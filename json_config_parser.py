@@ -30,20 +30,8 @@ def parse_to_json_config(filename: str):
             var = intent["variables"][0]
             json_config["intents"][intent_name]["variables"].append("$" + var)
             for utterance in intent["examples"]:
-                # populate json_config with all configuration examples
-                options = json_config["context-variables"][var]["config"]
-                if options != "null":
-                    for o in options:
-                        split = utterance.split("$")
-                        json_config["intents"][intent_name]["utterances"].append(split[0] + "$" + o + split[2])
-                else:
-                    if loaded_yaml["context-variables"][var]["extraction"] == "regex":
-                        split = utterance.split("$")
-                        json_config["intents"][intent_name]["utterances"].append(split[0] + f"[regex]{loaded_yaml['context-variables'][var]['pattern']}" + split[2])
-                    else:
-                        for e in loaded_yaml["context-variables"][var]["examples"]:
-                            split = utterance.split("$")
-                            json_config["intents"][intent_name]["utterances"].append(split[0] + "$" + e + split[2])     
+                split = utterance.split("$")
+                json_config["intents"][intent_name]["utterances"].append(f"{split[0]}${split[1]}{split[2]}")
         else:
             json_config["intents"][intent_name]["utterances"] = intent["examples"]
     return json_config
