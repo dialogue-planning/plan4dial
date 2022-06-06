@@ -39,7 +39,8 @@ def parse_to_json_config(filename: str):
     json_config["actions"] = {act: {} for act in loaded_yaml["actions"]}
     for act in json_config["actions"]:
         yaml_act = loaded_yaml["actions"][act]
-        # load in type, subtype, and message variants
+        # load in name, type, subtype, and message variants
+        json_config["actions"][act]["name"] = act
         json_config["actions"][act]["type"] = yaml_act["type"]
         if "subtype" in yaml_act:
             json_config["actions"][act]["subtype"] = yaml_act["subtype"]
@@ -66,35 +67,69 @@ def parse_to_json_config(filename: str):
             converted_eff = {}
             # create from template effects
             if effect == "validate-response":
+                converted_eff["global-outcome-name"] = "validate-response"
                 converted_eff["type"] = "oneof"
                 valid = {
                     "name": "valid",
                     "updates": {
                         yaml_act["effects"][effect]["entity"]: {
-                            "variable": yaml_act['effects'][effect]['entity'],
+                            "variable": yaml_act["effects"][effect]["entity"],
                             "value": f"${yaml_act['effects'][effect]['entity']}",
                             "certainty": "Known",
                         }
                     },
                     "intent": yaml_act["effects"][effect]["valid-intent"],
                 }
-                if "valid-follow-up" in yaml_act["effects"][effect]:
-                    valid["follow_up"] = yaml_act["effects"][effect]["valid-follow-up"]
+                valid["follow_up"] = (
+                    yaml_act["effects"][effect]["valid-follow-up"]
+                    if "valid-follow-up" in yaml_act["effects"][effect]
+                    else None
+                )
+
                 unclear = {
                     "name": "unclear",
                     "updates": {
-                        yaml_act["effects"][effect]['entity']: {
-                            "variable": yaml_act['effects'][effect]['entity'],
+                        yaml_act["effects"][effect]["entity"]: {
+                            "variable": yaml_act["effects"][effect]["entity"],
                             "value": f"${yaml_act['effects'][effect]['entity']}",
                             "certainty": "Uncertain",
                             "follow_up": f"clarify__{act}",
                         }
-                    }
+                    },
                 }
-                if "unclear-intent" in effect:
-                    unclear["unclear-intent"] = yaml_act["effects"][effect]["unclear-intent"]
+                unclear["unclear-intent"] = (
+                    yaml_act["effects"][effect]["unclear-intent"]
+                    if "unclear-intent" in effect
+                    else None
+                )
                 converted_eff["outcomes"] = [valid, unclear]
-            json_config["actions"][act]["effect"] = {"validate-response": converted_eff}
+            elif effect == "yes-no":
+                converted_eff["global-outcome-name"] = "yes-no"
+                converted_eff["type"] = "oneof"
+                confirm = {
+                    "name": "confirm",
+                    "updates": {
+                        yaml_act["effects"][effect]["entity"]: {
+                            "variable": yaml_act["effects"][effect]["entity"],
+                            "value": f"${yaml_act['effects'][effect]['entity']}",
+                            "certainty": "Known",
+                        }
+                    },
+                    "intent": "confirm",
+                }
+                deny = {
+                    "name": "deny",
+                    "updates": {
+                        yaml_act["effects"][effect]["entity"]: {
+                            "variable": yaml_act["effects"][effect]["entity"],
+                            "value": None,
+                            "certainty": "Unknown",
+                        }
+                    },
+                    "intent": "deny",
+                }
+                converted_eff["outcomes"] = [confirm, deny]                
+            json_config["actions"][act]["effect"] = converted_eff
     return json_config
 
 
