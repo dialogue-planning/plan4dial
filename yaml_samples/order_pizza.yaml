@@ -62,7 +62,7 @@ context-variables:
     - Tallahassee
     - Chicago
     - Austin
-  online_payment_method:
+  payment_method:
     type: enum
     known: 
       type: fflag
@@ -82,14 +82,8 @@ context-variables:
         - chequing
         - savings account
         - savings
-  cash:
-    type: enum
-    known: 
-      type: fflag
-      initially: false
-    options:
       cash:
-        variations:
+        variatinos:
         - money
         - notes
   card_number:
@@ -157,20 +151,13 @@ nlu:
       - I live in $location.
       - Do you deliver to $location?
       - I want my pizza to be delivered to $location.
-  - intent: set_payment_method_online
+  - intent: set_payment_method
     variables:
-      - online_payment_method
+      - payment_method
     examples:
-      - I want to pay by $online_payment_method.
-      - Can I pay with $online_payment_method?
-      - I will pay in $online_payment_method
-  - intent: set_payment_method_cash
-    variables:
-      - cash
-    examples:
-      - I want to pay by $cash.
-      - Can I pay with $cash?
-      - I will pay in $cash
+      - I want to pay by $payment_method.
+      - Can I pay with $payment_method?
+      - I will pay in $payment_method
   - intent: pay
     variables:
       - card_number
@@ -293,54 +280,16 @@ actions:
         known: true
       location:
         known: true
-      online_payment_method:
-        known: false
-      cash:
+      payment_method:
         known: false
     effects:
-      oneof:
-        pay-online:
-          oneof:
-            outcomes:
-              # received a valid value
-              valid:
-                updates:
-                  online_payment_method:
-                    value: $online_payment_method
-                    known: true
-                  paying_online: true
-                intent: set_payment_method_online
-              # need to clarify the response
-              unclear:
-                updates:
-                  online_payment_method:
-                    known: maybe
-                follow_up:
-                  clarify: ask-payment
-                intent: unclear-intent
-        pay-cash:
-          oneof:
-            outcomes:
-              # received a valid value
-              valid:
-                updates:
-                  cash:
-                    value: $cash
-                    known: true
-                  paying_online: false
-                intent: set_payment_method_cash
-              # need to clarify the response
-              unclear:
-                updates:
-                  cash:
-                    known: maybe
-                follow_up:
-                  clarify: ask-payment
-                intent: unclear-intent
+      validate-response:
+        entity: payment_method
+        valid-intent: set_payment_method
     clarify:
-      entity: online_payment_method
+      entity: payment_method
       message_variants:
-        - Would you like to pay with $online_payment_method?
+        - Would you like to pay with $payment_method?
 
   # ask for the user's card
   ask-card-number:
@@ -362,7 +311,9 @@ actions:
 
   check-order-availability:
     type: api
-    call: pizza.actions.check_order_availability
+    call:
+      endpoint: pizza.actions.check_order_availability
+      initial payload: null
     condition:
       order:
         known: true
@@ -372,7 +323,8 @@ actions:
           outcomes:
             in-stock:
               updates:
-                order_available: true
+                order_available:
+                  value: true
               # status of the call (helps determine the outcome similar to intent)
               status: success 
             out-of-stock:
@@ -387,7 +339,9 @@ actions:
 
   place-order:
     type: api
-    call: pizza.actions.place_order # make the call
+    call:
+      endpoint: pizza.actions.place_order # make the call
+      initial_payload: null
     condition:
       or:
         card_number:
@@ -400,7 +354,8 @@ actions:
           outcomes:
             success:
               updates:
-                goal: true
+                goal:
+                  value: true
               status: success
               response: "Order was successfully placed!"
             site-down:
