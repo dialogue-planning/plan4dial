@@ -156,9 +156,9 @@ def parse_to_json_config(filename: str):
                                     if "known" in update_config
                                     else None != None
                                 ):
-                                    if status:
+                                    if status == True:
                                         status = "Known"
-                                    elif not status:
+                                    elif status == False:
                                         status = "Unknown"
                                     elif status == "maybe":
                                         status = "Uncertain"
