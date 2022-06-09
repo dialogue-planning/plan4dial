@@ -2,6 +2,7 @@ from lib2to3.pytree import convert
 import yaml
 import json
 
+
 def parse_to_json_config(filename: str):
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
     json_config = {}
@@ -137,16 +138,24 @@ def parse_to_json_config(filename: str):
                     for out, out_config in outcomes.items():
                         next_outcome = {}
                         next_outcome["name"] = out
-                        updates = out_config["updates"] if "updates" in out_config else None
+                        updates = (
+                            out_config["updates"] if "updates" in out_config else None
+                        )
                         if updates:
                             collect_updates = {}
                             for update, update_config in updates.items():
                                 collect_updates[update] = {
-                                        "variable": update,
-                                        # if the value isn't supplied then the user is likely just setting "known" to False
-                                        "value": update_config["value"] if "value" in update_config else None
-                                    }
-                                if update_config["known"] if "known" in update_config else None != None:
+                                    "variable": update,
+                                    # if the value isn't supplied then the user is likely just setting "known" to False
+                                    "value": update_config["value"]
+                                    if "value" in update_config
+                                    else None,
+                                }
+                                if (
+                                    update_config["known"]
+                                    if "known" in update_config
+                                    else None != None
+                                ):
                                     if status:
                                         status = "Known"
                                     elif not status:
@@ -155,8 +164,14 @@ def parse_to_json_config(filename: str):
                                         status = "Uncertain"
                                     collect_updates[update]["certainty"] = status
                             next_outcome["updates"] = collect_updates
-                        next_outcome["intent"] = out_config["intent"] if "intent" in out_config else None
-                        next_outcome["follow_up"] = out_config["follow_up"] if "follow_up" in out_config else None
+                        next_outcome["intent"] = (
+                            out_config["intent"] if "intent" in out_config else None
+                        )
+                        next_outcome["follow_up"] = (
+                            out_config["follow_up"]
+                            if "follow_up" in out_config
+                            else None
+                        )
                         if "status" in out_config:
                             next_outcome["status"] = out_config["status"]
                         if "response" in out_config:
@@ -175,32 +190,27 @@ def parse_to_json_config(filename: str):
             clarify_act["message_variants"] = yaml_act["clarify"]["message_variants"]
             clarify_act["condition"] = [[entity, "Uncertain"]]
             clarify_act["effect"] = {
-                    "type": "oneof",
-                    "global-outcome-name": "yes-no",
-                        "outcomes": [
-                            {
-                                "name": "confirm",
-                                "updates": {
-                                    entity: {
-                                        "variable": entity,
-                                        "value": f"${entity}",
-                                        "certainty": True
-                                    }
-                                },
-                                "intent": "confirm"
-                            },
-                            {
-                                "name": "deny",
-                                "updates": {
-                                    entity: {
-                                        "value": None,
-                                        "certainty": False
-                                    }
-                                },
-                                "intent": "deny"
+                "type": "oneof",
+                "global-outcome-name": "yes-no",
+                "outcomes": [
+                    {
+                        "name": "confirm",
+                        "updates": {
+                            entity: {
+                                "variable": entity,
+                                "value": f"${entity}",
+                                "certainty": True,
                             }
-                        ]
-                    }
+                        },
+                        "intent": "confirm",
+                    },
+                    {
+                        "name": "deny",
+                        "updates": {entity: {"value": None, "certainty": False}},
+                        "intent": "deny",
+                    },
+                ],
+            }
         json_config["actions"][f"clarify__{act}"] = clarify_act
     return json_config
 
