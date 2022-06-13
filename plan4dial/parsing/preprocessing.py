@@ -38,6 +38,7 @@ def preprocess_yaml(filename: str):
                     new_eff["unclear"]["intent"] = eff_config["unclear-intent"]
 
                 new_eff = {"validate-response": {"oneof": {"outcomes": new_eff}}}
+                processed["actions"][act]["effects"] = new_eff
             elif eff == "yes-no":
                 new_eff = {
                             "confirm": {
@@ -64,7 +65,7 @@ def preprocess_yaml(filename: str):
                 if "unclear-intent" in eff_config:
                     new_eff["unclear"]["intent"] = eff_config["unclear-intent"]
                 new_eff = {"yes-no": {"oneof": {"outcomes": new_eff}}}
-            processed["actions"][act]["effects"] = new_eff
+                processed["actions"][act]["effects"] = new_eff
         if "clarify" in act_config:
             clarify_act = {}
             entity = act_config["clarify"]["entity"]
@@ -91,7 +92,7 @@ def preprocess_yaml(filename: str):
                 }
             }
             del processed["actions"][act]["clarify"]
-        processed["actions"][f"clarify__{act}"] = clarify_act
+            processed["actions"][f"clarify__{act}"] = clarify_act
     return processed
 
 

@@ -53,12 +53,8 @@ def parse_to_json_config(loaded_yaml: Dict):
         json_config_cond = []
         for cond in yaml_act["condition"]:
             if cond not in ["or", "not"]:
-                if yaml_act["condition"][cond]["known"]:
-                    json_config_cond.append([cond, "Known"])
-                elif not yaml_act["condition"][cond]["known"]:
-                    json_config_cond.append([cond, "Unknown"])
-                else:
-                    json_config_cond.append([cond, "Uncertain"])
+                if "known" in cond:
+                    json_config_cond.append(([cond, "Known"] if yaml_act["condition"][cond]["known"] else [cond, "Unknown"]) if type(yaml_act["condition"][cond]["known"]) == bool else [cond, "Uncertain"])
             # how to handle or/not clauses?
             else:
                 pass

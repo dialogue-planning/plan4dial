@@ -356,6 +356,16 @@ actions:
               updates:
                 goal:
                   value: true
+                ask-location:
+                  can-do: false
+                ask-order:
+                  can-do: false
+                ask-payment:
+                  can-do: false
+                ask-card-number:
+                  can-do: false
+                check-order-availability:
+                  can-do: false
               status: success
               response: "Order was successfully placed!"
             site-down:
