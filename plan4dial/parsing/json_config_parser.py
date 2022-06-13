@@ -111,4 +111,5 @@ def parse_to_json_config(loaded_yaml: Dict):
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
     f = str((base / "yaml_samples/order_pizza.yaml").resolve())
-    print(json.dumps(parse_to_json_config(preprocess_yaml(f)), indent=4))
+    json_file = open("pizza.json", "w")
+    json_file.write(json.dumps(parse_to_json_config(preprocess_yaml(f)), indent=4))

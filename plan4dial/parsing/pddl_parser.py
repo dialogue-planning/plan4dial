@@ -144,5 +144,4 @@ def parse_to_pddl(loaded_yaml: Dict):
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
     f = str((base / "yaml_samples/order_pizza.yaml").resolve())
-    # print(json.dumps(parse_to_pddl(preprocess_yaml(f)), indent=4))
     parse_to_pddl(preprocess_yaml(f))
