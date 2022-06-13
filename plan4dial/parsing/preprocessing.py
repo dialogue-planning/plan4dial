@@ -13,24 +13,24 @@ def preprocess_yaml(filename: str):
             # create from template effects
             if eff == "validate-response":
                 new_eff = {
-                            "valid": {
-                                "updates": {
-                                    eff_config["entity"]: {
-                                        "value": f"${eff_config['entity']}",
-                                        "known": True,
-                                    }
-                                },
-                                "intent": eff_config["valid-intent"],
-                            },
-                            "unclear": {
-                                "updates": {
-                                    eff_config["entity"]: {
-                                        "value": f"${eff_config['entity']}",
-                                        "known": "maybe",
-                                    }
-                                },
-                                "follow_up": {"clarify": f"clarify__{act}"},
-                            },
+                    "valid": {
+                        "updates": {
+                            eff_config["entity"]: {
+                                "value": f"${eff_config['entity']}",
+                                "known": True,
+                            }
+                        },
+                        "intent": eff_config["valid-intent"],
+                    },
+                    "unclear": {
+                        "updates": {
+                            eff_config["entity"]: {
+                                "value": f"${eff_config['entity']}",
+                                "known": "maybe",
+                            }
+                        },
+                        "follow_up": {"clarify": f"clarify__{act}"},
+                    },
                 }
                 if "valid-follow-up" in eff_config:
                     new_eff["valid"]["follow_up"] = eff_config["valid-follow-up"]
@@ -41,24 +41,24 @@ def preprocess_yaml(filename: str):
                 processed["actions"][act]["effects"] = new_eff
             elif eff == "yes-no":
                 new_eff = {
-                            "confirm": {
-                                "updates": {
-                                    eff_config["entity"]: {
-                                        "value": f"${eff_config['entity']}",
-                                        "known": True,
-                                    }
-                                },
-                                "intent": "confirm",
-                            },
-                            "deny": {
-                                "updates": {
-                                    eff_config["entity"]: {
-                                        "value": None,
-                                        "known": False,
-                                    }
-                                },
-                                "intent": "deny",
-                            },
+                    "confirm": {
+                        "updates": {
+                            eff_config["entity"]: {
+                                "value": f"${eff_config['entity']}",
+                                "known": True,
+                            }
+                        },
+                        "intent": "confirm",
+                    },
+                    "deny": {
+                        "updates": {
+                            eff_config["entity"]: {
+                                "value": None,
+                                "known": False,
+                            }
+                        },
+                        "intent": "deny",
+                    },
                 }
                 if "valid-follow-up" in eff_config:
                     new_eff["valid"]["follow_up"] = eff_config["valid-follow-up"]

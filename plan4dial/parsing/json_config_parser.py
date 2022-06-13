@@ -1,4 +1,3 @@
-import yaml
 import json
 from typing import Dict
 from pathlib import Path
@@ -13,52 +12,63 @@ def parse_to_json_config(loaded_yaml: Dict):
         var: {} for var in loaded_yaml["context-variables"]
     }
     for ctx_var, cfg in loaded_yaml["context-variables"].items():
-        json_config["context-variables"][ctx_var]["type"] = cfg["type"]
+        json_ctx_var = {}
+        json_ctx_var["type"] = cfg["type"]
         # do variations need to be given to hovor?
         if cfg["type"] == "enum":
-            json_config["context-variables"][ctx_var]["config"] = list(
+            json_ctx_var["config"] = list(
                 cfg["options"].keys()
             )
         elif cfg["type"] == "flag" or cfg["type"] == "fflag":
-            json_config["context-variables"][ctx_var]["config"] = cfg["initially"]
+            json_ctx_var["config"] = cfg["initially"]
         else:
-            json_config["context-variables"][ctx_var]["config"] = "null"
+            json_ctx_var["config"] = "null"
+        json_config["context-variables"][ctx_var] = json_ctx_var
         # do confirm/confirmation_utterance need to be given to hovor?
     json_config["intents"] = {var["intent"]: {} for var in loaded_yaml["nlu"]}
     # convert intents
     for intent in loaded_yaml["nlu"]:
         intent_name = intent["intent"]
-        json_config["intents"][intent_name] = {}
-        json_config["intents"][intent_name]["utterances"] = []
-        json_config["intents"][intent_name]["variables"] = []
+        cur_intent = {}
+        cur_intent["variables"] = []
         if "variables" in intent:
             # assume for now that we only have one entity in a sentence
-            var = intent["variables"][0]
-            json_config["intents"][intent_name]["variables"].append("$" + var)
-        json_config["intents"][intent_name]["utterances"] = intent["examples"]
+            cur_intent["variables"].append("$" + intent["variables"][0])
+        cur_intent["utterances"] = intent["examples"]
+        json_config["intents"][intent_name] = cur_intent
     # convert actions
     json_config["actions"] = {act: {} for act in loaded_yaml["actions"]}
     for act in loaded_yaml["actions"]:
         yaml_act = loaded_yaml["actions"][act]
+        cur_json_act = {}
         # load in name, type, subtype, and message variants
-        json_config["actions"][act]["name"] = act
-        json_config["actions"][act]["type"] = yaml_act["type"]
+        cur_json_act["name"] = act
+        cur_json_act["type"] = yaml_act["type"]
         if "subtype" in yaml_act:
-            json_config["actions"][act]["subtype"] = yaml_act["subtype"]
+            cur_json_act["subtype"] = yaml_act["subtype"]
         if "message_variants" in yaml_act:
-            json_config["actions"][act]["message_variants"] = yaml_act[
+            cur_json_act["message_variants"] = yaml_act[
                 "message_variants"
             ]
         # convert preconditions
         json_config_cond = []
-        for cond in yaml_act["condition"]:
+        for cond, cond_cfg in yaml_act["condition"].items():
             if cond not in ["or", "not"]:
                 if "known" in cond:
-                    json_config_cond.append(([cond, "Known"] if yaml_act["condition"][cond]["known"] else [cond, "Unknown"]) if type(yaml_act["condition"][cond]["known"]) == bool else [cond, "Uncertain"])
+                    json_config_cond.append(
+                        (
+                            [cond, "Known"]
+                            if cond_cfg["known"]
+                            else [cond, "Unknown"]
+                        )
+                        if type(cond_cfg["known"]) == bool
+                        else [cond, "Uncertain"]
+                    )
             # how to handle or/not clauses?
             else:
                 pass
-            json_config["actions"][act]["condition"] = json_config_cond
+            cur_json_act["condition"] = json_config_cond
+
         # convert effects
         for eff, eff_config in yaml_act["effects"].items():
             converted_eff = {}
@@ -70,9 +80,7 @@ def parse_to_json_config(loaded_yaml: Dict):
                 for out, out_config in outcomes.items():
                     next_outcome = {}
                     next_outcome["name"] = out
-                    updates = (
-                        out_config["updates"] if "updates" in out_config else None
-                    )
+                    updates = out_config["updates"] if "updates" in out_config else None
                     if updates:
                         collect_updates = {}
                         for update, update_config in updates.items():
@@ -89,7 +97,11 @@ def parse_to_json_config(loaded_yaml: Dict):
                                 else None != None
                             ):
                                 known = update_config["known"]
-                                status = ("Known" if known else "Unknown") if type(known) == bool else "Uncertain"
+                                status = (
+                                    ("Known" if known else "Unknown")
+                                    if type(known) == bool
+                                    else "Uncertain"
+                                )
                                 collect_updates[update]["certainty"] = status
                         next_outcome["updates"] = collect_updates
                     if "intent" in out_config:
@@ -104,7 +116,8 @@ def parse_to_json_config(loaded_yaml: Dict):
                         next_outcome["call"] = out_config["call"]
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
-            json_config["actions"][act]["effect"] = converted_eff
+            cur_json_act["effect"] = converted_eff
+        json_config["actions"][act] = cur_json_act
     return json_config
 
 

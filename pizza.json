@@ -38,23 +38,24 @@
     },
     "intents": {
         "greet": {
+            "variables": [],
             "utterances": [
                 "Hey",
                 "Hi",
                 "hey there"
-            ],
-            "variables": []
+            ]
         },
         "leave": {
+            "variables": [],
             "utterances": [
                 "Goodbye",
                 "Bye",
                 "That's all",
                 "i'm done"
-            ],
-            "variables": []
+            ]
         },
         "confirm": {
+            "variables": [],
             "utterances": [
                 true,
                 "yeah",
@@ -63,10 +64,10 @@
                 "mhm",
                 "confirm",
                 "yes please"
-            ],
-            "variables": []
+            ]
         },
         "deny": {
+            "variables": [],
             "utterances": [
                 false,
                 "not at all",
@@ -76,47 +77,46 @@
                 "nah",
                 "no thanks",
                 "no thank you"
-            ],
-            "variables": []
+            ]
         },
         "share_order": {
+            "variables": [
+                "$order"
+            ],
             "utterances": [
                 "I want a $order pizza",
                 "$order pizza please!",
                 "Do you have $order pizza?"
-            ],
-            "variables": [
-                "$order"
             ]
         },
         "share_location": {
+            "variables": [
+                "$location"
+            ],
             "utterances": [
                 "I live in $location.",
                 "Do you deliver to $location?",
                 "I want my pizza to be delivered to $location."
-            ],
-            "variables": [
-                "$location"
             ]
         },
         "set_payment_method": {
+            "variables": [
+                "$payment_method"
+            ],
             "utterances": [
                 "I want to pay by $payment_method.",
                 "Can I pay with $payment_method?",
                 "I will pay in $payment_method"
-            ],
-            "variables": [
-                "$payment_method"
             ]
         },
         "pay": {
+            "variables": [
+                "$card_number"
+            ],
             "utterances": [
                 "My credit card number is $card_number.",
                 "This is my account number $card_number",
                 "Ok, the number on my card is $card_number."
-            ],
-            "variables": [
-                "$card_number"
             ]
         }
     },

@@ -1,6 +1,4 @@
 from typing import Dict, List
-import yaml
-import json
 from pathlib import Path
 from preprocessing import preprocess_yaml
 
@@ -34,8 +32,10 @@ def fluents_to_pddl_and(fluents: List[str], tabs: int):
         else ""
     )
 
+
 def contains_and_pddl(outer_name: str, fluents: List[str]):
     return f"\n{TAB}(:{outer_name}{fluents_to_pddl_and(fluents, 2)}\n{TAB})"
+
 
 def action_to_pddl(act: str, act_config: Dict):
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
@@ -62,13 +62,21 @@ def action_to_pddl(act: str, act_config: Dict):
                                 )
                             )
                         if "can-do" in update_config:
-                            outcomes.append(f"(can-do_{update_var})" if update_config["can-do"] else f"(not (can-do_{update_var}))")
+                            outcomes.append(
+                                f"(can-do_{update_var})"
+                                if update_config["can-do"]
+                                else f"(not (can-do_{update_var}))"
+                            )
                 effects += f"\n{TAB * 4}(outcome {out}{fluents_to_pddl_and(outcomes, 5)}\n{TAB * 4})"
         effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
 
+
 def actions_to_pddl(actions: Dict):
-    return "\n".join([action_to_pddl(act, act_config) for act, act_config in actions.items()])
+    return "\n".join(
+        [action_to_pddl(act, act_config) for act, act_config in actions.items()]
+    )
+
 
 def parse_init(context_variables: Dict, actions: List[str]):
     init_true = []
@@ -92,6 +100,7 @@ def parse_init(context_variables: Dict, actions: List[str]):
     for act in actions:
         init_true.append(f"(can-do_{act})")
     return init_true
+
 
 def parse_predicates(context_variables: Dict, actions: List[str]):
     predicates = []
@@ -126,15 +135,21 @@ def parse_predicates(context_variables: Dict, actions: List[str]):
 
 
 def parse_to_pddl(loaded_yaml: Dict):
-    predicates = contains_and_pddl("predicates", parse_predicates(
-        loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
-    ))
+    predicates = contains_and_pddl(
+        "predicates",
+        parse_predicates(
+            loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
+        ),
+    )
     actions = actions_to_pddl(loaded_yaml["actions"])
     domain = f"(define\n{TAB}(domain {loaded_yaml['name']}\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants )\n{predicates}\n{actions}\n)"
     f = open("domain.pddl", "w")
     f.write(domain)
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem\n{TAB}(:domain {loaded_yaml['name']}\n{TAB}(:objects )"
-    init = contains_and_pddl("init", parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()))
+    init = contains_and_pddl(
+        "init",
+        parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()),
+    )
     goal = contains_and_pddl("goal", ["(goal)"])
     problem = problem_def + init + goal + "\n)"
     f = open("problem.pddl", "w")
