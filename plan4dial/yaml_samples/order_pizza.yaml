@@ -93,9 +93,6 @@ context-variables:
       initially: false
     extraction: regex
     pattern: \d{16}
-  paying_online:
-    type: flag
-    initially: false
   goal:
     type: flag
     initially: false

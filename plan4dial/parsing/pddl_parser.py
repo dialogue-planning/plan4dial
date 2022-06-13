@@ -34,9 +34,12 @@ def fluents_to_pddl_and(fluents: List[str], tabs: int):
         else ""
     )
 
+def init_to_pddl(init_pred: List[str]):
+    return f"{TAB}(:init{fluents_to_pddl_and(init_pred, 2)}\n{TAB})"
 
 def predicates_to_pddl(predicates: List[str]):
     return f"{TAB}(:predicates{fluents_to_pddl_and(predicates, 2)}\n{TAB})"
+
 
 
 def action_to_pddl(act: str, act_config: Dict):
@@ -46,7 +49,7 @@ def action_to_pddl(act: str, act_config: Dict):
         for cond_config_key, cond_config_val in cond_config.items():
             if cond_config_key == "known":
                 precond.extend(return_certainty_predicates(cond, cond_config_val))
-            precond.append(f"(can-do__{act})")
+            precond.append(f"(can-do_{act})")
 
     precond = f"\n{TAB * 2}:precondition{fluents_to_pddl_and(precond, 2)}"
     effects = f"\n{TAB * 2}:effect"
@@ -64,7 +67,7 @@ def action_to_pddl(act: str, act_config: Dict):
                                 )
                             )
                         if "can-do" in update_config:
-                            outcomes.append(f"(can-do__{update_var})" if update_config["can-do"] else f"(not (can-do__{update_var}))")
+                            outcomes.append(f"(can-do_{update_var})" if update_config["can-do"] else f"(not (can-do_{update_var}))")
                 effects += f"\n{TAB * 4}(outcome {out}{fluents_to_pddl_and(outcomes, 5)}\n{TAB * 4})"
         effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
@@ -72,30 +75,76 @@ def action_to_pddl(act: str, act_config: Dict):
 def actions_to_pddl(actions: Dict):
     return "\n".join([action_to_pddl(act, act_config) for act, act_config in actions.items()])
 
+def parse_init(context_variables: Dict, actions: List[str]):
+    init_true = []
+    for var, var_config in context_variables.items():
+        if "known" in var_config:
+            known_status = var_config["known"]["initially"]
+            if type(known_status) == bool:
+                if known_status:
+                    init_true.append(f"(have_{var})")
+            else:
+                if known_status == "maybe":
+                    init_true.append(f"(maybe-have_{var})")
+        if var_config["type"] in ["flag", "fflag"]:
+            status = var_config["initially"]
+            if type(status) == bool:
+                if status:
+                    init_true.append(f"({var})")
+            else:
+                if status == "maybe":
+                    init_true.append(f"(maybe-{var})")
+    for act in actions:
+        init_true.append(f"(can-do_{act})")
+    return init_true
+
 def parse_predicates(context_variables: Dict, actions: List[str]):
     predicates = []
+    init_true = []
     for var, var_config in context_variables.items():
         if "known" in var_config:
             predicates.append(f"(have_{var})")
             if var_config["known"]["type"] == "fflag":
                 predicates.append(f"(maybe-have_{var})")
-        else:
+            known_status = var_config["known"]["initially"]
+            if type(known_status) == bool:
+                if known_status:
+                    init_true.append(f"(have_{var})")
+            else:
+                if known_status == "maybe":
+                    init_true.append(f"(maybe-have_{var})")
+
+        if var_config["type"] in ["flag", "fflag"]:
             predicates.append(f"({var})")
+            if var_config["type"] == "fflag":
+                predicates.append(f"(maybe-{var})")
+            status = var_config["initially"]
+            if type(status) == bool:
+                if status:
+                    init_true.append(f"({var})")
+            else:
+                if status == "maybe":
+                    init_true.append(f"(maybe-{var})")
     for act in actions:
-        predicates.append(f"(can-do__{act})")
+        predicates.append(f"(can-do_{act})")
     return predicates
 
 
 def parse_to_pddl(loaded_yaml: Dict):
-    predicates = parse_predicates(
+    predicates = predicates_to_pddl(parse_predicates(
         loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
-    )
-    predicates = predicates_to_pddl(predicates)
+    ))
     actions = actions_to_pddl(loaded_yaml["actions"])
-    return f"(define\n{TAB}(domain {loaded_yaml['name']}\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants )\n{predicates}\n{actions}\n)"
+    domain = f"(define\n{TAB}(domain {loaded_yaml['name']}\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants )\n{predicates}\n{actions}\n)"
+    f = open("domain.pddl", "w")
+    f.write(domain)
+    problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem\n{TAB}(:domain {loaded_yaml['name']}\n{TAB}(:objects )\n{TAB}\n"
+    init = init_to_pddl(parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()))
+    print(init)
+
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
     f = str((base / "yaml_samples/order_pizza.yaml").resolve())
     # print(json.dumps(parse_to_pddl(preprocess_yaml(f)), indent=4))
-    print(parse_to_pddl(preprocess_yaml(f)))
+    parse_to_pddl(preprocess_yaml(f))
