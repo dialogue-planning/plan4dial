@@ -3,12 +3,9 @@
     (:requirements :strips :typing)
     (:types )
     (:constants )
+
     (:predicates
         (and
-            (test1)
-            (maybe-test1)
-            (have_test2)
-            (test2)
             (have_order)
             (maybe-have_order)
             (order_available)
@@ -28,7 +25,6 @@
             (can-do_clarify__ask-location)
             (can-do_clarify__ask-order)
             (can-do_clarify__ask-payment)
-
         )
     )
     (:action ask-location
@@ -38,7 +34,6 @@
             (not (have_location))
             (not (maybe-have_location))
             (can-do_ask-location)
-
         )
         :effect
             (labeled-oneof validate-response
@@ -46,14 +41,12 @@
                     (and
                         (have_location)
                         (not (maybe-have_location))
-
                     )
                 )
                 (outcome unclear
                     (and
                         (not (have_location))
                         (not (maybe-have_location))
-
                     )
                 )
             )
@@ -65,7 +58,6 @@
             (not (have_order))
             (not (maybe-have_order))
             (can-do_ask-order)
-
         )
         :effect
             (labeled-oneof validate-response
@@ -73,14 +65,12 @@
                     (and
                         (have_order)
                         (not (maybe-have_order))
-
                     )
                 )
                 (outcome unclear
                     (and
                         (not (have_order))
                         (not (maybe-have_order))
-
                     )
                 )
             )
@@ -92,7 +82,6 @@
             (not (have_payment_method))
             (not (maybe-have_payment_method))
             (can-do_ask-payment)
-
         )
         :effect
             (labeled-oneof validate-response
@@ -100,14 +89,12 @@
                     (and
                         (have_payment_method)
                         (not (maybe-have_payment_method))
-
                     )
                 )
                 (outcome unclear
                     (and
                         (not (have_payment_method))
                         (not (maybe-have_payment_method))
-
                     )
                 )
             )
@@ -120,7 +107,6 @@
             (not (maybe-have_payment_method))
             (can-do_ask-card-number)
             (can-do_ask-card-number)
-
         )
         :effect
             (labeled-oneof validate-response
@@ -128,14 +114,12 @@
                     (and
                         (have_card_number)
                         (not (maybe-have_card_number))
-
                     )
                 )
                 (outcome unclear
                     (and
                         (not (have_card_number))
                         (not (maybe-have_card_number))
-
                     )
                 )
             )
@@ -147,7 +131,6 @@
             (have_order)
             (not (maybe-have_order))
             (can-do_check-order-availability)
-
         )
         :effect
             (labeled-oneof make-call
@@ -157,7 +140,6 @@
                     (and
                         (not (have_order))
                         (not (maybe-have_order))
-
                     )
                 )
                 (outcome site-down
@@ -170,7 +152,6 @@
         (and
             (can-do_place-order)
             (can-do_place-order)
-
         )
         :effect
             (labeled-oneof make-call
@@ -181,7 +162,6 @@
                         (not (can-do_ask-payment))
                         (not (can-do_ask-card-number))
                         (not (can-do_check-order-availability))
-
                     )
                 )
                 (outcome site-down
@@ -195,7 +175,6 @@
             (not (have_location))
             (not (maybe-have_location))
             (can-do_clarify__ask-location)
-
         )
         :effect
             (labeled-oneof yes-no
@@ -203,14 +182,12 @@
                     (and
                         (have_location)
                         (not (maybe-have_location))
-
                     )
                 )
                 (outcome deny
                     (and
                         (not (have_entity))
                         (not (maybe-have_entity))
-
                     )
                 )
             )
@@ -222,7 +199,6 @@
             (not (have_order))
             (not (maybe-have_order))
             (can-do_clarify__ask-order)
-
         )
         :effect
             (labeled-oneof yes-no
@@ -230,14 +206,12 @@
                     (and
                         (have_order)
                         (not (maybe-have_order))
-
                     )
                 )
                 (outcome deny
                     (and
                         (not (have_entity))
                         (not (maybe-have_entity))
-
                     )
                 )
             )
@@ -249,7 +223,6 @@
             (not (have_payment_method))
             (not (maybe-have_payment_method))
             (can-do_clarify__ask-payment)
-
         )
         :effect
             (labeled-oneof yes-no
@@ -257,14 +230,12 @@
                     (and
                         (have_payment_method)
                         (not (maybe-have_payment_method))
-
                     )
                 )
                 (outcome deny
                     (and
                         (not (have_entity))
                         (not (maybe-have_entity))
-
                     )
                 )
             )

@@ -28,19 +28,14 @@ def fluents_to_pddl_and(fluents: List[str], tabs: int):
     return (
         "\n"
         + (TAB * tabs)
-        + f"(and{fluents_to_pddl(fluents, tabs + 1)}\n"
+        + f"(and{fluents_to_pddl(fluents, tabs + 1)}"
         + ("\n" + TAB * tabs + ")")
         if len(fluents) > 0
         else ""
     )
 
-def init_to_pddl(init_pred: List[str]):
-    return f"{TAB}(:init{fluents_to_pddl_and(init_pred, 2)}\n{TAB})"
-
-def predicates_to_pddl(predicates: List[str]):
-    return f"{TAB}(:predicates{fluents_to_pddl_and(predicates, 2)}\n{TAB})"
-
-
+def contains_and_pddl(outer_name: str, fluents: List[str]):
+    return f"\n{TAB}(:{outer_name}{fluents_to_pddl_and(fluents, 2)}\n{TAB})"
 
 def action_to_pddl(act: str, act_config: Dict):
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
@@ -131,16 +126,19 @@ def parse_predicates(context_variables: Dict, actions: List[str]):
 
 
 def parse_to_pddl(loaded_yaml: Dict):
-    predicates = predicates_to_pddl(parse_predicates(
+    predicates = contains_and_pddl("predicates", parse_predicates(
         loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
     ))
     actions = actions_to_pddl(loaded_yaml["actions"])
     domain = f"(define\n{TAB}(domain {loaded_yaml['name']}\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants )\n{predicates}\n{actions}\n)"
     f = open("domain.pddl", "w")
     f.write(domain)
-    problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem\n{TAB}(:domain {loaded_yaml['name']}\n{TAB}(:objects )\n{TAB}\n"
-    init = init_to_pddl(parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()))
-    print(init)
+    problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem\n{TAB}(:domain {loaded_yaml['name']}\n{TAB}(:objects )"
+    init = contains_and_pddl("init", parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()))
+    goal = contains_and_pddl("goal", ["(goal)"])
+    problem = problem_def + init + goal + "\n)"
+    f = open("problem.pddl", "w")
+    f.write(problem)
 
 
 if __name__ == "__main__":
