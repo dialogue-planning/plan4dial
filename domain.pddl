@@ -1,5 +1,5 @@
 (define
-    (domain order-pizza
+    (domain order-pizza)
     (:requirements :strips :typing)
     (:types )
     (:constants )

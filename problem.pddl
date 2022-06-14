@@ -1,6 +1,6 @@
 (define
-    (problem order-pizza-problem
-    (:domain order-pizza
+    (problem order-pizza-problem)
+    (:domain order-pizza)
     (:objects )
     (:init
         (and

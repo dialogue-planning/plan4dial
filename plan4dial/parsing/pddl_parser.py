@@ -142,10 +142,10 @@ def parse_to_pddl(loaded_yaml: Dict):
         ),
     )
     actions = actions_to_pddl(loaded_yaml["actions"])
-    domain = f"(define\n{TAB}(domain {loaded_yaml['name']}\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants )\n{predicates}\n{actions}\n)"
+    domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants )\n{predicates}\n{actions}\n)"
     f = open("domain.pddl", "w")
     f.write(domain)
-    problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem\n{TAB}(:domain {loaded_yaml['name']}\n{TAB}(:objects )"
+    problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = contains_and_pddl(
         "init",
         parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()),
