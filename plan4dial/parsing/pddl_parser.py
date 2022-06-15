@@ -17,7 +17,7 @@ def return_certainty_fluents(f_name: str, known: bool):
     elif known == "maybe":
         return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"]
 
-def fluents_to_pddl(fluents: List[str], tabs: int, name_wrap: str=None, and_wrap: bool=False):
+def fluents_to_pddl(fluents: List[str], tabs: int, outer_brackets: bool=False, name_wrap: str=None, and_wrap: bool=False):
     fluent_tabs = TAB * (tabs + 1)
     and_wrap_tabs = TAB * tabs
     if name_wrap and and_wrap:
@@ -32,7 +32,8 @@ def fluents_to_pddl(fluents: List[str], tabs: int, name_wrap: str=None, and_wrap
     if and_wrap:
         fluents = f"\n{and_wrap_tabs}(and{fluents}\n{and_wrap_tabs})"
     if name_wrap:
-        fluents = f"\n{TAB * tabs}({name_wrap}{fluents}\n{TAB * tabs})"
+        fluents = f"{name_wrap}{fluents}"
+        fluents = f"\n{TAB * tabs}({fluents}\n{TAB * tabs})" if outer_brackets else f"\n{TAB * tabs}{fluents}"
     return fluents
 
 def action_to_pddl(act: str, act_config: Dict):
@@ -72,7 +73,7 @@ def action_to_pddl(act: str, act_config: Dict):
                                 outcomes.append(return_flag_value_fluents(update_var, update_value))
                             elif update_var_type == "fflag":
                                 outcomes.append(return_flag_value_fluents(update_var, update_value) if type(update_value) == bool else f"(maybe-{update_var})")
-                effects += fluents_to_pddl(fluents=outcomes, tabs=4, name_wrap=f"outcome {out}", and_wrap=True)
+                effects += fluents_to_pddl(fluents=outcomes, tabs=4, outer_brackets=True, name_wrap=f"outcome {out}", and_wrap=True)
         effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
 
@@ -138,7 +139,7 @@ def parse_predicates(context_variables: Dict, actions: List[str]):
     return predicates
 
 def parse_to_pddl(loaded_yaml: Dict):
-    predicates = fluents_to_pddl(fluents=parse_predicates(loaded_yaml['context-variables'], loaded_yaml['actions'].keys()), tabs=1, name_wrap=":predicates")
+    predicates = fluents_to_pddl(fluents=parse_predicates(loaded_yaml['context-variables'], loaded_yaml['actions'].keys()), tabs=1, outer_brackets=True, name_wrap=":predicates")
     actions = actions_to_pddl(loaded_yaml)
     domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
     f = open("domain.pddl", "w")
@@ -147,9 +148,10 @@ def parse_to_pddl(loaded_yaml: Dict):
     init = fluents_to_pddl(
         fluents=parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()),
         tabs=2,
+        outer_brackets=True,
         name_wrap=":init"
     )
-    goal = fluents_to_pddl(fluents=["(goal)"], tabs=2, name_wrap=":goal", and_wrap=True)
+    goal = fluents_to_pddl(fluents=["(goal)"], tabs=2, outer_brackets=True, name_wrap=":goal", and_wrap=True)
     problem = problem_def + init + goal + "\n)"
     f = open("problem.pddl", "w")
     f.write(problem)

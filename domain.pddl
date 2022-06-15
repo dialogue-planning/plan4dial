@@ -26,13 +26,12 @@
     )
     (:action ask-location
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (not (have_location))
                 (not (maybe-have_location))
                 (can-do_ask-location)
             )
-        )
         :effect
             (labeled-oneof validate-response
                 (outcome valid
@@ -51,13 +50,12 @@
     )
     (:action ask-order
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (not (have_order))
                 (not (maybe-have_order))
                 (can-do_ask-order)
             )
-        )
         :effect
             (labeled-oneof validate-response
                 (outcome valid
@@ -76,13 +74,12 @@
     )
     (:action ask-payment
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (not (have_payment_method))
                 (not (maybe-have_payment_method))
                 (can-do_ask-payment)
             )
-        )
         :effect
             (labeled-oneof validate-response
                 (outcome valid
@@ -101,14 +98,13 @@
     )
     (:action ask-card-number
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (have_payment_method)
                 (not (maybe-have_payment_method))
                 (can-do_ask-card-number)
                 (can-do_ask-card-number)
             )
-        )
         :effect
             (labeled-oneof validate-response
                 (outcome valid
@@ -127,13 +123,12 @@
     )
     (:action check-order-availability
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (have_order)
                 (not (maybe-have_order))
                 (can-do_check-order-availability)
             )
-        )
         :effect
             (labeled-oneof make-call
                 (outcome in-stock
@@ -155,12 +150,11 @@
     )
     (:action place-order
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (can-do_place-order)
                 (can-do_place-order)
             )
-        )
         :effect
             (labeled-oneof make-call
                 (outcome success
@@ -181,13 +175,12 @@
     )
     (:action clarify__ask-location
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (not (have_location))
                 (maybe-have_location)
                 (can-do_clarify__ask-location)
             )
-        )
         :effect
             (labeled-oneof yes-no
                 (outcome confirm
@@ -206,13 +199,12 @@
     )
     (:action clarify__ask-order
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (not (have_order))
                 (maybe-have_order)
                 (can-do_clarify__ask-order)
             )
-        )
         :effect
             (labeled-oneof yes-no
                 (outcome confirm
@@ -231,13 +223,12 @@
     )
     (:action clarify__ask-payment
         :parameters()
-        (:precondition
+        :precondition
             (and
                 (not (have_payment_method))
                 (maybe-have_payment_method)
                 (can-do_clarify__ask-payment)
             )
-        )
         :effect
             (labeled-oneof yes-no
                 (outcome confirm
