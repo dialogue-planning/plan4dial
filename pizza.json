@@ -393,8 +393,8 @@
                     {
                         "name": "deny",
                         "updates": {
-                            "entity": {
-                                "variable": "entity",
+                            "location": {
+                                "variable": "location",
                                 "value": null
                             }
                         },
@@ -429,8 +429,8 @@
                     {
                         "name": "deny",
                         "updates": {
-                            "entity": {
-                                "variable": "entity",
+                            "order": {
+                                "variable": "order",
                                 "value": null
                             }
                         },
@@ -465,8 +465,8 @@
                     {
                         "name": "deny",
                         "updates": {
-                            "entity": {
-                                "variable": "entity",
+                            "payment_method": {
+                                "variable": "payment_method",
                                 "value": null
                             }
                         },

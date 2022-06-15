@@ -1,3 +1,4 @@
+from multiprocessing import context
 from typing import Dict, List
 from pathlib import Path
 from preprocessing import preprocess_yaml
@@ -5,37 +6,34 @@ from preprocessing import preprocess_yaml
 TAB = " " * 4
 
 
-def return_certainty_predicates(pred_name: str, known: bool):
+def return_flag_value_fluents(f_name: str, value: bool):
+    return f"({f_name})" if f_name else f"(not ({f_name}))"
+
+def return_certainty_fluents(f_name: str, known: bool):
     if known == True:
-        return [f"(have_{pred_name})", f"(not (maybe-have_{pred_name}))"]
+        return [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"]
     elif known == False:
-        return [f"(not (have_{pred_name}))", f"(not (maybe-have_{pred_name}))"]
+        return [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
     elif known == "maybe":
-        return [f"(not (have_{pred_name}))", f"(not (maybe-have_{pred_name}))"]
+        return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"]
 
-
-def fluents_to_pddl(fluents: List[str], tabs: int):
-    return (
-        (("\n" + TAB * tabs) + "{0}".format(("\n" + TAB * tabs).join(fluents)))
+def fluents_to_pddl(fluents: List[str], tabs: int, name_wrap: str=None, and_wrap: bool=False):
+    fluent_tabs = TAB * (tabs + 1)
+    and_wrap_tabs = TAB * tabs
+    if name_wrap and and_wrap:
+        and_wrap_tabs += TAB
+        fluent_tabs += TAB
+    
+    fluents = (
+        (("\n" + fluent_tabs) + "{0}".format(("\n" + fluent_tabs).join(fluents)))
         if len(fluents) > 0
-        else ""
+        else ("")
     )
-
-
-def fluents_to_pddl_and(fluents: List[str], tabs: int):
-    return (
-        "\n"
-        + (TAB * tabs)
-        + f"(and{fluents_to_pddl(fluents, tabs + 1)}"
-        + ("\n" + TAB * tabs + ")")
-        if len(fluents) > 0
-        else ""
-    )
-
-
-def contains_and_pddl(outer_name: str, fluents: List[str]):
-    return f"\n{TAB}(:{outer_name}{fluents_to_pddl_and(fluents, 2)}\n{TAB})"
-
+    if and_wrap:
+        fluents = f"\n{and_wrap_tabs}(and{fluents}\n{and_wrap_tabs})"
+    if name_wrap:
+        fluents = f"\n{TAB * tabs}({name_wrap}{fluents}\n{TAB * tabs})"
+    return fluents
 
 def action_to_pddl(act: str, act_config: Dict):
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
@@ -43,10 +41,10 @@ def action_to_pddl(act: str, act_config: Dict):
         precond = []
         for cond_config_key, cond_config_val in cond_config.items():
             if cond_config_key == "known":
-                precond.extend(return_certainty_predicates(cond, cond_config_val))
+                precond.extend(return_certainty_fluents(cond, cond_config_val))
             precond.append(f"(can-do_{act})")
 
-    precond = f"\n{TAB * 2}:precondition{fluents_to_pddl_and(precond, 2)}"
+    precond = fluents_to_pddl(fluents=precond, tabs=2, name_wrap=":precondition", and_wrap=True)
     effects = f"\n{TAB * 2}:effect"
     for eff, eff_config in act_config["effects"].items():
         effects += f"\n{TAB * 3}(labeled-oneof {eff}"
@@ -57,7 +55,7 @@ def action_to_pddl(act: str, act_config: Dict):
                     for update_var, update_config in out_config["updates"].items():
                         if "known" in update_config:
                             outcomes.extend(
-                                return_certainty_predicates(
+                                return_certainty_fluents(
                                     update_var, update_config["known"]
                                 )
                             )
@@ -67,14 +65,21 @@ def action_to_pddl(act: str, act_config: Dict):
                                 if update_config["can-do"]
                                 else f"(not (can-do_{update_var}))"
                             )
-                effects += f"\n{TAB * 4}(outcome {out}{fluents_to_pddl_and(outcomes, 5)}\n{TAB * 4})"
+                        if "value" in update_config:
+                            update_value = update_config["value"]
+                            update_var_type = type(update_value)
+                            if update_var_type == bool:
+                                outcomes.append(return_flag_value_fluents(update_var, update_value))
+                            elif update_var_type == "fflag":
+                                outcomes.append(return_flag_value_fluents(update_var, update_value) if type(update_value) == bool else f"(maybe-{update_var})")
+                effects += fluents_to_pddl(fluents=outcomes, tabs=4, name_wrap=f"outcome {out}", and_wrap=True)
         effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
 
 
-def actions_to_pddl(actions: Dict):
+def actions_to_pddl(loaded_yaml: Dict):
     return "\n".join(
-        [action_to_pddl(act, act_config) for act, act_config in actions.items()]
+        [action_to_pddl(act, act_config) for act, act_config in loaded_yaml["actions"].items()]
     )
 
 
@@ -117,7 +122,6 @@ def parse_predicates(context_variables: Dict, actions: List[str]):
             else:
                 if known_status == "maybe":
                     init_true.append(f"(maybe-have_{var})")
-
         if var_config["type"] in ["flag", "fflag"]:
             predicates.append(f"({var})")
             if var_config["type"] == "fflag":
@@ -133,24 +137,19 @@ def parse_predicates(context_variables: Dict, actions: List[str]):
         predicates.append(f"(can-do_{act})")
     return predicates
 
-
 def parse_to_pddl(loaded_yaml: Dict):
-    predicates = contains_and_pddl(
-        "predicates",
-        parse_predicates(
-            loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
-        ),
-    )
-    actions = actions_to_pddl(loaded_yaml["actions"])
-    domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants )\n{predicates}\n{actions}\n)"
+    predicates = fluents_to_pddl(fluents=parse_predicates(loaded_yaml['context-variables'], loaded_yaml['actions'].keys()), tabs=1, name_wrap=":predicates")
+    actions = actions_to_pddl(loaded_yaml)
+    domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
     f = open("domain.pddl", "w")
     f.write(domain)
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
-    init = contains_and_pddl(
-        "init",
-        parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()),
+    init = fluents_to_pddl(
+        fluents=parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()),
+        tabs=2,
+        name_wrap="init"
     )
-    goal = contains_and_pddl("goal", ["(goal)"])
+    goal = fluents_to_pddl(fluents=["(goal)"], tabs=2, name_wrap="goal", and_wrap=True)
     problem = problem_def + init + goal + "\n)"
     f = open("problem.pddl", "w")
     f.write(problem)

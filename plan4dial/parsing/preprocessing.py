@@ -84,7 +84,7 @@ def preprocess_yaml(filename: str):
                                 "intent": "confirm",
                             },
                             "deny": {
-                                "updates": {"entity": {"value": None, "known": False}},
+                                "updates": {entity: {"value": None, "known": False}},
                                 "intent": "deny",
                             },
                         }
