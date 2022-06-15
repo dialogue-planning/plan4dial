@@ -147,9 +147,9 @@ def parse_to_pddl(loaded_yaml: Dict):
     init = fluents_to_pddl(
         fluents=parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()),
         tabs=2,
-        name_wrap="init"
+        name_wrap=":init"
     )
-    goal = fluents_to_pddl(fluents=["(goal)"], tabs=2, name_wrap="goal", and_wrap=True)
+    goal = fluents_to_pddl(fluents=["(goal)"], tabs=2, name_wrap=":goal", and_wrap=True)
     problem = problem_def + init + goal + "\n)"
     f = open("problem.pddl", "w")
     f.write(problem)

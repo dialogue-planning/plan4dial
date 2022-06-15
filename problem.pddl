@@ -2,7 +2,7 @@
     (problem order-pizza-problem)
     (:domain order-pizza)
     (:objects )
-        (init
+        (:init
             (can-do_ask-location)
             (can-do_ask-order)
             (can-do_ask-payment)
@@ -13,7 +13,7 @@
             (can-do_clarify__ask-order)
             (can-do_clarify__ask-payment)
         )
-        (goal
+        (:goal
             (and
                 (goal)
             )
