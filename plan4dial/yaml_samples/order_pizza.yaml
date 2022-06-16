@@ -344,11 +344,17 @@ actions:
       endpoint: pizza.actions.place_order # make the call
       initial_payload: {}
     condition:
-      or:
-        card_number:
-          known: True
-        payment_method:
-          options: cash
+      # or:
+      order:
+        known: true
+      card_number:
+        known: true
+      order_available:
+        value: true
+        # TODO: the planner has no notion of what values things hold. this would need to be handled
+        # with a separate intent/flag setting.
+        # payment_method:
+        #   options: cash
     effects:
       make-call:
         oneof:

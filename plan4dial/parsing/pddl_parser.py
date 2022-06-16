@@ -3,11 +3,12 @@ from typing import Dict, List
 from pathlib import Path
 from preprocessing import preprocess_yaml
 
+
 TAB = " " * 4
 
 
 def return_flag_value_fluents(f_name: str, value: bool):
-    return f"({f_name})" if f_name else f"(not ({f_name}))"
+    return f"({f_name})" if value else f"(not ({f_name}))"
 
 def return_certainty_fluents(f_name: str, known: bool):
     if known == True:
@@ -38,13 +39,15 @@ def fluents_to_pddl(fluents: List[str], tabs: int, outer_brackets: bool=False, n
 
 def action_to_pddl(act: str, act_config: Dict):
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
+    precond = []
     for cond, cond_config in act_config["condition"].items():
-        precond = []
         for cond_config_key, cond_config_val in cond_config.items():
             if cond_config_key == "known":
                 precond.extend(return_certainty_fluents(cond, cond_config_val))
-            precond.append(f"(can-do_{act})")
-
+            elif cond_config_key == "value":
+                precond.append(f"({cond})" if cond_config_val else f"(not ({cond}))")
+            
+    precond.append(f"(can-do_{act})")
     precond = fluents_to_pddl(fluents=precond, tabs=2, name_wrap=":precondition", and_wrap=True)
     effects = f"\n{TAB * 2}:effect"
     for eff, eff_config in act_config["effects"].items():
@@ -59,12 +62,6 @@ def action_to_pddl(act: str, act_config: Dict):
                                 return_certainty_fluents(
                                     update_var, update_config["known"]
                                 )
-                            )
-                        if "can-do" in update_config:
-                            outcomes.append(
-                                f"(can-do_{update_var})"
-                                if update_config["can-do"]
-                                else f"(not (can-do_{update_var}))"
                             )
                         if "value" in update_config:
                             update_value = update_config["value"]

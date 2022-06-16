@@ -52,21 +52,20 @@ def parse_to_json_config(loaded_yaml: Dict):
         # convert preconditions
         json_config_cond = []
         for cond, cond_cfg in yaml_act["condition"].items():
-            if cond not in ["or", "not"]:
-                if "known" in cond:
+            for cond_config_key, cond_config_val in cond_cfg.items():
+                if cond_config_key == "known":
                     json_config_cond.append(
                         (
                             [cond, "Known"]
-                            if cond_cfg["known"]
+                            if cond_config_val
                             else [cond, "Unknown"]
                         )
-                        if type(cond_cfg["known"]) == bool
+                        if type(cond_config_val) == bool
                         else [cond, "Uncertain"]
                     )
-            # how to handle or/not clauses?
-            else:
-                pass
-            cur_json_act["condition"] = json_config_cond
+                elif cond_config_key == "value":
+                    json_config_cond.append([cond, cond_config_val])
+        cur_json_act["condition"] = json_config_cond
 
         # convert effects
         for eff, eff_config in yaml_act["effects"].items():
