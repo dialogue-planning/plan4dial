@@ -101,30 +101,30 @@ context-variables:
 # NOTE: deleted the | character which seems to convert the list to a single
 # string (rasa uses this, not sure why though -- it parses much nicer without
 # it).
-nlu:
-  - intent: greet
-    examples:
+intents:
+  greet:
+    utterances:
       - Hey
       - Hi
       - hey there
-  - intent: leave
-    examples:
+  leave:
+    utterances:
       - Goodbye
       - Bye
       - That's all
       - i'm done
-  - intent: confirm
-    examples:
-      - yes
+  confirm:
+    utterances:
+      - "yes"
       - yeah
       - that's it
-      - Y
+      - "Y"
       - mhm
       - confirm
       - yes please
-  - intent: deny
-    examples:
-      - no
+  deny:
+    utterances:
+      - "no"
       - not at all
       - that's not what i meant
       - absolutely not
@@ -132,33 +132,33 @@ nlu:
       - nah
       - no thanks
       - no thank you
-  - intent: share_order
+  share_order:
     # specify entities so we can ensure all examples use exactly these entities
     # (no more, no less)
     variables: 
       - order 
-    examples:
+    utterances:
       - I want a $order pizza
       - $order pizza please!
       - Do you have $order pizza?
-  - intent: share_location
+  share_location:
     variables:
       - location 
-    examples:
+    utterances:
       - I live in $location.
       - Do you deliver to $location?
       - I want my pizza to be delivered to $location.
-  - intent: set_payment_method
+  set_payment_method:
     variables:
       - payment_method
-    examples:
+    utterances:
       - I want to pay by $payment_method.
       - Can I pay with $payment_method?
       - I will pay in $payment_method
-  - intent: pay
+  pay:
     variables:
       - card_number
-    examples:
+    utterances:
       - My credit card number is $card_number.
       - This is my account number $card_number
       - Ok, the number on my card is $card_number.
@@ -211,8 +211,8 @@ effects:
         deny:
           updates:
             entity:
-              value: null
               known: false
+              value: null
           intent: deny
 
 actions:
@@ -310,7 +310,7 @@ actions:
     type: api
     call:
       endpoint: pizza.actions.check_order_availability
-      initial payload: null
+      initial_payload: {}
     condition:
       order:
         known: true
@@ -322,23 +322,27 @@ actions:
               updates:
                 order_available:
                   value: true
+              variable_list: []
               # status of the call (helps determine the outcome similar to intent)
               status: success 
             out-of-stock:
               updates:
                 order:
                   known: false
+                  value: null
               follow_up: ask-order
+              variable_list: []
               status: success
             site-down:
               response: site-down-exit
+              variable_list: []
               status: 404
 
   place-order:
     type: api
     call:
       endpoint: pizza.actions.place_order # make the call
-      initial_payload: null
+      initial_payload: {}
     condition:
       or:
         card_number:
@@ -363,9 +367,11 @@ actions:
                   can-do: false
                 check-order-availability:
                   can-do: false
+              variable_list: []
               status: success
               response: "Order was successfully placed!"
             site-down:
+              variable_list: []
               response: site-down-exit
               status: 404
 

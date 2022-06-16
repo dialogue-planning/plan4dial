@@ -25,17 +25,16 @@ def parse_to_json_config(loaded_yaml: Dict):
             json_ctx_var["config"] = "null"
         json_config["context-variables"][ctx_var] = json_ctx_var
         # do confirm/confirmation_utterance need to be given to hovor?
-    json_config["intents"] = {var["intent"]: {} for var in loaded_yaml["nlu"]}
+    json_config["intents"] = {var: {} for var in loaded_yaml["intents"]}
     # convert intents
-    for intent in loaded_yaml["nlu"]:
-        intent_name = intent["intent"]
+    for intent, intent_cfg in loaded_yaml["intents"].items():
         cur_intent = {}
         cur_intent["variables"] = []
         if "variables" in intent:
             # assume for now that we only have one entity in a sentence
             cur_intent["variables"].append("$" + intent["variables"][0])
-        cur_intent["utterances"] = intent["examples"]
-        json_config["intents"][intent_name] = cur_intent
+        cur_intent["utterances"] = intent_cfg["utterances"]
+        json_config["intents"][intent] = cur_intent
     # convert actions
     json_config["actions"] = {act: {} for act in loaded_yaml["actions"]}
     for act in loaded_yaml["actions"]:
@@ -79,7 +78,7 @@ def parse_to_json_config(loaded_yaml: Dict):
                 outcomes_list = []
                 for out, out_config in outcomes.items():
                     next_outcome = {}
-                    next_outcome["name"] = out
+                    next_outcome["name"] = f"{act}_DETDUP_{eff}-EQ-{out}"
                     updates = out_config["updates"] if "updates" in out_config else None
                     if updates:
                         collect_updates = {}
@@ -91,11 +90,7 @@ def parse_to_json_config(loaded_yaml: Dict):
                                 if "value" in update_config
                                 else None,
                             }
-                            if (
-                                update_config["known"]
-                                if "known" in update_config
-                                else None != None
-                            ):
+                            if "known" in update_config:
                                 known = update_config["known"]
                                 status = (
                                     ("Known" if known else "Unknown")
@@ -103,7 +98,9 @@ def parse_to_json_config(loaded_yaml: Dict):
                                     else "Uncertain"
                                 )
                                 collect_updates[update]["certainty"] = status
+                            collect_updates[update]["interpretation"] = update_config["interpretation"]
                         next_outcome["updates"] = collect_updates
+                    next_outcome["assignments"] = out_config["assignments"]
                     if "intent" in out_config:
                         next_outcome["intent"] = out_config["intent"]
                     if "follow_up" in out_config:
@@ -114,9 +111,16 @@ def parse_to_json_config(loaded_yaml: Dict):
                         next_outcome["response"] = out_config["response"]
                     if "call" in out_config:
                         next_outcome["call"] = out_config["call"]
+                    if "call" in yaml_act:
+                        next_outcome["variable_list"] = out_config["variable_list"]
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
             cur_json_act["effect"] = converted_eff
+        if "intents" in yaml_act:
+            cur_json_act["intents"] = yaml_act["intents"]
+        if "call" in yaml_act:
+            cur_json_act["call"] = yaml_act["call"]
+
         json_config["actions"][act] = cur_json_act
     return json_config
 
