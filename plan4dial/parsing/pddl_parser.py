@@ -147,11 +147,11 @@ def parse_to_pddl(loaded_yaml: Dict):
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = fluents_to_pddl(
         fluents=parse_init(loaded_yaml["context-variables"], loaded_yaml["actions"].keys()),
-        tabs=2,
+        tabs=1,
         outer_brackets=True,
         name_wrap=":init"
     )
-    goal = fluents_to_pddl(fluents=["(goal)"], tabs=2, outer_brackets=True, name_wrap=":goal", and_wrap=True)
+    goal = fluents_to_pddl(fluents=["(goal)"], tabs=1, outer_brackets=True, name_wrap=":goal", and_wrap=True)
     problem = problem_def + init + goal + "\n)"
     f = open("problem.pddl", "w")
     f.write(problem)
