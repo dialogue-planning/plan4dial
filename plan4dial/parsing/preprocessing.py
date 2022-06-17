@@ -47,6 +47,11 @@ def preprocess_yaml(filename: str):
                     unclear = eff_config["unclear-intent"]
                     new_eff["unclear"]["intent"] = unclear
                     act_intents.append(unclear)
+                else:
+                    unclear = f"{eff_config['entity']}-unclear"
+                    new_eff["unclear"]["intent"] = unclear
+                    processed["intents"][unclear] = {"variables": [], "utterances": []}
+                    act_intents.append(unclear)                    
                 new_eff = {"validate-response": {"oneof": {"outcomes": new_eff}}}
                 processed["actions"][act]["effects"] = new_eff
                 processed["actions"][act]["intents"] = {act_intent: processed["intents"][act_intent] for act_intent in act_intents}

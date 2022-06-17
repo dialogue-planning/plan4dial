@@ -140,11 +140,10 @@ intents:
     # (no more, no less)
     variables: 
       - order 
-      - location
     utterances:
-      - I want a $order pizza in $location
-      - $order pizza please in $location!
-      - Do you have $order pizza in $location?
+      - I want a $order pizza
+      - $order pizza please!
+      - Do you have $order pizza?
   share_location:
     variables:
       - location 

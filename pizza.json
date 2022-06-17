@@ -80,7 +80,9 @@
             ]
         },
         "share_order": {
-            "variables": [],
+            "variables": [
+                "$order"
+            ],
             "utterances": [
                 "I want a $order pizza",
                 "$order pizza please!",
@@ -88,7 +90,9 @@
             ]
         },
         "share_location": {
-            "variables": [],
+            "variables": [
+                "$location"
+            ],
             "utterances": [
                 "I live in $location.",
                 "Do you deliver to $location?",
@@ -96,7 +100,9 @@
             ]
         },
         "set_payment_method": {
-            "variables": [],
+            "variables": [
+                "$payment_method"
+            ],
             "utterances": [
                 "I want to pay by $payment_method.",
                 "Can I pay with $payment_method?",
@@ -104,12 +110,30 @@
             ]
         },
         "pay": {
-            "variables": [],
+            "variables": [
+                "$card_number"
+            ],
             "utterances": [
                 "My credit card number is $card_number.",
                 "This is my account number $card_number",
                 "Ok, the number on my card is $card_number."
             ]
+        },
+        "location-unclear": {
+            "variables": [],
+            "utterances": []
+        },
+        "order-unclear": {
+            "variables": [],
+            "utterances": []
+        },
+        "payment_method-unclear": {
+            "variables": [],
+            "utterances": []
+        },
+        "card_number-unclear": {
+            "variables": [],
+            "utterances": []
         }
     },
     "actions": {
@@ -160,6 +184,7 @@
                         "assignments": {
                             "$location": "maybe-found"
                         },
+                        "intent": "location-unclear",
                         "follow_up": {
                             "clarify": "clarify__ask-location"
                         }
@@ -176,6 +201,10 @@
                         "Do you deliver to $location?",
                         "I want my pizza to be delivered to $location."
                     ]
+                },
+                "location-unclear": {
+                    "variables": [],
+                    "utterances": []
                 }
             }
         },
@@ -226,6 +255,7 @@
                         "assignments": {
                             "$order": "maybe-found"
                         },
+                        "intent": "order-unclear",
                         "follow_up": {
                             "clarify": "clarify__ask-order"
                         }
@@ -242,6 +272,10 @@
                         "$order pizza please!",
                         "Do you have $order pizza?"
                     ]
+                },
+                "order-unclear": {
+                    "variables": [],
+                    "utterances": []
                 }
             }
         },
@@ -298,6 +332,7 @@
                         "assignments": {
                             "$payment_method": "maybe-found"
                         },
+                        "intent": "payment_method-unclear",
                         "follow_up": {
                             "clarify": "clarify__ask-payment"
                         }
@@ -314,6 +349,10 @@
                         "Can I pay with $payment_method?",
                         "I will pay in $payment_method"
                     ]
+                },
+                "payment_method-unclear": {
+                    "variables": [],
+                    "utterances": []
                 }
             }
         },
@@ -363,6 +402,7 @@
                         "assignments": {
                             "$card_number": "maybe-found"
                         },
+                        "intent": "card_number-unclear",
                         "follow_up": {
                             "clarify": "clarify__ask-card-number"
                         }
@@ -379,6 +419,10 @@
                         "This is my account number $card_number",
                         "Ok, the number on my card is $card_number."
                     ]
+                },
+                "card_number-unclear": {
+                    "variables": [],
+                    "utterances": []
                 }
             }
         },
