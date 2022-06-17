@@ -30,9 +30,9 @@ def parse_to_json_config(loaded_yaml: Dict):
     for intent, intent_cfg in loaded_yaml["intents"].items():
         cur_intent = {}
         cur_intent["variables"] = []
-        if "variables" in intent:
+        if "variables" in intent_cfg:
             # assume for now that we only have one entity in a sentence
-            cur_intent["variables"].append("$" + intent["variables"][0])
+            cur_intent["variables"].extend([f"${var}" for var in intent_cfg['variables']])
         cur_intent["utterances"] = intent_cfg["utterances"]
         json_config["intents"][intent] = cur_intent
     # convert actions
