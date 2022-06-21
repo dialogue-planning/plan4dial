@@ -27,10 +27,13 @@ def make_nlu_file(loaded_yaml: Dict):
             variables = intent_cfg["variables"]
             for variable in variables:
                 ctx_var = loaded_yaml["context-variables"][variable]
-                variations[variable] = ctx_var["examples"] if "examples" in ctx_var else []
+                variations[variable] = [f"[{ex}]({variable})" for ex in ctx_var['examples']] if "examples" in ctx_var else []
                 if "options" in ctx_var:
-                    variations[variable].extend(ctx_var["options"].keys())
-                    variations[variable].extend(v for option in ctx_var["options"].values() for v in option["variations"])
+                    # variations[variable] = {k: {} for k in ctx_var["options"].keys()}
+                    variations[variable] = [f"[{k}]({variable})" for k in ctx_var["options"]]
+                    for option, option_var in ctx_var["options"].items():    
+                        enum_map = f'{{"entity": "{variable}", "value": "{option}"}}'
+                        variations[variable].extend(f"[{v}]{enum_map}" for v in option_var["variations"])
                 elif "extraction" in ctx_var:
                     if ctx_var["extraction"] == "regex":
                         nlu["nlu"].append({"regex": variable, "examples": "- " + ctx_var["pattern"]})
@@ -40,7 +43,7 @@ def make_nlu_file(loaded_yaml: Dict):
             for variation in variations:
                 for utterance in intent_cfg["utterances"]:
                     for i in range(len(variables)):
-                        utterance = utterance.replace(f"${variables[i]}", f"[{variation[i]}]({variables[i]})")
+                        utterance = utterance.replace(f"${variables[i]}", str(variation[i]))
                     examples.append(utterance)
             nlu["nlu"].append({"intent": intent, "examples": "- " + "\n- ".join(examples)})
         else:
