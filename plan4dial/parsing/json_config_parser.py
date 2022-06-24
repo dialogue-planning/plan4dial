@@ -22,7 +22,14 @@ def parse_to_json_config(loaded_yaml: Dict):
         elif cfg["type"] == "flag" or cfg["type"] == "fflag":
             json_ctx_var["config"] = cfg["initially"]
         else:
-            json_ctx_var["config"] = "null"
+            if "extraction" in cfg:
+                json_ctx_var["config"] = {"extraction": cfg["extraction"]}
+                if "method" in cfg:
+                    json_ctx_var["config"]["method"] = cfg["method"]
+                elif "pattern" in cfg:
+                    json_ctx_var["config"]["pattern"] = cfg["pattern"]
+            else:
+                json_ctx_var["config"] = "null"
         json_config["context-variables"][ctx_var] = json_ctx_var
         # do confirm/confirmation_utterance need to be given to hovor?
     json_config["intents"] = {var: {} for var in loaded_yaml["intents"]}

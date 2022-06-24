@@ -17,7 +17,24 @@
         },
         "location": {
             "type": "json",
-            "config": "null"
+            "config": {
+                "extraction": "spacy",
+                "method": "gpe"
+            }
+        },
+        "start_location": {
+            "type": "json",
+            "config": {
+                "extraction": "spacy",
+                "method": "gpe"
+            }
+        },
+        "end_location": {
+            "type": "json",
+            "config": {
+                "extraction": "spacy",
+                "method": "gpe"
+            }
         },
         "payment_method": {
             "type": "enum",
@@ -29,7 +46,10 @@
         },
         "card_number": {
             "type": "json",
-            "config": "null"
+            "config": {
+                "extraction": "regex",
+                "pattern": "\\d{16}"
+            }
         },
         "goal": {
             "type": "flag",
@@ -97,6 +117,17 @@
                 "I live in $location.",
                 "Do you deliver to $location?",
                 "I want my pizza to be delivered to $location."
+            ]
+        },
+        "share_two_locations": {
+            "variables": [
+                "$start_location",
+                "$end_location"
+            ],
+            "utterances": [
+                "Can you deliver from $start_location to $end_location?",
+                "I want my pizza to be delivered from $start_location to $location.",
+                "Do you travel from $start_location to $end_location?"
             ]
         },
         "set_payment_method": {
