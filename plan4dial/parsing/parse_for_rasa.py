@@ -4,16 +4,30 @@ from typing import Dict
 from itertools import product
 
 
-def create_intent_example(ctx_var: Dict, extracted_value: str, entity: str, true_value=None):
+def create_intent_example(intent_cfg: Dict, extracted_value: str, entity: str, true_value=None):
     if not true_value:
         true_value = extracted_value
-
-    next_var = f'[{extracted_value}]{{"entity": "{entity}", '
-    if "role" in ctx_var:
-        next_var += f'role: "{ctx_var["role"]}", '
-    if "group" in ctx_var:
-        next_var += f'group: "{ctx_var["group"]}", '
-    return next_var + f'"value": "{true_value}"}}'
+    next_var = []
+    var_base = f'[{extracted_value}]{{"entity": "{entity}", '
+    if type(intent_cfg["variables"]) == dict:
+        if "groups" in intent_cfg["variables"][entity]:
+            groups = [f'"group": "{group}", ' for group in intent_cfg["variables"][entity]["groups"]] 
+            for group in groups:
+                next_var.append(var_base + group)
+        if "roles" in intent_cfg["variables"][entity]:
+            roles = [f'"role": "{role}", ' for role in intent_cfg["variables"][entity]["roles"]]
+            next_var_w_groups = []
+            if next_var:
+                for var in next_var:
+                    for role in roles:
+                        next_var_w_groups.append(var + role)
+                next_var = next_var_w_groups
+            else:                     
+                for role in roles:
+                    next_var.append(var_base + role)
+    else:
+        next_var = [var_base]
+    return [var + f'"value": "{true_value}"}}' for var in next_var]
 
 def make_nlu_file(loaded_yaml: Dict):
     intents = loaded_yaml["intents"]
@@ -22,17 +36,17 @@ def make_nlu_file(loaded_yaml: Dict):
         examples = []
         variations = {}
         if "variables" in intent_cfg:
-            variables = intent_cfg["variables"]
+            variables = list(intent_cfg["variables"].keys()) if type(intent_cfg["variables"]) == dict else intent_cfg["variables"]
             for variable in variables:
                 ctx_var = loaded_yaml["context-variables"][variable]
                 variations[variable] = []
                 if "examples" in ctx_var:
                     for ex in ctx_var['examples']:
-                        variations[variable].append(create_intent_example(ctx_var, ex, variable)) 
+                        variations[variable].extend(ex for ex in create_intent_example(intent_cfg, ex, variable)) 
                 if "options" in ctx_var:
-                    variations[variable] = [create_intent_example(ctx_var, option, variable) for option in ctx_var["options"]]
+                    variations[variable].extend(ex for option in ctx_var["options"] for ex in create_intent_example(intent_cfg, option, variable))
                     for option, option_var in ctx_var["options"].items():    
-                        variations[variable].extend(create_intent_example(ctx_var, v, variable, true_value=option) for v in option_var["variations"])
+                        variations[variable].extend(ex for v in option_var["variations"] for ex in create_intent_example(intent_cfg, v, variable, true_value=option))
                 elif "extraction" in ctx_var:
                     if ctx_var["extraction"] == "regex":
                         nlu["nlu"].append({"regex": variable, "examples": "- " + ctx_var["pattern"]})

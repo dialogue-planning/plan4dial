@@ -181,298 +181,123 @@ nlu:
 
     - Do you have [sweet]{"entity": "order", "value": "hawaiian"} pizza?'
   intent: share_order
-- examples: '- I live in [New York]{"entity": "location", "value": "New York"}.
+- examples: '- Can you deliver from [New York]{"entity": "location", "role": "start",
+    "value": "New York"}(role=start) to [New York]{"entity": "location", "role": "start",
+    "value": "New York"}(role=end)?
 
-    - Do you deliver to [New York]{"entity": "location", "value": "New York"}?
+    - I want my pizza to be delivered to [New York]{"entity": "location", "role":
+    "start", "value": "New York"}(role=end) from [New York]{"entity": "location",
+    "role": "start", "value": "New York"}(role=start).
 
-    - I want my pizza to be delivered to [New York]{"entity": "location", "value":
-    "New York"}.
+    - Do you travel from [New York]{"entity": "location", "role": "start", "value":
+    "New York"}(role=start) to [New York]{"entity": "location", "role": "start", "value":
+    "New York"}(role=end)?
 
-    - I live in [Denver]{"entity": "location", "value": "Denver"}.
+    - Can you deliver from [New York]{"entity": "location", "role": "end", "value":
+    "New York"}(role=start) to [New York]{"entity": "location", "role": "end", "value":
+    "New York"}(role=end)?
 
-    - Do you deliver to [Denver]{"entity": "location", "value": "Denver"}?
+    - I want my pizza to be delivered to [New York]{"entity": "location", "role":
+    "end", "value": "New York"}(role=end) from [New York]{"entity": "location", "role":
+    "end", "value": "New York"}(role=start).
 
-    - I want my pizza to be delivered to [Denver]{"entity": "location", "value": "Denver"}.
+    - Do you travel from [New York]{"entity": "location", "role": "end", "value":
+    "New York"}(role=start) to [New York]{"entity": "location", "role": "end", "value":
+    "New York"}(role=end)?
 
-    - I live in [Tallahassee]{"entity": "location", "value": "Tallahassee"}.
+    - Can you deliver from [Denver]{"entity": "location", "role": "start", "value":
+    "Denver"}(role=start) to [Denver]{"entity": "location", "role": "start", "value":
+    "Denver"}(role=end)?
 
-    - Do you deliver to [Tallahassee]{"entity": "location", "value": "Tallahassee"}?
+    - I want my pizza to be delivered to [Denver]{"entity": "location", "role": "start",
+    "value": "Denver"}(role=end) from [Denver]{"entity": "location", "role": "start",
+    "value": "Denver"}(role=start).
 
-    - I want my pizza to be delivered to [Tallahassee]{"entity": "location", "value":
-    "Tallahassee"}.
+    - Do you travel from [Denver]{"entity": "location", "role": "start", "value":
+    "Denver"}(role=start) to [Denver]{"entity": "location", "role": "start", "value":
+    "Denver"}(role=end)?
 
-    - I live in [Chicago]{"entity": "location", "value": "Chicago"}.
+    - Can you deliver from [Denver]{"entity": "location", "role": "end", "value":
+    "Denver"}(role=start) to [Denver]{"entity": "location", "role": "end", "value":
+    "Denver"}(role=end)?
 
-    - Do you deliver to [Chicago]{"entity": "location", "value": "Chicago"}?
+    - I want my pizza to be delivered to [Denver]{"entity": "location", "role": "end",
+    "value": "Denver"}(role=end) from [Denver]{"entity": "location", "role": "end",
+    "value": "Denver"}(role=start).
 
-    - I want my pizza to be delivered to [Chicago]{"entity": "location", "value":
-    "Chicago"}.
+    - Do you travel from [Denver]{"entity": "location", "role": "end", "value": "Denver"}(role=start)
+    to [Denver]{"entity": "location", "role": "end", "value": "Denver"}(role=end)?
 
-    - I live in [Austin]{"entity": "location", "value": "Austin"}.
+    - Can you deliver from [Tallahassee]{"entity": "location", "role": "start", "value":
+    "Tallahassee"}(role=start) to [Tallahassee]{"entity": "location", "role": "start",
+    "value": "Tallahassee"}(role=end)?
 
-    - Do you deliver to [Austin]{"entity": "location", "value": "Austin"}?
+    - I want my pizza to be delivered to [Tallahassee]{"entity": "location", "role":
+    "start", "value": "Tallahassee"}(role=end) from [Tallahassee]{"entity": "location",
+    "role": "start", "value": "Tallahassee"}(role=start).
 
-    - I want my pizza to be delivered to [Austin]{"entity": "location", "value": "Austin"}.'
+    - Do you travel from [Tallahassee]{"entity": "location", "role": "start", "value":
+    "Tallahassee"}(role=start) to [Tallahassee]{"entity": "location", "role": "start",
+    "value": "Tallahassee"}(role=end)?
+
+    - Can you deliver from [Tallahassee]{"entity": "location", "role": "end", "value":
+    "Tallahassee"}(role=start) to [Tallahassee]{"entity": "location", "role": "end",
+    "value": "Tallahassee"}(role=end)?
+
+    - I want my pizza to be delivered to [Tallahassee]{"entity": "location", "role":
+    "end", "value": "Tallahassee"}(role=end) from [Tallahassee]{"entity": "location",
+    "role": "end", "value": "Tallahassee"}(role=start).
+
+    - Do you travel from [Tallahassee]{"entity": "location", "role": "end", "value":
+    "Tallahassee"}(role=start) to [Tallahassee]{"entity": "location", "role": "end",
+    "value": "Tallahassee"}(role=end)?
+
+    - Can you deliver from [Chicago]{"entity": "location", "role": "start", "value":
+    "Chicago"}(role=start) to [Chicago]{"entity": "location", "role": "start", "value":
+    "Chicago"}(role=end)?
+
+    - I want my pizza to be delivered to [Chicago]{"entity": "location", "role": "start",
+    "value": "Chicago"}(role=end) from [Chicago]{"entity": "location", "role": "start",
+    "value": "Chicago"}(role=start).
+
+    - Do you travel from [Chicago]{"entity": "location", "role": "start", "value":
+    "Chicago"}(role=start) to [Chicago]{"entity": "location", "role": "start", "value":
+    "Chicago"}(role=end)?
+
+    - Can you deliver from [Chicago]{"entity": "location", "role": "end", "value":
+    "Chicago"}(role=start) to [Chicago]{"entity": "location", "role": "end", "value":
+    "Chicago"}(role=end)?
+
+    - I want my pizza to be delivered to [Chicago]{"entity": "location", "role": "end",
+    "value": "Chicago"}(role=end) from [Chicago]{"entity": "location", "role": "end",
+    "value": "Chicago"}(role=start).
+
+    - Do you travel from [Chicago]{"entity": "location", "role": "end", "value": "Chicago"}(role=start)
+    to [Chicago]{"entity": "location", "role": "end", "value": "Chicago"}(role=end)?
+
+    - Can you deliver from [Austin]{"entity": "location", "role": "start", "value":
+    "Austin"}(role=start) to [Austin]{"entity": "location", "role": "start", "value":
+    "Austin"}(role=end)?
+
+    - I want my pizza to be delivered to [Austin]{"entity": "location", "role": "start",
+    "value": "Austin"}(role=end) from [Austin]{"entity": "location", "role": "start",
+    "value": "Austin"}(role=start).
+
+    - Do you travel from [Austin]{"entity": "location", "role": "start", "value":
+    "Austin"}(role=start) to [Austin]{"entity": "location", "role": "start", "value":
+    "Austin"}(role=end)?
+
+    - Can you deliver from [Austin]{"entity": "location", "role": "end", "value":
+    "Austin"}(role=start) to [Austin]{"entity": "location", "role": "end", "value":
+    "Austin"}(role=end)?
+
+    - I want my pizza to be delivered to [Austin]{"entity": "location", "role": "end",
+    "value": "Austin"}(role=end) from [Austin]{"entity": "location", "role": "end",
+    "value": "Austin"}(role=start).
+
+    - Do you travel from [Austin]{"entity": "location", "role": "end", "value": "Austin"}(role=start)
+    to [Austin]{"entity": "location", "role": "end", "value": "Austin"}(role=end)?'
   intent: share_location
-- examples: '- Can you deliver from [New York]{"entity": "start_location", role: "from",
-    "value": "New York"} to [New York]{"entity": "end_location", role: "to", "value":
-    "New York"}?
-
-    - I want my pizza to be delivered from [New York]{"entity": "start_location",
-    role: "from", "value": "New York"} to [New York]{"entity": "end_location", role:
-    "to", "value": "New York"}.
-
-    - Do you travel from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [New York]{"entity": "end_location", role: "to", "value": "New
-    York"}?
-
-    - Can you deliver from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - I want my pizza to be delivered from [New York]{"entity": "start_location",
-    role: "from", "value": "New York"} to [Denver]{"entity": "end_location", role:
-    "to", "value": "Denver"}.
-
-    - Do you travel from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - Can you deliver from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [Tallahassee]{"entity": "end_location", role: "to", "value": "Tallahassee"}?
-
-    - I want my pizza to be delivered from [New York]{"entity": "start_location",
-    role: "from", "value": "New York"} to [Tallahassee]{"entity": "end_location",
-    role: "to", "value": "Tallahassee"}.
-
-    - Do you travel from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [Tallahassee]{"entity": "end_location", role: "to", "value": "Tallahassee"}?
-
-    - Can you deliver from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - I want my pizza to be delivered from [New York]{"entity": "start_location",
-    role: "from", "value": "New York"} to [Chicago]{"entity": "end_location", role:
-    "to", "value": "Chicago"}.
-
-    - Do you travel from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - Can you deliver from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?
-
-    - I want my pizza to be delivered from [New York]{"entity": "start_location",
-    role: "from", "value": "New York"} to [Austin]{"entity": "end_location", role:
-    "to", "value": "Austin"}.
-
-    - Do you travel from [New York]{"entity": "start_location", role: "from", "value":
-    "New York"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?
-
-    - Can you deliver from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [New York]{"entity": "end_location", role: "to", "value": "New York"}?
-
-    - I want my pizza to be delivered from [Denver]{"entity": "start_location", role:
-    "from", "value": "Denver"} to [New York]{"entity": "end_location", role: "to",
-    "value": "New York"}.
-
-    - Do you travel from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [New York]{"entity": "end_location", role: "to", "value": "New York"}?
-
-    - Can you deliver from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - I want my pizza to be delivered from [Denver]{"entity": "start_location", role:
-    "from", "value": "Denver"} to [Denver]{"entity": "end_location", role: "to", "value":
-    "Denver"}.
-
-    - Do you travel from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - Can you deliver from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [Tallahassee]{"entity": "end_location", role: "to", "value": "Tallahassee"}?
-
-    - I want my pizza to be delivered from [Denver]{"entity": "start_location", role:
-    "from", "value": "Denver"} to [Tallahassee]{"entity": "end_location", role: "to",
-    "value": "Tallahassee"}.
-
-    - Do you travel from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [Tallahassee]{"entity": "end_location", role: "to", "value": "Tallahassee"}?
-
-    - Can you deliver from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - I want my pizza to be delivered from [Denver]{"entity": "start_location", role:
-    "from", "value": "Denver"} to [Chicago]{"entity": "end_location", role: "to",
-    "value": "Chicago"}.
-
-    - Do you travel from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - Can you deliver from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?
-
-    - I want my pizza to be delivered from [Denver]{"entity": "start_location", role:
-    "from", "value": "Denver"} to [Austin]{"entity": "end_location", role: "to", "value":
-    "Austin"}.
-
-    - Do you travel from [Denver]{"entity": "start_location", role: "from", "value":
-    "Denver"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?
-
-    - Can you deliver from [Tallahassee]{"entity": "start_location", role: "from",
-    "value": "Tallahassee"} to [New York]{"entity": "end_location", role: "to", "value":
-    "New York"}?
-
-    - I want my pizza to be delivered from [Tallahassee]{"entity": "start_location",
-    role: "from", "value": "Tallahassee"} to [New York]{"entity": "end_location",
-    role: "to", "value": "New York"}.
-
-    - Do you travel from [Tallahassee]{"entity": "start_location", role: "from", "value":
-    "Tallahassee"} to [New York]{"entity": "end_location", role: "to", "value": "New
-    York"}?
-
-    - Can you deliver from [Tallahassee]{"entity": "start_location", role: "from",
-    "value": "Tallahassee"} to [Denver]{"entity": "end_location", role: "to", "value":
-    "Denver"}?
-
-    - I want my pizza to be delivered from [Tallahassee]{"entity": "start_location",
-    role: "from", "value": "Tallahassee"} to [Denver]{"entity": "end_location", role:
-    "to", "value": "Denver"}.
-
-    - Do you travel from [Tallahassee]{"entity": "start_location", role: "from", "value":
-    "Tallahassee"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - Can you deliver from [Tallahassee]{"entity": "start_location", role: "from",
-    "value": "Tallahassee"} to [Tallahassee]{"entity": "end_location", role: "to",
-    "value": "Tallahassee"}?
-
-    - I want my pizza to be delivered from [Tallahassee]{"entity": "start_location",
-    role: "from", "value": "Tallahassee"} to [Tallahassee]{"entity": "end_location",
-    role: "to", "value": "Tallahassee"}.
-
-    - Do you travel from [Tallahassee]{"entity": "start_location", role: "from", "value":
-    "Tallahassee"} to [Tallahassee]{"entity": "end_location", role: "to", "value":
-    "Tallahassee"}?
-
-    - Can you deliver from [Tallahassee]{"entity": "start_location", role: "from",
-    "value": "Tallahassee"} to [Chicago]{"entity": "end_location", role: "to", "value":
-    "Chicago"}?
-
-    - I want my pizza to be delivered from [Tallahassee]{"entity": "start_location",
-    role: "from", "value": "Tallahassee"} to [Chicago]{"entity": "end_location", role:
-    "to", "value": "Chicago"}.
-
-    - Do you travel from [Tallahassee]{"entity": "start_location", role: "from", "value":
-    "Tallahassee"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - Can you deliver from [Tallahassee]{"entity": "start_location", role: "from",
-    "value": "Tallahassee"} to [Austin]{"entity": "end_location", role: "to", "value":
-    "Austin"}?
-
-    - I want my pizza to be delivered from [Tallahassee]{"entity": "start_location",
-    role: "from", "value": "Tallahassee"} to [Austin]{"entity": "end_location", role:
-    "to", "value": "Austin"}.
-
-    - Do you travel from [Tallahassee]{"entity": "start_location", role: "from", "value":
-    "Tallahassee"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?
-
-    - Can you deliver from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [New York]{"entity": "end_location", role: "to", "value": "New York"}?
-
-    - I want my pizza to be delivered from [Chicago]{"entity": "start_location", role:
-    "from", "value": "Chicago"} to [New York]{"entity": "end_location", role: "to",
-    "value": "New York"}.
-
-    - Do you travel from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [New York]{"entity": "end_location", role: "to", "value": "New York"}?
-
-    - Can you deliver from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - I want my pizza to be delivered from [Chicago]{"entity": "start_location", role:
-    "from", "value": "Chicago"} to [Denver]{"entity": "end_location", role: "to",
-    "value": "Denver"}.
-
-    - Do you travel from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - Can you deliver from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [Tallahassee]{"entity": "end_location", role: "to", "value": "Tallahassee"}?
-
-    - I want my pizza to be delivered from [Chicago]{"entity": "start_location", role:
-    "from", "value": "Chicago"} to [Tallahassee]{"entity": "end_location", role: "to",
-    "value": "Tallahassee"}.
-
-    - Do you travel from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [Tallahassee]{"entity": "end_location", role: "to", "value": "Tallahassee"}?
-
-    - Can you deliver from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - I want my pizza to be delivered from [Chicago]{"entity": "start_location", role:
-    "from", "value": "Chicago"} to [Chicago]{"entity": "end_location", role: "to",
-    "value": "Chicago"}.
-
-    - Do you travel from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - Can you deliver from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?
-
-    - I want my pizza to be delivered from [Chicago]{"entity": "start_location", role:
-    "from", "value": "Chicago"} to [Austin]{"entity": "end_location", role: "to",
-    "value": "Austin"}.
-
-    - Do you travel from [Chicago]{"entity": "start_location", role: "from", "value":
-    "Chicago"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?
-
-    - Can you deliver from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [New York]{"entity": "end_location", role: "to", "value": "New York"}?
-
-    - I want my pizza to be delivered from [Austin]{"entity": "start_location", role:
-    "from", "value": "Austin"} to [New York]{"entity": "end_location", role: "to",
-    "value": "New York"}.
-
-    - Do you travel from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [New York]{"entity": "end_location", role: "to", "value": "New York"}?
-
-    - Can you deliver from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - I want my pizza to be delivered from [Austin]{"entity": "start_location", role:
-    "from", "value": "Austin"} to [Denver]{"entity": "end_location", role: "to", "value":
-    "Denver"}.
-
-    - Do you travel from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [Denver]{"entity": "end_location", role: "to", "value": "Denver"}?
-
-    - Can you deliver from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [Tallahassee]{"entity": "end_location", role: "to", "value": "Tallahassee"}?
-
-    - I want my pizza to be delivered from [Austin]{"entity": "start_location", role:
-    "from", "value": "Austin"} to [Tallahassee]{"entity": "end_location", role: "to",
-    "value": "Tallahassee"}.
-
-    - Do you travel from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [Tallahassee]{"entity": "end_location", role: "to", "value": "Tallahassee"}?
-
-    - Can you deliver from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - I want my pizza to be delivered from [Austin]{"entity": "start_location", role:
-    "from", "value": "Austin"} to [Chicago]{"entity": "end_location", role: "to",
-    "value": "Chicago"}.
-
-    - Do you travel from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [Chicago]{"entity": "end_location", role: "to", "value": "Chicago"}?
-
-    - Can you deliver from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?
-
-    - I want my pizza to be delivered from [Austin]{"entity": "start_location", role:
-    "from", "value": "Austin"} to [Austin]{"entity": "end_location", role: "to", "value":
-    "Austin"}.
-
-    - Do you travel from [Austin]{"entity": "start_location", role: "from", "value":
-    "Austin"} to [Austin]{"entity": "end_location", role: "to", "value": "Austin"}?'
-  intent: share_two_locations
 - examples: '- I want to pay by [credit]{"entity": "payment_method", "value": "credit"}.
 
     - Can I pay with [credit]{"entity": "payment_method", "value": "credit"}?

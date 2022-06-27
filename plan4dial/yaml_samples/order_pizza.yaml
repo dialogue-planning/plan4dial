@@ -56,42 +56,15 @@ context-variables:
       initially: false
     extraction: spacy
     method: gpe
+    roles:
+    - start
+    - end
     examples:
     - New York
     - Denver
     - Tallahassee
     - Chicago
     - Austin
-
-  start_location:
-    type: json
-    known: 
-      type: fflag
-      initially: false
-    extraction: spacy
-    method: gpe
-    role: from
-    examples:
-    - New York
-    - Denver
-    - Tallahassee
-    - Chicago
-    - Austin
-  end_location:
-    type: json
-    known: 
-      type: fflag
-      initially: false
-    extraction: spacy
-    method: gpe
-    role: to
-    examples:
-    - New York
-    - Denver
-    - Tallahassee
-    - Chicago
-    - Austin
-
   payment_method:
     type: enum
     known: 
@@ -176,19 +149,14 @@ intents:
       - Do you have $order pizza?
   share_location:
     variables:
-      - location 
+      location:
+        roles:
+          - start
+          - end
     utterances:
-      - I live in $location.
-      - Do you deliver to $location?
-      - I want my pizza to be delivered to $location.
-  share_two_locations:
-    variables:
-      - start_location
-      - end_location
-    utterances:
-      - Can you deliver from $start_location to $end_location?
-      - I want my pizza to be delivered from $start_location to $end_location.
-      - Do you travel from $start_location to $end_location?
+      - Can you deliver from $location(role=start) to $location(role=end)?
+      - I want my pizza to be delivered to $location(role=end) from $location(role=start).
+      - Do you travel from $location(role=start) to $location(role=end)?
   set_payment_method:
     variables:
       - payment_method
