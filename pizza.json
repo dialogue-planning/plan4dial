@@ -126,7 +126,7 @@
             ],
             "utterances": [
                 "Can you deliver from $start_location to $end_location?",
-                "I want my pizza to be delivered from $start_location to $location.",
+                "I want my pizza to be delivered from $start_location to $end_location.",
                 "Do you travel from $start_location to $end_location?"
             ]
         },

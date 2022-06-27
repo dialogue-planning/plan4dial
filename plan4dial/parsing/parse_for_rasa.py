@@ -1,23 +1,21 @@
 from pathlib import Path
 import yaml
-from yaml.representer import SafeRepresenter
-from json_config_parser import parse_to_json_config
-from preprocessing import preprocess_yaml
 from typing import Dict
 from itertools import product
 
-class literal_str(str): pass
 
-def change_style(style, representer):
-    def new_representer(dumper, data):
-        scalar = representer(dumper, data)
-        scalar.style = style
-        return scalar
-    return new_representer
+def create_intent_example(ctx_var: Dict, extracted_value: str, entity: str, true_value=None):
+    if not true_value:
+        true_value = extracted_value
+
+    next_var = f'[{extracted_value}]{{"entity": "{entity}", '
+    if "role" in ctx_var:
+        next_var += f'role: "{ctx_var["role"]}", '
+    if "group" in ctx_var:
+        next_var += f'group: "{ctx_var["group"]}", '
+    return next_var + f'"value": "{true_value}"}}'
 
 def make_nlu_file(loaded_yaml: Dict):
-    represent_literal_str = change_style('|', SafeRepresenter.represent_str)
-    yaml.add_representer(literal_str, represent_literal_str)
     intents = loaded_yaml["intents"]
     nlu = {"nlu": []}
     for intent, intent_cfg in intents.items():
@@ -27,13 +25,14 @@ def make_nlu_file(loaded_yaml: Dict):
             variables = intent_cfg["variables"]
             for variable in variables:
                 ctx_var = loaded_yaml["context-variables"][variable]
-                variations[variable] = [f"[{ex}]({variable})" for ex in ctx_var['examples']] if "examples" in ctx_var else []
+                variations[variable] = []
+                if "examples" in ctx_var:
+                    for ex in ctx_var['examples']:
+                        variations[variable].append(create_intent_example(ctx_var, ex, variable)) 
                 if "options" in ctx_var:
-                    # variations[variable] = {k: {} for k in ctx_var["options"].keys()}
-                    variations[variable] = [f"[{k}]({variable})" for k in ctx_var["options"]]
+                    variations[variable] = [create_intent_example(ctx_var, option, variable) for option in ctx_var["options"]]
                     for option, option_var in ctx_var["options"].items():    
-                        enum_map = f'{{"entity": "{variable}", "value": "{option}"}}'
-                        variations[variable].extend(f"[{v}]{enum_map}" for v in option_var["variations"])
+                        variations[variable].extend(create_intent_example(ctx_var, v, variable, true_value=option) for v in option_var["variations"])
                 elif "extraction" in ctx_var:
                     if ctx_var["extraction"] == "regex":
                         nlu["nlu"].append({"regex": variable, "examples": "- " + ctx_var["pattern"]})
