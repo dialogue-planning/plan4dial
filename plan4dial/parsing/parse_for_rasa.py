@@ -19,7 +19,7 @@ def create_intent_example(
             for role in intent_cfg["variables"][entity]["roles"]:
                 base[
                     f"{entity}(role={role})"
-                ] = f'[{extracted_value}]{{"entity": "{entity}", "role": "{role}", "value": "{true_value}"}}'  # {"entity": entity, "role": role, "value": true_value, "extracted": extracted_value}
+                ] = f'[{extracted_value}]{{"entity": "{entity}", "role": "{role}", "value": "{true_value}"}}'
         elif (
             "groups" in intent_cfg["variables"][entity]
             and "roles" not in intent_cfg["variables"][entity]
@@ -27,7 +27,7 @@ def create_intent_example(
             for group in intent_cfg["variables"][entity]["groups"]:
                 base[
                     f"{entity}(group={group})"
-                ] = f'[{extracted_value}]{{"entity": "{entity}", "group": "{group}", "value": "{true_value}"}}'  # {"entity": entity, "group": group, "value": true_value, "extracted": extracted_value}
+                ] = f'[{extracted_value}]{{"entity": "{entity}", "group": "{group}", "value": "{true_value}"}}'
         elif (
             "roles" in intent_cfg["variables"][entity]
             and "groups" in intent_cfg["variables"][entity]
@@ -40,11 +40,11 @@ def create_intent_example(
                 role, group = p[0], p[1]
                 base[
                     f"{entity}(role={role}, group={group})"
-                ] = f'[{extracted_value}]{{"entity": "{entity}", "role": "{role}", "group": "{group}", "value": "{true_value}"}}'  # {"entity": entity, "role": role, "group": group, "value": true_value, "extracted": extracted_value}
+                ] = f'[{extracted_value}]{{"entity": "{entity}", "role": "{role}", "group": "{group}", "value": "{true_value}"}}'
     else:
         base[
             entity
-        ] = f'[{extracted_value}]{{"entity": "{entity}", "value": "{true_value}"}}'  # {"entity": entity, "value": true_value, "extracted": extracted_value}
+        ] = f'[{extracted_value}]{{"entity": "{entity}", "value": "{true_value}"}}'
     return base
 
 
