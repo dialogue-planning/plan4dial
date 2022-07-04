@@ -16,9 +16,7 @@ def parse_to_json_config(loaded_yaml: Dict):
         json_ctx_var["type"] = cfg["type"]
         # do variations need to be given to hovor?
         if cfg["type"] == "enum":
-            json_ctx_var["config"] = list(
-                cfg["options"].keys()
-            )
+            json_ctx_var["config"] = list(cfg["options"].keys())
         elif cfg["type"] == "flag" or cfg["type"] == "fflag":
             json_ctx_var["config"] = cfg["initially"]
         else:
@@ -39,7 +37,9 @@ def parse_to_json_config(loaded_yaml: Dict):
         cur_intent["variables"] = []
         if "variables" in intent_cfg:
             # assume for now that we only have one entity in a sentence
-            cur_intent["variables"].extend([f"${var}" for var in intent_cfg['variables']])
+            cur_intent["variables"].extend(
+                [f"${var}" for var in intent_cfg["variables"]]
+            )
         cur_intent["utterances"] = intent_cfg["utterances"]
         json_config["intents"][intent] = cur_intent
     # convert actions
@@ -53,20 +53,14 @@ def parse_to_json_config(loaded_yaml: Dict):
         if "subtype" in yaml_act:
             cur_json_act["subtype"] = yaml_act["subtype"]
         if "message_variants" in yaml_act:
-            cur_json_act["message_variants"] = yaml_act[
-                "message_variants"
-            ]
+            cur_json_act["message_variants"] = yaml_act["message_variants"]
         # convert preconditions
         json_config_cond = []
         for cond, cond_cfg in yaml_act["condition"].items():
             for cond_config_key, cond_config_val in cond_cfg.items():
                 if cond_config_key == "known":
                     json_config_cond.append(
-                        (
-                            [cond, "Known"]
-                            if cond_config_val
-                            else [cond, "Unknown"]
-                        )
+                        ([cond, "Known"] if cond_config_val else [cond, "Unknown"])
                         if type(cond_config_val) == bool
                         else [cond, "Uncertain"]
                     )
@@ -104,7 +98,9 @@ def parse_to_json_config(loaded_yaml: Dict):
                                     else "Uncertain"
                                 )
                                 collect_updates[update]["certainty"] = status
-                            collect_updates[update]["interpretation"] = update_config["interpretation"]
+                            collect_updates[update]["interpretation"] = update_config[
+                                "interpretation"
+                            ]
                         next_outcome["updates"] = collect_updates
                     next_outcome["assignments"] = out_config["assignments"]
                     if "intent" in out_config:
