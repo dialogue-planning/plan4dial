@@ -59,6 +59,9 @@ context-variables:
     roles:
     - start
     - end
+    groups:
+      - 1
+      - 2
     examples:
     - New York
     - Denver
@@ -149,13 +152,7 @@ intents:
       - Do you have $order$ pizza?
   share_location:
     variables:
-      location:
-        roles:
-          - start
-          - end
-        groups:
-          - 1
-          - 2
+      - location
     utterances:
       - Can you deliver from $location(role=start, group=1)$ to $location(role=end, group=2)$?
       - I want my pizza to be delivered to $location(role=end, group=2)$ from $location(role=start, group=1)$.
