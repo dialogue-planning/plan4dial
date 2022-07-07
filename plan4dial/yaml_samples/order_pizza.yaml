@@ -206,8 +206,6 @@ effects:
             entity:
               value: $entity
               known: maybe
-          follow_up:
-            clarify: parent-action
           intent: unclear-intent
   # general yes-no effect created by default
   yes-no:
@@ -256,7 +254,23 @@ actions:
                   known: true
               intent: share_location
             # need to clarify the response
-            unclear:
+            # unclear_start_know_end:
+            #   updates:
+            #     start_location:
+            #       value: $start_location
+            #       known: maybe
+            #     end_location:
+            #       value: $end_location
+            #       known: true
+            # unclear_end_know_start:
+            #   updates:
+            #     start_location:
+            #       value: $start_location
+            #       known: true
+            #     end_location:
+            #       value: $end_location
+            #       known: maybe
+            unclear_both:
               updates:
                 start_location:
                   value: $start_location
@@ -264,159 +278,182 @@ actions:
                 end_location:
                   value: $end_location
                   known: maybe
-              follow_up:
-                clarify: parent-action
     # if supplied, creates a corresponding "clarify" action during parsing which 
     # assumes as a condition that the entities have their known attribute set
     # to maybe and the effect is the default confirm above
     clarify:
-      entity: start_location
+      entities:
+        - start_location
+        - end_location
       message_variants:
-        - Are you located in $start_location?
-        - Do you live in $start_location?
+        - Do you want to deliver from $start_location to $end_location?
+      # entities:
+      #   start_location:
+      #     message_variants:
+      #       - Do you want to deliver from $start_location?
+      #   end_location:
+      #     message_variants:
+      #       - Do you want to deliver to $end_location?
 
-  # ask for the user's order
-  ask-order:
-    type: dialogue
-    subtype: dialogue disambiguation 
-    message_variants:
-      - What would you like to order?
-      - What type of pizza would you like?
+  end:
+    type: system
     condition:
-      order:
-        known: false
-    effects:
-      # unclear-intent would be decided by the executor based on the extraction
-      # results/confidence
-      validate-response:
-        entity: order
-        valid-intent: share_order
-        valid-follow-up: check-order-availability
-        response: "Checking order availability..."
-    clarify:
-      entity: order
-      message_variants:
-        - Would you like to order $order?
-
-# add dialogue to outcome (response)
-# want to be able to add dialogue without explicitly updating variables (like an acknowledgement)
-# not handled by the planner
-
-  # ask for the user's payment method
-  ask-payment:
-    type: dialogue
-    subtype: dialogue disambiguation 
-    message_variants:
-      - How would you like to pay?
-    condition:
-      order:
-        known: true
       start_location:
         known: true
       end_location:
         known: true
-      payment_method:
-        known: false
     effects:
-      validate-response:
-        entity: payment_method
-        valid-intent: set_payment_method
-    clarify:
-      entity: payment_method
-      message_variants:
-        - Would you like to pay with $payment_method?
-
-  # ask for the user's card
-  ask-card-number:
-    type: dialogue
-    subtype: dialogue disambiguation 
-    message_variants:
-      - Enter your card number.
-      - Please enter your card details.
-    condition:
-      payment_method:
-        known: true
-        options:
-          - credit
-          - debit
-    effects:
-      validate-response:
-        entity: card_number
-        valid-intent: pay
-
-  check-order-availability:
-    type: api
-    call:
-      endpoint: pizza.actions.check_order_availability
-      initial_payload: {}
-    condition:
-      order:
-        known: true
-    effects:
-      make-call:
+      complete:
         oneof:
           outcomes:
-            in-stock:
-              updates:
-                order_available:
-                  value: true
-              variable_list: []
-              # status of the call (helps determine the outcome similar to intent)
-              status: success 
-            out-of-stock:
-              updates:
-                order:
-                  known: false
-                  value: null
-              follow_up: ask-order
-              variable_list: []
-              status: success
-            site-down:
-              response: site-down-exit
-              variable_list: []
-              status: 404
-
-  place-order:
-    type: api
-    call:
-      endpoint: pizza.actions.place_order # make the call
-      initial_payload: {}
-    condition:
-      # or:
-      order:
-        known: true
-      card_number:
-        known: true
-      order_available:
-        value: true
-        # TODO: the planner has no notion of what values things hold. this would need to be handled
-        # with a separate intent/flag setting.
-        # payment_method:
-        #   options: cash
-    effects:
-      make-call:
-        oneof:
-          outcomes:
-            success:
+            done:
               updates:
                 goal:
                   value: true
-                ask-location:
-                  can-do: false
-                ask-order:
-                  can-do: false
-                ask-payment:
-                  can-do: false
-                ask-card-number:
-                  can-do: false
-                check-order-availability:
-                  can-do: false
-              variable_list: []
-              status: success
-              response: "Order was successfully placed!"
-            site-down:
-              variable_list: []
-              response: site-down-exit
-              status: 404
+
+ 
+#   # ask for the user's order
+#   ask-order:
+#     type: dialogue
+#     subtype: dialogue disambiguation 
+#     message_variants:
+#       - What would you like to order?
+#       - What type of pizza would you like?
+#     condition:
+#       order:
+#         known: false
+#     effects:
+#       # unclear-intent would be decided by the executor based on the extraction
+#       # results/confidence
+#       validate-response:
+#         entity: order
+#         valid-intent: share_order
+#         valid-follow-up: check-order-availability
+#         response: "Checking order availability..."
+#     clarify:
+#       entity: order
+#       message_variants:
+#         - Would you like to order $order?
+
+# # add dialogue to outcome (response)
+# # want to be able to add dialogue without explicitly updating variables (like an acknowledgement)
+# # not handled by the planner
+
+#   # ask for the user's payment method
+#   ask-payment:
+#     type: dialogue
+#     subtype: dialogue disambiguation 
+#     message_variants:
+#       - How would you like to pay?
+#     condition:
+#       order:
+#         known: true
+#       start_location:
+#         known: true
+#       end_location:
+#         known: true
+#       payment_method:
+#         known: false
+#     effects:
+#       validate-response:
+#         entity: payment_method
+#         valid-intent: set_payment_method
+#     clarify:
+#       entity: payment_method
+#       message_variants:
+#         - Would you like to pay with $payment_method?
+
+#   # ask for the user's card
+#   ask-card-number:
+#     type: dialogue
+#     subtype: dialogue disambiguation 
+#     message_variants:
+#       - Enter your card number.
+#       - Please enter your card details.
+#     condition:
+#       payment_method:
+#         known: true
+#         options:
+#           - credit
+#           - debit
+#     effects:
+#       validate-response:
+#         entity: card_number
+#         valid-intent: pay
+
+#   check-order-availability:
+#     type: api
+#     call:
+#       endpoint: pizza.actions.check_order_availability
+#       initial_payload: {}
+#     condition:
+#       order:
+#         known: true
+#     effects:
+#       make-call:
+#         oneof:
+#           outcomes:
+#             in-stock:
+#               updates:
+#                 order_available:
+#                   value: true
+#               variable_list: []
+#               # status of the call (helps determine the outcome similar to intent)
+#               status: success 
+#             out-of-stock:
+#               updates:
+#                 order:
+#                   known: false
+#                   value: null
+#               follow_up: ask-order
+#               variable_list: []
+#               status: success
+#             site-down:
+#               response: site-down-exit
+#               variable_list: []
+#               status: 404
+
+#   place-order:
+#     type: api
+#     call:
+#       endpoint: pizza.actions.place_order # make the call
+#       initial_payload: {}
+#     condition:
+#       # or:
+#       order:
+#         known: true
+#       card_number:
+#         known: true
+#       order_available:
+#         value: true
+#         # TODO: the planner has no notion of what values things hold. this would need to be handled
+#         # with a separate intent/flag setting.
+#         # payment_method:
+#         #   options: cash
+#     effects:
+#       make-call:
+#         oneof:
+#           outcomes:
+#             success:
+#               updates:
+#                 goal:
+#                   value: true
+#                 ask-location:
+#                   can-do: false
+#                 ask-order:
+#                   can-do: false
+#                 ask-payment:
+#                   can-do: false
+#                 ask-card-number:
+#                   can-do: false
+#                 check-order-availability:
+#                   can-do: false
+#               variable_list: []
+#               status: success
+#               response: "Order was successfully placed!"
+#             site-down:
+#               variable_list: []
+#               response: site-down-exit
+#               status: 404
 
 ...

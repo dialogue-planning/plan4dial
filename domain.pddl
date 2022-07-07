@@ -17,14 +17,8 @@
         (maybe-have_card_number)
         (goal)
         (can-do_ask-location)
-        (can-do_ask-order)
-        (can-do_ask-payment)
-        (can-do_ask-card-number)
-        (can-do_check-order-availability)
-        (can-do_place-order)
+        (can-do_end)
         (can-do_clarify__ask-location)
-        (can-do_clarify__ask-order)
-        (can-do_clarify__ask-payment)
     )
     (:action ask-location
         :parameters()
@@ -46,7 +40,7 @@
                         (not (maybe-have_end_location))
                     )
                 )
-                (outcome unclear
+                (outcome unclear_both
                     (and
                         (not (have_start_location))
                         (maybe-have_start_location)
@@ -56,136 +50,21 @@
                 )
             )
     )
-    (:action ask-order
+    (:action end
         :parameters()
         :precondition
             (and
-                (not (have_order))
-                (not (maybe-have_order))
-                (can-do_ask-order)
-            )
-        :effect
-            (labeled-oneof validate-response
-                (outcome valid
-                    (and
-                        (have_order)
-                        (not (maybe-have_order))
-                    )
-                )
-                (outcome unclear
-                    (and
-                        (not (have_order))
-                        (maybe-have_order)
-                    )
-                )
-            )
-    )
-    (:action ask-payment
-        :parameters()
-        :precondition
-            (and
-                (have_order)
-                (not (maybe-have_order))
                 (have_start_location)
                 (not (maybe-have_start_location))
                 (have_end_location)
                 (not (maybe-have_end_location))
-                (not (have_payment_method))
-                (not (maybe-have_payment_method))
-                (can-do_ask-payment)
+                (can-do_end)
             )
         :effect
-            (labeled-oneof validate-response
-                (outcome valid
-                    (and
-                        (have_payment_method)
-                        (not (maybe-have_payment_method))
-                    )
-                )
-                (outcome unclear
-                    (and
-                        (not (have_payment_method))
-                        (maybe-have_payment_method)
-                    )
-                )
-            )
-    )
-    (:action ask-card-number
-        :parameters()
-        :precondition
-            (and
-                (have_payment_method)
-                (not (maybe-have_payment_method))
-                (can-do_ask-card-number)
-            )
-        :effect
-            (labeled-oneof validate-response
-                (outcome valid
-                    (and
-                        (have_card_number)
-                        (not (maybe-have_card_number))
-                    )
-                )
-                (outcome unclear
-                    (and
-                        (not (have_card_number))
-                        (maybe-have_card_number)
-                    )
-                )
-            )
-    )
-    (:action check-order-availability
-        :parameters()
-        :precondition
-            (and
-                (have_order)
-                (not (maybe-have_order))
-                (can-do_check-order-availability)
-            )
-        :effect
-            (labeled-oneof make-call
-                (outcome in-stock
-                    (and
-                        (order_available)
-                    )
-                )
-                (outcome out-of-stock
-                    (and
-                        (not (have_order))
-                        (not (maybe-have_order))
-                    )
-                )
-                (outcome site-down
-                    (and
-                    )
-                )
-            )
-    )
-    (:action place-order
-        :parameters()
-        :precondition
-            (and
-                (have_order)
-                (not (maybe-have_order))
-                (have_card_number)
-                (not (maybe-have_card_number))
-                (order_available)
-                (can-do_place-order)
-            )
-        :effect
-            (labeled-oneof make-call
-                (outcome success
+            (labeled-oneof complete
+                (outcome done
                     (and
                         (goal)
-                        (not (can-do_ask-location))
-                        (not (can-do_ask-order))
-                        (not (can-do_ask-payment))
-                        (not (can-do_ask-card-number))
-                        (not (can-do_check-order-availability))
-                    )
-                )
-                (outcome site-down
-                    (and
                     )
                 )
             )
@@ -196,6 +75,8 @@
             (and
                 (not (have_start_location))
                 (maybe-have_start_location)
+                (not (have_end_location))
+                (maybe-have_end_location)
                 (can-do_clarify__ask-location)
             )
         :effect
@@ -204,60 +85,16 @@
                     (and
                         (have_start_location)
                         (not (maybe-have_start_location))
+                        (have_end_location)
+                        (not (maybe-have_end_location))
                     )
                 )
                 (outcome deny
                     (and
                         (not (have_start_location))
                         (not (maybe-have_start_location))
-                    )
-                )
-            )
-    )
-    (:action clarify__ask-order
-        :parameters()
-        :precondition
-            (and
-                (not (have_order))
-                (maybe-have_order)
-                (can-do_clarify__ask-order)
-            )
-        :effect
-            (labeled-oneof yes-no
-                (outcome confirm
-                    (and
-                        (have_order)
-                        (not (maybe-have_order))
-                    )
-                )
-                (outcome deny
-                    (and
-                        (not (have_order))
-                        (not (maybe-have_order))
-                    )
-                )
-            )
-    )
-    (:action clarify__ask-payment
-        :parameters()
-        :precondition
-            (and
-                (not (have_payment_method))
-                (maybe-have_payment_method)
-                (can-do_clarify__ask-payment)
-            )
-        :effect
-            (labeled-oneof yes-no
-                (outcome confirm
-                    (and
-                        (have_payment_method)
-                        (not (maybe-have_payment_method))
-                    )
-                )
-                (outcome deny
-                    (and
-                        (not (have_payment_method))
-                        (not (maybe-have_payment_method))
+                        (not (have_end_location))
+                        (not (maybe-have_end_location))
                     )
                 )
             )

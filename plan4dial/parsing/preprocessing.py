@@ -33,7 +33,6 @@ def preprocess_yaml(filename: str):
                             }
                         },
                         "assignments": {f"${eff_config['entity']}": "maybe-found"},
-                        "follow_up": {"clarify": f"clarify__{act}"},
                     },
                 }
                 act_intents = [eff_config["valid-intent"]]
@@ -135,13 +134,13 @@ def preprocess_yaml(filename: str):
                         for intent in intents
                     }
         if "clarify" in act_config:
-            clarify_act = {}
-            entity = act_config["clarify"]["entity"]
-            clarify_act["type"] = act_config["type"]
-            clarify_act["subtype"] = act_config["subtype"]
-            clarify_act["message_variants"] = act_config["clarify"]["message_variants"]
-            clarify_act["condition"] = {entity: {"known": "maybe"}}
-            clarify_act["effects"] = {
+            entities = act_config["clarify"]["entities"]
+            clarify = {}
+            clarify["type"] = act_config["type"]
+            clarify["subtype"] = act_config["subtype"]
+            clarify["message_variants"] = act_config["clarify"]["message_variants"]
+            clarify["condition"] = {entity: {"known": "maybe"} for entity in entities}
+            clarify["effects"] = {
                 "yes-no": {
                     "oneof": {
                         "outcomes": {
@@ -151,9 +150,9 @@ def preprocess_yaml(filename: str):
                                         "value": f"${entity}",
                                         "known": True,
                                         "interpretation": "spel",
-                                    }
+                                    } for entity in entities
                                 },
-                                "assignments": {f"${entity}": "found"},
+                                "assignments": {f"${entity}": "found" for entity in entities},
                                 "intent": "confirm",
                             },
                             "deny": {
@@ -162,10 +161,10 @@ def preprocess_yaml(filename: str):
                                         "value": None,
                                         "known": False,
                                         "interpretation": "json",
-                                    }
+                                    } for entity in entities
                                 },
                                 "assignments": {
-                                    f"${entity}": "didnt-find"
+                                    f"${entity}": "didnt-find" for entity in entities
                                 },
                                 "intent": "deny",
                             },
@@ -173,12 +172,12 @@ def preprocess_yaml(filename: str):
                     }
                 }
             }
-            clarify_act["intents"] = {
+            clarify["intents"] = {
                 act_intent: processed["intents"][act_intent]
                 for act_intent in ["confirm", "deny"]
             }
+            processed["actions"][f"clarify__{act}"] = clarify
             del processed["actions"][act]["clarify"]
-            processed["actions"][f"clarify__{act}"] = clarify_act
     return processed
 
 
