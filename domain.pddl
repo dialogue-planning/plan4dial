@@ -86,8 +86,10 @@
             (and
                 (have_order)
                 (not (maybe-have_order))
-                (have_location)
-                (not (maybe-have_location))
+                (have_start_location)
+                (not (maybe-have_start_location))
+                (have_end_location)
+                (not (maybe-have_end_location))
                 (not (have_payment_method))
                 (not (maybe-have_payment_method))
                 (can-do_ask-payment)

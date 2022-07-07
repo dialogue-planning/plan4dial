@@ -310,7 +310,11 @@
                     "Known"
                 ],
                 [
-                    "location",
+                    "start_location",
+                    "Known"
+                ],
+                [
+                    "end_location",
                     "Known"
                 ],
                 [

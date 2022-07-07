@@ -311,7 +311,9 @@ actions:
     condition:
       order:
         known: true
-      location:
+      start_location:
+        known: true
+      end_location:
         known: true
       payment_method:
         known: false
