@@ -131,7 +131,7 @@ def preprocess_yaml(filename: str):
                                     )
                 if intents:
                     processed["actions"][act]["intents"] = {
-                        intent: processed["context-variables"][intent]
+                        intent: processed["intents"][intent]
                         for intent in intents
                     }
         if "clarify" in act_config:
@@ -153,7 +153,7 @@ def preprocess_yaml(filename: str):
                                         "interpretation": "spel",
                                     }
                                 },
-                                "assignments": {f"${eff_config['entity']}": "found"},
+                                "assignments": {f"${entity}": "found"},
                                 "intent": "confirm",
                             },
                             "deny": {
@@ -165,7 +165,7 @@ def preprocess_yaml(filename: str):
                                     }
                                 },
                                 "assignments": {
-                                    f"${eff_config['entity']}": "didnt-find"
+                                    f"${entity}": "didnt-find"
                                 },
                                 "intent": "deny",
                             },

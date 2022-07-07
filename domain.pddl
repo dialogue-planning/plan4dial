@@ -7,8 +7,10 @@
         (have_order)
         (maybe-have_order)
         (order_available)
-        (have_location)
-        (maybe-have_location)
+        (have_start_location)
+        (maybe-have_start_location)
+        (have_end_location)
+        (maybe-have_end_location)
         (have_payment_method)
         (maybe-have_payment_method)
         (have_card_number)
@@ -28,22 +30,28 @@
         :parameters()
         :precondition
             (and
-                (not (have_location))
-                (not (maybe-have_location))
+                (not (have_start_location))
+                (not (maybe-have_start_location))
+                (not (have_end_location))
+                (not (maybe-have_end_location))
                 (can-do_ask-location)
             )
         :effect
-            (labeled-oneof validate-response
+            (labeled-oneof validate-location
                 (outcome valid
                     (and
-                        (have_location)
-                        (not (maybe-have_location))
+                        (have_start_location)
+                        (not (maybe-have_start_location))
+                        (have_end_location)
+                        (not (maybe-have_end_location))
                     )
                 )
                 (outcome unclear
                     (and
-                        (not (have_location))
-                        (maybe-have_location)
+                        (not (have_start_location))
+                        (maybe-have_start_location)
+                        (not (have_end_location))
+                        (maybe-have_end_location)
                     )
                 )
             )
@@ -184,22 +192,22 @@
         :parameters()
         :precondition
             (and
-                (not (have_location))
-                (maybe-have_location)
+                (not (have_start_location))
+                (maybe-have_start_location)
                 (can-do_clarify__ask-location)
             )
         :effect
             (labeled-oneof yes-no
                 (outcome confirm
                     (and
-                        (have_location)
-                        (not (maybe-have_location))
+                        (have_start_location)
+                        (not (maybe-have_start_location))
                     )
                 )
                 (outcome deny
                     (and
-                        (not (have_location))
-                        (not (maybe-have_location))
+                        (not (have_start_location))
+                        (not (maybe-have_start_location))
                     )
                 )
             )

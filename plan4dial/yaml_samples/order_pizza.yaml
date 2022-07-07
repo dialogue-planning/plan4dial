@@ -49,19 +49,22 @@ context-variables:
   order_available:
     type: flag
     initially: false
-  location:
+  start_location:
     type: json
     known: 
       type: fflag
       initially: false
-    extraction: spacy
-    method: gpe
-    roles:
-    - start
-    - end
-    groups:
-      - 1
-      - 2
+    examples:
+    - New York
+    - Denver
+    - Tallahassee
+    - Chicago
+    - Austin
+  end_location:
+    type: json
+    known: 
+      type: fflag
+      initially: false
     examples:
     - New York
     - Denver
@@ -147,30 +150,31 @@ intents:
     variables: 
       - order 
     utterances:
-      - I want a $order$ pizza
-      - $order$ pizza please!
-      - Do you have $order$ pizza?
+      - I want a $order pizza
+      - $order pizza please!
+      - Do you have $order pizza?
   share_location:
     variables:
-      - location
+      - start_location
+      - end_location
     utterances:
-      - Can you deliver from $location(role=start, group=1)$ to $location(role=end, group=2)$?
-      - I want my pizza to be delivered to $location(role=end, group=2)$ from $location(role=start, group=1)$.
-      - Do you travel from $location(role=start, group=1)$ to $location(role=end, group=2)$?
+      - Can you deliver from $start_location to $end_location?
+      - I want my pizza to be delivered to $end_location from $start_location.
+      - Do you travel from $start_location to $end_location?
   set_payment_method:
     variables:
       - payment_method
     utterances:
-      - I want to pay by $payment_method$.
-      - Can I pay with $payment_method$?
-      - I will pay in $payment_method$
+      - I want to pay by $payment_method.
+      - Can I pay with $payment_method?
+      - I will pay in $payment_method
   pay:
     variables:
       - card_number
     utterances:
-      - My credit card number is $card_number$.
-      - This is my account number $card_number$
-      - Ok, the number on my card is $card_number$.
+      - My credit card number is $card_number.
+      - This is my account number $card_number
+      - Ok, the number on my card is $card_number.
 
 responses:
   site-down-exit:
@@ -192,7 +196,7 @@ effects:
         valid:
           updates:
             entity:
-              value: $entity$
+              value: $entity
               known: true
           intent: valid-intent
           follow_up: valid-follow-up
@@ -200,7 +204,7 @@ effects:
         unclear:
           updates:
             entity:
-              value: $entity$
+              value: $entity
               known: maybe
           follow_up:
             clarify: parent-action
@@ -214,7 +218,7 @@ effects:
         confirm:
           updates:
             entity:
-              value: $entity$
+              value: $entity
               known: true
           intent: confirm
         deny:
@@ -233,22 +237,43 @@ actions:
       - Where do you live?
       - Where would you like to deliver?
     condition:
-      location:
+      start_location:
+        known: false
+      end_location:
         known: false
     effects:
-      validate-response:
-        entity: location
-        # unclear-intent would be decided by the executor based on the extraction
-        # results/confidence
-        valid-intent: share_location
+      validate-location:
+        oneof:
+          outcomes:
+            # received a valid value
+            valid:
+              updates:
+                start_location:
+                  value: $start_location
+                  known: true
+                end_location:
+                  value: $end_location
+                  known: true
+              intent: share_location
+            # need to clarify the response
+            unclear:
+              updates:
+                start_location:
+                  value: $start_location
+                  known: maybe
+                end_location:
+                  value: $end_location
+                  known: maybe
+              follow_up:
+                clarify: parent-action
     # if supplied, creates a corresponding "clarify" action during parsing which 
     # assumes as a condition that the entities have their known attribute set
     # to maybe and the effect is the default confirm above
     clarify:
-      entity: location
+      entity: start_location
       message_variants:
-        - Are you located in $location$?
-        - Do you live in $location$?
+        - Are you located in $start_location?
+        - Do you live in $start_location?
 
   # ask for the user's order
   ask-order:
@@ -261,6 +286,8 @@ actions:
       order:
         known: false
     effects:
+      # unclear-intent would be decided by the executor based on the extraction
+      # results/confidence
       validate-response:
         entity: order
         valid-intent: share_order
@@ -269,7 +296,7 @@ actions:
     clarify:
       entity: order
       message_variants:
-        - Would you like to order $order$?
+        - Would you like to order $order?
 
 # add dialogue to outcome (response)
 # want to be able to add dialogue without explicitly updating variables (like an acknowledgement)
@@ -295,7 +322,7 @@ actions:
     clarify:
       entity: payment_method
       message_variants:
-        - Would you like to pay with $payment_method$?
+        - Would you like to pay with $payment_method?
 
   # ask for the user's card
   ask-card-number:
