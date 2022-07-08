@@ -34,6 +34,11 @@ def preprocess_yaml(filename: str):
                         },
                         "assignments": {f"${eff_config['entity']}": "maybe-found"},
                     },
+                    # "fallback": {
+                    #             "updates": {},
+                    #             "assignments": {f"${eff_config['entity']}": "didnt-find"},
+                    #             "intent": "fallback"
+                    #         }
                 }
                 act_intents = [eff_config["valid-intent"]]
                 if "valid-follow-up" in eff_config:
@@ -77,6 +82,11 @@ def preprocess_yaml(filename: str):
                         "assignments": {f"${eff_config['entity']}": "didnt-find"},
                         "intent": "deny",
                     },
+                    # "fallback": {
+                    #             "updates": {},
+                    #             "assignments": {f"${eff_config['entity']}": "didnt-find"},
+                    #             "intent": "fallback"
+                    #         }
                 }
                 if "valid-follow-up" in eff_config:
                     new_eff["valid"]["follow_up"] = eff_config["valid-follow-up"]
@@ -133,6 +143,9 @@ def preprocess_yaml(filename: str):
                         intent: processed["intents"][intent]
                         for intent in intents
                     }
+            # add fallback outcomes for each action
+            # entities = {entity for outcome in eff_config["oneof"]["outcomes"] for entity in eff_config["oneof"]["outcomes"][outcome]["updates"]}
+            # processed["actions"][act]["effects"][eff]["oneof"]["outcomes"]["fallback"] = {"updates":  {}, "assignments": {f"${entity}": "didnt-find" for entity in entities}, "intent": "fallback" }
         if "clarify" in act_config:
             entities = act_config["clarify"]["entities"]
             clarify = {}
@@ -168,6 +181,11 @@ def preprocess_yaml(filename: str):
                                 },
                                 "intent": "deny",
                             },
+                            # "fallback": {
+                            #     "updates": {},
+                            #     "assignments": {f"${entity}": "didnt-find" for entity in entities},
+                            #     "intent": "fallback"
+                            # }
                         }
                     }
                 }

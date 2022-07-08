@@ -202,5 +202,5 @@ def parse_to_pddl(loaded_yaml: Dict):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/order_pizza.yaml").resolve())
+    f = str((base / "yaml_samples/test.yaml").resolve())
     parse_to_pddl(preprocess_yaml(f))

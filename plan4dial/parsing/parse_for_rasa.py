@@ -50,7 +50,7 @@ def make_nlu_file(loaded_yaml: Dict):
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
     loaded_yaml = yaml.load(
-        open(str((base / "yaml_samples/order_pizza.yaml").resolve())),
+        open(str((base / "yaml_samples/test.yaml").resolve())),
         Loader=yaml.FullLoader,
     )
     f = open(str((base / "parsing/nlu.yml").resolve()), "w")

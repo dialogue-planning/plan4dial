@@ -6,95 +6,30 @@
     (:predicates
         (have_order)
         (maybe-have_order)
-        (order_available)
-        (have_start_location)
-        (maybe-have_start_location)
-        (have_end_location)
-        (maybe-have_end_location)
-        (have_payment_method)
-        (maybe-have_payment_method)
-        (have_card_number)
-        (maybe-have_card_number)
         (goal)
-        (can-do_ask-location)
-        (can-do_end)
-        (can-do_clarify__ask-location)
+        (can-do_ask-order)
     )
-    (:action ask-location
+    (:action ask-order
         :parameters()
         :precondition
             (and
-                (not (have_start_location))
-                (not (maybe-have_start_location))
-                (not (have_end_location))
-                (not (maybe-have_end_location))
-                (can-do_ask-location)
+                (not (have_order))
+                (not (maybe-have_order))
+                (can-do_ask-order)
             )
         :effect
-            (labeled-oneof validate-location
+            (labeled-oneof validate-order
                 (outcome valid
                     (and
-                        (have_start_location)
-                        (not (maybe-have_start_location))
-                        (have_end_location)
-                        (not (maybe-have_end_location))
-                    )
-                )
-                (outcome unclear_both
-                    (and
-                        (not (have_start_location))
-                        (maybe-have_start_location)
-                        (not (have_end_location))
-                        (maybe-have_end_location)
-                    )
-                )
-            )
-    )
-    (:action end
-        :parameters()
-        :precondition
-            (and
-                (have_start_location)
-                (not (maybe-have_start_location))
-                (have_end_location)
-                (not (maybe-have_end_location))
-                (can-do_end)
-            )
-        :effect
-            (labeled-oneof complete
-                (outcome done
-                    (and
+                        (have_order)
+                        (not (maybe-have_order))
                         (goal)
                     )
                 )
-            )
-    )
-    (:action clarify__ask-location
-        :parameters()
-        :precondition
-            (and
-                (not (have_start_location))
-                (maybe-have_start_location)
-                (not (have_end_location))
-                (maybe-have_end_location)
-                (can-do_clarify__ask-location)
-            )
-        :effect
-            (labeled-oneof yes-no
-                (outcome confirm
+                (outcome invalid
                     (and
-                        (have_start_location)
-                        (not (maybe-have_start_location))
-                        (have_end_location)
-                        (not (maybe-have_end_location))
-                    )
-                )
-                (outcome deny
-                    (and
-                        (not (have_start_location))
-                        (not (maybe-have_start_location))
-                        (not (have_end_location))
-                        (not (maybe-have_end_location))
+                        (not (have_order))
+                        (not (maybe-have_order))
                     )
                 )
             )

@@ -46,6 +46,7 @@ def parse_to_json_config(loaded_yaml: Dict):
             )
         cur_intent["utterances"] = intent_cfg["utterances"]
         json_config["intents"][intent] = cur_intent
+    # json_config["intents"]["fallback"] = {"variables": [], "utterances": []}
     # convert actions
     json_config["actions"] = {act: {} for act in loaded_yaml["actions"]}
     for act in loaded_yaml["actions"]:
@@ -93,7 +94,7 @@ def parse_to_json_config(loaded_yaml: Dict):
                                 "value": update_config["value"]
                                 if "value" in update_config
                                 else None,
-                            }
+                            } 
                             if "known" in update_config:
                                 known = update_config["known"]
                                 status = (
@@ -133,6 +134,6 @@ def parse_to_json_config(loaded_yaml: Dict):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/order_pizza.yaml").resolve())
+    f = str((base / "yaml_samples/test.yaml").resolve())
     json_file = open("pizza.json", "w")
     json_file.write(json.dumps(parse_to_json_config(preprocess_yaml(f)), indent=4))

@@ -1,0 +1,93 @@
+---
+version: "3.1"
+name: order-pizza
+
+context-variables:
+  order:
+    type: enum
+    known:
+      type: fflag
+      initially: false
+    options:
+      cheese:
+        variations:
+        - chz
+        - cheez
+        - mozzarella
+        - fromage
+        - cheesy
+      pepperoni:
+        variations:
+        - peperoni
+        - meat
+        - sausage
+      mushroom:
+        variations:
+        - vegetable
+        - veggie
+        - musroom
+        - shroom
+      gluten free:
+        variations:
+        - healthy
+        - gluten-free
+        - gf
+      hawaiian:
+        variations:
+        - pineapple
+        - ham and pineapple
+        - sweet
+  goal:
+    type: flag
+    initially: false
+
+intents:
+  greet:
+    utterances:
+      - Hey
+      - Hi
+      - hey there
+  leave:
+    utterances:
+      - Goodbye
+      - Bye
+      - That's all
+      - i'm done
+  share_order:
+    variables: 
+      - order 
+    utterances:
+      - I want a $order pizza
+      - $order pizza please!
+      - Do you have $order pizza?
+
+actions:
+  ask-order:
+    type: dialogue
+    subtype: dialogue disambiguation 
+    message_variants:
+      - What would you like to order?
+      - What type of pizza would you like?
+    condition:
+      order:
+        known: false
+    effects:
+      validate-order:
+        oneof:
+          outcomes:
+            # received a valid value
+            valid:
+              updates:
+                order:
+                  value: $order
+                  known: true
+                goal:
+                  value: true
+              intent: share_order
+            invalid:
+              updates:
+                order:
+                  value: null
+                  known: false
+ 
+            

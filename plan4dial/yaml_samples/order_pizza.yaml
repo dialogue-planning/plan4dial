@@ -12,43 +12,43 @@ name: order-pizza
 #   enum
 #   json
 context-variables:
-  order:
-    type: enum
-    known:
-      type: fflag
-      initially: false
-    options:
-      cheese:
-        variations:
-        - chz
-        - cheez
-        - mozzarella
-        - fromage
-        - cheesy
-      pepperoni:
-        variations:
-        - peperoni
-        - meat
-        - sausage
-      mushroom:
-        variations:
-        - vegetable
-        - veggie
-        - musroom
-        - shroom
-      gluten free:
-        variations:
-        - healthy
-        - gluten-free
-        - gf
-      hawaiian:
-        variations:
-        - pineapple
-        - ham and pineapple
-        - sweet
-  order_available:
-    type: flag
-    initially: false
+  # order:
+  #   type: enum
+  #   known:
+  #     type: fflag
+  #     initially: false
+  #   options:
+  #     cheese:
+  #       variations:
+  #       - chz
+  #       - cheez
+  #       - mozzarella
+  #       - fromage
+  #       - cheesy
+  #     pepperoni:
+  #       variations:
+  #       - peperoni
+  #       - meat
+  #       - sausage
+  #     mushroom:
+  #       variations:
+  #       - vegetable
+  #       - veggie
+  #       - musroom
+  #       - shroom
+  #     gluten free:
+  #       variations:
+  #       - healthy
+  #       - gluten-free
+  #       - gf
+  #     hawaiian:
+  #       variations:
+  #       - pineapple
+  #       - ham and pineapple
+  #       - sweet
+  # order_available:
+  #   type: flag
+  #   initially: false
   start_location:
     type: json
     known: 
@@ -71,40 +71,40 @@ context-variables:
     - Tallahassee
     - Chicago
     - Austin
-  payment_method:
-    type: enum
-    known: 
-      type: fflag
-      initially: false
-    options: 
-      credit:
-        variations:
-        - crdit
-        - credit card
-        - visa
-        - mastercard
-      debit:
-        variations: 
-        - dbit
-        - debit card
-        - chequing account
-        - chequing
-        - savings account
-        - savings
-      cash:
-        variations:
-        - money
-        - notes
-  card_number:
-    type: json
-    known:
-      type: fflag
-      initially: false
-    extraction: regex
-    pattern: \d{16}
-    examples:
-    - 1234567812345678
-    - 9876543212345678
+  # payment_method:
+  #   type: enum
+  #   known: 
+  #     type: fflag
+  #     initially: false
+  #   options: 
+  #     credit:
+  #       variations:
+  #       - crdit
+  #       - credit card
+  #       - visa
+  #       - mastercard
+  #     debit:
+  #       variations: 
+  #       - dbit
+  #       - debit card
+  #       - chequing account
+  #       - chequing
+  #       - savings account
+  #       - savings
+  #     cash:
+  #       variations:
+  #       - money
+  #       - notes
+  # card_number:
+  #   type: json
+  #   known:
+  #     type: fflag
+  #     initially: false
+  #   extraction: regex
+  #   pattern: \d{16}
+  #   examples:
+  #   - 1234567812345678
+  #   - 9876543212345678
   goal:
     type: flag
     initially: false
@@ -270,23 +270,23 @@ actions:
             #     end_location:
             #       value: $end_location
             #       known: maybe
-            unclear_both:
-              updates:
-                start_location:
-                  value: $start_location
-                  known: maybe
-                end_location:
-                  value: $end_location
-                  known: maybe
+            # unclear_both:
+            #   updates:
+            #     start_location:
+            #       value: $start_location
+            #       known: maybe
+            #     end_location:
+            #       value: $end_location
+            #       known: maybe
     # if supplied, creates a corresponding "clarify" action during parsing which 
     # assumes as a condition that the entities have their known attribute set
     # to maybe and the effect is the default confirm above
-    clarify:
-      entities:
-        - start_location
-        - end_location
-      message_variants:
-        - Do you want to deliver from $start_location to $end_location?
+    # clarify:
+    #   entities:
+    #     - start_location
+    #     - end_location
+    #   message_variants:
+    #     - Do you want to deliver from $start_location to $end_location?
       # entities:
       #   start_location:
       #     message_variants:

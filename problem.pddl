@@ -3,9 +3,7 @@
     (:domain order-pizza)
     (:objects )
     (:init
-        (can-do_ask-location)
-        (can-do_end)
-        (can-do_clarify__ask-location)
+        (can-do_ask-order)
     )
     (:goal
         (and
