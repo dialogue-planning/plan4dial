@@ -7,6 +7,8 @@ from preprocessing import preprocess_yaml
 def parse_to_json_config(loaded_yaml: Dict):
     json_config = {}
     json_config["name"] = loaded_yaml["name"]
+    if "responses" in loaded_yaml:
+        json_config["responses"] = loaded_yaml["responses"]
     # convert context variables
     json_config["context-variables"] = {
         var: {} for var in loaded_yaml["context-variables"]
@@ -14,7 +16,6 @@ def parse_to_json_config(loaded_yaml: Dict):
     for ctx_var, cfg in loaded_yaml["context-variables"].items():
         json_ctx_var = {}
         json_ctx_var["type"] = cfg["type"]
-        # do variations need to be given to hovor?
         if cfg["type"] == "enum":
             json_ctx_var["config"] = list(cfg["options"].keys())
         elif cfg["type"] == "flag" or cfg["type"] == "fflag":
@@ -28,10 +29,6 @@ def parse_to_json_config(loaded_yaml: Dict):
                     json_ctx_var["config"]["pattern"] = cfg["pattern"]
             else:
                 json_ctx_var["config"] = "null"
-        if "roles" in cfg:
-            json_ctx_var["roles"] = cfg["roles"]
-        if "groups" in cfg:
-            json_ctx_var["groups"] = cfg["groups"]
         json_config["context-variables"][ctx_var] = json_ctx_var
         # do confirm/confirmation_utterance need to be given to hovor?
     json_config["intents"] = {var: {} for var in loaded_yaml["intents"]}
@@ -40,13 +37,11 @@ def parse_to_json_config(loaded_yaml: Dict):
         cur_intent = {}
         cur_intent["variables"] = []
         if "variables" in intent_cfg:
-            # assume for now that we only have one entity in a sentence
             cur_intent["variables"].extend(
                 [f"${var}" for var in intent_cfg["variables"]]
             )
         cur_intent["utterances"] = intent_cfg["utterances"]
         json_config["intents"][intent] = cur_intent
-    # json_config["intents"]["fallback"] = {"variables": [], "utterances": []}
     # convert actions
     json_config["actions"] = {act: {} for act in loaded_yaml["actions"]}
     for act in loaded_yaml["actions"]:
@@ -118,8 +113,6 @@ def parse_to_json_config(loaded_yaml: Dict):
                         next_outcome["response"] = out_config["response"]
                     if "call" in out_config:
                         next_outcome["call"] = out_config["call"]
-                    if "call" in yaml_act:
-                        next_outcome["variable_list"] = out_config["variable_list"]
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
             cur_json_act["effect"] = converted_eff
@@ -127,7 +120,6 @@ def parse_to_json_config(loaded_yaml: Dict):
             cur_json_act["intents"] = yaml_act["intents"]
         if "call" in yaml_act:
             cur_json_act["call"] = yaml_act["call"]
-
         json_config["actions"][act] = cur_json_act
     return json_config
 

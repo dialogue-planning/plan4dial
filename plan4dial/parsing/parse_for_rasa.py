@@ -2,7 +2,6 @@ from pathlib import Path
 import yaml
 from typing import Dict
 from itertools import product
-import re
 
 
 def create_intent_example(

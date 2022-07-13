@@ -8,6 +8,7 @@
         (maybe-have_order)
         (goal)
         (can-do_ask-order)
+        (can-do_agent_fallback)
     )
     (:action ask-order
         :parameters()
@@ -15,6 +16,7 @@
             (and
                 (not (have_order))
                 (not (maybe-have_order))
+                (not (can-do_agent_fallback))
                 (can-do_ask-order)
             )
         :effect
@@ -26,10 +28,24 @@
                         (goal)
                     )
                 )
-                (outcome invalid
+                (outcome fallback
                     (and
-                        (not (have_order))
-                        (not (maybe-have_order))
+                        (can-do_agent_fallback)
+                    )
+                )
+            )
+    )
+    (:action agent_fallback
+        :parameters()
+        :precondition
+            (and
+                (can-do_agent_fallback)
+            )
+        :effect
+            (labeled-oneof reset
+                (outcome lock
+                    (and
+                        (not (can-do_agent_fallback))
                     )
                 )
             )

@@ -177,8 +177,13 @@ intents:
       - Ok, the number on my card is $card_number.
 
 responses:
-  site-down-exit:
-    Pizza site is experiencing issues and was unable to make your request. Exiting...
+  # created by default
+  agent_fallback:
+    - Sorry, I couldn't understand that input.
+    - I couldn't quite get that.
+  site_down_exit:
+    - Pizza site is experiencing issues and was unable to make your request. Exiting...
+
 
 # can set up template effects
 effects:
@@ -409,7 +414,7 @@ actions:
 #               variable_list: []
 #               status: success
 #             site-down:
-#               response: site-down-exit
+#               response: site_down_exit
 #               variable_list: []
 #               status: 404
 
@@ -453,7 +458,7 @@ actions:
 #               response: "Order was successfully placed!"
 #             site-down:
 #               variable_list: []
-#               response: site-down-exit
+#               response: site_down_exit
 #               status: 404
 
 ...

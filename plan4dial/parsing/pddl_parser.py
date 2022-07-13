@@ -111,7 +111,7 @@ def actions_to_pddl(loaded_yaml: Dict):
     )
 
 
-def parse_init(context_variables: Dict, actions: List[str]):
+def parse_init(context_variables: Dict, actions: List[str], responses: List[str]):
     init_true = []
     for var, var_config in context_variables.items():
         if "known" in var_config:
@@ -131,7 +131,8 @@ def parse_init(context_variables: Dict, actions: List[str]):
                 if status == "maybe":
                     init_true.append(f"(maybe-{var})")
     for act in actions:
-        init_true.append(f"(can-do_{act})")
+        if act not in responses:
+            init_true.append(f"(can-do_{act})")
     return init_true
 
 
@@ -182,7 +183,7 @@ def parse_to_pddl(loaded_yaml: Dict):
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = fluents_to_pddl(
         fluents=parse_init(
-            loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
+            loaded_yaml["context-variables"], loaded_yaml["actions"].keys(), loaded_yaml["responses"].keys()
         ),
         tabs=1,
         outer_brackets=True,

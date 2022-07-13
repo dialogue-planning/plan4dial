@@ -6,8 +6,40 @@ from copy import deepcopy
 
 def preprocess_yaml(filename: str):
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
+    for response, msg_vars in loaded_yaml["responses"].items():
+        loaded_yaml["actions"][response] = {
+            "type": "dialogue",
+            "condition": {},
+            "effects": {
+                "reset":
+                {
+                    "oneof":
+                    {
+                        "outcomes":
+                        {
+                            "lock":
+                            {
+                                "updates": {
+                                    response: {
+                                        "can-do": False
+                                    }
+                                },
+                            }
+
+                        }
+           
+                    }
+
+                }
+
+            },
+            "message_variants": msg_vars,
+        }
     processed = deepcopy(loaded_yaml)
     for act, act_config in loaded_yaml["actions"].items():
+        if act not in loaded_yaml["responses"]:
+            processed["actions"][act]["condition"]["can-do_agent_fallback"] = {"value": False}
+        # processed["actions"][act]["condition"][f"can-do_{act}"] = {"value": True}
         # convert effects
         for eff, eff_config in loaded_yaml["actions"][act]["effects"].items():
             # create from template effects
@@ -34,11 +66,13 @@ def preprocess_yaml(filename: str):
                         },
                         "assignments": {f"${eff_config['entity']}": "maybe-found"},
                     },
-                    # "fallback": {
-                    #             "updates": {},
-                    #             "assignments": {f"${eff_config['entity']}": "didnt-find"},
-                    #             "intent": "fallback"
-                    #         }
+                    "fallback": {
+                                "updates": {
+                                    "can-do_agent_fallback": {"value": True, "interpretation": "json",},
+                                },
+                                "assignments": {},
+                                "intent": "fallback",
+                            }
                 }
                 act_intents = [eff_config["valid-intent"]]
                 if "valid-follow-up" in eff_config:
@@ -82,11 +116,13 @@ def preprocess_yaml(filename: str):
                         "assignments": {f"${eff_config['entity']}": "didnt-find"},
                         "intent": "deny",
                     },
-                    # "fallback": {
-                    #             "updates": {},
-                    #             "assignments": {f"${eff_config['entity']}": "didnt-find"},
-                    #             "intent": "fallback"
-                    #         }
+                    "fallback": {
+                                "updates": {
+                                    "can-do_agent_fallback": {"value": True, "interpretation": "json"},
+                                },
+                                "assignments": {},
+                                "intent": "fallback",
+                            }
                 }
                 if "valid-follow-up" in eff_config:
                     new_eff["valid"]["follow_up"] = eff_config["valid-follow-up"]
@@ -101,7 +137,16 @@ def preprocess_yaml(filename: str):
             # general preprocessing needed for all other actions
             else:
                 intents = []
+
                 for option in eff_config:
+                    if act not in loaded_yaml["responses"]:
+                        processed["actions"][act]["effects"][eff][option]["outcomes"]["fallback"] = {
+                                "updates": {
+                                    "can-do_agent_fallback": {"value": True, "interpretation": "json"},
+                                },
+                                "assignments": {},
+                                "intent": "fallback",
+                            }
                     outcomes = eff_config[option]["outcomes"]
                     for out, out_config in outcomes.items():
                         if "intent" in out_config:
@@ -181,12 +226,14 @@ def preprocess_yaml(filename: str):
                                 },
                                 "intent": "deny",
                             },
-                            # "fallback": {
-                            #     "updates": {},
-                            #     "assignments": {f"${entity}": "didnt-find" for entity in entities},
-                            #     "intent": "fallback"
-                            # }
-                        }
+                            "fallback": {
+                                        "updates": {
+                                            "can-do_agent_fallback": {"value": True, "interpretation": "json"},
+                                        },
+                                        "assignments": {},
+                                        "intent": "fallback",
+                                    }
+                                }
                     }
                 }
             }
@@ -201,5 +248,5 @@ def preprocess_yaml(filename: str):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/order_pizza.yaml").resolve())
+    f = str((base / "yaml_samples/test.yaml").resolve())
     print(json.dumps(preprocess_yaml(f), indent=4))
