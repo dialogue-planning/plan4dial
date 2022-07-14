@@ -61,12 +61,6 @@ intents:
       - $order pizza please!
       - Do you have $order pizza?
 
-responses:
-  # created by default
-  agent_fallback:
-    - Sorry, I couldn't understand that input.
-    - I couldn't quite get that.
-
 actions:
   ask-order:
     type: dialogue
@@ -74,6 +68,9 @@ actions:
     message_variants:
       - What would you like to order?
       - What type of pizza would you like?
+    fallback_message_variants:
+      - Sorry, that isn't a valid order.
+      - I didn't quite get your order. Can you tell me again?
     condition:
       order:
         known: false

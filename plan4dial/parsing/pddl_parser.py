@@ -59,8 +59,8 @@ def action_to_pddl(act: str, act_config: Dict):
                 precond.extend(return_certainty_fluents(cond, cond_config_val))
             elif cond_config_key == "value":
                 precond.append(f"({cond})" if cond_config_val else f"(not ({cond}))")
-
-    precond.append(f"(can-do_{act})")
+    if act != "dialogue_statement":
+        precond.append(f"(can-do_{act})")
     precond = fluents_to_pddl(
         fluents=precond, tabs=2, name_wrap=":precondition", and_wrap=True
     )
@@ -111,7 +111,7 @@ def actions_to_pddl(loaded_yaml: Dict):
     )
 
 
-def parse_init(context_variables: Dict, actions: List[str], responses: List[str]):
+def parse_init(context_variables: Dict, actions: List[str]):
     init_true = []
     for var, var_config in context_variables.items():
         if "known" in var_config:
@@ -131,7 +131,7 @@ def parse_init(context_variables: Dict, actions: List[str], responses: List[str]
                 if status == "maybe":
                     init_true.append(f"(maybe-{var})")
     for act in actions:
-        if act not in responses:
+        if act != "dialogue_statement":
             init_true.append(f"(can-do_{act})")
     return init_true
 
@@ -183,7 +183,7 @@ def parse_to_pddl(loaded_yaml: Dict):
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = fluents_to_pddl(
         fluents=parse_init(
-            loaded_yaml["context-variables"], loaded_yaml["actions"].keys(), loaded_yaml["responses"].keys()
+            loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
         ),
         tabs=1,
         outer_brackets=True,
