@@ -54,6 +54,8 @@ def parse_to_json_config(loaded_yaml: Dict):
             cur_json_act["subtype"] = yaml_act["subtype"]
         if "message_variants" in yaml_act:
             cur_json_act["message_variants"] = yaml_act["message_variants"]
+        if "fallback_message_variants" in yaml_act:
+            cur_json_act["fallback_message_variants"] = yaml_act["fallback_message_variants"]
         # convert preconditions
         json_config_cond = []
         for cond, cond_cfg in yaml_act["condition"].items():

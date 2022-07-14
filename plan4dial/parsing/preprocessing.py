@@ -33,12 +33,15 @@ def preprocess_yaml(filename: str):
                         {
                             "updates": {
                                 "have-message": {
-                                    "value": False
+                                    "value": False,
+                                    "interpretation": "json",
                                 },
                                 "force-statement": {
-                                    "value": False
+                                    "value": False,
+                                    "interpretation": "json",
                                 }
                             },
+                            "assignments": {},
                             "intent": "fallback"
                         }
                     }
@@ -46,6 +49,7 @@ def preprocess_yaml(filename: str):
             }
         },
         "message_variants": [],
+        "intents": {"fallback": processed["intents"]["fallback"]}
     }
     processed["context-variables"]["have-message"] = {"type": "flag", "initially": False}
     processed["context-variables"]["force-statement"] = {"type": "flag", "initially": False}
