@@ -193,25 +193,22 @@ effects:
     parameters:
       - entity
       - valid-intent
-      - unclear-intent
       - valid-follow-up
     oneof:
       outcomes:
         # received a valid value
         valid:
           updates:
-            entity:
-              value: $entity
+            (entity):
+              value: $(entity)
               known: true
-          intent: valid-intent
-          follow_up: valid-follow-up
-        # need to clarify the response
+          intent: (valid-intent)
+          follow_up: (valid-follow-up)
         unclear:
           updates:
-            entity:
-              value: $entity
+            (entity):
+              value: $(entity)
               known: maybe
-          intent: unclear-intent
   # general yes-no effect created by default
   yes-no:
     parameters:
@@ -300,45 +297,28 @@ actions:
       #     message_variants:
       #       - Do you want to deliver to $end_location?
 
-  end:
-    type: system
+  # ask for the user's order
+  ask-order:
+    type: dialogue
+    subtype: dialogue disambiguation 
+    message_variants:
+      - What would you like to order?
+      - What type of pizza would you like?
     condition:
-      start_location:
-        known: true
-      end_location:
-        known: true
+      order:
+        known: false
     effects:
-      complete:
-        oneof:
-          outcomes:
-            done:
-              updates:
-                goal:
-                  value: true
-
- 
-#   # ask for the user's order
-#   ask-order:
-#     type: dialogue
-#     subtype: dialogue disambiguation 
-#     message_variants:
-#       - What would you like to order?
-#       - What type of pizza would you like?
-#     condition:
-#       order:
-#         known: false
-#     effects:
-#       # unclear-intent would be decided by the executor based on the extraction
-#       # results/confidence
-#       validate-response:
-#         entity: order
-#         valid-intent: share_order
-#         valid-follow-up: check-order-availability
-#         response: "Checking order availability..."
-#     clarify:
-#       entity: order
-#       message_variants:
-#         - Would you like to order $order?
+      # unclear-intent would be decided by the executor based on the extraction
+      # results/confidence
+      validate-response:
+        entity: order
+        valid-intent: share_order
+        valid-follow-up: check-order-availability
+        response: "Checking order availability..."
+    clarify:
+      entity: order
+      message_variants:
+        - Would you like to order $order?
 
 # # add dialogue to outcome (response)
 # # want to be able to add dialogue without explicitly updating variables (like an acknowledgement)
