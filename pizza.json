@@ -110,6 +110,10 @@
         "fallback": {
             "variables": [],
             "utterances": []
+        },
+        "unclear": {
+            "variables": [],
+            "utterances": []
         }
     },
     "actions": {
@@ -163,8 +167,7 @@
                                 "interpretation": "spel"
                             }
                         },
-                        "intent": "share_order",
-                        "follow_up": "ask-drink",
+                        "intent": "unclear",
                         "name": "ask-order_DETDUP_validate-response-EQ-unclear",
                         "assignments": {
                             "$order": "maybe-found"
@@ -197,6 +200,10 @@
                         "$order pizza please!",
                         "Do you have $order pizza?"
                     ]
+                },
+                "unclear": {
+                    "variables": [],
+                    "utterances": []
                 },
                 "fallback": {
                     "variables": [],
@@ -325,6 +332,7 @@
                             }
                         },
                         "intent": "share_side",
+                        "follow_up": "(valid-follow-up)",
                         "name": "ask-side_DETDUP_validate-response-EQ-valid",
                         "assignments": {
                             "$side": "found"
@@ -339,7 +347,7 @@
                                 "interpretation": "spel"
                             }
                         },
-                        "intent": "share_side",
+                        "intent": "unclear",
                         "name": "ask-side_DETDUP_validate-response-EQ-unclear",
                         "assignments": {
                             "$side": "maybe-found"
@@ -372,6 +380,10 @@
                         "$side on the side please!",
                         "Do you have $side available as a side option?"
                     ]
+                },
+                "unclear": {
+                    "variables": [],
+                    "utterances": []
                 },
                 "fallback": {
                     "variables": [],

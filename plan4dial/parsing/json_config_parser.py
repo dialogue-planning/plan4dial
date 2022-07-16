@@ -43,8 +43,9 @@ def configure_dialogue_statement():
     }
 
 def fallback_setup(loaded_yaml):
-    # set up the action, intent, and fluents needed for default fallback
+    # set up the action, intent, and fluents needed for default fallback/unclear user input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
+    loaded_yaml["intents"]["unclear"] = {"utterances": [], "variables": []}
     loaded_yaml["actions"]["dialogue_statement"] = configure_dialogue_statement()
     loaded_yaml["context-variables"]["have-message"] = {
         "type": "flag",
@@ -148,19 +149,29 @@ def instantiate_effects(loaded_yaml):
                                     )
                                     if check_val in eff_config:
                                         new_updates[update][key] = check_val.replace(
-                                            check_val, f"${eff_config[check_val]}"
+                                            check_val, eff_config[check_val] if check_val == val else f"${eff_config[check_val]}"
                                         )
                             instantiated_outcomes[out] = {
                                 "updates": new_updates
                             }
-                        if "(valid-intent)" in eff_config:
-                            instantiated_outcomes[out][
-                                "intent"
-                            ] = eff_config["(valid-intent)"]
-                        if "(follow_up)" in eff_config:
-                            instantiated_outcomes[out][
-                                "follow_up"
-                            ] = eff_config["(follow_up)"]
+                        if "intent" in out_config:
+                            if out_config["intent"] in eff_config:
+                                instantiated_outcomes[out][
+                                    "intent"
+                                ] = eff_config[out_config["intent"]]
+                            else:
+                                instantiated_outcomes[out][
+                                    "intent"
+                                ] = out_config["intent"]
+                        if "follow_up" in out_config:
+                            if out_config["follow_up"] in eff_config:
+                                instantiated_outcomes[out][
+                                    "follow_up"
+                                ] = eff_config[out_config["follow_up"]]
+                            else:
+                                instantiated_outcomes[out][
+                                    "follow_up"
+                                ] = out_config["follow_up"]
                     if fallback:
                         instantiated_outcomes["fallback"] = configure_fallback()   
                     processed[act]["effect"][eff] = {option: {"outcomes": instantiated_outcomes}}    

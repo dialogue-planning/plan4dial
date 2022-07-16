@@ -139,6 +139,7 @@ template-effects:
             (entity):
               value: $(entity)
               known: maybe
+          intent: unclear
 
 actions:
   ask-order:
@@ -157,7 +158,7 @@ actions:
       validate-response:
         entity: order
         valid-intent: share_order
-        follow_up: ask-drink
+        valid-follow-up: ask-drink
     clarify:
       entities: order
       message_variants:
