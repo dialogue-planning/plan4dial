@@ -1,16 +1,177 @@
+import yaml
 import json
-from typing import Dict
 from pathlib import Path
-from preprocessing import preprocess_yaml
+from copy import deepcopy
 
 
-def parse_to_json_config(loaded_yaml: Dict):
-    json_config = {}
-    json_config["name"] = loaded_yaml["name"]
-    if "responses" in loaded_yaml:
-        json_config["responses"] = loaded_yaml["responses"]
+def configure_fallback():
+    return {
+        "updates": {
+            "have-message": {"value": True},
+            "force-statement": {"value": True},
+        },
+        "intent": "fallback",
+    }
+
+def configure_dialogue_statement():
+    return {
+        "type": "dialogue",
+        "condition": {
+            "have-message": {"value": True},
+            "force-statement": {"value": True},
+        },
+        "effect": {
+            "reset": {
+                "oneof": {
+                    "outcomes": {
+                        "lock": {
+                            "updates": {
+                                "have-message": {
+                                    "value": False,
+                                },
+                                "force-statement": {
+                                    "value": False,
+                                },
+                            },
+                            "intent": "fallback",
+                        }
+                    }
+                }
+            }
+        },
+        "message_variants": [],
+    }
+
+def fallback_setup(loaded_yaml):
+    # set up the action, intent, and fluents needed for default fallback
+    loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
+    loaded_yaml["actions"]["dialogue_statement"] = configure_dialogue_statement()
+    loaded_yaml["context-variables"]["have-message"] = {
+        "type": "flag",
+        "initially": False,
+    }
+    loaded_yaml["context-variables"]["force-statement"] = {
+        "type": "flag",
+        "initially": False,
+    }
+
+def instantiate_clarification_actions(loaded_yaml):
+    processed_actions = deepcopy(loaded_yaml["actions"])
+    # instantiate clarification actions  
+    for act, act_config in loaded_yaml["actions"].items():
+        if "clarify" in act_config:
+            clarify = {}
+            entities = act_config["clarify"]["entities"]
+            # if only 1 entity is provided
+            if type(entities) != list:
+                entities = [entities]
+            clarify["type"], clarify["subtype"] = (
+                act_config["type"],
+                act_config["subtype"],
+            )
+            clarify["message_variants"] = act_config["clarify"]["message_variants"]
+            clarify["condition"] = {entity: {"known": "maybe"} for entity in entities}
+            clarify["effect"] = {
+                "validate-clarification": {
+                    "oneof": {
+                        "outcomes": {
+                            "confirm": {
+                                "updates": {
+                                    entity: {
+                                        "value": f"${entity}",
+                                        "known": True,
+                                    }
+                                    for entity in entities
+                                },
+                                "intent": "confirm",
+                            },
+                            "deny": {
+                                "updates": {
+                                    entity: {
+                                        "value": None,
+                                        "known": False,
+                                    }
+                                    for entity in entities
+                                },
+                                "intent": "deny",
+                            },
+                        }
+                    }
+                }
+            }
+            processed_actions[f"clarify__{act}"] = clarify
+            del processed_actions[act]["clarify"]
+    loaded_yaml["actions"] = processed_actions
+
+def instantiate_effects(loaded_yaml):
+    processed = deepcopy(loaded_yaml["actions"])
+    # for all actions, instantiate template effect and add fallbacks if necessary
+    for act, act_config in loaded_yaml["actions"].items():
+        processed[act]["condition"]["force-statement"] = {"value": False}
+        fallback = (
+            act_config["disable-fallback"] if "disable-fallback" in act_config else True
+        )
+        if fallback:
+            if "fallback_message_variants" not in act_config:
+                processed[act]["fallback_message_variants"] = [
+                    "Sorry, I couldn't understand that input.",
+                    "I couldn't quite get that.",
+                ]
+        for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
+            if eff in loaded_yaml["template-effects"]:
+                # for ease in parsing
+                eff_config = {f"({key})": val for key, val in eff_config.items()}
+                template_eff = loaded_yaml["template-effects"][eff]
+                del template_eff["parameters"]
+                for option in template_eff:
+                    outcomes = template_eff[option]["outcomes"]
+                    instantiated_outcomes = {}
+                    for out, out_config in outcomes.items():
+                        updates = (
+                            out_config["updates"] if "updates" in out_config else None
+                        )
+                        if updates:
+                            new_updates = {}
+                            for update, update_config in updates.items():
+                                if update in eff_config:
+                                    new_updates[eff_config[update]] = template_eff[
+                                        option
+                                    ]["outcomes"][out]["updates"][update]
+                                    update = eff_config[update]
+                                for key, val in update_config.items():
+                                    check_val = (
+                                        val[1:]
+                                        if type(val) == str and val[0] == "$"
+                                        else val
+                                    )
+                                    if check_val in eff_config:
+                                        new_updates[update][key] = check_val.replace(
+                                            check_val, eff_config[check_val]
+                                        )
+                            instantiated_outcomes[out] = {
+                                "updates": new_updates
+                            }
+                        if "intent" in out_config:
+                            instantiated_outcomes[out][
+                                "intent"
+                            ] = eff_config[out_config["intent"]]
+                        if "follow_up" in out_config:
+                            instantiated_outcomes[out][
+                                "follow_up"
+                            ] = eff_config[out_config["follow_up"]]
+                    if fallback:
+                        instantiated_outcomes["fallback"] = configure_fallback()   
+                    processed[act]["effect"][eff] = {option: {"outcomes": instantiated_outcomes}}    
+            else:
+                for option in eff_config:
+                    if fallback:
+                        processed[act]["effect"][eff][option]["outcomes"]["fallback"] = configure_fallback()
+    loaded_yaml["actions"] = processed
+
+def convert_ctx_var(loaded_yaml):
+    processed = deepcopy(loaded_yaml["context-variables"])
     # convert context variables
-    json_config["context-variables"] = {
+    processed = {
         var: {} for var in loaded_yaml["context-variables"]
     }
     for ctx_var, cfg in loaded_yaml["context-variables"].items():
@@ -29,9 +190,11 @@ def parse_to_json_config(loaded_yaml: Dict):
                     json_ctx_var["config"]["pattern"] = cfg["pattern"]
             else:
                 json_ctx_var["config"] = "null"
-        json_config["context-variables"][ctx_var] = json_ctx_var
-        # do confirm/confirmation_utterance need to be given to hovor?
-    json_config["intents"] = {var: {} for var in loaded_yaml["intents"]}
+        processed[ctx_var] = json_ctx_var
+    loaded_yaml["context-variables"] = processed
+
+def convert_intents(loaded_yaml):
+    processed = deepcopy(loaded_yaml["intents"])
     # convert intents
     for intent, intent_cfg in loaded_yaml["intents"].items():
         cur_intent = {}
@@ -41,24 +204,15 @@ def parse_to_json_config(loaded_yaml: Dict):
                 [f"${var}" for var in intent_cfg["variables"]]
             )
         cur_intent["utterances"] = intent_cfg["utterances"]
-        json_config["intents"][intent] = cur_intent
-    # convert actions
-    json_config["actions"] = {act: {} for act in loaded_yaml["actions"]}
+        processed[intent] = cur_intent
+    loaded_yaml["intents"] = processed
+
+def convert_actions(loaded_yaml):
+    processed = deepcopy(loaded_yaml["actions"])
     for act in loaded_yaml["actions"]:
-        yaml_act = loaded_yaml["actions"][act]
-        cur_json_act = {}
-        # load in name, type, subtype, and message variants
-        cur_json_act["name"] = act
-        cur_json_act["type"] = yaml_act["type"]
-        if "subtype" in yaml_act:
-            cur_json_act["subtype"] = yaml_act["subtype"]
-        if "message_variants" in yaml_act:
-            cur_json_act["message_variants"] = yaml_act["message_variants"]
-        if "fallback_message_variants" in yaml_act:
-            cur_json_act["fallback_message_variants"] = yaml_act["fallback_message_variants"]
         # convert preconditions
         json_config_cond = []
-        for cond, cond_cfg in yaml_act["condition"].items():
+        for cond, cond_cfg in loaded_yaml["actions"][act]["condition"].items():
             for cond_config_key, cond_config_val in cond_cfg.items():
                 if cond_config_key == "known":
                     json_config_cond.append(
@@ -68,66 +222,70 @@ def parse_to_json_config(loaded_yaml: Dict):
                     )
                 elif cond_config_key == "value":
                     json_config_cond.append([cond, cond_config_val])
-        cur_json_act["condition"] = json_config_cond
-
-        # convert effects
-        for eff, eff_config in yaml_act["effects"].items():
-            converted_eff = {}
+        processed[act]["condition"] = json_config_cond
+        for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
+            converted_eff = deepcopy(eff_config)
+            converted_eff["global-outcome-name"] = eff
+            intents = []
             for option in eff_config:
-                converted_eff["global-outcome-name"] = eff
                 converted_eff["type"] = option
                 outcomes = eff_config[option]["outcomes"]
                 outcomes_list = []
                 for out, out_config in outcomes.items():
-                    next_outcome = {}
+                    next_outcome = deepcopy(out_config)
                     next_outcome["name"] = f"{act}_DETDUP_{eff}-EQ-{out}"
-                    updates = out_config["updates"] if "updates" in out_config else None
-                    if updates:
-                        collect_updates = {}
-                        for update, update_config in updates.items():
-                            collect_updates[update] = {
-                                "variable": update,
-                                # if the value isn't supplied then the user is likely just setting "known" to False
-                                "value": update_config["value"]
-                                if "value" in update_config
-                                else None,
-                            } 
-                            if "known" in update_config:
-                                known = update_config["known"]
-                                status = (
-                                    ("Known" if known else "Unknown")
-                                    if type(known) == bool
-                                    else "Uncertain"
-                                )
-                                collect_updates[update]["certainty"] = status
-                            collect_updates[update]["interpretation"] = update_config[
-                                "interpretation"
-                            ]
-                        next_outcome["updates"] = collect_updates
-                    next_outcome["assignments"] = out_config["assignments"]
                     if "intent" in out_config:
-                        next_outcome["intent"] = out_config["intent"]
-                    if "follow_up" in out_config:
-                        next_outcome["follow_up"] = out_config["follow_up"]
-                    if "status" in out_config:
-                        next_outcome["status"] = out_config["status"]
-                    if "response" in out_config:
-                        next_outcome["response"] = out_config["response"]
-                    if "call" in out_config:
-                        next_outcome["call"] = out_config["call"]
+                        intents.append(out_config["intent"])
+                    next_outcome[
+                        "assignments"
+                    ] = {}
+                    if "updates" in out_config:
+                        for update_var, update_cfg in out_config["updates"].items():
+                            if "known" in update_cfg:
+                                known = update_cfg["known"]
+                                next_outcome["assignments"][f"${update_var}"] = (
+                                    ("found" if known else "didnt-find")
+                                    if type(known) == bool
+                                    else "maybe-found"
+                                )
+                                next_outcome["updates"][update_var]["certainty"] = (("Known" if known else "Unknown")
+                                    if type(known) == bool
+                                    else "Uncertain")
+                            if "can-do" in update_cfg:
+                                next_outcome["updates"][f"can-do_{update_var}"] = {
+                                    "value": update_cfg["can-do"],
+                                    "interpretation": "json",
+                                }
+                                del next_outcome["updates"][update_var]
+                            else:
+                                next_outcome["updates"][update_var]["interpretation"] = (
+                                    "json"
+                                    if update_cfg["value"] in [True, False, None]
+                                    else "spel"
+                                )
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
-            cur_json_act["effect"] = converted_eff
-        if "intents" in yaml_act:
-            cur_json_act["intents"] = yaml_act["intents"]
-        if "call" in yaml_act:
-            cur_json_act["call"] = yaml_act["call"]
-        json_config["actions"][act] = cur_json_act
-    return json_config
+                del converted_eff[option]
+                processed[act]["effect"] = converted_eff
+        if intents:
+            processed[act]["intents"] = {
+                intent: loaded_yaml["intents"][intent] for intent in intents
+            }
+    loaded_yaml["actions"] = processed
+
+def preprocess_yaml(filename: str):
+    loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
+    fallback_setup(loaded_yaml)
+    instantiate_clarification_actions(loaded_yaml)
+    instantiate_effects(loaded_yaml)
+    convert_ctx_var(loaded_yaml)
+    convert_intents(loaded_yaml)
+    convert_actions(loaded_yaml)
+    del loaded_yaml["template-effects"]
+    return loaded_yaml
 
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/test.yaml").resolve())
-    json_file = open("pizza.json", "w")
-    json_file.write(json.dumps(parse_to_json_config(preprocess_yaml(f)), indent=4))
+    f = str((base / "yaml_samples/order_pizza.yaml").resolve())
+    print(json.dumps(preprocess_yaml(f), indent=4))

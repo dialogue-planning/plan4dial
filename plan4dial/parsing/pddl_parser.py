@@ -1,7 +1,7 @@
 from multiprocessing import context
 from typing import Dict, List
 from pathlib import Path
-from preprocessing import preprocess_yaml
+from plan4dial.parsing.json_config_parser import preprocess_yaml
 
 
 TAB = " " * 4

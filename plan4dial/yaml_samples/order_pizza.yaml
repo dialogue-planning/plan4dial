@@ -185,8 +185,8 @@ responses:
     - Pizza site is experiencing issues and was unable to make your request. Exiting...
 
 
-# can set up template effects
-effects:
+# can set up template effect
+template-effects:
   # general validate-response effect created by default
   validate-response:
     # parameters that the template can take
@@ -241,7 +241,7 @@ actions:
         known: false
       end_location:
         known: false
-    effects:
+    effect:
       validate-location:
         oneof:
           outcomes:
@@ -307,7 +307,7 @@ actions:
     condition:
       order:
         known: false
-    effects:
+    effect:
       # unclear-intent would be decided by the executor based on the extraction
       # results/confidence
       validate-response:
@@ -316,7 +316,7 @@ actions:
         valid-follow-up: check-order-availability
         response: "Checking order availability..."
     clarify:
-      entity: order
+      entities: order
       message_variants:
         - Would you like to order $order?
 
@@ -339,7 +339,7 @@ actions:
 #         known: true
 #       payment_method:
 #         known: false
-#     effects:
+#     effect:
 #       validate-response:
 #         entity: payment_method
 #         valid-intent: set_payment_method
@@ -361,7 +361,7 @@ actions:
 #         options:
 #           - credit
 #           - debit
-#     effects:
+#     effect:
 #       validate-response:
 #         entity: card_number
 #         valid-intent: pay
@@ -374,7 +374,7 @@ actions:
 #     condition:
 #       order:
 #         known: true
-#     effects:
+#     effect:
 #       make-call:
 #         oneof:
 #           outcomes:
@@ -415,7 +415,7 @@ actions:
 #         # with a separate intent/flag setting.
 #         # payment_method:
 #         #   options: cash
-#     effects:
+#     effect:
 #       make-call:
 #         oneof:
 #           outcomes:
