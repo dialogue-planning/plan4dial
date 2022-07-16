@@ -1,12 +1,12 @@
 {
 
-  "init": "1",
+  "init": "2",
   "goal": "0",
   "nodes" : {
     "0": {
       "expected_successor": false,
       "action": "---",
-      "state": "0xfe6b00",
+      "state": "0x2317790",
       "distance": 0,
       "is_relevant": 1,
       "is_goal": 1,
@@ -17,54 +17,168 @@
     },
     "1": {
       "expected_successor": "0",
-      "action": "ask-order",
-      "state": "0xfebfe0",
+      "action": "ask-drink",
+      "state": "0x2320190",
       "distance": 1,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "ask-order_DETDUP_validate-order-EQ-fallback",
-            "successor_id": "2"
+            "outcome_label": "ask-drink_DETDUP_validate-order-EQ-ask-drink_detdup_validate-order-eq-fallback",
+            "successor_id": "3"
         },
         {
-            "outcome_label": "ask-order_DETDUP_validate-order-EQ-valid",
+            "outcome_label": "ask-drink_DETDUP_validate-order-EQ-ask-drink_detdup_validate-order-eq-valid",
             "successor_id": "0"
         }
        ]
     },
     "2": {
       "expected_successor": "1",
-      "action": "dialogue_statement",
-      "state": "0xfee850",
+      "action": "ask-order",
+      "state": "0x2320110",
       "distance": 2,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+            "outcome_label": "ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-fallback",
+            "successor_id": "6"
+        },
+        {
+            "outcome_label": "ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-unclear",
+            "successor_id": "4"
+        },
+        {
+            "outcome_label": "ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-valid",
             "successor_id": "1"
+        }
+       ]
+    },
+    "6": {
+      "expected_successor": "2",
+      "action": "dialogue_statement",
+      "state": "0x23265d0",
+      "distance": 3,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_reset-EQ-dialogue_statement_detdup_reset-eq-lock",
+            "successor_id": "2"
+        }
+       ]
+    },
+    "3": {
+      "expected_successor": "1",
+      "action": "dialogue_statement",
+      "state": "0x2323710",
+      "distance": 2,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_reset-EQ-dialogue_statement_detdup_reset-eq-lock",
+            "successor_id": "1"
+        }
+       ]
+    },
+    "4": {
+      "expected_successor": "1",
+      "action": "clarify__ask-order",
+      "state": "0x23239b0",
+      "distance": 2,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_validate-clarification-eq-confirm",
+            "successor_id": "1"
+        },
+        {
+            "outcome_label": "clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_validate-clarification-eq-deny",
+            "successor_id": "2"
+        },
+        {
+            "outcome_label": "clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_validate-clarification-eq-fallback",
+            "successor_id": "5"
+        }
+       ]
+    },
+    "5": {
+      "expected_successor": "4",
+      "action": "dialogue_statement",
+      "state": "0x2326d10",
+      "distance": 3,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_reset-EQ-dialogue_statement_detdup_reset-eq-lock",
+            "successor_id": "4"
         }
        ]
     }
   },
   "edges" : [
-      ["1", ">", "2"],
+      ["1", ">", "3"],
       ["1", ">", "0"],
-      ["2", ">", "1"]
+      ["2", ">", "6"],
+      ["2", ">", "4"],
+      ["2", ">", "1"],
+      ["6", ">", "2"],
+      ["3", ">", "1"],
+      ["4", ">", "1"],
+      ["4", ">", "2"],
+      ["4", ">", "5"],
+      ["5", ">", "4"]
   ],
   "states" : {
-    "0xfe6b00": [
+    "0x2317790": [
       "Atom goal()"
     ],
-    "0xfebfe0": [
-      "NegatedAtom have_order()",
+    "0x2320190": [
+      "NegatedAtom have_drink()",
+      "Atom have_order()",
+      "NegatedAtom maybe-have_order()",
       "NegatedAtom force-statement()"
     ],
-    "0xfee850": [
+    "0x2320110": [
+      "NegatedAtom have_drink()",
       "NegatedAtom have_order()",
+      "NegatedAtom maybe-have_order()",
+      "NegatedAtom force-statement()"
+    ],
+    "0x23265d0": [
+      "NegatedAtom have_drink()",
+      "NegatedAtom have_order()",
+      "NegatedAtom maybe-have_order()",
+      "Atom force-statement()",
+      "Atom have-message()"
+    ],
+    "0x2323710": [
+      "NegatedAtom have_drink()",
+      "Atom have_order()",
+      "NegatedAtom maybe-have_order()",
+      "Atom force-statement()",
+      "Atom have-message()"
+    ],
+    "0x23239b0": [
+      "NegatedAtom have_drink()",
+      "NegatedAtom have_order()",
+      "Atom maybe-have_order()",
+      "NegatedAtom force-statement()"
+    ],
+    "0x2326d10": [
+      "NegatedAtom have_drink()",
+      "NegatedAtom have_order()",
+      "Atom maybe-have_order()",
       "Atom force-statement()",
       "Atom have-message()"
     ]

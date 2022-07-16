@@ -107,21 +107,23 @@ def instantiate_effects(loaded_yaml):
     processed = deepcopy(loaded_yaml["actions"])
     # for all actions, instantiate template effect and add fallbacks if necessary
     for act, act_config in loaded_yaml["actions"].items():
-        processed[act]["condition"]["force-statement"] = {"value": False}
-        fallback = (
-            act_config["disable-fallback"] if "disable-fallback" in act_config else True
-        )
-        if fallback:
-            if "fallback_message_variants" not in act_config:
-                processed[act]["fallback_message_variants"] = [
-                    "Sorry, I couldn't understand that input.",
-                    "I couldn't quite get that.",
-                ]
+        fallback = False
+        if act != "dialogue_statement":
+            processed[act]["condition"]["force-statement"] = {"value": False}
+            fallback = (
+                act_config["disable-fallback"] if "disable-fallback" in act_config else True
+            )
+            if fallback:
+                if "fallback_message_variants" not in act_config:
+                    processed[act]["fallback_message_variants"] = [
+                        "Sorry, I couldn't understand that input.",
+                        "I couldn't quite get that.",
+                    ]
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             if eff in loaded_yaml["template-effects"]:
                 # for ease in parsing
                 eff_config = {f"({key})": val for key, val in eff_config.items()}
-                template_eff = loaded_yaml["template-effects"][eff]
+                template_eff = deepcopy(loaded_yaml["template-effects"][eff])
                 del template_eff["parameters"]
                 for option in template_eff:
                     outcomes = template_eff[option]["outcomes"]
@@ -151,14 +153,14 @@ def instantiate_effects(loaded_yaml):
                             instantiated_outcomes[out] = {
                                 "updates": new_updates
                             }
-                        if "intent" in out_config:
+                        if "(valid-intent)" in eff_config:
                             instantiated_outcomes[out][
                                 "intent"
-                            ] = eff_config[out_config["intent"]]
-                        if "follow_up" in out_config:
+                            ] = eff_config["(valid-intent)"]
+                        if "(follow_up)" in eff_config:
                             instantiated_outcomes[out][
                                 "follow_up"
-                            ] = eff_config[out_config["follow_up"]]
+                            ] = eff_config["(follow_up)"]
                     if fallback:
                         instantiated_outcomes["fallback"] = configure_fallback()   
                     processed[act]["effect"][eff] = {option: {"outcomes": instantiated_outcomes}}    
@@ -190,6 +192,8 @@ def convert_ctx_var(loaded_yaml):
                     json_ctx_var["config"]["pattern"] = cfg["pattern"]
             else:
                 json_ctx_var["config"] = "null"
+        if "known" in cfg:
+            json_ctx_var["known"] = cfg["known"]
         processed[ctx_var] = json_ctx_var
     loaded_yaml["context-variables"] = processed
 
@@ -287,5 +291,5 @@ def convert_yaml(filename: str):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/order_pizza.yaml").resolve())
+    f = str((base / "yaml_samples/test.yaml").resolve())
     print(json.dumps(convert_yaml(f), indent=4))

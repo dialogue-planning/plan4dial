@@ -53,7 +53,7 @@ def action_to_pddl(act: str, act_config: Dict):
         cond_key = cond[0]
         cond_val = cond[1]
         if type(cond_val) == bool:
-            precond.append(f"({cond})" if cond_val else f"(not ({cond}))")
+            precond.append(f"({cond_key})" if cond_val else f"(not ({cond_key}))")
         else:
             if cond_val == "Known":
                 cond_val = True
@@ -201,5 +201,5 @@ def parse_to_pddl(loaded_yaml: Dict):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/order_pizza.yaml").resolve())
+    f = str((base / "yaml_samples/test.yaml").resolve())
     parse_to_pddl(convert_yaml(f))
