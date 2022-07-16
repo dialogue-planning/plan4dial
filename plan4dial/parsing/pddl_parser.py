@@ -1,7 +1,6 @@
-from multiprocessing import context
 from typing import Dict, List
 from pathlib import Path
-from plan4dial.parsing.json_config_parser import preprocess_yaml
+from json_config_parser import convert_yaml
 
 
 TAB = " " * 4
@@ -11,14 +10,11 @@ def return_flag_value_fluents(f_name: str, value: bool):
     return f"({f_name})" if value else f"(not ({f_name}))"
 
 
-def return_certainty_fluents(f_name: str, known: bool):
-    if known == True:
-        return [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"]
-    elif known == False:
-        return [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
-    elif known == "maybe":
+def return_certainty_fluents(f_name: str, known):
+    if type(known) == bool:
+        return [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"] if known else [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
+    else:
         return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"]
-
 
 def fluents_to_pddl(
     fluents: List[str],
@@ -53,54 +49,57 @@ def fluents_to_pddl(
 def action_to_pddl(act: str, act_config: Dict):
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
     precond = []
-    for cond, cond_config in act_config["condition"].items():
-        for cond_config_key, cond_config_val in cond_config.items():
-            if cond_config_key == "known":
-                precond.extend(return_certainty_fluents(cond, cond_config_val))
-            elif cond_config_key == "value":
-                precond.append(f"({cond})" if cond_config_val else f"(not ({cond}))")
+    for cond in act_config["condition"]:
+        cond_key = cond[0]
+        cond_val = cond[1]
+        if type(cond_val) == bool:
+            precond.append(f"({cond})" if cond_val else f"(not ({cond}))")
+        else:
+            if cond_val == "Known":
+                cond_val = True
+            elif cond_val == "Unknown":
+                cond_val = False
+            else:
+                cond_val = "maybe"
+            precond.extend(return_certainty_fluents(cond_key, cond_val))
     if act != "dialogue_statement":
         precond.append(f"(can-do_{act})")
     precond = fluents_to_pddl(
         fluents=precond, tabs=2, name_wrap=":precondition", and_wrap=True
     )
-    effects = f"\n{TAB * 2}:effect"
-    for eff, eff_config in act_config["effects"].items():
-        effects += f"\n{TAB * 3}(labeled-oneof {eff}"
-        for eff_type in eff_config:
-            for out, out_config in eff_config[eff_type]["outcomes"].items():
-                outcomes = []
-                if "updates" in out_config:
-                    for update_var, update_config in out_config["updates"].items():
-                        if "known" in update_config:
-                            outcomes.extend(
-                                return_certainty_fluents(
-                                    update_var, update_config["known"]
-                                )
-                            )
-                        if "value" in update_config:
-                            update_value = update_config["value"]
-                            update_var_type = type(update_value)
-                            if update_var_type == bool:
-                                outcomes.append(
-                                    return_flag_value_fluents(update_var, update_value)
-                                )
-                            elif update_var_type == "fflag":
-                                outcomes.append(
-                                    return_flag_value_fluents(update_var, update_value)
-                                    if type(update_value) == bool
-                                    else f"(maybe-{update_var})"
-                                )
-                effects += fluents_to_pddl(
-                    fluents=outcomes,
-                    tabs=4,
-                    outer_brackets=True,
-                    name_wrap=f"outcome {out}",
-                    and_wrap=True,
-                )
-        effects += f"\n{TAB * 3})"
+    effects = f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof {act_config['effect']['global-outcome-name']}"
+    for out_config in act_config["effect"]["outcomes"]:
+        outcomes = []
+        if "updates" in out_config:
+            for update_var, update_config in out_config["updates"].items():
+                if "known" in update_config:
+                    outcomes.extend(
+                        return_certainty_fluents(
+                            update_var, update_config["known"]
+                        )
+                    )
+                if "value" in update_config:
+                    update_value = update_config["value"]
+                    update_var_type = type(update_value)
+                    if update_var_type == bool:
+                        outcomes.append(
+                            return_flag_value_fluents(update_var, update_value)
+                        )
+                    elif update_var_type == "fflag":
+                        outcomes.append(
+                            return_flag_value_fluents(update_var, update_value)
+                            if type(update_value) == bool
+                            else f"(maybe-{update_var})"
+                        )
+        effects += fluents_to_pddl(
+            fluents=outcomes,
+            tabs=4,
+            outer_brackets=True,
+            name_wrap=f"outcome {out_config['name']}",
+            and_wrap=True,
+        )
+    effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
-
 
 def actions_to_pddl(loaded_yaml: Dict):
     return "\n".join(
@@ -109,7 +108,6 @@ def actions_to_pddl(loaded_yaml: Dict):
             for act, act_config in loaded_yaml["actions"].items()
         ]
     )
-
 
 def parse_init(context_variables: Dict, actions: List[str]):
     init_true = []
@@ -123,7 +121,7 @@ def parse_init(context_variables: Dict, actions: List[str]):
                 if known_status == "maybe":
                     init_true.append(f"(maybe-have_{var})")
         if var_config["type"] in ["flag", "fflag"]:
-            status = var_config["initially"]
+            status = var_config["config"]
             if type(status) == bool:
                 if status:
                     init_true.append(f"({var})")
@@ -155,7 +153,7 @@ def parse_predicates(context_variables: Dict, actions: List[str]):
             predicates.append(f"({var})")
             if var_config["type"] == "fflag":
                 predicates.append(f"(maybe-{var})")
-            status = var_config["initially"]
+            status = var_config["config"]
             if type(status) == bool:
                 if status:
                     init_true.append(f"({var})")
@@ -203,5 +201,5 @@ def parse_to_pddl(loaded_yaml: Dict):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/test.yaml").resolve())
-    parse_to_pddl(preprocess_yaml(f))
+    f = str((base / "yaml_samples/order_pizza.yaml").resolve())
+    parse_to_pddl(convert_yaml(f))

@@ -273,7 +273,7 @@ def convert_actions(loaded_yaml):
             }
     loaded_yaml["actions"] = processed
 
-def preprocess_yaml(filename: str):
+def convert_yaml(filename: str):
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
     fallback_setup(loaded_yaml)
     instantiate_clarification_actions(loaded_yaml)
@@ -288,4 +288,4 @@ def preprocess_yaml(filename: str):
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
     f = str((base / "yaml_samples/order_pizza.yaml").resolve())
-    print(json.dumps(preprocess_yaml(f), indent=4))
+    print(json.dumps(convert_yaml(f), indent=4))
