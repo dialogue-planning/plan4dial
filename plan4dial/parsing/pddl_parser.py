@@ -95,7 +95,8 @@ def action_to_pddl(act: str, act_config: Dict):
             fluents=outcomes,
             tabs=4,
             outer_brackets=True,
-            name_wrap=f"outcome {out_config['name']}",
+            # only take the raw name
+            name_wrap=f"outcome {out_config['name'].split('-')[-1]}",
             and_wrap=True,
         )
     effects += f"\n{TAB * 3})"

@@ -31,19 +31,19 @@
             )
         :effect
             (labeled-oneof validate-response
-                (outcome ask-order_DETDUP_validate-response-EQ-valid
+                (outcome valid
                     (and
                         (have_order)
                         (not (maybe-have_order))
                     )
                 )
-                (outcome ask-order_DETDUP_validate-response-EQ-unclear
+                (outcome unclear
                     (and
                         (not (have_order))
                         (maybe-have_order)
                     )
                 )
-                (outcome ask-order_DETDUP_validate-response-EQ-fallback
+                (outcome fallback
                     (and
                         (have-message)
                         (force-statement)
@@ -64,14 +64,14 @@
             )
         :effect
             (labeled-oneof validate-order
-                (outcome ask-drink_DETDUP_validate-order-EQ-valid
+                (outcome valid
                     (and
                         (have_drink)
                         (not (maybe-have_drink))
                         (goal)
                     )
                 )
-                (outcome ask-drink_DETDUP_validate-order-EQ-fallback
+                (outcome fallback
                     (and
                         (have-message)
                         (force-statement)
@@ -92,19 +92,19 @@
             )
         :effect
             (labeled-oneof validate-response
-                (outcome ask-side_DETDUP_validate-response-EQ-valid
+                (outcome valid
                     (and
                         (have_side)
                         (not (maybe-have_side))
                     )
                 )
-                (outcome ask-side_DETDUP_validate-response-EQ-unclear
+                (outcome unclear
                     (and
                         (not (have_side))
                         (maybe-have_side)
                     )
                 )
-                (outcome ask-side_DETDUP_validate-response-EQ-fallback
+                (outcome fallback
                     (and
                         (have-message)
                         (force-statement)
@@ -121,7 +121,7 @@
             )
         :effect
             (labeled-oneof reset
-                (outcome dialogue_statement_DETDUP_reset-EQ-lock
+                (outcome lock
                     (and
                         (not (have-message))
                         (not (force-statement))
@@ -140,19 +140,19 @@
             )
         :effect
             (labeled-oneof validate-clarification
-                (outcome clarify__ask-order_DETDUP_validate-clarification-EQ-confirm
+                (outcome confirm
                     (and
                         (have_order)
                         (not (maybe-have_order))
                     )
                 )
-                (outcome clarify__ask-order_DETDUP_validate-clarification-EQ-deny
+                (outcome deny
                     (and
                         (not (have_order))
                         (not (maybe-have_order))
                     )
                 )
-                (outcome clarify__ask-order_DETDUP_validate-clarification-EQ-fallback
+                (outcome fallback
                     (and
                         (have-message)
                         (force-statement)
@@ -171,19 +171,19 @@
             )
         :effect
             (labeled-oneof validate-clarification
-                (outcome clarify__ask-side_DETDUP_validate-clarification-EQ-confirm
+                (outcome confirm
                     (and
                         (have_side)
                         (not (maybe-have_side))
                     )
                 )
-                (outcome clarify__ask-side_DETDUP_validate-clarification-EQ-deny
+                (outcome deny
                     (and
                         (not (have_side))
                         (not (maybe-have_side))
                     )
                 )
-                (outcome clarify__ask-side_DETDUP_validate-clarification-EQ-fallback
+                (outcome fallback
                     (and
                         (have-message)
                         (force-statement)

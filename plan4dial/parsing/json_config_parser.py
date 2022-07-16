@@ -148,7 +148,7 @@ def instantiate_effects(loaded_yaml):
                                     )
                                     if check_val in eff_config:
                                         new_updates[update][key] = check_val.replace(
-                                            check_val, eff_config[check_val]
+                                            check_val, f"${eff_config[check_val]}"
                                         )
                             instantiated_outcomes[out] = {
                                 "updates": new_updates
@@ -292,4 +292,5 @@ def convert_yaml(filename: str):
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
     f = str((base / "yaml_samples/test.yaml").resolve())
-    print(json.dumps(convert_yaml(f), indent=4))
+    json_file = open("pizza.json", "w")
+    json_file.write(json.dumps(convert_yaml(f), indent=4))

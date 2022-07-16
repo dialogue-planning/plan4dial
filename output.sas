@@ -78,7 +78,7 @@ begin_goal
 end_goal
 15
 begin_operator
-ask-drink_DETDUP_validate-order-EQ-ask-drink_detdup_validate-order-eq-fallback 
+ask-drink_DETDUP_validate-order-EQ-fallback 
 3
 0 1
 1 0
@@ -89,7 +89,7 @@ ask-drink_DETDUP_validate-order-EQ-ask-drink_detdup_validate-order-eq-fallback
 1
 end_operator
 begin_operator
-ask-drink_DETDUP_validate-order-EQ-ask-drink_detdup_validate-order-eq-valid 
+ask-drink_DETDUP_validate-order-EQ-valid 
 3
 4 1
 1 0
@@ -100,7 +100,7 @@ ask-drink_DETDUP_validate-order-EQ-ask-drink_detdup_validate-order-eq-valid
 1
 end_operator
 begin_operator
-ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-fallback 
+ask-order_DETDUP_validate-response-EQ-fallback 
 2
 1 1
 2 1
@@ -110,7 +110,7 @@ ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-fall
 1
 end_operator
 begin_operator
-ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-unclear 
+ask-order_DETDUP_validate-response-EQ-unclear 
 2
 4 1
 1 1
@@ -119,7 +119,7 @@ ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-uncl
 1
 end_operator
 begin_operator
-ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-valid 
+ask-order_DETDUP_validate-response-EQ-valid 
 2
 4 1
 2 1
@@ -128,7 +128,7 @@ ask-order_DETDUP_validate-response-EQ-ask-order_detdup_validate-response-eq-vali
 1
 end_operator
 begin_operator
-ask-side_DETDUP_validate-response-EQ-ask-side_detdup_validate-response-eq-fallback 
+ask-side_DETDUP_validate-response-EQ-fallback 
 4
 1 0
 3 1
@@ -140,7 +140,7 @@ ask-side_DETDUP_validate-response-EQ-ask-side_detdup_validate-response-eq-fallba
 1
 end_operator
 begin_operator
-ask-side_DETDUP_validate-response-EQ-ask-side_detdup_validate-response-eq-unclear 
+ask-side_DETDUP_validate-response-EQ-unclear 
 4
 4 1
 1 0
@@ -151,7 +151,7 @@ ask-side_DETDUP_validate-response-EQ-ask-side_detdup_validate-response-eq-unclea
 1
 end_operator
 begin_operator
-ask-side_DETDUP_validate-response-EQ-ask-side_detdup_validate-response-eq-valid 
+ask-side_DETDUP_validate-response-EQ-valid 
 4
 4 1
 1 0
@@ -162,7 +162,7 @@ ask-side_DETDUP_validate-response-EQ-ask-side_detdup_validate-response-eq-valid
 1
 end_operator
 begin_operator
-clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_validate-clarification-eq-confirm 
+clarify__ask-order_DETDUP_validate-clarification-EQ-confirm 
 1
 4 1
 2
@@ -171,7 +171,7 @@ clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_va
 1
 end_operator
 begin_operator
-clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_validate-clarification-eq-deny 
+clarify__ask-order_DETDUP_validate-clarification-EQ-deny 
 2
 4 1
 1 1
@@ -180,7 +180,7 @@ clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_va
 1
 end_operator
 begin_operator
-clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_validate-clarification-eq-fallback 
+clarify__ask-order_DETDUP_validate-clarification-EQ-fallback 
 2
 1 1
 2 0
@@ -190,7 +190,7 @@ clarify__ask-order_DETDUP_validate-clarification-EQ-clarify__ask-order_detdup_va
 1
 end_operator
 begin_operator
-clarify__ask-side_DETDUP_validate-clarification-EQ-clarify__ask-side_detdup_validate-clarification-eq-confirm 
+clarify__ask-side_DETDUP_validate-clarification-EQ-confirm 
 1
 4 1
 2
@@ -199,7 +199,7 @@ clarify__ask-side_DETDUP_validate-clarification-EQ-clarify__ask-side_detdup_vali
 1
 end_operator
 begin_operator
-clarify__ask-side_DETDUP_validate-clarification-EQ-clarify__ask-side_detdup_validate-clarification-eq-deny 
+clarify__ask-side_DETDUP_validate-clarification-EQ-deny 
 2
 4 1
 3 1
@@ -208,7 +208,7 @@ clarify__ask-side_DETDUP_validate-clarification-EQ-clarify__ask-side_detdup_vali
 1
 end_operator
 begin_operator
-clarify__ask-side_DETDUP_validate-clarification-EQ-clarify__ask-side_detdup_validate-clarification-eq-fallback 
+clarify__ask-side_DETDUP_validate-clarification-EQ-fallback 
 2
 3 1
 5 0
@@ -218,7 +218,7 @@ clarify__ask-side_DETDUP_validate-clarification-EQ-clarify__ask-side_detdup_vali
 1
 end_operator
 begin_operator
-dialogue_statement_DETDUP_reset-EQ-dialogue_statement_detdup_reset-eq-lock 
+dialogue_statement_DETDUP_reset-EQ-lock 
 0
 2
 0 4 0 1
