@@ -42,7 +42,21 @@ def configure_dialogue_statement():
         "message_variants": [],
     }
 
-def fallback_setup(loaded_yaml):
+def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
+    # every outcome in the forced action other than the fallback/unclear will undo the force
+    new_outcomes = {}
+    for out, out_config in prior_outcomes.items():
+        if out_config["intent"] != "fallback":
+            if clarify:
+                if out_config["intent"] != "deny":
+                    out_config["updates"][forced_name] = {"value": False}
+            else:
+                if out_config["intent"] != "unclear":  
+                    out_config["updates"][forced_name] = {"value": False}
+        new_outcomes[out] = (out_config)
+    return new_outcomes
+
+def base_setup(loaded_yaml):
     # set up the action, intent, and fluents needed for default fallback/unclear user input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
     loaded_yaml["intents"]["unclear"] = {"utterances": [], "variables": []}
@@ -125,6 +139,7 @@ def instantiate_effects(loaded_yaml):
                 # for ease in parsing
                 eff_config = {f"({key})": val for key, val in eff_config.items()}
                 template_eff = deepcopy(loaded_yaml["template-effects"][eff])
+                parameters = {f"({p})" for p in template_eff["parameters"]}
                 del template_eff["parameters"]
                 for option in template_eff:
                     outcomes = template_eff[option]["outcomes"]
@@ -155,23 +170,21 @@ def instantiate_effects(loaded_yaml):
                                 "updates": new_updates
                             }
                         if "intent" in out_config:
-                            if out_config["intent"] in eff_config:
+                            if out_config["intent"] not in parameters:
+                                instantiated_outcomes[out]["intent"] = out_config["intent"]
+                            elif out_config["intent"] in eff_config:
                                 instantiated_outcomes[out][
                                     "intent"
                                 ] = eff_config[out_config["intent"]]
                             else:
-                                instantiated_outcomes[out][
-                                    "intent"
-                                ] = out_config["intent"]
+                                instantiated_outcomes[out]["intent"] = "fallback"
+                        else:
+                            instantiated_outcomes[out]["intent"] = "fallback"
                         if "follow_up" in out_config:
                             if out_config["follow_up"] in eff_config:
                                 instantiated_outcomes[out][
                                     "follow_up"
                                 ] = eff_config[out_config["follow_up"]]
-                            else:
-                                instantiated_outcomes[out][
-                                    "follow_up"
-                                ] = out_config["follow_up"]
                     if fallback:
                         instantiated_outcomes["fallback"] = configure_fallback()   
                     processed[act]["effect"][eff] = {option: {"outcomes": instantiated_outcomes}}    
@@ -222,6 +235,38 @@ def convert_intents(loaded_yaml):
         processed[intent] = cur_intent
     loaded_yaml["intents"] = processed
 
+def add_follow_ups(loaded_yaml):
+    processed = deepcopy(loaded_yaml["actions"])
+    forced_acts = []
+    for act in loaded_yaml["actions"]:
+        for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
+            for option in eff_config:
+                outcomes = eff_config[option]["outcomes"]
+                for out, out_config in outcomes.items():
+                    next_outcome = deepcopy(out_config)
+                    if "follow_up" in next_outcome:
+                        forced = next_outcome['follow_up']
+                        next_outcome["updates"][f"forcing__{forced}"] = {"value": True}
+                        forced_acts.append(forced)
+                    processed[act]["effect"][eff][option]["outcomes"][out] = next_outcome
+    with_forced = deepcopy(processed)
+    for forced in forced_acts:
+        name = f"forcing__{forced}"
+        clarify_name = f"clarify__{forced}"
+        for act in processed:
+            # don't lock fallback/unclear so we can loop on a forced action if needed
+            if act != forced and act != clarify_name and act != "dialogue_statement":
+                with_forced[act]["condition"][name] = {"value": False}
+        for eff, eff_config in loaded_yaml["actions"][forced]["effect"].items():
+            for option in eff_config:
+                with_forced[forced]["effect"][eff][option]["outcomes"] = reset_force_in_outcomes(False, processed[forced]["effect"][eff][option]["outcomes"], name)
+        if clarify_name in processed:
+            for eff, eff_config in loaded_yaml["actions"][clarify_name]["effect"].items():
+                for option in eff_config:
+                    with_forced[clarify_name]["effect"][eff][option]["outcomes"] = reset_force_in_outcomes(True, processed[clarify_name]["effect"][eff][option]["outcomes"], name)
+        loaded_yaml["context-variables"][name] = {"type": "flag", "config": False}
+    loaded_yaml["actions"] = with_forced
+
 def convert_actions(loaded_yaml):
     processed = deepcopy(loaded_yaml["actions"])
     for act in loaded_yaml["actions"]:
@@ -249,8 +294,7 @@ def convert_actions(loaded_yaml):
                 for out, out_config in outcomes.items():
                     next_outcome = deepcopy(out_config)
                     next_outcome["name"] = f"{act}_DETDUP_{eff}-EQ-{out}"
-                    if "intent" in out_config:
-                        intents.append(out_config["intent"])
+                    intents.append(out_config["intent"])
                     next_outcome[
                         "assignments"
                     ] = {}
@@ -266,18 +310,11 @@ def convert_actions(loaded_yaml):
                                 next_outcome["updates"][update_var]["certainty"] = (("Known" if known else "Unknown")
                                     if type(known) == bool
                                     else "Uncertain")
-                            if "can-do" in update_cfg:
-                                next_outcome["updates"][f"can-do_{update_var}"] = {
-                                    "value": update_cfg["can-do"],
-                                    "interpretation": "json",
-                                }
-                                del next_outcome["updates"][update_var]
-                            else:
-                                next_outcome["updates"][update_var]["interpretation"] = (
-                                    "json"
-                                    if update_cfg["value"] in [True, False, None]
-                                    else "spel"
-                                )
+                            next_outcome["updates"][update_var]["interpretation"] = (
+                                "json"
+                                if update_cfg["value"] in [True, False, None]
+                                else "spel"
+                            )
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
                 del converted_eff[option]
@@ -290,11 +327,12 @@ def convert_actions(loaded_yaml):
 
 def convert_yaml(filename: str):
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
-    fallback_setup(loaded_yaml)
+    base_setup(loaded_yaml)
     instantiate_clarification_actions(loaded_yaml)
     instantiate_effects(loaded_yaml)
     convert_ctx_var(loaded_yaml)
     convert_intents(loaded_yaml)
+    add_follow_ups(loaded_yaml)
     convert_actions(loaded_yaml)
     del loaded_yaml["template-effects"]
     return loaded_yaml

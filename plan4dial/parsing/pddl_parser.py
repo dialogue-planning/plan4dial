@@ -62,8 +62,7 @@ def action_to_pddl(act: str, act_config: Dict):
             else:
                 cond_val = "maybe"
             precond.extend(return_certainty_fluents(cond_key, cond_val))
-    if act != "dialogue_statement":
-        precond.append(f"(can-do_{act})")
+
     precond = fluents_to_pddl(
         fluents=precond, tabs=2, name_wrap=":precondition", and_wrap=True
     )
@@ -129,9 +128,6 @@ def parse_init(context_variables: Dict, actions: List[str]):
             else:
                 if status == "maybe":
                     init_true.append(f"(maybe-{var})")
-    for act in actions:
-        if act != "dialogue_statement":
-            init_true.append(f"(can-do_{act})")
     return init_true
 
 
@@ -161,8 +157,6 @@ def parse_predicates(context_variables: Dict, actions: List[str]):
             else:
                 if status == "maybe":
                     init_true.append(f"(maybe-{var})")
-    for act in actions:
-        predicates.append(f"(can-do_{act})")
     return predicates
 
 

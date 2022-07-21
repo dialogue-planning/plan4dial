@@ -49,6 +49,10 @@
         "force-statement": {
             "type": "flag",
             "config": false
+        },
+        "forcing__ask-drink": {
+            "type": "flag",
+            "config": false
         }
     },
     "intents": {
@@ -136,6 +140,10 @@
                 [
                     "force-statement",
                     false
+                ],
+                [
+                    "forcing__ask-drink",
+                    false
                 ]
             ],
             "effect": {
@@ -149,6 +157,10 @@
                                 "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
+                            },
+                            "forcing__ask-drink": {
+                                "value": true,
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_order",
@@ -237,7 +249,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "validate-order",
+                "global-outcome-name": "validate-response",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -248,15 +260,30 @@
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             },
-                            "goal": {
-                                "value": true,
+                            "forcing__ask-drink": {
+                                "value": false,
                                 "interpretation": "json"
                             }
                         },
                         "intent": "share_drink",
-                        "name": "ask-drink_DETDUP_validate-order-EQ-valid",
+                        "name": "ask-drink_DETDUP_validate-response-EQ-valid",
                         "assignments": {
                             "$drink": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "drink": {
+                                "value": "$drink",
+                                "known": "maybe",
+                                "certainty": "Uncertain",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "intent": "unclear",
+                        "name": "ask-drink_DETDUP_validate-response-EQ-unclear",
+                        "assignments": {
+                            "$drink": "maybe-found"
                         }
                     },
                     {
@@ -271,7 +298,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "ask-drink_DETDUP_validate-order-EQ-fallback",
+                        "name": "ask-drink_DETDUP_validate-response-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -286,6 +313,10 @@
                         "$drink with ice please!",
                         "Do you have $drink kind of drink?"
                     ]
+                },
+                "unclear": {
+                    "variables": [],
+                    "utterances": []
                 },
                 "fallback": {
                     "variables": [],
@@ -316,10 +347,14 @@
                 [
                     "force-statement",
                     false
+                ],
+                [
+                    "forcing__ask-drink",
+                    false
                 ]
             ],
             "effect": {
-                "global-outcome-name": "validate-response",
+                "global-outcome-name": "validate-side",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -329,28 +364,16 @@
                                 "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
+                            },
+                            "goal": {
+                                "value": true,
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_side",
-                        "follow_up": "(valid-follow-up)",
-                        "name": "ask-side_DETDUP_validate-response-EQ-valid",
+                        "name": "ask-side_DETDUP_validate-side-EQ-valid",
                         "assignments": {
                             "$side": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "side": {
-                                "value": "$side",
-                                "known": "maybe",
-                                "certainty": "Uncertain",
-                                "interpretation": "spel"
-                            }
-                        },
-                        "intent": "unclear",
-                        "name": "ask-side_DETDUP_validate-response-EQ-unclear",
-                        "assignments": {
-                            "$side": "maybe-found"
                         }
                     },
                     {
@@ -365,7 +388,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "ask-side_DETDUP_validate-response-EQ-fallback",
+                        "name": "ask-side_DETDUP_validate-side-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -380,10 +403,6 @@
                         "$side on the side please!",
                         "Do you have $side available as a side option?"
                     ]
-                },
-                "unclear": {
-                    "variables": [],
-                    "utterances": []
                 },
                 "fallback": {
                     "variables": [],
@@ -445,6 +464,10 @@
                 ],
                 [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__ask-drink",
                     false
                 ]
             ],
@@ -535,6 +558,113 @@
                 }
             }
         },
+        "clarify__ask-drink": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "Is your drink $drink?"
+            ],
+            "condition": [
+                [
+                    "drink",
+                    "Uncertain"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "validate-clarification",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "drink": {
+                                "value": "$drink",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            },
+                            "forcing__ask-drink": {
+                                "value": false,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "clarify__ask-drink_DETDUP_validate-clarification-EQ-confirm",
+                        "assignments": {
+                            "$drink": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "drink": {
+                                "value": null,
+                                "known": false,
+                                "certainty": "Unknown",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "clarify__ask-drink_DETDUP_validate-clarification-EQ-deny",
+                        "assignments": {
+                            "$drink": "didnt-find"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "clarify__ask-drink_DETDUP_validate-clarification-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
         "clarify__ask-side": {
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
@@ -548,6 +678,10 @@
                 ],
                 [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__ask-drink",
                     false
                 ]
             ],

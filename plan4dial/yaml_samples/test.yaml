@@ -179,18 +179,25 @@ actions:
       drink:
         known: false
     effect:
-      validate-order:
-        oneof:
-          outcomes:
-            # received a valid value
-            valid:
-              updates:
-                drink:
-                  value: $drink
-                  known: true
-                goal:
-                  value: true
-              intent: share_drink
+      validate-response:
+        entity: drink
+        valid-intent: share_drink
+      # validate-drink:
+      #   oneof:
+      #     outcomes:
+      #       # received a valid value
+      #       valid:
+      #         updates:
+      #           drink:
+      #             value: $drink
+      #             known: true
+      #           goal:
+      #             value: true
+      #         intent: share_drink
+    clarify:
+      entities: drink
+      message_variants:
+      - Is your drink $drink?
 
   ask-side:
     type: dialogue
@@ -207,9 +214,18 @@ actions:
       side:
         known: false
     effect:
-      validate-response:
-        entity: side
-        valid-intent: share_side
+      validate-side:
+        oneof:
+          outcomes:
+            # received a valid value
+            valid:
+              updates:
+                side:
+                  value: $side
+                  known: true
+                goal:
+                  value: true
+              intent: share_side
     clarify:
       entities: side
       message_variants:
