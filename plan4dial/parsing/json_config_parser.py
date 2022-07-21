@@ -4,22 +4,22 @@ from pathlib import Path
 from copy import deepcopy
 
 
-def configure_fallback():
+def configure_fallback_true():
     return {
-        "updates": {
             "have-message": {"value": True},
             "force-statement": {"value": True},
-        },
-        "intent": "fallback",
+        }
+
+def configure_fallback():
+    return {
+        "updates": configure_fallback_true(),
+        "intent": "fallback"
     }
 
 def configure_dialogue_statement():
     return {
         "type": "dialogue",
-        "condition": {
-            "have-message": {"value": True},
-            "force-statement": {"value": True},
-        },
+        "condition": configure_fallback_true(),
         "effect": {
             "reset": {
                 "oneof": {
@@ -248,6 +248,8 @@ def add_follow_ups(loaded_yaml):
                         forced = next_outcome['follow_up']
                         next_outcome["updates"][f"forcing__{forced}"] = {"value": True}
                         forced_acts.append(forced)
+                    if "response" in next_outcome:
+                        next_outcome["updates"].update(configure_fallback_true())
                     processed[act]["effect"][eff][option]["outcomes"][out] = next_outcome
     with_forced = deepcopy(processed)
     for forced in forced_acts:

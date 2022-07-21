@@ -123,6 +123,7 @@ template-effects:
     parameters:
       - entity
       - valid-intent
+
       - valid-follow-up
     oneof:
       outcomes:
@@ -179,21 +180,28 @@ actions:
       drink:
         known: false
     effect:
-      validate-response:
-        entity: drink
-        valid-intent: share_drink
-      # validate-drink:
-      #   oneof:
-      #     outcomes:
-      #       # received a valid value
-      #       valid:
-      #         updates:
-      #           drink:
-      #             value: $drink
-      #             known: true
-      #           goal:
-      #             value: true
-      #         intent: share_drink
+      # validate-response:
+      #   entity: drink
+      #   valid-intent: share_drink
+      validate-drink:
+        oneof:
+          outcomes:
+            # received a valid value
+            valid:
+              updates:
+                drink:
+                  value: $drink
+                  known: true
+                # goal:
+                #   value: true
+              intent: share_drink
+              response: Drink has been successfully logged.
+            unclear:
+              updates:
+                drink:
+                  value: $drink
+                  known: maybe
+              intent: unclear
     clarify:
       entities: drink
       message_variants:
