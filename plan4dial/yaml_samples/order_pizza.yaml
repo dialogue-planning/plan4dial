@@ -187,8 +187,8 @@ responses:
 
 # can set up template effect
 template-effects:
-  # general validate-response effect created by default
-  validate-response:
+  # general slot-fill effect created by default
+  slot-fill:
     # parameters that the template can take
     parameters:
       - entity
@@ -310,7 +310,7 @@ actions:
     effect:
       # unclear-intent would be decided by the executor based on the extraction
       # results/confidence
-      validate-response:
+      slot-fill:
         entity: order
         valid-intent: share_order
         valid-follow-up: check-order-availability
@@ -340,7 +340,7 @@ actions:
 #       payment_method:
 #         known: false
 #     effect:
-#       validate-response:
+#       slot-fill:
 #         entity: payment_method
 #         valid-intent: set_payment_method
 #     clarify:
@@ -362,7 +362,7 @@ actions:
 #           - credit
 #           - debit
 #     effect:
-#       validate-response:
+#       slot-fill:
 #         entity: card_number
 #         valid-intent: pay
 

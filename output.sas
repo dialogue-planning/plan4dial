@@ -122,7 +122,7 @@ ask-drink_DETDUP_validate-drink-EQ-valid
 1
 end_operator
 begin_operator
-ask-order_DETDUP_validate-response-EQ-fallback 
+ask-order_DETDUP_slot-fill-EQ-fallback 
 3
 4 1
 1 1
@@ -133,7 +133,7 @@ ask-order_DETDUP_validate-response-EQ-fallback
 1
 end_operator
 begin_operator
-ask-order_DETDUP_validate-response-EQ-unclear 
+ask-order_DETDUP_slot-fill-EQ-unclear 
 3
 6 1
 4 1
@@ -143,7 +143,7 @@ ask-order_DETDUP_validate-response-EQ-unclear
 1
 end_operator
 begin_operator
-ask-order_DETDUP_validate-response-EQ-valid 
+ask-order_DETDUP_slot-fill-EQ-valid 
 2
 6 1
 5 1

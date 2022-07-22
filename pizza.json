@@ -147,7 +147,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "validate-response",
+                "global-outcome-name": "slot-fill",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -165,7 +165,7 @@
                         },
                         "intent": "share_order",
                         "follow_up": "ask-drink",
-                        "name": "ask-order_DETDUP_validate-response-EQ-valid",
+                        "name": "ask-order_DETDUP_slot-fill-EQ-valid",
                         "assignments": {
                             "$order": "found"
                         }
@@ -180,7 +180,7 @@
                             }
                         },
                         "intent": "unclear",
-                        "name": "ask-order_DETDUP_validate-response-EQ-unclear",
+                        "name": "ask-order_DETDUP_slot-fill-EQ-unclear",
                         "assignments": {
                             "$order": "maybe-found"
                         }
@@ -197,7 +197,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "ask-order_DETDUP_validate-response-EQ-fallback",
+                        "name": "ask-order_DETDUP_slot-fill-EQ-fallback",
                         "assignments": {}
                     }
                 ]

@@ -82,15 +82,15 @@
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "ask-order_DETDUP_validate-response-EQ-fallback",
+            "outcome_label": "ask-order_DETDUP_slot-fill-EQ-fallback",
             "successor_id": "12"
         },
         {
-            "outcome_label": "ask-order_DETDUP_validate-response-EQ-unclear",
+            "outcome_label": "ask-order_DETDUP_slot-fill-EQ-unclear",
             "successor_id": "10"
         },
         {
-            "outcome_label": "ask-order_DETDUP_validate-response-EQ-valid",
+            "outcome_label": "ask-order_DETDUP_slot-fill-EQ-valid",
             "successor_id": "3"
         }
        ]

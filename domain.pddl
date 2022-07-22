@@ -25,7 +25,7 @@
                 (not (forcing__ask-drink))
             )
         :effect
-            (labeled-oneof validate-response
+            (labeled-oneof slot-fill
                 (outcome valid
                     (and
                         (have_order)
