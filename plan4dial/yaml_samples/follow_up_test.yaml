@@ -119,29 +119,27 @@ intents:
       - Do you have $side available as a side option?
 
 template-effects:
-  advanced_custom:
-    - slot-fill
-    # slot-fill:
-    #   parameters:
-    #     - entities
-    #     - valid-intent
-    #     - valid-follow-up
-    #   oneof:
-    #     outcomes:
-    #       # received a valid value
-    #       valid:
-    #         updates:
-    #           (entity):
-    #             value: $(entity)
-    #             known: true
-    #         intent: (valid-intent)
-    #         follow_up: (valid-follow-up)
-    #       unclear:
-    #         updates:
-    #           (entity):
-    #             value: $(entity)
-    #             known: maybe
-    #         intent: unclear
+    validate-response:
+      parameters:
+        - entities
+        - valid-intent
+        - valid-follow-up
+      oneof:
+        outcomes:
+          # received a valid value
+          valid:
+            updates:
+              (entity):
+                value: $(entity)
+                known: true
+            intent: (valid-intent)
+            follow_up: (valid-follow-up)
+          unclear:
+            updates:
+              (entity):
+                value: $(entity)
+                known: maybe
+            intent: unclear
 
 actions:
   ask-order:

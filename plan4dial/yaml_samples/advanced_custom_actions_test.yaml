@@ -1,0 +1,149 @@
+---
+version: "3.1"
+name: order-pizza
+
+context-variables:
+  order:
+    type: enum
+    known:
+      type: fflag
+      initially: false
+    options:
+      cheese:
+        variations:
+        - chz
+        - cheez
+        - mozzarella
+        - fromage
+        - cheesy
+      pepperoni:
+        variations:
+        - peperoni
+        - meat
+        - sausage
+      mushroom:
+        variations:
+        - vegetable
+        - veggie
+        - musroom
+        - shroom
+      gluten free:
+        variations:
+        - healthy
+        - gluten-free
+        - gf
+      hawaiian:
+        variations:
+        - pineapple
+        - ham and pineapple
+        - sweet
+  # drink:
+  #   type: enum
+  #   known:
+  #     type: fflag
+  #     initially: false
+  #   options:
+  #     coke:
+  #       variations:
+  #       - coke
+  #       - coca cola
+  #       - soda
+  #       - pop
+  #     coffee:
+  #       variations:
+  #       - caffeine
+  #       - decaf
+  #       - espresso
+  # side:
+  #   type: enum
+  #   known:
+  #     type: fflag
+  #     initially: false
+  #   options:
+  #     fries:
+  #       variations:
+  #       - french fries
+  #       - potato wedges
+  #       - crisps
+  #       - chips
+  #     salad:
+  #       variations:
+  #       - healthy side
+  #       - lettuce and tomatoes
+  #       - greek salad
+  #       - caesar salad
+  goal:
+    type: flag
+    initially: false
+
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  share_all:
+    variables: 
+      - order
+      - drink
+      - side
+    utterances:
+      - I want a $order pizza with a $drink and $side.
+      - $order pizza with a $drink and $side please!
+      - Can I get a $order pizza with a $drink and $side?
+
+actions:
+  ask-order:
+    advanced-custom:
+      custom-type: slot_fill
+      parameters:
+        action_name: ask-order
+        entities:
+          - order
+          # - drink
+          # - side
+        valid_intent: share_all
+        message_variants:
+          - What would you like to order? Specify your preference of pizza, drink, and side.
+        fallback_message_variants:
+          - Sorry, that isn't a valid order.
+          - I didn't quite get your order. Can you tell me again?
+        clarify_messages:
+          order:
+            - Is your order $order?
+          # drink:
+          #   - Would you like to drink $drink?
+          # side:
+          #   - Would you like to have $side on the side?
+  complete:
+    type: dialogue
+    subtype: dialogue disambiguation 
+    message_variants:
+      - Goal completed.
+    condition:
+      order:
+        known: true
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            # received a valid value
+            assign-goal:
+              updates:
+                goal:
+                  value: true
+...
