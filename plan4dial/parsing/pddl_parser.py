@@ -48,20 +48,21 @@ def fluents_to_pddl(
 
 def action_to_pddl(act: str, act_config: Dict):
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
-    precond = []
+    precond = set()
     for cond in act_config["condition"]:
         cond_key = cond[0]
         cond_val = cond[1]
-        if type(cond_val) == bool:
-            precond.append(f"({cond_key})" if cond_val else f"(not ({cond_key}))")
-        else:
-            if cond_val == "Known":
-                cond_val = True
-            elif cond_val == "Unknown":
-                cond_val = False
+        if cond_val:
+            if type(cond_val) == bool:
+                precond.add(f"({cond_key})" if cond_val else f"(not ({cond_key}))")
             else:
-                cond_val = "maybe"
-            precond.extend(return_certainty_fluents(cond_key, cond_val))
+                if cond_val == "Known":
+                    cond_val = True
+                elif cond_val == "Unknown":
+                    cond_val = False
+                elif cond_val == "Uncertain":
+                    cond_val = "maybe"
+                precond.update(return_certainty_fluents(cond_key, cond_val))
 
     precond = fluents_to_pddl(
         fluents=precond, tabs=2, name_wrap=":precondition", and_wrap=True
@@ -94,8 +95,7 @@ def action_to_pddl(act: str, act_config: Dict):
             fluents=outcomes,
             tabs=4,
             outer_brackets=True,
-            # only take the raw name
-            name_wrap=f"outcome {out_config['name'].split('-')[-1]}",
+            name_wrap=f"outcome {out_config['name']}",
             and_wrap=True,
         )
     effects += f"\n{TAB * 3})"
@@ -109,7 +109,7 @@ def actions_to_pddl(loaded_yaml: Dict):
         ]
     )
 
-def parse_init(context_variables: Dict, actions: List[str]):
+def parse_init(context_variables: Dict):
     init_true = []
     for var, var_config in context_variables.items():
         if "known" in var_config:
@@ -176,7 +176,7 @@ def parse_to_pddl(loaded_yaml: Dict):
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = fluents_to_pddl(
         fluents=parse_init(
-            loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
+            loaded_yaml["context-variables"]
         ),
         tabs=1,
         outer_brackets=True,
@@ -196,5 +196,5 @@ def parse_to_pddl(loaded_yaml: Dict):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/test.yaml").resolve())
+    f = str((base / "yaml_samples/advanced_custom_actions_test.yaml").resolve())
     parse_to_pddl(convert_yaml(f))
