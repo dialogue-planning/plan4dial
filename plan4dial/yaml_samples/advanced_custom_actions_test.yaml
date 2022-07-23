@@ -37,23 +37,23 @@ context-variables:
         - pineapple
         - ham and pineapple
         - sweet
-  # drink:
-  #   type: enum
-  #   known:
-  #     type: fflag
-  #     initially: false
-  #   options:
-  #     coke:
-  #       variations:
-  #       - coke
-  #       - coca cola
-  #       - soda
-  #       - pop
-  #     coffee:
-  #       variations:
-  #       - caffeine
-  #       - decaf
-  #       - espresso
+  drink:
+    type: enum
+    known:
+      type: fflag
+      initially: false
+    options:
+      coke:
+        variations:
+        - coke
+        - coca cola
+        - soda
+        - pop
+      coffee:
+        variations:
+        - caffeine
+        - decaf
+        - espresso
   # side:
   #   type: enum
   #   known:
@@ -100,11 +100,25 @@ intents:
     variables: 
       - order
       - drink
-      - side
+      # - side
     utterances:
-      - I want a $order pizza with a $drink and $side.
-      - $order pizza with a $drink and $side please!
-      - Can I get a $order pizza with a $drink and $side?
+      - I want a $order pizza with a $drink #and $side.
+      - $order pizza with a $drink #and $side please!
+      - Can I get a $order pizza with a $drink #and $side?
+  share_order:
+    variables:
+      - order
+    utterances:
+      - I want a $order pizza.
+      - $order pizza please!
+      - Can I get a $order pizza?
+  share_drink:
+    variables:
+      - drink
+    utterances:
+      - I want to drink $drink.
+      - $drink with ice please!
+      - Can I get $drink to drink?
 
 actions:
   ask-order:
@@ -114,28 +128,40 @@ actions:
         action_name: ask-order
         entities:
           - order
-          # - drink
+          - drink
           # - side
         valid_intent: share_all
         message_variants:
-          - What would you like to order? Specify your preference of pizza, drink, and side.
+          - What would you like to order?
         fallback_message_variants:
           - Sorry, that isn't a valid order.
-          - I didn't quite get your order. Can you tell me again?
+          - I didn't quite get your order. Can you tell me again?   
         clarify_messages:
           order:
             - Is your order $order?
-          # drink:
-          #   - Would you like to drink $drink?
+          drink:
+            - Would you like to drink $drink?
           # side:
           #   - Would you like to have $side on the side?
+        # single_slot_fallback:
+        #   order:
+        #     intent: share_order
+        #     message_variants:
+        #       - Please enter a valid pizza order.
+        #   drink:
+        #     intent: share_drink
+        #     message_variants:
+        #       - Please enter a valid drink for your order.
+
+        
   complete:
-    type: dialogue
-    subtype: dialogue disambiguation 
+    type: system 
     message_variants:
       - Goal completed.
     condition:
       order:
+        known: true
+      drink:
         known: true
     effect:
       finish:

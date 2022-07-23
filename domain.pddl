@@ -6,6 +6,8 @@
     (:predicates
         (have_order)
         (maybe-have_order)
+        (have_drink)
+        (maybe-have_drink)
         (goal)
         (have-message)
         (force-statement)
@@ -15,23 +17,70 @@
         :precondition
             (and
                 (not (have_order))
+                (not (force-statement))
+                (not (have_drink))
                 (not (maybe-have_order))
+                (not (maybe-have_drink))
             )
         :effect
             (labeled-oneof validate-slot-fill
-                (outcome ask-order_DETDUP_validate-slot-fill-EQ-order_Certain
+                (outcome order_found-drink_found
+                    (and
+                        (have_order)
+                        (not (maybe-have_order))
+                        (have_drink)
+                        (not (maybe-have_drink))
+                    )
+                )
+                (outcome order_found-drink_maybe-found
+                    (and
+                        (have_order)
+                        (not (maybe-have_order))
+                        (not (have_drink))
+                        (maybe-have_drink)
+                    )
+                )
+                (outcome order_found
                     (and
                         (have_order)
                         (not (maybe-have_order))
                     )
                 )
-                (outcome ask-order_DETDUP_validate-slot-fill-EQ-order_Uncertain
+                (outcome order_maybe-found-drink_found
+                    (and
+                        (not (have_order))
+                        (maybe-have_order)
+                        (have_drink)
+                        (not (maybe-have_drink))
+                    )
+                )
+                (outcome order_maybe-found-drink_maybe-found
+                    (and
+                        (not (have_order))
+                        (maybe-have_order)
+                        (not (have_drink))
+                        (maybe-have_drink)
+                    )
+                )
+                (outcome order_maybe-found
                     (and
                         (not (have_order))
                         (maybe-have_order)
                     )
                 )
-                (outcome ask-order_DETDUP_validate-slot-fill-EQ-fallback
+                (outcome drink_found
+                    (and
+                        (have_drink)
+                        (not (maybe-have_drink))
+                    )
+                )
+                (outcome drink_maybe-found
+                    (and
+                        (not (have_drink))
+                        (maybe-have_drink)
+                    )
+                )
+                (outcome fallback
                     (and
                         (have-message)
                         (force-statement)
@@ -43,20 +92,16 @@
         :parameters()
         :precondition
             (and
+                (not (maybe-have_drink))
                 (not (maybe-have_order))
                 (have_order)
+                (have_drink)
             )
         :effect
             (labeled-oneof finish
-                (outcome complete_DETDUP_finish-EQ-assign-goal
+                (outcome assign-goal
                     (and
                         (goal)
-                    )
-                )
-                (outcome complete_DETDUP_finish-EQ-fallback
-                    (and
-                        (have-message)
-                        (force-statement)
                     )
                 )
             )
@@ -65,12 +110,12 @@
         :parameters()
         :precondition
             (and
-                (force-statement)
                 (have-message)
+                (force-statement)
             )
         :effect
             (labeled-oneof reset
-                (outcome dialogue_statement_DETDUP_reset-EQ-lock
+                (outcome lock
                     (and
                         (not (have-message))
                         (not (force-statement))
@@ -83,23 +128,114 @@
         :precondition
             (and
                 (not (have_order))
+                (not (force-statement))
                 (maybe-have_order)
             )
         :effect
             (labeled-oneof validate-clarification
-                (outcome clarify__order_DETDUP_validate-clarification-EQ-confirm
+                (outcome confirm
                     (and
                         (have_order)
                         (not (maybe-have_order))
                     )
                 )
-                (outcome clarify__order_DETDUP_validate-clarification-EQ-deny
+                (outcome deny
                     (and
                         (not (have_order))
                         (not (maybe-have_order))
                     )
                 )
-                (outcome clarify__order_DETDUP_validate-clarification-EQ-fallback
+                (outcome fallback
+                    (and
+                        (have-message)
+                        (force-statement)
+                    )
+                )
+            )
+    )
+    (:action clarify__drink
+        :parameters()
+        :precondition
+            (and
+                (not (force-statement))
+                (not (have_drink))
+                (maybe-have_drink)
+            )
+        :effect
+            (labeled-oneof validate-clarification
+                (outcome confirm
+                    (and
+                        (have_drink)
+                        (not (maybe-have_drink))
+                    )
+                )
+                (outcome deny
+                    (and
+                        (not (have_drink))
+                        (not (maybe-have_drink))
+                    )
+                )
+                (outcome fallback
+                    (and
+                        (have-message)
+                        (force-statement)
+                    )
+                )
+            )
+    )
+    (:action single_slot__order
+        :parameters()
+        :precondition
+            (and
+                (not (have_order))
+                (not (maybe-have_order))
+                (not (force-statement))
+            )
+        :effect
+            (labeled-oneof validate-clarification
+                (outcome fill-slot
+                    (and
+                        (have_order)
+                        (not (maybe-have_order))
+                    )
+                )
+                (outcome slot-unclear
+                    (and
+                        (not (have_order))
+                        (maybe-have_order)
+                    )
+                )
+                (outcome fallback
+                    (and
+                        (have-message)
+                        (force-statement)
+                    )
+                )
+            )
+    )
+    (:action single_slot__drink
+        :parameters()
+        :precondition
+            (and
+                (not (maybe-have_drink))
+                (not (force-statement))
+                (not (have_drink))
+            )
+        :effect
+            (labeled-oneof validate-clarification
+                (outcome fill-slot
+                    (and
+                        (have_drink)
+                        (not (maybe-have_drink))
+                    )
+                )
+                (outcome slot-unclear
+                    (and
+                        (not (have_drink))
+                        (maybe-have_drink)
+                    )
+                )
+                (outcome fallback
                     (and
                         (have-message)
                         (force-statement)

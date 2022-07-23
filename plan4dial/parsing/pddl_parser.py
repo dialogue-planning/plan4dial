@@ -52,7 +52,7 @@ def action_to_pddl(act: str, act_config: Dict):
     for cond in act_config["condition"]:
         cond_key = cond[0]
         cond_val = cond[1]
-        if cond_val:
+        if cond_val != None:
             if type(cond_val) == bool:
                 precond.add(f"({cond_key})" if cond_val else f"(not ({cond_key}))")
             else:
@@ -95,7 +95,8 @@ def action_to_pddl(act: str, act_config: Dict):
             fluents=outcomes,
             tabs=4,
             outer_brackets=True,
-            name_wrap=f"outcome {out_config['name']}",
+            # only take raw name
+            name_wrap=f"outcome {out_config['name'].split('-EQ-')[1]}",
             and_wrap=True,
         )
     effects += f"\n{TAB * 3})"

@@ -1,12 +1,13 @@
+from pickletools import string1
 from typing import List, Dict
 import itertools
 
 
 def map_update(entity: str, certainty: str):
     return {
-        "Certain": {entity: {"value": f"${entity}", "known": True}},
-        "Uncertain": {entity: {"value": f"${entity}", "known": "maybe"}},
-        "Unknown": {entity: {"value": None, "known": False}},
+        "found": {entity: {"value": f"${entity}", "known": True}},
+        "maybe-found": {entity: {"value": f"${entity}", "known": "maybe"}},
+        "didnt-find": {entity: {"value": None, "known": False}},
     }[certainty]
 
 
@@ -20,11 +21,11 @@ def clarify_act(entity: str, message_variants: List[str]):
             "oneof": {
                 "outcomes": {
                     "confirm": {
-                        "updates": map_update(entity, "Certain"),
+                        "updates": map_update(entity, "found"),
                         "intent": "confirm",
                     },
                     "deny": {
-                        "updates": map_update(entity, "Unknown"),
+                        "updates": map_update(entity, "didnt-find"),
                         "intent": "deny",
                     },
                 },
@@ -34,22 +35,22 @@ def clarify_act(entity: str, message_variants: List[str]):
     return {f"clarify__{entity}": clarify}
 
 
-def single_slot(entity: str):
+def single_slot(entity: str):#, intent:str, message_variants: List[str]):
     single_slot = {}
     single_slot["type"], single_slot["subtype"] = "dialogue", "dialogue disambiguation"
     single_slot["message_variants"] = [f"Please enter a valid value for {entity}."]
-    single_slot["condition"] = {entity: {"known": "maybe"}}
+    single_slot["condition"] = {entity: {"known": False}}
     single_slot["effect"] = {
         "validate-clarification": {
             "oneof": {
                 "outcomes": {
-                    "confirm": {
-                        "updates": map_update(entity, "Certain"),
-                        "intent": "confirm",
+                    "fill-slot": {
+                        "updates": map_update(entity, "found"),
+                        "intent": {entity: "found"},
                     },
-                    "deny": {
-                        "updates": map_update(entity, "Unknown"),
-                        "intent": "deny",
+                    "slot-unclear": {
+                        "updates": map_update(entity, "maybe-found"),
+                        "intent": {entity: "maybe-found"},
                     },
                 },
             }
@@ -63,19 +64,20 @@ def slot_fill(
     message_variants: List[str],
     entities: List[str],
     clarify_messages: Dict,
-    fallback_message_variants: List,
+    fallback_message_variants: List[str],
+    # single_slot_fallback: List[str],
     valid_intent: str,
     valid_follow_up: str = None,
     additional_valid_updates: Dict = None,
 ):
     entity_combos = []
-    # create the cross-product of certain, uncertain, and unknown with the entities given
+    # create the cross-product of found, maybe-found, and didnt-find with the entities given
     for entity in entities:
         entity_combos.append(
             [
                 p
                 for p in itertools.product(
-                    [entity], ["Certain", "Uncertain", "Unknown"]
+                    [entity], ["found", "maybe-found", "didnt-find"]
                 )
             ]
         )
@@ -86,24 +88,24 @@ def slot_fill(
     action["fallback_message_variants"] = fallback_message_variants
     action["condition"] = {}
     for entity in entities:
-        action["condition"].update(map_update(entity, "Unknown"))
+        action["condition"].update(map_update(entity, "didnt-find"))
     action["effect"] = {"validate-slot-fill": {"oneof": {"outcomes": {}}}}
     for combo in entity_combos:
         next_out = {"updates": {}}
         certainties = [info[1] for info in combo]
-        if "Unknown" not in certainties and "Uncertain" not in certainties:
+        if "didnt-find" not in certainties and "maybe-found" not in certainties:
             next_out["intent"] = valid_intent
             if valid_follow_up:
                 next_out["follow_up"] = valid_follow_up
             if additional_valid_updates:
                 next_out["updates"].update(additional_valid_updates)
         else:
-            next_out["intent"] = {entity: certainty for entity, certainty in combo}
-        outcome_name = "".join(f"{entity}_{certainty}-" for entity, certainty in combo)[
+            next_out["intent"] = {entity: certainty for entity, certainty in combo if certainty != "didnt-find"}
+        outcome_name = "".join(f"{entity}_{certainty}-" for entity, certainty in combo if certainty != "didnt-find")[
             :-1
         ]
         for entity, certainty in combo:
-            if certainty != "Unknown":
+            if certainty != "didnt-find":
                 next_out["updates"].update(map_update(entity, certainty))
         if next_out["updates"]:
             action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][

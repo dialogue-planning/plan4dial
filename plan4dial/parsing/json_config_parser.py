@@ -53,7 +53,7 @@ def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
                 if out_config["intent"] != "deny":
                     out_config["updates"][forced_name] = {"value": False}
             else:
-                if out_config["intent"] != "unclear":  
+                if "uncertain" not in out_config["intent"]:  
                     out_config["updates"][forced_name] = {"value": False}
         new_outcomes[out] = (out_config)
     return new_outcomes
@@ -61,7 +61,6 @@ def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
 def base_setup(loaded_yaml):
     # set up the action, intent, and fluents needed for default fallback/unclear user input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
-    loaded_yaml["intents"]["unclear"] = {"utterances": [], "variables": []}
     loaded_yaml["actions"]["dialogue_statement"] = configure_dialogue_statement()
     loaded_yaml["context-variables"]["have-message"] = {
         "type": "flag",
@@ -125,7 +124,7 @@ def instantiate_effects(loaded_yaml):
     # for all actions, instantiate template effect and add fallbacks if necessary
     for act, act_config in loaded_yaml["actions"].items():
         fallback = False
-        if act != "dialogue_statement":
+        if act != "dialogue_statement" and act_config["type"] != "system":
             processed[act]["condition"]["force-statement"] = {"value": False}
             fallback = (
                 act_config["disable-fallback"] if "disable-fallback" in act_config else True
@@ -313,8 +312,9 @@ def convert_actions(loaded_yaml):
                     if "intent" not in out_config:
                         next_outcome["intent"] = None
                     else:
-                        if type(out_config["intent"]) != dict:
-                            intents.append(out_config["intent"])
+                        # if type(out_config["intent"]) != dict:
+                        #     if out_config["intent"] in loaded_yaml["intents"]:
+                                intents.append(out_config["intent"])
                     next_outcome[
                         "assignments"
                     ] = {}
@@ -340,20 +340,23 @@ def convert_actions(loaded_yaml):
                 del converted_eff[option]
                 processed[act]["effect"] = converted_eff
         if intents:
-            processed[act]["intents"] = {
-                intent: loaded_yaml["intents"][intent] for intent in intents
-            }
+            processed[act]["intents"] = {}
+            for intent in intents:
+                if type(intent) == str:
+                    if intent in loaded_yaml["intents"]:
+                        processed[act]["intents"][intent] = loaded_yaml["intents"][intent]
+                # else:
+                #     processed[act]["intents"][frozenset(intent.items())] = intent
     loaded_yaml["actions"] = processed
 
 def convert_yaml(filename: str):
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
     base_setup(loaded_yaml)
     # instantiate_clarification_actions(loaded_yaml)
-    instantiate_advanced_custom_actions(loaded_yaml)
-    instantiate_effects(loaded_yaml)
     convert_ctx_var(loaded_yaml)
     convert_intents(loaded_yaml)
-
+    instantiate_advanced_custom_actions(loaded_yaml)
+    instantiate_effects(loaded_yaml)
     add_follow_ups(loaded_yaml)
     convert_actions(loaded_yaml)
     # del loaded_yaml["template-effects"]
