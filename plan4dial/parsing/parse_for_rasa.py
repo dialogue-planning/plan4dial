@@ -33,8 +33,6 @@ def make_nlu_file(loaded_yaml: Dict):
                     if ctx_var["extraction"] == "regex":
                         nlu["nlu"].append({"regex": variable, "examples": "- " + ctx_var["pattern"]})
             variations = [tup for tup in product(*variations.values())]
-            for v in variations:
-                print(v)
             for variation in variations:
                 for utterance in intent_cfg["utterances"]:
                     for i in range(len(variables)):
