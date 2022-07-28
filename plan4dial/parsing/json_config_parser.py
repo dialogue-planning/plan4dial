@@ -359,7 +359,8 @@ def convert_yaml(filename: str):
     instantiate_effects(loaded_yaml)
     add_follow_ups(loaded_yaml)
     convert_actions(loaded_yaml)
-    # del loaded_yaml["template-effects"]
+    if "template-effects" in loaded_yaml:
+        del loaded_yaml["template-effects"]
     return loaded_yaml
 
 
