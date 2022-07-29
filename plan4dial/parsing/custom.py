@@ -1,4 +1,5 @@
 from pickletools import string1
+from textwrap import fill
 from typing import List, Dict
 import itertools
 
@@ -35,7 +36,15 @@ def clarify_act(entity: str, message_variants: List[str]):
     return {f"clarify__{entity}": clarify}
 
 
-def single_slot(entity: str):#, intent:str, message_variants: List[str]):
+def single_slot(entity: str, additional_updates: Dict):#, intent:str, message_variants: List[str]):
+    fill_slot_updates = map_update(entity, "found")
+    slot_unclear_updates = map_update(entity, "maybe-found")
+    key = frozenset({entity: "found"}.items())
+    if key in additional_updates:
+        fill_slot_updates.update(additional_updates[key])
+    key = frozenset({entity: "maybe-found"}.items())
+    if key in additional_updates:
+        slot_unclear_updates.update(additional_updates[key])
     single_slot = {}
     single_slot["type"], single_slot["subtype"] = "dialogue", "dialogue disambiguation"
     single_slot["message_variants"] = [f"Please enter a valid value for {entity}."]
@@ -45,11 +54,11 @@ def single_slot(entity: str):#, intent:str, message_variants: List[str]):
             "oneof": {
                 "outcomes": {
                     "fill-slot": {
-                        "updates": map_update(entity, "found"),
+                        "updates": fill_slot_updates,
                         "intent": {entity: "found"},
                     },
                     "slot-unclear": {
-                        "updates": map_update(entity, "maybe-found"),
+                        "updates": slot_unclear_updates,
                         "intent": {entity: "maybe-found"},
                     },
                 },
@@ -68,8 +77,17 @@ def slot_fill(
     # single_slot_fallback: List[str],
     valid_intent: str,
     valid_follow_up: str = None,
-    additional_valid_updates: Dict = None,
+    additional_updates: Dict = None,
 ):
+    if additional_updates:
+        for i in range(len(additional_updates)):
+            for update in additional_updates[i]["outcome"]:
+                additional_updates[i]["outcome"][update] = (
+                                        ("found" if additional_updates[i]["outcome"][update]["known"] else "didnt-find")
+                                        if type(additional_updates[i]["outcome"][update]["known"]) == bool
+                                        else "maybe-found"
+                                    )
+        additional_updates = {frozenset({entity: certainty for entity, certainty in setting["outcome"].items() if certainty != "didnt-find"}.items()): setting["also_update"] for setting in additional_updates}
     entity_combos = []
     # create the cross-product of found, maybe-found, and didnt-find with the entities given
     for entity in entities:
@@ -97,8 +115,6 @@ def slot_fill(
             next_out["intent"] = valid_intent
             if valid_follow_up:
                 next_out["follow_up"] = valid_follow_up
-            if additional_valid_updates:
-                next_out["updates"].update(additional_valid_updates)
         else:
             next_out["intent"] = {entity: certainty for entity, certainty in combo if certainty != "didnt-find"}
         outcome_name = "".join(f"{entity}_{certainty}-" for entity, certainty in combo if certainty != "didnt-find")[
@@ -107,6 +123,10 @@ def slot_fill(
         for entity, certainty in combo:
             if certainty != "didnt-find":
                 next_out["updates"].update(map_update(entity, certainty))
+        if additional_updates:
+            key = frozenset({entity: certainty for entity, certainty in combo if certainty != "didnt-find"}.items())
+            if key in additional_updates:
+                next_out["updates"].update(additional_updates[key])
         if next_out["updates"]:
             action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
                 outcome_name
@@ -118,6 +138,6 @@ def slot_fill(
     ]:
         actions.update(clarify_action)
     if len(entities) > 1:
-        for single_slot_action in [single_slot(entity) for entity in entities]:
+        for single_slot_action in [single_slot(entity, additional_updates) for entity in entities]:
             actions.update(single_slot_action)
     return actions
