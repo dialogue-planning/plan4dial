@@ -22,7 +22,14 @@ def slot_fill(
                                         if type(additional_updates[i]["outcome"][update]["known"]) == bool
                                         else "maybe-found"
                                     )
-        additional_updates = {frozenset({entity: certainty for entity, certainty in setting["outcome"].items() if certainty != "didnt-find"}.items()): setting["also_update"] for setting in additional_updates}
+        cfg_updates = {}
+        for setting in additional_updates:
+            key = frozenset({entity: certainty for entity, certainty in setting["outcome"].items() if certainty != "didnt-find"}.items())
+            cfg_updates[key] = {}
+            if "also_update" in setting:
+                cfg_updates[key]["updates"] = setting["also_update"]
+            if "response" in setting:
+                cfg_updates[key]["response"] = setting["response"]
     entity_combos = []
     # create the cross-product of found, maybe-found, and didnt-find with the entities given
     for entity in entities:
@@ -61,8 +68,11 @@ def slot_fill(
 
         if additional_updates:
             key = frozenset({entity: certainty for entity, certainty in combo if certainty != "didnt-find"}.items())
-            if key in additional_updates:
-                next_out["updates"].update(additional_updates[key])
+            if key in cfg_updates:
+                if "updates" in cfg_updates[key]:
+                    next_out["updates"].update(cfg_updates[key]["updates"])
+                if "response" in cfg_updates[key]:
+                    next_out["response"] = cfg_updates[key]["response"]
         if next_out["updates"]:
             action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
                 outcome_name
