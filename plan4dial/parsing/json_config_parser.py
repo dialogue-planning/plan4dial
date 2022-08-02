@@ -4,6 +4,7 @@ from pathlib import Path
 from copy import deepcopy
 import custom
 from inspect import getmembers, isfunction
+from utils import *
 
 
 def configure_fallback_true():
@@ -72,52 +73,57 @@ def base_setup(loaded_yaml):
     }
 
 def instantiate_clarification_actions(loaded_yaml):
-    processed_actions = deepcopy(loaded_yaml["actions"])
-    # instantiate clarification actions  
+    processed = deepcopy(loaded_yaml)
     for act, act_config in loaded_yaml["actions"].items():
         if "clarify" in act_config:
-            clarify = {}
-            entities = act_config["clarify"]["entities"]
-            # if only 1 entity is provided
-            if type(entities) != list:
-                entities = [entities]
-            clarify["type"], clarify["subtype"] = (
-                act_config["type"],
-                act_config["subtype"],
-            )
-            clarify["message_variants"] = act_config["clarify"]["message_variants"]
-            clarify["condition"] = {entity: {"known": "maybe"} for entity in entities}
-            clarify["effect"] = {
-                "validate-clarification": {
-                    "oneof": {
-                        "outcomes": {
-                            "confirm": {
-                                "updates": {
-                                    entity: {
-                                        "value": f"${entity}",
-                                        "known": True,
-                                    }
-                                    for entity in entities
-                                },
-                                "intent": "confirm",
-                            },
-                            "deny": {
-                                "updates": {
-                                    entity: {
-                                        "value": None,
-                                        "known": False,
-                                    }
-                                    for entity in entities
-                                },
-                                "intent": "deny",
-                            },
-                        }
-                    }
-                }
-            }
-            processed_actions[f"clarify__{act}"] = clarify
-            del processed_actions[act]["clarify"]
-    loaded_yaml["actions"] = processed_actions
+            update_config_clarification(processed, act, list(act_config["clarify"].keys()), act_config["clarify"])
+    # processed_actions = deepcopy(loaded_yaml["actions"])
+    # # instantiate clarification actions  
+    # for act, act_config in loaded_yaml["actions"].items():
+    #     if "clarify" in act_config:
+    #         clarify = {}
+    #         entities = act_config["clarify"]["entities"]
+    #         # if only 1 entity is provided
+    #         if type(entities) != list:
+    #             entities = [entities]
+    #         clarify["type"], clarify["subtype"] = (
+    #             act_config["type"],
+    #             act_config["subtype"],
+    #         )
+    #         clarify["message_variants"] = act_config["clarify"]["message_variants"]
+    #         clarify["condition"] = {entity: {"known": "maybe"} for entity in entities}
+    #         clarify["effect"] = {
+    #             "validate-clarification": {
+    #                 "oneof": {
+    #                     "outcomes": {
+    #                         "confirm": {
+    #                             "updates": {
+    #                                 entity: {
+    #                                     "value": f"${entity}",
+    #                                     "known": True,
+    #                                 }
+    #                                 for entity in entities
+    #                             },
+    #                             "intent": "confirm",
+    #                         },
+    #                         "deny": {
+    #                             "updates": {
+    #                                 entity: {
+    #                                     "value": None,
+    #                                     "known": False,
+    #                                 }
+    #                                 for entity in entities
+    #                             },
+    #                             "intent": "deny",
+    #                         },
+    #                     }
+    #                 }
+    #             }
+    #         }
+    #         processed_actions[f"clarify__{act}"] = clarify
+    #         del processed_actions[act]["clarify"]
+    for key in processed:
+        loaded_yaml[key] = processed[key]
 
 def instantiate_effects(loaded_yaml):
     processed = deepcopy(loaded_yaml["actions"])
@@ -197,15 +203,18 @@ def instantiate_effects(loaded_yaml):
     loaded_yaml["actions"] = processed
 
 def instantiate_advanced_custom_actions(loaded_yaml):
-    processed = deepcopy(loaded_yaml["actions"])
-    for act_config in loaded_yaml["actions"].values():
+    processed = deepcopy(loaded_yaml)
+    for act, act_config in loaded_yaml["actions"].items():
         if "advanced-custom" in act_config:
             for custom_act in getmembers(custom, isfunction):
                 act_name, act_function = custom_act[0], custom_act[1]
                 if act_name == act_config["advanced-custom"]["custom-type"]:
-                    processed.update(act_function(**act_config["advanced-custom"]["parameters"]))
+                    act_function(processed, **act_config["advanced-custom"]["parameters"])
                     break
-    loaded_yaml["actions"] = processed
+            del processed["actions"][act]
+    for key in processed:
+        loaded_yaml[key] = processed[key]
+
 
 def convert_ctx_var(loaded_yaml):
     processed = deepcopy(loaded_yaml["context-variables"])
@@ -312,9 +321,7 @@ def convert_actions(loaded_yaml):
                     if "intent" not in out_config:
                         next_outcome["intent"] = None
                     else:
-                        # if type(out_config["intent"]) != dict:
-                        #     if out_config["intent"] in loaded_yaml["intents"]:
-                                intents.append(out_config["intent"])
+                        intents.append(out_config["intent"])
                     next_outcome[
                         "assignments"
                     ] = {}
@@ -345,19 +352,17 @@ def convert_actions(loaded_yaml):
                 if type(intent) == str:
                     if intent in loaded_yaml["intents"]:
                         processed[act]["intents"][intent] = loaded_yaml["intents"][intent]
-                # else:
-                #     processed[act]["intents"][frozenset(intent.items())] = intent
     loaded_yaml["actions"] = processed
 
 def convert_yaml(filename: str):
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
     base_setup(loaded_yaml)
-    # instantiate_clarification_actions(loaded_yaml)
-    convert_ctx_var(loaded_yaml)
-    convert_intents(loaded_yaml)
+    instantiate_clarification_actions(loaded_yaml)
     instantiate_advanced_custom_actions(loaded_yaml)
     instantiate_effects(loaded_yaml)
     add_follow_ups(loaded_yaml)
+    convert_ctx_var(loaded_yaml)
+    convert_intents(loaded_yaml)
     convert_actions(loaded_yaml)
     if "template-effects" in loaded_yaml:
         del loaded_yaml["template-effects"]
@@ -366,6 +371,6 @@ def convert_yaml(filename: str):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/advanced_custom_actions_test.yaml").resolve())
+    f = str((base / "yaml_samples/advanced_custom_actions_test_v3.yaml").resolve())
     json_file = open("pizza.json", "w")
     json_file.write(json.dumps(convert_yaml(f), indent=4))

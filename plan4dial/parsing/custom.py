@@ -1,80 +1,15 @@
-from pickletools import string1
-from textwrap import fill
 from typing import List, Dict
 import itertools
-
-
-def map_update(entity: str, certainty: str):
-    return {
-        "found": {entity: {"value": f"${entity}", "known": True}},
-        "maybe-found": {entity: {"value": f"${entity}", "known": "maybe"}},
-        "didnt-find": {entity: {"value": None, "known": False}},
-    }[certainty]
-
-
-def clarify_act(entity: str, message_variants: List[str]):
-    clarify = {}
-    clarify["type"], clarify["subtype"] = "dialogue", "dialogue disambiguation"
-    clarify["message_variants"] = message_variants
-    clarify["condition"] = {entity: {"known": "maybe"}}
-    clarify["effect"] = {
-        "validate-clarification": {
-            "oneof": {
-                "outcomes": {
-                    "confirm": {
-                        "updates": map_update(entity, "found"),
-                        "intent": "confirm",
-                    },
-                    "deny": {
-                        "updates": map_update(entity, "didnt-find"),
-                        "intent": "deny",
-                    },
-                },
-            }
-        }
-    }
-    return {f"clarify__{entity}": clarify}
-
-
-def single_slot(entity: str, additional_updates: Dict):#, intent:str, message_variants: List[str]):
-    fill_slot_updates = map_update(entity, "found")
-    slot_unclear_updates = map_update(entity, "maybe-found")
-    key = frozenset({entity: "found"}.items())
-    if key in additional_updates:
-        fill_slot_updates.update(additional_updates[key])
-    key = frozenset({entity: "maybe-found"}.items())
-    if key in additional_updates:
-        slot_unclear_updates.update(additional_updates[key])
-    single_slot = {}
-    single_slot["type"], single_slot["subtype"] = "dialogue", "dialogue disambiguation"
-    single_slot["message_variants"] = [f"Please enter a valid value for {entity}."]
-    single_slot["condition"] = {entity: {"known": False}}
-    single_slot["effect"] = {
-        "validate-clarification": {
-            "oneof": {
-                "outcomes": {
-                    "fill-slot": {
-                        "updates": fill_slot_updates,
-                        "intent": {entity: "found"},
-                    },
-                    "slot-unclear": {
-                        "updates": slot_unclear_updates,
-                        "intent": {entity: "maybe-found"},
-                    },
-                },
-            }
-        }
-    }
-    return {f"single_slot__{entity}": single_slot}
+from utils import *
 
 
 def slot_fill(
+    loaded_yaml: Dict,
     action_name: str,
     message_variants: List[str],
     entities: List[str],
-    clarify_messages: Dict,
+    clarify: Dict,
     fallback_message_variants: List[str],
-    # single_slot_fallback: List[str],
     valid_intent: str,
     valid_follow_up: str = None,
     additional_updates: Dict = None,
@@ -123,6 +58,7 @@ def slot_fill(
         for entity, certainty in combo:
             if certainty != "didnt-find":
                 next_out["updates"].update(map_update(entity, certainty))
+
         if additional_updates:
             key = frozenset({entity: certainty for entity, certainty in combo if certainty != "didnt-find"}.items())
             if key in additional_updates:
@@ -132,12 +68,7 @@ def slot_fill(
                 outcome_name
             ] = next_out
     actions = {action_name: action}
-
-    for clarify_action in [
-        clarify_act(entity, clarify_messages[entity]) for entity in entities
-    ]:
-        actions.update(clarify_action)
-    if len(entities) > 1:
-        for single_slot_action in [single_slot(entity, additional_updates) for entity in entities]:
-            actions.update(single_slot_action)
-    return actions
+    new_actions, new_ctx_vars = create_clarifications_single_slots(action_name, action, entities, clarify, additional_updates)
+    actions.update(new_actions)
+    loaded_yaml["actions"].update(actions)
+    loaded_yaml["context-variables"].update(new_ctx_vars)

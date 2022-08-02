@@ -197,5 +197,5 @@ def parse_to_pddl(loaded_yaml: Dict):
 
 if __name__ == "__main__":
     base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/advanced_custom_actions_test.yaml").resolve())
+    f = str((base / "yaml_samples/advanced_custom_actions_test_v3.yaml").resolve())
     parse_to_pddl(convert_yaml(f))
