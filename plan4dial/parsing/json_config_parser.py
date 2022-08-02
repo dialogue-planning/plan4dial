@@ -77,51 +77,6 @@ def instantiate_clarification_actions(loaded_yaml):
     for act, act_config in loaded_yaml["actions"].items():
         if "clarify" in act_config:
             update_config_clarification(processed, act, list(act_config["clarify"].keys()), act_config["clarify"])
-    # processed_actions = deepcopy(loaded_yaml["actions"])
-    # # instantiate clarification actions  
-    # for act, act_config in loaded_yaml["actions"].items():
-    #     if "clarify" in act_config:
-    #         clarify = {}
-    #         entities = act_config["clarify"]["entities"]
-    #         # if only 1 entity is provided
-    #         if type(entities) != list:
-    #             entities = [entities]
-    #         clarify["type"], clarify["subtype"] = (
-    #             act_config["type"],
-    #             act_config["subtype"],
-    #         )
-    #         clarify["message_variants"] = act_config["clarify"]["message_variants"]
-    #         clarify["condition"] = {entity: {"known": "maybe"} for entity in entities}
-    #         clarify["effect"] = {
-    #             "validate-clarification": {
-    #                 "oneof": {
-    #                     "outcomes": {
-    #                         "confirm": {
-    #                             "updates": {
-    #                                 entity: {
-    #                                     "value": f"${entity}",
-    #                                     "known": True,
-    #                                 }
-    #                                 for entity in entities
-    #                             },
-    #                             "intent": "confirm",
-    #                         },
-    #                         "deny": {
-    #                             "updates": {
-    #                                 entity: {
-    #                                     "value": None,
-    #                                     "known": False,
-    #                                 }
-    #                                 for entity in entities
-    #                             },
-    #                             "intent": "deny",
-    #                         },
-    #                     }
-    #                 }
-    #             }
-    #         }
-    #         processed_actions[f"clarify__{act}"] = clarify
-    #         del processed_actions[act]["clarify"]
     for key in processed:
         loaded_yaml[key] = processed[key]
 
