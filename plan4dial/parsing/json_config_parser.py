@@ -48,14 +48,25 @@ def configure_dialogue_statement():
 def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
     # every outcome in the forced action other than the fallback/unclear will undo the force
     new_outcomes = {}
+    reset_force = False
     for out, out_config in prior_outcomes.items():
-        if out_config["intent"] != "fallback":
-            if clarify:
-                if out_config["intent"] != "deny":
-                    out_config["updates"][forced_name] = {"value": False}
-            else:
-                if "uncertain" not in out_config["intent"]:  
-                    out_config["updates"][forced_name] = {"value": False}
+        if "intent" in out_config:
+            intent = out_config["intent"]
+            if intent != "fallback":
+                if clarify:
+                    if intent != "deny":
+                        reset_force = True
+                else:
+                    if type(intent) == str:
+                        if "maybe" not in intent:  
+                            reset_force = True
+                    else:
+                        if "maybe" not in intent.values():  
+                            reset_force = True
+        else:
+            reset_force = True
+        if reset_force:
+            out_config["updates"][forced_name] = {"value": False}
         new_outcomes[out] = (out_config)
     return new_outcomes
 
@@ -243,7 +254,7 @@ def add_follow_ups(loaded_yaml):
             for eff, eff_config in loaded_yaml["actions"][clarify_name]["effect"].items():
                 for option in eff_config:
                     with_forced[clarify_name]["effect"][eff][option]["outcomes"] = reset_force_in_outcomes(True, processed[clarify_name]["effect"][eff][option]["outcomes"], name)
-        loaded_yaml["context-variables"][name] = {"type": "flag", "config": False}
+        loaded_yaml["context-variables"][name] = {"type": "flag", "initially": False}
     loaded_yaml["actions"] = with_forced
 
 def convert_actions(loaded_yaml):
