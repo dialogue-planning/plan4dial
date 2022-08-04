@@ -69,8 +69,8 @@ def single_slot(entity: str, clarify_cfg: Dict, additional_updates: Dict=None):
             }
         }
     }
-    if "response" in clarify_cfg:
-        single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"]["fill-slot"]["response"] = clarify_cfg["response"]
+    if "response_variants" in clarify_cfg:
+        single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"]["fill-slot"]["response_variants"] = clarify_cfg["response_variants"]
     if "fallback_message_variants" in clarify_cfg:
         single_slot["fallback_message_variants"] = clarify_cfg["fallback_message_variants"]
 

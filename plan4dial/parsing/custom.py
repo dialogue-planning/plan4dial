@@ -28,8 +28,8 @@ def slot_fill(
             cfg_updates[key] = {}
             if "also_update" in setting:
                 cfg_updates[key]["updates"] = setting["also_update"]
-            if "response" in setting:
-                cfg_updates[key]["response"] = setting["response"]
+            if "response_variants" in setting:
+                cfg_updates[key]["response_variants"] = setting["response_variants"]
     entity_combos = []
     # create the cross-product of found, maybe-found, and didnt-find with the entities given
     for entity in entities:
@@ -71,8 +71,8 @@ def slot_fill(
             if key in cfg_updates:
                 if "updates" in cfg_updates[key]:
                     next_out["updates"].update(cfg_updates[key]["updates"])
-                if "response" in cfg_updates[key]:
-                    next_out["response"] = cfg_updates[key]["response"]
+                if "response_variants" in cfg_updates[key]:
+                    next_out["response_variants"] = cfg_updates[key]["response_variants"]
         if next_out["updates"]:
             action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
                 outcome_name

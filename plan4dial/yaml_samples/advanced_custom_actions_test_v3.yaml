@@ -151,15 +151,18 @@ actions:
           - outcome:
               pizza_flavour:
                 known: true
-            response: Pizza has been logged.
+            response_variants:
+              - Pizza has been logged.
           - outcome:
               side:
                 known: true
-            response: Side has been logged.
+            response_variants:
+              - Side has been logged.
           - outcome:
               drink:
                 known: true
-            response: Drink has been logged.
+            response_variants:
+              - Drink has been logged.
           - outcome:
               pizza_flavour:
                 known: maybe
@@ -179,7 +182,7 @@ actions:
               - What type of pizza do you want to order?
             fallback_message_variants:
               - Sorry, that isn't a valid pizza order.
-            response:
+            response_variants:
               - Pizza order has been logged.
           drink:
             message_variants:
@@ -188,7 +191,7 @@ actions:
               - What kind of drink would you like?
             fallback_message_variants:
               - Sorry, that isn't a valid drink.
-            response:
+            response_variants:
               - Drink has been logged.
           side:
             message_variants:
@@ -197,7 +200,7 @@ actions:
               - What would you like to have on the side?
             fallback_message_variants:
               - Sorry, that isn't a valid side.
-            response:
+            response_variants:
               - Side has been logged.
 
   # force-all:

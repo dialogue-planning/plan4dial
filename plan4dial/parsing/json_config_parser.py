@@ -225,7 +225,7 @@ def add_follow_ups(loaded_yaml):
                         forced = next_outcome['follow_up']
                         next_outcome["updates"][f"forcing__{forced}"] = {"value": True}
                         forced_acts.append(forced)
-                    if "response" in next_outcome:
+                    if "response_variants" in next_outcome:
                         next_outcome["updates"].update(configure_fallback_true())
                     processed[act]["effect"][eff][option]["outcomes"][out] = next_outcome
     with_forced = deepcopy(processed)
