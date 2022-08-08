@@ -37,7 +37,7 @@ def clarify_act(entity: str, message_variants: List[str], single_slot: bool):
     return {f"clarify__{entity}": clarify}
 
 
-def single_slot(entity: str, clarify_cfg: Dict, additional_updates: Dict=None):    
+def single_slot(entity: str, clarify_cfg: Dict, additional_updates: Dict = None):
     fill_slot_updates = map_update(entity, "found")
     slot_unclear_updates = map_update(entity, "maybe-found")
     fill_slot_updates[f"allow_single_slot_{entity}"] = {"value": False}
@@ -48,11 +48,18 @@ def single_slot(entity: str, clarify_cfg: Dict, additional_updates: Dict=None):
         key = frozenset({entity: "maybe-found"}.items())
         if key in additional_updates:
             slot_unclear_updates.update(additional_updates[key])
-    message_variants = clarify_cfg["single_slot_message_variants"] if "single_slot_message_variants" in clarify_cfg else [f"Please enter a valid value for {entity.replace('_', ' ')}."]
+    message_variants = (
+        clarify_cfg["single_slot_message_variants"]
+        if "single_slot_message_variants" in clarify_cfg
+        else [f"Please enter a valid value for {entity.replace('_', ' ')}."]
+    )
     single_slot = {}
     single_slot["type"], single_slot["subtype"] = "dialogue", "dialogue disambiguation"
     single_slot["message_variants"] = message_variants
-    single_slot["condition"] = {entity: {"known": False}, f"allow_single_slot_{entity}": {"value": True}}
+    single_slot["condition"] = {
+        entity: {"known": False},
+        f"allow_single_slot_{entity}": {"value": True},
+    }
     single_slot["effect"] = {
         "validate-slot-fill": {
             "oneof": {
@@ -70,13 +77,24 @@ def single_slot(entity: str, clarify_cfg: Dict, additional_updates: Dict=None):
         }
     }
     if "response_variants" in clarify_cfg:
-        single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"]["fill-slot"]["response_variants"] = clarify_cfg["response_variants"]
+        single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"]["fill-slot"][
+            "response_variants"
+        ] = clarify_cfg["response_variants"]
     if "fallback_message_variants" in clarify_cfg:
-        single_slot["fallback_message_variants"] = clarify_cfg["fallback_message_variants"]
+        single_slot["fallback_message_variants"] = clarify_cfg[
+            "fallback_message_variants"
+        ]
 
     return {f"single_slot__{entity}": single_slot}
 
-def create_clarifications_single_slots(original_act_name: str, original_act_config: Dict, entities: List[str], clarify: Dict, additional_updates: Dict=None):
+
+def create_clarifications_single_slots(
+    original_act_name: str,
+    original_act_config: Dict,
+    entities: List[str],
+    clarify: Dict,
+    additional_updates: Dict = None,
+):
     new_actions = {}
     new_ctx_vars = {}
 
@@ -88,15 +106,41 @@ def create_clarifications_single_slots(original_act_name: str, original_act_conf
                 for out, out_config in outcomes.items():
                     for entity in entities:
                         if entity not in out_config["updates"]:
-                            new_ctx_vars[f"allow_single_slot_{entity}"] = {"type": "flag", "initially": False}
-                            original_act_config["effect"][eff][option]["outcomes"][out]["updates"][f"allow_single_slot_{entity}"] = {"value": True}
-                            new_actions.update(single_slot(entity, clarify[entity], additional_updates))
+                            new_ctx_vars[f"allow_single_slot_{entity}"] = {
+                                "type": "flag",
+                                "initially": False,
+                            }
+                            original_act_config["effect"][eff][option]["outcomes"][out][
+                                "updates"
+                            ][f"allow_single_slot_{entity}"] = {"value": True}
+                            new_actions.update(
+                                single_slot(entity, clarify[entity], additional_updates)
+                            )
         new_actions[original_act_name] = original_act_config
         for entity in entities:
-            new_actions.update(clarify_act(entity, clarify[entity]["message_variants"], f"allow_single_slot_{entity}" in new_ctx_vars))
+            new_actions.update(
+                clarify_act(
+                    entity,
+                    clarify[entity]["message_variants"],
+                    f"allow_single_slot_{entity}" in new_ctx_vars,
+                )
+            )
     return new_actions, new_ctx_vars
 
-def update_config_clarification(loaded_yaml: Dict, original_act_name: str, entities: List[str], clarify: Dict, additional_updates: Dict=None):
-    new_actions, new_ctx_vars = create_clarifications_single_slots(original_act_name, loaded_yaml["actions"][original_act_name], entities, clarify, additional_updates)
+
+def update_config_clarification(
+    loaded_yaml: Dict,
+    original_act_name: str,
+    entities: List[str],
+    clarify: Dict,
+    additional_updates: Dict = None,
+):
+    new_actions, new_ctx_vars = create_clarifications_single_slots(
+        original_act_name,
+        loaded_yaml["actions"][original_act_name],
+        entities,
+        clarify,
+        additional_updates,
+    )
     loaded_yaml["actions"].update(new_actions)
     loaded_yaml["context-variables"].update(new_ctx_vars)

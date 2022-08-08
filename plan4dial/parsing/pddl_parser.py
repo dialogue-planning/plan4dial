@@ -12,9 +12,14 @@ def return_flag_value_fluents(f_name: str, value: bool):
 
 def return_certainty_fluents(f_name: str, known):
     if type(known) == bool:
-        return [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"] if known else [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
+        return (
+            [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"]
+            if known
+            else [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
+        )
     else:
         return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"]
+
 
 def fluents_to_pddl(
     fluents: List[str],
@@ -74,9 +79,7 @@ def action_to_pddl(act: str, act_config: Dict):
             for update_var, update_config in out_config["updates"].items():
                 if "known" in update_config:
                     outcomes.extend(
-                        return_certainty_fluents(
-                            update_var, update_config["known"]
-                        )
+                        return_certainty_fluents(update_var, update_config["known"])
                     )
                 if "value" in update_config:
                     update_value = update_config["value"]
@@ -102,6 +105,7 @@ def action_to_pddl(act: str, act_config: Dict):
     effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
 
+
 def actions_to_pddl(loaded_yaml: Dict):
     return "\n".join(
         [
@@ -109,6 +113,7 @@ def actions_to_pddl(loaded_yaml: Dict):
             for act, act_config in loaded_yaml["actions"].items()
         ]
     )
+
 
 def parse_init(context_variables: Dict):
     init_true = []
@@ -174,9 +179,7 @@ def parse_to_pddl(loaded_yaml: Dict):
     domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = fluents_to_pddl(
-        fluents=parse_init(
-            loaded_yaml["context-variables"]
-        ),
+        fluents=parse_init(loaded_yaml["context-variables"]),
         tabs=1,
         outer_brackets=True,
         name_wrap=":init",

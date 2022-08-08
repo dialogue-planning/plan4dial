@@ -18,13 +18,23 @@ def slot_fill(
         for i in range(len(additional_updates)):
             for update in additional_updates[i]["outcome"]:
                 additional_updates[i]["outcome"][update] = (
-                                        ("found" if additional_updates[i]["outcome"][update]["known"] else "didnt-find")
-                                        if type(additional_updates[i]["outcome"][update]["known"]) == bool
-                                        else "maybe-found"
-                                    )
+                    (
+                        "found"
+                        if additional_updates[i]["outcome"][update]["known"]
+                        else "didnt-find"
+                    )
+                    if type(additional_updates[i]["outcome"][update]["known"]) == bool
+                    else "maybe-found"
+                )
         cfg_updates = {}
         for setting in additional_updates:
-            key = frozenset({entity: certainty for entity, certainty in setting["outcome"].items() if certainty != "didnt-find"}.items())
+            key = frozenset(
+                {
+                    entity: certainty
+                    for entity, certainty in setting["outcome"].items()
+                    if certainty != "didnt-find"
+                }.items()
+            )
             cfg_updates[key] = {}
             if "also_update" in setting:
                 cfg_updates[key]["updates"] = setting["also_update"]
@@ -58,27 +68,43 @@ def slot_fill(
             if valid_follow_up:
                 next_out["follow_up"] = valid_follow_up
         else:
-            next_out["intent"] = {entity: certainty for entity, certainty in combo if certainty != "didnt-find"}
-        outcome_name = "".join(f"{entity}_{certainty}-" for entity, certainty in combo if certainty != "didnt-find")[
-            :-1
-        ]
+            next_out["intent"] = {
+                entity: certainty
+                for entity, certainty in combo
+                if certainty != "didnt-find"
+            }
+        outcome_name = "".join(
+            f"{entity}_{certainty}-"
+            for entity, certainty in combo
+            if certainty != "didnt-find"
+        )[:-1]
         for entity, certainty in combo:
             if certainty != "didnt-find":
                 next_out["updates"].update(map_update(entity, certainty))
 
         if additional_updates:
-            key = frozenset({entity: certainty for entity, certainty in combo if certainty != "didnt-find"}.items())
+            key = frozenset(
+                {
+                    entity: certainty
+                    for entity, certainty in combo
+                    if certainty != "didnt-find"
+                }.items()
+            )
             if key in cfg_updates:
                 if "updates" in cfg_updates[key]:
                     next_out["updates"].update(cfg_updates[key]["updates"])
                 if "response_variants" in cfg_updates[key]:
-                    next_out["response_variants"] = cfg_updates[key]["response_variants"]
+                    next_out["response_variants"] = cfg_updates[key][
+                        "response_variants"
+                    ]
         if next_out["updates"]:
             action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
                 outcome_name
             ] = next_out
     actions = {action_name: action}
-    new_actions, new_ctx_vars = create_clarifications_single_slots(action_name, action, entities, clarify, additional_updates)
+    new_actions, new_ctx_vars = create_clarifications_single_slots(
+        action_name, action, entities, clarify, additional_updates
+    )
     actions.update(new_actions)
     loaded_yaml["actions"].update(actions)
     loaded_yaml["context-variables"].update(new_ctx_vars)
