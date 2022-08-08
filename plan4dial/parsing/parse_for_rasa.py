@@ -1,6 +1,5 @@
 from pathlib import Path
 import yaml
-from typing import Dict
 from itertools import product
 
 
@@ -11,7 +10,8 @@ def create_intent_example(
         true_value = extracted_value
     return f'[{extracted_value}]{{"entity": "{entity}", "value": "{true_value}"}}'
 
-def make_nlu_file(loaded_yaml: Dict):
+def make_nlu_file(filename: str):
+    loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
     intents = loaded_yaml["intents"]
     nlu = {"nlu": []}
     for intent, intent_cfg in intents.items():

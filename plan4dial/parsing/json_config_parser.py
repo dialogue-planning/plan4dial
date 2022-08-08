@@ -2,9 +2,10 @@ import yaml
 import json
 from pathlib import Path
 from copy import deepcopy
-import custom
+
 from inspect import getmembers, isfunction
-from utils import *
+from ..custom_actions.utils import *
+import plan4dial.custom_actions.custom as custom
 
 
 def configure_fallback_true():

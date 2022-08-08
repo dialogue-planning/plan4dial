@@ -1,6 +1,6 @@
 from typing import List, Dict
 import itertools
-from utils import *
+from .utils import *
 
 
 def slot_fill(
