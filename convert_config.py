@@ -5,6 +5,7 @@ from pathlib import Path
 from plan4dial.parsing.json_config_parser import convert_yaml
 from plan4dial.parsing.pddl_parser import parse_to_pddl
 from plan4dial.parsing.parse_for_rasa import make_nlu_file
+from rasa.model_training import train_nlu
 
 def generate_files(yaml_filename: str, domain_name: str, output_folder: str, rbp_path: str):
     # convert to hovor json config
@@ -21,6 +22,13 @@ def generate_files(yaml_filename: str, domain_name: str, output_folder: str, rbp
     writer = open(str((Path(__file__).parent / output_folder / f"{domain_name}_nlu.yaml").resolve()), "w")
     # parse for rasa
     yaml.dump(make_nlu_file(yaml_filename), writer)
+    # train rasa NLU model
+    train_nlu(
+        config=f"./{domain_name}/config.yml",
+        nlu_data=f"./{domain_name}/nlu.yml",
+        output=f"./{domain_name}",
+        fixed_model_name=f"{domain_name}-model"
+    )
     # generate PDDL files; convert policy.out to a prp.json file
     cmd = f"{rbp_path}/prp {domain_str} {problem_str} --output-format 3"
     os.system(cmd)
@@ -28,7 +36,7 @@ def generate_files(yaml_filename: str, domain_name: str, output_folder: str, rbp
         plan_data = {f"plan": json.load(f)}
     with open(str((Path(__file__).parent / output_folder / f"{domain_name}.prp.json").resolve()), 'w') as f:
         json.dump(plan_data, f, indent=4)
-    # delete output files
+    # delete extra output files
     os.remove("policy.out")
     os.remove("output.sas")
     
