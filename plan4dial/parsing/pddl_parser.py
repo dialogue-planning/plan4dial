@@ -50,11 +50,9 @@ def fluents_to_pddl(
         )
     return fluents
 
-
-def action_to_pddl(act: str, act_config: Dict):
-    act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
+def get_precond_fluents(conditions):
     precond = set()
-    for cond in act_config["condition"]:
+    for cond in conditions:
         cond_key = cond[0]
         cond_val = cond[1]
         if cond_val != None:
@@ -68,34 +66,43 @@ def action_to_pddl(act: str, act_config: Dict):
                 elif cond_val == "Uncertain":
                     cond_val = "maybe"
                 precond.update(return_certainty_fluents(cond_key, cond_val))
+    return precond
+
+def get_update_fluents(updates):
+    outcomes = set()
+    for update_var, update_config in updates.items():
+        if "known" in update_config:
+            outcomes.update(
+                return_certainty_fluents(update_var, update_config["known"])
+            )
+        if "value" in update_config:
+            update_value = update_config["value"]
+            update_var_type = type(update_value)
+            if update_var_type == bool:
+                outcomes.add(
+                    return_flag_value_fluents(update_var, update_value)
+                )
+            elif update_var_type == "fflag":
+                outcomes.add(
+                    return_flag_value_fluents(update_var, update_value)
+                    if type(update_value) == bool
+                    else f"(maybe-{update_var})"
+                )
+    return outcomes
+
+def action_to_pddl(act: str, act_config: Dict):
+    act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
+
 
     precond = fluents_to_pddl(
-        fluents=precond, tabs=2, name_wrap=":precondition", and_wrap=True
+        fluents=get_precond_fluents(act_config["condition"]), tabs=2, name_wrap=":precondition", and_wrap=True
     )
     effects = f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof {act_config['effect']['global-outcome-name']}"
     for out_config in act_config["effect"]["outcomes"]:
-        outcomes = []
         if "updates" in out_config:
-            for update_var, update_config in out_config["updates"].items():
-                if "known" in update_config:
-                    outcomes.extend(
-                        return_certainty_fluents(update_var, update_config["known"])
-                    )
-                if "value" in update_config:
-                    update_value = update_config["value"]
-                    update_var_type = type(update_value)
-                    if update_var_type == bool:
-                        outcomes.append(
-                            return_flag_value_fluents(update_var, update_value)
-                        )
-                    elif update_var_type == "fflag":
-                        outcomes.append(
-                            return_flag_value_fluents(update_var, update_value)
-                            if type(update_value) == bool
-                            else f"(maybe-{update_var})"
-                        )
+            update_fluents = get_update_fluents(out_config["updates"])
         effects += fluents_to_pddl(
-            fluents=outcomes,
+            fluents=update_fluents,
             tabs=4,
             outer_brackets=True,
             # only take raw name
@@ -105,7 +112,6 @@ def action_to_pddl(act: str, act_config: Dict):
     effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
 
-
 def actions_to_pddl(loaded_yaml: Dict):
     return "\n".join(
         [
@@ -114,30 +120,38 @@ def actions_to_pddl(loaded_yaml: Dict):
         ]
     )
 
-
 def parse_init(context_variables: Dict):
-    init_true = []
+    init_true = set()
+    init_true_complete = set()
     for var, var_config in context_variables.items():
         if "known" in var_config:
             known_status = var_config["known"]["initially"]
             if type(known_status) == bool:
                 if known_status:
-                    init_true.append(f"(have_{var})")
+                    init_true.add(f"(have_{var})")
+                else:
+                    init_true_complete.add(f"(not (have_{var}))")
+                    if var_config["known"]["type"] == "fflag":
+                        init_true_complete.add(f"(not (maybe-have_{var}))")
             else:
                 if known_status == "maybe":
-                    init_true.append(f"(maybe-have_{var})")
+                    init_true.add(f"(maybe-have_{var})")
         if var_config["type"] in ["flag", "fflag"]:
             status = var_config["config"]
             if type(status) == bool:
                 if status:
-                    init_true.append(f"({var})")
+                    init_true.add(f"({var})")
+                else:
+                    init_true_complete.add(f"(not ({var}))")
+                    if var_config["type"] == "fflag":
+                        init_true_complete.add(f"(not (maybe-{var}))")
             else:
                 if status == "maybe":
-                    init_true.append(f"(maybe-{var})")
-    return init_true
+                    init_true.add(f"(maybe-{var})")
+    init_true_complete.update(init_true)
+    return init_true, init_true_complete
 
-
-def parse_predicates(context_variables: Dict, actions: List[str]):
+def parse_predicates(context_variables: Dict):
     predicates = []
     init_true = []
     for var, var_config in context_variables.items():
@@ -169,8 +183,7 @@ def parse_predicates(context_variables: Dict, actions: List[str]):
 def parse_to_pddl(loaded_yaml: Dict):
     predicates = fluents_to_pddl(
         fluents=parse_predicates(
-            loaded_yaml["context-variables"], loaded_yaml["actions"].keys()
-        ),
+            loaded_yaml["context-variables"]),
         tabs=1,
         outer_brackets=True,
         name_wrap=":predicates",
@@ -179,7 +192,7 @@ def parse_to_pddl(loaded_yaml: Dict):
     domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = fluents_to_pddl(
-        fluents=parse_init(loaded_yaml["context-variables"]),
+        fluents=parse_init(loaded_yaml["context-variables"])[0],
         tabs=1,
         outer_brackets=True,
         name_wrap=":init",

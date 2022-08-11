@@ -1,0 +1,131 @@
+{
+    "actions": {
+        "force-all": {
+            "condition": [
+                "(not (maybe-have_pizza_flavour))",
+                "(not (have_pizza_flavour))",
+                "(not (have_drink))",
+                "(not (maybe-have_drink))",
+                "(not (have_side))",
+                "(not (maybe-have_side))",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "valid": [
+                    "(not (maybe-have_pizza_flavour))",
+                    "(have_drink)",
+                    "(have_pizza_flavour)",
+                    "(not (maybe-have_drink))",
+                    "(have_side)",
+                    "(not (maybe-have_side))"
+                ],
+                "fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "complete": {
+            "condition": [
+                "(not (maybe-have_pizza_flavour))",
+                "(have_drink)",
+                "(have_pizza_flavour)",
+                "(not (maybe-have_drink))",
+                "(have_side)",
+                "(not (maybe-have_side))"
+            ],
+            "effect": {
+                "assign-goal": [
+                    "(goal)"
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "condition": [
+                "(force-statement)",
+                "(have-message)"
+            ],
+            "effect": {
+                "lock": [
+                    "(not (have-message))",
+                    "(not (force-statement))"
+                ]
+            }
+        },
+        "clarify__pizza_flavour": {
+            "condition": [
+                "(maybe-have_pizza_flavour)",
+                "(not (have_pizza_flavour))",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "confirm": [
+                    "(not (maybe-have_pizza_flavour))",
+                    "(have_pizza_flavour)"
+                ],
+                "deny": [
+                    "(not (maybe-have_pizza_flavour))",
+                    "(not (have_pizza_flavour))"
+                ],
+                "fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "clarify__drink": {
+            "condition": [
+                "(not (have_drink))",
+                "(maybe-have_drink)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "confirm": [
+                    "(not (maybe-have_drink))",
+                    "(have_drink)"
+                ],
+                "deny": [
+                    "(not (maybe-have_drink))",
+                    "(not (have_drink))"
+                ],
+                "fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "clarify__side": {
+            "condition": [
+                "(maybe-have_side)",
+                "(not (have_side))",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "confirm": [
+                    "(have_side)",
+                    "(not (maybe-have_side))"
+                ],
+                "deny": [
+                    "(not (have_side))",
+                    "(not (maybe-have_side))"
+                ],
+                "fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        }
+    },
+    "initial_state": [
+        "(not (maybe-have_pizza_flavour))",
+        "(not (have-message))",
+        "(not (goal))",
+        "(not (have_pizza_flavour))",
+        "(not (have_drink))",
+        "(not (maybe-have_drink))",
+        "(not (maybe_pizza))",
+        "(not (have_side))",
+        "(not (maybe-have_side))",
+        "(not (force-statement))"
+    ]
+}
