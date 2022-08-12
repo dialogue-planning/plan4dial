@@ -6,7 +6,7 @@
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0xa0f140",
+                "state": "0x2678140",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -16,7 +16,7 @@
             "1": {
                 "expected_successor": "0",
                 "action": "complete",
-                "state": "0xa129a0",
+                "state": "0x267b9a0",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -31,7 +31,7 @@
             "2": {
                 "expected_successor": "1",
                 "action": "force-all",
-                "state": "0xa12f00",
+                "state": "0x267bf00",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -50,7 +50,7 @@
             "3": {
                 "expected_successor": "2",
                 "action": "dialogue_statement",
-                "state": "0xa15a00",
+                "state": "0x267ea00",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -86,21 +86,21 @@
             ]
         ],
         "states": {
-            "0xa0f140": [
+            "0x2678140": [
                 "Atom goal()"
             ],
-            "0xa129a0": [
+            "0x267b9a0": [
                 "Atom have_drink()",
                 "Atom have_pizza_flavour()",
                 "Atom have_side()"
             ],
-            "0xa12f00": [
+            "0x267bf00": [
                 "NegatedAtom have_drink()",
                 "NegatedAtom have_pizza_flavour()",
                 "NegatedAtom have_side()",
                 "NegatedAtom force-statement()"
             ],
-            "0xa15a00": [
+            "0x267ea00": [
                 "NegatedAtom have_drink()",
                 "NegatedAtom have_pizza_flavour()",
                 "NegatedAtom have_side()",
