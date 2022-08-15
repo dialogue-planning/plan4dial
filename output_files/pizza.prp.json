@@ -1,12 +1,12 @@
 {
     "plan": {
-        "init": "2",
+        "init": "4",
         "goal": "0",
         "nodes": {
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x2678140",
+                "state": "0x1cad5e0",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -15,50 +15,80 @@
             },
             "1": {
                 "expected_successor": "0",
-                "action": "complete",
-                "state": "0x267b9a0",
+                "action": "end",
+                "state": "0x1cb3d40",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "complete_DETDUP_finish-EQ-assign-goal",
+                        "outcome_label": "end_DETDUP_finish-EQ-assign-goal",
                         "successor_id": "0"
                     }
                 ]
             },
             "2": {
                 "expected_successor": "1",
-                "action": "force-all",
-                "state": "0x267bf00",
+                "action": "dialogue_statement",
+                "state": "0x1cb3e60",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "force-all_DETDUP_validate-EQ-fallback",
-                        "successor_id": "3"
-                    },
-                    {
-                        "outcome_label": "force-all_DETDUP_validate-EQ-valid",
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
                         "successor_id": "1"
                     }
                 ]
             },
             "3": {
                 "expected_successor": "2",
-                "action": "dialogue_statement",
-                "state": "0x267ea00",
+                "action": "complete",
+                "state": "0x1cb4900",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "outcome_label": "complete_DETDUP_finish-EQ-assign-goal",
                         "successor_id": "2"
+                    }
+                ]
+            },
+            "4": {
+                "expected_successor": "3",
+                "action": "force-all",
+                "state": "0x1cb2a00",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "force-all_DETDUP_validate-EQ-fallback",
+                        "successor_id": "5"
+                    },
+                    {
+                        "outcome_label": "force-all_DETDUP_validate-EQ-valid",
+                        "successor_id": "3"
+                    }
+                ]
+            },
+            "5": {
+                "expected_successor": "4",
+                "action": "dialogue_statement",
+                "state": "0x1cba000",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "4"
                     }
                 ]
             }
@@ -72,35 +102,55 @@
             [
                 "2",
                 ">",
-                "3"
-            ],
-            [
-                "2",
-                ">",
                 "1"
             ],
             [
                 "3",
                 ">",
                 "2"
+            ],
+            [
+                "4",
+                ">",
+                "5"
+            ],
+            [
+                "4",
+                ">",
+                "3"
+            ],
+            [
+                "5",
+                ">",
+                "4"
             ]
         ],
         "states": {
-            "0x2678140": [
+            "0x1cad5e0": [
                 "Atom goal()"
             ],
-            "0x267b9a0": [
+            "0x1cb3d40": [
+                "NegatedAtom force-statement()",
+                "Atom end()"
+            ],
+            "0x1cb3e60": [
+                "Atom force-statement()",
+                "Atom have-message()",
+                "Atom end()"
+            ],
+            "0x1cb4900": [
                 "Atom have_drink()",
                 "Atom have_pizza_flavour()",
-                "Atom have_side()"
+                "Atom have_side()",
+                "NegatedAtom force-statement()"
             ],
-            "0x267bf00": [
+            "0x1cb2a00": [
                 "NegatedAtom have_drink()",
                 "NegatedAtom have_pizza_flavour()",
                 "NegatedAtom have_side()",
                 "NegatedAtom force-statement()"
             ],
-            "0x267ea00": [
+            "0x1cba000": [
                 "NegatedAtom have_drink()",
                 "NegatedAtom have_pizza_flavour()",
                 "NegatedAtom have_side()",

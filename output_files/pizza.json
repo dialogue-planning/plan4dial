@@ -46,6 +46,10 @@
             "type": "flag",
             "config": false
         },
+        "end": {
+            "type": "flag",
+            "config": false
+        },
         "have-message": {
             "type": "flag",
             "config": false
@@ -245,9 +249,6 @@
         },
         "complete": {
             "type": "system",
-            "message_variants": [
-                "Goal completed."
-            ],
             "condition": [
                 [
                     "pizza_flavour",
@@ -260,6 +261,51 @@
                 [
                     "side",
                     "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "finish",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "end": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Goal completed."
+                        ],
+                        "name": "complete_DETDUP_finish-EQ-assign-goal",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "end": {
+            "type": "system",
+            "condition": [
+                [
+                    "end",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
                 ]
             ],
             "effect": {
@@ -273,7 +319,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "name": "complete_DETDUP_finish-EQ-assign-goal",
+                        "name": "end_DETDUP_finish-EQ-assign-goal",
                         "intent": null,
                         "assignments": {}
                     }

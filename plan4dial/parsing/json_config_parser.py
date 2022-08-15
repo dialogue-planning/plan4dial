@@ -105,12 +105,12 @@ def instantiate_effects(loaded_yaml):
     # for all actions, instantiate template effect and add fallbacks if necessary
     for act, act_config in loaded_yaml["actions"].items():
         fallback = False
-        if act != "dialogue_statement" and act_config["type"] != "system":
+        if act != "dialogue_statement":
             processed[act]["condition"]["force-statement"] = {"value": False}
             fallback = (
-                act_config["disable-fallback"]
+                not act_config["disable-fallback"]
                 if "disable-fallback" in act_config
-                else True
+                else act_config["type"] != "system"
             )
             if fallback:
                 if "fallback_message_variants" not in act_config:

@@ -78,6 +78,9 @@ context-variables:
   maybe_pizza:
     type: flag
     initially: false
+  end:
+    type: flag
+    initially: false
 
 intents:
   confirm:
@@ -240,10 +243,10 @@ actions:
          message_variants:
           - Would you like to have $side on the side?
 
+
+
   complete:
-    type: system 
-    message_variants:
-      - Goal completed.
+    type: system
     condition:
       pizza_flavour:
         known: true
@@ -256,6 +259,22 @@ actions:
         oneof:
           outcomes:
             # received a valid value
+            assign-goal:
+              updates:
+                end:
+                  value: true
+              response_variants:
+                - Goal completed. 
+
+  end:
+    type: system
+    condition:
+      end:
+        value: true
+    effect:
+      finish:
+        oneof:
+          outcomes:
             assign-goal:
               updates:
                 goal:
