@@ -244,7 +244,8 @@ actions:
           - Would you like to have $side on the side?
 
 
-
+# currently, goal completing actions need to use 2 actions in order to 
+# include a message before completing the goal.
   complete:
     type: system
     condition:
