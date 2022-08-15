@@ -1,6 +1,7 @@
 import json
 import yaml
 import os
+import subprocess
 from pathlib import Path
 from plan4dial.parsing.json_config_parser import convert_yaml
 from plan4dial.parsing.pddl_parser import parse_to_pddl
@@ -51,8 +52,7 @@ def generate_files(
             fixed_model_name=f"{domain_name}-model"
         )
     # generate PDDL files; convert policy.out to a prp.json file
-    cmd =  f"{str((Path(rbp_path)  / 'prp').resolve())} {domain_str} {problem_str} --output-format 3"
-    os.system(cmd)
+    subprocess.run([f"{str((Path(rbp_path)  / 'prp').resolve())}", domain_str, problem_str, "--output-format", "3"])
     with open(f"policy.out") as f:
         plan_data = {f"plan": json.load(f)}
     with open(

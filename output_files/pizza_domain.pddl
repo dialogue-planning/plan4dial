@@ -20,24 +20,24 @@
         :parameters()
         :precondition
             (and
-                (not (have_drink))
-                (not (have_pizza_flavour))
-                (not (maybe-have_side))
-                (not (maybe-have_pizza_flavour))
                 (not (maybe-have_drink))
+                (not (maybe-have_side))
                 (not (force-statement))
+                (not (maybe-have_pizza_flavour))
+                (not (have_pizza_flavour))
+                (not (have_drink))
                 (not (have_side))
             )
         :effect
             (labeled-oneof validate
                 (outcome valid
                     (and
-                        (have_side)
-                        (have_pizza_flavour)
                         (have_drink)
-                        (not (maybe-have_side))
-                        (not (maybe-have_pizza_flavour))
                         (not (maybe-have_drink))
+                        (not (maybe-have_side))
+                        (have_side)
+                        (not (maybe-have_pizza_flavour))
+                        (have_pizza_flavour)
                     )
                 )
                 (outcome fallback
@@ -52,37 +52,25 @@
         :parameters()
         :precondition
             (and
-                (have_side)
-                (have_pizza_flavour)
                 (have_drink)
-                (not (maybe-have_side))
-                (not (maybe-have_pizza_flavour))
                 (not (maybe-have_drink))
+                (not (maybe-have_side))
+                (have_side)
                 (not (force-statement))
-            )
-        :effect
-            (labeled-oneof finish
-                (outcome assign-goal
-                    (and
-                        (end)
-                        (force-statement)
-                        (have-message)
-                    )
-                )
-            )
-    )
-    (:action end
-        :parameters()
-        :precondition
-            (and
-                (end)
-                (not (force-statement))
+                (not (maybe-have_pizza_flavour))
+                (have_pizza_flavour)
             )
         :effect
             (labeled-oneof finish
                 (outcome assign-goal
                     (and
                         (goal)
+                    )
+                )
+                (outcome fallback
+                    (and
+                        (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -98,8 +86,8 @@
             (labeled-oneof reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )
@@ -108,16 +96,16 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (maybe-have_pizza_flavour)
                 (not (have_pizza_flavour))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof validate-clarification
                 (outcome confirm
                     (and
-                        (have_pizza_flavour)
                         (not (maybe-have_pizza_flavour))
+                        (have_pizza_flavour)
                     )
                 )
                 (outcome deny
@@ -138,8 +126,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (maybe-have_drink)
+                (not (force-statement))
                 (not (have_drink))
             )
         :effect
@@ -168,9 +156,9 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (maybe-have_side)
                 (not (have_side))
+                (maybe-have_side)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof validate-clarification

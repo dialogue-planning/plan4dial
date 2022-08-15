@@ -244,10 +244,13 @@ actions:
           - Would you like to have $side on the side?
 
 
-# currently, goal completing actions need to use 2 actions in order to 
+# NOTE: currently, goal completing actions need to use 2 actions in order to 
 # include a message before completing the goal.
   complete:
-    type: system
+    type: dialogue
+    disable_fallback: true
+    message_variants:
+      - Goal completed.
     condition:
       pizza_flavour:
         known: true
@@ -262,22 +265,22 @@ actions:
             # received a valid value
             assign-goal:
               updates:
-                end:
-                  value: true
-              response_variants:
-                - Goal completed. 
-
-  end:
-    type: system
-    condition:
-      end:
-        value: true
-    effect:
-      finish:
-        oneof:
-          outcomes:
-            assign-goal:
-              updates:
                 goal:
                   value: true
+              # response_variants:
+              #   - Goal completed. 
+
+  # end:
+  #   type: system
+  #   condition:
+  #     end:
+  #       value: true
+  #   effect:
+  #     finish:
+  #       oneof:
+  #         outcomes:
+  #           assign-goal:
+  #             updates:
+  #               goal:
+  #                 value: true
 ...

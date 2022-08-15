@@ -248,7 +248,10 @@
             }
         },
         "complete": {
-            "type": "system",
+            "type": "dialogue",
+            "message_variants": [
+                "Goal completed."
+            ],
             "condition": [
                 [
                     "pizza_flavour",
@@ -273,10 +276,17 @@
                 "outcomes": [
                     {
                         "updates": {
-                            "end": {
+                            "goal": {
                                 "value": true,
                                 "interpretation": "json"
-                            },
+                            }
+                        },
+                        "name": "complete_DETDUP_finish-EQ-assign-goal",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
                             "have-message": {
                                 "value": true,
                                 "interpretation": "json"
@@ -286,44 +296,21 @@
                                 "interpretation": "json"
                             }
                         },
-                        "response_variants": [
-                            "Goal completed."
-                        ],
-                        "name": "complete_DETDUP_finish-EQ-assign-goal",
-                        "intent": null,
+                        "intent": "fallback",
+                        "name": "complete_DETDUP_finish-EQ-fallback",
                         "assignments": {}
                     }
                 ]
-            }
-        },
-        "end": {
-            "type": "system",
-            "condition": [
-                [
-                    "end",
-                    true
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
             ],
-            "effect": {
-                "global-outcome-name": "finish",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "goal": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "end_DETDUP_finish-EQ-assign-goal",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
             }
         },
         "dialogue_statement": {
