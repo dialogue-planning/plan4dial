@@ -11,13 +11,13 @@
         (dairy-free)
         (gluten-free)
         (have-restaurant)
-        (have-allergy)
+        (have_allergy)
         (set-cuisine)
         (goal)
     )
     (:action set-restaurant
         :parameters ()
-        :precondition (and (have-allergy))
+        :precondition (and (have_allergy))
         :effect 
             (labeled-oneof validate
                 (outcome valid
@@ -83,7 +83,5 @@
                     )
                 )
             )
-
     )
-    
 )

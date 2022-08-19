@@ -1,148 +1,845 @@
 {
     "plan": {
-        "init": "2",
+        "init": "12",
         "goal": "0",
         "nodes": {
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x14c0160",
+                "state": "0x1e88ad0",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
                 "is_sc": 1,
                 "successors": []
             },
-            "1": {
+            "10": {
                 "expected_successor": "0",
-                "action": "complete",
-                "state": "0x14c98b0",
+                "action": "test_or",
+                "state": "0x1e91250",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "complete_DETDUP_finish-EQ-assign-goal",
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
                         "successor_id": "0"
                     },
                     {
-                        "outcome_label": "complete_DETDUP_finish-EQ-fallback",
-                        "successor_id": "3"
-                    }
-                ]
-            },
-            "2": {
-                "expected_successor": "1",
-                "action": "force-all",
-                "state": "0x14c5e40",
-                "distance": 2,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "force-all_DETDUP_validate-EQ-fallback",
-                        "successor_id": "4"
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
                     },
                     {
-                        "outcome_label": "force-all_DETDUP_validate-EQ-valid",
-                        "successor_id": "1"
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
                     }
                 ]
             },
-            "3": {
-                "expected_successor": "1",
-                "action": "dialogue_statement",
-                "state": "0x14c88b0",
+            "11": {
+                "expected_successor": "10",
+                "action": "set-cuisine",
+                "state": "0x1e91710",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
-                        "successor_id": "1"
+                        "outcome_label": "set-cuisine_DETDUP_1",
+                        "successor_id": "41"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_2",
+                        "successor_id": "35"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_3",
+                        "successor_id": "18"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_4",
+                        "successor_id": "10"
                     }
                 ]
             },
-            "4": {
-                "expected_successor": "2",
-                "action": "dialogue_statement",
-                "state": "0x14c82b0",
+            "12": {
+                "expected_successor": "11",
+                "action": "get-cuisine",
+                "state": "0x1e91730",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
-                        "successor_id": "2"
+                        "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-valid",
+                        "successor_id": "11"
+                    }
+                ]
+            },
+            "17": {
+                "expected_successor": "0",
+                "action": "test_or",
+                "state": "0x1e90500",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "18": {
+                "expected_successor": "17",
+                "action": "set-cuisine",
+                "state": "0x1e94090",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_1",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_2",
+                        "successor_id": "25"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_3",
+                        "successor_id": "18"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_4",
+                        "successor_id": "17"
+                    }
+                ]
+            },
+            "23": {
+                "expected_successor": "0",
+                "action": "test_or",
+                "state": "0x1e93390",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "24": {
+                "expected_successor": "23",
+                "action": "set-cuisine",
+                "state": "0x1e965a0",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_1",
+                        "successor_id": "24"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_2",
+                        "successor_id": "24"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_3",
+                        "successor_id": "24"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_4",
+                        "successor_id": "23"
+                    }
+                ]
+            },
+            "25": {
+                "expected_successor": "23",
+                "action": "set-cuisine",
+                "state": "0x1e978f0",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_1",
+                        "successor_id": "24"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_2",
+                        "successor_id": "25"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_3",
+                        "successor_id": "25"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_4",
+                        "successor_id": "23"
+                    }
+                ]
+            },
+            "28": {
+                "expected_successor": "0",
+                "action": "test_or",
+                "state": "0x1e934f0",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "29": {
+                "expected_successor": "28",
+                "action": "set-cuisine",
+                "state": "0x1e98d50",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_1",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_2",
+                        "successor_id": "24"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_3",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_4",
+                        "successor_id": "28"
+                    }
+                ]
+            },
+            "34": {
+                "expected_successor": "0",
+                "action": "test_or",
+                "state": "0x1e9ade0",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "35": {
+                "expected_successor": "34",
+                "action": "set-cuisine",
+                "state": "0x1e9a980",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_1",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_2",
+                        "successor_id": "35"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_3",
+                        "successor_id": "25"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_4",
+                        "successor_id": "34"
+                    }
+                ]
+            },
+            "37": {
+                "expected_successor": "36",
+                "action": "set-cuisine",
+                "state": "0x1e9c5c0",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_1",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_2",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_3",
+                        "successor_id": "24"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_4",
+                        "successor_id": "36"
+                    }
+                ]
+            },
+            "36": {
+                "expected_successor": "0",
+                "action": "test_or",
+                "state": "0x1e95470",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "40": {
+                "expected_successor": "0",
+                "action": "test_or",
+                "state": "0x1e9dc00",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "test_or_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "41": {
+                "expected_successor": "40",
+                "action": "set-cuisine",
+                "state": "0x1e9dba0",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_1",
+                        "successor_id": "41"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_2",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_3",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_4",
+                        "successor_id": "40"
                     }
                 ]
             }
         },
         "edges": [
             [
-                "1",
+                "10",
                 ">",
                 "0"
             ],
             [
-                "1",
+                "10",
                 ">",
-                "3"
+                "0"
             ],
             [
-                "2",
+                "10",
                 ">",
-                "4"
+                "0"
             ],
             [
-                "2",
+                "10",
                 ">",
-                "1"
+                "0"
             ],
             [
-                "3",
+                "11",
                 ">",
-                "1"
+                "41"
             ],
             [
-                "4",
+                "11",
                 ">",
-                "2"
+                "35"
+            ],
+            [
+                "11",
+                ">",
+                "18"
+            ],
+            [
+                "11",
+                ">",
+                "10"
+            ],
+            [
+                "12",
+                ">",
+                "11"
+            ],
+            [
+                "17",
+                ">",
+                "0"
+            ],
+            [
+                "17",
+                ">",
+                "0"
+            ],
+            [
+                "17",
+                ">",
+                "0"
+            ],
+            [
+                "17",
+                ">",
+                "0"
+            ],
+            [
+                "18",
+                ">",
+                "29"
+            ],
+            [
+                "18",
+                ">",
+                "25"
+            ],
+            [
+                "18",
+                ">",
+                "18"
+            ],
+            [
+                "18",
+                ">",
+                "17"
+            ],
+            [
+                "23",
+                ">",
+                "0"
+            ],
+            [
+                "23",
+                ">",
+                "0"
+            ],
+            [
+                "23",
+                ">",
+                "0"
+            ],
+            [
+                "23",
+                ">",
+                "0"
+            ],
+            [
+                "24",
+                ">",
+                "24"
+            ],
+            [
+                "24",
+                ">",
+                "24"
+            ],
+            [
+                "24",
+                ">",
+                "24"
+            ],
+            [
+                "24",
+                ">",
+                "23"
+            ],
+            [
+                "25",
+                ">",
+                "24"
+            ],
+            [
+                "25",
+                ">",
+                "25"
+            ],
+            [
+                "25",
+                ">",
+                "25"
+            ],
+            [
+                "25",
+                ">",
+                "23"
+            ],
+            [
+                "28",
+                ">",
+                "0"
+            ],
+            [
+                "28",
+                ">",
+                "0"
+            ],
+            [
+                "28",
+                ">",
+                "0"
+            ],
+            [
+                "28",
+                ">",
+                "0"
+            ],
+            [
+                "29",
+                ">",
+                "29"
+            ],
+            [
+                "29",
+                ">",
+                "24"
+            ],
+            [
+                "29",
+                ">",
+                "29"
+            ],
+            [
+                "29",
+                ">",
+                "28"
+            ],
+            [
+                "34",
+                ">",
+                "0"
+            ],
+            [
+                "34",
+                ">",
+                "0"
+            ],
+            [
+                "34",
+                ">",
+                "0"
+            ],
+            [
+                "34",
+                ">",
+                "0"
+            ],
+            [
+                "35",
+                ">",
+                "37"
+            ],
+            [
+                "35",
+                ">",
+                "35"
+            ],
+            [
+                "35",
+                ">",
+                "25"
+            ],
+            [
+                "35",
+                ">",
+                "34"
+            ],
+            [
+                "37",
+                ">",
+                "37"
+            ],
+            [
+                "37",
+                ">",
+                "37"
+            ],
+            [
+                "37",
+                ">",
+                "24"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "36",
+                ">",
+                "0"
+            ],
+            [
+                "36",
+                ">",
+                "0"
+            ],
+            [
+                "36",
+                ">",
+                "0"
+            ],
+            [
+                "36",
+                ">",
+                "0"
+            ],
+            [
+                "40",
+                ">",
+                "0"
+            ],
+            [
+                "40",
+                ">",
+                "0"
+            ],
+            [
+                "40",
+                ">",
+                "0"
+            ],
+            [
+                "40",
+                ">",
+                "0"
+            ],
+            [
+                "41",
+                ">",
+                "41"
+            ],
+            [
+                "41",
+                ">",
+                "37"
+            ],
+            [
+                "41",
+                ">",
+                "29"
+            ],
+            [
+                "41",
+                ">",
+                "40"
             ]
         ],
         "states": {
-            "0x14c0160": [
+            "0x1e88ad0": [
                 "Atom goal()"
             ],
-            "0x14c98b0": [
-                "Atom have_drink()",
-                "Atom have_pizza_flavour()",
-                "Atom have_side()",
-                "NegatedAtom force-statement()"
+            "0x1e91250": [
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()",
+                "Atom chinese()"
             ],
-            "0x14c5e40": [
-                "NegatedAtom have_drink()",
-                "NegatedAtom have_pizza_flavour()",
-                "NegatedAtom have_side()",
-                "NegatedAtom force-statement()"
+            "0x1e91710": [
+                "Atom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
             ],
-            "0x14c88b0": [
-                "Atom have_drink()",
-                "Atom have_pizza_flavour()",
-                "Atom have_side()",
-                "Atom force-statement()",
-                "Atom have-message()"
+            "0x1e91730": [
+                "NegatedAtom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
             ],
-            "0x14c82b0": [
-                "NegatedAtom have_drink()",
-                "NegatedAtom have_pizza_flavour()",
-                "NegatedAtom have_side()",
-                "Atom force-statement()",
-                "Atom have-message()"
+            "0x1e90500": [
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()",
+                "Atom chinese()"
+            ],
+            "0x1e94090": [
+                "Atom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
+            ],
+            "0x1e93390": [
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()",
+                "Atom chinese()"
+            ],
+            "0x1e965a0": [
+                "Atom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
+            ],
+            "0x1e978f0": [
+                "Atom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
+            ],
+            "0x1e934f0": [
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()",
+                "Atom chinese()"
+            ],
+            "0x1e98d50": [
+                "Atom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
+            ],
+            "0x1e9ade0": [
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()",
+                "Atom chinese()"
+            ],
+            "0x1e9a980": [
+                "Atom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
+            ],
+            "0x1e9c5c0": [
+                "Atom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
+            ],
+            "0x1e95470": [
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()",
+                "Atom chinese()"
+            ],
+            "0x1e9dc00": [
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()",
+                "Atom chinese()"
+            ],
+            "0x1e9dba0": [
+                "Atom have_cuisine()",
+                "Atom mexican()",
+                "Atom italian()",
+                "Atom dessert()"
             ]
         }
     }

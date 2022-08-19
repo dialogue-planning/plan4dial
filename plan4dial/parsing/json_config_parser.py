@@ -4,7 +4,7 @@ from pathlib import Path
 from copy import deepcopy
 
 from inspect import getmembers, isfunction
-from ..custom_actions.utils import *
+from plan4dial.custom_actions.utils import *
 import plan4dial.custom_actions.custom as custom
 
 
@@ -45,6 +45,26 @@ def configure_dialogue_statement():
         "message_variants": [],
     }
 
+def configure_assignments(known):
+    return (
+                ("found" if known else "didnt-find")
+                if type(known) == bool
+                else "maybe-found"
+            )
+
+def configure_certainty(known):
+    return (
+            ("Known" if known else "Unknown")
+            if type(known) == bool
+            else "Uncertain"
+        )
+
+def configure_interpretation(value):
+    return (
+            "json"
+            if value in [True, False, None] 
+            else "spel"
+        )
 
 def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
     # every outcome in the forced action other than the fallback/unclear will undo the force
@@ -215,7 +235,10 @@ def convert_ctx_var(loaded_yaml):
         json_ctx_var = {}
         json_ctx_var["type"] = cfg["type"]
         if cfg["type"] == "enum":
-            json_ctx_var["config"] = list(cfg["options"].keys())
+            if type(cfg["options"]) == dict:
+                json_ctx_var["config"] = list(cfg["options"].keys())
+            else:
+                json_ctx_var["config"] = cfg["options"]
         elif cfg["type"] == "flag" or cfg["type"] == "fflag":
             json_ctx_var["config"] = cfg["init"]
         else:
@@ -302,16 +325,18 @@ def convert_actions(loaded_yaml):
     for act in loaded_yaml["actions"]:
         # convert preconditions
         json_config_cond = []
-        for cond, cond_cfg in loaded_yaml["actions"][act]["condition"].items():
-            for cond_config_key, cond_config_val in cond_cfg.items():
-                if cond_config_key == "known":
-                    json_config_cond.append(
-                        ([cond, "Known"] if cond_config_val else [cond, "Unknown"])
-                        if type(cond_config_val) == bool
-                        else [cond, "Uncertain"]
-                    )
-                elif cond_config_key == "value":
-                    json_config_cond.append([cond, cond_config_val])
+        condition = loaded_yaml["actions"][act]["condition"]
+        for cond, cond_cfg in condition.items():
+            if type(cond_cfg) == dict:
+                for cond_config_key, cond_config_val in cond_cfg.items():
+                    if cond_config_key == "known":
+                        json_config_cond.append(
+                            ([cond, "Known"] if cond_config_val else [cond, "Unknown"])
+                            if type(cond_config_val) == bool
+                            else [cond, "Uncertain"]
+                        )
+                    elif cond_config_key == "value":
+                        json_config_cond.append([cond, cond_config_val])
         processed[act]["condition"] = json_config_cond
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             converted_eff = deepcopy(eff_config)
@@ -331,23 +356,15 @@ def convert_actions(loaded_yaml):
                     next_outcome["assignments"] = {}
                     if "updates" in out_config:
                         for update_var, update_cfg in out_config["updates"].items():
-                            if "known" in update_cfg:
-                                known = update_cfg["known"]
-                                next_outcome["assignments"][f"${update_var}"] = (
-                                    ("found" if known else "didnt-find")
-                                    if type(known) == bool
-                                    else "maybe-found"
-                                )
-                                next_outcome["updates"][update_var]["certainty"] = (
-                                    ("Known" if known else "Unknown")
-                                    if type(known) == bool
-                                    else "Uncertain"
-                                )
-                            next_outcome["updates"][update_var]["interpretation"] = (
-                                "json"
-                                if update_cfg["value"] in [True, False, None]
-                                else "spel"
-                            )
+                            if update_var in ["and", "or"]:
+                                #for expr in update_cfg:
+                                    pass
+                            else:
+                                if "known" in update_cfg:
+                                    next_outcome["assignments"][f"${update_var}"] = configure_assignments(update_cfg["known"])
+                                    next_outcome["updates"][update_var]["certainty"] = configure_certainty(update_cfg["known"])
+                                if "value" in update_cfg:
+                                    next_outcome["updates"][update_var]["interpretation"] = configure_interpretation(update_cfg["value"])
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
                 del converted_eff[option]

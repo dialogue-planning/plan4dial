@@ -109,12 +109,14 @@ actions:
         known: false
     effect:
       set-cuisine:
-        outcomes:
-          valid:
-            updates:
-              cuisine: $cuisine
-              known: true
-            intent: share_cuisine
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                cuisine:
+                  value: $cuisine
+                  known: true
+              intent: share_cuisine
   get-have-allergy:
     type: dialogue
     subtype: dialogue disambiguation
@@ -131,7 +133,7 @@ actions:
               updates:
                 have_allergy:
                   value: true
-                intent: confirm
+              intent: confirm
             indicate_no_allergy:
               updates:
                 have_allergy:
@@ -139,7 +141,7 @@ actions:
                 conflict:
                   known: true
                   value: false
-                intent: deny
+              intent: deny
   get-allergy:
     type: dialogue
     subtype: dialogue disambiguation
@@ -159,7 +161,7 @@ actions:
                 food_restriction:
                   value: $food_restriction
                   known: true
-                intent: share_allergies
+              intent: share_allergies
   get-budget:
     type: dialogue
     subtype: dialogue disambiguation
@@ -188,7 +190,8 @@ actions:
     condition:
       cuisine:
         known: true
-      have_allergy: true
+      have_allergy:
+        value: true
       food_restriction:
         known: true
     effect:
@@ -196,40 +199,48 @@ actions:
         oneof:
           outcomes:
             validate-combos:
-              and:
-                - when:
-                    condition:
-                      cuisine:
-                        value: mexican
-                    effect:
-                      conflict:
-                        known: true
-                        value: true
-                - when:
-                    condition:
-                      food_restriction:
-                        value: dairy-free
-                      cuisine:
-                        value: dessert
-                    effect:
-                      conflict:
-                        known: true
-                        value: true
+              updates:
+                and:
+                  - when:
+                      condition:
+                        cuisine:
+                          value: mexican
+                      effect:
+                        conflict:
+                          known: true
+                          value: true
+                  - when:
+                      condition:
+                        food_restriction:
+                          value: dairy-free
+                        or:
+                          - cuisine:
+                            value: dessert
+                          - cuisine:
+                            value: italian
+                      effect:
+                        conflict:
+                          known: true
+                          value: true
   reset-preferences:
     type: system
     condition:
       conflict:
         value: true
     effect:
-      have_allergy:
-        value: null
-        known: false 
-      food_restriction:
-        value: null
-        known: false 
-      cuisine:
-        value: null
-        known: false
+      reset:
+        oneof:
+          outcomes:
+            reset-values:
+              have_allergy:
+                value: null
+                known: false 
+              food_restriction:
+                value: null
+                known: false 
+              cuisine:
+                value: null
+                known: false
     response_variants:
       - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
     
@@ -248,35 +259,36 @@ actions:
         oneof:
           outcomes:
             valid:
-              and:
-                - when:
-                    condition:
-                      cuisine:
-                        value: mexican
-                    effect:
-                      restaurant:
-                        value: Guac Grill
-                - when:
-                    condition:
-                      cuisine:
-                        value: italian
-                    effect:
-                      restaurant:
-                        value: Alfredo's Pizza Cafe
-                - when:
-                    condition:
-                      cuisine:
-                        value: chinese
-                    effect:
-                      restaurant:
-                        value: Mandarin
-                - when:
-                    condition:
-                      cuisine:
-                        value: dessert
-                    effect:
-                      restaurant:
-                        value: Geneva Crepes
+              updates:
+                and:
+                  - when:
+                      condition:
+                        cuisine:
+                          value: mexican
+                      effect:
+                        restaurant:
+                          value: Guac Grill
+                  - when:
+                      condition:
+                        cuisine:
+                          value: italian
+                      effect:
+                        restaurant:
+                          value: Alfredo's Pizza Cafe
+                  - when:
+                      condition:
+                        cuisine:
+                          value: chinese
+                      effect:
+                        restaurant:
+                          value: Mandarin
+                  - when:
+                      condition:
+                        cuisine:
+                          value: dessert
+                      effect:
+                        restaurant:
+                          value: Geneva Crepes
                 restaurant:
                   known: true
                 end:
@@ -292,6 +304,7 @@ actions:
         oneof:
           outcomes:
             finish:
-              goal:
-                value: true
+              updates:
+                goal:
+                  value: true
                        

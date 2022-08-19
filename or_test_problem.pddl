@@ -1,10 +1,8 @@
 (define
     (problem test-problem)
-    (:domain test)
+    (:domain or_test)
     (:objects )
     (:init
-        (mexican)
-        (have_allergy)
     )
     (:goal
         (and
