@@ -1,0 +1,297 @@
+---
+name: day-planner
+
+context-variables:
+  cuisine:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - mexican
+      - italian
+      - chinese
+      - dessert
+  restaurant:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Guac Grill
+      - Alfredo's Pizza Cafe
+      - Mandarin
+      - Geneva Crepes
+  have_allergy:
+    type: flag
+    init: false
+  food_restriction:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - dairy-free
+      - gluten-free
+  conflict:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  low_budget:
+    type: flag
+    init: false
+  outing_atmosphere:
+    type: enum
+    known:
+      type: flag
+      init: false 
+    options:
+      - exciting
+      - relaxing
+  goal:
+    type: flag
+    init: false
+
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  share_cuisine:
+    variables:
+      - cuisine
+    utterances:
+      - I want to eat $cuisine.
+      - Do you have restaurants of type $cuisine?
+      - Are there any $cuisine restaurants in the area?
+  share_allergies:
+    variables:
+      - food_restriction
+    utterances:
+      - I have to eat $food_restriction.
+      - I can only eat foods that are $food_restriction.
+      - I am allergic to any foods that are not $food_restriction.
+  share_outing_preference:
+    variables:
+      - outing_atmosphere
+    utterances:
+      - I would prefer a $outing_atmosphere atmosphere today.
+      - I want to go to a $outing_atmosphere place.
+      - What is the most $outing_atmosphere place in the city?
+
+actions:
+  get-cuisine:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+    fallback_message_variants:
+      - Sorry, that isn't a valid cuisine.
+    condition:
+      cuisine:
+        known: false
+    effect:
+      set-cuisine:
+        outcomes:
+          valid:
+            updates:
+              cuisine: $cuisine
+              known: true
+            intent: share_cuisine
+  get-have-allergy:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - Do you have any allergies? (Y/N)
+    condition:
+      have_allergy:
+        known: false 
+    effect:
+      set-allergy:
+        oneof:
+          outcomes:
+            indicate_allergy:
+              updates:
+                have_allergy:
+                  value: true
+                intent: confirm
+            indicate_no_allergy:
+              updates:
+                have_allergy:
+                  value: false
+                conflict:
+                  known: true
+                  value: false
+                intent: deny
+  get-allergy:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What type of allergy do you have? (I currently account for dairy and gluten allergies).
+    fallback_message_variants:
+      - Sorry, I don't recognize that type of allergy.
+    condition:
+      have_allergy:
+        value: true
+    effect:
+      set-allergy:
+        oneof:
+          outcomes:
+            update_allergy:
+              updates:
+                food_restriction:
+                  value: $food_restriction
+                  known: true
+                intent: share_allergies
+  get-budget:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - Are you on a low budget? (Y/N)
+    condition:
+      low_budget:
+        known: false 
+    effect:
+      set-budget:
+        oneof:
+          outcomes:
+            low:
+              updates:
+                low_budget:
+                  value: true
+              intent: confirm
+            high:
+              updates:
+                low_budget:
+                  value: false 
+              intent: deny
+  # before continuing, we need to ensure their allergy and cuisine preferences don't conflict 
+  check-allergies:
+    type: system
+    condition:
+      cuisine:
+        known: true
+      have_allergy: true
+      food_restriction:
+        known: true
+    effect:
+      check-conflicts:
+        oneof:
+          outcomes:
+            validate-combos:
+              and:
+                - when:
+                    condition:
+                      cuisine:
+                        value: mexican
+                    effect:
+                      conflict:
+                        known: true
+                        value: true
+                - when:
+                    condition:
+                      food_restriction:
+                        value: dairy-free
+                      cuisine:
+                        value: dessert
+                    effect:
+                      conflict:
+                        known: true
+                        value: true
+  reset-preferences:
+    type: system
+    condition:
+      conflict:
+        value: true
+    effect:
+      have_allergy:
+        value: null
+        known: false 
+      food_restriction:
+        value: null
+        known: false 
+      cuisine:
+        value: null
+        known: false
+    response_variants:
+      - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+    
+  set-restaurant:
+    type: dialogue
+    message_variants:
+      - Chosen restaurant has been logged as $restaurant.
+    condition:
+      cuisine:
+        known: true
+      conflict:
+        known: true
+        value: false
+    effect:
+      set:
+        oneof:
+          outcomes:
+            valid:
+              and:
+                - when:
+                    condition:
+                      cuisine:
+                        value: mexican
+                    effect:
+                      restaurant:
+                        value: Guac Grill
+                - when:
+                    condition:
+                      cuisine:
+                        value: italian
+                    effect:
+                      restaurant:
+                        value: Alfredo's Pizza Cafe
+                - when:
+                    condition:
+                      cuisine:
+                        value: chinese
+                    effect:
+                      restaurant:
+                        value: Mandarin
+                - when:
+                    condition:
+                      cuisine:
+                        value: dessert
+                    effect:
+                      restaurant:
+                        value: Geneva Crepes
+                restaurant:
+                  known: true
+                end:
+                  value: true
+
+  complete:
+    type: dialogue
+    condition:
+      restaurant:
+        known: true
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            finish:
+              goal:
+                value: true
+                       

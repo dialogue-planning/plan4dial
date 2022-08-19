@@ -125,7 +125,7 @@ def parse_init(context_variables: Dict):
     init_true_complete = set()
     for var, var_config in context_variables.items():
         if "known" in var_config:
-            known_status = var_config["known"]["initially"]
+            known_status = var_config["known"]["init"]
             if type(known_status) == bool:
                 if known_status:
                     init_true.add(f"(have_{var})")
@@ -159,7 +159,7 @@ def parse_predicates(context_variables: Dict):
             predicates.append(f"(have_{var})")
             if var_config["known"]["type"] == "fflag":
                 predicates.append(f"(maybe-have_{var})")
-            known_status = var_config["known"]["initially"]
+            known_status = var_config["known"]["init"]
             if type(known_status) == bool:
                 if known_status:
                     init_true.append(f"(have_{var})")

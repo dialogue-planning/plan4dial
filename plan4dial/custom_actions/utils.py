@@ -108,7 +108,7 @@ def create_clarifications_single_slots(
                         if entity not in out_config["updates"]:
                             new_ctx_vars[f"allow_single_slot_{entity}"] = {
                                 "type": "flag",
-                                "initially": False,
+                                "init": False,
                             }
                             original_act_config["effect"][eff][option]["outcomes"][out][
                                 "updates"

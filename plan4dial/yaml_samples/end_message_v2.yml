@@ -1,4 +1,4 @@
-  ---
+---
 version: "3.1"
 name: order-pizza
 
@@ -7,7 +7,7 @@ context-variables:
     type: enum
     known:
       type: fflag
-      initially: false
+      init: false
     options:
       cheese:
         variations:
@@ -41,7 +41,7 @@ context-variables:
     type: enum
     known:
       type: fflag
-      initially: false
+      init: false
     options:
       coke:
         variations:
@@ -58,7 +58,7 @@ context-variables:
     type: enum
     known:
       type: fflag
-      initially: false
+      init: false
     options:
       fries:
         variations:
@@ -74,10 +74,10 @@ context-variables:
         - caesar salad
   goal:
     type: flag
-    initially: false
+    init: false
   end:
     type: flag
-    initially: false
+    init: false
 
 intents:
   confirm:

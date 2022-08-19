@@ -13,7 +13,7 @@
             ],
             "known": {
                 "type": "fflag",
-                "initially": false
+                "init": false
             }
         },
         "drink": {
@@ -24,7 +24,7 @@
             ],
             "known": {
                 "type": "fflag",
-                "initially": false
+                "init": false
             }
         },
         "side": {
@@ -35,7 +35,7 @@
             ],
             "known": {
                 "type": "fflag",
-                "initially": false
+                "init": false
             }
         },
         "goal": {

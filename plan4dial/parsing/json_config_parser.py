@@ -78,11 +78,11 @@ def base_setup(loaded_yaml):
     loaded_yaml["actions"]["dialogue_statement"] = configure_dialogue_statement()
     loaded_yaml["context-variables"]["have-message"] = {
         "type": "flag",
-        "initially": False,
+        "init": False,
     }
     loaded_yaml["context-variables"]["force-statement"] = {
         "type": "flag",
-        "initially": False,
+        "init": False,
     }
 
 
@@ -217,7 +217,7 @@ def convert_ctx_var(loaded_yaml):
         if cfg["type"] == "enum":
             json_ctx_var["config"] = list(cfg["options"].keys())
         elif cfg["type"] == "flag" or cfg["type"] == "fflag":
-            json_ctx_var["config"] = cfg["initially"]
+            json_ctx_var["config"] = cfg["init"]
         else:
             if "extraction" in cfg:
                 json_ctx_var["config"] = {"extraction": cfg["extraction"]}
@@ -293,7 +293,7 @@ def add_follow_ups(loaded_yaml):
                         processed[clarify_name]["effect"][eff][option]["outcomes"],
                         name,
                     )
-        loaded_yaml["context-variables"][name] = {"type": "flag", "initially": False}
+        loaded_yaml["context-variables"][name] = {"type": "flag", "init": False}
     loaded_yaml["actions"] = with_forced
 
 
