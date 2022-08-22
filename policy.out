@@ -1,0 +1,157 @@
+{
+
+  "init": "3",
+  "goal": "0",
+  "nodes" : {
+    "0": {
+      "expected_successor": false,
+      "action": "---",
+      "state": "0x1d248b0",
+      "distance": 0,
+      "is_relevant": 1,
+      "is_goal": 1,
+      "is_sc": 1,
+      "successors": [
+
+       ]
+    },
+    "1": {
+      "expected_successor": "0",
+      "action": "goal1",
+      "state": "0x1d2f740",
+      "distance": 1,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "goal1_DETDUP_done-EQ-done",
+            "successor_id": "0"
+        }
+       ]
+    },
+    "2": {
+      "expected_successor": "1",
+      "action": "set-cuisine",
+      "state": "0x1d2b700",
+      "distance": 2,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "set-cuisine_DETDUP_set-EQ-valid1",
+            "successor_id": "5"
+        },
+        {
+            "outcome_label": "set-cuisine_DETDUP_set-EQ-valid2",
+            "successor_id": "1"
+        }
+       ]
+    },
+    "3": {
+      "expected_successor": "2",
+      "action": "get-cuisine",
+      "state": "0x1d2f760",
+      "distance": 3,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-fallback",
+            "successor_id": "6"
+        },
+        {
+            "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-valid",
+            "successor_id": "2"
+        }
+       ]
+    },
+    "5": {
+      "expected_successor": "4",
+      "action": "test_value",
+      "state": "0x1d2e8e0",
+      "distance": 2,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "test_value_DETDUP_test-value-EQ-assign",
+            "successor_id": "4"
+        }
+       ]
+    },
+    "4": {
+      "expected_successor": "0",
+      "action": "goal2",
+      "state": "0x1d2e740",
+      "distance": 1,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "goal2_DETDUP_done-EQ-done",
+            "successor_id": "0"
+        }
+       ]
+    },
+    "6": {
+      "expected_successor": "3",
+      "action": "dialogue_statement",
+      "state": "0x1d31f00",
+      "distance": 4,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+            "successor_id": "3"
+        }
+       ]
+    }
+  },
+  "edges" : [
+      ["1", ">", "0"],
+      ["2", ">", "5"],
+      ["2", ">", "1"],
+      ["3", ">", "6"],
+      ["3", ">", "2"],
+      ["5", ">", "4"],
+      ["4", ">", "0"],
+      ["6", ">", "3"]
+  ],
+  "states" : {
+    "0x1d248b0": [
+      "Atom goal()"
+    ],
+    "0x1d2f740": [
+      "NegatedAtom force-statement()",
+      "Atom cuisine-value-mexican()"
+    ],
+    "0x1d2b700": [
+      "NegatedAtom force-statement()",
+      "Atom can-set-cuisine()"
+    ],
+    "0x1d2f760": [
+      "NegatedAtom have_cuisine()",
+      "NegatedAtom force-statement()"
+    ],
+    "0x1d2e8e0": [
+      "NegatedAtom force-statement()",
+      "Atom cuisine-value-italian()"
+    ],
+    "0x1d2e740": [
+      "NegatedAtom force-statement()",
+      "Atom test()"
+    ],
+    "0x1d31f00": [
+      "NegatedAtom have_cuisine()",
+      "Atom force-statement()",
+      "Atom have-message()"
+    ]
+   }
+}

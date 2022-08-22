@@ -1,12 +1,11 @@
 {
+    "name": "value_test",
     "context-variables": {
         "cuisine": {
             "type": "enum",
             "config": [
                 "mexican",
-                "italian",
-                "chinese",
-                "dessert"
+                "italian"
             ],
             "known": {
                 "type": "flag",
@@ -26,6 +25,18 @@
             "config": false
         },
         "force-statement": {
+            "type": "flag",
+            "config": false
+        },
+        "can-set-cuisine": {
+            "type": "flag",
+            "config": false
+        },
+        "cuisine-value-mexican": {
+            "type": "flag",
+            "config": false
+        },
+        "cuisine-value-italian": {
             "type": "flag",
             "config": false
         }
@@ -102,6 +113,9 @@
                                 "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
+                            },
+                            "can-set-cuisine": {
+                                "value": true
                             }
                         },
                         "intent": "share_cuisine",
@@ -144,16 +158,85 @@
                 }
             }
         },
-        "test_or": {
+        "set-cuisine": {
             "type": "system",
             "condition": [
                 [
-                    "cuisine",
-                    "Known"
-                ],
+                    "can-set-cuisine",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "cuisine-value-mexican": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "can-set-cuisine": {
+                                "value": false,
+                                "interpretation": "json"
+                            }
+                        }
+                    },
+                    {
+                        "updates": {
+                            "cuisine-value-italian": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "can-set-cuisine": {
+                                "value": false,
+                                "interpretation": "json"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "test_value": {
+            "type": "system",
+            "condition": [
                 [
                     "force-statement",
                     false
+                ],
+                [
+                    "cuisine",
+                    "italian"
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "test-value",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "test": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "test_value_DETDUP_test-value-EQ-assign",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "goal1": {
+            "type": "system",
+            "condition": [
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "cuisine",
+                    "mexican"
                 ]
             ],
             "effect": {
@@ -167,7 +250,37 @@
                                 "interpretation": "json"
                             }
                         },
-                        "name": "test_or_DETDUP_done-EQ-done",
+                        "name": "goal1_DETDUP_done-EQ-done",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "goal2": {
+            "type": "system",
+            "condition": [
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "cuisine-value-test",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "done",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "goal2_DETDUP_done-EQ-done",
                         "intent": null,
                         "assignments": {}
                     }

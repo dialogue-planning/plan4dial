@@ -10,6 +10,7 @@
         (breakfast)
         (dairy-free)
         (gluten-free)
+        (low-cal)
         (have-restaurant)
         (have_allergy)
         (set-cuisine)
@@ -23,10 +24,13 @@
                 (outcome valid
                     (and
                         (when (or (dairy-free) (gluten-free)) (and (dessert)))
-                        (when (or (mexican) (italian)) (and (breakfast)))
                     )
                 )
-        
+               (outcome valid2
+                    (and
+                        (when (or (mexican) (italian)) (and (low-cal)))
+                    )
+                )
             )
     )
     
@@ -74,7 +78,7 @@
     
     (:action complete
         :parameters ()
-        :precondition (or (dessert) (breakfast));(have-restaurant))
+        :precondition (or (dessert) (low-cal));(have-restaurant))
         :effect 
             (labeled-oneof done
                 (outcome done

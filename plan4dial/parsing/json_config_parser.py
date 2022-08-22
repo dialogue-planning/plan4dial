@@ -45,26 +45,51 @@ def configure_dialogue_statement():
         "message_variants": [],
     }
 
+
 def configure_assignments(known):
     return (
-                ("found" if known else "didnt-find")
-                if type(known) == bool
-                else "maybe-found"
-            )
+        ("found" if known else "didnt-find") if type(known) == bool else "maybe-found"
+    )
+
 
 def configure_certainty(known):
-    return (
-            ("Known" if known else "Unknown")
-            if type(known) == bool
-            else "Uncertain"
-        )
+    return ("Known" if known else "Unknown") if type(known) == bool else "Uncertain"
+
 
 def configure_interpretation(value):
-    return (
-            "json"
-            if value in [True, False, None] 
-            else "spel"
-        )
+    return "json" if value in [True, False, None] else "spel"
+
+
+def configure_value_setter(loaded_yaml, ctx_var):
+    ctx_var_cfg = loaded_yaml["context-variables"][ctx_var]
+    options = (
+        list(ctx_var_cfg["options"].keys())
+        if type(ctx_var_cfg["options"]) == dict
+        else ctx_var_cfg["options"]
+    )
+    can_set = f"can-set-{ctx_var}"
+    loaded_yaml["context-variables"][can_set] = {"type": "flag", "init": False}
+    for option in options:
+        loaded_yaml["context-variables"][f"{ctx_var}-value-{option}"] = {"type": "flag", "init": False}
+        loaded_yaml["actions"][f"set-{ctx_var}-value-{option}"] = {
+            "type": "system",
+            "condition": {can_set: {"value": True}, ctx_var: {"value": option}},
+            "effect": {
+                "set-valid-value": {
+                    "oneof": {
+                        "outcomes": {
+                            "assign": {
+                                "updates": {
+                                    option: {"value": True},
+                                    can_set: {"value": False},
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+        }
+
 
 def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
     # every outcome in the forced action other than the fallback/unclear will undo the force
@@ -320,6 +345,41 @@ def add_follow_ups(loaded_yaml):
     loaded_yaml["actions"] = with_forced
 
 
+def add_value_setters(loaded_yaml):
+    processed = deepcopy(loaded_yaml)
+    # stores actions that need a separate action where their values are encoded in PDDL.
+    # necessary whenever an action is contingent on a variable being a certain value.
+    needs_value_setter = set()
+    for act, act_cfg in loaded_yaml["actions"].items():
+        for cond, cond_cfg in act_cfg["condition"].items():
+            if "value" in cond_cfg:
+                option = cond_cfg["value"]
+                if type(option) != bool:
+                    # if not done already, create new "value-setting" actions, conditions, etc.
+                    if f"{cond}-value-{option}" not in processed["context-variables"]:
+                        needs_value_setter.add(cond)
+                        configure_value_setter(processed, cond)
+                    # reset old condition to the refactored condition so we can specify value
+                    # only delete the value portion (may still have "known")
+                    del processed["actions"][act]["condition"][cond]["value"]
+                    # delete whole condition if empty
+                    if processed["actions"][act]["condition"][cond] == {}:
+                        del processed["actions"][act]["condition"][cond]
+                    # replace
+                    processed["actions"][act]["condition"][f"{cond}-value-{option}"] = {"value": True}
+    for act, act_cfg in loaded_yaml["actions"].items():
+        for eff, eff_config in act_cfg["effect"].items():
+            for option in eff_config:
+                outcomes = eff_config[option]["outcomes"]
+                for out, out_config in outcomes.items():
+                    if "updates" in out_config:
+                        for update_var, update_cfg in out_config["updates"].items():
+                            if update_var in needs_value_setter:
+                                if "value" in update_cfg:
+                                    if type(update_cfg["value"]) == str:
+                                        processed["actions"][act]["effect"][eff][option]["outcomes"][out]["updates"][f"can-set-{update_var}"] = {"value": True}
+    loaded_yaml["actions"], loaded_yaml["context-variables"] = processed["actions"], processed["context-variables"]
+
 def convert_actions(loaded_yaml):
     processed = deepcopy(loaded_yaml["actions"])
     for act in loaded_yaml["actions"]:
@@ -357,14 +417,20 @@ def convert_actions(loaded_yaml):
                     if "updates" in out_config:
                         for update_var, update_cfg in out_config["updates"].items():
                             if update_var in ["and", "or"]:
-                                #for expr in update_cfg:
-                                    pass
+                                # for expr in update_cfg:
+                                pass
                             else:
                                 if "known" in update_cfg:
-                                    next_outcome["assignments"][f"${update_var}"] = configure_assignments(update_cfg["known"])
-                                    next_outcome["updates"][update_var]["certainty"] = configure_certainty(update_cfg["known"])
+                                    next_outcome["assignments"][
+                                        f"${update_var}"
+                                    ] = configure_assignments(update_cfg["known"])
+                                    next_outcome["updates"][update_var][
+                                        "certainty"
+                                    ] = configure_certainty(update_cfg["known"])
                                 if "value" in update_cfg:
-                                    next_outcome["updates"][update_var]["interpretation"] = configure_interpretation(update_cfg["value"])
+                                    next_outcome["updates"][update_var][
+                                        "interpretation"
+                                    ] = configure_interpretation(update_cfg["value"])
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
                 del converted_eff[option]
@@ -387,6 +453,7 @@ def convert_yaml(filename: str):
     instantiate_advanced_custom_actions(loaded_yaml)
     instantiate_effects(loaded_yaml)
     add_follow_ups(loaded_yaml)
+    add_value_setters(loaded_yaml)
     convert_ctx_var(loaded_yaml)
     convert_intents(loaded_yaml)
     convert_actions(loaded_yaml)

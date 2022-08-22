@@ -18,7 +18,7 @@ def return_certainty_fluents(f_name: str, known):
             else [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
         )
     else:
-        return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"]
+        return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"] if known == "maybe" else [f"({known})"]
 
 
 def fluents_to_pddl(
