@@ -45,25 +45,25 @@ def generate_files(
             output=f"{dirname}",
             fixed_model_name=f"{domain_name}-model"
         )
-    # generate PDDL files; convert policy.out to a prp.json file; wait until complete
-    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
-    with open(f"policy.out") as f:
-        plan_data = {f"plan": json.load(f)}
-    with open(f"{dirname}/{domain_name}.prp.json", "w") as f:
-        json.dump(plan_data, f, indent=4)
-    # delete extra output files
-    os.remove("./policy.out")
-    os.remove("./output.sas")
-    # for rollout
-    rollout_data = rollout_config(converted_json)
-    with open(f"{dirname}/{domain_name}_rollout_config.json", "w") as f:
-        json.dump(rollout_data, f, indent=4)
+    # # generate PDDL files; convert policy.out to a prp.json file; wait until complete
+    # subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
+    # with open(f"policy.out") as f:
+    #     plan_data = {f"plan": json.load(f)}
+    # with open(f"{dirname}/{domain_name}.prp.json", "w") as f:
+    #     json.dump(plan_data, f, indent=4)
+    # # delete extra output files
+    # os.remove("./policy.out")
+    # os.remove("./output.sas")
+    # # for rollout
+    # rollout_data = rollout_config(converted_json)
+    # with open(f"{dirname}/{domain_name}_rollout_config.json", "w") as f:
+    #     json.dump(rollout_data, f, indent=4)
 
 
 if __name__ == "__main__":
     generate_files(
-        "./plan4dial/yaml_samples/value_test.yml",
-        "test",
+        "./plan4dial/yaml_samples/or_test.yml",
+        "or_test",
         str((Path(__file__).parent.parent / "rbp").resolve()),
         False
     )

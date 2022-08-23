@@ -1,0 +1,59 @@
+nlu:
+- examples: '- yes
+
+    - yeah
+
+    - that''s it
+
+    - Y
+
+    - mhm
+
+    - confirm
+
+    - yes please'
+  intent: confirm
+- examples: '- no
+
+    - not at all
+
+    - that''s not what i meant
+
+    - absolutely not
+
+    - i don''t want that
+
+    - nah
+
+    - no thanks
+
+    - no thank you'
+  intent: deny
+- examples: '- I want to eat [mexican]{"entity": "cuisine", "value": "mexican"}.
+
+    - Do you have restaurants of type [mexican]{"entity": "cuisine", "value": "mexican"}?
+
+    - Are there any [mexican]{"entity": "cuisine", "value": "mexican"} restaurants
+    in the area?
+
+    - I want to eat [italian]{"entity": "cuisine", "value": "italian"}.
+
+    - Do you have restaurants of type [italian]{"entity": "cuisine", "value": "italian"}?
+
+    - Are there any [italian]{"entity": "cuisine", "value": "italian"} restaurants
+    in the area?
+
+    - I want to eat [chinese]{"entity": "cuisine", "value": "chinese"}.
+
+    - Do you have restaurants of type [chinese]{"entity": "cuisine", "value": "chinese"}?
+
+    - Are there any [chinese]{"entity": "cuisine", "value": "chinese"} restaurants
+    in the area?
+
+    - I want to eat [dessert]{"entity": "cuisine", "value": "dessert"}.
+
+    - Do you have restaurants of type [dessert]{"entity": "cuisine", "value": "dessert"}?
+
+    - Are there any [dessert]{"entity": "cuisine", "value": "dessert"} restaurants
+    in the area?'
+  intent: share_cuisine

@@ -146,7 +146,7 @@ def instantiate_clarification_actions(loaded_yaml):
         loaded_yaml[key] = processed[key]
 
 
-def instantiate_effects(loaded_yaml):
+def instantiate_effects_add_fallbacks(loaded_yaml):
     processed = deepcopy(loaded_yaml["actions"])
     # for all actions, instantiate template effect and add fallbacks if necessary
     for act, act_config in loaded_yaml["actions"].items():
@@ -345,12 +345,29 @@ def add_follow_ups(loaded_yaml):
         loaded_yaml["context-variables"][name] = {"type": "flag", "init": False}
     loaded_yaml["actions"] = with_forced
 
+def duplicate_for_or_condition(loaded_yaml):
+    processed = deepcopy(loaded_yaml["actions"])
+    for act, act_cfg in loaded_yaml["actions"].items():
+        for cond, cond_cfg in act_cfg["condition"].items():
+            if cond == "or":
+                idx = 1
+                for or_cond in cond_cfg:
+                    new_cond = deepcopy(act_cfg["condition"])
+                    del new_cond["or"]
+                    for k, v in or_cond.items():
+                        new_cond[k] = v
+                    next_act_name = f"{act}-or-{idx}"
+                    processed[next_act_name] = deepcopy(processed[act])
+                    processed[next_act_name]["condition"] = new_cond
+                    idx += 1
+                del processed[act]
+    loaded_yaml["actions"] = processed
+
 
 def add_value_setters(loaded_yaml):
     processed = deepcopy(loaded_yaml)
     # stores actions that need a separate action where their values are encoded in PDDL.
     # necessary whenever an action is contingent on a variable being a certain value.
-    needs_value_setter = set()
     for act, act_cfg in loaded_yaml["actions"].items():
         for cond, cond_cfg in act_cfg["condition"].items():
             if "value" in cond_cfg:
@@ -360,7 +377,6 @@ def add_value_setters(loaded_yaml):
                         raise AssertionError(f"Cannot specify the value \"{option}\" for the context variable \"{cond}\".")
                     # if not done already, create new "value-setting" actions, conditions, etc.
                     if f"{cond}-value-{option}" not in processed["context-variables"]:
-                        needs_value_setter.add(cond)
                         configure_value_setter(processed, cond)
                     # reset old condition to the refactored condition so we can specify value
                     # only delete the value portion (may still have "known")
@@ -372,6 +388,8 @@ def add_value_setters(loaded_yaml):
                     processed["actions"][act]["condition"][f"{cond}-value-{option}"] = {"value": True}
     loaded_yaml["actions"], loaded_yaml["context-variables"] = processed["actions"], processed["context-variables"]
 
+
+
 def convert_actions(loaded_yaml):
     processed = deepcopy(loaded_yaml["actions"])
     for act in loaded_yaml["actions"]:
@@ -379,7 +397,6 @@ def convert_actions(loaded_yaml):
         json_config_cond = []
         condition = loaded_yaml["actions"][act]["condition"]
         for cond, cond_cfg in condition.items():
-            if type(cond_cfg) == dict:
                 for cond_config_key, cond_config_val in cond_cfg.items():
                     if cond_config_key == "known":
                         json_config_cond.append(
@@ -408,21 +425,17 @@ def convert_actions(loaded_yaml):
                     next_outcome["assignments"] = {}
                     if "updates" in out_config:
                         for update_var, update_cfg in out_config["updates"].items():
-                            if update_var in ["and", "or"]:
-                                # for expr in update_cfg:
-                                pass
-                            else:
-                                if "known" in update_cfg:
-                                    next_outcome["assignments"][
-                                        f"${update_var}"
-                                    ] = configure_assignments(update_cfg["known"])
-                                    next_outcome["updates"][update_var][
-                                        "certainty"
-                                    ] = configure_certainty(update_cfg["known"])
-                                if "value" in update_cfg:
-                                    next_outcome["updates"][update_var][
-                                        "interpretation"
-                                    ] = configure_interpretation(update_cfg["value"])
+                            if "known" in update_cfg:
+                                next_outcome["assignments"][
+                                    f"${update_var}"
+                                ] = configure_assignments(update_cfg["known"])
+                                next_outcome["updates"][update_var][
+                                    "certainty"
+                                ] = configure_certainty(update_cfg["known"])
+                            if "value" in update_cfg:
+                                next_outcome["updates"][update_var][
+                                    "interpretation"
+                                ] = configure_interpretation(update_cfg["value"])
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
                 del converted_eff[option]
@@ -443,8 +456,9 @@ def convert_yaml(filename: str):
     base_setup(loaded_yaml)
     instantiate_clarification_actions(loaded_yaml)
     instantiate_advanced_custom_actions(loaded_yaml)
-    instantiate_effects(loaded_yaml)
+    instantiate_effects_add_fallbacks(loaded_yaml)
     add_follow_ups(loaded_yaml)
+    duplicate_for_or_condition(loaded_yaml)
     add_value_setters(loaded_yaml)
     convert_ctx_var(loaded_yaml)
     convert_intents(loaded_yaml)

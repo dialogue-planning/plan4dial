@@ -1,3 +1,5 @@
+name: or_test
+
 context-variables:
   cuisine:
     type: enum
@@ -77,8 +79,8 @@ actions:
             value: mexican
         - cuisine:
             value: dessert
-        - cuisine:
-            value: chinese
+          test:
+            value: true
     effect:
       done:
         oneof:
