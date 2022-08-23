@@ -1,0 +1,106 @@
+name: value_test
+
+context-variables:
+  cuisine:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - mexican
+      - italian
+  test:
+    type: flag
+    init: false
+  goal:
+    type: flag
+    init: false
+
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  share_cuisine:
+    variables:
+      - cuisine
+    utterances:
+      - I want to eat $cuisine.
+      - Do you have restaurants of type $cuisine?
+      - Are there any $cuisine restaurants in the area?
+
+actions:
+  get-cuisine:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+    fallback_message_variants:
+      - Sorry, that isn't a valid cuisine.
+    condition:
+      cuisine:
+        known: false
+    effect:
+      set-cuisine:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                cuisine:
+                  value: $cuisine
+                  known: true
+              intent: share_cuisine
+  test_value:
+    type: system
+    condition:
+      cuisine:
+        value: italian
+    effect:
+      test-value:
+        oneof:
+          outcomes:
+            assign:
+              updates:
+                test:
+                  value: true
+  goal1:
+    type: system
+    condition:
+      cuisine:
+        value: mexican
+    effect:
+      done:
+        oneof:
+          outcomes:
+            done:
+              updates:
+                goal:
+                  value: true
+  goal2:
+    type: system
+    condition:
+      test:
+        value: true
+    effect:
+      done:
+        oneof:
+          outcomes:
+            done:
+              updates:
+                goal:
+                  value: true

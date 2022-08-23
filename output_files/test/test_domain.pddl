@@ -9,7 +9,6 @@
         (goal)
         (have-message)
         (force-statement)
-        (can-set-cuisine)
         (cuisine-value-mexican)
         (cuisine-value-italian)
     )
@@ -25,7 +24,6 @@
                 (outcome valid
                     (and
                         (have_cuisine)
-                        (can-set-cuisine)
                     )
                 )
                 (outcome fallback
@@ -36,32 +34,12 @@
                 )
             )
     )
-    (:action set-cuisine
-        :parameters ()
-        :precondition (and (can-set-cuisine))
-        :effect
-            (labeled-oneof set
-                (outcome valid1
-                    (and
-                        (not (can-set-cuisine))
-                        (cuisine-value-italian)
-                    )
-                )
-                (outcome valid2
-                    (and
-                        (not (can-set-cuisine))
-                        (cuisine-value-mexican)
-                    )
-                )
-            )
-    )
-    
     (:action test_value
         :parameters()
         :precondition
             (and
-                (cuisine-value-italian)
                 (not (force-statement))
+                (cuisine-value-italian)
             )
         :effect
             (labeled-oneof test-value
@@ -117,6 +95,28 @@
                     (and
                         (not (have-message))
                         (not (force-statement))
+                    )
+                )
+            )
+    )
+    (:action set-cuisine
+        :parameters()
+        :precondition
+            (and
+                (have_cuisine)
+                (not (cuisine-value-italian))
+                (not (cuisine-value-mexican))
+            )
+        :effect
+            (labeled-oneof set-valid-value
+                (outcome mexican
+                    (and
+                        (cuisine-value-mexican)
+                    )
+                )
+                (outcome italian
+                    (and
+                        (cuisine-value-italian)
                     )
                 )
             )

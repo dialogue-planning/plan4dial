@@ -10,16 +10,19 @@ def return_flag_value_fluents(f_name: str, value: bool):
     return f"({f_name})" if value else f"(not ({f_name}))"
 
 
-def return_certainty_fluents(f_name: str, known):
+def return_certainty_fluents(f_name: str, is_fflag: bool, known):
     if type(known) == bool:
         return (
             [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"]
             if known
             else [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
+        ) if is_fflag else (
+            [f"(have_{f_name})"]
+            if known
+            else [f"(not (have_{f_name}))"]
         )
     else:
-        return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"] if known == "maybe" else [f"({known})"]
-
+        return ([f"(not (have_{f_name}))", f"(maybe-have_{f_name})"] if known == "maybe" else [f"({known})"])
 
 def fluents_to_pddl(
     fluents: List[str],
@@ -50,7 +53,7 @@ def fluents_to_pddl(
         )
     return fluents
 
-def get_precond_fluents(conditions):
+def get_precond_fluents(context_variables: Dict, conditions):
     precond = set()
     for cond in conditions:
         cond_key = cond[0]
@@ -65,15 +68,15 @@ def get_precond_fluents(conditions):
                     cond_val = False
                 elif cond_val == "Uncertain":
                     cond_val = "maybe"
-                precond.update(return_certainty_fluents(cond_key, cond_val))
+                precond.update(return_certainty_fluents(cond_key, context_variables[cond_key]["known"]["type"] == "fflag", cond_val))
     return precond
 
-def get_update_fluents(updates):
+def get_update_fluents(context_variables: Dict, updates):
     outcomes = set()
     for update_var, update_config in updates.items():
         if "known" in update_config:
             outcomes.update(
-                return_certainty_fluents(update_var, update_config["known"])
+                return_certainty_fluents(update_var, context_variables[update_var]["known"]["type"] == "fflag", update_config["known"])
             )
         if "value" in update_config:
             update_value = update_config["value"]
@@ -90,17 +93,17 @@ def get_update_fluents(updates):
                 )
     return outcomes
 
-def action_to_pddl(act: str, act_config: Dict):
+def action_to_pddl(context_variables: Dict, act: str, act_config: Dict):
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
 
 
     precond = fluents_to_pddl(
-        fluents=get_precond_fluents(act_config["condition"]), tabs=2, name_wrap=":precondition", and_wrap=True
+        fluents=get_precond_fluents(context_variables, act_config["condition"]), tabs=2, name_wrap=":precondition", and_wrap=True
     )
     effects = f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof {act_config['effect']['global-outcome-name']}"
     for out_config in act_config["effect"]["outcomes"]:
         if "updates" in out_config:
-            update_fluents = get_update_fluents(out_config["updates"])
+            update_fluents = get_update_fluents(context_variables, out_config["updates"])
         effects += fluents_to_pddl(
             fluents=update_fluents,
             tabs=4,
@@ -115,7 +118,7 @@ def action_to_pddl(act: str, act_config: Dict):
 def actions_to_pddl(loaded_yaml: Dict):
     return "\n".join(
         [
-            action_to_pddl(act, act_config)
+            action_to_pddl(loaded_yaml["context-variables"], act, act_config)
             for act, act_config in loaded_yaml["actions"].items()
         ]
     )

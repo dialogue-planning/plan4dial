@@ -67,28 +67,29 @@ def configure_value_setter(loaded_yaml, ctx_var):
         if type(ctx_var_cfg["options"]) == dict
         else ctx_var_cfg["options"]
     )
-    can_set = f"can-set-{ctx_var}"
-    loaded_yaml["context-variables"][can_set] = {"type": "flag", "init": False}
+
     for option in options:
         loaded_yaml["context-variables"][f"{ctx_var}-value-{option}"] = {"type": "flag", "init": False}
-        loaded_yaml["actions"][f"set-{ctx_var}-value-{option}"] = {
-            "type": "system",
-            "condition": {can_set: {"value": True}, ctx_var: {"value": option}},
-            "effect": {
-                "set-valid-value": {
-                    "oneof": {
-                        "outcomes": {
-                            "assign": {
-                                "updates": {
-                                    option: {"value": True},
-                                    can_set: {"value": False},
-                                }
-                            }
+    loaded_yaml["actions"][f"set-{ctx_var}"] = {
+        "type": "system",
+        "subtype": "Context dependent determination",
+        "condition": {**{ctx_var: {"known": True}}, **{f"{ctx_var}-value-{option}": {"value": False} for option in options}},
+        "effect": {
+            "set-valid-value": {
+                "oneof": {
+                    "outcomes": {
+                        option: {
+                            "updates": {
+                                f"{ctx_var}-value-{option}": {"value": True},
+                            },
+                            "context": {ctx_var : option}
                         }
+                        for option in options
                     }
                 }
-            },
+            }
         }
+    }
 
 
 def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
@@ -353,8 +354,10 @@ def add_value_setters(loaded_yaml):
     for act, act_cfg in loaded_yaml["actions"].items():
         for cond, cond_cfg in act_cfg["condition"].items():
             if "value" in cond_cfg:
-                option = cond_cfg["value"]
-                if type(option) != bool:
+                option = cond_cfg["value"]  
+                if type(option) == str:
+                    if option not in loaded_yaml["context-variables"][cond]["options"]:
+                        raise AssertionError(f"Cannot specify the value \"{option}\" for the context variable \"{cond}\".")
                     # if not done already, create new "value-setting" actions, conditions, etc.
                     if f"{cond}-value-{option}" not in processed["context-variables"]:
                         needs_value_setter.add(cond)
@@ -367,17 +370,6 @@ def add_value_setters(loaded_yaml):
                         del processed["actions"][act]["condition"][cond]
                     # replace
                     processed["actions"][act]["condition"][f"{cond}-value-{option}"] = {"value": True}
-    for act, act_cfg in loaded_yaml["actions"].items():
-        for eff, eff_config in act_cfg["effect"].items():
-            for option in eff_config:
-                outcomes = eff_config[option]["outcomes"]
-                for out, out_config in outcomes.items():
-                    if "updates" in out_config:
-                        for update_var, update_cfg in out_config["updates"].items():
-                            if update_var in needs_value_setter:
-                                if "value" in update_cfg:
-                                    if type(update_cfg["value"]) == str:
-                                        processed["actions"][act]["effect"][eff][option]["outcomes"][out]["updates"][f"can-set-{update_var}"] = {"value": True}
     loaded_yaml["actions"], loaded_yaml["context-variables"] = processed["actions"], processed["context-variables"]
 
 def convert_actions(loaded_yaml):

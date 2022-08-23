@@ -29,11 +29,12 @@ def make_nlu_file(filename: str):
                         create_intent_example(option, variable)
                         for option in ctx_var["options"]
                     ]
-                    for option, option_var in ctx_var["options"].items():
-                        variations[variable].extend(
-                            create_intent_example(v, variable, true_value=option)
-                            for v in option_var["variations"]
-                        )
+                    if type(ctx_var["options"]) == dict:
+                        for option, option_var in ctx_var["options"].items():
+                            variations[variable].extend(
+                                create_intent_example(v, variable, true_value=option)
+                                for v in option_var["variations"]
+                            )
                 elif "extraction" in ctx_var:
                     if ctx_var["extraction"] == "regex":
                         nlu["nlu"].append(

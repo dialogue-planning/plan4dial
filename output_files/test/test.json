@@ -28,10 +28,6 @@
             "type": "flag",
             "config": false
         },
-        "can-set-cuisine": {
-            "type": "flag",
-            "config": false
-        },
         "cuisine-value-mexican": {
             "type": "flag",
             "config": false
@@ -113,9 +109,6 @@
                                 "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
-                            },
-                            "can-set-cuisine": {
-                                "value": true
                             }
                         },
                         "intent": "share_cuisine",
@@ -158,45 +151,6 @@
                 }
             }
         },
-        "set-cuisine": {
-            "type": "system",
-            "condition": [
-                [
-                    "can-set-cuisine",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "set",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "cuisine-value-mexican": {
-                                "value": true,
-                                "interpretation": "json"
-                            },
-                            "can-set-cuisine": {
-                                "value": false,
-                                "interpretation": "json"
-                            }
-                        }
-                    },
-                    {
-                        "updates": {
-                            "cuisine-value-italian": {
-                                "value": true,
-                                "interpretation": "json"
-                            },
-                            "can-set-cuisine": {
-                                "value": false,
-                                "interpretation": "json"
-                            }
-                        }
-                    }
-                ]
-            }
-        },
         "test_value": {
             "type": "system",
             "condition": [
@@ -205,8 +159,8 @@
                     false
                 ],
                 [
-                    "cuisine",
-                    "italian"
+                    "cuisine-value-italian",
+                    true
                 ]
             ],
             "effect": {
@@ -235,8 +189,8 @@
                     false
                 ],
                 [
-                    "cuisine",
-                    "mexican"
+                    "cuisine-value-mexican",
+                    true
                 ]
             ],
             "effect": {
@@ -261,12 +215,12 @@
             "type": "system",
             "condition": [
                 [
-                    "force-statement",
-                    false
+                    "test",
+                    true
                 ],
                 [
-                    "cuisine-value-test",
-                    true
+                    "force-statement",
+                    false
                 ]
             ],
             "effect": {
@@ -326,6 +280,58 @@
                     "variables": [],
                     "utterances": []
                 }
+            }
+        },
+        "set-cuisine": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "cuisine",
+                    "Known"
+                ],
+                [
+                    "cuisine-value-mexican",
+                    false
+                ],
+                [
+                    "cuisine-value-italian",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-valid-value",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "cuisine-value-mexican": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": "mexican"
+                        },
+                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-mexican",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "cuisine-value-italian": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": "italian"
+                        },
+                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-italian",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
             }
         }
     }
