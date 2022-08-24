@@ -1,3 +1,5 @@
+name: when_test
+
 context-variables:
   cuisine:
     type: enum

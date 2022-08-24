@@ -1,0 +1,297 @@
+{
+    "name": "when_test",
+    "context-variables": {
+        "cuisine": {
+            "type": "enum",
+            "config": [
+                "mexican",
+                "italian",
+                "dessert"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "food_restriction": {
+            "type": "enum",
+            "config": [
+                "dairy-free",
+                "gluten-free"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "have_allergy": {
+            "type": "flag",
+            "config": false
+        },
+        "goal": {
+            "type": "flag",
+            "config": false
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "confirm": {
+            "variables": [],
+            "utterances": [
+                "yes",
+                "yeah",
+                "that's it",
+                "Y",
+                "mhm",
+                "confirm",
+                "yes please"
+            ]
+        },
+        "deny": {
+            "variables": [],
+            "utterances": [
+                "no",
+                "not at all",
+                "that's not what i meant",
+                "absolutely not",
+                "i don't want that",
+                "nah",
+                "no thanks",
+                "no thank you"
+            ]
+        },
+        "share_cuisine": {
+            "variables": [
+                "$cuisine"
+            ],
+            "utterances": [
+                "I want to eat $cuisine.",
+                "Do you have restaurants of type $cuisine?",
+                "Are there any $cuisine restaurants in the area?"
+            ]
+        },
+        "fallback": {
+            "variables": [],
+            "utterances": []
+        }
+    },
+    "actions": {
+        "set-restaurant": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have_allergy",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "validate",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "and": [
+                                {
+                                    "when": {
+                                        "condition": {
+                                            "dairy-free": {
+                                                "value": true
+                                            }
+                                        },
+                                        "effect": {
+                                            "dessert": {
+                                                "value": true
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "when": {
+                                        "condition": {
+                                            "gluten-free": {
+                                                "value": true
+                                            }
+                                        },
+                                        "effect": {
+                                            "dessert": {
+                                                "value": true
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "when": {
+                                        "condition": {
+                                            "mexican": {
+                                                "value": true
+                                            }
+                                        },
+                                        "effect": {
+                                            "breakfast": {
+                                                "value": true
+                                            }
+                                        }
+                                    }
+                                },
+                                {
+                                    "when": {
+                                        "condition": {
+                                            "italian": {
+                                                "value": true
+                                            }
+                                        },
+                                        "effect": {
+                                            "breakfast": {
+                                                "value": true
+                                            }
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        "name": "set-restaurant_DETDUP_validate-EQ-valid",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "set-restaurant_DETDUP_validate-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "complete-or-1": {
+            "type": "system",
+            "condition": [
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "dessert",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "done",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "complete-or-1_DETDUP_done-EQ-done",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "complete-or-2": {
+            "type": "system",
+            "condition": [
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "breakfast",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "done",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "complete-or-2_DETDUP_done-EQ-done",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        }
+    }
+}

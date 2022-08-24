@@ -18,8 +18,8 @@
         :parameters()
         :precondition
             (and
-                (not (have_cuisine))
                 (not (force-statement))
+                (not (have_cuisine))
             )
         :effect
             (labeled-oneof set-cuisine
@@ -47,8 +47,8 @@
             (labeled-oneof reset
                 (outcome lock
                     (and
-                        (not (have-message))
                         (not (force-statement))
+                        (not (have-message))
                     )
                 )
             )
@@ -89,8 +89,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (test)
+                (not (force-statement))
                 (cuisine-value-dessert)
             )
         :effect
@@ -106,11 +106,11 @@
         :parameters()
         :precondition
             (and
-                (not (cuisine-value-chinese))
-                (not (cuisine-value-mexican))
-                (not (cuisine-value-italian))
-                (not (cuisine-value-dessert))
                 (have_cuisine)
+                (not (cuisine-value-italian))
+                (not (cuisine-value-chinese))
+                (not (cuisine-value-dessert))
+                (not (cuisine-value-mexican))
             )
         :effect
             (labeled-oneof set-valid-value

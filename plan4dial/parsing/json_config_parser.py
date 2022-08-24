@@ -389,6 +389,7 @@ def duplicate_for_or_condition(loaded_yaml):
     processed = deepcopy(loaded_yaml["actions"])
     for act, act_cfg in loaded_yaml["actions"].items():
         for cond, cond_cfg in act_cfg["condition"].items():
+            # currently only handles "or"s and "or"s of "ands" (when multiple conditions are listed under one bullet)
             if cond == "or":
                 idx = 1
                 for or_cond in cond_cfg:
@@ -401,6 +402,28 @@ def duplicate_for_or_condition(loaded_yaml):
                     processed[next_act_name]["condition"] = new_cond
                     idx += 1
                 del processed[act]
+    loaded_yaml["actions"] = processed
+
+def duplicate_for_or_when_condition(loaded_yaml):
+    processed = deepcopy(loaded_yaml["actions"])
+    for act, act_cfg in loaded_yaml["actions"].items():
+        for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
+            for option in eff_config:
+                for out, out_config in eff_config[option]["outcomes"].items():
+                    if "updates" in out_config:
+                        for update_var, update_cfg in out_config["updates"].items():
+                            # for now, assume we only use "and" explicitly to stack "when" expressions
+                            if update_var == "and":
+                                for when_expr in update_cfg:
+                                    for when_cond, when_cond_cfg in when_expr["when"]["condition"].items():
+                                        if when_cond == "or":
+                                            for or_cond in when_cond_cfg:
+                                                new_when = deepcopy(when_expr)
+                                                del new_when["when"]["condition"]["or"]
+                                                for k, v in or_cond.items():
+                                                    new_when["when"]["condition"][k] = v
+                                                processed[act]["effect"][eff][option]["outcomes"][out]["updates"][update_var].append(new_when)
+                                    processed[act]["effect"][eff][option]["outcomes"][out]["updates"][update_var].remove(when_expr)
     loaded_yaml["actions"] = processed
 
 
@@ -505,6 +528,7 @@ def convert_yaml(filename: str):
     instantiate_effects_add_fallbacks(loaded_yaml)
     add_follow_ups(loaded_yaml)
     duplicate_for_or_condition(loaded_yaml)
+    duplicate_for_or_when_condition(loaded_yaml)
     add_value_setters(loaded_yaml)
     convert_ctx_var(loaded_yaml)
     convert_intents(loaded_yaml)

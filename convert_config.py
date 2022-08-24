@@ -62,8 +62,8 @@ def generate_files(
 
 if __name__ == "__main__":
     generate_files(
-        "./plan4dial/yaml_samples/nested_formula_test.yml",
-        "or_test",
+        "./plan4dial/yaml_samples/when_test.yml",
+        "when_test",
         str((Path(__file__).parent.parent / "rbp").resolve()),
         False
     )
