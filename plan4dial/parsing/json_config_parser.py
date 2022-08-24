@@ -2,10 +2,10 @@ import yaml
 import json
 from pathlib import Path
 from copy import deepcopy
-
 from inspect import getmembers, isfunction
 from plan4dial.custom_actions.utils import *
 import plan4dial.custom_actions.custom as custom
+from nnf import Or, And, Var, config
 
 
 def configure_fallback_true():
@@ -60,6 +60,39 @@ def configure_interpretation(value):
     return "json" if value in [True, False, None] else "spel"
 
 
+@config(auto_simplify=True)
+def convert_to_formula(condition: Dict):
+    formula_terms = []
+    if type(condition) == list:
+        formula_terms.extend(
+            [
+                formula
+                for nesting in condition
+                for formula in convert_to_formula(nesting)
+            ]
+        )
+    else:
+        for connective, config in condition.items():
+            if connective not in ["and", "or"]:
+                formula_terms.extend(
+                    Var(f"({connective}-{base_key}-{base_value})")
+                    for base_key, base_value in config.items()
+                )
+            else:
+                formula_terms.append(
+                    And(convert_to_formula(config))
+                    if connective == "and"
+                    else Or(convert_to_formula(config))
+                )
+    return formula_terms
+
+
+@config(auto_simplify=True)
+def convert_to_DNF(condition: Dict):
+    # mappings that will simplify formula creation
+    return (And(convert_to_formula(condition)).negate()).to_CNF().negate()
+
+
 def configure_value_setter(loaded_yaml, ctx_var):
     ctx_var_cfg = loaded_yaml["context-variables"][ctx_var]
     options = (
@@ -69,11 +102,17 @@ def configure_value_setter(loaded_yaml, ctx_var):
     )
 
     for option in options:
-        loaded_yaml["context-variables"][f"{ctx_var}-value-{option}"] = {"type": "flag", "init": False}
+        loaded_yaml["context-variables"][f"{ctx_var}-value-{option}"] = {
+            "type": "flag",
+            "init": False,
+        }
     loaded_yaml["actions"][f"set-{ctx_var}"] = {
         "type": "system",
         "subtype": "Context dependent determination",
-        "condition": {**{ctx_var: {"known": True}}, **{f"{ctx_var}-value-{option}": {"value": False} for option in options}},
+        "condition": {
+            **{ctx_var: {"known": True}},
+            **{f"{ctx_var}-value-{option}": {"value": False} for option in options},
+        },
         "effect": {
             "set-valid-value": {
                 "oneof": {
@@ -82,13 +121,13 @@ def configure_value_setter(loaded_yaml, ctx_var):
                             "updates": {
                                 f"{ctx_var}-value-{option}": {"value": True},
                             },
-                            "context": {ctx_var : option}
+                            "context": {ctx_var: option},
                         }
                         for option in options
                     }
                 }
             }
-        }
+        },
     }
 
 
@@ -345,6 +384,7 @@ def add_follow_ups(loaded_yaml):
         loaded_yaml["context-variables"][name] = {"type": "flag", "init": False}
     loaded_yaml["actions"] = with_forced
 
+
 def duplicate_for_or_condition(loaded_yaml):
     processed = deepcopy(loaded_yaml["actions"])
     for act, act_cfg in loaded_yaml["actions"].items():
@@ -371,10 +411,12 @@ def add_value_setters(loaded_yaml):
     for act, act_cfg in loaded_yaml["actions"].items():
         for cond, cond_cfg in act_cfg["condition"].items():
             if "value" in cond_cfg:
-                option = cond_cfg["value"]  
+                option = cond_cfg["value"]
                 if type(option) == str:
                     if option not in loaded_yaml["context-variables"][cond]["options"]:
-                        raise AssertionError(f"Cannot specify the value \"{option}\" for the context variable \"{cond}\".")
+                        raise AssertionError(
+                            f'Cannot specify the value "{option}" for the context variable "{cond}".'
+                        )
                     # if not done already, create new "value-setting" actions, conditions, etc.
                     if f"{cond}-value-{option}" not in processed["context-variables"]:
                         configure_value_setter(processed, cond)
@@ -385,9 +427,13 @@ def add_value_setters(loaded_yaml):
                     if processed["actions"][act]["condition"][cond] == {}:
                         del processed["actions"][act]["condition"][cond]
                     # replace
-                    processed["actions"][act]["condition"][f"{cond}-value-{option}"] = {"value": True}
-    loaded_yaml["actions"], loaded_yaml["context-variables"] = processed["actions"], processed["context-variables"]
-
+                    processed["actions"][act]["condition"][f"{cond}-value-{option}"] = {
+                        "value": True
+                    }
+    loaded_yaml["actions"], loaded_yaml["context-variables"] = (
+        processed["actions"],
+        processed["context-variables"],
+    )
 
 
 def convert_actions(loaded_yaml):
@@ -397,15 +443,15 @@ def convert_actions(loaded_yaml):
         json_config_cond = []
         condition = loaded_yaml["actions"][act]["condition"]
         for cond, cond_cfg in condition.items():
-                for cond_config_key, cond_config_val in cond_cfg.items():
-                    if cond_config_key == "known":
-                        json_config_cond.append(
-                            ([cond, "Known"] if cond_config_val else [cond, "Unknown"])
-                            if type(cond_config_val) == bool
-                            else [cond, "Uncertain"]
-                        )
-                    elif cond_config_key == "value":
-                        json_config_cond.append([cond, cond_config_val])
+            for cond_config_key, cond_config_val in cond_cfg.items():
+                if cond_config_key == "known":
+                    json_config_cond.append(
+                        ([cond, "Known"] if cond_config_val else [cond, "Unknown"])
+                        if type(cond_config_val) == bool
+                        else [cond, "Uncertain"]
+                    )
+                elif cond_config_key == "value":
+                    json_config_cond.append([cond, cond_config_val])
         processed[act]["condition"] = json_config_cond
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             converted_eff = deepcopy(eff_config)
@@ -466,10 +512,3 @@ def convert_yaml(filename: str):
     if "template-effects" in loaded_yaml:
         del loaded_yaml["template-effects"]
     return loaded_yaml
-
-
-if __name__ == "__main__":
-    base = Path(__file__).parent.parent
-    f = str((base / "yaml_samples/advanced_custom_actions_test_v3.yaml").resolve())
-    json_file = open("pizza.json", "w")
-    json_file.write(json.dumps(convert_yaml(f), indent=4))
