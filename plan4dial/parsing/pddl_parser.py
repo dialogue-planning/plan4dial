@@ -104,14 +104,14 @@ def action_to_pddl(context_variables: Dict, act: str, act_config: Dict):
     for out_config in act_config["effect"]["outcomes"]:
         if "updates" in out_config:
             update_fluents = get_update_fluents(context_variables, out_config["updates"])
-        effects += fluents_to_pddl(
-            fluents=update_fluents,
-            tabs=4,
-            outer_brackets=True,
-            # only take raw name
-            name_wrap=f"outcome {out_config['name'].split('-EQ-')[1]}",
-            and_wrap=True,
-        )
+            effects += fluents_to_pddl(
+                fluents=update_fluents,
+                tabs=4,
+                outer_brackets=True,
+                # only take raw name
+                name_wrap=f"outcome {out_config['name'].split('-EQ-')[1]}",
+                and_wrap=True,
+            )
     effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
 

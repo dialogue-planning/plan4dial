@@ -25,6 +25,9 @@ context-variables:
   have_allergy:
     type: flag
     init: false
+    known:
+      type: flag
+      init: false
   food_restriction:
     type: enum
     known:
@@ -42,6 +45,9 @@ context-variables:
   low_budget:
     type: flag
     init: false
+    known:
+      type: flag
+      init: false
   outing_atmosphere:
     type: enum
     known:
@@ -133,10 +139,12 @@ actions:
               updates:
                 have_allergy:
                   value: true
+                  known: true
               intent: confirm
             indicate_no_allergy:
               updates:
                 have_allergy:
+                  known: true
                   value: false
                 conflict:
                   known: true
@@ -162,30 +170,30 @@ actions:
                   value: $food_restriction
                   known: true
               intent: share_allergies
-  get-budget:
-    type: dialogue
-    subtype: dialogue disambiguation
-    message_variants:
-      - Are you on a low budget? (Y/N)
-    condition:
-      low_budget:
-        known: false 
-    effect:
-      set-budget:
-        oneof:
-          outcomes:
-            low:
-              updates:
-                low_budget:
-                  value: true
-              intent: confirm
-            high:
-              updates:
-                low_budget:
-                  value: false 
-              intent: deny
+  # get-budget:
+  #   type: dialogue
+  #   subtype: dialogue disambiguation
+  #   message_variants:
+  #     - Are you on a low budget? (Y/N)
+  #   condition:
+  #     low_budget:
+  #       known: false 
+  #   effect:
+  #     set-budget:
+  #       oneof:
+  #         outcomes:
+  #           low:
+  #             updates:
+  #               low_budget:
+  #                 value: true
+  #             intent: confirm
+  #           high:
+  #             updates:
+  #               low_budget:
+  #                 value: false 
+  #             intent: deny
   # before continuing, we need to ensure their allergy and cuisine preferences don't conflict 
-  check-allergies:
+  check-allergies-1:
     type: system
     condition:
       cuisine:
@@ -194,34 +202,40 @@ actions:
         value: true
       food_restriction:
         known: true
+      or:
+        - cuisine:
+            value: mexican
+        - cuisine:
+            value: italian
     effect:
       check-conflicts:
         oneof:
           outcomes:
             validate-combos:
               updates:
-                and:
-                  - when:
-                      condition:
-                        cuisine:
-                          value: mexican
-                      effect:
-                        conflict:
-                          known: true
-                          value: true
-                  - when:
-                      condition:
-                        food_restriction:
-                          value: dairy-free
-                        or:
-                          - cuisine:
-                            value: dessert
-                          - cuisine:
-                            value: italian
-                      effect:
-                        conflict:
-                          known: true
-                          value: true
+                conflict:
+                  known: true
+                  value: true
+  # check-allergies-2:
+  #   type: system
+  #   condition:
+  #     cuisine:
+  #       known: true
+  #       value: dessert
+  #     have_allergy:
+  #       value: true
+  #     food_restriction:
+  #       known: true
+  #       value: dairy-free
+  #   effect:
+  #     check-conflicts:
+  #       oneof:
+  #         outcomes:
+  #           validate-combos:
+  #             updates:
+  #               conflict:
+  #                 known: true
+  #                 value: true
   reset-preferences:
     type: system
     condition:
@@ -232,73 +246,122 @@ actions:
         oneof:
           outcomes:
             reset-values:
-              have_allergy:
-                value: null
-                known: false 
-              food_restriction:
-                value: null
-                known: false 
-              cuisine:
-                value: null
-                known: false
+              updates:
+                have_allergy:
+                  known: false 
+                food_restriction:
+                  known: false 
+                cuisine:
+                  known: false
     response_variants:
       - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
-    
-  set-restaurant:
+  set-restaurant-mexican:
     type: dialogue
     message_variants:
-      - Chosen restaurant has been logged as $restaurant.
+      - Chosen restaurant has been logged as Guac Grill.
     condition:
       cuisine:
         known: true
-      conflict:
-        known: true
-        value: false
+        value: mexican
+      or:
+        - conflict:
+            known: true
+            value: false
+        - have_allergy:
+            known: true
+            value: false
     effect:
       set:
         oneof:
           outcomes:
             valid:
               updates:
-                and:
-                  - when:
-                      condition:
-                        cuisine:
-                          value: mexican
-                      effect:
-                        restaurant:
-                          value: Guac Grill
-                  - when:
-                      condition:
-                        cuisine:
-                          value: italian
-                      effect:
-                        restaurant:
-                          value: Alfredo's Pizza Cafe
-                  - when:
-                      condition:
-                        cuisine:
-                          value: chinese
-                      effect:
-                        restaurant:
-                          value: Mandarin
-                  - when:
-                      condition:
-                        cuisine:
-                          value: dessert
-                      effect:
-                        restaurant:
-                          value: Geneva Crepes
                 restaurant:
+                  value: Guac Grill
                   known: true
-                end:
-                  value: true
-
-  complete:
+  set-restaurant-italian:
     type: dialogue
+    message_variants:
+      - Chosen restaurant has been logged as Alfredo's Pizza Cafe.
     condition:
-      restaurant:
+      cuisine:
         known: true
+        value: italian
+      or:
+        - conflict:
+            known: true
+            value: false
+        - have_allergy:
+            known: true
+            value: false
+    effect:
+      set:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                restaurant:
+                  value: Alfredo's Pizza Cafe
+                  known: true
+  set-restaurant-chinese:
+    type: dialogue
+    message_variants:
+      - Chosen restaurant has been logged as Mandarin.
+    condition:
+      cuisine:
+        known: true
+        value: chinese
+      or:
+        - conflict:
+            known: true
+            value: false
+        - have_allergy:
+            known: true
+            value: false
+    effect:
+      set:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                restaurant:
+                  value: Mandarin
+                  known: true
+  set-restaurant-dessert:
+    type: dialogue
+    message_variants:
+      - Chosen restaurant has been logged as Geneva Crepes.
+    condition:
+      cuisine:
+        known: true
+        value: dessert
+      conflict:
+        known: true
+        value: false
+      or:
+        - conflict:
+            known: true
+            value: false
+        - have_allergy:
+            known: true
+            value: false
+    effect:
+      set:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                restaurant:
+                  value: Geneva Crepes
+                  known: true
+  complete:
+    type: system
+    condition:
+      or:
+        - restaurant:
+            known: true
+        - conflict:
+            value: true
     effect:
       finish:
         oneof:

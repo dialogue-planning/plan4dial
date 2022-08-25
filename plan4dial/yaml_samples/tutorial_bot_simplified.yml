@@ -1,0 +1,344 @@
+---
+name: day-planner
+
+context-variables:
+  cuisine:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - mexican
+      - italian
+      - chinese
+      - dessert
+  restaurant:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Guac Grill
+      - Alfredo's Pizza Cafe
+  have_allergy:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  food_restriction:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - dairy-free
+      - gluten-free
+  conflict:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  checked-for-conflict:
+    type: flag
+    init: false
+  low_budget:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  outing_atmosphere:
+    type: enum
+    known:
+      type: flag
+      init: false 
+    options:
+      - exciting
+      - relaxing
+  goal:
+    type: flag
+    init: false
+
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  share_cuisine:
+    variables:
+      - cuisine
+    utterances:
+      - I want to eat $cuisine.
+      - Do you have restaurants of type $cuisine?
+      - Are there any $cuisine restaurants in the area?
+  share_allergies:
+    variables:
+      - food_restriction
+    utterances:
+      - I have to eat $food_restriction.
+      - I can only eat foods that are $food_restriction.
+      - I am allergic to any foods that are not $food_restriction.
+  share_outing_preference:
+    variables:
+      - outing_atmosphere
+    utterances:
+      - I would prefer a $outing_atmosphere atmosphere today.
+      - I want to go to a $outing_atmosphere place.
+      - What is the most $outing_atmosphere place in the city?
+
+actions:
+  get-cuisine:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+    fallback_message_variants:
+      - Sorry, that isn't a valid cuisine.
+    condition:
+      cuisine:
+        known: false
+    effect:
+      set-cuisine:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                cuisine:
+                  value: $cuisine
+                  known: true
+              intent: share_cuisine
+  get-have-allergy:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - Do you have any allergies? (Y/N)
+    condition:
+      have_allergy:
+        known: false 
+    effect:
+      set-allergy:
+        oneof:
+          outcomes:
+            indicate_allergy:
+              updates:
+                have_allergy:
+                  value: true
+                  known: true
+              intent: confirm
+            indicate_no_allergy:
+              updates:
+                have_allergy:
+                  known: true
+                  value: false
+                conflict:
+                  known: true
+                  value: false
+              intent: deny
+  get-allergy:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What type of allergy do you have? (I currently account for dairy and gluten allergies).
+    fallback_message_variants:
+      - Sorry, I don't recognize that type of allergy.
+    condition:
+      have_allergy:
+        value: true
+    effect:
+      set-allergy:
+        oneof:
+          outcomes:
+            update_allergy:
+              updates:
+                food_restriction:
+                  value: $food_restriction
+                  known: true
+              intent: share_allergies
+  check-conflict-1:
+    type: system
+    condition:
+      have_allergy:
+        value: true
+      food_restriction:
+        known: true
+      cuisine:
+        known: true
+      or:
+        - cuisine:
+            value: mexican
+          food_restriction:
+            value: gluten-free
+        - cuisine:
+            value: dessert
+          food_restriction:
+            value: dairy-free
+    effect:
+      check-conflicts:
+        oneof:
+          outcomes:
+            validate-combos:
+              updates:
+                conflict:
+                  known: true
+                  value: true
+  check-conflict-2:
+    type: system
+    condition:
+      have_allergy:
+        value: true
+      food_restriction:
+        known: true
+      cuisine:
+        known: true
+      or:
+        - cuisine:
+            value: italian
+        - cuisine:
+            value: chinese
+        - cuisine:
+            value: mexican
+          food_restriction:
+            value: dairy-free
+        - cuisine:
+            value: dessert
+          food_restriction:
+            value: gluten-free
+    effect:
+      check-conflicts:
+        oneof:
+          outcomes:
+            validate-combos:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+  reset-preferences:
+    type: system
+    condition:
+      conflict:
+        value: true
+    effect:
+      reset:
+        oneof:
+          outcomes:
+            reset-values:
+              updates:
+                have_allergy:
+                  known: false 
+                food_restriction:
+                  known: false 
+                cuisine:
+                  known: false
+    response_variants:
+      - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+  set-restaurant-mexican:
+    type: dialogue
+    message_variants:
+      - Chosen restaurant has been logged as Guac Grill.
+    condition:
+      cuisine:
+        known: true
+        value: mexican
+      conflict:
+        known: true
+        value: false
+    effect:
+      set:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                restaurant:
+                  value: Guac Grill
+                  known: true
+  set-restaurant-italian:
+    type: dialogue
+    message_variants:
+      - Chosen restaurant has been logged as Alfredo's Pizza Cafe.
+    condition:
+      cuisine:
+        known: true
+        value: italian
+      conflict:
+        known: true
+        value: false
+    effect:
+      set:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                restaurant:
+                  value: Alfredo's Pizza Cafe
+                  known: true
+  set-restaurant-chinese:
+    type: dialogue
+    message_variants:
+      - Chosen restaurant has been logged as Mandarin.
+    condition:
+      cuisine:
+        known: true
+        value: chinese
+      conflict:
+        known: true
+        value: false
+    effect:
+      set:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                restaurant:
+                  value: Mandarin
+                  known: true
+  set-restaurant-dessert:
+    type: dialogue
+    message_variants:
+      - Chosen restaurant has been logged as Geneva Crepes.
+    condition:
+      cuisine:
+        known: true
+        value: dessert
+      conflict:
+        known: true
+        value: false
+    effect:
+      set:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                restaurant:
+                  value: Geneva Crepes
+                  known: true
+  complete:
+    type: system
+    condition:
+      restaurant:
+        known: true
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            finish:
+              updates:
+                goal:
+                  value: true
+                       

@@ -1,6 +1,4 @@
 import yaml
-import json
-from pathlib import Path
 from copy import deepcopy
 from inspect import getmembers, isfunction
 from plan4dial.custom_actions.utils import *
@@ -102,9 +100,30 @@ def configure_value_setter(loaded_yaml, ctx_var):
     )
 
     for option in options:
-        loaded_yaml["context-variables"][f"{ctx_var}-value-{option}"] = {
+        option_value_name = f"{ctx_var}-value-{option}"
+        loaded_yaml["context-variables"][option_value_name] = {
             "type": "flag",
             "init": False,
+        }
+        loaded_yaml["actions"][f"reset-{option_value_name}"] = {
+            "type": "system",
+            "condition": {
+                ctx_var: {"known": False},
+                option_value_name: {"value": True}
+            },
+            "effect": {
+                "reset": {
+                    "oneof": {
+                        "outcomes": {
+                            f"reset-{option}": {
+                                "updates": {
+                                    option_value_name: {"value": False}
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     loaded_yaml["actions"][f"set-{ctx_var}"] = {
         "type": "system",
@@ -429,6 +448,7 @@ def duplicate_for_or_when_condition(loaded_yaml):
 
 def add_value_setters(loaded_yaml):
     processed = deepcopy(loaded_yaml)
+    use_value_setters = set()
     # stores actions that need a separate action where their values are encoded in PDDL.
     # necessary whenever an action is contingent on a variable being a certain value.
     for act, act_cfg in loaded_yaml["actions"].items():
@@ -443,6 +463,7 @@ def add_value_setters(loaded_yaml):
                     # if not done already, create new "value-setting" actions, conditions, etc.
                     if f"{cond}-value-{option}" not in processed["context-variables"]:
                         configure_value_setter(processed, cond)
+                        use_value_setters.add(cond)
                     # reset old condition to the refactored condition so we can specify value
                     # only delete the value portion (may still have "known")
                     del processed["actions"][act]["condition"][cond]["value"]
@@ -453,6 +474,10 @@ def add_value_setters(loaded_yaml):
                     processed["actions"][act]["condition"][f"{cond}-value-{option}"] = {
                         "value": True
                     }
+    # NEED TO FIX ISSUE WHERE ASSIGNING A VARIABLE TO NULL DOES NOT RE-ASSIGN THE VALUES
+    # OF THE "VALUE" CONTEXT VARIABLES. I.E. CUISINE == NULL DOES NOT CHANGE THAT
+    # CUISINE-VALUE-MEXICAN IS STILL TRUE. EASY SOLUTION: AUTO-CREATE A SYSTEM ACTION SUCH THAT
+    # IF WE DO NOT KNOW THE CONTEXT VARIABLE AND ONE OF THE VALUES IS TRUE (OR), RESET ALL VALUES.
     loaded_yaml["actions"], loaded_yaml["context-variables"] = (
         processed["actions"],
         processed["context-variables"],
