@@ -54,10 +54,10 @@ def generate_files(
     # # delete extra output files
     # os.remove("./policy.out")
     # os.remove("./output.sas")
-    # # for rollout
-    # rollout_data = rollout_config(converted_json)
-    # with open(f"{dirname}/{domain_name}_rollout_config.json", "w") as f:
-    #     json.dump(rollout_data, f, indent=4)
+    # for rollout
+    rollout_data = rollout_config(converted_json)
+    with open(f"{dirname}/{domain_name}_rollout_config.json", "w") as f:
+        json.dump(rollout_data, f, indent=4)
 
 
 if __name__ == "__main__":

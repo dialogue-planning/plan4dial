@@ -18,7 +18,9 @@
             "type": "enum",
             "config": [
                 "Guac Grill",
-                "Alfredo's Pizza Cafe"
+                "Alfredo's Pizza Cafe",
+                "Mandarin",
+                "Geneva Crepes"
             ],
             "known": {
                 "type": "flag",
@@ -368,6 +370,10 @@
             "condition": [
                 [
                     "have_allergy",
+                    "Known"
+                ],
+                [
+                    "have_allergy",
                     true
                 ],
                 [
@@ -433,6 +439,10 @@
             "condition": [
                 [
                     "conflict",
+                    "Known"
+                ],
+                [
+                    "conflict",
                     true
                 ],
                 [
@@ -457,6 +467,12 @@
                             "cuisine": {
                                 "known": false,
                                 "certainty": "Unknown"
+                            },
+                            "conflict": {
+                                "known": false,
+                                "value": false,
+                                "certainty": "Unknown",
+                                "interpretation": "json"
                             }
                         },
                         "name": "reset-preferences_DETDUP_reset-EQ-reset-values",
@@ -464,7 +480,8 @@
                         "assignments": {
                             "$have_allergy": "didnt-find",
                             "$food_restriction": "didnt-find",
-                            "$cuisine": "didnt-find"
+                            "$cuisine": "didnt-find",
+                            "$conflict": "didnt-find"
                         }
                     }
                 ]
@@ -845,6 +862,10 @@
             "condition": [
                 [
                     "have_allergy",
+                    "Known"
+                ],
+                [
+                    "have_allergy",
                     true
                 ],
                 [
@@ -885,6 +906,10 @@
         "check-conflict-1-or-2": {
             "type": "system",
             "condition": [
+                [
+                    "have_allergy",
+                    "Known"
+                ],
                 [
                     "have_allergy",
                     true
@@ -929,6 +954,10 @@
             "condition": [
                 [
                     "have_allergy",
+                    "Known"
+                ],
+                [
+                    "have_allergy",
                     true
                 ],
                 [
@@ -969,6 +998,10 @@
         "check-conflict-2-or-2": {
             "type": "system",
             "condition": [
+                [
+                    "have_allergy",
+                    "Known"
+                ],
                 [
                     "have_allergy",
                     true
@@ -1013,6 +1046,10 @@
             "condition": [
                 [
                     "have_allergy",
+                    "Known"
+                ],
+                [
+                    "have_allergy",
                     true
                 ],
                 [
@@ -1053,6 +1090,10 @@
         "check-conflict-2-or-4": {
             "type": "system",
             "condition": [
+                [
+                    "have_allergy",
+                    "Known"
+                ],
                 [
                     "have_allergy",
                     true

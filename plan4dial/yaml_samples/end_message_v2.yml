@@ -108,7 +108,7 @@ intents:
       - I want a $pizza_flavour pizza with a $drink and $side.
       - $pizza_flavour pizza with a $drink and $side please!
       - Can I get a $pizza_flavour pizza with a $drink and $side?
-  
+actions:
   force-all:
     type: dialogue
     subtype: dialogue disambiguation 

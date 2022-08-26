@@ -20,6 +20,8 @@ context-variables:
     options:
       - Guac Grill
       - Alfredo's Pizza Cafe
+      - Mandarin
+      - Geneva Crepes
   have_allergy:
     type: flag
     init: false
@@ -160,6 +162,7 @@ actions:
       - Sorry, I don't recognize that type of allergy.
     condition:
       have_allergy:
+        known: true
         value: true
     effect:
       set-allergy:
@@ -175,6 +178,7 @@ actions:
     type: system
     condition:
       have_allergy:
+        known: true
         value: true
       food_restriction:
         known: true
@@ -202,6 +206,7 @@ actions:
     type: system
     condition:
       have_allergy:
+        known: true
         value: true
       food_restriction:
         known: true
@@ -233,6 +238,7 @@ actions:
     type: system
     condition:
       conflict:
+        known: true
         value: true
     effect:
       reset:
@@ -246,6 +252,9 @@ actions:
                   known: false 
                 cuisine:
                   known: false
+                conflict:
+                  known: false 
+                  value: false
     response_variants:
       - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
   set-restaurant-mexican:

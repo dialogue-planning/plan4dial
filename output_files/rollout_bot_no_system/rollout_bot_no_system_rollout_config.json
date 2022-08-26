@@ -1,0 +1,120 @@
+{
+    "actions": {
+        "get-base": {
+            "condition": [
+                "NegatedAtom force-statement()",
+                "NegatedAtom have_base()"
+            ],
+            "effect": {
+                "get-base_DETDUP_set-base-EQ-valid": [
+                    "Atom have_base()"
+                ],
+                "get-base_DETDUP_set-base-EQ-fallback": [
+                    "Atom force-statement()",
+                    "Atom have-message()"
+                ]
+            }
+        },
+        "get-toppings": {
+            "condition": [
+                "NegatedAtom have_toppings()",
+                "NegatedAtom force-statement()"
+            ],
+            "effect": {
+                "get-toppings_DETDUP_set-toppings-EQ-valid": [
+                    "Atom have_toppings()"
+                ],
+                "get-toppings_DETDUP_set-toppings-EQ-fallback": [
+                    "Atom force-statement()",
+                    "Atom have-message()"
+                ]
+            }
+        },
+        "get-size": {
+            "condition": [
+                "NegatedAtom force-statement()",
+                "NegatedAtom have_size()"
+            ],
+            "effect": {
+                "get-size_DETDUP_set-size-EQ-valid": [
+                    "Atom have_size()"
+                ],
+                "get-size_DETDUP_set-size-EQ-fallback": [
+                    "Atom force-statement()",
+                    "Atom have-message()"
+                ]
+            }
+        },
+        "get-drink": {
+            "condition": [
+                "NegatedAtom force-statement()",
+                "NegatedAtom have_drink()"
+            ],
+            "effect": {
+                "get-drink_DETDUP_set-drink-EQ-valid": [
+                    "Atom have_drink()"
+                ],
+                "get-drink_DETDUP_set-drink-EQ-fallback": [
+                    "Atom force-statement()",
+                    "Atom have-message()"
+                ]
+            }
+        },
+        "get-side": {
+            "condition": [
+                "NegatedAtom force-statement()",
+                "NegatedAtom have_side()"
+            ],
+            "effect": {
+                "get-side_DETDUP_set-side-EQ-valid": [
+                    "Atom have_side()"
+                ],
+                "get-side_DETDUP_set-side-EQ-fallback": [
+                    "Atom force-statement()",
+                    "Atom have-message()"
+                ]
+            }
+        },
+        "complete": {
+            "condition": [
+                "Atom have_size()",
+                "Atom have_side()",
+                "Atom have_base()",
+                "NegatedAtom force-statement()",
+                "Atom have_drink()",
+                "Atom have_toppings()"
+            ],
+            "effect": {
+                "complete_DETDUP_goal-EQ-valid": [
+                    "Atom goal()"
+                ],
+                "complete_DETDUP_goal-EQ-fallback": [
+                    "Atom force-statement()",
+                    "Atom have-message()"
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "condition": [
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "effect": {
+                "dialogue_statement_DETDUP_reset-EQ-lock": [
+                    "NegatedAtom force-statement()",
+                    "NegatedAtom have-message()"
+                ]
+            }
+        }
+    },
+    "initial_state": [
+        "NegatedAtom have_toppings()",
+        "NegatedAtom have_drink()",
+        "NegatedAtom have_size()",
+        "NegatedAtom have_base()",
+        "NegatedAtom have-message()",
+        "NegatedAtom force-statement()",
+        "NegatedAtom goal()",
+        "NegatedAtom have_side()"
+    ]
+}
