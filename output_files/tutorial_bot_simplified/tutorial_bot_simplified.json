@@ -203,7 +203,6 @@
                         "updates": {
                             "cuisine": {
                                 "value": "$cuisine",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -272,7 +271,6 @@
                         "updates": {
                             "have_allergy": {
                                 "value": true,
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -286,13 +284,11 @@
                     {
                         "updates": {
                             "have_allergy": {
-                                "known": true,
                                 "value": false,
                                 "certainty": "Known",
                                 "interpretation": "json"
                             },
                             "conflict": {
-                                "known": true,
                                 "value": false,
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -389,7 +385,6 @@
                         "updates": {
                             "food_restriction": {
                                 "value": "$food_restriction",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -457,19 +452,15 @@
                     {
                         "updates": {
                             "have_allergy": {
-                                "known": false,
                                 "certainty": "Unknown"
                             },
                             "food_restriction": {
-                                "known": false,
                                 "certainty": "Unknown"
                             },
                             "cuisine": {
-                                "known": false,
                                 "certainty": "Unknown"
                             },
                             "conflict": {
-                                "known": false,
                                 "value": false,
                                 "certainty": "Unknown",
                                 "interpretation": "json"
@@ -525,7 +516,6 @@
                         "updates": {
                             "restaurant": {
                                 "value": "Guac Grill",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -599,7 +589,6 @@
                         "updates": {
                             "restaurant": {
                                 "value": "Alfredo's Pizza Cafe",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -673,7 +662,6 @@
                         "updates": {
                             "restaurant": {
                                 "value": "Mandarin",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -747,7 +735,6 @@
                         "updates": {
                             "restaurant": {
                                 "value": "Geneva Crepes",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -888,7 +875,6 @@
                     {
                         "updates": {
                             "conflict": {
-                                "known": true,
                                 "value": true,
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -934,7 +920,6 @@
                     {
                         "updates": {
                             "conflict": {
-                                "known": true,
                                 "value": true,
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -980,7 +965,6 @@
                     {
                         "updates": {
                             "conflict": {
-                                "known": true,
                                 "value": false,
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -1026,7 +1010,6 @@
                     {
                         "updates": {
                             "conflict": {
-                                "known": true,
                                 "value": false,
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -1072,7 +1055,6 @@
                     {
                         "updates": {
                             "conflict": {
-                                "known": true,
                                 "value": false,
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -1118,7 +1100,6 @@
                     {
                         "updates": {
                             "conflict": {
-                                "known": true,
                                 "value": false,
                                 "certainty": "Known",
                                 "interpretation": "json"

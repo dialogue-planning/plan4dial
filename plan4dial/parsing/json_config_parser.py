@@ -117,7 +117,7 @@ def configure_value_setter(loaded_yaml, ctx_var):
                         "outcomes": {
                             f"reset-{option}": {
                                 "updates": {
-                                    option_value_name: {"value": False}
+                                    option_value_name: {"value": False, "interpretation": "json"}
                                 }
                             }
                         }
@@ -526,6 +526,7 @@ def convert_actions(loaded_yaml):
                                 next_outcome["updates"][update_var][
                                     "certainty"
                                 ] = configure_certainty(update_cfg["known"])
+                                del next_outcome["updates"][update_var]["known"]
                             if "value" in update_cfg:
                                 next_outcome["updates"][update_var][
                                     "interpretation"

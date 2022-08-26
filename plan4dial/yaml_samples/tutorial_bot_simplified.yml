@@ -62,6 +62,9 @@ context-variables:
   goal:
     type: flag
     init: false
+    # known:
+    #   type: flag
+    #   init: false
 
 intents:
   confirm:
@@ -247,11 +250,14 @@ actions:
             reset-values:
               updates:
                 have_allergy:
-                  known: false 
+                  known: false
+                  #value: null
                 food_restriction:
-                  known: false 
+                  known: false
+                  #value: null
                 cuisine:
                   known: false
+                  #value: null
                 conflict:
                   known: false 
                   value: false
@@ -351,3 +357,17 @@ actions:
                 goal:
                   value: true
                        
+  # complete:
+  #   type: system
+  #   condition:
+  #     restaurant:
+  #       known: false
+  #   effect:
+  #     finish:
+  #       oneof:
+  #         outcomes:
+  #           finish:
+  #             updates:
+  #               goal:
+  #                 value: true
+  #                 known: true
