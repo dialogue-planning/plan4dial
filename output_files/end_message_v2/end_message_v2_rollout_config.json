@@ -49,8 +49,8 @@
         },
         "end": {
             "condition": [
-                "NegatedAtom force-statement()",
-                "Atom end()"
+                "Atom end()",
+                "NegatedAtom force-statement()"
             ],
             "effect": {
                 "end_DETDUP_finish-EQ-assign-goal": [
@@ -65,8 +65,8 @@
             ],
             "effect": {
                 "dialogue_statement_DETDUP_reset-EQ-lock": [
-                    "NegatedAtom force-statement()",
-                    "NegatedAtom have-message()"
+                    "NegatedAtom have-message()",
+                    "NegatedAtom force-statement()"
                 ]
             }
         },
@@ -77,14 +77,8 @@
                 "Atom maybe-have_pizza_flavour()"
             ],
             "effect": {
-                "clarify__pizza_flavour_DETDUP_validate-clarification-EQ-confirm": [
-                    "Atom have_pizza_flavour()",
-                    "NegatedAtom maybe-have_pizza_flavour()"
-                ],
-                "clarify__pizza_flavour_DETDUP_validate-clarification-EQ-deny": [
-                    "NegatedAtom have_pizza_flavour()",
-                    "NegatedAtom maybe-have_pizza_flavour()"
-                ],
+                "clarify__pizza_flavour_DETDUP_validate-clarification-EQ-confirm": [],
+                "clarify__pizza_flavour_DETDUP_validate-clarification-EQ-deny": [],
                 "clarify__pizza_flavour_DETDUP_validate-clarification-EQ-fallback": [
                     "Atom force-statement()",
                     "Atom have-message()"
@@ -119,14 +113,8 @@
                 "NegatedAtom have_side()"
             ],
             "effect": {
-                "clarify__side_DETDUP_validate-clarification-EQ-confirm": [
-                    "NegatedAtom maybe-have_side()",
-                    "Atom have_side()"
-                ],
-                "clarify__side_DETDUP_validate-clarification-EQ-deny": [
-                    "NegatedAtom maybe-have_side()",
-                    "NegatedAtom have_side()"
-                ],
+                "clarify__side_DETDUP_validate-clarification-EQ-confirm": [],
+                "clarify__side_DETDUP_validate-clarification-EQ-deny": [],
                 "clarify__side_DETDUP_validate-clarification-EQ-fallback": [
                     "Atom force-statement()",
                     "Atom have-message()"

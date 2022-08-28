@@ -80,8 +80,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (end)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof finish
@@ -121,14 +121,10 @@
             (labeled-oneof validate-clarification
                 (outcome confirm
                     (and
-                        (have_pizza_flavour)
-                        (not (maybe-have_pizza_flavour))
                     )
                 )
                 (outcome deny
                     (and
-                        (not (have_pizza_flavour))
-                        (not (maybe-have_pizza_flavour))
                     )
                 )
                 (outcome fallback
@@ -146,19 +142,17 @@
                 (not (force-statement))
                 (maybe-have_drink)
                 (not (have_drink))
+                (not (force-statement))
+                (maybe-have_drink)
             )
         :effect
             (labeled-oneof validate-clarification
                 (outcome confirm
                     (and
-                        (not (maybe-have_drink))
-                        (have_drink)
                     )
                 )
                 (outcome deny
                     (and
-                        (not (maybe-have_drink))
-                        (not (have_drink))
                     )
                 )
                 (outcome fallback
@@ -181,8 +175,6 @@
             (labeled-oneof validate-clarification
                 (outcome confirm
                     (and
-                        (not (maybe-have_side))
-                        (have_side)
                     )
                 )
                 (outcome deny

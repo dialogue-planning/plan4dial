@@ -41,8 +41,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -72,8 +72,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -95,8 +95,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -141,8 +141,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -166,8 +166,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -191,8 +191,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -216,8 +216,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -242,8 +242,8 @@
         :parameters()
         :precondition
             (and
-                (have-message)
                 (force-statement)
+                (have-message)
             )
         :effect
             (labeled-oneof reset
@@ -427,8 +427,8 @@
         :parameters()
         :precondition
             (and
-                (not (have_cuisine))
                 (cuisine-value-dessert)
+                (not (have_cuisine))
             )
         :effect
             (labeled-oneof reset
@@ -448,6 +448,8 @@
                 (have_cuisine)
                 (not (cuisine-value-dessert))
                 (not (cuisine-value-mexican))
+                (not (cuisine-value-chinese))
+                (not (cuisine-value-italian))
             )
         :effect
             (labeled-oneof set-valid-value

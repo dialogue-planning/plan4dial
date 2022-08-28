@@ -10,8 +10,8 @@
                     "Atom have_cuisine()"
                 ],
                 "get-cuisine_DETDUP_set-cuisine-EQ-fallback": [
-                    "Atom have-message()",
-                    "Atom force-statement()"
+                    "Atom force-statement()",
+                    "Atom have-message()"
                 ]
             }
         },
@@ -32,8 +32,8 @@
                     "NegatedAtom have_allergy()"
                 ],
                 "get-have-allergy_DETDUP_set-allergy-EQ-fallback": [
-                    "Atom have-message()",
-                    "Atom force-statement()"
+                    "Atom force-statement()",
+                    "Atom have-message()"
                 ]
             }
         },
@@ -48,8 +48,8 @@
                     "Atom have_food_restriction()"
                 ],
                 "get-allergy_DETDUP_set-allergy-EQ-fallback": [
-                    "Atom have-message()",
-                    "Atom force-statement()"
+                    "Atom force-statement()",
+                    "Atom have-message()"
                 ]
             }
         },
@@ -82,8 +82,8 @@
                     "Atom have_restaurant()"
                 ],
                 "set-restaurant-mexican_DETDUP_set-EQ-fallback": [
-                    "Atom have-message()",
-                    "Atom force-statement()"
+                    "Atom force-statement()",
+                    "Atom have-message()"
                 ]
             }
         },
@@ -100,8 +100,8 @@
                     "Atom have_restaurant()"
                 ],
                 "set-restaurant-italian_DETDUP_set-EQ-fallback": [
-                    "Atom have-message()",
-                    "Atom force-statement()"
+                    "Atom force-statement()",
+                    "Atom have-message()"
                 ]
             }
         },
@@ -118,8 +118,8 @@
                     "Atom have_restaurant()"
                 ],
                 "set-restaurant-chinese_DETDUP_set-EQ-fallback": [
-                    "Atom have-message()",
-                    "Atom force-statement()"
+                    "Atom force-statement()",
+                    "Atom have-message()"
                 ]
             }
         },
@@ -136,8 +136,8 @@
                     "Atom have_restaurant()"
                 ],
                 "set-restaurant-dessert_DETDUP_set-EQ-fallback": [
-                    "Atom have-message()",
-                    "Atom force-statement()"
+                    "Atom force-statement()",
+                    "Atom have-message()"
                 ]
             }
         },
@@ -154,8 +154,8 @@
         },
         "dialogue_statement": {
             "condition": [
-                "Atom have-message()",
-                "Atom force-statement()"
+                "Atom force-statement()",
+                "Atom have-message()"
             ],
             "effect": {
                 "dialogue_statement_DETDUP_reset-EQ-lock": [
@@ -289,8 +289,8 @@
         },
         "reset-cuisine-value-dessert": {
             "condition": [
-                "NegatedAtom have_cuisine()",
-                "Atom cuisine-value-dessert()"
+                "Atom cuisine-value-dessert()",
+                "NegatedAtom have_cuisine()"
             ],
             "effect": {
                 "reset-cuisine-value-dessert_DETDUP_reset-EQ-reset-dessert": [
