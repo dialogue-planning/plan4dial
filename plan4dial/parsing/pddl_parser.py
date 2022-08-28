@@ -10,19 +10,13 @@ def return_flag_value_fluents(f_name: str, value: bool):
     return f"({f_name})" if value else f"(not ({f_name}))"
 
 
-def return_certainty_fluents(f_name: str, is_fflag: bool, known):
-    if type(known) == bool:
-        return (
-            [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"]
-            if known
-            else [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
-        ) if is_fflag else (
-            [f"(have_{f_name})"]
-            if known
-            else [f"(not (have_{f_name}))"]
-        )
-    else:
-        return ([f"(not (have_{f_name}))", f"(maybe-have_{f_name})"] if known == "maybe" else [f"({known})"])
+def return_certainty_fluents(f_name: str, is_fflag: bool, certainty):
+    if certainty == "Known":
+        return [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"] if is_fflag else [f"(have_{f_name})"]
+    elif certainty == "Unknown":
+        return [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"] if is_fflag else [f"(not (have_{f_name}))"]
+    elif certainty == "Uncertain":
+        return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"]
 
 def fluents_to_pddl(
     fluents: List[str],
@@ -61,22 +55,18 @@ def get_precond_fluents(context_variables: Dict, conditions):
         if cond_val != None:
             if type(cond_val) == bool:
                 precond.add(f"({cond_key})" if cond_val else f"(not ({cond_key}))")
-            else:
-                if cond_val == "Known":
-                    cond_val = True
-                elif cond_val == "Unknown":
-                    cond_val = False
-                elif cond_val == "Uncertain":
-                    cond_val = "maybe"
+            elif cond_val in ["Known", "Unknown", "Uncertain"]:
                 precond.update(return_certainty_fluents(cond_key, context_variables[cond_key]["known"]["type"] == "fflag", cond_val))
+            else:
+                precond.add(f"({cond_val})")
     return precond
 
 def get_update_fluents(context_variables: Dict, updates):
     outcomes = set()
     for update_var, update_config in updates.items():
-        if "known" in update_config:
+        if "certainty" in update_config:
             outcomes.update(
-                return_certainty_fluents(update_var, context_variables[update_var]["known"]["type"] == "fflag", update_config["known"])
+                return_certainty_fluents(update_var, context_variables[update_var]["known"]["type"] == "fflag", update_config["certainty"])
             )
         if "value" in update_config:
             update_value = update_config["value"]
