@@ -19,13 +19,13 @@
         :parameters()
         :precondition
             (and
-                (not (have_pizza_flavour))
-                (not (have_side))
-                (not (force-statement))
                 (not (maybe-have_drink))
+                (not (have_side))
+                (not (have_pizza_flavour))
+                (not (force-statement))
                 (not (have_drink))
-                (not (maybe-have_pizza_flavour))
                 (not (maybe-have_side))
+                (not (maybe-have_pizza_flavour))
             )
         :effect
             (labeled-oneof validate
@@ -34,9 +34,9 @@
                         (have_pizza_flavour)
                         (not (maybe-have_drink))
                         (have_drink)
-                        (not (maybe-have_pizza_flavour))
-                        (not (maybe-have_side))
                         (have_side)
+                        (not (maybe-have_side))
+                        (not (maybe-have_pizza_flavour))
                     )
                 )
                 (outcome fallback
@@ -52,12 +52,12 @@
         :precondition
             (and
                 (have_pizza_flavour)
-                (not (force-statement))
                 (not (maybe-have_drink))
                 (have_drink)
-                (not (maybe-have_pizza_flavour))
-                (not (maybe-have_side))
+                (not (force-statement))
                 (have_side)
+                (not (maybe-have_side))
+                (not (maybe-have_pizza_flavour))
             )
         :effect
             (labeled-oneof finish
@@ -103,8 +103,8 @@
             (labeled-oneof reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )
@@ -113,18 +113,22 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (have_pizza_flavour))
                 (maybe-have_pizza_flavour)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof validate-clarification
                 (outcome confirm
                     (and
+                        (have_pizza_flavour)
+                        (not (maybe-have_pizza_flavour))
                     )
                 )
                 (outcome deny
                     (and
+                        (not (have_pizza_flavour))
+                        (not (maybe-have_pizza_flavour))
                     )
                 )
                 (outcome fallback
@@ -139,20 +143,22 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (maybe-have_drink)
                 (not (have_drink))
-                (not (force-statement))
                 (maybe-have_drink)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof validate-clarification
                 (outcome confirm
                     (and
+                        (have_drink)
+                        (not (maybe-have_drink))
                     )
                 )
                 (outcome deny
                     (and
+                        (not (have_drink))
+                        (not (maybe-have_drink))
                     )
                 )
                 (outcome fallback
@@ -167,20 +173,22 @@
         :parameters()
         :precondition
             (and
+                (not (have_side))
                 (not (force-statement))
                 (maybe-have_side)
-                (not (have_side))
             )
         :effect
             (labeled-oneof validate-clarification
                 (outcome confirm
                     (and
+                        (not (maybe-have_side))
+                        (have_side)
                     )
                 )
                 (outcome deny
                     (and
-                        (not (maybe-have_side))
                         (not (have_side))
+                        (not (maybe-have_side))
                     )
                 )
                 (outcome fallback

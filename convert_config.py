@@ -62,8 +62,8 @@ def generate_files(
 
 if __name__ == "__main__":
     generate_files(
-        "./plan4dial/yaml_samples/tutorial_bot_simplified.yml",
-        "tutorial_bot_simplified",
+        "./plan4dial/yaml_samples/end_message_v2.yml",
+        "end_message_v2",
         str((Path(__file__).parent.parent / "rbp").resolve()),
         False
     )
