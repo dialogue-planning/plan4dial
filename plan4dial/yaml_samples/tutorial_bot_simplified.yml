@@ -251,13 +251,13 @@ actions:
               updates:
                 have_allergy:
                   known: false
-                  #value: null
+                  value: null
                 food_restriction:
                   known: false
-                  #value: null
+                  value: null
                 cuisine:
                   known: false
-                  #value: null
+                  value: null
                 conflict:
                   known: false 
                   value: false

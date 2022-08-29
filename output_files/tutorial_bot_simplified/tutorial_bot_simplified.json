@@ -452,13 +452,19 @@
                     {
                         "updates": {
                             "have_allergy": {
-                                "certainty": "Unknown"
+                                "value": null,
+                                "certainty": "Unknown",
+                                "interpretation": "json"
                             },
                             "food_restriction": {
-                                "certainty": "Unknown"
+                                "value": null,
+                                "certainty": "Unknown",
+                                "interpretation": "json"
                             },
                             "cuisine": {
-                                "certainty": "Unknown"
+                                "value": null,
+                                "certainty": "Unknown",
+                                "interpretation": "json"
                             },
                             "conflict": {
                                 "value": false,

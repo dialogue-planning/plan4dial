@@ -135,19 +135,16 @@
                         "updates": {
                             "pizza_flavour": {
                                 "value": "$pizza_flavour",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             },
                             "drink": {
                                 "value": "$drink",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             },
                             "side": {
                                 "value": "$side",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -386,7 +383,6 @@
                         "updates": {
                             "pizza_flavour": {
                                 "value": "$pizza_flavour",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -401,7 +397,6 @@
                         "updates": {
                             "pizza_flavour": {
                                 "value": null,
-                                "known": false,
                                 "certainty": "Unknown",
                                 "interpretation": "json"
                             }
@@ -489,7 +484,6 @@
                         "updates": {
                             "drink": {
                                 "value": "$drink",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -504,7 +498,6 @@
                         "updates": {
                             "drink": {
                                 "value": null,
-                                "known": false,
                                 "certainty": "Unknown",
                                 "interpretation": "json"
                             }
@@ -592,7 +585,6 @@
                         "updates": {
                             "side": {
                                 "value": "$side",
-                                "known": true,
                                 "certainty": "Known",
                                 "interpretation": "spel"
                             }
@@ -607,7 +599,6 @@
                         "updates": {
                             "side": {
                                 "value": null,
-                                "known": false,
                                 "certainty": "Unknown",
                                 "interpretation": "json"
                             }
