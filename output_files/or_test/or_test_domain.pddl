@@ -5,14 +5,11 @@
     (:constants )
     (:predicates
         (have_cuisine)
-        (test)
+        (have_restaurant)
+        (have_goal)
         (goal)
         (have-message)
         (force-statement)
-        (cuisine-value-mexican)
-        (cuisine-value-italian)
-        (cuisine-value-chinese)
-        (cuisine-value-dessert)
     )
     (:action get-cuisine
         :parameters()
@@ -36,6 +33,55 @@
                 )
             )
     )
+    (:action test_context_and_value_set
+        :parameters()
+        :precondition
+            (and
+                (not (have_restaurant))
+                (not (force-statement))
+                (have_cuisine)
+            )
+        :effect
+            (labeled-oneof assign_restaurant
+                (outcome set-mexican
+                    (and
+                        (have_restaurant)
+                    )
+                )
+                (outcome set-italian
+                    (and
+                        (have_restaurant)
+                    )
+                )
+                (outcome set-chinese
+                    (and
+                        (have_restaurant)
+                    )
+                )
+                (outcome set-dessert
+                    (and
+                        (have_restaurant)
+                    )
+                )
+            )
+    )
+    (:action test_and
+        :parameters()
+        :precondition
+            (and
+                (not (force-statement))
+                (have_restaurant)
+            )
+        :effect
+            (labeled-oneof done
+                (outcome done
+                    (and
+                        (have_goal)
+                        (goal)
+                    )
+                )
+            )
+    )
     (:action dialogue_statement
         :parameters()
         :precondition
@@ -47,91 +93,8 @@
             (labeled-oneof reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
-                    )
-                )
-            )
-    )
-    (:action test_or-or-1
-        :parameters()
-        :precondition
-            (and
-                (not (force-statement))
-                (cuisine-value-italian)
-            )
-        :effect
-            (labeled-oneof done
-                (outcome done
-                    (and
-                        (goal)
-                    )
-                )
-            )
-    )
-    (:action test_or-or-2
-        :parameters()
-        :precondition
-            (and
-                (not (force-statement))
-                (cuisine-value-mexican)
-            )
-        :effect
-            (labeled-oneof done
-                (outcome done
-                    (and
-                        (goal)
-                    )
-                )
-            )
-    )
-    (:action test_or-or-3
-        :parameters()
-        :precondition
-            (and
-                (test)
-                (not (force-statement))
-                (cuisine-value-dessert)
-            )
-        :effect
-            (labeled-oneof done
-                (outcome done
-                    (and
-                        (goal)
-                    )
-                )
-            )
-    )
-    (:action set-cuisine
-        :parameters()
-        :precondition
-            (and
-                (have_cuisine)
-                (not (cuisine-value-italian))
-                (not (cuisine-value-chinese))
-                (not (cuisine-value-dessert))
-                (not (cuisine-value-mexican))
-            )
-        :effect
-            (labeled-oneof set-valid-value
-                (outcome mexican
-                    (and
-                        (cuisine-value-mexican)
-                    )
-                )
-                (outcome italian
-                    (and
-                        (cuisine-value-italian)
-                    )
-                )
-                (outcome chinese
-                    (and
-                        (cuisine-value-chinese)
-                    )
-                )
-                (outcome dessert
-                    (and
-                        (cuisine-value-dessert)
+                        (not (force-statement))
                     )
                 )
             )

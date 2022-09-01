@@ -1,0 +1,72 @@
+{
+    "actions": {
+        "get-cuisine": {
+            "condition": [
+                "NegatedAtom force-statement()",
+                "NegatedAtom have_cuisine()"
+            ],
+            "effect": {
+                "get-cuisine_DETDUP_set-cuisine-EQ-valid": [
+                    "Atom have_cuisine()"
+                ],
+                "get-cuisine_DETDUP_set-cuisine-EQ-fallback": [
+                    "Atom force-statement()",
+                    "Atom have-message()"
+                ]
+            }
+        },
+        "test_context_and_value_set": {
+            "condition": [
+                "NegatedAtom have_restaurant()",
+                "NegatedAtom force-statement()",
+                "Atom have_cuisine()"
+            ],
+            "effect": {
+                "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-mexican": [
+                    "Atom have_restaurant()"
+                ],
+                "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-italian": [
+                    "Atom have_restaurant()"
+                ],
+                "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-chinese": [
+                    "Atom have_restaurant()"
+                ],
+                "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-dessert": [
+                    "Atom have_restaurant()"
+                ]
+            }
+        },
+        "test_and": {
+            "condition": [
+                "NegatedAtom force-statement()",
+                "Atom have_restaurant()"
+            ],
+            "effect": {
+                "test_and_DETDUP_done-EQ-done": [
+                    "Atom have_goal()",
+                    "Atom goal()"
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "condition": [
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "effect": {
+                "dialogue_statement_DETDUP_reset-EQ-lock": [
+                    "NegatedAtom have-message()",
+                    "NegatedAtom force-statement()"
+                ]
+            }
+        }
+    },
+    "initial_state": [
+        "NegatedAtom have_cuisine()",
+        "NegatedAtom have_restaurant()",
+        "NegatedAtom force-statement()",
+        "NegatedAtom goal()",
+        "NegatedAtom have_goal()",
+        "NegatedAtom have-message()"
+    ]
+}

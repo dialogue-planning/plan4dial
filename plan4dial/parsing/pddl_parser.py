@@ -87,10 +87,11 @@ def get_update_fluents(context_variables: Dict, updates):
                 return_certainty_fluents(update_var, update_var_fflag, update_config["certainty"])
             )
         if "value" in update_config:
-            if context_variables[update_var]["type"] in ["flag", "fflag"]:
-                outcomes.add(
-                    return_flag_value_fluent(update_var, update_var_fflag, update_config["value"])
-                )
+            if update_config["value"] != None:
+                if context_variables[update_var]["type"] in ["flag", "fflag"]:
+                    outcomes.add(
+                        return_flag_value_fluent(update_var, update_var_fflag, update_config["value"])
+                    )
     return outcomes
 
 def action_to_pddl(context_variables: Dict, act: str, act_config: Dict):

@@ -11,12 +11,27 @@ context-variables:
       - italian
       - chinese
       - dessert
-  test:
-    type: flag
-    init: false
+      - bar food
+  restaurant:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Guac Grill
+      - Alfredo's Pizza Cafe
+      - Mandarin
+      - Geneva Crepes
+  # test:
+  #   type: flag
+  #   init: false
   goal:
     type: flag
     init: false
+    known:
+      type: flag
+      init: false
+
 
 intents:
   confirm:
@@ -67,6 +82,21 @@ actions:
                   value: $cuisine
                   known: true
               intent: share_cuisine
+
+  test_and:
+    type: system
+    condition:
+      cuisine:
+        known: true
+        value: dessert
+    effect:
+      done:
+        oneof:
+          outcomes:
+            done:
+              updates:
+                test:
+                  value: true
   test_or:
     type: system
     condition:
@@ -78,14 +108,21 @@ actions:
         - cuisine:
             value: mexican
         - cuisine:
+            value: chinese
+        - cuisine:
             value: dessert
           test:
             value: true
+        - cuisine:
+            value: bar food
     effect:
       done:
         oneof:
           outcomes:
             done:
               updates:
+                cuisine:
+                  value: null
+                  known: false
                 goal:
                   value: true

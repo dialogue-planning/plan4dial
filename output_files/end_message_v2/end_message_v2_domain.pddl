@@ -19,30 +19,30 @@
         :parameters()
         :precondition
             (and
-                (not (maybe-have_drink))
-                (not (have_side))
-                (not (have_pizza_flavour))
-                (not (force-statement))
                 (not (have_drink))
+                (not (have_side))
                 (not (maybe-have_side))
+                (not (force-statement))
+                (not (have_pizza_flavour))
+                (not (maybe-have_drink))
                 (not (maybe-have_pizza_flavour))
             )
         :effect
             (labeled-oneof validate
                 (outcome valid
                     (and
-                        (have_pizza_flavour)
-                        (not (maybe-have_drink))
+                        (not (maybe-have_side))
                         (have_drink)
                         (have_side)
-                        (not (maybe-have_side))
+                        (not (maybe-have_drink))
+                        (have_pizza_flavour)
                         (not (maybe-have_pizza_flavour))
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -51,12 +51,13 @@
         :parameters()
         :precondition
             (and
-                (have_pizza_flavour)
-                (not (maybe-have_drink))
-                (have_drink)
+                (not (end))
                 (not (force-statement))
-                (have_side)
                 (not (maybe-have_side))
+                (have_drink)
+                (have_side)
+                (not (maybe-have_drink))
+                (have_pizza_flavour)
                 (not (maybe-have_pizza_flavour))
             )
         :effect
@@ -64,14 +65,8 @@
                 (outcome assign-goal
                     (and
                         (end)
-                        (force-statement)
                         (have-message)
-                    )
-                )
-                (outcome fallback
-                    (and
                         (force-statement)
-                        (have-message)
                     )
                 )
             )
@@ -96,8 +91,8 @@
         :parameters()
         :precondition
             (and
-                (force-statement)
                 (have-message)
+                (force-statement)
             )
         :effect
             (labeled-oneof reset
@@ -113,9 +108,9 @@
         :parameters()
         :precondition
             (and
+                (not (force-statement))
                 (not (have_pizza_flavour))
                 (maybe-have_pizza_flavour)
-                (not (force-statement))
             )
         :effect
             (labeled-oneof validate-clarification
@@ -133,8 +128,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -143,9 +138,9 @@
         :parameters()
         :precondition
             (and
+                (not (force-statement))
                 (not (have_drink))
                 (maybe-have_drink)
-                (not (force-statement))
             )
         :effect
             (labeled-oneof validate-clarification
@@ -163,8 +158,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -173,16 +168,16 @@
         :parameters()
         :precondition
             (and
-                (not (have_side))
-                (not (force-statement))
                 (maybe-have_side)
+                (not (force-statement))
+                (not (have_side))
             )
         :effect
             (labeled-oneof validate-clarification
                 (outcome confirm
                     (and
-                        (not (maybe-have_side))
                         (have_side)
+                        (not (maybe-have_side))
                     )
                 )
                 (outcome deny
@@ -193,8 +188,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )

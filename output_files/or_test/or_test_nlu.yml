@@ -55,5 +55,13 @@ nlu:
     - Do you have restaurants of type [dessert]{"entity": "cuisine", "value": "dessert"}?
 
     - Are there any [dessert]{"entity": "cuisine", "value": "dessert"} restaurants
+    in the area?
+
+    - I want to eat [bar food]{"entity": "cuisine", "value": "bar food"}.
+
+    - Do you have restaurants of type [bar food]{"entity": "cuisine", "value": "bar
+    food"}?
+
+    - Are there any [bar food]{"entity": "cuisine", "value": "bar food"} restaurants
     in the area?'
   intent: share_cuisine

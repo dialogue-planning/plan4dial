@@ -7,42 +7,40 @@
                 "mexican",
                 "italian",
                 "chinese",
-                "dessert"
+                "dessert",
+                "bar food"
             ],
             "known": {
                 "type": "flag",
                 "init": false
             }
         },
-        "test": {
-            "type": "flag",
-            "config": false
+        "restaurant": {
+            "type": "enum",
+            "config": [
+                "Guac Grill",
+                "Alfredo's Pizza Cafe",
+                "Mandarin",
+                "Geneva Crepes"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
         },
         "goal": {
             "type": "flag",
-            "config": false
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
         },
         "have-message": {
             "type": "flag",
             "config": false
         },
         "force-statement": {
-            "type": "flag",
-            "config": false
-        },
-        "cuisine-value-mexican": {
-            "type": "flag",
-            "config": false
-        },
-        "cuisine-value-italian": {
-            "type": "flag",
-            "config": false
-        },
-        "cuisine-value-chinese": {
-            "type": "flag",
-            "config": false
-        },
-        "cuisine-value-dessert": {
             "type": "flag",
             "config": false
         }
@@ -116,9 +114,9 @@
                         "updates": {
                             "cuisine": {
                                 "value": "$cuisine",
-                                "known": true,
+                                "variable": "cuisine",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_cuisine",
@@ -131,10 +129,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -161,6 +161,144 @@
                 }
             }
         },
+        "test_context_and_value_set": {
+            "type": "system",
+            "subtype": "Context Dependent Determination",
+            "condition": [
+                [
+                    "cuisine",
+                    "Known"
+                ],
+                [
+                    "restaurant",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "assign_restaurant",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "restaurant": {
+                                "value": "Guac Grill",
+                                "variable": "restaurant",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": {
+                                "value": "mexican"
+                            }
+                        },
+                        "name": "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-mexican",
+                        "intent": null,
+                        "assignments": {
+                            "$restaurant": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "restaurant": {
+                                "value": "Alfredo's Pizza Cafe",
+                                "variable": "restaurant",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": {
+                                "value": "italian"
+                            }
+                        },
+                        "name": "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-italian",
+                        "intent": null,
+                        "assignments": {
+                            "$restaurant": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "restaurant": {
+                                "value": "Mandarin",
+                                "variable": "restaurant",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": {
+                                "value": "chinese"
+                            }
+                        },
+                        "name": "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-chinese",
+                        "intent": null,
+                        "assignments": {
+                            "$restaurant": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "restaurant": {
+                                "value": "Geneva Crepes",
+                                "variable": "restaurant",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": {
+                                "value": "dessert"
+                            }
+                        },
+                        "name": "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-dessert",
+                        "intent": null,
+                        "assignments": {
+                            "$restaurant": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "test_and": {
+            "type": "system",
+            "condition": [
+                [
+                    "restaurant",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "done",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "test_and_DETDUP_done-EQ-done",
+                        "intent": null,
+                        "assignments": {
+                            "$goal": "found"
+                        }
+                    }
+                ]
+            }
+        },
         "dialogue_statement": {
             "type": "dialogue",
             "condition": [
@@ -181,10 +319,12 @@
                         "updates": {
                             "have-message": {
                                 "value": false,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": false,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -200,188 +340,6 @@
                     "variables": [],
                     "utterances": []
                 }
-            }
-        },
-        "test_or-or-1": {
-            "type": "system",
-            "condition": [
-                [
-                    "force-statement",
-                    false
-                ],
-                [
-                    "cuisine-value-italian",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "done",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "goal": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "test_or-or-1_DETDUP_done-EQ-done",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
-            }
-        },
-        "test_or-or-2": {
-            "type": "system",
-            "condition": [
-                [
-                    "force-statement",
-                    false
-                ],
-                [
-                    "cuisine-value-mexican",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "done",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "goal": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "test_or-or-2_DETDUP_done-EQ-done",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
-            }
-        },
-        "test_or-or-3": {
-            "type": "system",
-            "condition": [
-                [
-                    "force-statement",
-                    false
-                ],
-                [
-                    "test",
-                    true
-                ],
-                [
-                    "cuisine-value-dessert",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "done",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "goal": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "test_or-or-3_DETDUP_done-EQ-done",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
-            }
-        },
-        "set-cuisine": {
-            "type": "system",
-            "subtype": "Context dependent determination",
-            "condition": [
-                [
-                    "cuisine",
-                    "Known"
-                ],
-                [
-                    "cuisine-value-mexican",
-                    false
-                ],
-                [
-                    "cuisine-value-italian",
-                    false
-                ],
-                [
-                    "cuisine-value-chinese",
-                    false
-                ],
-                [
-                    "cuisine-value-dessert",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "set-valid-value",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "cuisine-value-mexican": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "cuisine": "mexican"
-                        },
-                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-mexican",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "cuisine-value-italian": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "cuisine": "italian"
-                        },
-                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-italian",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "cuisine-value-chinese": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "cuisine": "chinese"
-                        },
-                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-chinese",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "cuisine-value-dessert": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "cuisine": "dessert"
-                        },
-                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-dessert",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
             }
         }
     }

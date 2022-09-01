@@ -54,10 +54,6 @@ def configure_certainty(known):
     return ("Known" if known else "Unknown") if type(known) == bool else "Uncertain"
 
 
-def configure_interpretation(value):
-    return "json" if value in [True, False, None] else "spel"
-
-
 @config(auto_simplify=True)
 def convert_to_formula(condition: Dict):
     formula_terms = []
@@ -92,62 +88,77 @@ def convert_to_DNF(condition: Dict):
 
 
 def configure_value_setter(loaded_yaml, ctx_var):
+    processed = deepcopy(loaded_yaml["actions"])
     ctx_var_cfg = loaded_yaml["context-variables"][ctx_var]
-    options = (
+    var_options = (
         list(ctx_var_cfg["options"].keys())
         if type(ctx_var_cfg["options"]) == dict
         else ctx_var_cfg["options"]
     )
 
-    for option in options:
-        option_value_name = f"{ctx_var}-value-{option}"
+    for v in var_options:
+        option_value_name = f"{ctx_var}-value-{v.replace(' ', '_')}"
         loaded_yaml["context-variables"][option_value_name] = {
             "type": "flag",
             "init": False,
         }
-        loaded_yaml["actions"][f"reset-{option_value_name}"] = {
-            "type": "system",
-            "condition": {
-                ctx_var: {"known": False},
-                option_value_name: {"value": True}
-            },
-            "effect": {
-                "reset": {
-                    "oneof": {
-                        "outcomes": {
-                            f"reset-{option}": {
-                                "updates": {
-                                    option_value_name: {"value": False, "interpretation": "json"}
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    loaded_yaml["actions"][f"set-{ctx_var}"] = {
+    # TODO: whenever we lose knowledge of the context variable, reset all values
+    for act in loaded_yaml["actions"]:
+        for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
+            for option in eff_config:
+                for out, out_config in eff_config[option]["outcomes"].items():
+                    if "updates" in out_config:
+                        for update_var, update_cfg in out_config["updates"].items():
+                            if ctx_var == update_var and "known" in out_config:
+                                if out_config["known"] == False:
+                                    for v in var_options:
+                                        option_value_name = f"{ctx_var}-value-{v.replace(' ', '_')}"
+                                        processed[act][eff][option][out]["updates"][option_value_name] = {"value": False}
+
+        # loaded_yaml["actions"][f"reset-{option_value_name}"] = {
+        #     "type": "system",
+        #     "condition": {
+        #         ctx_var: {"known": False},
+        #         option_value_name: {"value": True}
+        #     },
+        #     "effect": {
+        #         "reset": {
+        #             "oneof": {
+        #                 "outcomes": {
+        #                     f"reset-{option.replace(' ', '_')}": {
+        #                         "updates": {
+        #                             option_value_name: {"value": False, "interpretation": "json"}
+        #                         }
+        #                     }
+        #                 }
+        #             }
+        #         }
+        #     }
+        # }
+    processed[f"set-{ctx_var}"] = {
         "type": "system",
         "subtype": "Context dependent determination",
         "condition": {
             **{ctx_var: {"known": True}},
-            **{f"{ctx_var}-value-{option}": {"value": False} for option in options},
+            **{f"{ctx_var}-value-{v.replace(' ', '_')}": {"value": False} for v in var_options},
         },
         "effect": {
             "set-valid-value": {
                 "oneof": {
                     "outcomes": {
-                        option: {
+                        v.replace(' ', '_'): {
                             "updates": {
-                                f"{ctx_var}-value-{option}": {"value": True},
+                                f"{ctx_var}-value-{v.replace(' ', '_')}": {"value": True},
                             },
-                            "context": {ctx_var: option},
+                            "context": {ctx_var: v},
                         }
-                        for option in options
+                        for v in var_options
                     }
                 }
             }
         },
     }
+    loaded_yaml["actions"] = processed
 
 
 def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
@@ -287,8 +298,8 @@ def instantiate_effects_add_fallbacks(loaded_yaml):
                             option: {"outcomes": instantiated_outcomes}
                         }
             else:
-                for option in eff_config:
-                    if fallback:
+                if fallback:
+                    for option in eff_config:
                         processed[act]["effect"][eff][option]["outcomes"][
                             "fallback"
                         ] = configure_fallback()
@@ -461,7 +472,7 @@ def add_value_setters(loaded_yaml):
                             f'Cannot specify the value "{option}" for the context variable "{cond}".'
                         )
                     # if not done already, create new "value-setting" actions, conditions, etc.
-                    if f"{cond}-value-{option}" not in processed["context-variables"]:
+                    if f"{cond}-value-{option.replace(' ', '_')}" not in processed["context-variables"]:
                         configure_value_setter(processed, cond)
                         use_value_setters.add(cond)
                     # reset old condition to the refactored condition so we can specify value
@@ -471,7 +482,7 @@ def add_value_setters(loaded_yaml):
                     if processed["actions"][act]["condition"][cond] == {}:
                         del processed["actions"][act]["condition"][cond]
                     # replace
-                    processed["actions"][act]["condition"][f"{cond}-value-{option}"] = {
+                    processed["actions"][act]["condition"][f"{cond}-value-{option.replace(' ', '_')}"] = {
                         "value": True
                     }
     # NEED TO FIX ISSUE WHERE ASSIGNING A VARIABLE TO NULL DOES NOT RE-ASSIGN THE VALUES
@@ -519,6 +530,7 @@ def convert_actions(loaded_yaml):
                     next_outcome["assignments"] = {}
                     if "updates" in out_config:
                         for update_var, update_cfg in out_config["updates"].items():
+                            next_outcome["updates"][update_var]["variable"] = update_var
                             if "known" in update_cfg:
                                 next_outcome["assignments"][
                                     f"${update_var}"
@@ -527,10 +539,11 @@ def convert_actions(loaded_yaml):
                                     "certainty"
                                 ] = configure_certainty(update_cfg["known"])
                                 del next_outcome["updates"][update_var]["known"]
-                            if "value" in update_cfg:
-                                next_outcome["updates"][update_var][
-                                    "interpretation"
-                                ] = configure_interpretation(update_cfg["value"])
+                            if "value" not in update_cfg:
+                                 next_outcome["updates"][update_var]["value"] = None
+                            next_outcome["updates"][update_var][
+                                "interpretation"
+                            ] = "json"
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
                 del converted_eff[option]

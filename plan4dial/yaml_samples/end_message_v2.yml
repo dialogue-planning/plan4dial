@@ -156,7 +156,7 @@ actions:
 # include a message before completing the goal.
   complete:
     type: dialogue
-    disable_fallback: true
+    disable-fallback: true
     message_variants:
       - Goal completed.
     condition:
@@ -166,6 +166,8 @@ actions:
         known: true
       side:
         known: true
+      end:
+        value: false
     effect:
       finish:
         oneof:
@@ -176,9 +178,13 @@ actions:
                 end:
                   value: true
               response_variants:
-                - Goal completed. 
+                - Order has been logged as`:` $pizza_flavour pizza with a $drink to drink and $side on the side.
+              intent:
   end:
-    type: system
+    type: dialogue
+    disable-fallback: true
+    message_variants:
+      - Have a nice day!
     condition:
       end:
         value: true
@@ -190,3 +196,4 @@ actions:
               updates:
                 goal:
                   value: true
+              intent:

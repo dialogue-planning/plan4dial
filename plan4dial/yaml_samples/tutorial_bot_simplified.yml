@@ -42,9 +42,6 @@ context-variables:
     known:
       type: flag
       init: false
-  checked-for-conflict:
-    type: flag
-    init: false
   low_budget:
     type: flag
     init: false
@@ -62,9 +59,9 @@ context-variables:
   goal:
     type: flag
     init: false
-    # known:
-    #   type: flag
-    #   init: false
+    known:
+      type: flag
+      init: false
 
 intents:
   confirm:
@@ -251,98 +248,63 @@ actions:
               updates:
                 have_allergy:
                   known: false
-                  value: null
                 food_restriction:
                   known: false
-                  value: null
                 cuisine:
                   known: false
-                  value: null
                 conflict:
                   known: false 
-                  value: false
-    response_variants:
-      - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
-  set-restaurant-mexican:
-    type: dialogue
-    message_variants:
-      - Chosen restaurant has been logged as Guac Grill.
+              response_variants:
+                - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+
+  set-restaurant:
+    type: system
+    subtype: Context dependent determination
     condition:
       cuisine:
         known: true
-        value: mexican
       conflict:
         known: true
         value: false
+      restaurant:
+        known: false
     effect:
-      set:
+      assign_restaurant:
         oneof:
           outcomes:
-            valid:
+            set-mexican:
               updates:
                 restaurant:
                   value: Guac Grill
                   known: true
-  set-restaurant-italian:
-    type: dialogue
-    message_variants:
-      - Chosen restaurant has been logged as Alfredo's Pizza Cafe.
-    condition:
-      cuisine:
-        known: true
-        value: italian
-      conflict:
-        known: true
-        value: false
-    effect:
-      set:
-        oneof:
-          outcomes:
-            valid:
+              context:
+                cuisine:
+                  value: mexican              
+            set-italian:
               updates:
                 restaurant:
-                  value: Alfredo's Pizza Cafe
+                  value: Alfredo's Pizza Cafe  
                   known: true
-  set-restaurant-chinese:
-    type: dialogue
-    message_variants:
-      - Chosen restaurant has been logged as Mandarin.
-    condition:
-      cuisine:
-        known: true
-        value: chinese
-      conflict:
-        known: true
-        value: false
-    effect:
-      set:
-        oneof:
-          outcomes:
-            valid:
+              context:
+                cuisine:
+                  value: italian
+            set-chinese:
               updates:
                 restaurant:
                   value: Mandarin
                   known: true
-  set-restaurant-dessert:
-    type: dialogue
-    message_variants:
-      - Chosen restaurant has been logged as Geneva Crepes.
-    condition:
-      cuisine:
-        known: true
-        value: dessert
-      conflict:
-        known: true
-        value: false
-    effect:
-      set:
-        oneof:
-          outcomes:
-            valid:
+              context:
+                cuisine:
+                  value: chinese
+            set-dessert:
               updates:
                 restaurant:
                   value: Geneva Crepes
                   known: true
+              context:
+                cuisine:
+                  value: dessert
+
   complete:
     type: system
     condition:
@@ -356,18 +318,4 @@ actions:
               updates:
                 goal:
                   value: true
-                       
-  # complete:
-  #   type: system
-  #   condition:
-  #     restaurant:
-  #       known: false
-  #   effect:
-  #     finish:
-  #       oneof:
-  #         outcomes:
-  #           finish:
-  #             updates:
-  #               goal:
-  #                 value: true
-  #                 known: true
+                  known: true

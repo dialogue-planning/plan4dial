@@ -54,10 +54,6 @@
                 "init": false
             }
         },
-        "checked-for-conflict": {
-            "type": "flag",
-            "config": false
-        },
         "low_budget": {
             "type": "flag",
             "config": false,
@@ -79,13 +75,25 @@
         },
         "goal": {
             "type": "flag",
-            "config": false
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
         },
         "have-message": {
             "type": "flag",
             "config": false
         },
         "force-statement": {
+            "type": "flag",
+            "config": false
+        },
+        "food_restriction-value-dairy-free": {
+            "type": "flag",
+            "config": false
+        },
+        "food_restriction-value-gluten-free": {
             "type": "flag",
             "config": false
         },
@@ -102,14 +110,6 @@
             "config": false
         },
         "cuisine-value-dessert": {
-            "type": "flag",
-            "config": false
-        },
-        "food_restriction-value-dairy-free": {
-            "type": "flag",
-            "config": false
-        },
-        "food_restriction-value-gluten-free": {
             "type": "flag",
             "config": false
         }
@@ -203,8 +203,9 @@
                         "updates": {
                             "cuisine": {
                                 "value": "$cuisine",
+                                "variable": "cuisine",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_cuisine",
@@ -217,10 +218,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -271,6 +274,7 @@
                         "updates": {
                             "have_allergy": {
                                 "value": true,
+                                "variable": "have_allergy",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -285,11 +289,13 @@
                         "updates": {
                             "have_allergy": {
                                 "value": false,
+                                "variable": "have_allergy",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             },
                             "conflict": {
                                 "value": false,
+                                "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -305,10 +311,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -385,8 +393,9 @@
                         "updates": {
                             "food_restriction": {
                                 "value": "$food_restriction",
+                                "variable": "food_restriction",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_allergies",
@@ -399,10 +408,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -452,26 +463,43 @@
                     {
                         "updates": {
                             "have_allergy": {
-                                "value": null,
+                                "variable": "have_allergy",
                                 "certainty": "Unknown",
+                                "value": null,
                                 "interpretation": "json"
                             },
                             "food_restriction": {
-                                "value": null,
+                                "variable": "food_restriction",
                                 "certainty": "Unknown",
+                                "value": null,
                                 "interpretation": "json"
                             },
                             "cuisine": {
-                                "value": null,
+                                "variable": "cuisine",
                                 "certainty": "Unknown",
+                                "value": null,
                                 "interpretation": "json"
                             },
                             "conflict": {
-                                "value": false,
+                                "variable": "conflict",
                                 "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
+                        "response_variants": [
+                            "Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences."
+                        ],
                         "name": "reset-preferences_DETDUP_reset-EQ-reset-values",
                         "intent": null,
                         "assignments": {
@@ -482,16 +510,11 @@
                         }
                     }
                 ]
-            },
-            "response_variants": [
-                "Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences."
-            ]
+            }
         },
-        "set-restaurant-mexican": {
-            "type": "dialogue",
-            "message_variants": [
-                "Chosen restaurant has been logged as Guac Grill."
-            ],
+        "set-restaurant": {
+            "type": "system",
+            "subtype": "Context dependent determination",
             "condition": [
                 [
                     "cuisine",
@@ -506,277 +529,99 @@
                     false
                 ],
                 [
-                    "force-statement",
-                    false
+                    "restaurant",
+                    "Unknown"
                 ],
                 [
-                    "cuisine-value-mexican",
-                    true
+                    "force-statement",
+                    false
                 ]
             ],
             "effect": {
-                "global-outcome-name": "set",
+                "global-outcome-name": "assign_restaurant",
                 "type": "oneof",
                 "outcomes": [
                     {
                         "updates": {
                             "restaurant": {
                                 "value": "Guac Grill",
+                                "variable": "restaurant",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
-                        "name": "set-restaurant-mexican_DETDUP_set-EQ-valid",
+                        "context": {
+                            "cuisine": {
+                                "value": "mexican"
+                            }
+                        },
+                        "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-mexican",
                         "intent": null,
                         "assignments": {
                             "$restaurant": "found"
                         }
                     },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "set-restaurant-mexican_DETDUP_set-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
-            ],
-            "intents": {
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
-            }
-        },
-        "set-restaurant-italian": {
-            "type": "dialogue",
-            "message_variants": [
-                "Chosen restaurant has been logged as Alfredo's Pizza Cafe."
-            ],
-            "condition": [
-                [
-                    "cuisine",
-                    "Known"
-                ],
-                [
-                    "conflict",
-                    "Known"
-                ],
-                [
-                    "conflict",
-                    false
-                ],
-                [
-                    "force-statement",
-                    false
-                ],
-                [
-                    "cuisine-value-italian",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "set",
-                "type": "oneof",
-                "outcomes": [
                     {
                         "updates": {
                             "restaurant": {
                                 "value": "Alfredo's Pizza Cafe",
+                                "variable": "restaurant",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
-                        "name": "set-restaurant-italian_DETDUP_set-EQ-valid",
+                        "context": {
+                            "cuisine": {
+                                "value": "italian"
+                            }
+                        },
+                        "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-italian",
                         "intent": null,
                         "assignments": {
                             "$restaurant": "found"
                         }
                     },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "set-restaurant-italian_DETDUP_set-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
-            ],
-            "intents": {
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
-            }
-        },
-        "set-restaurant-chinese": {
-            "type": "dialogue",
-            "message_variants": [
-                "Chosen restaurant has been logged as Mandarin."
-            ],
-            "condition": [
-                [
-                    "cuisine",
-                    "Known"
-                ],
-                [
-                    "conflict",
-                    "Known"
-                ],
-                [
-                    "conflict",
-                    false
-                ],
-                [
-                    "force-statement",
-                    false
-                ],
-                [
-                    "cuisine-value-chinese",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "set",
-                "type": "oneof",
-                "outcomes": [
                     {
                         "updates": {
                             "restaurant": {
                                 "value": "Mandarin",
+                                "variable": "restaurant",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
-                        "name": "set-restaurant-chinese_DETDUP_set-EQ-valid",
+                        "context": {
+                            "cuisine": {
+                                "value": "chinese"
+                            }
+                        },
+                        "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-chinese",
                         "intent": null,
                         "assignments": {
                             "$restaurant": "found"
                         }
                     },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "set-restaurant-chinese_DETDUP_set-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
-            ],
-            "intents": {
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
-            }
-        },
-        "set-restaurant-dessert": {
-            "type": "dialogue",
-            "message_variants": [
-                "Chosen restaurant has been logged as Geneva Crepes."
-            ],
-            "condition": [
-                [
-                    "cuisine",
-                    "Known"
-                ],
-                [
-                    "conflict",
-                    "Known"
-                ],
-                [
-                    "conflict",
-                    false
-                ],
-                [
-                    "force-statement",
-                    false
-                ],
-                [
-                    "cuisine-value-dessert",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "set",
-                "type": "oneof",
-                "outcomes": [
                     {
                         "updates": {
                             "restaurant": {
                                 "value": "Geneva Crepes",
+                                "variable": "restaurant",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
-                        "name": "set-restaurant-dessert_DETDUP_set-EQ-valid",
+                        "context": {
+                            "cuisine": {
+                                "value": "dessert"
+                            }
+                        },
+                        "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-dessert",
                         "intent": null,
                         "assignments": {
                             "$restaurant": "found"
                         }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "set-restaurant-dessert_DETDUP_set-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
-            ],
-            "intents": {
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
             }
         },
         "complete": {
@@ -799,12 +644,16 @@
                         "updates": {
                             "goal": {
                                 "value": true,
+                                "variable": "goal",
+                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "name": "complete_DETDUP_finish-EQ-finish",
                         "intent": null,
-                        "assignments": {}
+                        "assignments": {
+                            "$goal": "found"
+                        }
                     }
                 ]
             }
@@ -829,10 +678,12 @@
                         "updates": {
                             "have-message": {
                                 "value": false,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": false,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -882,6 +733,7 @@
                         "updates": {
                             "conflict": {
                                 "value": true,
+                                "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -927,6 +779,7 @@
                         "updates": {
                             "conflict": {
                                 "value": true,
+                                "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -972,6 +825,7 @@
                         "updates": {
                             "conflict": {
                                 "value": false,
+                                "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -1017,6 +871,7 @@
                         "updates": {
                             "conflict": {
                                 "value": false,
+                                "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -1062,6 +917,7 @@
                         "updates": {
                             "conflict": {
                                 "value": false,
+                                "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -1107,6 +963,7 @@
                         "updates": {
                             "conflict": {
                                 "value": false,
+                                "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
@@ -1120,120 +977,54 @@
                 ]
             }
         },
-        "reset-cuisine-value-mexican": {
+        "set-food_restriction": {
             "type": "system",
+            "subtype": "Context dependent determination",
             "condition": [
                 [
-                    "cuisine",
-                    "Unknown"
+                    "food_restriction",
+                    "Known"
                 ],
                 [
-                    "cuisine-value-mexican",
-                    true
+                    "food_restriction-value-dairy-free",
+                    false
+                ],
+                [
+                    "food_restriction-value-gluten-free",
+                    false
                 ]
             ],
             "effect": {
-                "global-outcome-name": "reset",
+                "global-outcome-name": "set-valid-value",
                 "type": "oneof",
                 "outcomes": [
                     {
                         "updates": {
-                            "cuisine-value-mexican": {
-                                "value": false,
+                            "food_restriction-value-dairy-free": {
+                                "value": true,
+                                "variable": "food_restriction-value-dairy-free",
                                 "interpretation": "json"
                             }
                         },
-                        "name": "reset-cuisine-value-mexican_DETDUP_reset-EQ-reset-mexican",
+                        "context": {
+                            "food_restriction": "dairy-free"
+                        },
+                        "name": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
                         "intent": null,
                         "assignments": {}
-                    }
-                ]
-            }
-        },
-        "reset-cuisine-value-italian": {
-            "type": "system",
-            "condition": [
-                [
-                    "cuisine",
-                    "Unknown"
-                ],
-                [
-                    "cuisine-value-italian",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "reset",
-                "type": "oneof",
-                "outcomes": [
+                    },
                     {
                         "updates": {
-                            "cuisine-value-italian": {
-                                "value": false,
+                            "food_restriction-value-gluten-free": {
+                                "value": true,
+                                "variable": "food_restriction-value-gluten-free",
                                 "interpretation": "json"
                             }
                         },
-                        "name": "reset-cuisine-value-italian_DETDUP_reset-EQ-reset-italian",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
-            }
-        },
-        "reset-cuisine-value-chinese": {
-            "type": "system",
-            "condition": [
-                [
-                    "cuisine",
-                    "Unknown"
-                ],
-                [
-                    "cuisine-value-chinese",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "reset",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "cuisine-value-chinese": {
-                                "value": false,
-                                "interpretation": "json"
-                            }
+                        "context": {
+                            "food_restriction": "gluten-free"
                         },
-                        "name": "reset-cuisine-value-chinese_DETDUP_reset-EQ-reset-chinese",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
-            }
-        },
-        "reset-cuisine-value-dessert": {
-            "type": "system",
-            "condition": [
-                [
-                    "cuisine",
-                    "Unknown"
-                ],
-                [
-                    "cuisine-value-dessert",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "reset",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "cuisine-value-dessert": {
-                                "value": false,
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "reset-cuisine-value-dessert_DETDUP_reset-EQ-reset-dessert",
+                        "name": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
                         "intent": null,
                         "assignments": {}
                     }
@@ -1273,6 +1064,7 @@
                         "updates": {
                             "cuisine-value-mexican": {
                                 "value": true,
+                                "variable": "cuisine-value-mexican",
                                 "interpretation": "json"
                             }
                         },
@@ -1287,6 +1079,7 @@
                         "updates": {
                             "cuisine-value-italian": {
                                 "value": true,
+                                "variable": "cuisine-value-italian",
                                 "interpretation": "json"
                             }
                         },
@@ -1301,6 +1094,7 @@
                         "updates": {
                             "cuisine-value-chinese": {
                                 "value": true,
+                                "variable": "cuisine-value-chinese",
                                 "interpretation": "json"
                             }
                         },
@@ -1315,6 +1109,7 @@
                         "updates": {
                             "cuisine-value-dessert": {
                                 "value": true,
+                                "variable": "cuisine-value-dessert",
                                 "interpretation": "json"
                             }
                         },
@@ -1322,118 +1117,6 @@
                             "cuisine": "dessert"
                         },
                         "name": "set-cuisine_DETDUP_set-valid-value-EQ-dessert",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
-            }
-        },
-        "reset-food_restriction-value-dairy-free": {
-            "type": "system",
-            "condition": [
-                [
-                    "food_restriction",
-                    "Unknown"
-                ],
-                [
-                    "food_restriction-value-dairy-free",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "reset",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "food_restriction-value-dairy-free": {
-                                "value": false,
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "reset-food_restriction-value-dairy-free_DETDUP_reset-EQ-reset-dairy-free",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
-            }
-        },
-        "reset-food_restriction-value-gluten-free": {
-            "type": "system",
-            "condition": [
-                [
-                    "food_restriction",
-                    "Unknown"
-                ],
-                [
-                    "food_restriction-value-gluten-free",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "reset",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "food_restriction-value-gluten-free": {
-                                "value": false,
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "reset-food_restriction-value-gluten-free_DETDUP_reset-EQ-reset-gluten-free",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
-            }
-        },
-        "set-food_restriction": {
-            "type": "system",
-            "subtype": "Context dependent determination",
-            "condition": [
-                [
-                    "food_restriction",
-                    "Known"
-                ],
-                [
-                    "food_restriction-value-dairy-free",
-                    false
-                ],
-                [
-                    "food_restriction-value-gluten-free",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "set-valid-value",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "food_restriction-value-dairy-free": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "food_restriction": "dairy-free"
-                        },
-                        "name": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "food_restriction-value-gluten-free": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "food_restriction": "gluten-free"
-                        },
-                        "name": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
                         "intent": null,
                         "assignments": {}
                     }
