@@ -6,17 +6,23 @@
     (:predicates
         (have_cuisine)
         (have_restaurant)
+        (test)
         (have_goal)
         (goal)
         (have-message)
         (force-statement)
+        (cuisine-value-mexican)
+        (cuisine-value-italian)
+        (cuisine-value-chinese)
+        (cuisine-value-dessert)
+        (cuisine-value-bar_food)
     )
     (:action get-cuisine
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (have_cuisine))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof set-cuisine
@@ -33,51 +39,19 @@
                 )
             )
     )
-    (:action test_context_and_value_set
-        :parameters()
-        :precondition
-            (and
-                (not (have_restaurant))
-                (not (force-statement))
-                (have_cuisine)
-            )
-        :effect
-            (labeled-oneof assign_restaurant
-                (outcome set-mexican
-                    (and
-                        (have_restaurant)
-                    )
-                )
-                (outcome set-italian
-                    (and
-                        (have_restaurant)
-                    )
-                )
-                (outcome set-chinese
-                    (and
-                        (have_restaurant)
-                    )
-                )
-                (outcome set-dessert
-                    (and
-                        (have_restaurant)
-                    )
-                )
-            )
-    )
     (:action test_and
         :parameters()
         :precondition
             (and
+                (have_cuisine)
+                (cuisine-value-dessert)
                 (not (force-statement))
-                (have_restaurant)
             )
         :effect
             (labeled-oneof done
                 (outcome done
                     (and
-                        (have_goal)
-                        (goal)
+                        (test)
                     )
                 )
             )
@@ -95,6 +69,157 @@
                     (and
                         (not (have-message))
                         (not (force-statement))
+                    )
+                )
+            )
+    )
+    (:action test_or-or-1
+        :parameters()
+        :precondition
+            (and
+                (cuisine-value-italian)
+                (not (force-statement))
+            )
+        :effect
+            (labeled-oneof done
+                (outcome done
+                    (and
+                        (not (cuisine-value-bar_food))
+                        (not (cuisine-value-italian))
+                        (not (cuisine-value-mexican))
+                        (not (cuisine-value-dessert))
+                        (not (have_cuisine))
+                        (goal)
+                        (not (cuisine-value-chinese))
+                    )
+                )
+            )
+    )
+    (:action test_or-or-2
+        :parameters()
+        :precondition
+            (and
+                (cuisine-value-mexican)
+                (not (force-statement))
+            )
+        :effect
+            (labeled-oneof done
+                (outcome done
+                    (and
+                        (not (cuisine-value-bar_food))
+                        (not (cuisine-value-italian))
+                        (not (cuisine-value-mexican))
+                        (not (cuisine-value-dessert))
+                        (not (have_cuisine))
+                        (goal)
+                        (not (cuisine-value-chinese))
+                    )
+                )
+            )
+    )
+    (:action test_or-or-3
+        :parameters()
+        :precondition
+            (and
+                (cuisine-value-chinese)
+                (not (force-statement))
+            )
+        :effect
+            (labeled-oneof done
+                (outcome done
+                    (and
+                        (not (cuisine-value-bar_food))
+                        (not (cuisine-value-italian))
+                        (not (cuisine-value-mexican))
+                        (not (cuisine-value-dessert))
+                        (not (have_cuisine))
+                        (goal)
+                        (not (cuisine-value-chinese))
+                    )
+                )
+            )
+    )
+    (:action test_or-or-4
+        :parameters()
+        :precondition
+            (and
+                (cuisine-value-dessert)
+                (test)
+                (not (force-statement))
+            )
+        :effect
+            (labeled-oneof done
+                (outcome done
+                    (and
+                        (not (cuisine-value-bar_food))
+                        (not (cuisine-value-italian))
+                        (not (cuisine-value-mexican))
+                        (not (cuisine-value-dessert))
+                        (not (have_cuisine))
+                        (goal)
+                        (not (cuisine-value-chinese))
+                    )
+                )
+            )
+    )
+    (:action test_or-or-5
+        :parameters()
+        :precondition
+            (and
+                (cuisine-value-bar_food)
+                (not (force-statement))
+            )
+        :effect
+            (labeled-oneof done
+                (outcome done
+                    (and
+                        (not (cuisine-value-bar_food))
+                        (not (cuisine-value-italian))
+                        (not (cuisine-value-mexican))
+                        (not (cuisine-value-dessert))
+                        (not (have_cuisine))
+                        (goal)
+                        (not (cuisine-value-chinese))
+                    )
+                )
+            )
+    )
+    (:action set-cuisine
+        :parameters()
+        :precondition
+            (and
+                (not (cuisine-value-bar_food))
+                (not (cuisine-value-italian))
+                (not (cuisine-value-mexican))
+                (not (cuisine-value-dessert))
+                (have_cuisine)
+                (not (cuisine-value-chinese))
+            )
+        :effect
+            (labeled-oneof set-valid-value
+                (outcome mexican
+                    (and
+                        (cuisine-value-mexican)
+                    )
+                )
+                (outcome italian
+                    (and
+                        (cuisine-value-italian)
+                    )
+                )
+                (outcome chinese
+                    (and
+                        (cuisine-value-chinese)
+                    )
+                )
+                (outcome dessert
+                    (and
+                        (cuisine-value-dessert)
+                    )
+                )
+                (outcome bar_food
+                    (and
+                        (cuisine-value-bar_food)
                     )
                 )
             )

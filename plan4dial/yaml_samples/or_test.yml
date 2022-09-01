@@ -22,9 +22,9 @@ context-variables:
       - Alfredo's Pizza Cafe
       - Mandarin
       - Geneva Crepes
-  # test:
-  #   type: flag
-  #   init: false
+  test:
+    type: flag
+    init: false
   goal:
     type: flag
     init: false
@@ -122,7 +122,7 @@ actions:
             done:
               updates:
                 cuisine:
-                  value: null
+                  value: bar food
                   known: false
                 goal:
                   value: true

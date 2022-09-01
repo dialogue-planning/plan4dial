@@ -109,11 +109,11 @@ def configure_value_setter(loaded_yaml, ctx_var):
                 for out, out_config in eff_config[option]["outcomes"].items():
                     if "updates" in out_config:
                         for update_var, update_cfg in out_config["updates"].items():
-                            if ctx_var == update_var and "known" in out_config:
-                                if out_config["known"] == False:
+                            if ctx_var == update_var and "known" in update_cfg:
+                                if update_cfg["known"] == False:
                                     for v in var_options:
                                         option_value_name = f"{ctx_var}-value-{v.replace(' ', '_')}"
-                                        processed[act][eff][option][out]["updates"][option_value_name] = {"value": False}
+                                        processed[act]["effect"][eff][option]["outcomes"][out]["updates"][option_value_name] = {"value": False}
 
         # loaded_yaml["actions"][f"reset-{option_value_name}"] = {
         #     "type": "system",
@@ -150,7 +150,7 @@ def configure_value_setter(loaded_yaml, ctx_var):
                             "updates": {
                                 f"{ctx_var}-value-{v.replace(' ', '_')}": {"value": True},
                             },
-                            "context": {ctx_var: v},
+                            "context": {ctx_var: {"value": v}},
                         }
                         for v in var_options
                     }

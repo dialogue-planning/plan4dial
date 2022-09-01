@@ -495,6 +495,36 @@
                                 "value": true,
                                 "variable": "force-statement",
                                 "interpretation": "json"
+                            },
+                            "food_restriction-value-dairy-free": {
+                                "value": false,
+                                "variable": "food_restriction-value-dairy-free",
+                                "interpretation": "json"
+                            },
+                            "food_restriction-value-gluten-free": {
+                                "value": false,
+                                "variable": "food_restriction-value-gluten-free",
+                                "interpretation": "json"
+                            },
+                            "cuisine-value-mexican": {
+                                "value": false,
+                                "variable": "cuisine-value-mexican",
+                                "interpretation": "json"
+                            },
+                            "cuisine-value-italian": {
+                                "value": false,
+                                "variable": "cuisine-value-italian",
+                                "interpretation": "json"
+                            },
+                            "cuisine-value-chinese": {
+                                "value": false,
+                                "variable": "cuisine-value-chinese",
+                                "interpretation": "json"
+                            },
+                            "cuisine-value-dessert": {
+                                "value": false,
+                                "variable": "cuisine-value-dessert",
+                                "interpretation": "json"
                             }
                         },
                         "response_variants": [
@@ -1007,7 +1037,9 @@
                             }
                         },
                         "context": {
-                            "food_restriction": "dairy-free"
+                            "food_restriction": {
+                                "value": "dairy-free"
+                            }
                         },
                         "name": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
                         "intent": null,
@@ -1022,7 +1054,9 @@
                             }
                         },
                         "context": {
-                            "food_restriction": "gluten-free"
+                            "food_restriction": {
+                                "value": "gluten-free"
+                            }
                         },
                         "name": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
                         "intent": null,
@@ -1069,7 +1103,9 @@
                             }
                         },
                         "context": {
-                            "cuisine": "mexican"
+                            "cuisine": {
+                                "value": "mexican"
+                            }
                         },
                         "name": "set-cuisine_DETDUP_set-valid-value-EQ-mexican",
                         "intent": null,
@@ -1084,7 +1120,9 @@
                             }
                         },
                         "context": {
-                            "cuisine": "italian"
+                            "cuisine": {
+                                "value": "italian"
+                            }
                         },
                         "name": "set-cuisine_DETDUP_set-valid-value-EQ-italian",
                         "intent": null,
@@ -1099,7 +1137,9 @@
                             }
                         },
                         "context": {
-                            "cuisine": "chinese"
+                            "cuisine": {
+                                "value": "chinese"
+                            }
                         },
                         "name": "set-cuisine_DETDUP_set-valid-value-EQ-chinese",
                         "intent": null,
@@ -1114,7 +1154,9 @@
                             }
                         },
                         "context": {
-                            "cuisine": "dessert"
+                            "cuisine": {
+                                "value": "dessert"
+                            }
                         },
                         "name": "set-cuisine_DETDUP_set-valid-value-EQ-dessert",
                         "intent": null,

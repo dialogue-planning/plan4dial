@@ -6,7 +6,7 @@
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x1d6b6c0",
+                "state": "0x12ba340",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -15,42 +15,46 @@
             },
             "1": {
                 "expected_successor": "0",
-                "action": "test_and",
-                "state": "0x1d720d0",
+                "action": "test_or-or-2",
+                "state": "0x12c52b0",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "test_and_DETDUP_done-EQ-done",
+                        "outcome_label": "test_or-or-2_DETDUP_done-EQ-done",
                         "successor_id": "0"
                     }
                 ]
             },
             "2": {
                 "expected_successor": "1",
-                "action": "test_context_and_value_set",
-                "state": "0x1d71980",
+                "action": "set-cuisine",
+                "state": "0x12c2160",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-chinese",
-                        "successor_id": "1"
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-bar_food",
+                        "successor_id": "8"
                     },
                     {
-                        "outcome_label": "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-dessert",
-                        "successor_id": "1"
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-chinese",
+                        "successor_id": "7"
                     },
                     {
-                        "outcome_label": "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-italian",
-                        "successor_id": "1"
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-dessert",
+                        "successor_id": "6"
                     },
                     {
-                        "outcome_label": "test_context_and_value_set_DETDUP_assign_restaurant-EQ-set-mexican",
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-italian",
+                        "successor_id": "4"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-mexican",
                         "successor_id": "1"
                     }
                 ]
@@ -58,7 +62,7 @@
             "3": {
                 "expected_successor": "2",
                 "action": "get-cuisine",
-                "state": "0x1d706d0",
+                "state": "0x12c38a0",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -66,7 +70,7 @@
                 "successors": [
                     {
                         "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-fallback",
-                        "successor_id": "4"
+                        "successor_id": "9"
                     },
                     {
                         "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-valid",
@@ -74,10 +78,85 @@
                     }
                 ]
             },
+            "7": {
+                "expected_successor": "0",
+                "action": "test_or-or-3",
+                "state": "0x12cc4a0",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or-or-3_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
             "4": {
+                "expected_successor": "0",
+                "action": "test_or-or-1",
+                "state": "0x12c8d60",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or-or-1_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "5": {
+                "expected_successor": "0",
+                "action": "test_or-or-4",
+                "state": "0x12c8b70",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or-or-4_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "6": {
+                "expected_successor": "5",
+                "action": "test_and",
+                "state": "0x12c9500",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_and_DETDUP_done-EQ-done",
+                        "successor_id": "5"
+                    }
+                ]
+            },
+            "8": {
+                "expected_successor": "0",
+                "action": "test_or-or-5",
+                "state": "0x12ccc10",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "test_or-or-5_DETDUP_done-EQ-done",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "9": {
                 "expected_successor": "3",
                 "action": "dialogue_statement",
-                "state": "0x1d74df0",
+                "state": "0x12c9bd0",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -99,17 +178,22 @@
             [
                 "2",
                 ">",
-                "1"
+                "8"
             ],
             [
                 "2",
                 ">",
-                "1"
+                "7"
             ],
             [
                 "2",
                 ">",
-                "1"
+                "6"
+            ],
+            [
+                "2",
+                ">",
+                "4"
             ],
             [
                 "2",
@@ -119,7 +203,7 @@
             [
                 "3",
                 ">",
-                "4"
+                "9"
             ],
             [
                 "3",
@@ -127,34 +211,93 @@
                 "2"
             ],
             [
+                "7",
+                ">",
+                "0"
+            ],
+            [
                 "4",
+                ">",
+                "0"
+            ],
+            [
+                "5",
+                ">",
+                "0"
+            ],
+            [
+                "6",
+                ">",
+                "5"
+            ],
+            [
+                "8",
+                ">",
+                "0"
+            ],
+            [
+                "9",
                 ">",
                 "3"
             ]
         ],
         "states": {
-            "0x1d6b6c0": [
+            "0x12ba340": [
                 "Atom goal()"
             ],
-            "0x1d720d0": [
+            "0x12c52b0": [
                 "NegatedAtom force-statement()",
-                "Atom have_restaurant()"
+                "Atom cuisine-value-mexican()"
             ],
-            "0x1d71980": [
+            "0x12c2160": [
+                "NegatedAtom force-statement()",
                 "Atom have_cuisine()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom cuisine-value-bar_food()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()"
             ],
-            "0x1d706d0": [
-                "NegatedAtom have_cuisine()",
+            "0x12c38a0": [
                 "NegatedAtom force-statement()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1d74df0": [
                 "NegatedAtom have_cuisine()",
+                "NegatedAtom cuisine-value-bar_food()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()"
+            ],
+            "0x12cc4a0": [
+                "NegatedAtom force-statement()",
+                "Atom cuisine-value-chinese()"
+            ],
+            "0x12c8d60": [
+                "NegatedAtom force-statement()",
+                "Atom cuisine-value-italian()"
+            ],
+            "0x12c8b70": [
+                "NegatedAtom force-statement()",
+                "Atom test()",
+                "Atom cuisine-value-dessert()"
+            ],
+            "0x12c9500": [
+                "NegatedAtom force-statement()",
+                "Atom have_cuisine()",
+                "Atom cuisine-value-dessert()"
+            ],
+            "0x12ccc10": [
+                "NegatedAtom force-statement()",
+                "Atom cuisine-value-bar_food()"
+            ],
+            "0x12c9bd0": [
                 "Atom force-statement()",
                 "Atom have-message()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom have_cuisine()",
+                "NegatedAtom cuisine-value-bar_food()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()"
             ]
         }
     }
