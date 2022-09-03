@@ -62,6 +62,12 @@ context-variables:
     known:
       type: flag
       init: false
+  test_fflag:
+    type: flag
+    init: false
+    known:
+      type: fflag
+      init: false
 
 intents:
   confirm:
@@ -279,7 +285,7 @@ actions:
                   known: true
               context:
                 cuisine:
-                  value: mexican              
+                  value: mexican
             set-italian:
               updates:
                 restaurant:
@@ -288,6 +294,8 @@ actions:
               context:
                 cuisine:
                   value: italian
+                test_fflag:
+                  known: false
             set-chinese:
               updates:
                 restaurant:
@@ -296,6 +304,8 @@ actions:
               context:
                 cuisine:
                   value: chinese
+                have_allergy:
+                  known: true
             set-dessert:
               updates:
                 restaurant:

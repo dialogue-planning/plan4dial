@@ -6,7 +6,7 @@
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x1062350",
+                "state": "0x268bf90",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -16,7 +16,7 @@
             "1": {
                 "expected_successor": "0",
                 "action": "complete",
-                "state": "0x1066870",
+                "state": "0x26903c0",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -31,7 +31,7 @@
             "2": {
                 "expected_successor": "1",
                 "action": "set-restaurant",
-                "state": "0x10667f0",
+                "state": "0x2690340",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -58,7 +58,7 @@
             "3": {
                 "expected_successor": "2",
                 "action": "get-cuisine",
-                "state": "0x106f2d0",
+                "state": "0x26904e0",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -74,10 +74,40 @@
                     }
                 ]
             },
+            "16": {
+                "expected_successor": "7",
+                "action": "check-conflict-1-or-1",
+                "state": "0x2699cd0",
+                "distance": 7,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "check-conflict-1-or-1_DETDUP_check-conflicts-EQ-validate-combos",
+                        "successor_id": "7"
+                    }
+                ]
+            },
+            "7": {
+                "expected_successor": "15",
+                "action": "reset-preferences",
+                "state": "0x2697c60",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "reset-preferences_DETDUP_reset-EQ-reset-values",
+                        "successor_id": "15"
+                    }
+                ]
+            },
             "5": {
                 "expected_successor": "3",
                 "action": "dialogue_statement",
-                "state": "0x106d450",
+                "state": "0x2696ff0",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -92,7 +122,7 @@
             "11": {
                 "expected_successor": "10",
                 "action": "get-cuisine",
-                "state": "0x106e5f0",
+                "state": "0x2698160",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -100,7 +130,7 @@
                 "successors": [
                     {
                         "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-fallback",
-                        "successor_id": "32"
+                        "successor_id": "30"
                     },
                     {
                         "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-valid",
@@ -111,7 +141,7 @@
             "12": {
                 "expected_successor": "11",
                 "action": "get-allergy",
-                "state": "0x106b570",
+                "state": "0x2695110",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -119,7 +149,7 @@
                 "successors": [
                     {
                         "outcome_label": "get-allergy_DETDUP_set-allergy-EQ-fallback",
-                        "successor_id": "33"
+                        "successor_id": "31"
                     },
                     {
                         "outcome_label": "get-allergy_DETDUP_set-allergy-EQ-update_allergy",
@@ -130,7 +160,7 @@
             "13": {
                 "expected_successor": "3",
                 "action": "get-have-allergy",
-                "state": "0x1070770",
+                "state": "0x269a3b0",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -138,7 +168,7 @@
                 "successors": [
                     {
                         "outcome_label": "get-have-allergy_DETDUP_set-allergy-EQ-fallback",
-                        "successor_id": "34"
+                        "successor_id": "15"
                     },
                     {
                         "outcome_label": "get-have-allergy_DETDUP_set-allergy-EQ-indicate_allergy",
@@ -151,9 +181,9 @@
                 ]
             },
             "10": {
-                "expected_successor": "20",
+                "expected_successor": "32",
                 "action": "set-cuisine",
-                "state": "0x106df10",
+                "state": "0x26976a0",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -161,26 +191,26 @@
                 "successors": [
                     {
                         "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-chinese",
-                        "successor_id": "31"
+                        "successor_id": "29"
                     },
                     {
                         "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-dessert",
-                        "successor_id": "30"
+                        "successor_id": "28"
                     },
                     {
                         "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-italian",
-                        "successor_id": "21"
+                        "successor_id": "23"
                     },
                     {
                         "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-mexican",
-                        "successor_id": "20"
+                        "successor_id": "32"
                     }
                 ]
             },
             "8": {
-                "expected_successor": "18",
+                "expected_successor": "7",
                 "action": "check-conflict-1-or-1",
-                "state": "0x106e040",
+                "state": "0x2697be0",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -188,14 +218,14 @@
                 "successors": [
                     {
                         "outcome_label": "check-conflict-1-or-1_DETDUP_check-conflicts-EQ-validate-combos",
-                        "successor_id": "18"
+                        "successor_id": "7"
                     }
                 ]
             },
             "14": {
                 "expected_successor": "3",
                 "action": "get-have-allergy",
-                "state": "0x1071d60",
+                "state": "0x269b7a0",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -207,7 +237,7 @@
                     },
                     {
                         "outcome_label": "get-have-allergy_DETDUP_set-allergy-EQ-indicate_allergy",
-                        "successor_id": "8"
+                        "successor_id": "20"
                     },
                     {
                         "outcome_label": "get-have-allergy_DETDUP_set-allergy-EQ-indicate_no_allergy",
@@ -218,7 +248,7 @@
             "15": {
                 "expected_successor": "14",
                 "action": "dialogue_statement",
-                "state": "0x1071fb0",
+                "state": "0x269bd30",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -230,221 +260,75 @@
                     }
                 ]
             },
-            "16": {
-                "expected_successor": "15",
-                "action": "reset-preferences",
-                "state": "0x10720f0",
-                "distance": 6,
+            "18": {
+                "expected_successor": "22",
+                "action": "set-cuisine",
+                "state": "0x269de90",
+                "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "reset-preferences_DETDUP_reset-EQ-reset-values",
-                        "successor_id": "15"
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-chinese",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-dessert",
+                        "successor_id": "28"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-italian",
+                        "successor_id": "23"
+                    },
+                    {
+                        "outcome_label": "set-cuisine_DETDUP_set-valid-value-EQ-mexican",
+                        "successor_id": "22"
                     }
                 ]
             },
-            "17": {
-                "expected_successor": "16",
-                "action": "check-conflict-1-or-1",
-                "state": "0x1072230",
-                "distance": 7,
+            "19": {
+                "expected_successor": "18",
+                "action": "get-cuisine",
+                "state": "0x269dfb0",
+                "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "check-conflict-1-or-1_DETDUP_check-conflicts-EQ-validate-combos",
-                        "successor_id": "16"
+                        "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-fallback",
+                        "successor_id": "30"
+                    },
+                    {
+                        "outcome_label": "get-cuisine_DETDUP_set-cuisine-EQ-valid",
+                        "successor_id": "18"
                     }
                 ]
             },
             "20": {
-                "expected_successor": "17",
-                "action": "set-food_restriction",
-                "state": "0x1072450",
-                "distance": 8,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
-                        "successor_id": "19"
-                    },
-                    {
-                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
-                        "successor_id": "17"
-                    }
-                ]
-            },
-            "18": {
-                "expected_successor": "15",
-                "action": "reset-preferences",
-                "state": "0x10704b0",
-                "distance": 6,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "reset-preferences_DETDUP_reset-EQ-reset-values",
-                        "successor_id": "15"
-                    }
-                ]
-            },
-            "25": {
-                "expected_successor": "24",
-                "action": "dialogue_statement",
-                "state": "0x1075700",
-                "distance": 5,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
-                        "successor_id": "24"
-                    }
-                ]
-            },
-            "26": {
-                "expected_successor": "25",
-                "action": "reset-preferences",
-                "state": "0x1075840",
-                "distance": 6,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "reset-preferences_DETDUP_reset-EQ-reset-values",
-                        "successor_id": "25"
-                    }
-                ]
-            },
-            "27": {
-                "expected_successor": "26",
-                "action": "check-conflict-1-or-2",
-                "state": "0x1075a00",
-                "distance": 7,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "check-conflict-1-or-2_DETDUP_check-conflicts-EQ-validate-combos",
-                        "successor_id": "26"
-                    }
-                ]
-            },
-            "30": {
-                "expected_successor": "27",
-                "action": "set-food_restriction",
-                "state": "0x1079900",
-                "distance": 8,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
-                        "successor_id": "27"
-                    },
-                    {
-                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
-                        "successor_id": "29"
-                    }
-                ]
-            },
-            "28": {
-                "expected_successor": "25",
-                "action": "reset-preferences",
-                "state": "0x1074750",
-                "distance": 6,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "reset-preferences_DETDUP_reset-EQ-reset-values",
-                        "successor_id": "25"
-                    }
-                ]
-            },
-            "32": {
-                "expected_successor": "11",
-                "action": "dialogue_statement",
-                "state": "0x1081390",
+                "expected_successor": "19",
+                "action": "get-allergy",
+                "state": "0x269e0f0",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
-                        "successor_id": "11"
-                    }
-                ]
-            },
-            "29": {
-                "expected_successor": "2",
-                "action": "check-conflict-2-or-4",
-                "state": "0x1079990",
-                "distance": 3,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "check-conflict-2-or-4_DETDUP_check-conflicts-EQ-validate-combos",
-                        "successor_id": "2"
-                    }
-                ]
-            },
-            "31": {
-                "expected_successor": "2",
-                "action": "check-conflict-2-or-2",
-                "state": "0x10810c0",
-                "distance": 3,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "check-conflict-2-or-2_DETDUP_check-conflicts-EQ-validate-combos",
-                        "successor_id": "2"
-                    }
-                ]
-            },
-            "24": {
-                "expected_successor": "3",
-                "action": "get-have-allergy",
-                "state": "0x10754b0",
-                "distance": 4,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "get-have-allergy_DETDUP_set-allergy-EQ-fallback",
-                        "successor_id": "25"
+                        "outcome_label": "get-allergy_DETDUP_set-allergy-EQ-fallback",
+                        "successor_id": "31"
                     },
                     {
-                        "outcome_label": "get-have-allergy_DETDUP_set-allergy-EQ-indicate_allergy",
-                        "successor_id": "22"
-                    },
-                    {
-                        "outcome_label": "get-have-allergy_DETDUP_set-allergy-EQ-indicate_no_allergy",
-                        "successor_id": "3"
+                        "outcome_label": "get-allergy_DETDUP_set-allergy-EQ-update_allergy",
+                        "successor_id": "19"
                     }
                 ]
             },
-            "19": {
+            "21": {
                 "expected_successor": "2",
                 "action": "check-conflict-2-or-3",
-                "state": "0x10725d0",
+                "state": "0x26a5d00",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -456,25 +340,10 @@
                     }
                 ]
             },
-            "22": {
-                "expected_successor": "28",
-                "action": "check-conflict-1-or-2",
-                "state": "0x1078e40",
-                "distance": 7,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "check-conflict-1-or-2_DETDUP_check-conflicts-EQ-validate-combos",
-                        "successor_id": "28"
-                    }
-                ]
-            },
-            "21": {
+            "23": {
                 "expected_successor": "2",
                 "action": "check-conflict-2-or-1",
-                "state": "0x10726e0",
+                "state": "0x269e770",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -486,10 +355,59 @@
                     }
                 ]
             },
-            "33": {
-                "expected_successor": "12",
+            "28": {
+                "expected_successor": "24",
+                "action": "set-food_restriction",
+                "state": "0x26a5550",
+                "distance": 8,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
+                        "successor_id": "24"
+                    },
+                    {
+                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
+                        "successor_id": "27"
+                    }
+                ]
+            },
+            "27": {
+                "expected_successor": "2",
+                "action": "check-conflict-2-or-4",
+                "state": "0x26a5180",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "check-conflict-2-or-4_DETDUP_check-conflicts-EQ-validate-combos",
+                        "successor_id": "2"
+                    }
+                ]
+            },
+            "29": {
+                "expected_successor": "2",
+                "action": "check-conflict-2-or-2",
+                "state": "0x26ab0d0",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "check-conflict-2-or-2_DETDUP_check-conflicts-EQ-validate-combos",
+                        "successor_id": "2"
+                    }
+                ]
+            },
+            "31": {
+                "expected_successor": "20",
                 "action": "dialogue_statement",
-                "state": "0x107ba10",
+                "state": "0x26a91e0",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -497,22 +415,90 @@
                 "successors": [
                     {
                         "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
-                        "successor_id": "12"
+                        "successor_id": "20"
                     }
                 ]
             },
-            "34": {
-                "expected_successor": "13",
+            "24": {
+                "expected_successor": "26",
+                "action": "check-conflict-1-or-2",
+                "state": "0x26a44d0",
+                "distance": 7,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "check-conflict-1-or-2_DETDUP_check-conflicts-EQ-validate-combos",
+                        "successor_id": "26"
+                    }
+                ]
+            },
+            "22": {
+                "expected_successor": "16",
+                "action": "set-food_restriction",
+                "state": "0x269e6d0",
+                "distance": 8,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
+                        "successor_id": "21"
+                    },
+                    {
+                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
+                        "successor_id": "16"
+                    }
+                ]
+            },
+            "26": {
+                "expected_successor": "15",
+                "action": "reset-preferences",
+                "state": "0x269a170",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "reset-preferences_DETDUP_reset-EQ-reset-values",
+                        "successor_id": "15"
+                    }
+                ]
+            },
+            "30": {
+                "expected_successor": "19",
                 "action": "dialogue_statement",
-                "state": "0x107c3b0",
-                "distance": 5,
+                "state": "0x26a6960",
+                "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
                         "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
-                        "successor_id": "13"
+                        "successor_id": "19"
+                    }
+                ]
+            },
+            "32": {
+                "expected_successor": "8",
+                "action": "set-food_restriction",
+                "state": "0x26a9080",
+                "distance": 8,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
+                        "successor_id": "21"
+                    },
+                    {
+                        "outcome_label": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
+                        "successor_id": "8"
                     }
                 ]
             }
@@ -554,6 +540,16 @@
                 "2"
             ],
             [
+                "16",
+                ">",
+                "7"
+            ],
+            [
+                "7",
+                ">",
+                "15"
+            ],
+            [
                 "5",
                 ">",
                 "3"
@@ -561,7 +557,7 @@
             [
                 "11",
                 ">",
-                "32"
+                "30"
             ],
             [
                 "11",
@@ -571,7 +567,7 @@
             [
                 "12",
                 ">",
-                "33"
+                "31"
             ],
             [
                 "12",
@@ -581,7 +577,7 @@
             [
                 "13",
                 ">",
-                "34"
+                "15"
             ],
             [
                 "13",
@@ -596,27 +592,27 @@
             [
                 "10",
                 ">",
-                "31"
+                "29"
             ],
             [
                 "10",
                 ">",
-                "30"
+                "28"
             ],
             [
                 "10",
                 ">",
-                "21"
+                "23"
             ],
             [
                 "10",
                 ">",
-                "20"
+                "32"
             ],
             [
                 "8",
                 ">",
-                "18"
+                "7"
             ],
             [
                 "14",
@@ -626,7 +622,7 @@
             [
                 "14",
                 ">",
-                "8"
+                "20"
             ],
             [
                 "14",
@@ -639,14 +635,39 @@
                 "14"
             ],
             [
-                "16",
+                "18",
                 ">",
-                "15"
+                "29"
             ],
             [
-                "17",
+                "18",
                 ">",
-                "16"
+                "28"
+            ],
+            [
+                "18",
+                ">",
+                "23"
+            ],
+            [
+                "18",
+                ">",
+                "22"
+            ],
+            [
+                "19",
+                ">",
+                "30"
+            ],
+            [
+                "19",
+                ">",
+                "18"
+            ],
+            [
+                "20",
+                ">",
+                "31"
             ],
             [
                 "20",
@@ -654,49 +675,29 @@
                 "19"
             ],
             [
-                "20",
+                "21",
                 ">",
-                "17"
+                "2"
             ],
             [
-                "18",
+                "23",
                 ">",
-                "15"
-            ],
-            [
-                "25",
-                ">",
-                "24"
-            ],
-            [
-                "26",
-                ">",
-                "25"
-            ],
-            [
-                "27",
-                ">",
-                "26"
-            ],
-            [
-                "30",
-                ">",
-                "27"
-            ],
-            [
-                "30",
-                ">",
-                "29"
+                "2"
             ],
             [
                 "28",
                 ">",
-                "25"
+                "24"
             ],
             [
-                "32",
+                "28",
                 ">",
-                "11"
+                "27"
+            ],
+            [
+                "27",
+                ">",
+                "2"
             ],
             [
                 "29",
@@ -706,328 +707,325 @@
             [
                 "31",
                 ">",
-                "2"
+                "20"
             ],
             [
                 "24",
                 ">",
-                "25"
-            ],
-            [
-                "24",
-                ">",
-                "22"
-            ],
-            [
-                "24",
-                ">",
-                "3"
-            ],
-            [
-                "19",
-                ">",
-                "2"
+                "26"
             ],
             [
                 "22",
                 ">",
-                "28"
+                "21"
             ],
             [
-                "21",
+                "22",
                 ">",
-                "2"
+                "16"
             ],
             [
-                "33",
+                "26",
                 ">",
-                "12"
+                "15"
             ],
             [
-                "34",
+                "30",
                 ">",
-                "13"
+                "19"
+            ],
+            [
+                "32",
+                ">",
+                "21"
+            ],
+            [
+                "32",
+                ">",
+                "8"
             ]
         ],
         "states": {
-            "0x1062350": [
+            "0x268bf90": [
                 "Atom goal()"
             ],
-            "0x1066870": [
+            "0x26903c0": [
                 "NegatedAtom force-statement()",
                 "Atom have_restaurant()"
             ],
-            "0x10667f0": [
+            "0x2690340": [
                 "Atom have_cuisine()",
                 "NegatedAtom force-statement()",
                 "NegatedAtom conflict()",
                 "Atom have_conflict()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x106f2d0": [
+            "0x26904e0": [
                 "NegatedAtom have_cuisine()",
                 "NegatedAtom force-statement()",
                 "NegatedAtom conflict()",
                 "Atom have_conflict()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x106d450": [
+            "0x2699cd0": [
+                "Atom have_allergy()",
+                "Atom food_restriction-value-gluten-free()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "Atom cuisine-value-mexican()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x2697c60": [
+                "NegatedAtom force-statement()",
+                "Atom conflict()",
+                "Atom have_conflict()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x2696ff0": [
                 "NegatedAtom have_cuisine()",
                 "Atom force-statement()",
+                "Atom have-message()",
                 "NegatedAtom conflict()",
-                "Atom have-message()",
                 "Atom have_conflict()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x106e5f0": [
-                "NegatedAtom food_restriction-value-dairy-free()",
-                "NegatedAtom food_restriction-value-gluten-free()",
+            "0x2698160": [
                 "Atom have_allergy()",
                 "NegatedAtom have_cuisine()",
-                "NegatedAtom cuisine-value-chinese()",
-                "NegatedAtom cuisine-value-dessert()",
-                "NegatedAtom cuisine-value-italian()",
-                "NegatedAtom cuisine-value-mexican()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
                 "Atom have_have_allergy()",
                 "NegatedAtom force-statement()",
                 "Atom have_food_restriction()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x106b570": [
-                "NegatedAtom food_restriction-value-dairy-free()",
-                "NegatedAtom food_restriction-value-gluten-free()",
+            "0x2695110": [
                 "Atom have_allergy()",
                 "NegatedAtom have_cuisine()",
-                "NegatedAtom cuisine-value-chinese()",
-                "NegatedAtom cuisine-value-dessert()",
-                "NegatedAtom cuisine-value-italian()",
-                "NegatedAtom cuisine-value-mexican()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
                 "Atom have_have_allergy()",
                 "NegatedAtom force-statement()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1070770": [
-                "NegatedAtom food_restriction-value-dairy-free()",
-                "NegatedAtom food_restriction-value-gluten-free()",
-                "NegatedAtom have_cuisine()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_have_allergy()",
-                "NegatedAtom force-statement()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x106df10": [
+            "0x269a3b0": [
+                "NegatedAtom have_cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
+                "NegatedAtom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x26976a0": [
                 "Atom have_allergy()",
                 "Atom have_cuisine()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "Atom have_food_restriction()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "Atom have_have_allergy()",
-                "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x106e040": [
-                "Atom food_restriction-value-gluten-free()",
+            "0x2697be0": [
                 "Atom have_allergy()",
-                "Atom cuisine-value-mexican()",
+                "Atom food_restriction-value-gluten-free()",
                 "Atom have_have_allergy()",
                 "NegatedAtom force-statement()",
+                "Atom cuisine-value-mexican()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x1071d60": [
-                "Atom food_restriction-value-gluten-free()",
+            "0x269b7a0": [
                 "NegatedAtom have_cuisine()",
-                "Atom cuisine-value-mexican()",
-                "NegatedAtom have_have_allergy()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1071fb0": [
-                "Atom food_restriction-value-gluten-free()",
-                "NegatedAtom have_cuisine()",
-                "Atom cuisine-value-mexican()",
-                "NegatedAtom have_have_allergy()",
-                "Atom force-statement()",
-                "Atom have-message()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x10720f0": [
-                "Atom food_restriction-value-gluten-free()",
-                "Atom cuisine-value-mexican()",
-                "NegatedAtom force-statement()",
-                "Atom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1072230": [
-                "Atom food_restriction-value-gluten-free()",
-                "Atom have_allergy()",
-                "Atom cuisine-value-mexican()",
-                "Atom have_have_allergy()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1072450": [
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_allergy()",
-                "Atom have_cuisine()",
-                "Atom cuisine-value-mexican()",
-                "Atom have_have_allergy()",
+                "NegatedAtom have_have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x10704b0": [
-                "Atom food_restriction-value-gluten-free()",
-                "Atom cuisine-value-mexican()",
-                "NegatedAtom force-statement()",
-                "Atom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1075700": [
-                "Atom food_restriction-value-dairy-free()",
+            "0x269bd30": [
                 "NegatedAtom have_cuisine()",
-                "Atom cuisine-value-dessert()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
                 "NegatedAtom have_have_allergy()",
                 "Atom force-statement()",
                 "Atom have-message()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1075840": [
-                "Atom food_restriction-value-dairy-free()",
-                "Atom cuisine-value-dessert()",
-                "NegatedAtom force-statement()",
-                "Atom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1075a00": [
-                "Atom food_restriction-value-dairy-free()",
-                "Atom have_allergy()",
-                "Atom cuisine-value-dessert()",
-                "Atom have_have_allergy()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1079900": [
-                "NegatedAtom food_restriction-value-dairy-free()",
-                "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_allergy()",
-                "Atom have_cuisine()",
-                "Atom cuisine-value-dessert()",
-                "Atom have_have_allergy()",
-                "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1074750": [
-                "Atom food_restriction-value-dairy-free()",
-                "Atom cuisine-value-dessert()",
-                "NegatedAtom force-statement()",
-                "Atom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x1081390": [
-                "NegatedAtom food_restriction-value-dairy-free()",
-                "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_allergy()",
-                "NegatedAtom have_cuisine()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "Atom have_have_allergy()",
-                "Atom force-statement()",
-                "Atom have-message()",
-                "Atom have_food_restriction()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x1079990": [
-                "Atom food_restriction-value-gluten-free()",
+            "0x269de90": [
                 "Atom have_allergy()",
                 "Atom have_cuisine()",
-                "Atom cuisine-value-dessert()",
-                "Atom have_have_allergy()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x10810c0": [
-                "Atom have_allergy()",
-                "Atom have_cuisine()",
-                "Atom cuisine-value-chinese()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
                 "Atom have_have_allergy()",
                 "NegatedAtom force-statement()",
                 "Atom have_food_restriction()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x10754b0": [
-                "Atom food_restriction-value-dairy-free()",
+            "0x269dfb0": [
+                "Atom have_allergy()",
                 "NegatedAtom have_cuisine()",
-                "Atom cuisine-value-dessert()",
-                "NegatedAtom have_have_allergy()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
+                "Atom have_have_allergy()",
                 "NegatedAtom force-statement()",
+                "Atom have_food_restriction()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x10725d0": [
-                "Atom food_restriction-value-dairy-free()",
+            "0x269e0f0": [
+                "Atom have_allergy()",
+                "NegatedAtom have_cuisine()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x26a5d00": [
                 "Atom have_allergy()",
                 "Atom have_cuisine()",
+                "Atom food_restriction-value-dairy-free()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
                 "Atom cuisine-value-mexican()",
-                "Atom have_have_allergy()",
-                "NegatedAtom force-statement()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x1078e40": [
-                "Atom food_restriction-value-dairy-free()",
-                "Atom have_allergy()",
-                "Atom cuisine-value-dessert()",
-                "Atom have_have_allergy()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x10726e0": [
+            "0x269e770": [
                 "Atom have_allergy()",
                 "Atom have_cuisine()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "Atom have_food_restriction()",
                 "Atom cuisine-value-italian()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x26a5550": [
+                "Atom have_allergy()",
+                "Atom have_cuisine()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
                 "Atom have_have_allergy()",
                 "NegatedAtom force-statement()",
                 "Atom have_food_restriction()",
+                "Atom cuisine-value-dessert()",
                 "NegatedAtom have_restaurant()"
             ],
-            "0x107ba10": [
-                "NegatedAtom food_restriction-value-dairy-free()",
-                "NegatedAtom food_restriction-value-gluten-free()",
+            "0x26a5180": [
+                "Atom have_allergy()",
+                "Atom have_cuisine()",
+                "Atom food_restriction-value-gluten-free()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "Atom cuisine-value-dessert()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x26ab0d0": [
+                "Atom have_allergy()",
+                "Atom have_cuisine()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "Atom have_food_restriction()",
+                "Atom cuisine-value-chinese()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x26a91e0": [
                 "Atom have_allergy()",
                 "NegatedAtom have_cuisine()",
-                "NegatedAtom cuisine-value-chinese()",
-                "NegatedAtom cuisine-value-dessert()",
-                "NegatedAtom cuisine-value-italian()",
-                "NegatedAtom cuisine-value-mexican()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
                 "Atom have_have_allergy()",
                 "Atom force-statement()",
                 "Atom have-message()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x107c3b0": [
-                "NegatedAtom food_restriction-value-dairy-free()",
-                "NegatedAtom food_restriction-value-gluten-free()",
-                "NegatedAtom have_cuisine()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_have_allergy()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x26a44d0": [
+                "Atom have_allergy()",
+                "Atom food_restriction-value-dairy-free()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "Atom cuisine-value-dessert()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x269e6d0": [
+                "Atom have_allergy()",
+                "Atom have_cuisine()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "Atom have_food_restriction()",
+                "Atom cuisine-value-mexican()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x269a170": [
+                "NegatedAtom force-statement()",
+                "Atom conflict()",
+                "Atom have_conflict()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x26a6960": [
+                "Atom have_allergy()",
+                "NegatedAtom have_cuisine()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
+                "Atom have_have_allergy()",
                 "Atom force-statement()",
                 "Atom have-message()",
+                "Atom have_food_restriction()",
+                "NegatedAtom cuisine-value-chinese()",
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()",
+                "NegatedAtom have_restaurant()"
+            ],
+            "0x26a9080": [
+                "Atom have_allergy()",
+                "Atom have_cuisine()",
+                "NegatedAtom food_restriction-value-dairy-free()",
+                "NegatedAtom food_restriction-value-gluten-free()",
+                "Atom have_have_allergy()",
+                "NegatedAtom force-statement()",
+                "Atom have_food_restriction()",
+                "Atom cuisine-value-mexican()",
                 "NegatedAtom have_restaurant()"
             ]
         }

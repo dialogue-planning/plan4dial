@@ -2,13 +2,13 @@ import json
 import yaml
 import os
 import subprocess
-import spacy
+#import spacy
 from pathlib import Path
 from plan4dial.parsing.json_config_parser import convert_yaml
 from plan4dial.parsing.pddl_parser import parse_to_pddl
 from plan4dial.parsing.parse_for_rasa import make_nlu_file
 from plan4dial.parsing.pddl_for_rollout import rollout_config
-from rasa.model_training import train_nlu
+#from rasa.model_training import train_nlu
 
 
 def generate_files(
@@ -30,10 +30,11 @@ def generate_files(
     writer = open(problem_str, "w")
     writer.write(problem)
     writer = open(f"{dirname}/{domain_name}_nlu.yml", "w")
-    # parse for rasa
-    yaml.dump(make_nlu_file(yaml_filename), writer)
+
     # train rasa NLU model
     if train:
+        # parse for rasa
+        yaml.dump(make_nlu_file(yaml_filename), writer)
         # download the spacy model if needed; wait until complete
         try:
             spacy.load("en_core_web_md")
@@ -45,15 +46,18 @@ def generate_files(
             output=f"{dirname}",
             fixed_model_name=f"{domain_name}-model"
         )
-    # # generate PDDL files; convert policy.out to a prp.json file; wait until complete
-    # subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
-    # with open(f"policy.out") as f:
-    #     plan_data = {f"plan": json.load(f)}
-    # with open(f"{dirname}/{domain_name}.prp.json", "w") as f:
-    #     json.dump(plan_data, f, indent=4)
-    # # delete extra output files
-    # os.remove("./policy.out")
-    # os.remove("./output.sas")
+    # generate PDDL files; convert policy.out to a prp.json file; wait until complete
+    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
+    try:
+        with open(f"policy.out") as f:
+            plan_data = {f"plan": json.load(f)}
+    except FileNotFoundError:
+        raise Exception("PDDL is invalid.")
+    with open(f"{dirname}/{domain_name}.prp.json", "w") as f:
+        json.dump(plan_data, f, indent=4)
+    # delete extra output files
+    os.remove("./policy.out")
+    os.remove("./output.sas")
     # for rollout
     rollout_data = rollout_config(converted_json)
     with open(f"{dirname}/{domain_name}_rollout_config.json", "w") as f:

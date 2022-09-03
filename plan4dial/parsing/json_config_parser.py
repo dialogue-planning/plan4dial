@@ -102,7 +102,7 @@ def configure_value_setter(loaded_yaml, ctx_var):
             "type": "flag",
             "init": False,
         }
-    # TODO: whenever we lose knowledge of the context variable, reset all values
+    # whenever we lose knowledge of the context variable, reset all values
     for act in loaded_yaml["actions"]:
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             for option in eff_config:
@@ -114,27 +114,6 @@ def configure_value_setter(loaded_yaml, ctx_var):
                                     for v in var_options:
                                         option_value_name = f"{ctx_var}-value-{v.replace(' ', '_')}"
                                         processed[act]["effect"][eff][option]["outcomes"][out]["updates"][option_value_name] = {"value": False}
-
-        # loaded_yaml["actions"][f"reset-{option_value_name}"] = {
-        #     "type": "system",
-        #     "condition": {
-        #         ctx_var: {"known": False},
-        #         option_value_name: {"value": True}
-        #     },
-        #     "effect": {
-        #         "reset": {
-        #             "oneof": {
-        #                 "outcomes": {
-        #                     f"reset-{option.replace(' ', '_')}": {
-        #                         "updates": {
-        #                             option_value_name: {"value": False, "interpretation": "json"}
-        #                         }
-        #                     }
-        #                 }
-        #             }
-        #         }
-        #     }
-        # }
     processed[f"set-{ctx_var}"] = {
         "type": "system",
         "subtype": "Context dependent determination",
