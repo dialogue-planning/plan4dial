@@ -15,21 +15,21 @@ def generate_files(
     yaml_filename: str, domain_name: str, rbp_path: str, train: bool = False
 ):
     dirname = f"./output_files/{domain_name}"
-    # # make a new directory for this domain if it doesn't exist
-    # if not os.path.exists(dirname):
-    #     os.makedirs(dirname)
-    # # convert to hovor json config
-    # writer = open(f"{dirname}/{domain_name}.json", "w")
-    # converted_json = convert_yaml(yaml_filename)
-    # writer.write(json.dumps(converted_json, indent=4))
-    # # convert to PDDL
-    # domain, problem = parse_to_pddl(converted_json)
+    # make a new directory for this domain if it doesn't exist
+    if not os.path.exists(dirname):
+        os.makedirs(dirname)
+    # convert to hovor json config
+    writer = open(f"{dirname}/{domain_name}.json", "w")
+    converted_json = convert_yaml(yaml_filename)
+    writer.write(json.dumps(converted_json, indent=4))
+    # convert to PDDL
+    domain, problem = parse_to_pddl(converted_json)
     domain_str, problem_str = f"{dirname}/{domain_name}_domain.pddl", f"{dirname}/{domain_name}_problem.pddl"
-    # writer = open(domain_str, "w")
-    # writer.write(domain)
-    # writer = open(problem_str, "w")
-    # writer.write(problem)
-    # writer = open(f"{dirname}/{domain_name}_nlu.yml", "w")
+    writer = open(domain_str, "w")
+    writer.write(domain)
+    writer = open(problem_str, "w")
+    writer.write(problem)
+    writer = open(f"{dirname}/{domain_name}_nlu.yml", "w")
 
     # # train rasa NLU model
     # if train:
@@ -59,15 +59,15 @@ def generate_files(
     os.remove("./policy.out")
     os.remove("./output.sas")
     # # for rollout
-    # rollout_data = rollout_config(converted_json)
-    # with open(f"{dirname}/{domain_name}_rollout_config.json", "w") as f:
-    #     json.dump(rollout_data, f, indent=4)
+    rollout_data = rollout_config(converted_json)
+    with open(f"{dirname}/{domain_name}_rollout_config.json", "w") as f:
+        json.dump(rollout_data, f, indent=4)
 
 
 if __name__ == "__main__":
     generate_files(
         "./plan4dial/yaml_samples/tutorial_bot_simplified.yml",
-        "test",
+        "tutorial_bot_simplified",
         str((Path(__file__).parent.parent / "rbp").resolve()),
         False
     )

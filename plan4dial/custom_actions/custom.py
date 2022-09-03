@@ -47,7 +47,7 @@ def slot_fill(
             [
                 p
                 for p in itertools.product(
-                    [entity], ["found", "maybe-found", "didnt-find"]
+                    [entity], (["found", "maybe-found", "didnt-find"] if loaded_yaml["context-variables"][entity]["known"]["type"] == "fflag" else ["found", "didnt-find"])
                 )
             ]
         )
@@ -101,7 +101,7 @@ def slot_fill(
             action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
                 outcome_name
             ] = next_out
-    actions = {action_name: action}
+    actions = {f"slot-fill__{action_name}": action}
     new_actions, new_ctx_vars = create_clarifications_single_slots(
         action_name, action, entities, clarify, additional_updates
     )

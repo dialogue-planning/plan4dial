@@ -112,27 +112,6 @@ intents:
       - What is the most $outing_atmosphere place in the city?
 
 actions:
-  # get-cuisine:
-  #   type: dialogue
-  #   subtype: dialogue disambiguation
-  #   message_variants:
-  #     - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
-  #   fallback_message_variants:
-  #     - Sorry, that isn't a valid cuisine.
-  #   condition:
-  #     cuisine:
-  #       known: false
-  #   effect:
-  #     set-cuisine:
-  #       oneof:
-  #         outcomes:
-  #           valid:
-  #             updates:
-  #               cuisine:
-  #                 value: $cuisine
-  #                 known: true
-  #             intent: share_cuisine
-
   get-cuisine:
     advanced-custom:
       custom-type: slot_fill
@@ -147,7 +126,7 @@ actions:
           - Sorry, that isn't a valid cuisine. 
         clarify:
           cuisine:
-            message_variants:
+            clarify_message_variants:
               - I wasn't quite sure about your desired cuisine preference. Do you want to eat $cuisine?
             fallback_message_variants:
               - Sorry, that still isn't a valid cuisine.

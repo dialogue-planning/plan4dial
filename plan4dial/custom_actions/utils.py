@@ -117,11 +117,13 @@ def create_clarifications_single_slots(
                                 single_slot(entity, clarify[entity], additional_updates)
                             )
         new_actions[original_act_name] = original_act_config
-        for entity in entities:
+    for entity in entities:
+        # only create clarify actions if clarify messages were specified
+        if "clarify_message_variants" in clarify[entity]:
             new_actions.update(
                 clarify_act(
                     entity,
-                    clarify[entity]["message_variants"],
+                    clarify[entity]["clarify_message_variants"],
                     f"allow_single_slot_{entity}" in new_ctx_vars,
                 )
             )
