@@ -5,7 +5,7 @@ context-variables:
   cuisine:
     type: enum
     known:
-      type: flag
+      type: fflag
       init: false
     options:
       - mexican
@@ -112,26 +112,47 @@ intents:
       - What is the most $outing_atmosphere place in the city?
 
 actions:
+  # get-cuisine:
+  #   type: dialogue
+  #   subtype: dialogue disambiguation
+  #   message_variants:
+  #     - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+  #   fallback_message_variants:
+  #     - Sorry, that isn't a valid cuisine.
+  #   condition:
+  #     cuisine:
+  #       known: false
+  #   effect:
+  #     set-cuisine:
+  #       oneof:
+  #         outcomes:
+  #           valid:
+  #             updates:
+  #               cuisine:
+  #                 value: $cuisine
+  #                 known: true
+  #             intent: share_cuisine
+
   get-cuisine:
-    type: dialogue
-    subtype: dialogue disambiguation
-    message_variants:
-      - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
-    fallback_message_variants:
-      - Sorry, that isn't a valid cuisine.
-    condition:
-      cuisine:
-        known: false
-    effect:
-      set-cuisine:
-        oneof:
-          outcomes:
-            valid:
-              updates:
-                cuisine:
-                  value: $cuisine
-                  known: true
-              intent: share_cuisine
+    advanced-custom:
+      custom-type: slot_fill
+      parameters:
+        action_name: get-cuisine
+        entities:
+          - cuisine
+        valid_intent: share_cuisine
+        message_variants:
+          - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+        fallback_message_variants:
+          - Sorry, that isn't a valid cuisine. 
+        clarify:
+          cuisine:
+            message_variants:
+              - I wasn't quite sure about your desired cuisine preference. Do you want to eat $cuisine?
+            fallback_message_variants:
+              - Sorry, that still isn't a valid cuisine.
+            response_variants:
+              - Cuisine preference has been logged.
   get-have-allergy:
     type: dialogue
     subtype: dialogue disambiguation

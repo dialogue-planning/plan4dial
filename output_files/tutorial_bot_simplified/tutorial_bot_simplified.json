@@ -10,7 +10,7 @@
                 "dessert"
             ],
             "known": {
-                "type": "flag",
+                "type": "fflag",
                 "init": false
             }
         },
@@ -184,80 +184,6 @@
         }
     },
     "actions": {
-        "get-cuisine": {
-            "type": "dialogue",
-            "subtype": "dialogue disambiguation",
-            "message_variants": [
-                "What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area."
-            ],
-            "fallback_message_variants": [
-                "Sorry, that isn't a valid cuisine."
-            ],
-            "condition": [
-                [
-                    "cuisine",
-                    "Unknown"
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "set-cuisine",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "cuisine": {
-                                "value": "$cuisine",
-                                "variable": "cuisine",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_cuisine",
-                        "name": "get-cuisine_DETDUP_set-cuisine-EQ-valid",
-                        "assignments": {
-                            "$cuisine": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "get-cuisine_DETDUP_set-cuisine-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "intents": {
-                "share_cuisine": {
-                    "variables": [
-                        "$cuisine"
-                    ],
-                    "utterances": [
-                        "I want to eat $cuisine.",
-                        "Do you have restaurants of type $cuisine?",
-                        "Are there any $cuisine restaurants in the area?"
-                    ]
-                },
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
-            }
-        },
         "get-have-allergy": {
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
