@@ -6,7 +6,7 @@
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x118a020",
+                "state": "0x24ed070",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -16,7 +16,7 @@
             "1": {
                 "expected_successor": "0",
                 "action": "complete",
-                "state": "0x1196f00",
+                "state": "0x24f9f20",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -31,7 +31,7 @@
             "2": {
                 "expected_successor": "1",
                 "action": "set-restaurant",
-                "state": "0x118e3d0",
+                "state": "0x24f13f0",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -58,7 +58,7 @@
             "3": {
                 "expected_successor": "2",
                 "action": "slot-fill__get-cuisine",
-                "state": "0x118e550",
+                "state": "0x24f1570",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -77,7 +77,7 @@
             "7": {
                 "expected_successor": "15",
                 "action": "reset-preferences",
-                "state": "0x1195cf0",
+                "state": "0x24f8d10",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -92,7 +92,7 @@
             "5": {
                 "expected_successor": "3",
                 "action": "dialogue_statement",
-                "state": "0x1195080",
+                "state": "0x24f80a0",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -107,7 +107,7 @@
             "11": {
                 "expected_successor": "10",
                 "action": "slot-fill__get-cuisine",
-                "state": "0x11961f0",
+                "state": "0x24f9210",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -126,7 +126,7 @@
             "12": {
                 "expected_successor": "11",
                 "action": "get-allergy",
-                "state": "0x11931a0",
+                "state": "0x24f61c0",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -145,7 +145,7 @@
             "13": {
                 "expected_successor": "3",
                 "action": "get-have-allergy",
-                "state": "0x1198440",
+                "state": "0x24fb460",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -168,7 +168,7 @@
             "10": {
                 "expected_successor": "32",
                 "action": "set-cuisine",
-                "state": "0x1195530",
+                "state": "0x24f8550",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -195,7 +195,7 @@
             "8": {
                 "expected_successor": "7",
                 "action": "check-conflict-1-or-1",
-                "state": "0x1195c70",
+                "state": "0x24f8c90",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -210,7 +210,7 @@
             "16": {
                 "expected_successor": "17",
                 "action": "dialogue_statement",
-                "state": "0x119b3e0",
+                "state": "0x24fe400",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -225,7 +225,7 @@
             "14": {
                 "expected_successor": "3",
                 "action": "get-have-allergy",
-                "state": "0x1199830",
+                "state": "0x24fc850",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -248,7 +248,7 @@
             "15": {
                 "expected_successor": "14",
                 "action": "dialogue_statement",
-                "state": "0x1199dc0",
+                "state": "0x24fcde0",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -263,7 +263,7 @@
             "17": {
                 "expected_successor": "21",
                 "action": "slot-fill__get-cuisine",
-                "state": "0x119b4b0",
+                "state": "0x24fe4d0",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -282,7 +282,7 @@
             "18": {
                 "expected_successor": "17",
                 "action": "get-allergy",
-                "state": "0x119a180",
+                "state": "0x24fd1a0",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -301,7 +301,7 @@
             "19": {
                 "expected_successor": "7",
                 "action": "check-conflict-1-or-1",
-                "state": "0x1197d60",
+                "state": "0x24fad80",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -316,7 +316,7 @@
             "21": {
                 "expected_successor": "23",
                 "action": "set-cuisine",
-                "state": "0x119d460",
+                "state": "0x2500480",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -343,7 +343,7 @@
             "28": {
                 "expected_successor": "2",
                 "action": "check-conflict-2-or-4",
-                "state": "0x11a4160",
+                "state": "0x2507180",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -358,7 +358,7 @@
             "22": {
                 "expected_successor": "2",
                 "action": "check-conflict-2-or-3",
-                "state": "0x11a4420",
+                "state": "0x2507440",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -373,7 +373,7 @@
             "24": {
                 "expected_successor": "2",
                 "action": "check-conflict-2-or-1",
-                "state": "0x119db20",
+                "state": "0x2500b40",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -388,7 +388,7 @@
             "30": {
                 "expected_successor": "2",
                 "action": "check-conflict-2-or-2",
-                "state": "0x11aa070",
+                "state": "0x250d090",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -403,7 +403,7 @@
             "29": {
                 "expected_successor": "25",
                 "action": "set-food_restriction",
-                "state": "0x119d910",
+                "state": "0x2500930",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -422,7 +422,7 @@
             "25": {
                 "expected_successor": "27",
                 "action": "check-conflict-1-or-2",
-                "state": "0x11a4a70",
+                "state": "0x2507a90",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -437,7 +437,7 @@
             "23": {
                 "expected_successor": "19",
                 "action": "set-food_restriction",
-                "state": "0x119d970",
+                "state": "0x2500990",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -456,7 +456,7 @@
             "27": {
                 "expected_successor": "15",
                 "action": "reset-preferences",
-                "state": "0x1198200",
+                "state": "0x24fb220",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -471,7 +471,7 @@
             "31": {
                 "expected_successor": "18",
                 "action": "dialogue_statement",
-                "state": "0x11a9190",
+                "state": "0x250c1b0",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -486,7 +486,7 @@
             "32": {
                 "expected_successor": "8",
                 "action": "set-food_restriction",
-                "state": "0x11a60f0",
+                "state": "0x2509110",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -746,287 +746,287 @@
             ]
         ],
         "states": {
-            "0x118a020": [
+            "0x24ed070": [
                 "Atom goal()"
             ],
-            "0x1196f00": [
+            "0x24f9f20": [
                 "NegatedAtom force-statement()",
-                "Atom have_restaurant()"
+                "Atom know__restaurant()"
             ],
-            "0x118e3d0": [
-                "Atom have_cuisine()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
-            ],
-            "0x118e550": [
-                "NegatedAtom have_cuisine()",
+            "0x24f13f0": [
+                "Atom know__cuisine()",
                 "NegatedAtom force-statement()",
                 "NegatedAtom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
+                "Atom know__conflict()",
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1195cf0": [
+            "0x24f1570": [
+                "NegatedAtom know__cuisine()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom conflict()",
+                "Atom know__conflict()",
+                "NegatedAtom know__restaurant()"
+            ],
+            "0x24f8d10": [
                 "NegatedAtom force-statement()",
                 "Atom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
+                "Atom know__conflict()",
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1195080": [
-                "NegatedAtom have_cuisine()",
+            "0x24f80a0": [
+                "NegatedAtom know__cuisine()",
                 "Atom force-statement()",
                 "Atom have-message()",
                 "NegatedAtom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
+                "Atom know__conflict()",
+                "NegatedAtom know__restaurant()"
             ],
-            "0x11961f0": [
+            "0x24f9210": [
                 "Atom have_allergy()",
-                "NegatedAtom have_cuisine()",
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x11931a0": [
+            "0x24f61c0": [
                 "Atom have_allergy()",
-                "NegatedAtom have_cuisine()",
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1198440": [
-                "NegatedAtom have_cuisine()",
+            "0x24fb460": [
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "NegatedAtom have_have_allergy()",
+                "NegatedAtom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1195530": [
+            "0x24f8550": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
+                "Atom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1195c70": [
+            "0x24f8c90": [
                 "Atom have_allergy()",
                 "Atom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "Atom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x119b3e0": [
+            "0x24fe400": [
                 "Atom have_allergy()",
-                "NegatedAtom have_cuisine()",
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "Atom force-statement()",
                 "Atom have-message()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1199830": [
-                "NegatedAtom have_cuisine()",
+            "0x24fc850": [
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "NegatedAtom have_have_allergy()",
+                "NegatedAtom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1199dc0": [
-                "NegatedAtom have_cuisine()",
+            "0x24fcde0": [
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "NegatedAtom have_have_allergy()",
+                "NegatedAtom know__have_allergy()",
                 "Atom force-statement()",
                 "Atom have-message()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x119b4b0": [
+            "0x24fe4d0": [
                 "Atom have_allergy()",
-                "NegatedAtom have_cuisine()",
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x119a180": [
+            "0x24fd1a0": [
                 "Atom have_allergy()",
-                "NegatedAtom have_cuisine()",
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1197d60": [
+            "0x24fad80": [
                 "Atom have_allergy()",
                 "Atom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "Atom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x119d460": [
+            "0x2500480": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
+                "Atom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x11a4160": [
+            "0x2507180": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
+                "Atom know__cuisine()",
                 "Atom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "Atom cuisine-value-dessert()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x11a4420": [
+            "0x2507440": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
+                "Atom know__cuisine()",
                 "Atom food_restriction-value-dairy-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "Atom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x119db20": [
+            "0x2500b40": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
-                "Atom have_have_allergy()",
+                "Atom know__cuisine()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "Atom cuisine-value-italian()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x11aa070": [
+            "0x250d090": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
-                "Atom have_have_allergy()",
+                "Atom know__cuisine()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "Atom cuisine-value-chinese()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x119d910": [
+            "0x2500930": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
+                "Atom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "Atom cuisine-value-dessert()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x11a4a70": [
+            "0x2507a90": [
                 "Atom have_allergy()",
                 "Atom food_restriction-value-dairy-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
                 "Atom cuisine-value-dessert()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x119d970": [
+            "0x2500990": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
+                "Atom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "Atom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x1198200": [
+            "0x24fb220": [
                 "NegatedAtom force-statement()",
                 "Atom conflict()",
-                "Atom have_conflict()",
-                "NegatedAtom have_restaurant()"
+                "Atom know__conflict()",
+                "NegatedAtom know__restaurant()"
             ],
-            "0x11a9190": [
+            "0x250c1b0": [
                 "Atom have_allergy()",
-                "NegatedAtom have_cuisine()",
+                "NegatedAtom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "Atom force-statement()",
                 "Atom have-message()",
                 "NegatedAtom cuisine-value-chinese()",
                 "NegatedAtom cuisine-value-dessert()",
                 "NegatedAtom cuisine-value-italian()",
                 "NegatedAtom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ],
-            "0x11a60f0": [
+            "0x2509110": [
                 "Atom have_allergy()",
-                "Atom have_cuisine()",
+                "Atom know__cuisine()",
                 "NegatedAtom food_restriction-value-dairy-free()",
                 "NegatedAtom food_restriction-value-gluten-free()",
-                "Atom have_have_allergy()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom have_food_restriction()",
+                "Atom know__food_restriction()",
                 "Atom cuisine-value-mexican()",
-                "NegatedAtom have_restaurant()"
+                "NegatedAtom know__restaurant()"
             ]
         }
     }
