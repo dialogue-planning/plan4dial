@@ -15,16 +15,16 @@ def return_flag_value_fluent(f_name: str, is_fflag: bool, value):
 def return_known_fluents(f_name: str, is_fflag: bool, known):
     if type(known) == bool:
         return (
-            [f"(have_{f_name})", f"(not (maybe-have_{f_name}))"]
+            [f"(know__{f_name})", f"(not (maybe-know__{f_name}))"]
             if known
-            else [f"(not (have_{f_name}))", f"(not (maybe-have_{f_name}))"]
+            else [f"(not (know__{f_name}))", f"(not (maybe-know__{f_name}))"]
         ) if is_fflag else (
-            [f"(have_{f_name})"]
+            [f"(know__{f_name})"]
             if known
-            else [f"(not (have_{f_name}))"]
+            else [f"(not (know__{f_name}))"]
         )
     else:
-        return [f"(not (have_{f_name}))", f"(maybe-have_{f_name})"]
+        return [f"(not (know__{f_name}))", f"(maybe-know__{f_name})"]
 
 def return_certainty_fluents(f_name: str, is_fflag: bool, certainty):
     if certainty == "Known":
@@ -132,14 +132,14 @@ def parse_init(context_variables: Dict):
             known_status = var_config["known"]["init"]
             if type(known_status) == bool:
                 if known_status:
-                    init_true.add(f"(have_{var})")
+                    init_true.add(f"(know__{var})")
                 else:
-                    init_true_complete.add(f"(not (have_{var}))")
+                    init_true_complete.add(f"(not (know__{var}))")
                     if var_config["known"]["type"] == "fflag":
-                        init_true_complete.add(f"(not (maybe-have_{var}))")
+                        init_true_complete.add(f"(not (maybe-know__{var}))")
             else:
                 if known_status == "maybe":
-                    init_true.add(f"(maybe-have_{var})")
+                    init_true.add(f"(maybe-know__{var})")
         if var_config["type"] in ["flag", "fflag"]:
             status = var_config["config"]
             if type(status) == bool:
@@ -160,16 +160,16 @@ def parse_predicates(context_variables: Dict):
     init_true = []
     for var, var_config in context_variables.items():
         if "known" in var_config:
-            predicates.append(f"(have_{var})")
+            predicates.append(f"(know__{var})")
             if var_config["known"]["type"] == "fflag":
-                predicates.append(f"(maybe-have_{var})")
+                predicates.append(f"(maybe-know__{var})")
             known_status = var_config["known"]["init"]
             if type(known_status) == bool:
                 if known_status:
-                    init_true.append(f"(have_{var})")
+                    init_true.append(f"(know__{var})")
             else:
                 if known_status == "maybe":
-                    init_true.append(f"(maybe-have_{var})")
+                    init_true.append(f"(maybe-know__{var})")
         if var_config["type"] in ["flag", "fflag"]:
             predicates.append(f"({var})")
             if var_config["type"] == "fflag":
