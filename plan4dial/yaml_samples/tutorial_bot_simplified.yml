@@ -149,8 +149,6 @@ actions:
                 have_allergy:
                   value: true
                   known: true
-                test_fflag:
-                  known: false
               intent: confirm
             indicate_no_allergy:
               updates:
@@ -242,8 +240,6 @@ actions:
                 conflict:
                   known: true
                   value: false
-                test_fflag:
-                  known: maybe
   reset-preferences:
     type: system
     condition:

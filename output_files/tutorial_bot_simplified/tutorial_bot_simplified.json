@@ -211,19 +211,12 @@
                                 "variable": "have_allergy",
                                 "certainty": "Known",
                                 "interpretation": "json"
-                            },
-                            "test_fflag": {
-                                "variable": "test_fflag",
-                                "certainty": "Unknown",
-                                "value": null,
-                                "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "get-have-allergy_DETDUP_set-allergy-EQ-indicate_allergy",
                         "assignments": {
-                            "$have_allergy": "found",
-                            "$test_fflag": "didnt-find"
+                            "$have_allergy": "found"
                         }
                     },
                     {
@@ -1028,19 +1021,12 @@
                                 "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
-                            },
-                            "test_fflag": {
-                                "variable": "test_fflag",
-                                "certainty": "Uncertain",
-                                "value": null,
-                                "interpretation": "json"
                             }
                         },
                         "name": "check-conflict-2-or-1_DETDUP_check-conflicts-EQ-validate-combos",
                         "intent": null,
                         "assignments": {
-                            "$conflict": "found",
-                            "$test_fflag": "maybe-found"
+                            "$conflict": "found"
                         }
                     }
                 ]
@@ -1081,19 +1067,12 @@
                                 "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
-                            },
-                            "test_fflag": {
-                                "variable": "test_fflag",
-                                "certainty": "Uncertain",
-                                "value": null,
-                                "interpretation": "json"
                             }
                         },
                         "name": "check-conflict-2-or-2_DETDUP_check-conflicts-EQ-validate-combos",
                         "intent": null,
                         "assignments": {
-                            "$conflict": "found",
-                            "$test_fflag": "maybe-found"
+                            "$conflict": "found"
                         }
                     }
                 ]
@@ -1134,19 +1113,12 @@
                                 "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
-                            },
-                            "test_fflag": {
-                                "variable": "test_fflag",
-                                "certainty": "Uncertain",
-                                "value": null,
-                                "interpretation": "json"
                             }
                         },
                         "name": "check-conflict-2-or-3_DETDUP_check-conflicts-EQ-validate-combos",
                         "intent": null,
                         "assignments": {
-                            "$conflict": "found",
-                            "$test_fflag": "maybe-found"
+                            "$conflict": "found"
                         }
                     }
                 ]
@@ -1187,19 +1159,12 @@
                                 "variable": "conflict",
                                 "certainty": "Known",
                                 "interpretation": "json"
-                            },
-                            "test_fflag": {
-                                "variable": "test_fflag",
-                                "certainty": "Uncertain",
-                                "value": null,
-                                "interpretation": "json"
                             }
                         },
                         "name": "check-conflict-2-or-4_DETDUP_check-conflicts-EQ-validate-combos",
                         "intent": null,
                         "assignments": {
-                            "$conflict": "found",
-                            "$test_fflag": "maybe-found"
+                            "$conflict": "found"
                         }
                     }
                 ]
