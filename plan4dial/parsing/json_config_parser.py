@@ -34,7 +34,7 @@ def configure_dialogue_statement():
                                     "value": False,
                                 },
                             },
-                            "intent": "fallback",
+                            "intent": "utter_dialogue_statement",
                         }
                     }
                 }
@@ -169,6 +169,7 @@ def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
 def base_setup(loaded_yaml):
     # set up the action, intent, and fluents needed for default fallback/unclear user input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
+    loaded_yaml["intents"]["utter_dialogue_statement"] = {"utterances": [], "variables": []}
     loaded_yaml["actions"]["dialogue_statement"] = configure_dialogue_statement()
     loaded_yaml["context-variables"]["have-message"] = {
         "type": "flag",
