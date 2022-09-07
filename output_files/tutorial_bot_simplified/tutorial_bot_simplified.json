@@ -81,14 +81,6 @@
                 "init": false
             }
         },
-        "test_fflag": {
-            "type": "flag",
-            "config": false,
-            "known": {
-                "type": "fflag",
-                "init": false
-            }
-        },
         "have-message": {
             "type": "flag",
             "config": false
@@ -537,9 +529,6 @@
                         "context": {
                             "cuisine": {
                                 "value": "italian"
-                            },
-                            "test_fflag": {
-                                "known": false
                             }
                         },
                         "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-italian",
@@ -560,12 +549,6 @@
                         "context": {
                             "cuisine": {
                                 "value": "chinese"
-                            },
-                            "have_allergy": {
-                                "known": true
-                            },
-                            "test_fflag": {
-                                "known": "maybe"
                             }
                         },
                         "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-chinese",
