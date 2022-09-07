@@ -5,7 +5,7 @@ context-variables:
   cuisine:
     type: enum
     known:
-      type: fflag
+      type: flag
       init: false
     options:
       - mexican
@@ -120,8 +120,6 @@ actions:
           - Sorry, that isn't a valid cuisine. 
         clarify:
           cuisine:
-            clarify_message_variants:
-              - I wasn't quite sure about your desired cuisine preference. Do you want to eat $cuisine?
             fallback_message_variants:
               - Sorry, that still isn't a valid cuisine.
             response_variants:
