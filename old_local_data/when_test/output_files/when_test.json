@@ -1,0 +1,1195 @@
+{
+    "name": "day-planner",
+    "context_variables": {
+        "cuisine": {
+            "type": "enum",
+            "config": [
+                "mexican",
+                "italian",
+                "chinese",
+                "dessert"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "restaurant": {
+            "type": "enum",
+            "config": [
+                "Guac Grill",
+                "Alfredo's Pizza Cafe",
+                "Mandarin",
+                "Geneva Crepes"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "have_allergy": {
+            "type": "flag",
+            "config": false
+        },
+        "food_restriction": {
+            "type": "enum",
+            "config": [
+                "dairy-free",
+                "gluten-free"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "conflict": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "low_budget": {
+            "type": "flag",
+            "config": false
+        },
+        "outing_atmosphere": {
+            "type": "enum",
+            "config": [
+                "exciting",
+                "relaxing"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "goal": {
+            "type": "flag",
+            "config": false
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        },
+        "food_restriction-value-dairy-free": {
+            "type": "flag",
+            "config": false
+        },
+        "food_restriction-value-gluten-free": {
+            "type": "flag",
+            "config": false
+        },
+        "cuisine-value-mexican": {
+            "type": "flag",
+            "config": false
+        },
+        "cuisine-value-italian": {
+            "type": "flag",
+            "config": false
+        },
+        "cuisine-value-chinese": {
+            "type": "flag",
+            "config": false
+        },
+        "cuisine-value-dessert": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "confirm": {
+            "variables": [],
+            "utterances": [
+                "yes",
+                "yeah",
+                "that's it",
+                "Y",
+                "mhm",
+                "confirm",
+                "yes please"
+            ]
+        },
+        "deny": {
+            "variables": [],
+            "utterances": [
+                "no",
+                "not at all",
+                "that's not what i meant",
+                "absolutely not",
+                "i don't want that",
+                "nah",
+                "no thanks",
+                "no thank you"
+            ]
+        },
+        "share_cuisine": {
+            "variables": [
+                "$cuisine"
+            ],
+            "utterances": [
+                "I want to eat $cuisine.",
+                "Do you have restaurants of type $cuisine?",
+                "Are there any $cuisine restaurants in the area?"
+            ]
+        },
+        "share_allergies": {
+            "variables": [
+                "$food_restriction"
+            ],
+            "utterances": [
+                "I have to eat $food_restriction.",
+                "I can only eat foods that are $food_restriction.",
+                "I am allergic to any foods that are not $food_restriction."
+            ]
+        },
+        "share_outing_preference": {
+            "variables": [
+                "$outing_atmosphere"
+            ],
+            "utterances": [
+                "I would prefer a $outing_atmosphere atmosphere today.",
+                "I want to go to a $outing_atmosphere place.",
+                "What is the most $outing_atmosphere place in the city?"
+            ]
+        },
+        "fallback": {
+            "variables": [],
+            "utterances": []
+        }
+    },
+    "actions": {
+        "get-cuisine": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area."
+            ],
+            "fallback_message_variants": [
+                "Sorry, that isn't a valid cuisine."
+            ],
+            "condition": [
+                [
+                    "cuisine",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-cuisine",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "cuisine": {
+                                "value": "$cuisine",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "intent": "share_cuisine",
+                        "name": "get-cuisine_DETDUP_set-cuisine-EQ-valid",
+                        "assignments": {
+                            "$cuisine": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-cuisine_DETDUP_set-cuisine-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_cuisine": {
+                    "variables": [
+                        "$cuisine"
+                    ],
+                    "utterances": [
+                        "I want to eat $cuisine.",
+                        "Do you have restaurants of type $cuisine?",
+                        "Are there any $cuisine restaurants in the area?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-have-allergy": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "Do you have any allergies? (Y/N)"
+            ],
+            "condition": [
+                [
+                    "have_allergy",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-allergy",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have_allergy": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "get-have-allergy_DETDUP_set-allergy-EQ-indicate_allergy",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have_allergy": {
+                                "value": false,
+                                "interpretation": "json"
+                            },
+                            "conflict": {
+                                "known": true,
+                                "value": false,
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "get-have-allergy_DETDUP_set-allergy-EQ-indicate_no_allergy",
+                        "assignments": {
+                            "$conflict": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-have-allergy_DETDUP_set-allergy-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-allergy": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What type of allergy do you have? (I currently account for dairy and gluten allergies)."
+            ],
+            "fallback_message_variants": [
+                "Sorry, I don't recognize that type of allergy."
+            ],
+            "condition": [
+                [
+                    "have_allergy",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-allergy",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "food_restriction": {
+                                "value": "$food_restriction",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "intent": "share_allergies",
+                        "name": "get-allergy_DETDUP_set-allergy-EQ-update_allergy",
+                        "assignments": {
+                            "$food_restriction": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-allergy_DETDUP_set-allergy-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_allergies": {
+                    "variables": [
+                        "$food_restriction"
+                    ],
+                    "utterances": [
+                        "I have to eat $food_restriction.",
+                        "I can only eat foods that are $food_restriction.",
+                        "I am allergic to any foods that are not $food_restriction."
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-budget": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "Are you on a low budget? (Y/N)"
+            ],
+            "condition": [
+                [
+                    "low_budget",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-budget",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "low_budget": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "get-budget_DETDUP_set-budget-EQ-low",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "low_budget": {
+                                "value": false,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "get-budget_DETDUP_set-budget-EQ-high",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-budget_DETDUP_set-budget-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "check-allergies-2": {
+            "type": "system",
+            "condition": [
+                [
+                    "cuisine",
+                    "Known"
+                ],
+                [
+                    "have_allergy",
+                    true
+                ],
+                [
+                    "food_restriction",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "food_restriction-value-dairy-free",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "check-conflicts",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "conflict": {
+                                "known": true,
+                                "value": true,
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "check-allergies-2_DETDUP_check-conflicts-EQ-validate-combos",
+                        "intent": null,
+                        "assignments": {
+                            "$conflict": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "reset-preferences": {
+            "type": "system",
+            "condition": [
+                [
+                    "conflict",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "have_allergy": {
+                            "value": null,
+                            "known": false
+                        },
+                        "food_restriction": {
+                            "value": null,
+                            "known": false
+                        },
+                        "cuisine": {
+                            "value": null,
+                            "known": false
+                        },
+                        "name": "reset-preferences_DETDUP_reset-EQ-reset-values",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            },
+            "response_variants": [
+                "Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences."
+            ]
+        },
+        "set-restaurant-mexican": {
+            "type": "dialogue",
+            "message_variants": [
+                "Chosen restaurant has been logged as Guac Grill."
+            ],
+            "condition": [
+                [
+                    "cuisine",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "restaurant": {
+                                "value": "Guac Grill",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "name": "set-restaurant-mexican_DETDUP_set-EQ-valid",
+                        "intent": null,
+                        "assignments": {
+                            "$restaurant": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "set-restaurant-mexican_DETDUP_set-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "set-restaurant-italian": {
+            "type": "dialogue",
+            "message_variants": [
+                "Chosen restaurant has been logged as Alfredo's Pizza Cafe."
+            ],
+            "condition": [
+                [
+                    "cuisine",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "restaurant": {
+                                "value": "Alfredo's Pizza Cafe",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "name": "set-restaurant-italian_DETDUP_set-EQ-valid",
+                        "intent": null,
+                        "assignments": {
+                            "$restaurant": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "set-restaurant-italian_DETDUP_set-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "set-restaurant-chinese": {
+            "type": "dialogue",
+            "message_variants": [
+                "Chosen restaurant has been logged as Mandarin."
+            ],
+            "condition": [
+                [
+                    "cuisine",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "restaurant": {
+                                "value": "Mandarin",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "name": "set-restaurant-chinese_DETDUP_set-EQ-valid",
+                        "intent": null,
+                        "assignments": {
+                            "$restaurant": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "set-restaurant-chinese_DETDUP_set-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "set-restaurant-dessert": {
+            "type": "dialogue",
+            "message_variants": [
+                "Chosen restaurant has been logged as Geneva Crepes."
+            ],
+            "condition": [
+                [
+                    "cuisine",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "restaurant": {
+                                "value": "Geneva Crepes",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "name": "set-restaurant-dessert_DETDUP_set-EQ-valid",
+                        "intent": null,
+                        "assignments": {
+                            "$restaurant": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "set-restaurant-dessert_DETDUP_set-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "complete": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "restaurant",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "finish",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "complete_DETDUP_finish-EQ-finish",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "complete_DETDUP_finish-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "check-allergies-1-or-1": {
+            "type": "system",
+            "condition": [
+                [
+                    "have_allergy",
+                    true
+                ],
+                [
+                    "food_restriction",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "cuisine-value-mexican",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "check-conflicts",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "conflict": {
+                                "known": true,
+                                "value": true,
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "check-allergies-1-or-1_DETDUP_check-conflicts-EQ-validate-combos",
+                        "intent": null,
+                        "assignments": {
+                            "$conflict": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "check-allergies-1-or-2": {
+            "type": "system",
+            "condition": [
+                [
+                    "have_allergy",
+                    true
+                ],
+                [
+                    "food_restriction",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "cuisine-value-italian",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "check-conflicts",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "conflict": {
+                                "known": true,
+                                "value": true,
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "check-allergies-1-or-2_DETDUP_check-conflicts-EQ-validate-combos",
+                        "intent": null,
+                        "assignments": {
+                            "$conflict": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "set-food_restriction": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "food_restriction",
+                    "Known"
+                ],
+                [
+                    "food_restriction-value-dairy-free",
+                    false
+                ],
+                [
+                    "food_restriction-value-gluten-free",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-valid-value",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "food_restriction-value-dairy-free": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "food_restriction": "dairy-free"
+                        },
+                        "name": "set-food_restriction_DETDUP_set-valid-value-EQ-dairy-free",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "food_restriction-value-gluten-free": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "food_restriction": "gluten-free"
+                        },
+                        "name": "set-food_restriction_DETDUP_set-valid-value-EQ-gluten-free",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "set-cuisine": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "cuisine",
+                    "Known"
+                ],
+                [
+                    "cuisine-value-mexican",
+                    false
+                ],
+                [
+                    "cuisine-value-italian",
+                    false
+                ],
+                [
+                    "cuisine-value-chinese",
+                    false
+                ],
+                [
+                    "cuisine-value-dessert",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-valid-value",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "cuisine-value-mexican": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": "mexican"
+                        },
+                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-mexican",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "cuisine-value-italian": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": "italian"
+                        },
+                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-italian",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "cuisine-value-chinese": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": "chinese"
+                        },
+                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-chinese",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "cuisine-value-dessert": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "cuisine": "dessert"
+                        },
+                        "name": "set-cuisine_DETDUP_set-valid-value-EQ-dessert",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        }
+    }
+}

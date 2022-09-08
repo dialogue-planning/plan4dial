@@ -1,0 +1,647 @@
+{
+    "name": "order-pizza",
+    "context_variables": {
+        "base": {
+            "type": "enum",
+            "config": [
+                "tomato sauce",
+                "alfredo sauce",
+                "barbecue sauce",
+                "pesto",
+                "ranch"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "size": {
+            "type": "enum",
+            "config": [
+                "small",
+                "medium",
+                "large"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "toppings": {
+            "type": "enum",
+            "config": [
+                "pepperoni",
+                "mushrooms",
+                "hawaiian",
+                "olives",
+                "tomatoes",
+                "peppers"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "drink": {
+            "type": "enum",
+            "config": [
+                "coke",
+                "coffee"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "side": {
+            "type": "enum",
+            "config": [
+                "fries",
+                "salad"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "goal": {
+            "type": "flag",
+            "config": false
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "thank": {
+            "variables": [],
+            "utterances": [
+                "Thank you!",
+                "Thanks!",
+                "thank",
+                "thanks so much!",
+                "have a good day!",
+                "have a good night!",
+                "thx",
+                "ty"
+            ]
+        },
+        "share_base": {
+            "variables": [
+                "$base"
+            ],
+            "utterances": [
+                "I want a pizza with a $base base",
+                "I would prefer a pizza with a $base base.",
+                "Do you have $base for a base?"
+            ]
+        },
+        "share_size": {
+            "variables": [
+                "$size"
+            ],
+            "utterances": [
+                "I want a $size pizza.",
+                "I would prefer a $size pizza.",
+                "Can I get a $size pizza?"
+            ]
+        },
+        "share_toppings": {
+            "variables": [
+                "$toppings"
+            ],
+            "utterances": [
+                "I want a pizza with $toppings",
+                "I would prefer a pizza with $toppings.",
+                "Do you have $toppings?",
+                "Can I get a pizza with $toppings?"
+            ]
+        },
+        "share_drink": {
+            "variables": [
+                "$drink"
+            ],
+            "utterances": [
+                "I want to drink $drink.",
+                "$drink with ice please!",
+                "Do you have $drink kind of drink?"
+            ]
+        },
+        "share_side": {
+            "variables": [
+                "$side"
+            ],
+            "utterances": [
+                "I want to have $side on the side.",
+                "$side on the side please!",
+                "Do you have $side available as a side option?"
+            ]
+        },
+        "fallback": {
+            "variables": [],
+            "utterances": []
+        }
+    },
+    "actions": {
+        "get-base": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What base do you want for your pizza?"
+            ],
+            "condition": [
+                [
+                    "base",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-base",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "base": {
+                                "value": "$base",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "intent": "share_base",
+                        "name": "get-base_DETDUP_set-base-EQ-valid",
+                        "assignments": {
+                            "$base": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-base_DETDUP_set-base-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "share_base": {
+                    "variables": [
+                        "$base"
+                    ],
+                    "utterances": [
+                        "I want a pizza with a $base base",
+                        "I would prefer a pizza with a $base base.",
+                        "Do you have $base for a base?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-toppings": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What toppings do you want for your pizza?"
+            ],
+            "condition": [
+                [
+                    "toppings",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-toppings",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "toppings": {
+                                "value": "$toppings",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "intent": "share_toppings",
+                        "name": "get-toppings_DETDUP_set-toppings-EQ-valid",
+                        "assignments": {
+                            "$toppings": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-toppings_DETDUP_set-toppings-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "share_toppings": {
+                    "variables": [
+                        "$toppings"
+                    ],
+                    "utterances": [
+                        "I want a pizza with $toppings",
+                        "I would prefer a pizza with $toppings.",
+                        "Do you have $toppings?",
+                        "Can I get a pizza with $toppings?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-size": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What size do you want your pizza to be?"
+            ],
+            "condition": [
+                [
+                    "size",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-size",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "size": {
+                                "value": "$size",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "intent": "share_size",
+                        "name": "get-size_DETDUP_set-size-EQ-valid",
+                        "assignments": {
+                            "$size": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-size_DETDUP_set-size-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "share_size": {
+                    "variables": [
+                        "$size"
+                    ],
+                    "utterances": [
+                        "I want a $size pizza.",
+                        "I would prefer a $size pizza.",
+                        "Can I get a $size pizza?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-drink": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What drink do you want with your order?"
+            ],
+            "condition": [
+                [
+                    "drink",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-drink",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "drink": {
+                                "value": "$drink",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "intent": "share_drink",
+                        "name": "get-drink_DETDUP_set-drink-EQ-valid",
+                        "assignments": {
+                            "$drink": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-drink_DETDUP_set-drink-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "share_drink": {
+                    "variables": [
+                        "$drink"
+                    ],
+                    "utterances": [
+                        "I want to drink $drink.",
+                        "$drink with ice please!",
+                        "Do you have $drink kind of drink?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-side": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What side do you want with your order?"
+            ],
+            "condition": [
+                [
+                    "side",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-side",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "side": {
+                                "value": "$side",
+                                "known": true,
+                                "certainty": "Known",
+                                "interpretation": "spel"
+                            }
+                        },
+                        "intent": "share_side",
+                        "name": "get-side_DETDUP_set-side-EQ-valid",
+                        "assignments": {
+                            "$side": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-side_DETDUP_set-side-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "share_side": {
+                    "variables": [
+                        "$side"
+                    ],
+                    "utterances": [
+                        "I want to have $side on the side.",
+                        "$side on the side please!",
+                        "Do you have $side available as a side option?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "complete": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "Ordering a pizza of size $size with $base as a base and $toppings as toppings, as well as a $drink and $side."
+            ],
+            "condition": [
+                [
+                    "base",
+                    "Known"
+                ],
+                [
+                    "size",
+                    "Known"
+                ],
+                [
+                    "toppings",
+                    "Known"
+                ],
+                [
+                    "drink",
+                    "Known"
+                ],
+                [
+                    "side",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "goal",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "thank",
+                        "name": "complete_DETDUP_goal-EQ-valid",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "complete_DETDUP_goal-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "I couldn't quite get that."
+            ],
+            "intents": {
+                "thank": {
+                    "variables": [],
+                    "utterances": [
+                        "Thank you!",
+                        "Thanks!",
+                        "thank",
+                        "thanks so much!",
+                        "have a good day!",
+                        "have a good night!",
+                        "thx",
+                        "ty"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        }
+    }
+}

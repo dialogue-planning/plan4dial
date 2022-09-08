@@ -1,0 +1,271 @@
+---
+name: order-pizza
+
+context_variables:
+  base:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      tomato sauce:
+        variations:
+          - tomatoe sauce
+      alfredo sauce:
+        variations:
+          - white sauce
+          - cream sauce
+      barbecue sauce:
+        variations:
+          - bbq sauce
+      pesto:
+        variations:
+          - green pesto
+      ranch:
+        variations:
+          - caesar sauce
+  size:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - small
+      - medium
+      - large
+  toppings:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      pepperoni:
+        variations:
+          - peperoni
+          - meat
+          - sausage
+      mushrooms:
+        variations:
+          - vegetable
+          - veggie
+          - musroom
+          - shroom
+      hawaiian:
+        variations:
+          - pineapple
+          - ham and pineapple
+          - sweet
+      olives:
+        variations:
+          - green olives
+          - black olives
+      tomatoes:
+        variations:
+          - tomatos
+      peppers:
+        variations:
+          - bell peppers
+          - green peppers
+          - red peppers
+  drink:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      coke:
+        variations:
+        - coke
+        - coca cola
+        - soda
+        - pop
+      coffee:
+        variations:
+        - caffeine
+        - decaf
+        - espresso
+  side:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      fries:
+        variations:
+        - french fries
+        - potato wedges
+        - crisps
+        - chips
+      salad:
+        variations:
+        - healthy side
+        - lettuce and tomatoes
+        - greek salad
+        - caesar salad
+  goal:
+    type: flag
+    init: false
+intents:
+  thank:
+    utterances:
+      - Thank you!
+      - Thanks!
+      - thank
+      - thanks so much!
+      - have a good day!
+      - have a good night!
+      - thx
+      - ty
+  share_base:
+    variables: 
+      - base 
+    utterances:
+      - I want a pizza with a $base base
+      - I would prefer a pizza with a $base base. 
+      - Do you have $base for a base?
+  share_size:
+    variables: 
+      - size 
+    utterances:
+      - I want a $size pizza.
+      - I would prefer a $size pizza. 
+      - Can I get a $size pizza?
+  share_toppings:
+    variables: 
+      - toppings 
+    utterances:
+      - I want a pizza with $toppings
+      - I would prefer a pizza with $toppings. 
+      - Do you have $toppings?
+      - Can I get a pizza with $toppings?
+  share_drink:
+    variables: 
+      - drink 
+    utterances:
+      - I want to drink $drink.
+      - $drink with ice please!
+      - Do you have $drink kind of drink?
+  share_side:
+    variables: 
+      - side 
+    utterances:
+      - I want to have $side on the side.
+      - $side on the side please!
+      - Do you have $side available as a side option?
+actions:
+  get-base:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What base do you want for your pizza?
+    condition:
+      base:
+        known: false
+    effect:
+      set-base:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                base:
+                  value: $base
+                  known: true
+              intent: share_base
+  get-toppings:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What toppings do you want for your pizza?
+    condition:
+      toppings:
+        known: false
+    effect:
+      set-toppings:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                toppings:
+                  value: $toppings
+                  known: true
+              intent: share_toppings
+  get-size:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What size do you want your pizza to be?
+    condition:
+      size:
+        known: false
+    effect:
+      set-size:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                size:
+                  value: $size
+                  known: true
+              intent: share_size
+  get-drink:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What drink do you want with your order?
+    condition:
+      drink:
+        known: false
+    effect:
+      set-drink:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                drink:
+                  value: $drink
+                  known: true
+              intent: share_drink
+  get-side:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What side do you want with your order?
+    condition:
+      side:
+        known: false
+    effect:
+      set-side:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                side:
+                  value: $side
+                  known: true
+              intent: share_side
+  complete:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - Ordering a pizza of size $size with $base as a base and $toppings as toppings, as well as a $drink and $side.
+    condition:
+      base:
+        known: true
+      size:
+        known: true
+      toppings:
+        known: true
+      drink:
+        known: true
+      side:
+        known: true
+    effect:
+      goal:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                goal:
+                  value: true
+              intent: thank
+...

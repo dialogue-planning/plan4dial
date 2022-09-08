@@ -1,0 +1,240 @@
+---
+version: "3.1"
+name: order-pizza
+
+context_variables:
+  order:
+    type: enum
+    known:
+      type: fflag
+      init: false
+    options:
+      cheese:
+        variations:
+        - chz
+        - cheez
+        - mozzarella
+        - fromage
+        - cheesy
+      pepperoni:
+        variations:
+        - peperoni
+        - meat
+        - sausage
+      mushroom:
+        variations:
+        - vegetable
+        - veggie
+        - musroom
+        - shroom
+      gluten free:
+        variations:
+        - healthy
+        - gluten-free
+        - gf
+      hawaiian:
+        variations:
+        - pineapple
+        - ham and pineapple
+        - sweet
+  drink:
+    type: enum
+    known:
+      type: fflag
+      init: false
+    options:
+      coke:
+        variations:
+        - coke
+        - coca cola
+        - soda
+        - pop
+      coffee:
+        variations:
+        - caffeine
+        - decaf
+        - espresso
+  side:
+    type: enum
+    known:
+      type: fflag
+      init: false
+    options:
+      fries:
+        variations:
+        - french fries
+        - potato wedges
+        - crisps
+        - chips
+      salad:
+        variations:
+        - healthy side
+        - lettuce and tomatoes
+        - greek salad
+        - caesar salad
+  goal:
+    type: flag
+    init: false
+
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  share_order:
+    variables: 
+      - order 
+    utterances:
+      - I want a $order pizza
+      - $order pizza please!
+      - Do you have $order pizza?
+  share_drink:
+    variables: 
+      - drink 
+    utterances:
+      - I want to drink $drink.
+      - $drink with ice please!
+      - Do you have $drink kind of drink?
+  share_side:
+    variables: 
+      - side 
+    utterances:
+      - I want to have $side on the side.
+      - $side on the side please!
+      - Do you have $side available as a side option?
+
+template-effects:
+    validate-response:
+      parameters:
+        - entities
+        - valid-intent
+        - valid-follow-up
+      oneof:
+        outcomes:
+          # received a valid value
+          valid:
+            updates:
+              (entity):
+                value: $(entity)
+                known: true
+            intent: (valid-intent)
+            follow_up: (valid-follow-up)
+          unclear:
+            updates:
+              (entity):
+                value: $(entity)
+                known: maybe
+            intent: unclear
+
+actions:
+  ask-order:
+    type: dialogue
+    subtype: dialogue disambiguation 
+    message_variants:
+      - What would you like to order?
+      - What type of pizza would you like?
+    fallback_message_variants:
+      - Sorry, that isn't a valid order.
+      - I didn't quite get your order. Can you tell me again?
+    condition:
+      order:
+        known: false
+    effect:
+      slot-fill:
+        entity: order
+        valid-intent: share_order
+        valid-follow-up: ask-drink
+    clarify:
+      entities: order
+      message_variants:
+      - Is your order $order?
+
+  ask-drink:
+    type: dialogue
+    subtype: dialogue disambiguation 
+    message_variants:
+      - What would you like to drink?
+      - What type of drink would you like?
+    fallback_message_variants:
+      - Sorry, that isn't a valid drink.
+      - I didn't quite get your drink. Can you tell me again?
+    condition:
+      order:
+        known: true
+      drink:
+        known: false
+    effect:
+      # slot-fill:
+      #   entity: drink
+      #   valid-intent: share_drink
+      validate-drink:
+        oneof:
+          outcomes:
+            # received a valid value
+            valid:
+              updates:
+                drink:
+                  value: $drink
+                  known: true
+                # goal:
+                #   value: true
+              intent: share_drink
+              response: Drink has been successfully logged.
+            unclear:
+              updates:
+                drink:
+                  value: $drink
+                  known: maybe
+              intent: unclear
+    clarify:
+      entities: drink
+      message_variants:
+      - Is your drink $drink?
+
+  ask-side:
+    type: dialogue
+    subtype: dialogue disambiguation 
+    message_variants:
+      - What side would you like to order?
+      - What type of side would you like?
+    fallback_message_variants:
+      - Sorry, that isn't a valid side.
+      - I didn't quite get your side. Can you tell me again?
+    condition:
+      order:
+        known: true
+      side:
+        known: false
+    effect:
+      validate-side:
+        oneof:
+          outcomes:
+            # received a valid value
+            valid:
+              updates:
+                side:
+                  value: $side
+                  known: true
+                goal:
+                  value: true
+              intent: share_side
+    clarify:
+      entities: side
+      message_variants:
+      - Is your side $side?
+...

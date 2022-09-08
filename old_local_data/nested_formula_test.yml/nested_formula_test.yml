@@ -1,0 +1,117 @@
+name: nested_formula_test
+
+context_variables:
+  cuisine:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - mexican
+      - italian
+      - chinese
+      - dessert
+  a:
+    type: flag
+    init: false
+  b:
+    type: flag
+    init: false
+  c:
+    type: flag
+    init: false
+  d:
+    type: flag
+    init: false
+  goal:
+    type: flag
+    init: false
+
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  share_cuisine:
+    variables:
+      - cuisine
+    utterances:
+      - I want to eat $cuisine.
+      - Do you have restaurants of type $cuisine?
+      - Are there any $cuisine restaurants in the area?
+
+actions:
+  get-cuisine:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+    fallback_message_variants:
+      - Sorry, that isn't a valid cuisine.
+    condition:
+      cuisine:
+        known: false
+    effect:
+      set-cuisine:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                cuisine:
+                  value: $cuisine
+                  known: true
+                b:
+                  value: true
+                d:
+                  value: true
+              intent: share_cuisine
+  test_or:
+    type: system
+    condition:
+      cuisine:
+        known: true
+        # [(italian \/ mexican) /\ (dessert \/ a)] \/ [(b \/ c) /\ (d)]
+      or:
+        - and:
+            - or:
+                - cuisine:
+                    value: italian
+                - cuisine:
+                    value: mexican
+            - or: 
+                - cuisine:
+                    value: dessert
+                - a:
+                    value: true
+        - and:
+            - or:
+                - b:
+                    value: true
+                - c:
+                    value: true
+            - or: 
+                - d:
+                    value: true
+    effect:
+      done:
+        oneof:
+          outcomes:
+            done:
+              updates:
+                goal:
+                  value: true

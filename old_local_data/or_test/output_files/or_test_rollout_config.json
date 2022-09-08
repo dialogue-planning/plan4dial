@@ -1,0 +1,170 @@
+{
+    "actions": {
+        "get-cuisine": {
+            "condition": [
+                "NegatedAtom have_cuisine()",
+                "NegatedAtom force-statement()"
+            ],
+            "effect": {
+                "get-cuisine_DETDUP_set-cuisine-EQ-valid": [
+                    "Atom have_cuisine()"
+                ],
+                "get-cuisine_DETDUP_set-cuisine-EQ-fallback": [
+                    "Atom force-statement()",
+                    "Atom have-message()"
+                ]
+            }
+        },
+        "test_and": {
+            "condition": [
+                "Atom have_cuisine()",
+                "Atom cuisine-value-dessert()",
+                "NegatedAtom force-statement()"
+            ],
+            "effect": {
+                "test_and_DETDUP_done-EQ-done": [
+                    "Atom test()"
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "condition": [
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "effect": {
+                "dialogue_statement_DETDUP_reset-EQ-lock": [
+                    "NegatedAtom have-message()",
+                    "NegatedAtom force-statement()"
+                ]
+            }
+        },
+        "test_or-or-1": {
+            "condition": [
+                "Atom cuisine-value-italian()",
+                "NegatedAtom force-statement()"
+            ],
+            "effect": {
+                "test_or-or-1_DETDUP_done-EQ-done": [
+                    "NegatedAtom cuisine-value-bar_food()",
+                    "NegatedAtom cuisine-value-italian()",
+                    "NegatedAtom cuisine-value-mexican()",
+                    "NegatedAtom cuisine-value-dessert()",
+                    "NegatedAtom have_cuisine()",
+                    "Atom goal()",
+                    "NegatedAtom cuisine-value-chinese()"
+                ]
+            }
+        },
+        "test_or-or-2": {
+            "condition": [
+                "Atom cuisine-value-mexican()",
+                "NegatedAtom force-statement()"
+            ],
+            "effect": {
+                "test_or-or-2_DETDUP_done-EQ-done": [
+                    "NegatedAtom cuisine-value-bar_food()",
+                    "NegatedAtom cuisine-value-italian()",
+                    "NegatedAtom cuisine-value-mexican()",
+                    "NegatedAtom cuisine-value-dessert()",
+                    "NegatedAtom have_cuisine()",
+                    "Atom goal()",
+                    "NegatedAtom cuisine-value-chinese()"
+                ]
+            }
+        },
+        "test_or-or-3": {
+            "condition": [
+                "Atom cuisine-value-chinese()",
+                "NegatedAtom force-statement()"
+            ],
+            "effect": {
+                "test_or-or-3_DETDUP_done-EQ-done": [
+                    "NegatedAtom cuisine-value-bar_food()",
+                    "NegatedAtom cuisine-value-italian()",
+                    "NegatedAtom cuisine-value-mexican()",
+                    "NegatedAtom cuisine-value-dessert()",
+                    "NegatedAtom have_cuisine()",
+                    "Atom goal()",
+                    "NegatedAtom cuisine-value-chinese()"
+                ]
+            }
+        },
+        "test_or-or-4": {
+            "condition": [
+                "Atom cuisine-value-dessert()",
+                "Atom test()",
+                "NegatedAtom force-statement()"
+            ],
+            "effect": {
+                "test_or-or-4_DETDUP_done-EQ-done": [
+                    "NegatedAtom cuisine-value-bar_food()",
+                    "NegatedAtom cuisine-value-italian()",
+                    "NegatedAtom cuisine-value-mexican()",
+                    "NegatedAtom cuisine-value-dessert()",
+                    "NegatedAtom have_cuisine()",
+                    "Atom goal()",
+                    "NegatedAtom cuisine-value-chinese()"
+                ]
+            }
+        },
+        "test_or-or-5": {
+            "condition": [
+                "Atom cuisine-value-bar_food()",
+                "NegatedAtom force-statement()"
+            ],
+            "effect": {
+                "test_or-or-5_DETDUP_done-EQ-done": [
+                    "NegatedAtom cuisine-value-bar_food()",
+                    "NegatedAtom cuisine-value-italian()",
+                    "NegatedAtom cuisine-value-mexican()",
+                    "NegatedAtom cuisine-value-dessert()",
+                    "NegatedAtom have_cuisine()",
+                    "Atom goal()",
+                    "NegatedAtom cuisine-value-chinese()"
+                ]
+            }
+        },
+        "set-cuisine": {
+            "condition": [
+                "NegatedAtom cuisine-value-bar_food()",
+                "NegatedAtom cuisine-value-italian()",
+                "NegatedAtom cuisine-value-mexican()",
+                "NegatedAtom cuisine-value-dessert()",
+                "Atom have_cuisine()",
+                "NegatedAtom cuisine-value-chinese()"
+            ],
+            "effect": {
+                "set-cuisine_DETDUP_set-valid-value-EQ-mexican": [
+                    "Atom cuisine-value-mexican()"
+                ],
+                "set-cuisine_DETDUP_set-valid-value-EQ-italian": [
+                    "Atom cuisine-value-italian()"
+                ],
+                "set-cuisine_DETDUP_set-valid-value-EQ-chinese": [
+                    "Atom cuisine-value-chinese()"
+                ],
+                "set-cuisine_DETDUP_set-valid-value-EQ-dessert": [
+                    "Atom cuisine-value-dessert()"
+                ],
+                "set-cuisine_DETDUP_set-valid-value-EQ-bar_food": [
+                    "Atom cuisine-value-bar_food()"
+                ]
+            }
+        }
+    },
+    "initial_state": [
+        "NegatedAtom cuisine-value-bar_food()",
+        "NegatedAtom cuisine-value-italian()",
+        "NegatedAtom cuisine-value-mexican()",
+        "NegatedAtom cuisine-value-dessert()",
+        "NegatedAtom goal()",
+        "NegatedAtom have_goal()",
+        "NegatedAtom have_restaurant()",
+        "NegatedAtom have_cuisine()",
+        "NegatedAtom test()",
+        "NegatedAtom have-message()",
+        "NegatedAtom cuisine-value-chinese()",
+        "NegatedAtom force-statement()"
+    ]
+}
