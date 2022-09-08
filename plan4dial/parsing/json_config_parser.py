@@ -214,75 +214,11 @@ def instantiate_effects_add_fallbacks(loaded_yaml):
                         "I couldn't quite get that.",
                     ]
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
-            if "template-effects" in loaded_yaml:
-                if eff in loaded_yaml["template-effects"]:
-                    # for ease in parsing
-                    eff_config = {f"({key})": val for key, val in eff_config.items()}
-                    template_eff = deepcopy(loaded_yaml["template-effects"][eff])
-                    parameters = {f"({p})" for p in template_eff["parameters"]}
-                    del template_eff["parameters"]
-                    for option in template_eff:
-                        outcomes = template_eff[option]["outcomes"]
-                        instantiated_outcomes = {}
-                        for out, out_config in outcomes.items():
-                            updates = (
-                                out_config["updates"]
-                                if "updates" in out_config
-                                else None
-                            )
-                            if updates:
-                                new_updates = {}
-                                for update, update_config in updates.items():
-                                    if update in eff_config:
-                                        new_updates[eff_config[update]] = template_eff[
-                                            option
-                                        ]["outcomes"][out]["updates"][update]
-                                        update = eff_config[update]
-                                    for key, val in update_config.items():
-                                        check_val = (
-                                            val[1:]
-                                            if type(val) == str and val[0] == "$"
-                                            else val
-                                        )
-                                        if check_val in eff_config:
-                                            new_updates[update][
-                                                key
-                                            ] = check_val.replace(
-                                                check_val,
-                                                eff_config[check_val]
-                                                if check_val == val
-                                                else f"${eff_config[check_val]}",
-                                            )
-                                instantiated_outcomes[out] = {"updates": new_updates}
-                            if "intent" in out_config:
-                                if out_config["intent"] not in parameters:
-                                    instantiated_outcomes[out]["intent"] = out_config[
-                                        "intent"
-                                    ]
-                                elif out_config["intent"] in eff_config:
-                                    instantiated_outcomes[out]["intent"] = eff_config[
-                                        out_config["intent"]
-                                    ]
-                                else:
-                                    instantiated_outcomes[out]["intent"] = "fallback"
-                            else:
-                                instantiated_outcomes[out]["intent"] = "fallback"
-                            if "follow_up" in out_config:
-                                if out_config["follow_up"] in eff_config:
-                                    instantiated_outcomes[out][
-                                        "follow_up"
-                                    ] = eff_config[out_config["follow_up"]]
-                        if fallback:
-                            instantiated_outcomes["fallback"] = configure_fallback()
-                        processed[act]["effect"][eff] = {
-                            option: {"outcomes": instantiated_outcomes}
-                        }
-            else:
-                if fallback:
-                    for option in eff_config:
-                        processed[act]["effect"][eff][option]["outcomes"][
-                            "fallback"
-                        ] = configure_fallback()
+            if fallback:
+                for option in eff_config:
+                    processed[act]["effect"][eff][option]["outcomes"][
+                        "fallback"
+                    ] = configure_fallback()
     loaded_yaml["actions"] = processed
 
 
@@ -552,6 +488,4 @@ def convert_yaml(filename: str):
     convert_ctx_var(loaded_yaml)
     convert_intents(loaded_yaml)
     convert_actions(loaded_yaml)
-    if "template-effects" in loaded_yaml:
-        del loaded_yaml["template-effects"]
     return loaded_yaml
