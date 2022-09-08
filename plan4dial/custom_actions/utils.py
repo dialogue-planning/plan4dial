@@ -145,4 +145,4 @@ def update_config_clarification(
         additional_updates,
     )
     loaded_yaml["actions"].update(new_actions)
-    loaded_yaml["context-variables"].update(new_ctx_vars)
+    loaded_yaml["context_variables"].update(new_ctx_vars)

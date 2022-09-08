@@ -11,9 +11,9 @@ def convert_to_hovor_fluents(fluents: List[str]):
     return fluents
 
 def rollout_config(configuration):
-    actions = {act: {"condition": convert_to_hovor_fluents(list(get_precond_fluents(configuration["context-variables"], act_cfg["condition"]))), "effect": {}} for act, act_cfg in configuration["actions"].items()}
+    actions = {act: {"condition": convert_to_hovor_fluents(list(get_precond_fluents(configuration["context_variables"], act_cfg["condition"]))), "effect": {}} for act, act_cfg in configuration["actions"].items()}
     for act, act_cfg in configuration["actions"].items():
         for out in act_cfg["effect"]["outcomes"]:
             if "updates" in out:
-                actions[act]["effect"][out["name"]] = convert_to_hovor_fluents(list(get_update_fluents(configuration["context-variables"], out["updates"])))
-    return {"actions": actions, "initial_state": convert_to_hovor_fluents(list(parse_init(configuration["context-variables"])[1]))} 
+                actions[act]["effect"][out["name"]] = convert_to_hovor_fluents(list(get_update_fluents(configuration["context_variables"], out["updates"])))
+    return {"actions": actions, "initial_state": convert_to_hovor_fluents(list(parse_init(configuration["context_variables"])[1]))} 

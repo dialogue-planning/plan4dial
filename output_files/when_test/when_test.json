@@ -1,6 +1,6 @@
 {
     "name": "day-planner",
-    "context-variables": {
+    "context_variables": {
         "cuisine": {
             "type": "enum",
             "config": [

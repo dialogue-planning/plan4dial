@@ -19,7 +19,7 @@ def make_nlu_file(filename: str):
         if "variables" in intent_cfg:
             variables = intent_cfg["variables"]
             for variable in variables:
-                ctx_var = loaded_yaml["context-variables"][variable]
+                ctx_var = loaded_yaml["context_variables"][variable]
                 variations[variable] = []
                 if "examples" in ctx_var:
                     for ex in ctx_var["examples"]:

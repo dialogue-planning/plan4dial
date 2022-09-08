@@ -89,7 +89,7 @@ def convert_to_DNF(condition: Dict):
 
 def configure_value_setter(loaded_yaml, ctx_var):
     processed = deepcopy(loaded_yaml["actions"])
-    ctx_var_cfg = loaded_yaml["context-variables"][ctx_var]
+    ctx_var_cfg = loaded_yaml["context_variables"][ctx_var]
     var_options = (
         list(ctx_var_cfg["options"].keys())
         if type(ctx_var_cfg["options"]) == dict
@@ -98,7 +98,7 @@ def configure_value_setter(loaded_yaml, ctx_var):
 
     for v in var_options:
         option_value_name = f"{ctx_var}-value-{v.replace(' ', '_')}"
-        loaded_yaml["context-variables"][option_value_name] = {
+        loaded_yaml["context_variables"][option_value_name] = {
             "type": "flag",
             "init": False,
         }
@@ -171,11 +171,11 @@ def base_setup(loaded_yaml):
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
     loaded_yaml["intents"]["utter_dialogue_statement"] = {"utterances": [], "variables": []}
     loaded_yaml["actions"]["dialogue_statement"] = configure_dialogue_statement()
-    loaded_yaml["context-variables"]["have-message"] = {
+    loaded_yaml["context_variables"]["have-message"] = {
         "type": "flag",
         "init": False,
     }
-    loaded_yaml["context-variables"]["force-statement"] = {
+    loaded_yaml["context_variables"]["force-statement"] = {
         "type": "flag",
         "init": False,
     }
@@ -303,10 +303,10 @@ def instantiate_advanced_custom_actions(loaded_yaml):
 
 
 def convert_ctx_var(loaded_yaml):
-    processed = deepcopy(loaded_yaml["context-variables"])
+    processed = deepcopy(loaded_yaml["context_variables"])
     # convert context variables
-    processed = {var: {} for var in loaded_yaml["context-variables"]}
-    for ctx_var, cfg in loaded_yaml["context-variables"].items():
+    processed = {var: {} for var in loaded_yaml["context_variables"]}
+    for ctx_var, cfg in loaded_yaml["context_variables"].items():
         json_ctx_var = {}
         json_ctx_var["type"] = cfg["type"]
         if cfg["type"] == "enum":
@@ -328,7 +328,7 @@ def convert_ctx_var(loaded_yaml):
         if "known" in cfg:
             json_ctx_var["known"] = cfg["known"]
         processed[ctx_var] = json_ctx_var
-    loaded_yaml["context-variables"] = processed
+    loaded_yaml["context_variables"] = processed
 
 
 def convert_intents(loaded_yaml):
@@ -391,7 +391,7 @@ def add_follow_ups(loaded_yaml):
                         processed[clarify_name]["effect"][eff][option]["outcomes"],
                         name,
                     )
-        loaded_yaml["context-variables"][name] = {"type": "flag", "init": False}
+        loaded_yaml["context_variables"][name] = {"type": "flag", "init": False}
     loaded_yaml["actions"] = with_forced
 
 
@@ -447,12 +447,12 @@ def add_value_setters(loaded_yaml):
             if "value" in cond_cfg:
                 option = cond_cfg["value"]
                 if type(option) == str:
-                    if option not in loaded_yaml["context-variables"][cond]["options"]:
+                    if option not in loaded_yaml["context_variables"][cond]["options"]:
                         raise AssertionError(
                             f'Cannot specify the value "{option}" for the context variable "{cond}".'
                         )
                     # if not done already, create new "value-setting" actions, conditions, etc.
-                    if f"{cond}-value-{option.replace(' ', '_')}" not in processed["context-variables"]:
+                    if f"{cond}-value-{option.replace(' ', '_')}" not in processed["context_variables"]:
                         configure_value_setter(processed, cond)
                         use_value_setters.add(cond)
                     # reset old condition to the refactored condition so we can specify value
@@ -469,9 +469,9 @@ def add_value_setters(loaded_yaml):
     # OF THE "VALUE" CONTEXT VARIABLES. I.E. CUISINE == NULL DOES NOT CHANGE THAT
     # CUISINE-VALUE-MEXICAN IS STILL TRUE. EASY SOLUTION: AUTO-CREATE A SYSTEM ACTION SUCH THAT
     # IF WE DO NOT KNOW THE CONTEXT VARIABLE AND ONE OF THE VALUES IS TRUE (OR), RESET ALL VALUES.
-    loaded_yaml["actions"], loaded_yaml["context-variables"] = (
+    loaded_yaml["actions"], loaded_yaml["context_variables"] = (
         processed["actions"],
-        processed["context-variables"],
+        processed["context_variables"],
     )
 
 

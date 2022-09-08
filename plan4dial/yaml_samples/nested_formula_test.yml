@@ -1,6 +1,6 @@
 name: nested_formula_test
 
-context-variables:
+context_variables:
   cuisine:
     type: enum
     known:

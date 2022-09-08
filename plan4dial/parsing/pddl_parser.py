@@ -119,7 +119,7 @@ def action_to_pddl(context_variables: Dict, act: str, act_config: Dict):
 def actions_to_pddl(loaded_yaml: Dict):
     return "\n".join(
         [
-            action_to_pddl(loaded_yaml["context-variables"], act, act_config)
+            action_to_pddl(loaded_yaml["context_variables"], act, act_config)
             for act, act_config in loaded_yaml["actions"].items()
         ]
     )
@@ -187,7 +187,7 @@ def parse_predicates(context_variables: Dict):
 def parse_to_pddl(loaded_yaml: Dict):
     predicates = fluents_to_pddl(
         fluents=parse_predicates(
-            loaded_yaml["context-variables"]),
+            loaded_yaml["context_variables"]),
         tabs=1,
         outer_brackets=True,
         name_wrap=":predicates",
@@ -196,7 +196,7 @@ def parse_to_pddl(loaded_yaml: Dict):
     domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = fluents_to_pddl(
-        fluents=parse_init(loaded_yaml["context-variables"])[0],
+        fluents=parse_init(loaded_yaml["context_variables"])[0],
         tabs=1,
         outer_brackets=True,
         name_wrap=":init",

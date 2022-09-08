@@ -1,7 +1,7 @@
 ---
 name: order-pizza
 
-context-variables:
+context_variables:
   base:
     type: enum
     known:

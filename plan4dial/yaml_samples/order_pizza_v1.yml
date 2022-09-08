@@ -11,7 +11,7 @@ name: order-pizza
 #       can set to T/F/M (maybe) init
 #   enum
 #   json
-context-variables:
+context_variables:
   # order:
   #   type: enum
   #   known:

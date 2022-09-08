@@ -1,6 +1,6 @@
 name: when_test
 
-context-variables:
+context_variables:
   cuisine:
     type: enum
     known:
