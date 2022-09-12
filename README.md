@@ -2,7 +2,8 @@
 
 Generates and trains a chatbot given a simple YAML configuration using automated planning for conversation navigation.
 
-## DOCS: https://qumulab.github.io/plan4dial/plan4dial.html
+## Documentation:
+https://qumulab.github.io/plan4dial/plan4dial.html
 
 ## Requirements
 **Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.**
