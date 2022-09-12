@@ -2,7 +2,7 @@
 
 Generates and trains a chatbot given a simple YAML configuration using automated planning for conversation navigation.
 
-## Documentation:
+## Documentation
 https://qumulab.github.io/plan4dial/plan4dial.html
 
 ## Requirements
