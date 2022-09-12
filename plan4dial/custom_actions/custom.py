@@ -8,7 +8,7 @@ def slot_fill(
     action_name: str,
     message_variants: List[str],
     entities: List[str],
-    clarify: Dict,
+    config_entities: Dict,
     fallback_message_variants: List[str],
     valid_intent: str,
     valid_follow_up: str = None,
@@ -103,7 +103,7 @@ def slot_fill(
             ] = next_out
     actions = {f"slot-fill__{action_name}": action}
     new_actions, new_ctx_vars = create_clarifications_single_slots(
-        action_name, action, entities, clarify, additional_updates
+        action_name, action, entities, config_entities, additional_updates
     )
     actions.update(new_actions)
     loaded_yaml["actions"].update(actions)

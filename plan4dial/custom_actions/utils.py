@@ -1,5 +1,4 @@
 from typing import List, Dict
-from copy import deepcopy
 
 
 def map_update(entity: str, certainty: str):
@@ -92,7 +91,7 @@ def create_clarifications_single_slots(
     original_act_name: str,
     original_act_config: Dict,
     entities: List[str],
-    clarify: Dict,
+    config_entities: Dict,
     additional_updates: Dict = None,
 ):
     new_actions = {}
@@ -114,16 +113,16 @@ def create_clarifications_single_slots(
                                 "updates"
                             ][f"allow_single_slot_{entity}"] = {"value": True}
                             new_actions.update(
-                                single_slot(entity, clarify[entity], additional_updates)
+                                single_slot(entity, config_entities[entity], additional_updates)
                             )
         new_actions[original_act_name] = original_act_config
     for entity in entities:
         # only create clarify actions if clarify messages were specified
-        if "clarify_message_variants" in clarify[entity]:
+        if "clarify_message_variants" in config_entities[entity]:
             new_actions.update(
                 clarify_act(
                     entity,
-                    clarify[entity]["clarify_message_variants"],
+                    config_entities[entity]["clarify_message_variants"],
                     f"allow_single_slot_{entity}" in new_ctx_vars,
                 )
             )
@@ -134,14 +133,14 @@ def update_config_clarification(
     loaded_yaml: Dict,
     original_act_name: str,
     entities: List[str],
-    clarify: Dict,
+    config_entities: Dict,
     additional_updates: Dict = None,
 ):
     new_actions, new_ctx_vars = create_clarifications_single_slots(
         original_act_name,
         loaded_yaml["actions"][original_act_name],
         entities,
-        clarify,
+        config_entities,
         additional_updates,
     )
     loaded_yaml["actions"].update(new_actions)

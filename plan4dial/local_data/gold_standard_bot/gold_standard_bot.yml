@@ -118,7 +118,7 @@ actions:
           - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
         fallback_message_variants:
           - Sorry, that isn't a valid cuisine. 
-        clarify:
+        config_entities:
           cuisine:
             fallback_message_variants:
               - Sorry, that still isn't a valid cuisine.
