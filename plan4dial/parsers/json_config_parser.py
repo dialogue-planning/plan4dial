@@ -11,10 +11,10 @@ def test():
     Retrieves rows pertaining to the given keys from the Table instance
     represented by table_handle.  String keys will be UTF-8 encoded.
 
-    ### Args:
+    Args:
 
-    **table_handle**: An open smalltable.Table instance.  
-    **key**: A sequence of strings representing the key of each table
+    `table_handle`: An open smalltable.Table instance.  
+    `key`: A sequence of strings representing the key of each table
           row to fetch. String keys will be UTF-8 encoded.  
         require_all_keys: If True only rows with values set for all keys will be
           returned.
