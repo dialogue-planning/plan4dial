@@ -1,3 +1,4 @@
+from typing import Union
 import yaml
 from copy import deepcopy
 from inspect import getmembers, isfunction
@@ -5,42 +6,11 @@ from plan4dial.custom_actions.utils import *
 import plan4dial.custom_actions.custom as custom
 from nnf import Or, And, Var, config
 
-def test():
-    """Fetches rows from a Smalltable.  
 
-    Retrieves rows pertaining to the given keys from the Table instance
-    represented by table_handle.  String keys will be UTF-8 encoded.
-
-    Args:
-
-    `table_handle`: An open smalltable.Table instance.  
-    `key`: A sequence of strings representing the key of each table
-          row to fetch. String keys will be UTF-8 encoded.  
-        require_all_keys: If True only rows with values set for all keys will be
-          returned.
-
-    Returns:  
-        A dict mapping keys to the corresponding table row data
-        fetched. Each row is represented as a tuple of strings. For
-        example:
-
-        {b'Serak': ('Rigel VII', 'Preparer'),
-         b'Zim': ('Irk', 'Invader'),
-         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
-
-        Returned keys are always bytes.  If a key from the keys argument is
-        missing from the dictionary, then that row was not found in the
-        table (and require_all_keys must have been False).
-
-    Raises:  
-        IOError: An error occurred accessing the smalltable.
-    """
-    pass
-
-def configure_fallback_true():
+def _configure_fallback_true():
     """
     Returns:  
-    - dict: Configuration where `have-message` and `force-statement` are set to True.
+    - (dict): Configuration where `have-message` and `force-statement` are set to True.
     """
     return {
         "have-message": {"value": True},
@@ -48,15 +18,15 @@ def configure_fallback_true():
     }
 
 
-def configure_fallback():
+def _configure_fallback():
     """
     Returns:  
-    - dict: Update configuration for a fallback outcome.
+    - (dict): Update configuration for a fallback outcome.
     """
-    return {"updates": configure_fallback_true(), "intent": "fallback"}
+    return {"updates": _configure_fallback_true(), "intent": "fallback"}
 
 
-def configure_dialogue_statement():
+def _configure_dialogue_statement():
     """Returns the base `dialogue_statement` action.
 
     Most often, the `dialogue_statement` action is triggered when a `fallback`
@@ -71,11 +41,11 @@ def configure_dialogue_statement():
     take user input into account and simply execute the single outcome.
 
     Returns:  
-    - dict: The full configuration for the `dialogue_statement` action.
+    - (dict): The full configuration for the `dialogue_statement` action.
     """
     return {
         "type": "dialogue",
-        "condition": configure_fallback_true(),
+        "condition": _configure_fallback_true(),
         "effect": {
             "reset": {
                 "oneof": {
@@ -99,47 +69,99 @@ def configure_dialogue_statement():
     }
 
 
-def configure_assignments(known):
+def _configure_assignments(known: Union[bool, str]):
+    """Converts the parameter `known` (which is either True, False, or "maybe")
+    to the equivalent Hovor assignment ("found", "didnt-find", and
+    "maybe-found" respectively). Used for outcomes.
+
+    Args:
+    - known (bool or str): The "known" status of a context variable in the YAML. 
+
+    Returns:
+    - (str): The Hovor assignment equivalent to the "known" parameter provided.
+    """
     return (
         ("found" if known else "didnt-find") if type(known) == bool else "maybe-found"
     )
 
 
-def configure_certainty(known):
+def _configure_certainty(known):
+    """Converts the parameter `known` (which is either True, False, or "maybe")
+    to the equivalent Hovor certainty ("Known", "Unknown", and
+    "Uncertain" respectively). Used for preconditions.
+
+    Args:
+    - known (bool or str): The "known" status of a context variable in the YAML. 
+
+    Returns:
+    - (str): The Hovor certainty equivalent to the "known" parameter provided.
+    """
     return ("Known" if known else "Unknown") if type(known) == bool else "Uncertain"
 
 
 @config(auto_simplify=True)
-def convert_to_formula(condition: Dict):
+def _convert_to_formula(condition: Dict):
+    """Converts an action condition from the YAML to a list of terms for an
+    NNF formula.
+
+    Args:
+    - condition (dict): An action condition from the YAML.
+
+    Returns:
+    - formula_terms (nnf.And` or `nnf.Or): An NNF formula.
+
+    TODO: Test extensively once arbitrary conversion to DNF becomes viable.
+    """
     formula_terms = []
+    # if we get passed a list, update formula_terms by the conversion of each
+    # element in the list
     if type(condition) == list:
         formula_terms.extend(
             [
                 formula
                 for nesting in condition
-                for formula in convert_to_formula(nesting)
+                for formula in _convert_to_formula(nesting)
             ]
         )
     else:
+        # otherwise, inspect the parameter further
         for connective, config in condition.items():
+            # if the key is not "and" or "or", then we know we're dealing with
+            # a context variable and value setting. represent these with Vars.
+            # NOTE: we may want to store the Var to dict mappings so we can
+            # reference them later when constructing new actions from the
+            # formula terms.
             if connective not in ["and", "or"]:
                 formula_terms.extend(
                     Var(f"({connective}-{base_key}-{base_value})")
                     for base_key, base_value in config.items()
                 )
             else:
+                # if we are dealing with an "and" or "or", nest the terms in
+                # the respective connective.
                 formula_terms.append(
-                    And(convert_to_formula(config))
+                    And(_convert_to_formula(config))
                     if connective == "and"
-                    else Or(convert_to_formula(config))
+                    else Or(_convert_to_formula(config))
                 )
     return formula_terms
 
 
 @config(auto_simplify=True)
-def convert_to_DNF(condition: Dict):
-    # mappings that will simplify formula creation
-    return (And(convert_to_formula(condition)).negate()).to_CNF().negate()
+def _convert_to_DNF(condition: Dict):
+    """Converts an action condition from the YAML to an NNF formula in 
+    Disjunctive Normal Form. Eventually, this would be used for auto-
+    generating equivalent actions based on arbritrary logical formulas.
+
+    NOTE: Will not be in use until issue #4 is resolved.
+
+    Args:
+    - condition (dict): An action condition from the YAML.
+
+    Returns:
+    - (nnf.And): The DNF formula that the action condition was converted to.
+    """
+    return (And(_convert_to_formula(condition)).negate()).to_CNF().negate()
 
 
 def configure_value_setter(loaded_yaml, ctx_var):
@@ -225,7 +247,7 @@ def base_setup(loaded_yaml):
     # set up the action, intent, and fluents needed for default fallback/unclear user input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
     loaded_yaml["intents"]["utter_dialogue_statement"] = {"utterances": [], "variables": []}
-    loaded_yaml["actions"]["dialogue_statement"] = configure_dialogue_statement()
+    loaded_yaml["actions"]["dialogue_statement"] = _configure_dialogue_statement()
     loaded_yaml["context_variables"]["have-message"] = {
         "type": "flag",
         "init": False,
@@ -273,7 +295,7 @@ def instantiate_effects_add_fallbacks(loaded_yaml):
                 for option in eff_config:
                     processed[act]["effect"][eff][option]["outcomes"][
                         "fallback"
-                    ] = configure_fallback()
+                    ] = _configure_fallback()
     loaded_yaml["actions"] = processed
 
 
@@ -351,7 +373,7 @@ def add_follow_ups(loaded_yaml):
                         next_outcome["updates"][f"forcing__{forced}"] = {"value": True}
                         forced_acts.append(forced)
                     if "response_variants" in next_outcome:
-                        next_outcome["updates"].update(configure_fallback_true())
+                        next_outcome["updates"].update(_configure_fallback_true())
                     processed[act]["effect"][eff][option]["outcomes"][
                         out
                     ] = next_outcome
@@ -505,10 +527,10 @@ def convert_actions(loaded_yaml):
                             if "known" in update_cfg:
                                 next_outcome["assignments"][
                                     f"${update_var}"
-                                ] = configure_assignments(update_cfg["known"])
+                                ] = _configure_assignments(update_cfg["known"])
                                 next_outcome["updates"][update_var][
                                     "certainty"
-                                ] = configure_certainty(update_cfg["known"])
+                                ] = _configure_certainty(update_cfg["known"])
                                 del next_outcome["updates"][update_var]["known"]
                             if "value" not in update_cfg:
                                  next_outcome["updates"][update_var]["value"] = None
