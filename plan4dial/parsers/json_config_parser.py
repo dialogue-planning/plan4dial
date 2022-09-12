@@ -9,9 +9,10 @@ def test():
     """Fetches rows from a Smalltable.  
 
     Retrieves rows pertaining to the given keys from the Table instance
-    represented by table_handle.  String keys will be UTF-8 encoded.  
+    represented by table_handle.  String keys will be UTF-8 encoded.
 
-    Args:  
+    ### Args:
+
         **table_handle**: An open smalltable.Table instance.  
         key: A sequence of strings representing the key of each table
           row to fetch. String keys will be UTF-8 encoded.  
