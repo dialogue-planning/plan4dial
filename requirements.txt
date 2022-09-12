@@ -2,3 +2,4 @@ pyyaml
 rasa
 spacy
 nnf
+pdoc
