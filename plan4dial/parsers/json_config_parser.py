@@ -7,6 +7,12 @@ from nnf import Or, And, Var, config
 
 
 def configure_fallback_true():
+    """Configures the update setting for outcomes that result in a fallback.
+
+    Returns:
+        Dict: Dict where `have-message` and `force-statement` are set to True
+              so that a fallback action is triggered when these updates are made.
+    """
     return {
         "have-message": {"value": True},
         "force-statement": {"value": True},
