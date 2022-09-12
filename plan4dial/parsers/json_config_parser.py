@@ -38,11 +38,9 @@ def test():
     pass
 
 def configure_fallback_true():
-    """Configures the update setting for outcomes that result in a fallback.
-
-    Returns:
-        Dict: Dict where `have-message` and `force-statement` are set to True
-              so that a fallback action is triggered when these updates are made.
+    """
+    Returns:  
+    - dict: Configuration where `have-message` and `force-statement` are set to True.
     """
     return {
         "have-message": {"value": True},
@@ -51,10 +49,30 @@ def configure_fallback_true():
 
 
 def configure_fallback():
+    """
+    Returns:  
+    - dict: Update configuration for a fallback outcome.
+    """
     return {"updates": configure_fallback_true(), "intent": "fallback"}
 
 
 def configure_dialogue_statement():
+    """Returns the base `dialogue_statement` action.
+
+    Most often, the `dialogue_statement` action is triggered when a `fallback`
+    outcome occurs; in this case, `dialogue_statement` updates its
+    `message_variants` to the appropriate `fallback_message_variants`.
+    Dialogue statements are also used for responses, in which case
+    `dialogue_statement` updates its `message_variants` to the appropriate
+    `response_variants`.
+
+    Note that the intent `utter_dialogue_statement` is a blank intent because
+    `message` actions (`dialogue` type actions with a single outcome) do not
+    take user input into account and simply execute the single outcome.
+
+    Returns:  
+    - dict: The full configuration for the `dialogue_statement` action.
+    """
     return {
         "type": "dialogue",
         "condition": configure_fallback_true(),
