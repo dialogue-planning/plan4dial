@@ -1,5 +1,4 @@
 .venv
 .vscode
 .rasa
-.github
 __pycache__
