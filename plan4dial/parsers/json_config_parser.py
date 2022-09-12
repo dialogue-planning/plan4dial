@@ -6,19 +6,19 @@ import plan4dial.custom_actions.custom as custom
 from nnf import Or, And, Var, config
 
 def test():
-    """Fetches rows from a Smalltable.
+    """Fetches rows from a Smalltable.  
 
     Retrieves rows pertaining to the given keys from the Table instance
-    represented by table_handle.  String keys will be UTF-8 encoded.
+    represented by table_handle.  String keys will be UTF-8 encoded.  
 
-    Args:
-        table_handle: An open smalltable.Table instance.
+    Args:  
+        table_handle: An open smalltable.Table instance.  
         keys: A sequence of strings representing the key of each table
-          row to fetch.  String keys will be UTF-8 encoded.
+          row to fetch.  String keys will be UTF-8 encoded.  
         require_all_keys: If True only rows with values set for all keys will be
-          returned.
+          returned.  
 
-    Returns:
+    Returns:  
         A dict mapping keys to the corresponding table row data
         fetched. Each row is represented as a tuple of strings. For
         example:
