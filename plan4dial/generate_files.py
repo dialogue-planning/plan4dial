@@ -4,7 +4,7 @@ import os
 import subprocess
 import spacy
 from pathlib import Path
-from plan4dial.parsers.json_config_parser import convert_yaml
+from plan4dial.parsers.json_config_parser import _convert_yaml
 from plan4dial.parsers.pddl_parser import parse_to_pddl
 from plan4dial.parsers.parse_for_rasa import make_nlu_file
 from plan4dial.parsers.pddl_for_rollout import rollout_config
@@ -19,16 +19,19 @@ def generate_files(
         os.makedirs(output_folder)
     # convert to hovor json config
     writer = open(f"{output_folder}/configuration_data.json", "w")
-    converted_json = convert_yaml(yaml_filename)
+    converted_json = _convert_yaml(yaml_filename)
     writer.write(json.dumps(converted_json, indent=4))
     # convert to PDDL
     domain, problem = parse_to_pddl(converted_json)
-    domain_str, problem_str = f"{output_folder}/domain.pddl", f"{output_folder}/problem.pddl"
+    domain_str, problem_str = (
+        f"{output_folder}/domain.pddl",
+        f"{output_folder}/problem.pddl",
+    )
     writer = open(domain_str, "w")
     writer.write(domain)
     writer = open(problem_str, "w")
     writer.write(problem)
-    
+
     # train rasa NLU model
     if train:
         writer = open(f"{output_folder}/nlu.yml", "w")
@@ -43,7 +46,7 @@ def generate_files(
             config=f"nlu_config.yml",
             nlu_data=f"{output_folder}/nlu.yml",
             output=f"{output_folder}",
-            fixed_model_name=f"nlu_model"
+            fixed_model_name=f"nlu_model",
         )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
     subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
@@ -69,5 +72,5 @@ if __name__ == "__main__":
         f"{dirname}/gold_standard_bot.yml",
         f"{dirname}/output_files",
         str((Path(__file__).parent.parent / "rbp").resolve()),
-        True
+        True,
     )

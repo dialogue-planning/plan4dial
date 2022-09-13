@@ -9,7 +9,7 @@ from nnf import Or, And, Var, config
 
 def _configure_fallback_true():
     """
-    Returns:  
+    Returns:
     - (dict): Configuration where `have-message` and `force-statement` are set to True.
     """
     return {
@@ -20,7 +20,7 @@ def _configure_fallback_true():
 
 def _configure_fallback():
     """
-    Returns:  
+    Returns:
     - (dict): Update configuration for a fallback outcome.
     """
     return {"updates": _configure_fallback_true(), "intent": "fallback"}
@@ -40,7 +40,7 @@ def _configure_dialogue_statement():
     `message` actions (`dialogue` type actions with a single outcome) do not
     take user input into account and simply execute the single outcome.
 
-    Returns:  
+    Returns:
     - (dict): The full configuration for the `dialogue_statement` action.
     """
     return {
@@ -75,7 +75,7 @@ def _configure_assignments(known: Union[bool, str]):
     "maybe-found" respectively). Used for outcomes.
 
     Args:
-    - known (bool or str): The "known" status of a context variable in the YAML. 
+    - known (bool or str): The "known" status of a context variable in the YAML.
 
     Returns:
     - (str): The Hovor assignment equivalent to the "known" parameter provided.
@@ -85,13 +85,13 @@ def _configure_assignments(known: Union[bool, str]):
     )
 
 
-def _configure_certainty(known):
+def _configure_certainty(known: Union[bool, str]):
     """Converts the parameter `known` (which is either True, False, or "maybe")
     to the equivalent Hovor certainty ("Known", "Unknown", and
     "Uncertain" respectively). Used for preconditions.
 
     Args:
-    - known (bool or str): The "known" status of a context variable in the YAML. 
+    - known (bool or str): The "known" status of a context variable in the YAML.
 
     Returns:
     - (str): The Hovor certainty equivalent to the "known" parameter provided.
@@ -149,7 +149,7 @@ def _convert_to_formula(condition: Dict):
 
 @config(auto_simplify=True)
 def _convert_to_DNF(condition: Dict):
-    """Converts an action condition from the YAML to an NNF formula in 
+    """Converts an action condition from the YAML to an NNF formula in
     Disjunctive Normal Form. Eventually, this would be used for auto-
     generating equivalent actions based on arbritrary logical formulas.
 
@@ -164,21 +164,71 @@ def _convert_to_DNF(condition: Dict):
     return (And(_convert_to_formula(condition)).negate()).to_CNF().negate()
 
 
-def configure_value_setter(loaded_yaml, ctx_var):
+def _configure_value_setter(loaded_yaml: Dict, ctx_var: str):
+    """Configures the actions in loaded_yaml to allow for value setting. This
+    allows values to be used in preconditions, i.e. cuisine: {value: "Mexican"}.
+
+    This is done by creating flag context variables that represent the value
+    of the context variable; i.e. "cuisine-value-Mexican". We need to create
+    flag representations so that value knowledge is reflected in the PDDL and
+    ultimately the generated tree/controller. This flag is what would be used
+    as a precondition to check the value of the context variable.
+
+    Obviously, the flag values can be set when the context variable becomes
+    known, and reset when the context variable becomes unknown.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    - ctx_var (str): The context variable referenced in value-dependent
+        preconditions.
+    """
     processed = deepcopy(loaded_yaml["actions"])
     ctx_var_cfg = loaded_yaml["context_variables"][ctx_var]
+    # possible values the context variable can be set to
     var_options = (
         list(ctx_var_cfg["options"].keys())
         if type(ctx_var_cfg["options"]) == dict
         else ctx_var_cfg["options"]
     )
-
+    # create flag context variables that represent the given ctx_var being set
+    # to all possible values; initialize all as False
     for v in var_options:
         option_value_name = f"{ctx_var}-value-{v.replace(' ', '_')}"
         loaded_yaml["context_variables"][option_value_name] = {
             "type": "flag",
             "init": False,
         }
+    # create a function that sets the relevant "value flag" context variables
+    # to true if the given context variable is known using context dependent
+    # determination
+    processed[f"set-{ctx_var}"] = {
+        "type": "system",
+        "subtype": "Context dependent determination",
+        "condition": {
+            **{ctx_var: {"known": True}},
+            **{
+                f"{ctx_var}-value-{v.replace(' ', '_')}": {"value": False}
+                for v in var_options
+            },
+        },
+        "effect": {
+            "set-valid-value": {
+                "oneof": {
+                    "outcomes": {
+                        v.replace(" ", "_"): {
+                            "updates": {
+                                f"{ctx_var}-value-{v.replace(' ', '_')}": {
+                                    "value": True
+                                },
+                            },
+                            "context": {ctx_var: {"value": v}},
+                        }
+                        for v in var_options
+                    }
+                }
+            }
+        },
+    }
     # whenever we lose knowledge of the context variable, reset all values
     for act in loaded_yaml["actions"]:
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
@@ -189,35 +239,17 @@ def configure_value_setter(loaded_yaml, ctx_var):
                             if ctx_var == update_var and "known" in update_cfg:
                                 if update_cfg["known"] == False:
                                     for v in var_options:
-                                        option_value_name = f"{ctx_var}-value-{v.replace(' ', '_')}"
-                                        processed[act]["effect"][eff][option]["outcomes"][out]["updates"][option_value_name] = {"value": False}
-    processed[f"set-{ctx_var}"] = {
-        "type": "system",
-        "subtype": "Context dependent determination",
-        "condition": {
-            **{ctx_var: {"known": True}},
-            **{f"{ctx_var}-value-{v.replace(' ', '_')}": {"value": False} for v in var_options},
-        },
-        "effect": {
-            "set-valid-value": {
-                "oneof": {
-                    "outcomes": {
-                        v.replace(' ', '_'): {
-                            "updates": {
-                                f"{ctx_var}-value-{v.replace(' ', '_')}": {"value": True},
-                            },
-                            "context": {ctx_var: {"value": v}},
-                        }
-                        for v in var_options
-                    }
-                }
-            }
-        },
-    }
+                                        processed[act]["effect"][eff][option][
+                                            "outcomes"
+                                        ][out]["updates"][
+                                            f"{ctx_var}-value-{v.replace(' ', '_')}"
+                                        ] = {
+                                            "value": False
+                                        }
     loaded_yaml["actions"] = processed
 
 
-def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
+def _reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
     # every outcome in the forced action other than the fallback/unclear will undo the force
     new_outcomes = {}
     reset_force = False
@@ -246,7 +278,10 @@ def reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
 def base_setup(loaded_yaml):
     # set up the action, intent, and fluents needed for default fallback/unclear user input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
-    loaded_yaml["intents"]["utter_dialogue_statement"] = {"utterances": [], "variables": []}
+    loaded_yaml["intents"]["utter_dialogue_statement"] = {
+        "utterances": [],
+        "variables": [],
+    }
     loaded_yaml["actions"]["dialogue_statement"] = _configure_dialogue_statement()
     loaded_yaml["context_variables"]["have-message"] = {
         "type": "flag",
@@ -365,8 +400,7 @@ def add_follow_ups(loaded_yaml):
     for act in loaded_yaml["actions"]:
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             for option in eff_config:
-                outcomes = eff_config[option]["outcomes"]
-                for out, out_config in outcomes.items():
+                for out, out_config in eff_config[option]["outcomes"].items():
                     next_outcome = deepcopy(out_config)
                     if "follow_up" in next_outcome:
                         forced = next_outcome["follow_up"]
@@ -389,7 +423,7 @@ def add_follow_ups(loaded_yaml):
             for option in eff_config:
                 with_forced[forced]["effect"][eff][option][
                     "outcomes"
-                ] = reset_force_in_outcomes(
+                ] = _reset_force_in_outcomes(
                     False, processed[forced]["effect"][eff][option]["outcomes"], name
                 )
         if clarify_name in processed:
@@ -399,7 +433,7 @@ def add_follow_ups(loaded_yaml):
                 for option in eff_config:
                     with_forced[clarify_name]["effect"][eff][option][
                         "outcomes"
-                    ] = reset_force_in_outcomes(
+                    ] = _reset_force_in_outcomes(
                         True,
                         processed[clarify_name]["effect"][eff][option]["outcomes"],
                         name,
@@ -427,9 +461,18 @@ def duplicate_for_or_condition(loaded_yaml):
                 del processed[act]
     loaded_yaml["actions"] = processed
 
+
 def duplicate_for_or_when_condition(loaded_yaml):
+    """Creates equivalent "when" expressions to those with an "or" condition by splitting
+    them up into separate conditions
+
+    NOTE: what is the difference between when conditions and "context" settings in updates again?!
+
+    Args:
+        loaded_yaml (_type_): _description_
+    """
     processed = deepcopy(loaded_yaml["actions"])
-    for act, act_cfg in loaded_yaml["actions"].items():
+    for act in loaded_yaml["actions"]:
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             for option in eff_config:
                 for out, out_config in eff_config[option]["outcomes"].items():
@@ -438,23 +481,39 @@ def duplicate_for_or_when_condition(loaded_yaml):
                             # for now, assume we only use "and" explicitly to stack "when" expressions
                             if update_var == "and":
                                 for when_expr in update_cfg:
-                                    for when_cond, when_cond_cfg in when_expr["when"]["condition"].items():
+                                    for when_cond, when_cond_cfg in when_expr["when"][
+                                        "condition"
+                                    ].items():
                                         if when_cond == "or":
                                             for or_cond in when_cond_cfg:
                                                 new_when = deepcopy(when_expr)
                                                 del new_when["when"]["condition"]["or"]
                                                 for k, v in or_cond.items():
                                                     new_when["when"]["condition"][k] = v
-                                                processed[act]["effect"][eff][option]["outcomes"][out]["updates"][update_var].append(new_when)
-                                    processed[act]["effect"][eff][option]["outcomes"][out]["updates"][update_var].remove(when_expr)
+                                                processed[act]["effect"][eff][option][
+                                                    "outcomes"
+                                                ][out]["updates"][update_var].append(
+                                                    new_when
+                                                )
+                                    processed[act]["effect"][eff][option]["outcomes"][
+                                        out
+                                    ]["updates"][update_var].remove(when_expr)
     loaded_yaml["actions"] = processed
 
 
-def add_value_setters(loaded_yaml):
+def _add_value_setters(loaded_yaml):
+    """Configures value setters when an action is contingent on the string value of a 
+    context variable. Resets the precondition of these actions to rely on the flag values
+    that represent the true value of the context variable.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+
+    Raises:
+    - AssertionError: Raised if the user tried to specify an invalid value for a context
+    variable in a precondition.
+    """
     processed = deepcopy(loaded_yaml)
-    use_value_setters = set()
-    # stores actions that need a separate action where their values are encoded in PDDL.
-    # necessary whenever an action is contingent on a variable being a certain value.
     for act, act_cfg in loaded_yaml["actions"].items():
         for cond, cond_cfg in act_cfg["condition"].items():
             if "value" in cond_cfg:
@@ -465,9 +524,11 @@ def add_value_setters(loaded_yaml):
                             f'Cannot specify the value "{option}" for the context variable "{cond}".'
                         )
                     # if not done already, create new "value-setting" actions, conditions, etc.
-                    if f"{cond}-value-{option.replace(' ', '_')}" not in processed["context_variables"]:
-                        configure_value_setter(processed, cond)
-                        use_value_setters.add(cond)
+                    if (
+                        f"{cond}-value-{option.replace(' ', '_')}"
+                        not in processed["context_variables"]
+                    ):
+                        _configure_value_setter(processed, cond)
                     # reset old condition to the refactored condition so we can specify value
                     # only delete the value portion (may still have "known")
                     del processed["actions"][act]["condition"][cond]["value"]
@@ -475,20 +536,22 @@ def add_value_setters(loaded_yaml):
                     if processed["actions"][act]["condition"][cond] == {}:
                         del processed["actions"][act]["condition"][cond]
                     # replace
-                    processed["actions"][act]["condition"][f"{cond}-value-{option.replace(' ', '_')}"] = {
-                        "value": True
-                    }
-    # NEED TO FIX ISSUE WHERE ASSIGNING A VARIABLE TO NULL DOES NOT RE-ASSIGN THE VALUES
-    # OF THE "VALUE" CONTEXT VARIABLES. I.E. CUISINE == NULL DOES NOT CHANGE THAT
-    # CUISINE-VALUE-MEXICAN IS STILL TRUE. EASY SOLUTION: AUTO-CREATE A SYSTEM ACTION SUCH THAT
-    # IF WE DO NOT KNOW THE CONTEXT VARIABLE AND ONE OF THE VALUES IS TRUE (OR), RESET ALL VALUES.
+                    processed["actions"][act]["condition"][
+                        f"{cond}-value-{option.replace(' ', '_')}"
+                    ] = {"value": True}
     loaded_yaml["actions"], loaded_yaml["context_variables"] = (
         processed["actions"],
         processed["context_variables"],
     )
 
 
-def convert_actions(loaded_yaml):
+def _convert_actions(loaded_yaml: Dict):
+    """Converts the actions from how they were formatted in the YAML to the
+    JSON configuration that Hovor requires.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     processed = deepcopy(loaded_yaml["actions"])
     for act in loaded_yaml["actions"]:
         # convert preconditions
@@ -505,17 +568,19 @@ def convert_actions(loaded_yaml):
                 elif cond_config_key == "value":
                     json_config_cond.append([cond, cond_config_val])
         processed[act]["condition"] = json_config_cond
+        # convert effects
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             converted_eff = deepcopy(eff_config)
             converted_eff["global-outcome-name"] = eff
             intents = []
             for option in eff_config:
                 converted_eff["type"] = option
-                outcomes = eff_config[option]["outcomes"]
                 outcomes_list = []
-                for out, out_config in outcomes.items():
+                for out, out_config in eff_config[option]["outcomes"].items():
                     next_outcome = deepcopy(out_config)
+                    # reformat name
                     next_outcome["name"] = f"{act}_DETDUP_{eff}-EQ-{out}"
+                    # use blank intent if no intent was specified
                     if "intent" not in out_config:
                         next_outcome["intent"] = None
                     else:
@@ -524,6 +589,8 @@ def convert_actions(loaded_yaml):
                     if "updates" in out_config:
                         for update_var, update_cfg in out_config["updates"].items():
                             next_outcome["updates"][update_var]["variable"] = update_var
+                            # set the assignments and certainty based on the "known" settings
+                            # that were updated
                             if "known" in update_cfg:
                                 next_outcome["assignments"][
                                     f"${update_var}"
@@ -532,8 +599,12 @@ def convert_actions(loaded_yaml):
                                     "certainty"
                                 ] = _configure_certainty(update_cfg["known"])
                                 del next_outcome["updates"][update_var]["known"]
+                            # set value to None if not specified (i.e. if just setting 
+                            # known: False)
                             if "value" not in update_cfg:
-                                 next_outcome["updates"][update_var]["value"] = None
+                                next_outcome["updates"][update_var]["value"] = None
+                            # JSON interpretations are handled in the most straightforward
+                            # way by Hovor (as opposed to spel, which requires a specific format)
                             next_outcome["updates"][update_var][
                                 "interpretation"
                             ] = "json"
@@ -541,9 +612,11 @@ def convert_actions(loaded_yaml):
                 converted_eff["outcomes"] = outcomes_list
                 del converted_eff[option]
                 processed[act]["effect"] = converted_eff
+        # add the intents in a separate section
         if intents:
             processed[act]["intents"] = {}
             for intent in intents:
+                # don't consider null or frozenset intents
                 if type(intent) == str:
                     if intent in loaded_yaml["intents"]:
                         processed[act]["intents"][intent] = loaded_yaml["intents"][
@@ -552,7 +625,18 @@ def convert_actions(loaded_yaml):
     loaded_yaml["actions"] = processed
 
 
-def convert_yaml(filename: str):
+def _convert_yaml(filename: str):
+    """Generates the JSON configuration required by Hovor from the provided
+    YAML file. First preprocesses the YAML, adding clarification actions,
+    follow-up actions, etc, then finally converts everything into Hovor
+    format.
+
+    Args:
+    - filename (str): the YAML file.
+
+    Returns:
+    - (dict): The JSON configuration required by Hovor.
+    """
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
     base_setup(loaded_yaml)
     instantiate_clarification_actions(loaded_yaml)
@@ -560,9 +644,9 @@ def convert_yaml(filename: str):
     instantiate_effects_add_fallbacks(loaded_yaml)
     add_follow_ups(loaded_yaml)
     duplicate_for_or_condition(loaded_yaml)
-    duplicate_for_or_when_condition(loaded_yaml)
-    add_value_setters(loaded_yaml)
+    _duplicate_for_or_when_condition(loaded_yaml)
+    _add_value_setters(loaded_yaml)
     convert_ctx_var(loaded_yaml)
     convert_intents(loaded_yaml)
-    convert_actions(loaded_yaml)
+    _convert_actions(loaded_yaml)
     return loaded_yaml

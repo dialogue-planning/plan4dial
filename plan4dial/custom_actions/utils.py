@@ -113,7 +113,9 @@ def create_clarifications_single_slots(
                                 "updates"
                             ][f"allow_single_slot_{entity}"] = {"value": True}
                             new_actions.update(
-                                single_slot(entity, config_entities[entity], additional_updates)
+                                single_slot(
+                                    entity, config_entities[entity], additional_updates
+                                )
                             )
         new_actions[original_act_name] = original_act_config
     for entity in entities:

@@ -47,7 +47,13 @@ def slot_fill(
             [
                 p
                 for p in itertools.product(
-                    [entity], (["found", "maybe-found", "didnt-find"] if loaded_yaml["context_variables"][entity]["known"]["type"] == "fflag" else ["found", "didnt-find"])
+                    [entity],
+                    (
+                        ["found", "maybe-found", "didnt-find"]
+                        if loaded_yaml["context_variables"][entity]["known"]["type"]
+                        == "fflag"
+                        else ["found", "didnt-find"]
+                    ),
                 )
             ]
         )
