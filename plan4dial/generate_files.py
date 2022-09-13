@@ -1,14 +1,13 @@
 import json
-import yaml
 import os
 import subprocess
-import spacy
+# import spacy
 from pathlib import Path
-from plan4dial.parsers.json_config_parser import _convert_yaml
-from plan4dial.parsers.pddl_parser import parse_to_pddl
-from plan4dial.parsers.parse_for_rasa import _make_nlu_file
-from plan4dial.parsers.pddl_for_rollout import rollout_config
-from rasa.model_training import train_nlu
+from parsers.json_config_parser import _convert_yaml
+from parsers.pddl_parser import _parse_to_pddl
+from parsers.parse_for_rasa import _make_nlu_file
+from parsers.pddl_for_rollout import rollout_config
+# from rasa.model_training import train_nlu
 
 
 def generate_files(
@@ -22,7 +21,7 @@ def generate_files(
     converted_json = _convert_yaml(yaml_filename)
     writer.write(json.dumps(converted_json, indent=4))
     # convert to PDDL
-    domain, problem = parse_to_pddl(converted_json)
+    domain, problem = _parse_to_pddl(converted_json)
     domain_str, problem_str = (
         f"{output_folder}/domain.pddl",
         f"{output_folder}/problem.pddl",
@@ -32,22 +31,22 @@ def generate_files(
     writer = open(problem_str, "w")
     writer.write(problem)
 
-    # train rasa NLU model
-    if train:
-        writer = open(f"{output_folder}/nlu.yml", "w")
-        # parse for rasa
-        yaml.dump(_make_nlu_file(converted_json), writer)
-        # download the spacy model if needed; wait until complete
-        try:
-            spacy.load("en_core_web_md")
-        except OSError:
-            subprocess.run(["python -m spacy download en_core_web_md"])
-        train_nlu(
-            config=f"nlu_config.yml",
-            nlu_data=f"{output_folder}/nlu.yml",
-            output=f"{output_folder}",
-            fixed_model_name=f"nlu_model",
-        )
+    # # train rasa NLU model
+    # if train:
+    #     writer = open(f"{output_folder}/nlu.yml", "w")
+    #     # parse for rasa
+    #     yaml.dump(_make_nlu_file(converted_json), writer)
+    #     # download the spacy model if needed; wait until complete
+    #     try:
+    #         spacy.load("en_core_web_md")
+    #     except OSError:
+    #         subprocess.run(["python -m spacy download en_core_web_md"])
+    #     train_nlu(
+    #         config=f"nlu_config.yml",
+    #         nlu_data=f"{output_folder}/nlu.yml",
+    #         output=f"{output_folder}",
+    #         fixed_model_name=f"nlu_model",
+    #     )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
     subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
     try:

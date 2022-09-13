@@ -258,7 +258,7 @@
             },
             "fallback_message_variants": [
                 "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
+                "Sorry, I didn't quite get that."
             ],
             "intents": {
                 "confirm": {

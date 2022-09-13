@@ -37,10 +37,10 @@ def _make_nlu_file(loaded_yaml: Dict) -> Dict:
     and entities.
 
     Args:
-    - loaded_yaml (dict): The loaded YAML configuration.
+    - loaded_yaml (Dict): The loaded YAML configuration.
 
     Returns:
-    - nlu (dict): The NLU configuration for Rasa.
+    - nlu (Dict): The NLU configuration for Rasa.
     """
     intents = loaded_yaml["intents"]
     nlu = {"nlu": []}

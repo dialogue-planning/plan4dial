@@ -1,15 +1,9 @@
-"""This module contains all the files necessary to convert from the HOVOR
-configuration to PDDL. This PDDL is later used to generate the controller/tree
-that determines how the conversation is navigated.
 
-Authors:
-- Rebecca De Venezia
-"""
 
 from plan4dial.parsers.pddl_parser import (
     get_precond_fluents,
     get_update_fluents,
-    parse_init,
+    _parse_init,
 )
 from typing import List
 
@@ -40,17 +34,16 @@ def rollout_config(configuration):
     }
     for act, act_cfg in configuration["actions"].items():
         for out in act_cfg["effect"]["outcomes"]:
-            if "updates" in out:
-                actions[act]["effect"][out["name"]] = convert_to_hovor_fluents(
-                    list(
-                        get_update_fluents(
-                            configuration["context_variables"], out["updates"]
-                        )
+            actions[act]["effect"][out["name"]] = convert_to_hovor_fluents(
+                list(
+                    get_update_fluents(
+                        configuration["context_variables"], out["updates"]
                     )
                 )
+            )
     return {
         "actions": actions,
         "initial_state": convert_to_hovor_fluents(
-            list(parse_init(configuration["context_variables"])[1])
+            list(_parse_init(configuration["context_variables"])[1])
         ),
     }
