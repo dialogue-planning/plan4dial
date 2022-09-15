@@ -7,7 +7,7 @@ import plan4dial.custom_actions.custom as custom
 from nnf import Or, And, Var, config
 
 
-def _configure_fallback_true():
+def _configure_force_message_true():
     """
     Returns:
     - (dict): Configuration where `have-message` and `force-statement` are set to True.
@@ -23,14 +23,14 @@ def _configure_fallback():
     Returns:
     - (dict): Update configuration for a fallback outcome.
     """
-    return {"updates": _configure_fallback_true(), "intent": "fallback"}
+    return {"updates": _configure_force_message_true(), "intent": "fallback"}
 
 
 def _configure_dialogue_statement():
     """Returns the base `dialogue_statement` action.
 
-    Most often, the `dialogue_statement` action is triggered when a `fallback`
-    outcome occurs; in this case, `dialogue_statement` updates its
+    Most often, the `dialogue_statement` action is triggered when a fallback
+    occurs; in this case, `dialogue_statement` updates its
     `message_variants` to the appropriate `fallback_message_variants`.
     Dialogue statements are also used for responses, in which case
     `dialogue_statement` updates its `message_variants` to the appropriate
@@ -45,7 +45,7 @@ def _configure_dialogue_statement():
     """
     return {
         "type": "dialogue",
-        "condition": _configure_fallback_true(),
+        "condition": _configure_force_message_true(),
         "effect": {
             "reset": {
                 "oneof": {
@@ -394,7 +394,16 @@ def convert_intents(loaded_yaml):
     loaded_yaml["intents"] = processed
 
 
-def add_follow_ups(loaded_yaml):
+def _add_follow_ups_and_responses(loaded_yaml):
+    """Configures follow up actions and responses where they were specified
+    in the YAML.
+
+    Follow ups are actions that are forced to take place after an outcome.
+    Responses are messages that the agent must utter after an outcome.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     processed = deepcopy(loaded_yaml["actions"])
     forced_acts = []
     for act in loaded_yaml["actions"]:
@@ -402,21 +411,26 @@ def add_follow_ups(loaded_yaml):
             for option in eff_config:
                 for out, out_config in eff_config[option]["outcomes"].items():
                     next_outcome = deepcopy(out_config)
+                    # if a follow up was specified, set the forcing__{action}
+                    # flag to True and keep track of which action was forced
                     if "follow_up" in next_outcome:
                         forced = next_outcome["follow_up"]
                         next_outcome["updates"][f"forcing__{forced}"] = {"value": True}
                         forced_acts.append(forced)
+                    # force a message if a response was indicated
                     if "response_variants" in next_outcome:
-                        next_outcome["updates"].update(_configure_fallback_true())
+                        next_outcome["updates"].update(_configure_force_message_true())
                     processed[act]["effect"][eff][option]["outcomes"][
                         out
                     ] = next_outcome
     with_forced = deepcopy(processed)
+    # iterate through all the actions that are going to be forced at some point
     for forced in forced_acts:
         name = f"forcing__{forced}"
         clarify_name = f"clarify__{forced}"
+        # iterate through all actions
         for act in processed:
-            # don't lock fallback/unclear so we can loop on a forced action if needed
+            # don't lock the fallback or the respective clarify action so we can clarify/fallback on a forced action if needed
             if act != forced and act != clarify_name and act != "dialogue_statement":
                 with_forced[act]["condition"][name] = {"value": False}
         for eff, eff_config in loaded_yaml["actions"][forced]["effect"].items():
@@ -442,13 +456,24 @@ def add_follow_ups(loaded_yaml):
     loaded_yaml["actions"] = with_forced
 
 
-def duplicate_for_or_condition(loaded_yaml):
+def _duplicate_for_or_condition(loaded_yaml):
+    """Creates equivalent actions to those with an "or" precondition by splitting
+    them up into separate actions. 
+
+    NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #4).  
+    Should not be deployed yet.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     processed = deepcopy(loaded_yaml["actions"])
     for act, act_cfg in loaded_yaml["actions"].items():
         for cond, cond_cfg in act_cfg["condition"].items():
             # currently only handles "or"s and "or"s of "ands" (when multiple conditions are listed under one bullet)
             if cond == "or":
                 idx = 1
+                # for each or condition, create a new action with that 
+                # condition and none of the other ones in the or clause
                 for or_cond in cond_cfg:
                     new_cond = deepcopy(act_cfg["condition"])
                     del new_cond["or"]
@@ -462,14 +487,15 @@ def duplicate_for_or_condition(loaded_yaml):
     loaded_yaml["actions"] = processed
 
 
-def duplicate_for_or_when_condition(loaded_yaml):
+def _duplicate_for_or_when_condition(loaded_yaml):
     """Creates equivalent "when" expressions to those with an "or" condition by splitting
-    them up into separate conditions
+    them up into separate conditions. 
 
-    NOTE: what is the difference between when conditions and "context" settings in updates again?!
+    NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #3 and #4).  
+    Should not be deployed yet.
 
     Args:
-        loaded_yaml (_type_): _description_
+    - loaded_yaml (dict): The loaded YAML configuration.
     """
     processed = deepcopy(loaded_yaml["actions"])
     for act in loaded_yaml["actions"]:
@@ -485,9 +511,11 @@ def duplicate_for_or_when_condition(loaded_yaml):
                                         "condition"
                                     ].items():
                                         if when_cond == "or":
+                                            # iterate through each "or" condition
                                             for or_cond in when_cond_cfg:
                                                 new_when = deepcopy(when_expr)
                                                 del new_when["when"]["condition"]["or"]
+                                                # create new expressions for each condition
                                                 for k, v in or_cond.items():
                                                     new_when["when"]["condition"][k] = v
                                                 processed[act]["effect"][eff][option][
@@ -642,9 +670,7 @@ def _convert_yaml(filename: str):
     instantiate_clarification_actions(loaded_yaml)
     instantiate_advanced_custom_actions(loaded_yaml)
     instantiate_effects_add_fallbacks(loaded_yaml)
-    add_follow_ups(loaded_yaml)
-    duplicate_for_or_condition(loaded_yaml)
-    _duplicate_for_or_when_condition(loaded_yaml)
+    _add_follow_ups_and_responses(loaded_yaml)
     _add_value_setters(loaded_yaml)
     convert_ctx_var(loaded_yaml)
     convert_intents(loaded_yaml)
