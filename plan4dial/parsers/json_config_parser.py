@@ -249,24 +249,14 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str):
     loaded_yaml["actions"] = processed
 
 
-def _reset_force_in_outcomes(clarify, prior_outcomes, forced_name):
-    # every outcome in the forced action other than the fallback/unclear will undo the force
+def reset_force_in_outcomes(prior_outcomes, forced_name):
+    # every outcome in the forced action other than the fallback will undo the force
     new_outcomes = {}
     reset_force = False
     for out, out_config in prior_outcomes.items():
         if "intent" in out_config:
-            intent = out_config["intent"]
-            if intent != "fallback":
-                if clarify:
-                    if intent != "deny":
-                        reset_force = True
-                else:
-                    if type(intent) == str:
-                        if "maybe" not in intent:
-                            reset_force = True
-                    else:
-                        if "maybe" not in intent.values():
-                            reset_force = True
+            if out_config["intent"] != "fallback":
+                reset_force = True
         else:
             reset_force = True
         if reset_force:
@@ -401,6 +391,13 @@ def _add_follow_ups_and_responses(loaded_yaml):
     Follow ups are actions that are forced to take place after an outcome.
     Responses are messages that the agent must utter after an outcome.
 
+    NOTE: As it stands, follow ups only force the action that you specify and 
+    disable all others. This means that for actions that, for example, lead into
+    clarifications, those clarifications will not be forced too. A more complex
+    configuration for robust follow_up functionality (as well as more
+    description of the issue) is detailed in #5, but this bare-bones
+    specification can be safely used in the meantime.
+
     Args:
     - loaded_yaml (dict): The loaded YAML configuration.
     """
@@ -426,33 +423,26 @@ def _add_follow_ups_and_responses(loaded_yaml):
     with_forced = deepcopy(processed)
     # iterate through all the actions that are going to be forced at some point
     for forced in forced_acts:
-        name = f"forcing__{forced}"
-        clarify_name = f"clarify__{forced}"
+        forcing_name = f"forcing__{forced}"
         # iterate through all actions
         for act in processed:
-            # don't lock the fallback or the respective clarify action so we can clarify/fallback on a forced action if needed
-            if act != forced and act != clarify_name and act != "dialogue_statement":
-                with_forced[act]["condition"][name] = {"value": False}
+            # don't lock the fallback so we can fallback on a forced action if needed
+            # don't lock the forced action itself, obviously
+            if act != forced and act != "dialogue_statement":
+                with_forced[act]["condition"][forcing_name] = {"value": False}
+        # for all actions that are being forced, any outcome that IS NOT a fallback 
+        # will end the force
         for eff, eff_config in loaded_yaml["actions"][forced]["effect"].items():
             for option in eff_config:
-                with_forced[forced]["effect"][eff][option][
-                    "outcomes"
-                ] = _reset_force_in_outcomes(
-                    False, processed[forced]["effect"][eff][option]["outcomes"], name
-                )
-        if clarify_name in processed:
-            for eff, eff_config in loaded_yaml["actions"][clarify_name][
-                "effect"
-            ].items():
-                for option in eff_config:
-                    with_forced[clarify_name]["effect"][eff][option][
-                        "outcomes"
-                    ] = _reset_force_in_outcomes(
-                        True,
-                        processed[clarify_name]["effect"][eff][option]["outcomes"],
-                        name,
-                    )
-        loaded_yaml["context_variables"][name] = {"type": "flag", "init": False}
+                for out, out_config in with_forced[forced]["effect"][eff][option]["outcomes"].items():
+                    if "intent" in out_config:
+                        if out_config["intent"] != "fallback":
+                            reset_force = True
+                    else:
+                        reset_force = True
+                    if reset_force:
+                        out_config["updates"][forcing_name] = {"value": False}
+        loaded_yaml["context_variables"][forcing_name] = {"type": "flag", "init": False}
     loaded_yaml["actions"] = with_forced
 
 
