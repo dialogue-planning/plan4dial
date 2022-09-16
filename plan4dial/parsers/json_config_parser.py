@@ -283,27 +283,6 @@ def base_setup(loaded_yaml):
     }
 
 
-def _instantiate_clarification_actions(loaded_yaml):
-    """Instantiate clarification action(s) whenever the "clarify" parameter is
-    specified for an action in the YAML.
-
-    Args:
-    - loaded_yaml (dict): The loaded YAML configuration.
-    """
-    processed = deepcopy(loaded_yaml)
-    for act, act_config in loaded_yaml["actions"].items():
-        if "clarify" in act_config:
-            # create clarifications/single slots as necessary
-            update_config_clarification(
-                processed,
-                act,
-                list(act_config["clarify"].keys()),
-                act_config["clarify"],
-            )
-    for key in processed:
-        loaded_yaml[key] = processed[key]
-
-
 def _add_fallbacks(loaded_yaml):
     """Ensure that non-fallback options can only run if a fallback did not just
     occur. Add fallback outcomes to actions as necessary.
