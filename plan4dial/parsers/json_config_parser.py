@@ -1,4 +1,5 @@
-from typing import Union
+from msilib.schema import Directory
+from typing import Union, Dict, List
 import yaml
 from copy import deepcopy
 from inspect import getmembers, isfunction
@@ -7,7 +8,7 @@ import plan4dial.custom_actions.custom as custom
 from nnf import Or, And, Var, config
 
 
-def _configure_force_message_true():
+def _configure_force_message_true() -> Dict:
     """
     Returns:
     - (dict): Configuration where `have-message` and `force-statement` are set to True.
@@ -18,7 +19,7 @@ def _configure_force_message_true():
     }
 
 
-def _configure_fallback():
+def _configure_fallback() -> Dict:
     """
     Returns:
     - (dict): Update configuration for a fallback outcome.
@@ -26,7 +27,7 @@ def _configure_fallback():
     return {"updates": _configure_force_message_true(), "intent": "fallback"}
 
 
-def _configure_dialogue_statement():
+def _configure_dialogue_statement() -> Dict:
     """Returns the base `dialogue_statement` action.
 
     Most often, the `dialogue_statement` action is triggered when a fallback
@@ -69,7 +70,7 @@ def _configure_dialogue_statement():
     }
 
 
-def _configure_assignments(known: Union[bool, str]):
+def _configure_assignments(known: Union[bool, str]) -> str:
     """Converts the parameter `known` (which is either True, False, or "maybe")
     to the equivalent Hovor assignment ("found", "didnt-find", and
     "maybe-found" respectively). Used for outcomes.
@@ -85,7 +86,7 @@ def _configure_assignments(known: Union[bool, str]):
     )
 
 
-def _configure_certainty(known: Union[bool, str]):
+def _configure_certainty(known: Union[bool, str]) -> str:
     """Converts the parameter `known` (which is either True, False, or "maybe")
     to the equivalent Hovor certainty ("Known", "Unknown", and
     "Uncertain" respectively). Used for preconditions.
@@ -100,7 +101,7 @@ def _configure_certainty(known: Union[bool, str]):
 
 
 @config(auto_simplify=True)
-def _convert_to_formula(condition: Dict):
+def _convert_to_formula(condition: Dict) -> Union[And, Or]:
     """Converts an action condition from the YAML to a list of terms for an
     NNF formula.
 
@@ -108,7 +109,7 @@ def _convert_to_formula(condition: Dict):
     - condition (dict): An action condition from the YAML.
 
     Returns:
-    - formula_terms (nnf.And` or `nnf.Or): An NNF formula.
+    - formula_terms (nnf.And or nnf.Or): An NNF formula.
 
     TODO: Test extensively once arbitrary conversion to DNF becomes viable.
     """
@@ -148,7 +149,7 @@ def _convert_to_formula(condition: Dict):
 
 
 @config(auto_simplify=True)
-def _convert_to_DNF(condition: Dict):
+def _convert_to_DNF(condition: Dict) -> And:
     """Converts an action condition from the YAML to an NNF formula in
     Disjunctive Normal Form. Eventually, this would be used for auto-
     generating equivalent actions based on arbritrary logical formulas.
@@ -164,7 +165,7 @@ def _convert_to_DNF(condition: Dict):
     return (And(_convert_to_formula(condition)).negate()).to_CNF().negate()
 
 
-def _configure_value_setter(loaded_yaml: Dict, ctx_var: str):
+def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
     """Configures the actions in loaded_yaml to allow for value setting. This
     allows values to be used in preconditions, i.e. cuisine: {value: "Mexican"}.
 
@@ -249,8 +250,22 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str):
     loaded_yaml["actions"] = processed
 
 
-def reset_force_in_outcomes(prior_outcomes, forced_name):
-    # every outcome in the forced action other than the fallback will undo the force
+def _reset_force_in_outcomes(prior_outcomes, forced_name) -> Dict:
+    """In an action that was forced by a `follow_up`, set the flag that's
+    forcing this action to False in any outcome that either 1) doesn't have
+    an intent, or 2) has a non-fallback intent.
+
+    # NOTE: will undergo refactoring eventually (see #5).
+
+    Args:
+    - prior_outcomes (dict): Outcomes of the forced action in question.
+    - forced_name (str): Name of the flag that is forcing this action
+    to be run.
+
+    Returns:
+    - new_outcomes (dict): The updated outcome where the "forced" flag is
+    reset appropriately.
+    """
     new_outcomes = {}
     reset_force = False
     for out, out_config in prior_outcomes.items():
@@ -265,7 +280,13 @@ def reset_force_in_outcomes(prior_outcomes, forced_name):
     return new_outcomes
 
 
-def base_setup(loaded_yaml):
+def _base_fallback_setup(loaded_yaml) -> None:
+    """Sets up the default intents, action, and context variables needed to
+    handle fallbacks. 
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     # set up the action, intent, and fluents needed for default fallback/unclear user input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
     loaded_yaml["intents"]["utter_dialogue_statement"] = {
@@ -283,7 +304,7 @@ def base_setup(loaded_yaml):
     }
 
 
-def _add_fallbacks(loaded_yaml):
+def _add_fallbacks(loaded_yaml) -> None:
     """Ensure that non-fallback options can only run if a fallback did not just
     occur. Add fallback outcomes to actions as necessary.
 
@@ -323,7 +344,7 @@ def _add_fallbacks(loaded_yaml):
     loaded_yaml["actions"] = processed
 
 
-def _instantiate_advanced_custom_actions(loaded_yaml):
+def _instantiate_advanced_custom_actions(loaded_yaml) -> None:
     """Instantiate custom actions.
 
     NOTE: The custom actions are responsible for adding the actions to the
@@ -353,7 +374,7 @@ def _instantiate_advanced_custom_actions(loaded_yaml):
         loaded_yaml[key] = processed[key]
 
 
-def _convert_ctx_var(loaded_yaml):
+def _convert_ctx_var(loaded_yaml) -> None:
     """Converts the context variables from how they were formatted in the YAML
     to the JSON configuration that Hovor requires.
 
@@ -391,7 +412,7 @@ def _convert_ctx_var(loaded_yaml):
     loaded_yaml["context_variables"] = processed
 
 
-def _convert_intents(loaded_yaml):
+def _convert_intents(loaded_yaml) -> None:
     """Converts the intents from how they were formatted in the YAML to the
     JSON configuration that Hovor requires.
 
@@ -412,7 +433,7 @@ def _convert_intents(loaded_yaml):
     loaded_yaml["intents"] = processed
 
 
-def _add_follow_ups_and_responses(loaded_yaml):
+def _add_follow_ups_and_responses(loaded_yaml) -> None:
     """Configures follow up actions and responses where they were specified
     in the YAML.
 
@@ -474,7 +495,7 @@ def _add_follow_ups_and_responses(loaded_yaml):
     loaded_yaml["actions"] = with_forced
 
 
-def _duplicate_for_or_condition(loaded_yaml):
+def _duplicate_for_or_condition(loaded_yaml) -> None:
     """Creates equivalent actions to those with an "or" precondition by splitting
     them up into separate actions. 
 
@@ -505,7 +526,7 @@ def _duplicate_for_or_condition(loaded_yaml):
     loaded_yaml["actions"] = processed
 
 
-def _duplicate_for_or_when_condition(loaded_yaml):
+def _duplicate_for_or_when_condition(loaded_yaml) -> None:
     """Creates equivalent "when" expressions to those with an "or" condition by splitting
     them up into separate conditions. 
 
@@ -547,7 +568,7 @@ def _duplicate_for_or_when_condition(loaded_yaml):
     loaded_yaml["actions"] = processed
 
 
-def _add_value_setters(loaded_yaml):
+def _add_value_setters(loaded_yaml) -> None:
     """Configures value setters when an action is contingent on the string value of a 
     context variable. Resets the precondition of these actions to rely on the flag values
     that represent the true value of the context variable.
@@ -591,7 +612,7 @@ def _add_value_setters(loaded_yaml):
     )
 
 
-def _convert_actions(loaded_yaml: Dict):
+def _convert_actions(loaded_yaml: Dict) -> None:
     """Converts the actions from how they were formatted in the YAML to the
     JSON configuration that Hovor requires.
 
@@ -671,7 +692,7 @@ def _convert_actions(loaded_yaml: Dict):
     loaded_yaml["actions"] = processed
 
 
-def _convert_yaml(filename: str):
+def _convert_yaml(filename: str) -> Dict:
     """Generates the JSON configuration required by Hovor from the provided
     YAML file. First preprocesses the YAML, adding clarification actions,
     follow-up actions, etc, then finally converts everything into Hovor
@@ -684,13 +705,12 @@ def _convert_yaml(filename: str):
     - (dict): The JSON configuration required by Hovor.
     """
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
-    base_setup(loaded_yaml)
-    instantiate_clarification_actions(loaded_yaml)
-    instantiate_advanced_custom_actions(loaded_yaml)
-    instantiate_effects_add_fallbacks(loaded_yaml)
+    _base_fallback_setup(loaded_yaml)
+    _instantiate_advanced_custom_actions(loaded_yaml)
+    _add_fallbacks(loaded_yaml)
     _add_follow_ups_and_responses(loaded_yaml)
     _add_value_setters(loaded_yaml)
-    convert_ctx_var(loaded_yaml)
-    convert_intents(loaded_yaml)
+    _convert_ctx_var(loaded_yaml)
+    _convert_intents(loaded_yaml)
     _convert_actions(loaded_yaml)
     return loaded_yaml
