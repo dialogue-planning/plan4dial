@@ -283,10 +283,17 @@ def base_setup(loaded_yaml):
     }
 
 
-def instantiate_clarification_actions(loaded_yaml):
+def _instantiate_clarification_actions(loaded_yaml):
+    """Instantiate clarification action(s) whenever the "clarify" parameter is
+    specified for an action in the YAML.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     processed = deepcopy(loaded_yaml)
     for act, act_config in loaded_yaml["actions"].items():
         if "clarify" in act_config:
+            # create clarifications/single slots as necessary
             update_config_clarification(
                 processed,
                 act,
@@ -297,24 +304,37 @@ def instantiate_clarification_actions(loaded_yaml):
         loaded_yaml[key] = processed[key]
 
 
-def instantiate_effects_add_fallbacks(loaded_yaml):
+def _add_fallbacks(loaded_yaml):
+    """Ensure that non-fallback options can only run if a fallback did not just
+    occur. Add fallback outcomes to actions as necessary.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     processed = deepcopy(loaded_yaml["actions"])
-    # for all actions, instantiate template effect and add fallbacks if necessary
     for act, act_config in loaded_yaml["actions"].items():
         fallback = False
+        # for all non-fallback actions, make sure we can only execute that
+        # action if a fallback is not occurring
         if act != "dialogue_statement":
             processed[act]["condition"]["force-statement"] = {"value": False}
+            # check if either fallbacks are disabled or we have a system action
+            # (fallbacks are only needed for dialogue actions)
             fallback = (
                 not act_config["disable-fallback"]
                 if "disable-fallback" in act_config
                 else act_config["type"] != "system"
             )
+            # if this action has fallbacks enabled, and we haven't specified
+            # custom fallback message variants, add these as default
             if fallback:
                 if "fallback_message_variants" not in act_config:
                     processed[act]["fallback_message_variants"] = [
                         "Sorry, I couldn't understand that input.",
-                        "I couldn't quite get that.",
+                        "Sorry, I didn't quite get that.",
                     ]
+        # if this action has fallbacks enabled, add fallback outcomes 
+        # as necessary
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             if fallback:
                 for option in eff_config:
@@ -324,10 +344,23 @@ def instantiate_effects_add_fallbacks(loaded_yaml):
     loaded_yaml["actions"] = processed
 
 
-def instantiate_advanced_custom_actions(loaded_yaml):
+def _instantiate_advanced_custom_actions(loaded_yaml):
+    """Instantiate custom actions.
+
+    NOTE: The custom actions are responsible for adding the actions to the
+    configuration. This is because some custom actions add multiple actions,
+    make changes to the context variables, etc. As a general rule, the
+    loaded_yaml should always be the first parameter.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     processed = deepcopy(loaded_yaml)
+    # iterate through all actions
     for act, act_config in loaded_yaml["actions"].items():
+        # if we're dealing with a custom action
         if "advanced-custom" in act_config:
+            # find the action in the "custom.py" file and call it
             for custom_act in getmembers(custom, isfunction):
                 act_name, act_function = custom_act[0], custom_act[1]
                 if act_name == act_config["advanced-custom"]["custom-type"]:
@@ -335,12 +368,19 @@ def instantiate_advanced_custom_actions(loaded_yaml):
                         processed, **act_config["advanced-custom"]["parameters"]
                     )
                     break
+            # delete the custom action instantiation outline
             del processed["actions"][act]
     for key in processed:
         loaded_yaml[key] = processed[key]
 
 
-def convert_ctx_var(loaded_yaml):
+def _convert_ctx_var(loaded_yaml):
+    """Converts the context variables from how they were formatted in the YAML
+    to the JSON configuration that Hovor requires.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     processed = deepcopy(loaded_yaml["context_variables"])
     # convert context variables
     processed = {var: {} for var in loaded_yaml["context_variables"]}
@@ -348,13 +388,16 @@ def convert_ctx_var(loaded_yaml):
         json_ctx_var = {}
         json_ctx_var["type"] = cfg["type"]
         if cfg["type"] == "enum":
+            # don't include variations in the config
             if type(cfg["options"]) == dict:
                 json_ctx_var["config"] = list(cfg["options"].keys())
             else:
                 json_ctx_var["config"] = cfg["options"]
+        # for flags/fflags, the config is the initial setting
         elif cfg["type"] == "flag" or cfg["type"] == "fflag":
             json_ctx_var["config"] = cfg["init"]
         else:
+            # add other information to the config as necessary
             if "extraction" in cfg:
                 json_ctx_var["config"] = {"extraction": cfg["extraction"]}
                 if "method" in cfg:
@@ -369,12 +412,18 @@ def convert_ctx_var(loaded_yaml):
     loaded_yaml["context_variables"] = processed
 
 
-def convert_intents(loaded_yaml):
+def _convert_intents(loaded_yaml):
+    """Converts the intents from how they were formatted in the YAML to the
+    JSON configuration that Hovor requires.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
     processed = deepcopy(loaded_yaml["intents"])
-    # convert intents
     for intent, intent_cfg in loaded_yaml["intents"].items():
         cur_intent = {}
         cur_intent["variables"] = []
+        # add the $ identifier to all variables
         if "variables" in intent_cfg:
             cur_intent["variables"].extend(
                 [f"${var}" for var in intent_cfg["variables"]]
