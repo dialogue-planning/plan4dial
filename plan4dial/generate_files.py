@@ -6,7 +6,7 @@ import spacy
 from pathlib import Path
 from plan4dial.parsers.json_config_parser import _convert_yaml
 from plan4dial.parsers.pddl_parser import parse_to_pddl
-from plan4dial.parsers.parse_for_rasa import make_nlu_file
+from plan4dial.parsers.parse_for_rasa import _make_nlu_file
 from plan4dial.parsers.pddl_for_rollout import rollout_config
 from rasa.model_training import train_nlu
 
@@ -36,7 +36,7 @@ def generate_files(
     if train:
         writer = open(f"{output_folder}/nlu.yml", "w")
         # parse for rasa
-        yaml.dump(make_nlu_file(yaml_filename), writer)
+        yaml.dump(_make_nlu_file(converted_json), writer)
         # download the spacy model if needed; wait until complete
         try:
             spacy.load("en_core_web_md")

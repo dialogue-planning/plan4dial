@@ -1,3 +1,11 @@
+"""This module contains all the files necessary to convert from the HOVOR
+configuration to PDDL. This PDDL is later used to generate the controller/tree
+that determines how the conversation is navigated.
+
+Authors:
+- Rebecca De Venezia
+"""
+
 from plan4dial.parsers.pddl_parser import (
     get_precond_fluents,
     get_update_fluents,

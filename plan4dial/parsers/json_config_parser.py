@@ -1,5 +1,11 @@
-from msilib.schema import Directory
-from typing import Union, Dict, List
+"""This module contains all the base functions required to convert a YAML 
+configuration to the JSON configuration required by Hovor.
+
+Authors:
+- Rebecca De Venezia
+"""
+
+from typing import Union, Dict
 import yaml
 from copy import deepcopy
 from inspect import getmembers, isfunction
@@ -250,36 +256,6 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
     loaded_yaml["actions"] = processed
 
 
-def _reset_force_in_outcomes(prior_outcomes, forced_name) -> Dict:
-    """In an action that was forced by a `follow_up`, set the flag that's
-    forcing this action to False in any outcome that either 1) doesn't have
-    an intent, or 2) has a non-fallback intent.
-
-    # NOTE: will undergo refactoring eventually (see #5).
-
-    Args:
-    - prior_outcomes (dict): Outcomes of the forced action in question.
-    - forced_name (str): Name of the flag that is forcing this action
-    to be run.
-
-    Returns:
-    - new_outcomes (dict): The updated outcome where the "forced" flag is
-    reset appropriately.
-    """
-    new_outcomes = {}
-    reset_force = False
-    for out, out_config in prior_outcomes.items():
-        if "intent" in out_config:
-            if out_config["intent"] != "fallback":
-                reset_force = True
-        else:
-            reset_force = True
-        if reset_force:
-            out_config["updates"][forced_name] = {"value": False}
-        new_outcomes[out] = out_config
-    return new_outcomes
-
-
 def _base_fallback_setup(loaded_yaml) -> None:
     """Sets up the default intents, action, and context variables needed to
     handle fallbacks. 
@@ -302,6 +278,39 @@ def _base_fallback_setup(loaded_yaml) -> None:
         "type": "flag",
         "init": False,
     }
+
+
+def _instantiate_advanced_custom_actions(loaded_yaml) -> None:
+    """Instantiate custom actions.
+
+    NOTE: All custom action functions must be placed in 
+    plan4dial/custom_actions/custom.py.
+
+    NOTE: The custom actions are responsible for adding the actions to the
+    configuration. This is because some custom actions add multiple actions,
+    make changes to the context variables, etc. As a general rule, the
+    loaded_yaml should always be the first parameter.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
+    processed = deepcopy(loaded_yaml)
+    # iterate through all actions
+    for act, act_config in loaded_yaml["actions"].items():
+        # if we're dealing with a custom action
+        if "advanced-custom" in act_config:
+            # find the action in the "custom.py" file and call it
+            for custom_act in getmembers(custom, isfunction):
+                act_name, act_function = custom_act[0], custom_act[1]
+                if act_name == act_config["advanced-custom"]["custom-type"]:
+                    act_function(
+                        processed, **act_config["advanced-custom"]["parameters"]
+                    )
+                    break
+            # delete the custom action instantiation outline
+            del processed["actions"][act]
+    for key in processed:
+        loaded_yaml[key] = processed[key]
 
 
 def _add_fallbacks(loaded_yaml) -> None:
@@ -342,95 +351,6 @@ def _add_fallbacks(loaded_yaml) -> None:
                         "fallback"
                     ] = _configure_fallback()
     loaded_yaml["actions"] = processed
-
-
-def _instantiate_advanced_custom_actions(loaded_yaml) -> None:
-    """Instantiate custom actions.
-
-    NOTE: The custom actions are responsible for adding the actions to the
-    configuration. This is because some custom actions add multiple actions,
-    make changes to the context variables, etc. As a general rule, the
-    loaded_yaml should always be the first parameter.
-
-    Args:
-    - loaded_yaml (dict): The loaded YAML configuration.
-    """
-    processed = deepcopy(loaded_yaml)
-    # iterate through all actions
-    for act, act_config in loaded_yaml["actions"].items():
-        # if we're dealing with a custom action
-        if "advanced-custom" in act_config:
-            # find the action in the "custom.py" file and call it
-            for custom_act in getmembers(custom, isfunction):
-                act_name, act_function = custom_act[0], custom_act[1]
-                if act_name == act_config["advanced-custom"]["custom-type"]:
-                    act_function(
-                        processed, **act_config["advanced-custom"]["parameters"]
-                    )
-                    break
-            # delete the custom action instantiation outline
-            del processed["actions"][act]
-    for key in processed:
-        loaded_yaml[key] = processed[key]
-
-
-def _convert_ctx_var(loaded_yaml) -> None:
-    """Converts the context variables from how they were formatted in the YAML
-    to the JSON configuration that Hovor requires.
-
-    Args:
-    - loaded_yaml (dict): The loaded YAML configuration.
-    """
-    processed = deepcopy(loaded_yaml["context_variables"])
-    # convert context variables
-    processed = {var: {} for var in loaded_yaml["context_variables"]}
-    for ctx_var, cfg in loaded_yaml["context_variables"].items():
-        json_ctx_var = {}
-        json_ctx_var["type"] = cfg["type"]
-        if cfg["type"] == "enum":
-            # don't include variations in the config
-            if type(cfg["options"]) == dict:
-                json_ctx_var["config"] = list(cfg["options"].keys())
-            else:
-                json_ctx_var["config"] = cfg["options"]
-        # for flags/fflags, the config is the initial setting
-        elif cfg["type"] == "flag" or cfg["type"] == "fflag":
-            json_ctx_var["config"] = cfg["init"]
-        else:
-            # add other information to the config as necessary
-            if "extraction" in cfg:
-                json_ctx_var["config"] = {"extraction": cfg["extraction"]}
-                if "method" in cfg:
-                    json_ctx_var["config"]["method"] = cfg["method"]
-                elif "pattern" in cfg:
-                    json_ctx_var["config"]["pattern"] = cfg["pattern"]
-            else:
-                json_ctx_var["config"] = "null"
-        if "known" in cfg:
-            json_ctx_var["known"] = cfg["known"]
-        processed[ctx_var] = json_ctx_var
-    loaded_yaml["context_variables"] = processed
-
-
-def _convert_intents(loaded_yaml) -> None:
-    """Converts the intents from how they were formatted in the YAML to the
-    JSON configuration that Hovor requires.
-
-    Args:
-    - loaded_yaml (dict): The loaded YAML configuration.
-    """
-    processed = deepcopy(loaded_yaml["intents"])
-    for intent, intent_cfg in loaded_yaml["intents"].items():
-        cur_intent = {}
-        cur_intent["variables"] = []
-        # add the $ identifier to all variables
-        if "variables" in intent_cfg:
-            cur_intent["variables"].extend(
-                [f"${var}" for var in intent_cfg["variables"]]
-            )
-        cur_intent["utterances"] = intent_cfg["utterances"]
-        processed[intent] = cur_intent
-    loaded_yaml["intents"] = processed
 
 
 def _add_follow_ups_and_responses(loaded_yaml) -> None:
@@ -610,6 +530,64 @@ def _add_value_setters(loaded_yaml) -> None:
         processed["actions"],
         processed["context_variables"],
     )
+
+def _convert_ctx_var(loaded_yaml) -> None:
+    """Converts the context variables from how they were formatted in the YAML
+    to the JSON configuration that Hovor requires.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
+    processed = deepcopy(loaded_yaml["context_variables"])
+    # convert context variables
+    processed = {var: {} for var in loaded_yaml["context_variables"]}
+    for ctx_var, cfg in loaded_yaml["context_variables"].items():
+        json_ctx_var = {}
+        json_ctx_var["type"] = cfg["type"]
+        if cfg["type"] == "enum":
+            # don't include variations in the config
+            if type(cfg["options"]) == dict:
+                json_ctx_var["config"] = list(cfg["options"].keys())
+            else:
+                json_ctx_var["config"] = cfg["options"]
+        # for flags/fflags, the config is the initial setting
+        elif cfg["type"] == "flag" or cfg["type"] == "fflag":
+            json_ctx_var["config"] = cfg["init"]
+        else:
+            # add other information to the config as necessary
+            if "extraction" in cfg:
+                json_ctx_var["config"] = {"extraction": cfg["extraction"]}
+                if "method" in cfg:
+                    json_ctx_var["config"]["method"] = cfg["method"]
+                elif "pattern" in cfg:
+                    json_ctx_var["config"]["pattern"] = cfg["pattern"]
+            else:
+                json_ctx_var["config"] = "null"
+        if "known" in cfg:
+            json_ctx_var["known"] = cfg["known"]
+        processed[ctx_var] = json_ctx_var
+    loaded_yaml["context_variables"] = processed
+
+
+def _convert_intents(loaded_yaml) -> None:
+    """Converts the intents from how they were formatted in the YAML to the
+    JSON configuration that Hovor requires.
+
+    Args:
+    - loaded_yaml (dict): The loaded YAML configuration.
+    """
+    processed = deepcopy(loaded_yaml["intents"])
+    for intent, intent_cfg in loaded_yaml["intents"].items():
+        cur_intent = {}
+        cur_intent["variables"] = []
+        # add the $ identifier to all variables
+        if "variables" in intent_cfg:
+            cur_intent["variables"].extend(
+                [f"${var}" for var in intent_cfg["variables"]]
+            )
+        cur_intent["utterances"] = intent_cfg["utterances"]
+        processed[intent] = cur_intent
+    loaded_yaml["intents"] = processed
 
 
 def _convert_actions(loaded_yaml: Dict) -> None:
