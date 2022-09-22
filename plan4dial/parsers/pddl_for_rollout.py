@@ -34,13 +34,14 @@ def rollout_config(configuration):
     }
     for act, act_cfg in configuration["actions"].items():
         for out in act_cfg["effect"]["outcomes"]:
-            actions[act]["effect"][out["name"]] = convert_to_hovor_fluents(
-                list(
-                    get_update_fluents(
-                        configuration["context_variables"], out["updates"]
+            if "updates" in out:
+                actions[act]["effect"][out["name"]] = convert_to_hovor_fluents(
+                    list(
+                        get_update_fluents(
+                            configuration["context_variables"], out["updates"]
+                        )
                     )
                 )
-            )
     return {
         "actions": actions,
         "initial_state": convert_to_hovor_fluents(

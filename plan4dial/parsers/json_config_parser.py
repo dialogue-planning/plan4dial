@@ -241,17 +241,18 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             for option in eff_config:
                 for out, out_config in eff_config[option]["outcomes"].items():
-                    for update_var, update_cfg in out_config["updates"].items():
-                        if ctx_var == update_var and "known" in update_cfg:
-                            if update_cfg["known"] == False:
-                                for v in var_options:
-                                    processed[act]["effect"][eff][option][
-                                        "outcomes"
-                                    ][out]["updates"][
-                                        f"{ctx_var}-value-{v.replace(' ', '_')}"
-                                    ] = {
-                                        "value": False
-                                    }
+                    if "updates" in out_config:
+                        for update_var, update_cfg in out_config["updates"].items():
+                            if ctx_var == update_var and "known" in update_cfg:
+                                if update_cfg["known"] == False:
+                                    for v in var_options:
+                                        processed[act]["effect"][eff][option][
+                                            "outcomes"
+                                        ][out]["updates"][
+                                            f"{ctx_var}-value-{v.replace(' ', '_')}"
+                                        ] = {
+                                            "value": False
+                                        }
     loaded_yaml["actions"] = processed
 
 
@@ -380,11 +381,18 @@ def _add_follow_ups_and_responses(loaded_yaml: Dict) -> None:
                     # flag to True and keep track of which action was forced
                     if "follow_up" in next_outcome:
                         forced = next_outcome["follow_up"]
-                        next_outcome["updates"][f"forcing__{forced}"] = {"value": True}
+                        forcing_name = f"forcing__{forced}"
+                        if "updates" in next_outcome:
+                            next_outcome["updates"][forcing_name] = {"value": True}
+                        else:
+                            next_outcome["updates"] = {forcing_name: {"value": True}}
                         forced_acts.append(forced)
                     # force a message if a response was indicated
                     if "response_variants" in next_outcome:
-                        next_outcome["updates"].update(_configure_force_message_true())
+                        if "updates" in next_outcome:
+                            next_outcome["updates"].update(_configure_force_message_true())
+                        else:
+                            next_outcome["updates"] = _configure_force_message_true()
                     processed[act]["effect"][eff][option]["outcomes"][
                         out
                     ] = next_outcome
@@ -409,7 +417,10 @@ def _add_follow_ups_and_responses(loaded_yaml: Dict) -> None:
                     else:
                         reset_force = True
                     if reset_force:
-                        out_config["updates"][forcing_name] = {"value": False}
+                        if "updates" in out_config:
+                            out_config["updates"][forcing_name] = {"value": False}
+                        else:
+                            out_config["updates"] = {forcing_name: {"value": False}}
         loaded_yaml["context_variables"][forcing_name] = {"type": "flag", "init": False}
     loaded_yaml["actions"] = with_forced
 
@@ -460,29 +471,30 @@ def _duplicate_for_or_when_condition(loaded_yaml: Dict) -> None:
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             for option in eff_config:
                 for out, out_config in eff_config[option]["outcomes"].items():
-                    for update_var, update_cfg in out_config["updates"].items():
-                        # for now, assume we only use "and" explicitly to stack "when" expressions
-                        if update_var == "and":
-                            for when_expr in update_cfg:
-                                for when_cond, when_cond_cfg in when_expr["when"][
-                                    "condition"
-                                ].items():
-                                    if when_cond == "or":
-                                        # iterate through each "or" condition
-                                        for or_cond in when_cond_cfg:
-                                            new_when = deepcopy(when_expr)
-                                            del new_when["when"]["condition"]["or"]
-                                            # create new expressions for each condition
-                                            for k, v in or_cond.items():
-                                                new_when["when"]["condition"][k] = v
-                                            processed[act]["effect"][eff][option][
-                                                "outcomes"
-                                            ][out]["updates"][update_var].append(
-                                                new_when
-                                            )
-                                processed[act]["effect"][eff][option]["outcomes"][
-                                    out
-                                ]["updates"][update_var].remove(when_expr)
+                    if "updates" in out_config:
+                        for update_var, update_cfg in out_config["updates"].items():
+                            # for now, assume we only use "and" explicitly to stack "when" expressions
+                            if update_var == "and":
+                                for when_expr in update_cfg:
+                                    for when_cond, when_cond_cfg in when_expr["when"][
+                                        "condition"
+                                    ].items():
+                                        if when_cond == "or":
+                                            # iterate through each "or" condition
+                                            for or_cond in when_cond_cfg:
+                                                new_when = deepcopy(when_expr)
+                                                del new_when["when"]["condition"]["or"]
+                                                # create new expressions for each condition
+                                                for k, v in or_cond.items():
+                                                    new_when["when"]["condition"][k] = v
+                                                processed[act]["effect"][eff][option][
+                                                    "outcomes"
+                                                ][out]["updates"][update_var].append(
+                                                    new_when
+                                                )
+                                    processed[act]["effect"][eff][option]["outcomes"][
+                                        out
+                                    ]["updates"][update_var].remove(when_expr)
     loaded_yaml["actions"] = processed
 
 
@@ -629,27 +641,28 @@ def _convert_actions(loaded_yaml: Dict) -> None:
                     else:
                         intents.append(out_config["intent"])
                     next_outcome["assignments"] = {}
-                    for update_var, update_cfg in out_config["updates"].items():
-                        next_outcome["updates"][update_var]["variable"] = update_var
-                        # set the assignments and certainty based on the "known" settings
-                        # that were updated
-                        if "known" in update_cfg:
-                            next_outcome["assignments"][
-                                f"${update_var}"
-                            ] = _configure_assignments(update_cfg["known"])
+                    if "updates" in out_config:
+                        for update_var, update_cfg in out_config["updates"].items():
+                            next_outcome["updates"][update_var]["variable"] = update_var
+                            # set the assignments and certainty based on the "known" settings
+                            # that were updated
+                            if "known" in update_cfg:
+                                next_outcome["assignments"][
+                                    f"${update_var}"
+                                ] = _configure_assignments(update_cfg["known"])
+                                next_outcome["updates"][update_var][
+                                    "certainty"
+                                ] = _configure_certainty(update_cfg["known"])
+                                del next_outcome["updates"][update_var]["known"]
+                            # set value to None if not specified (i.e. if just setting 
+                            # known: False)
+                            if "value" not in update_cfg:
+                                next_outcome["updates"][update_var]["value"] = None
+                            # JSON interpretations are handled in the most straightforward
+                            # way by Hovor (as opposed to spel, which requires a specific format)
                             next_outcome["updates"][update_var][
-                                "certainty"
-                            ] = _configure_certainty(update_cfg["known"])
-                            del next_outcome["updates"][update_var]["known"]
-                        # set value to None if not specified (i.e. if just setting 
-                        # known: False)
-                        if "value" not in update_cfg:
-                            next_outcome["updates"][update_var]["value"] = None
-                        # JSON interpretations are handled in the most straightforward
-                        # way by Hovor (as opposed to spel, which requires a specific format)
-                        next_outcome["updates"][update_var][
-                            "interpretation"
-                        ] = "json"
+                                "interpretation"
+                            ] = "json"
                     outcomes_list.append(next_outcome)
                 converted_eff["outcomes"] = outcomes_list
                 del converted_eff[option]

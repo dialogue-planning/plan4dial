@@ -103,20 +103,21 @@ def create_clarifications_single_slots(
             for option in eff_config:
                 outcomes = eff_config[option]["outcomes"]
                 for out, out_config in outcomes.items():
-                    for entity in entities:
-                        if entity not in out_config["updates"]:
-                            new_ctx_vars[f"allow_single_slot_{entity}"] = {
-                                "type": "flag",
-                                "init": False,
-                            }
-                            original_act_config["effect"][eff][option]["outcomes"][out][
-                                "updates"
-                            ][f"allow_single_slot_{entity}"] = {"value": True}
-                            new_actions.update(
-                                single_slot(
-                                    entity, config_entities[entity], additional_updates
+                    if "updates" in out_config:
+                        for entity in entities:
+                            if entity not in out_config["updates"]:
+                                new_ctx_vars[f"allow_single_slot_{entity}"] = {
+                                    "type": "flag",
+                                    "init": False,
+                                }
+                                original_act_config["effect"][eff][option]["outcomes"][out][
+                                    "updates"
+                                ][f"allow_single_slot_{entity}"] = {"value": True}
+                                new_actions.update(
+                                    single_slot(
+                                        entity, config_entities[entity], additional_updates
+                                    )
                                 )
-                            )
         new_actions[original_act_name] = original_act_config
     for entity in entities:
         # only create clarify actions if clarify messages were specified

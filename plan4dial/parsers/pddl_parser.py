@@ -197,19 +197,20 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
     effects = f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof {act_config['effect']['global-outcome-name']}"
     # iterate through all the outcomes
     for out_config in act_config["effect"]["outcomes"]:
-        # for each outcome, get the update fluents
-        update_fluents = get_update_fluents(
-            context_variables, out_config["updates"]
-        )
-        # add the outcome to the effect string
-        effects += fluents_to_pddl(
-            fluents=update_fluents,
-            tabs=4,
-            outer_brackets=True,
-            # only take raw name
-            name_wrap=f"outcome {out_config['name'].split('-EQ-')[1]}",
-            and_wrap=True,
-        )
+        if "updates" in out_config:
+            # for each outcome, get the update fluents
+            update_fluents = get_update_fluents(
+                context_variables, out_config["updates"]
+            )
+            # add the outcome to the effect string
+            effects += fluents_to_pddl(
+                fluents=update_fluents,
+                tabs=4,
+                outer_brackets=True,
+                # only take raw name
+                name_wrap=f"outcome {out_config['name'].split('-EQ-')[1]}",
+                and_wrap=True,
+            )
     effects += f"\n{TAB * 3})"
     return act_param + precond + effects + f"\n{TAB})"
 
