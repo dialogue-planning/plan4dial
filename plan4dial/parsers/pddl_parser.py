@@ -12,8 +12,25 @@ from typing import Dict, List, Set, Union, Tuple
 # define a tab
 TAB = " " * 4
 
+def _get_is_fflag(context_variables: Dict, v_name: str) -> bool:
+    """Determines if the provided variable has a "known" setting of type fflag.
 
-def return_flag_value_fluent(v_name: str, is_fflag: bool, value: Union[bool, str]) -> str:
+    Args:
+    - context_variables (Dict): The configuration of all context variables.
+    - v_name (str): The name of the variable.
+
+    Returns:
+    - (bool): Indicates if the provided variable has a "known" setting of type
+    fflag.
+    """
+    return (
+            (context_variables[v_name]["known"]["type"] == "fflag")
+            if "known" in context_variables[v_name]
+            else False
+        )
+
+
+def _return_flag_value_fluent(v_name: str, is_fflag: bool, value: Union[bool, str]) -> str:
     """Returns the fluent version of a flag or fflag context variable depending
     on the setting supplied.
 
@@ -33,23 +50,30 @@ def return_flag_value_fluent(v_name: str, is_fflag: bool, value: Union[bool, str
         return f"(maybe__{v_name})"
 
 
-def return_known_fluents(v_name: str, is_fflag: bool, known: Union[bool, str]) -> List[str]:
-    """Helper function for `return_certainty_fluents`. Returns the fluent 
-    version of the "known" setting of a context variable depending on the
-    setting supplied. In this case, the "known" setting is what we would see 
-    in the YAML; the only options are True, False, and "maybe".
+def _return_certainty_fluents(v_name: str, is_fflag: bool, certainty: str) -> List[str]:
+    """Returns the fluent version of the certainty setting of a context variable
+    depending on the setting supplied.
 
     Args:
     - v_name (str): The name of the variable.
-    - is_fflag (bool): Describes if the variable is of type fflag, in which 
-    case the "maybe" option can be considered.
-    - known (bool or str): The "known" setting of this context variable.
+    - is_fflag (bool): Describes if the variable's "known" type is fflag, in 
+    which case the "Uncertain" option can be considered.
+    - certainty (str): The certainty setting of this context variable.
 
     Returns:
-    - (str): The fluent version of the "known" setting of a context variable
-    depending on the setting supplied.
+    - (List[str]): The list of fluents that reflect the certainty setting for
+    the context variable supplied.
     """
+    # convert to a simpler representation
+    if certainty == "Known":
+        known = True
+    elif certainty == "Unknown":
+        known = False
+    elif certainty == "Uncertain":
+        known = "maybe"
+
     if type(known) == bool:
+        # only include "maybe"s if the known type is fflag
         return (
             (
                 [f"(know__{v_name})", f"(not (maybe-know__{v_name}))"]
@@ -60,86 +84,88 @@ def return_known_fluents(v_name: str, is_fflag: bool, known: Union[bool, str]) -
             else ([f"(know__{v_name})"] if known else [f"(not (know__{v_name}))"])
         )
     else:
+        # "maybe"/"Uncertain" option chosen
         return [f"(not (know__{v_name}))", f"(maybe-know__{v_name})"]
-
-
-def return_certainty_fluents(v_name: str, is_fflag: bool, certainty: str) -> List[str]:
-    """Returns the fluent version of the certainty setting of a context variable
-    depending on the setting supplied.
-
-    Args:
-    - v_name (str): The name of the variable.
-    - is_fflag (bool): Describes if the variable is of type fflag, in which 
-    case the "Uncertain" option can be considered.
-    - certainty (str): The certainty setting of this context variable.
-
-    Returns:
-    - (str): The fluent version of the certainty setting of a context variable
-    depending on the setting supplied.
-    """
-    if certainty == "Known":
-        return return_known_fluents(v_name, is_fflag, True)
-    elif certainty == "Unknown":
-        return return_known_fluents(v_name, is_fflag, False)
-    elif certainty == "Uncertain":
-        return return_known_fluents(v_name, is_fflag, "maybe")
 
 
 def fluents_to_pddl(
     fluents: List[str],
     tabs: int,
-    outer_brackets: bool = False,
     name_wrap: str = None,
     and_wrap: bool = False,
-):
+) -> str:
+    """Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and
+    "and" wraps as appropriate.
+
+    Args:
+    - fluents (List[str]): A list of the string versions of the fluents.
+    - tabs (int): The "base" indentation of the fluents.
+    - name_wrap (str, optional): Setting to wrap fluents with a name, i.e.
+    ":predicates". Defaults to None.
+    - and_wrap (bool, optional): Setting to wrap fluents with an "and", i.e.
+    :precondition\n(and\n\t(...)). Defaults to False.
+
+    Returns:
+    - (str): The converted PDDL fluents.
+    """
+    # set up the base tabbing before each fluent
     fluent_tabs = TAB * (tabs + 1)
+    # set up the base fluent before the and wrap
     and_wrap_tabs = TAB * tabs
+    # if we are also including a name wrap with an and wrap, then everything
+    # needs to be indented one more tab to make room for that
     if name_wrap and and_wrap:
         and_wrap_tabs += TAB
         fluent_tabs += TAB
 
+    # join the fluents together
     fluents = (
         (("\n" + fluent_tabs) + "{0}".format(("\n" + fluent_tabs).join(fluents)))
         if len(fluents) > 0
         else ("")
     )
+    # wrap with the and if necessary
     if and_wrap:
         fluents = f"\n{and_wrap_tabs}(and{fluents}\n{and_wrap_tabs})"
+    # wrap with the name wrap 
     if name_wrap:
         fluents = f"{name_wrap}{fluents}"
         fluents = (
             f"\n{TAB * tabs}({fluents}\n{TAB * tabs})"
-            if outer_brackets
-            else f"\n{TAB * tabs}{fluents}"
         )
     return fluents
 
 
-def get_precond_fluents(context_variables: Dict, conditions):
+def _get_precond_fluents(context_variables: Dict, conditions: List[Union[str, bool]]) -> Set[str]:
+    """Convert an action precondition to PDDL fluents.
+
+    Args:
+    - context_variables (Dict): The configuration of all context variables.
+    - conditions (List[Union[str, bool]]): The conditions to be converted.
+
+    Returns:
+    - Set[str]: The set of converted fluents.
+    """
     precond = set()
+    # iterate through all the conditions
     for cond in conditions:
         cond_key = cond[0]
         cond_val = cond[1]
-        cond_key_fflag = (
-            (context_variables[cond_key]["known"]["type"] == "fflag")
-            if "known" in context_variables[cond_key]
-            else False
-        )
+        cond_key_fflag = _get_is_fflag(context_variables, cond_key)
+        # update precond depending on the type of condition value
         if cond_val != None:
             if type(cond_val) == bool:
                 precond.add(
-                    return_flag_value_fluent(cond_key, cond_key_fflag, cond_val)
+                    _return_flag_value_fluent(cond_key, cond_key_fflag, cond_val)
                 )
             elif cond_val in ["Known", "Unknown", "Uncertain"]:
                 precond.update(
-                    return_certainty_fluents(cond_key, cond_key_fflag, cond_val)
+                    _return_certainty_fluents(cond_key, cond_key_fflag, cond_val)
                 )
-            else:
-                precond.add(f"({cond_val})")
     return precond
 
 
-def get_update_fluents(context_variables: Dict, updates: Dict) -> Set[str]:
+def _get_update_fluents(context_variables: Dict, updates: Dict) -> Set[str]:
     """Converts the update configuration of an action outcome to PDDL fluents.
 
     Args:
@@ -150,23 +176,24 @@ def get_update_fluents(context_variables: Dict, updates: Dict) -> Set[str]:
     - outcomes (Set[str]): The set of fluents that were added by the outcome update.
     """
     outcomes = set()
+    # iterate through all the update configurations
     for update_var, update_config in updates.items():
-        update_var_fflag = (
-            (context_variables[update_var]["known"]["type"] == "fflag")
-            if "known" in context_variables[update_var]
-            else False
-        )
+        # if the context variable has a "known" configuration, check if that is
+        # of type fflag
+        update_var_fflag = _get_is_fflag(context_variables, update_var)
+        # add fluents based on the certainty if those were updated
         if "certainty" in update_config:
             outcomes.update(
-                return_certainty_fluents(
+                _return_certainty_fluents(
                     update_var, update_var_fflag, update_config["certainty"]
                 )
             )
+        # add fluents based on the value if we're dealing with a flag/fflag type
         if "value" in update_config:
             if update_config["value"] != None:
                 if context_variables[update_var]["type"] in ["flag", "fflag"]:
                     outcomes.add(
-                        return_flag_value_fluent(
+                        _return_flag_value_fluent(
                             update_var, update_var_fflag, update_config["value"]
                         )
                     )
@@ -188,7 +215,7 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
 
     # convert the preconditions
     precond = fluents_to_pddl(
-        fluents=get_precond_fluents(context_variables, act_config["condition"]),
+        fluents=_get_precond_fluents(context_variables, act_config["condition"]),
         tabs=2,
         name_wrap=":precondition",
         and_wrap=True,
@@ -199,14 +226,13 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
     for out_config in act_config["effect"]["outcomes"]:
         if "updates" in out_config:
             # for each outcome, get the update fluents
-            update_fluents = get_update_fluents(
+            update_fluents = _get_update_fluents(
                 context_variables, out_config["updates"]
             )
             # add the outcome to the effect string
             effects += fluents_to_pddl(
                 fluents=update_fluents,
                 tabs=4,
-                outer_brackets=True,
                 # only take raw name
                 name_wrap=f"outcome {out_config['name'].split('-EQ-')[1]}",
                 and_wrap=True,
@@ -222,7 +248,7 @@ def _actions_to_pddl(loaded_yaml: Dict) -> str:
     - loaded_yaml (Dict): The loaded YAML configuration.
 
     Returns:
-    (str): The converted actions.
+    - (str): The converted actions.
     """
     return "\n".join(
         [
@@ -317,7 +343,6 @@ def _parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
     predicates = fluents_to_pddl(
         fluents=_parse_predicates(loaded_yaml["context_variables"]),
         tabs=1,
-        outer_brackets=True,
         name_wrap=":predicates",
     )
     actions = _actions_to_pddl(loaded_yaml)
@@ -326,13 +351,11 @@ def _parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
     init = fluents_to_pddl(
         fluents=_parse_init(loaded_yaml["context_variables"])[0],
         tabs=1,
-        outer_brackets=True,
         name_wrap=":init",
     )
     goal = fluents_to_pddl(
         fluents=["(goal)"],
         tabs=1,
-        outer_brackets=True,
         name_wrap=":goal",
         and_wrap=True,
     )

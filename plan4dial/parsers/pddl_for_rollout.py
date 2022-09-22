@@ -2,7 +2,7 @@
 
 from plan4dial.parsers.pddl_parser import (
     get_precond_fluents,
-    get_update_fluents,
+    _get_update_fluents,
     _parse_init,
 )
 from typing import List
@@ -37,7 +37,7 @@ def rollout_config(configuration):
             if "updates" in out:
                 actions[act]["effect"][out["name"]] = convert_to_hovor_fluents(
                     list(
-                        get_update_fluents(
+                        _get_update_fluents(
                             configuration["context_variables"], out["updates"]
                         )
                     )
