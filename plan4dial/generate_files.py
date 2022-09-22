@@ -3,10 +3,10 @@ import os
 import subprocess
 # import spacy
 from pathlib import Path
-from parsers.json_config_parser import _convert_yaml
-from parsers.pddl_parser import _parse_to_pddl
-from parsers.parse_for_rasa import _make_nlu_file
-from parsers.pddl_for_rollout import rollout_config
+from plan4dial.parsers.json_config_parser import _convert_yaml
+from plan4dial.parsers.pddl_parser import _parse_to_pddl
+from plan4dial.parsers.parse_for_rasa import _make_nlu_file
+from plan4dial.parsers.pddl_for_rollout import rollout_config
 # from rasa.model_training import train_nlu
 
 
@@ -48,17 +48,17 @@ def generate_files(
     #         fixed_model_name=f"nlu_model",
     #     )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
-    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
-    try:
-        with open(f"policy.out") as f:
-            plan_data = {f"plan": json.load(f)}
-    except FileNotFoundError:
-        raise Exception("PDDL is invalid.")
-    with open(f"{output_folder}/plan_data.prp.json", "w") as f:
-        json.dump(plan_data, f, indent=4)
-    # delete extra output files
-    os.remove("./policy.out")
-    os.remove("./output.sas")
+    # subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
+    # try:
+    #     with open(f"policy.out") as f:
+    #         plan_data = {f"plan": json.load(f)}
+    # except FileNotFoundError:
+    #     raise Exception("PDDL is invalid.")
+    # with open(f"{output_folder}/plan_data.prp.json", "w") as f:
+    #     json.dump(plan_data, f, indent=4)
+    # # delete extra output files
+    # os.remove("./policy.out")
+    # os.remove("./output.sas")
     # for rollout
     rollout_data = rollout_config(converted_json)
     with open(f"{output_folder}/rollout_config.json", "w") as f:

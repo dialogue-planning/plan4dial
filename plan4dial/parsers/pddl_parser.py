@@ -88,7 +88,7 @@ def _return_certainty_fluents(v_name: str, is_fflag: bool, certainty: str) -> Li
         return [f"(not (know__{v_name}))", f"(maybe-know__{v_name})"]
 
 
-def fluents_to_pddl(
+def _fluents_to_pddl(
     fluents: List[str],
     tabs: int,
     name_wrap: str = None,
@@ -214,7 +214,7 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
 
     # convert the preconditions
-    precond = fluents_to_pddl(
+    precond = _fluents_to_pddl(
         fluents=_get_precond_fluents(context_variables, act_config["condition"]),
         tabs=2,
         name_wrap=":precondition",
@@ -230,7 +230,7 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
                 context_variables, out_config["updates"]
             )
             # add the outcome to the effect string
-            effects += fluents_to_pddl(
+            effects += _fluents_to_pddl(
                 fluents=update_fluents,
                 tabs=4,
                 # only take raw name
@@ -340,7 +340,7 @@ def _parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
     - domain (str): The generated PDDL domain.
     - problem (str): The generated PDDL problem.
     """
-    predicates = fluents_to_pddl(
+    predicates = _fluents_to_pddl(
         fluents=_parse_predicates(loaded_yaml["context_variables"]),
         tabs=1,
         name_wrap=":predicates",
@@ -348,12 +348,12 @@ def _parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
     actions = _actions_to_pddl(loaded_yaml)
     domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
-    init = fluents_to_pddl(
+    init = _fluents_to_pddl(
         fluents=_parse_init(loaded_yaml["context_variables"])[0],
         tabs=1,
         name_wrap=":init",
     )
-    goal = fluents_to_pddl(
+    goal = _fluents_to_pddl(
         fluents=["(goal)"],
         tabs=1,
         name_wrap=":goal",
