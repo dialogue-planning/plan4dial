@@ -9,7 +9,7 @@ Authors:
 - Rebecca De Venezia
 """
 
-from plan4dial.parsers.pddl_parser import (
+from .pddl_parser import (
     _get_precond_fluents,
     _get_update_fluents,
     _parse_init,

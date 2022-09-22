@@ -9,8 +9,8 @@ from typing import Union, Dict
 import yaml
 from copy import deepcopy
 from inspect import getmembers, isfunction
-from plan4dial.custom_actions.utils import *
-import plan4dial.custom_actions.custom as custom
+from ..custom_actions.utils import *
+from ..custom_actions import custom
 from nnf import Or, And, Var, config
 
 

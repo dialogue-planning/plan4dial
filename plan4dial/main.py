@@ -3,10 +3,10 @@ import os
 import subprocess
 # import spacy
 from pathlib import Path
-from plan4dial.parsers.json_config_parser import _convert_yaml
-from plan4dial.parsers.pddl_parser import _parse_to_pddl
-from plan4dial.parsers.parse_for_rasa import _make_nlu_file
-from plan4dial.parsers.pddl_for_rollout import rollout_config
+from generate_files.parsers.json_config_parser import _convert_yaml
+from generate_files.parsers.pddl_parser import _parse_to_pddl
+from generate_files.parsers.parse_for_rasa import _make_nlu_file
+from generate_files.parsers.pddl_for_rollout import rollout_config
 # from rasa.model_training import train_nlu
 
 
