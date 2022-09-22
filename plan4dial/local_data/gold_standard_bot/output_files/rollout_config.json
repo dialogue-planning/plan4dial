@@ -11,9 +11,9 @@
                     "Atom have_allergy()"
                 ],
                 "get-have-allergy_DETDUP_set-allergy-EQ-indicate_no_allergy": [
-                    "Atom know__conflict()",
-                    "NegatedAtom conflict()",
                     "Atom know__have_allergy()",
+                    "NegatedAtom conflict()",
+                    "Atom know__conflict()",
                     "NegatedAtom have_allergy()"
                 ],
                 "get-have-allergy_DETDUP_set-allergy-EQ-fallback": [
@@ -24,8 +24,8 @@
         },
         "get-allergy": {
             "condition": [
-                "NegatedAtom force-statement()",
                 "Atom know__have_allergy()",
+                "NegatedAtom force-statement()",
                 "Atom have_allergy()"
             ],
             "effect": {
@@ -40,34 +40,34 @@
         },
         "reset-preferences": {
             "condition": [
+                "NegatedAtom force-statement()",
                 "Atom conflict()",
-                "Atom know__conflict()",
-                "NegatedAtom force-statement()"
+                "Atom know__conflict()"
             ],
             "effect": {
                 "reset-preferences_DETDUP_reset-EQ-reset-values": [
-                    "NegatedAtom cuisine-value-chinese()",
-                    "Atom have-message()",
-                    "NegatedAtom cuisine-value-dessert()",
                     "NegatedAtom food_restriction-value-gluten-free()",
+                    "NegatedAtom cuisine-value-mexican()",
+                    "Atom have-message()",
+                    "NegatedAtom know__food_restriction()",
+                    "NegatedAtom know__cuisine()",
+                    "Atom force-statement()",
+                    "NegatedAtom cuisine-value-chinese()",
                     "NegatedAtom know__conflict()",
                     "NegatedAtom food_restriction-value-dairy-free()",
-                    "NegatedAtom know__food_restriction()",
-                    "NegatedAtom cuisine-value-italian()",
                     "NegatedAtom know__have_allergy()",
-                    "NegatedAtom cuisine-value-mexican()",
-                    "Atom force-statement()",
-                    "NegatedAtom know__cuisine()"
+                    "NegatedAtom cuisine-value-dessert()",
+                    "NegatedAtom cuisine-value-italian()"
                 ]
             }
         },
         "set-restaurant": {
             "condition": [
-                "NegatedAtom know__restaurant()",
-                "Atom know__cuisine()",
-                "Atom know__conflict()",
                 "NegatedAtom conflict()",
-                "NegatedAtom force-statement()"
+                "Atom know__cuisine()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__restaurant()",
+                "Atom know__conflict()"
             ],
             "effect": {
                 "set-restaurant_DETDUP_assign_restaurant-EQ-set-mexican": [
@@ -86,13 +86,13 @@
         },
         "complete": {
             "condition": [
-                "NegatedAtom force-statement()",
-                "Atom know__restaurant()"
+                "Atom know__restaurant()",
+                "NegatedAtom force-statement()"
             ],
             "effect": {
                 "complete_DETDUP_finish-EQ-finish": [
-                    "Atom know__goal()",
-                    "Atom goal()"
+                    "Atom goal()",
+                    "Atom know__goal()"
                 ]
             }
         },
@@ -126,10 +126,10 @@
         "check-conflict-1-or-1": {
             "condition": [
                 "Atom food_restriction-value-gluten-free()",
-                "Atom have_allergy()",
                 "Atom cuisine-value-mexican()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom know__have_allergy()"
+                "Atom have_allergy()"
             ],
             "effect": {
                 "check-conflict-1-or-1_DETDUP_check-conflicts-EQ-validate-combos": [
@@ -140,11 +140,11 @@
         },
         "check-conflict-1-or-2": {
             "condition": [
-                "Atom have_allergy()",
-                "Atom cuisine-value-dessert()",
                 "Atom food_restriction-value-dairy-free()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom know__have_allergy()"
+                "Atom cuisine-value-dessert()",
+                "Atom have_allergy()"
             ],
             "effect": {
                 "check-conflict-1-or-2_DETDUP_check-conflicts-EQ-validate-combos": [
@@ -155,68 +155,68 @@
         },
         "check-conflict-2-or-1": {
             "condition": [
-                "Atom have_allergy()",
+                "Atom know__food_restriction()",
+                "Atom cuisine-value-italian()",
                 "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom know__food_restriction()",
-                "Atom cuisine-value-italian()"
+                "Atom have_allergy()"
             ],
             "effect": {
                 "check-conflict-2-or-1_DETDUP_check-conflicts-EQ-validate-combos": [
-                    "Atom know__conflict()",
-                    "NegatedAtom conflict()"
+                    "NegatedAtom conflict()",
+                    "Atom know__conflict()"
                 ]
             }
         },
         "check-conflict-2-or-2": {
             "condition": [
-                "Atom have_allergy()",
+                "Atom know__food_restriction()",
+                "Atom cuisine-value-chinese()",
                 "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom cuisine-value-chinese()",
-                "Atom know__food_restriction()"
+                "Atom have_allergy()"
             ],
             "effect": {
                 "check-conflict-2-or-2_DETDUP_check-conflicts-EQ-validate-combos": [
-                    "Atom know__conflict()",
-                    "NegatedAtom conflict()"
+                    "NegatedAtom conflict()",
+                    "Atom know__conflict()"
                 ]
             }
         },
         "check-conflict-2-or-3": {
             "condition": [
-                "Atom have_allergy()",
                 "Atom cuisine-value-mexican()",
                 "Atom food_restriction-value-dairy-free()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom know__have_allergy()"
+                "Atom have_allergy()"
             ],
             "effect": {
                 "check-conflict-2-or-3_DETDUP_check-conflicts-EQ-validate-combos": [
-                    "Atom know__conflict()",
-                    "NegatedAtom conflict()"
+                    "NegatedAtom conflict()",
+                    "Atom know__conflict()"
                 ]
             }
         },
         "check-conflict-2-or-4": {
             "condition": [
                 "Atom food_restriction-value-gluten-free()",
-                "Atom have_allergy()",
-                "Atom cuisine-value-dessert()",
+                "Atom know__have_allergy()",
                 "NegatedAtom force-statement()",
-                "Atom know__have_allergy()"
+                "Atom cuisine-value-dessert()",
+                "Atom have_allergy()"
             ],
             "effect": {
                 "check-conflict-2-or-4_DETDUP_check-conflicts-EQ-validate-combos": [
-                    "Atom know__conflict()",
-                    "NegatedAtom conflict()"
+                    "NegatedAtom conflict()",
+                    "Atom know__conflict()"
                 ]
             }
         },
         "set-food_restriction": {
             "condition": [
-                "NegatedAtom food_restriction-value-gluten-free()",
                 "Atom know__food_restriction()",
+                "NegatedAtom food_restriction-value-gluten-free()",
                 "NegatedAtom food_restriction-value-dairy-free()"
             ],
             "effect": {
@@ -230,11 +230,11 @@
         },
         "set-cuisine": {
             "condition": [
+                "NegatedAtom cuisine-value-mexican()",
                 "NegatedAtom cuisine-value-chinese()",
-                "NegatedAtom cuisine-value-dessert()",
                 "Atom know__cuisine()",
-                "NegatedAtom cuisine-value-italian()",
-                "NegatedAtom cuisine-value-mexican()"
+                "NegatedAtom cuisine-value-dessert()",
+                "NegatedAtom cuisine-value-italian()"
             ],
             "effect": {
                 "set-cuisine_DETDUP_set-valid-value-EQ-mexican": [
@@ -253,25 +253,25 @@
         }
     },
     "initial_state": [
-        "NegatedAtom food_restriction-value-gluten-free()",
-        "NegatedAtom know__goal()",
-        "NegatedAtom conflict()",
-        "NegatedAtom goal()",
-        "NegatedAtom cuisine-value-chinese()",
-        "NegatedAtom cuisine-value-dessert()",
-        "NegatedAtom know__restaurant()",
-        "NegatedAtom know__conflict()",
-        "NegatedAtom know__food_restriction()",
-        "NegatedAtom cuisine-value-italian()",
-        "NegatedAtom low_budget()",
-        "NegatedAtom know__have_allergy()",
+        "NegatedAtom know__cuisine()",
+        "NegatedAtom know__outing_atmosphere()",
         "NegatedAtom have-message()",
         "NegatedAtom know__low_budget()",
-        "NegatedAtom know__outing_atmosphere()",
         "NegatedAtom food_restriction-value-dairy-free()",
+        "NegatedAtom cuisine-value-italian()",
+        "NegatedAtom food_restriction-value-gluten-free()",
+        "NegatedAtom low_budget()",
+        "NegatedAtom know__goal()",
+        "NegatedAtom know__conflict()",
+        "NegatedAtom know__have_allergy()",
+        "NegatedAtom know__restaurant()",
         "NegatedAtom cuisine-value-mexican()",
+        "NegatedAtom know__food_restriction()",
+        "NegatedAtom conflict()",
         "NegatedAtom have_allergy()",
+        "NegatedAtom cuisine-value-chinese()",
+        "NegatedAtom goal()",
         "NegatedAtom force-statement()",
-        "NegatedAtom know__cuisine()"
+        "NegatedAtom cuisine-value-dessert()"
     ]
 }
