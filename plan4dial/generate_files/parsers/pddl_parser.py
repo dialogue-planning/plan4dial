@@ -12,6 +12,7 @@ from typing import Dict, List, Set, Union, Tuple
 # define a tab
 TAB = " " * 4
 
+
 def _get_is_fflag(context_variables: Dict, v_name: str) -> bool:
     """Determines if the provided variable has a "known" setting of type fflag.
 

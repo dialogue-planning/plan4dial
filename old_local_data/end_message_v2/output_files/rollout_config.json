@@ -1,0 +1,83 @@
+{
+    "actions": {
+        "force-all": {
+            "condition": [
+                "(not (maybe-know__drink))",
+                "(not (maybe-know__side))",
+                "(not (maybe-know__pizza_flavour))",
+                "(not (know__side))",
+                "(not (know__pizza_flavour))",
+                "(not (force-statement))",
+                "(not (know__drink))"
+            ],
+            "effect": {
+                "force-all_DETDUP_validate-EQ-valid": [
+                    "(not (maybe-know__drink))",
+                    "(know__side)",
+                    "(not (maybe-know__side))",
+                    "(not (maybe-know__pizza_flavour))",
+                    "(know__drink)",
+                    "(know__pizza_flavour)"
+                ],
+                "force-all_DETDUP_validate-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
+                ]
+            }
+        },
+        "complete": {
+            "condition": [
+                "(not (end))",
+                "(not (maybe-know__drink))",
+                "(know__side)",
+                "(not (maybe-know__side))",
+                "(not (maybe-know__pizza_flavour))",
+                "(know__drink)",
+                "(know__pizza_flavour)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "complete_DETDUP_finish-EQ-assign-goal": [
+                    "(end)",
+                    "(have-message)",
+                    "(force-statement)"
+                ]
+            }
+        },
+        "end": {
+            "condition": [
+                "(end)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "end_DETDUP_finish-EQ-assign-goal": [
+                    "(goal)"
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "condition": [
+                "(have-message)",
+                "(force-statement)"
+            ],
+            "effect": {
+                "dialogue_statement_DETDUP_reset-EQ-lock": [
+                    "(not (have-message))",
+                    "(not (force-statement))"
+                ]
+            }
+        }
+    },
+    "initial_state": [
+        "(not (goal))",
+        "(not (end))",
+        "(not (maybe-know__drink))",
+        "(not (have-message))",
+        "(not (maybe-know__side))",
+        "(not (maybe-know__pizza_flavour))",
+        "(not (know__side))",
+        "(not (know__pizza_flavour))",
+        "(not (force-statement))",
+        "(not (know__drink))"
+    ]
+}
