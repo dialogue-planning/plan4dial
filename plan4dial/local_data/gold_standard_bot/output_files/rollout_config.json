@@ -2,19 +2,19 @@
     "actions": {
         "get-have-allergy": {
             "condition": [
-                "(not (force-statement))",
-                "(not (know__have_allergy))"
+                "(not (know__have_allergy))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-have-allergy_DETDUP_set-allergy-EQ-indicate_allergy": [
-                    "(have_allergy)",
-                    "(know__have_allergy)"
+                    "(know__have_allergy)",
+                    "(have_allergy)"
                 ],
                 "get-have-allergy_DETDUP_set-allergy-EQ-indicate_no_allergy": [
-                    "(not (have_allergy))",
                     "(know__have_allergy)",
                     "(not (conflict))",
-                    "(know__conflict)"
+                    "(know__conflict)",
+                    "(not (have_allergy))"
                 ],
                 "get-have-allergy_DETDUP_set-allergy-EQ-fallback": [
                     "(force-statement)",
@@ -24,8 +24,8 @@
         },
         "get-allergy": {
             "condition": [
-                "(have_allergy)",
                 "(know__have_allergy)",
+                "(have_allergy)",
                 "(not (force-statement))"
             ],
             "effect": {
@@ -40,34 +40,34 @@
         },
         "reset-preferences": {
             "condition": [
-                "(know__conflict)",
                 "(not (force-statement))",
-                "(conflict)"
+                "(conflict)",
+                "(know__conflict)"
             ],
             "effect": {
                 "reset-preferences_DETDUP_reset-EQ-reset-values": [
-                    "(not (know__cuisine))",
-                    "(not (cuisine-value-dessert))",
-                    "(have-message)",
-                    "(not (food_restriction-value-gluten-free))",
-                    "(not (cuisine-value-chinese))",
-                    "(not (know__conflict))",
-                    "(force-statement)",
-                    "(not (cuisine-value-italian))",
                     "(not (cuisine-value-mexican))",
+                    "(not (know__conflict))",
+                    "(not (food_restriction-value-gluten-free))",
+                    "(not (cuisine-value-italian))",
                     "(not (food_restriction-value-dairy-free))",
                     "(not (know__food_restriction))",
-                    "(not (know__have_allergy))"
+                    "(not (cuisine-value-dessert))",
+                    "(not (cuisine-value-chinese))",
+                    "(have-message)",
+                    "(not (know__have_allergy))",
+                    "(force-statement)",
+                    "(not (know__cuisine))"
                 ]
             }
         },
         "set-restaurant": {
             "condition": [
                 "(know__cuisine)",
+                "(not (force-statement))",
                 "(not (conflict))",
                 "(know__conflict)",
-                "(not (know__restaurant))",
-                "(not (force-statement))"
+                "(not (know__restaurant))"
             ],
             "effect": {
                 "set-restaurant_DETDUP_assign_restaurant-EQ-set-mexican": [
@@ -91,8 +91,8 @@
             ],
             "effect": {
                 "complete_DETDUP_finish-EQ-finish": [
-                    "(know__goal)",
-                    "(goal)"
+                    "(goal)",
+                    "(know__goal)"
                 ]
             }
         },
@@ -125,20 +125,20 @@
         },
         "clarify__cuisine": {
             "condition": [
+                "(not (force-statement))",
                 "(not (know__cuisine))",
-                "(maybe-know__cuisine)",
-                "(not (force-statement))"
+                "(maybe-know__cuisine)"
             ],
             "effect": {
                 "clarify__cuisine_DETDUP_validate-clarification-EQ-confirm": [
                     "(know__cuisine)"
                 ],
                 "clarify__cuisine_DETDUP_validate-clarification-EQ-deny": [
-                    "(not (know__cuisine))",
+                    "(not (cuisine-value-mexican))",
+                    "(not (cuisine-value-italian))",
                     "(not (cuisine-value-dessert))",
                     "(not (cuisine-value-chinese))",
-                    "(not (cuisine-value-italian))",
-                    "(not (cuisine-value-mexican))"
+                    "(not (know__cuisine))"
                 ],
                 "clarify__cuisine_DETDUP_validate-clarification-EQ-fallback": [
                     "(force-statement)",
@@ -148,41 +148,41 @@
         },
         "check-conflict-1-or-1": {
             "condition": [
-                "(cuisine-value-mexican)",
-                "(have_allergy)",
-                "(know__have_allergy)",
+                "(not (force-statement))",
                 "(food_restriction-value-gluten-free)",
-                "(not (force-statement))"
+                "(know__have_allergy)",
+                "(have_allergy)",
+                "(cuisine-value-mexican)"
             ],
             "effect": {
                 "check-conflict-1-or-1_DETDUP_check-conflicts-EQ-validate-combos": [
-                    "(know__conflict)",
-                    "(conflict)"
+                    "(conflict)",
+                    "(know__conflict)"
                 ]
             }
         },
         "check-conflict-1-or-2": {
             "condition": [
-                "(food_restriction-value-dairy-free)",
-                "(have_allergy)",
+                "(not (force-statement))",
                 "(know__have_allergy)",
+                "(food_restriction-value-dairy-free)",
                 "(cuisine-value-dessert)",
-                "(not (force-statement))"
+                "(have_allergy)"
             ],
             "effect": {
                 "check-conflict-1-or-2_DETDUP_check-conflicts-EQ-validate-combos": [
-                    "(know__conflict)",
-                    "(conflict)"
+                    "(conflict)",
+                    "(know__conflict)"
                 ]
             }
         },
         "check-conflict-2-or-1": {
             "condition": [
-                "(have_allergy)",
-                "(know__have_allergy)",
-                "(cuisine-value-italian)",
+                "(not (force-statement))",
                 "(know__food_restriction)",
-                "(not (force-statement))"
+                "(cuisine-value-italian)",
+                "(know__have_allergy)",
+                "(have_allergy)"
             ],
             "effect": {
                 "check-conflict-2-or-1_DETDUP_check-conflicts-EQ-validate-combos": [
@@ -193,11 +193,11 @@
         },
         "check-conflict-2-or-2": {
             "condition": [
-                "(cuisine-value-chinese)",
-                "(have_allergy)",
-                "(know__have_allergy)",
+                "(not (force-statement))",
                 "(know__food_restriction)",
-                "(not (force-statement))"
+                "(know__have_allergy)",
+                "(cuisine-value-chinese)",
+                "(have_allergy)"
             ],
             "effect": {
                 "check-conflict-2-or-2_DETDUP_check-conflicts-EQ-validate-combos": [
@@ -208,11 +208,11 @@
         },
         "check-conflict-2-or-3": {
             "condition": [
-                "(cuisine-value-mexican)",
+                "(not (force-statement))",
+                "(know__have_allergy)",
                 "(food_restriction-value-dairy-free)",
                 "(have_allergy)",
-                "(know__have_allergy)",
-                "(not (force-statement))"
+                "(cuisine-value-mexican)"
             ],
             "effect": {
                 "check-conflict-2-or-3_DETDUP_check-conflicts-EQ-validate-combos": [
@@ -223,11 +223,11 @@
         },
         "check-conflict-2-or-4": {
             "condition": [
-                "(have_allergy)",
-                "(know__have_allergy)",
+                "(not (force-statement))",
                 "(food_restriction-value-gluten-free)",
+                "(know__have_allergy)",
                 "(cuisine-value-dessert)",
-                "(not (force-statement))"
+                "(have_allergy)"
             ],
             "effect": {
                 "check-conflict-2-or-4_DETDUP_check-conflicts-EQ-validate-combos": [
@@ -253,11 +253,11 @@
         },
         "set-cuisine": {
             "condition": [
-                "(not (cuisine-value-dessert))",
-                "(not (cuisine-value-chinese))",
-                "(not (cuisine-value-italian))",
                 "(not (cuisine-value-mexican))",
-                "(know__cuisine)"
+                "(know__cuisine)",
+                "(not (cuisine-value-italian))",
+                "(not (cuisine-value-dessert))",
+                "(not (cuisine-value-chinese))"
             ],
             "effect": {
                 "set-cuisine_DETDUP_set-valid-value-EQ-mexican": [
@@ -276,25 +276,25 @@
         }
     },
     "initial_state": [
-        "(not (have-message))",
+        "(not (know__conflict))",
+        "(not (food_restriction-value-gluten-free))",
+        "(not (know__restaurant))",
+        "(not (know__low_budget))",
+        "(not (low_budget))",
+        "(not (cuisine-value-italian))",
         "(not (conflict))",
         "(not (food_restriction-value-dairy-free))",
-        "(not (know__restaurant))",
-        "(not (force-statement))",
-        "(not (low_budget))",
-        "(not (know__outing_atmosphere))",
-        "(not (know__conflict))",
-        "(not (know__food_restriction))",
-        "(not (know__cuisine))",
         "(not (cuisine-value-dessert))",
         "(not (cuisine-value-chinese))",
-        "(not (food_restriction-value-gluten-free))",
-        "(not (know__have_allergy))",
         "(not (have_allergy))",
-        "(not (know__low_budget))",
+        "(not (have-message))",
+        "(not (know__have_allergy))",
+        "(not (know__cuisine))",
+        "(not (cuisine-value-mexican))",
+        "(not (force-statement))",
+        "(not (know__food_restriction))",
         "(not (goal))",
         "(not (know__goal))",
-        "(not (cuisine-value-italian))",
-        "(not (cuisine-value-mexican))"
+        "(not (know__outing_atmosphere))"
     ]
 }

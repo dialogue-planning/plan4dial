@@ -113,7 +113,6 @@ actions:
         action_name: get-cuisine
         entities:
           - cuisine
-        valid_intent: share_cuisine
         message_variants:
           - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
         fallback_message_variants:

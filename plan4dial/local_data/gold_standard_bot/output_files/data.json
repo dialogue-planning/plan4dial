@@ -697,7 +697,9 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "share_cuisine",
+                        "intent": {
+                            "cuisine": "found"
+                        },
                         "name": "slot-fill__get-cuisine_DETDUP_validate-slot-fill-EQ-cuisine_found",
                         "assignments": {
                             "$cuisine": "found"
@@ -723,16 +725,6 @@
                 ]
             },
             "intents": {
-                "share_cuisine": {
-                    "variables": [
-                        "$cuisine"
-                    ],
-                    "utterances": [
-                        "I want to eat $cuisine.",
-                        "Do you have restaurants of type $cuisine?",
-                        "Are there any $cuisine restaurants in the area?"
-                    ]
-                },
                 "fallback": {
                     "variables": [],
                     "utterances": []

@@ -1,13 +1,13 @@
 import json
 import os
 import subprocess
-# import spacy
+import spacy
 from pathlib import Path
 from generate_files.parsers.json_config_parser import _convert_yaml
 from generate_files.parsers.pddl_parser import _parse_to_pddl
 from generate_files.parsers.parse_for_rasa import _make_nlu_file
 from generate_files.parsers.pddl_for_rollout import _rollout_config
-# from rasa.model_training import train_nlu
+from rasa.model_training import train_nlu
 
 
 def generate_files(
@@ -32,34 +32,34 @@ def generate_files(
     writer = open(problem_str, "w")
     writer.write(problem)
 
-    # # train rasa NLU model
-    # if train:
-    #     writer = open(f"{output_folder}/nlu.yml", "w")
-    #     # parse for rasa
-    #     yaml.dump(_make_nlu_file(converted_json), writer)
-    #     # download the spacy model if needed; wait until complete
-    #     try:
-    #         spacy.load("en_core_web_md")
-    #     except OSError:
-    #         subprocess.run(["python -m spacy download en_core_web_md"])
-    #     train_nlu(
-    #         config=f"nlu_config.yml",
-    #         nlu_data=f"{output_folder}/nlu.yml",
-    #         output=f"{output_folder}",
-    #         fixed_model_name=f"nlu_model",
-    #     )
+    # train rasa NLU model
+    if train:
+        writer = open(f"{output_folder}/nlu.yml", "w")
+        # parse for rasa
+        yaml.dump(_make_nlu_file(converted_json), writer)
+        # download the spacy model if needed; wait until complete
+        try:
+            spacy.load("en_core_web_md")
+        except OSError:
+            subprocess.run(["python -m spacy download en_core_web_md"])
+        train_nlu(
+            config=f"nlu_config.yml",
+            nlu_data=f"{output_folder}/nlu.yml",
+            output=f"{output_folder}",
+            fixed_model_name=f"nlu_model",
+        )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
-    # subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
-    # try:
-    #     with open(f"policy.out") as f:
-    #         plan_data = {f"plan": json.load(f)}
-    # except FileNotFoundError:
-    #     raise Exception("PDDL is invalid.")
-    # with open(f"{output_folder}/data.prp.json", "w") as f:
-    #     json.dump(plan_data, f, indent=4)
-    # # delete extra output files
-    # os.remove("./policy.out")
-    # os.remove("./output.sas")
+    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
+    try:
+        with open(f"policy.out") as f:
+            plan_data = {f"plan": json.load(f)}
+    except FileNotFoundError:
+        raise Exception("PDDL is invalid.")
+    with open(f"{output_folder}/data.prp.json", "w") as f:
+        json.dump(plan_data, f, indent=4)
+    # delete extra output files
+    os.remove("./policy.out")
+    os.remove("./output.sas")
     # for rollout
     rollout_data = _rollout_config(converted_json)
     with open(f"{output_folder}/rollout_config.json", "w") as f:
