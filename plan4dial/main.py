@@ -11,9 +11,25 @@ from rasa.model_training import train_nlu
 
 
 def generate_files(
-    yaml_filename: str, output_folder: str, rbp_path: str, train: bool = False
+    yaml_filename: str, output_folder: str, rbp_path: str, train: bool = True
 ):
-    print("here")
+    """Main file responsible for generating the files that will be sent to
+    HOVOR (`contingent-plan-executor`) for executor.
+
+    Args:
+    - yaml_filename (str): The path to the filled out YAML configuration. 
+    - output_folder (str): Output folder where the files will be stored.
+    - rbp_path (str): Path to the `rbp` directory so the planner can be run.
+    - train (bool, optional): Determines if training is required. It is best to
+    set to False if you made changes to the YAML that require some new output
+    files, but the NLU model is not affected (no changes in the Rasa NLU YAML
+    configuration). Defaults to True.
+
+    Raises:
+    - err (FileNotFoundError): Raised if the planner was not able to find a
+    valid plan. Happens if the YAML configuration (and by proxy, the PDDL) is
+    invalid in some way (i.e. missing actions, can't get out of a loop, etc.)
+    """
     # make a new directory for this domain if it doesn't exist
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
@@ -53,14 +69,14 @@ def generate_files(
     try:
         with open(f"policy.out") as f:
             plan_data = {f"plan": json.load(f)}
-    except FileNotFoundError:
-        raise Exception("PDDL is invalid.")
+    except FileNotFoundError as err:
+        raise err("PDDL is invalid.")
     with open(f"{output_folder}/data.prp.json", "w") as f:
         json.dump(plan_data, f, indent=4)
     # delete extra output files
     os.remove("./policy.out")
     os.remove("./output.sas")
-    # for rollout
+    # generate configuration for rollout
     rollout_data = _rollout_config(converted_json)
     with open(f"{output_folder}/rollout_config.json", "w") as f:
         json.dump(rollout_data, f, indent=4)
