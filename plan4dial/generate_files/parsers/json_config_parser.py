@@ -9,9 +9,8 @@ from typing import Union, Dict
 import yaml
 from copy import deepcopy
 from inspect import getmembers, isfunction
-from ..custom_actions.utils import *
-from ..custom_actions import custom
 from nnf import Or, And, Var, config
+from importlib import import_module
 
 
 def _configure_force_message_true() -> Dict:
@@ -283,13 +282,14 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
 def _instantiate_advanced_custom_actions(loaded_yaml: Dict) -> None:
     """Instantiate custom actions.
 
-    NOTE: All custom action functions must be placed in 
-    plan4dial/custom_actions/custom.py.
+    NOTE: All custom action functions must be placed in a file in
+    plan4dial/generate_files/custom_actions.py. The name of the file should
+    be the same name as the function that configures the custom action.
 
     NOTE: The custom actions are responsible for adding the actions to the
     configuration. This is because some custom actions add multiple actions,
-    make changes to the context variables, etc. As a general rule, the
-    loaded_yaml should always be the first parameter.
+    make changes to the context variables, etc. As a rule, the `loaded_yaml`
+    should always be the first parameter.
 
     Args:
     - loaded_yaml (Dict): The loaded YAML configuration.
@@ -299,10 +299,11 @@ def _instantiate_advanced_custom_actions(loaded_yaml: Dict) -> None:
     for act, act_config in loaded_yaml["actions"].items():
         # if we're dealing with a custom action
         if "advanced-custom" in act_config:
-            # find the action in the "custom.py" file and call it
-            for custom_act in getmembers(custom, isfunction):
+            # find the appropriate file in the custom_actions folder
+            custom_act_name = act_config['advanced-custom']['custom-type']
+            for custom_act in getmembers(import_module(f"generate_files.custom_actions.{custom_act_name}"), isfunction):
                 act_name, act_function = custom_act[0], custom_act[1]
-                if act_name == act_config["advanced-custom"]["custom-type"]:
+                if act_name == custom_act_name:
                     act_function(
                         processed, **act_config["advanced-custom"]["parameters"]
                     )

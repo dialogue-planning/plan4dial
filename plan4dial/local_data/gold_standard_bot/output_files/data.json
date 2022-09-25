@@ -739,6 +739,131 @@
                 }
             }
         },
+        "clarify__cuisine": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "I didn't quite get your cuisine preference. Do you want to eat $cuisine?"
+            ],
+            "condition": [
+                [
+                    "cuisine",
+                    "Uncertain"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "validate-clarification",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "cuisine": {
+                                "value": "$cuisine",
+                                "variable": "cuisine",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "clarify__cuisine_DETDUP_validate-clarification-EQ-confirm",
+                        "assignments": {
+                            "$cuisine": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "cuisine": {
+                                "value": null,
+                                "variable": "cuisine",
+                                "certainty": "Unknown",
+                                "interpretation": "json"
+                            },
+                            "cuisine-value-mexican": {
+                                "value": false,
+                                "variable": "cuisine-value-mexican",
+                                "interpretation": "json"
+                            },
+                            "cuisine-value-italian": {
+                                "value": false,
+                                "variable": "cuisine-value-italian",
+                                "interpretation": "json"
+                            },
+                            "cuisine-value-chinese": {
+                                "value": false,
+                                "variable": "cuisine-value-chinese",
+                                "interpretation": "json"
+                            },
+                            "cuisine-value-dessert": {
+                                "value": false,
+                                "variable": "cuisine-value-dessert",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "clarify__cuisine_DETDUP_validate-clarification-EQ-deny",
+                        "assignments": {
+                            "$cuisine": "didnt-find"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "clarify__cuisine_DETDUP_validate-clarification-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
         "check-conflict-1-or-1": {
             "type": "system",
             "condition": [

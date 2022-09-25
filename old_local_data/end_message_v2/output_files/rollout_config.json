@@ -2,45 +2,45 @@
     "actions": {
         "force-all": {
             "condition": [
+                "(not (force-statement))",
+                "(not (know__pizza_flavour))",
+                "(not (know__drink))",
                 "(not (maybe-know__drink))",
                 "(not (maybe-know__side))",
                 "(not (maybe-know__pizza_flavour))",
-                "(not (know__side))",
-                "(not (know__pizza_flavour))",
-                "(not (force-statement))",
-                "(not (know__drink))"
+                "(not (know__side))"
             ],
             "effect": {
                 "force-all_DETDUP_validate-EQ-valid": [
+                    "(know__pizza_flavour)",
                     "(not (maybe-know__drink))",
-                    "(know__side)",
                     "(not (maybe-know__side))",
                     "(not (maybe-know__pizza_flavour))",
-                    "(know__drink)",
-                    "(know__pizza_flavour)"
+                    "(know__side)",
+                    "(know__drink)"
                 ],
                 "force-all_DETDUP_validate-EQ-fallback": [
-                    "(have-message)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(have-message)"
                 ]
             }
         },
         "complete": {
             "condition": [
+                "(not (force-statement))",
                 "(not (end))",
+                "(know__pizza_flavour)",
                 "(not (maybe-know__drink))",
-                "(know__side)",
                 "(not (maybe-know__side))",
                 "(not (maybe-know__pizza_flavour))",
-                "(know__drink)",
-                "(know__pizza_flavour)",
-                "(not (force-statement))"
+                "(know__side)",
+                "(know__drink)"
             ],
             "effect": {
                 "complete_DETDUP_finish-EQ-assign-goal": [
                     "(end)",
-                    "(have-message)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(have-message)"
                 ]
             }
         },
@@ -57,27 +57,27 @@
         },
         "dialogue_statement": {
             "condition": [
-                "(have-message)",
-                "(force-statement)"
+                "(force-statement)",
+                "(have-message)"
             ],
             "effect": {
                 "dialogue_statement_DETDUP_reset-EQ-lock": [
-                    "(not (have-message))",
-                    "(not (force-statement))"
+                    "(not (force-statement))",
+                    "(not (have-message))"
                 ]
             }
         }
     },
     "initial_state": [
-        "(not (goal))",
+        "(not (force-statement))",
+        "(not (know__pizza_flavour))",
+        "(not (know__drink))",
         "(not (end))",
-        "(not (maybe-know__drink))",
         "(not (have-message))",
+        "(not (maybe-know__drink))",
+        "(not (goal))",
         "(not (maybe-know__side))",
         "(not (maybe-know__pizza_flavour))",
-        "(not (know__side))",
-        "(not (know__pizza_flavour))",
-        "(not (force-statement))",
-        "(not (know__drink))"
+        "(not (know__side))"
     ]
 }

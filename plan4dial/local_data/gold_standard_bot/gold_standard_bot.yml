@@ -122,6 +122,8 @@ actions:
           cuisine:
             fallback_message_variants:
               - Sorry, that still isn't a valid cuisine.
+            clarify_message_variants:
+              - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
             response_variants:
               - Cuisine preference has been logged.
   get-have-allergy:

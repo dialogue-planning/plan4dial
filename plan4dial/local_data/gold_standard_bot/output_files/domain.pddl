@@ -29,8 +29,8 @@
         :parameters()
         (:precondition
             (and
-                (not (know__have_allergy))
                 (not (force-statement))
+                (not (know__have_allergy))
             )
         )
         :effect
@@ -43,16 +43,16 @@
                 )
                 (outcome indicate_no_allergy
                     (and
-                        (know__have_allergy)
-                        (know__conflict)
-                        (not (conflict))
                         (not (have_allergy))
+                        (know__have_allergy)
+                        (not (conflict))
+                        (know__conflict)
                     )
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -61,9 +61,9 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
                 (have_allergy)
                 (know__have_allergy)
+                (not (force-statement))
             )
         )
         :effect
@@ -75,8 +75,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -85,27 +85,27 @@
         :parameters()
         (:precondition
             (and
+                (know__conflict)
                 (not (force-statement))
                 (conflict)
-                (know__conflict)
             )
         )
         :effect
             (labeled-oneof reset
                 (outcome reset-values
                     (and
-                        (not (know__food_restriction))
-                        (not (food_restriction-value-dairy-free))
-                        (not (cuisine-value-italian))
-                        (have-message)
                         (not (know__cuisine))
-                        (not (know__conflict))
-                        (not (know__have_allergy))
-                        (not (cuisine-value-chinese))
-                        (not (food_restriction-value-gluten-free))
-                        (not (cuisine-value-mexican))
-                        (force-statement)
                         (not (cuisine-value-dessert))
+                        (have-message)
+                        (not (food_restriction-value-gluten-free))
+                        (not (cuisine-value-chinese))
+                        (not (know__conflict))
+                        (force-statement)
+                        (not (cuisine-value-italian))
+                        (not (cuisine-value-mexican))
+                        (not (food_restriction-value-dairy-free))
+                        (not (know__food_restriction))
+                        (not (know__have_allergy))
                     )
                 )
             )
@@ -114,11 +114,11 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
-                (not (know__restaurant))
+                (know__cuisine)
                 (not (conflict))
                 (know__conflict)
-                (know__cuisine)
+                (not (know__restaurant))
+                (not (force-statement))
             )
         )
         :effect
@@ -167,8 +167,8 @@
         :parameters()
         (:precondition
             (and
-                (have-message)
                 (force-statement)
+                (have-message)
             )
         )
         :effect
@@ -185,8 +185,8 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
                 (not (know__cuisine))
+                (not (force-statement))
             )
         )
         :effect
@@ -198,8 +198,41 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
+                    )
+                )
+            )
+    )
+    (:action clarify__cuisine
+        :parameters()
+        (:precondition
+            (and
+                (not (know__cuisine))
+                (maybe-know__cuisine)
+                (not (force-statement))
+            )
+        )
+        :effect
+            (labeled-oneof validate-clarification
+                (outcome confirm
+                    (and
+                        (know__cuisine)
+                    )
+                )
+                (outcome deny
+                    (and
+                        (not (know__cuisine))
+                        (not (cuisine-value-dessert))
+                        (not (cuisine-value-chinese))
+                        (not (cuisine-value-italian))
+                        (not (cuisine-value-mexican))
+                    )
+                )
+                (outcome fallback
+                    (and
+                        (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -208,19 +241,19 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
                 (cuisine-value-mexican)
+                (have_allergy)
                 (know__have_allergy)
                 (food_restriction-value-gluten-free)
-                (have_allergy)
+                (not (force-statement))
             )
         )
         :effect
             (labeled-oneof check-conflicts
                 (outcome validate-combos
                     (and
-                        (conflict)
                         (know__conflict)
+                        (conflict)
                     )
                 )
             )
@@ -229,19 +262,19 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
-                (cuisine-value-dessert)
                 (food_restriction-value-dairy-free)
-                (know__have_allergy)
                 (have_allergy)
+                (know__have_allergy)
+                (cuisine-value-dessert)
+                (not (force-statement))
             )
         )
         :effect
             (labeled-oneof check-conflicts
                 (outcome validate-combos
                     (and
-                        (conflict)
                         (know__conflict)
+                        (conflict)
                     )
                 )
             )
@@ -250,19 +283,19 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
-                (know__food_restriction)
+                (have_allergy)
                 (know__have_allergy)
                 (cuisine-value-italian)
-                (have_allergy)
+                (know__food_restriction)
+                (not (force-statement))
             )
         )
         :effect
             (labeled-oneof check-conflicts
                 (outcome validate-combos
                     (and
-                        (know__conflict)
                         (not (conflict))
+                        (know__conflict)
                     )
                 )
             )
@@ -271,19 +304,19 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
-                (know__food_restriction)
-                (know__have_allergy)
                 (cuisine-value-chinese)
                 (have_allergy)
+                (know__have_allergy)
+                (know__food_restriction)
+                (not (force-statement))
             )
         )
         :effect
             (labeled-oneof check-conflicts
                 (outcome validate-combos
                     (and
-                        (know__conflict)
                         (not (conflict))
+                        (know__conflict)
                     )
                 )
             )
@@ -292,19 +325,19 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
                 (cuisine-value-mexican)
                 (food_restriction-value-dairy-free)
-                (know__have_allergy)
                 (have_allergy)
+                (know__have_allergy)
+                (not (force-statement))
             )
         )
         :effect
             (labeled-oneof check-conflicts
                 (outcome validate-combos
                     (and
-                        (know__conflict)
                         (not (conflict))
+                        (know__conflict)
                     )
                 )
             )
@@ -313,19 +346,19 @@
         :parameters()
         (:precondition
             (and
-                (not (force-statement))
-                (cuisine-value-dessert)
+                (have_allergy)
                 (know__have_allergy)
                 (food_restriction-value-gluten-free)
-                (have_allergy)
+                (cuisine-value-dessert)
+                (not (force-statement))
             )
         )
         :effect
             (labeled-oneof check-conflicts
                 (outcome validate-combos
                     (and
-                        (know__conflict)
                         (not (conflict))
+                        (know__conflict)
                     )
                 )
             )
@@ -334,9 +367,9 @@
         :parameters()
         (:precondition
             (and
-                (know__food_restriction)
                 (not (food_restriction-value-gluten-free))
                 (not (food_restriction-value-dairy-free))
+                (know__food_restriction)
             )
         )
         :effect
@@ -357,11 +390,11 @@
         :parameters()
         (:precondition
             (and
+                (not (cuisine-value-dessert))
                 (not (cuisine-value-chinese))
                 (not (cuisine-value-italian))
                 (not (cuisine-value-mexican))
                 (know__cuisine)
-                (not (cuisine-value-dessert))
             )
         )
         :effect

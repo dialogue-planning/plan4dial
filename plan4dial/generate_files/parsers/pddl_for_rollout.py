@@ -14,31 +14,43 @@ from .pddl_parser import (
     _get_update_fluents,
     _parse_init,
 )
-from typing import List
+from typing import Dict
 
 
-def rollout_config(configuration):
+def _rollout_config(configuration_data: Dict) -> Dict:
+    """Given the configuration data, generates a PDDL configuration in dict
+    form for ease in calculating applicable actions in conversation rollouts.
+
+    Args:
+    - configuration_data (Dict): The configuration data for the domain. 
+
+    Returns:
+    - (Dict): The PDDL configuration in a dict form.
+    """
+    # initialize the actions with conditions
     actions = {
         act: {
             "condition":
                 list(
                     _get_precond_fluents(
-                        configuration["context_variables"], act_cfg["condition"]
+                        configuration_data["context_variables"], act_cfg["condition"]
                     )
                 ),
             "effect": {},
         }
-        for act, act_cfg in configuration["actions"].items()
+        for act, act_cfg in configuration_data["actions"].items()
     }
-    for act, act_cfg in configuration["actions"].items():
+    # instantiate the outcomes with update fluents
+    for act, act_cfg in configuration_data["actions"].items():
         for out in act_cfg["effect"]["outcomes"]:
             if "updates" in out:
                 actions[act]["effect"][out["name"]] = list(
                         _get_update_fluents(
-                            configuration["context_variables"], out["updates"]
+                            configuration_data["context_variables"], out["updates"]
                         )
                     )
+    # return both the actions and initial state
     return {
         "actions": actions,
-        "initial_state": list(_parse_init(configuration["context_variables"])[1])
+        "initial_state": list(_parse_init(configuration_data["context_variables"])[1])
     }

@@ -6,31 +6,31 @@ from pathlib import Path
 from generate_files.parsers.json_config_parser import _convert_yaml
 from generate_files.parsers.pddl_parser import _parse_to_pddl
 from generate_files.parsers.parse_for_rasa import _make_nlu_file
-from generate_files.parsers.pddl_for_rollout import rollout_config
+from generate_files.parsers.pddl_for_rollout import _rollout_config
 # from rasa.model_training import train_nlu
 
 
 def generate_files(
     yaml_filename: str, output_folder: str, rbp_path: str, train: bool = False
 ):
-    # print("here")
-    # # make a new directory for this domain if it doesn't exist
-    # if not os.path.exists(output_folder):
-    #     os.makedirs(output_folder)
-    # # convert to hovor json config
-    # writer = open(f"{output_folder}/data.json", "w")
+    print("here")
+    # make a new directory for this domain if it doesn't exist
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+    # convert to hovor json config
+    writer = open(f"{output_folder}/data.json", "w")
     converted_json = _convert_yaml(yaml_filename)
-    # writer.write(json.dumps(converted_json, indent=4))
-    # # convert to PDDL
-    # domain, problem = _parse_to_pddl(converted_json)
-    # domain_str, problem_str = (
-    #     f"{output_folder}/domain.pddl",
-    #     f"{output_folder}/problem.pddl",
-    # )
-    # writer = open(domain_str, "w")
-    # writer.write(domain)
-    # writer = open(problem_str, "w")
-    # writer.write(problem)
+    writer.write(json.dumps(converted_json, indent=4))
+    # convert to PDDL
+    domain, problem = _parse_to_pddl(converted_json)
+    domain_str, problem_str = (
+        f"{output_folder}/domain.pddl",
+        f"{output_folder}/problem.pddl",
+    )
+    writer = open(domain_str, "w")
+    writer.write(domain)
+    writer = open(problem_str, "w")
+    writer.write(problem)
 
     # # train rasa NLU model
     # if train:
@@ -61,16 +61,15 @@ def generate_files(
     # os.remove("./policy.out")
     # os.remove("./output.sas")
     # for rollout
-    rollout_data = rollout_config(converted_json)
+    rollout_data = _rollout_config(converted_json)
     with open(f"{output_folder}/rollout_config.json", "w") as f:
         json.dump(rollout_data, f, indent=4)
 
 
 if __name__ == "__main__":
-    #dirname = "./plan4dial/local_data/gold_standard_bot"
-    dirname = "./old_local_data/end_message_v2"
+    dirname = "./plan4dial/local_data/gold_standard_bot"
     generate_files(
-        f"{dirname}/end_message_v2.yml",
+        f"{dirname}/gold_standard_bot.yml",
         f"{dirname}/output_files",
         str((Path(__file__).parent.parent / "rbp").resolve()),
         True,
