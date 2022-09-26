@@ -279,7 +279,7 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
     }
 
 
-def _instantiate_advanced_custom_actions(loaded_yaml: Dict) -> None:
+def _instantiate_custom_actions(loaded_yaml: Dict) -> None:
     """Instantiate custom actions.
 
     NOTE: All custom action functions must be placed in a file in
@@ -298,14 +298,14 @@ def _instantiate_advanced_custom_actions(loaded_yaml: Dict) -> None:
     # iterate through all actions
     for act, act_config in loaded_yaml["actions"].items():
         # if we're dealing with a custom action
-        if "advanced-custom" in act_config:
+        if act_config["type"] == "custom":
             # find the appropriate file in the custom_actions folder
-            custom_act_name = act_config['advanced-custom']['custom-type']
+            custom_act_name = act_config["subtype"]
             for custom_act in getmembers(import_module(f"generate_files.custom_actions.{custom_act_name}"), isfunction):
                 act_name, act_function = custom_act[0], custom_act[1]
                 if act_name == custom_act_name:
                     act_function(
-                        processed, **act_config["advanced-custom"]["parameters"]
+                        processed, **act_config["custom"]["parameters"]
                     )
                     break
             # delete the custom action instantiation outline
@@ -695,7 +695,7 @@ def _convert_yaml(filename: str) -> Dict:
     """
     loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
     _base_fallback_setup(loaded_yaml)
-    _instantiate_advanced_custom_actions(loaded_yaml)
+    _instantiate_custom_actions(loaded_yaml)
     _add_fallbacks(loaded_yaml)
     _add_follow_ups_and_responses(loaded_yaml)
     _duplicate_for_or_condition(loaded_yaml)

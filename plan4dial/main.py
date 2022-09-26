@@ -2,6 +2,7 @@ import json
 import os
 import subprocess
 import spacy
+import yaml
 from pathlib import Path
 from generate_files.parsers.json_config_parser import _convert_yaml
 from generate_files.parsers.pddl_parser import _parse_to_pddl

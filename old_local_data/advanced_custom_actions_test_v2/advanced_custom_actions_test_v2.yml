@@ -135,7 +135,7 @@ intents:
 
 actions:
   ask-pizza_flavour:
-    advanced-custom:
+    custom:
       custom-type: slot_fill
       parameters:
         action_name: ask-order
