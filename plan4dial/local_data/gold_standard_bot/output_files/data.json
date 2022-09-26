@@ -1,0 +1,271 @@
+{
+    "name": "day-planner",
+    "context_variables": {
+        "cuisine": {
+            "type": "enum",
+            "config": [
+                "mexican",
+                "italian",
+                "chinese",
+                "dessert"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "restaurant": {
+            "type": "enum",
+            "config": [
+                "Guac Grill",
+                "Alfredo's Pizza Caf\u00e9",
+                "Mandarin",
+                "Geneva Crepes"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "have_allergy": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "food_restriction": {
+            "type": "enum",
+            "config": [
+                "dairy-free",
+                "gluten-free"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "conflict": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "budget": {
+            "type": "enum",
+            "config": [
+                "low",
+                "high"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "outing_type": {
+            "type": "enum",
+            "config": [
+                "high-energy",
+                "low-energy"
+            ],
+            "known": {
+                "type": "fflag",
+                "init": false
+            }
+        },
+        "outing": {
+            "type": "enum",
+            "config": [
+                "Stages",
+                "Stauffer Library",
+                "Cineplex Movie Theater",
+                "Smith's Golfing Club"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "goal": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "confirm": {
+            "variables": [],
+            "utterances": [
+                "yes",
+                "yeah",
+                "that's it",
+                "Y",
+                "mhm",
+                "confirm",
+                "yes please"
+            ]
+        },
+        "deny": {
+            "variables": [],
+            "utterances": [
+                "no",
+                "not at all",
+                "that's not what i meant",
+                "absolutely not",
+                "i don't want that",
+                "nah",
+                "no thanks",
+                "no thank you"
+            ]
+        },
+        "share_cuisine": {
+            "variables": [
+                "$cuisine"
+            ],
+            "utterances": [
+                "I want to eat $cuisine.",
+                "Do you have restaurants of type $cuisine?",
+                "Are there any $cuisine restaurants in the area?"
+            ]
+        },
+        "share_allergies": {
+            "variables": [
+                "$food_restriction"
+            ],
+            "utterances": [
+                "I have to eat $food_restriction.",
+                "I can only eat foods that are $food_restriction.",
+                "I am allergic to any foods that are not $food_restriction."
+            ]
+        },
+        "share_all_outing_preferences": {
+            "variables": [
+                "$budget",
+                "$outing_type"
+            ],
+            "utterances": [
+                "I have a $budget budget and I would prefer a $outing_type atmosphere today.",
+                "I am operating within a $budget budget and I want to go to a $outing_type place.",
+                "I can do activities with a $budget budget and I want to find the most $outing_type place in the city."
+            ]
+        },
+        "share_budget": {
+            "variables": [
+                "$budget"
+            ],
+            "utterances": [
+                "I have a $budget budget.",
+                "I am operating within a $budget budget.",
+                "I can do activities with a $budget budget."
+            ]
+        },
+        "share_outing_type": {
+            "variables": [
+                "$outing_type"
+            ],
+            "utterances": [
+                "I would prefer a $outing_type atmosphere today.",
+                "I want to go to a $outing_type place.",
+                "What is the most $outing_type place in the city?"
+            ]
+        },
+        "fallback": {
+            "variables": [],
+            "utterances": []
+        },
+        "utter_dialogue_statement": {
+            "variables": [],
+            "utterances": []
+        }
+    },
+    "actions": {
+        "complete": {
+            "type": "system",
+            "condition": [
+                [
+                    "goal",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "finish",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "complete_DETDUP_finish-EQ-finish",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_dialogue_statement",
+                        "name": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "intents": {
+                "utter_dialogue_statement": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        }
+    }
+}

@@ -94,6 +94,7 @@ def _fluents_to_pddl(
     tabs: int,
     name_wrap: str = None,
     and_wrap: bool = False,
+    outer_brackets: bool = True
 ) -> str:
     """Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and
     "and" wraps as appropriate.
@@ -101,6 +102,8 @@ def _fluents_to_pddl(
     Args:
     - fluents (List[str]): A list of the string versions of the fluents.
     - tabs (int): The "base" indentation of the fluents.
+    - outer_brackets (bool. optional): Setting to wrap the final statement
+    with outer brackets, i.e. (outcome ...) Defaults to True.
     - name_wrap (str, optional): Setting to wrap fluents with a name, i.e.
     ":predicates". Defaults to None.
     - and_wrap (bool, optional): Setting to wrap fluents with an "and", i.e.
@@ -128,11 +131,13 @@ def _fluents_to_pddl(
     # wrap with the and if necessary
     if and_wrap:
         fluents = f"\n{and_wrap_tabs}(and{fluents}\n{and_wrap_tabs})"
-    # wrap with the name wrap 
+    # wrap with the name wrap and outer brackets if necessary
     if name_wrap:
         fluents = f"{name_wrap}{fluents}"
         fluents = (
             f"\n{TAB * tabs}({fluents}\n{TAB * tabs})"
+            if outer_brackets
+            else f"\n{TAB * tabs}{fluents}"
         )
     return fluents
 
@@ -220,6 +225,7 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
         tabs=2,
         name_wrap=":precondition",
         and_wrap=True,
+        outer_brackets=False
     )
     # convert the effects
     effects = f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof {act_config['effect']['global-outcome-name']}"

@@ -141,257 +141,11 @@ intents:
       - What is the most $outing_type place in the city?
 
 actions:
-  get-cuisine:
-    type: custom
-    subtype: slot_fill
-    parameters:
-      action_name: get-cuisine
-      entities:
-        - cuisine
-      message_variants:
-        - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
-      fallback_message_variants:
-        - Sorry, that isn't a valid cuisine. 
-      config_entities:
-        cuisine:
-          fallback_message_variants:
-            - Sorry, that still isn't a valid cuisine.
-          clarify_message_variants:
-            - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
-      additional_updates:
-        - outcome:
-            cuisine:
-              known: true
-          response_variants:
-            - Cuisine preference has been logged.
-  get-have-allergy:
-    type: dialogue
-    subtype: dialogue disambiguation
-    message_variants:
-      - Do you have any allergies? (Y/N)
-    condition:
-      have_allergy:
-        known: false 
-    effect:
-      set-allergy:
-        oneof:
-          outcomes:
-            indicate_allergy:
-              updates:
-                have_allergy:
-                  value: true
-                  known: true
-              intent: confirm
-              follow_up: get-allergy
-            indicate_no_allergy:
-              updates:
-                have_allergy:
-                  known: true
-                  value: false
-                conflict:
-                  known: true
-                  value: false
-              intent: deny
-  get-allergy:
-    type: dialogue
-    subtype: dialogue disambiguation
-    message_variants:
-      - What type of allergy do you have? (I currently account for dairy and gluten allergies).
-    fallback_message_variants:
-      - Sorry, I don't recognize that type of allergy.
-    condition:
-      have_allergy:
-        known: true
-        value: true
-    effect:
-      set-allergy:
-        oneof:
-          outcomes:
-            update_allergy:
-              updates:
-                food_restriction:
-                  value: $food_restriction
-                  known: true
-              intent: share_allergies
-  check-conflicts:
-    type: system
-    subtype: Context dependent determination
-    condition:
-      have_allergy:
-        known: true
-        value: true
-      food_restriction:
-        known: true
-      cuisine:
-        known: true
-      conflict:
-        known: false
-    effect:
-      check-conflicts:
-        oneof:
-          outcomes:
-            restriction-dessert:
-              updates:
-                conflict:
-                  value: true
-              context:
-                cuisine:
-                  value: dessert
-                food_restriction:
-                  value: dairy-free
-            restriction-mexican:
-              updates:
-                conflict:
-                  value: true
-              context:
-                cuisine:
-                  value: mexican
-                food_restriction:
-                  value: gluten-free
-            no-restriction-1:
-              updates:
-                conflict:
-                  value: false
-              context:
-                cuisine:
-                  value: italian
-            no-restriction-2:
-              updates:
-                conflict:
-                  value: false
-              context:
-                cuisine:
-                  value: chinese
-            no-restriction-3:
-              updates:
-                conflict:
-                  value: false
-              context:
-                cuisine:
-                  value: dessert
-                food_restriction:
-                  value: gluten-free               
-            no-restriction-4:
-              updates:
-                conflict:
-                  value: false
-              context:
-                cuisine:
-                  value: mexican
-                food_restriction:
-                  value: dairy-free
-  reset-preferences:
-    type: system
-    condition:
-      conflict:
-        known: true
-        value: true
-    effect:
-      reset:
-        oneof:
-          outcomes:
-            reset-values:
-              updates:
-                have_allergy:
-                  known: false
-                food_restriction:
-                  known: false
-                cuisine:
-                  known: false
-                conflict:
-                  known: false 
-              response_variants:
-                - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
-  set-restaurant:
-    type: system
-    subtype: Context dependent determination
-    condition:
-      cuisine:
-        known: true
-      conflict:
-        known: true
-        value: false
-      restaurant:
-        known: false
-    effect:
-      assign_restaurant:
-        oneof:
-          outcomes:
-            set-mexican:
-              updates:
-                restaurant:
-                  value: Guac Grill
-                  known: true
-              context:
-                cuisine:
-                  value: mexican
-            set-italian:
-              updates:
-                restaurant:
-                  value: Alfredo's Pizza Café  
-                  known: true
-              context:
-                cuisine:
-                  value: italian
-            set-chinese:
-              updates:
-                restaurant:
-                  value: Mandarin
-                  known: true
-              context:
-                cuisine:
-                  value: chinese
-            set-dessert:
-              updates:
-                restaurant:
-                  value: Geneva Crepes
-                  known: true
-              context:
-                cuisine:
-                  value: dessert
-  get_outing:
-    type: custom
-    subtype: slot_fill
-    parameters:
-      action_name: get_outing_preference
-      entities:
-        - budget
-        - outing_type
-      message_variants:
-        - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
-      fallback_message_variants:
-        - Sorry, that isn't a valid outing preference.
-      config_entities:
-        budget:
-          fallback_message_variants:
-            - Sorry, that isn't a valid budget option. Please select either high or low.
-          single_slot_message_variants:
-            - What is your budget preference? Please select either high or low.
-        outing_type:
-          fallback_message_variants:
-            - Sorry, that isn't a valid outing type.
-          single_slot_message_variants:
-            - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
-      additional_updates:
-        - outcome:
-            budget:
-              known: true
-          response_variants:
-            - Ok, I'll take that into account.
-        - outcome:
-            outing_type:
-              known: true
-          response_variants:
-            - Great choice!
   complete:
-    type: dialogue
+    type: system
     condition:
-      restaurant:
-        known: true
-      outing:
-        known: true
-    message_variants:
-      - Booked a reservation at $reservation as well as a spot at $outing.
+      goal:
+        value: false
     effect:
       finish:
         oneof:
@@ -400,4 +154,264 @@ actions:
               updates:
                 goal:
                   value: true
-                  known: true
+  # get-cuisine:
+  #   type: custom
+  #   subtype: slot_fill
+  #   parameters:
+  #     action_name: get-cuisine
+  #     entities:
+  #       - cuisine
+  #     message_variants:
+  #       - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+  #     fallback_message_variants:
+  #       - Sorry, that isn't a valid cuisine. 
+  #     config_entities:
+  #       cuisine:
+  #         fallback_message_variants:
+  #           - Sorry, that still isn't a valid cuisine.
+  #         clarify_message_variants:
+  #           - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
+  #     additional_updates:
+  #       - outcome:
+  #           cuisine:
+  #             known: true
+  #         response_variants:
+  #           - Cuisine preference has been logged.
+  # get-have-allergy:
+  #   type: dialogue
+  #   subtype: dialogue disambiguation
+  #   message_variants:
+  #     - Do you have any allergies? (Y/N)
+  #   condition:
+  #     have_allergy:
+  #       known: false 
+  #   effect:
+  #     set-allergy:
+  #       oneof:
+  #         outcomes:
+  #           indicate_allergy:
+  #             updates:
+  #               have_allergy:
+  #                 value: true
+  #                 known: true
+  #             intent: confirm
+  #             follow_up: get-allergy
+  #           indicate_no_allergy:
+  #             updates:
+  #               have_allergy:
+  #                 known: true
+  #                 value: false
+  #               conflict:
+  #                 known: true
+  #                 value: false
+  #             intent: deny
+  # get-allergy:
+  #   type: dialogue
+  #   subtype: dialogue disambiguation
+  #   message_variants:
+  #     - What type of allergy do you have? (I currently account for dairy and gluten allergies).
+  #   fallback_message_variants:
+  #     - Sorry, I don't recognize that type of allergy.
+  #   condition:
+  #     have_allergy:
+  #       known: true
+  #       value: true
+  #   effect:
+  #     set-allergy:
+  #       oneof:
+  #         outcomes:
+  #           update_allergy:
+  #             updates:
+  #               food_restriction:
+  #                 value: $food_restriction
+  #                 known: true
+  #             intent: share_allergies
+  # check-conflicts:
+  #   type: system
+  #   subtype: Context dependent determination
+  #   condition:
+  #     have_allergy:
+  #       known: true
+  #       value: true
+  #     food_restriction:
+  #       known: true
+  #     cuisine:
+  #       known: true
+  #     conflict:
+  #       known: false
+  #   effect:
+  #     check-conflicts:
+  #       oneof:
+  #         outcomes:
+  #           restriction-dessert:
+  #             updates:
+  #               conflict:
+  #                 value: true
+  #             context:
+  #               cuisine:
+  #                 value: dessert
+  #               food_restriction:
+  #                 value: dairy-free
+  #           restriction-mexican:
+  #             updates:
+  #               conflict:
+  #                 value: true
+  #             context:
+  #               cuisine:
+  #                 value: mexican
+  #               food_restriction:
+  #                 value: gluten-free
+  #           no-restriction-1:
+  #             updates:
+  #               conflict:
+  #                 value: false
+  #             context:
+  #               cuisine:
+  #                 value: italian
+  #           no-restriction-2:
+  #             updates:
+  #               conflict:
+  #                 value: false
+  #             context:
+  #               cuisine:
+  #                 value: chinese
+  #           no-restriction-3:
+  #             updates:
+  #               conflict:
+  #                 value: false
+  #             context:
+  #               cuisine:
+  #                 value: dessert
+  #               food_restriction:
+  #                 value: gluten-free               
+  #           no-restriction-4:
+  #             updates:
+  #               conflict:
+  #                 value: false
+  #             context:
+  #               cuisine:
+  #                 value: mexican
+  #               food_restriction:
+  #                 value: dairy-free
+  # reset-preferences:
+  #   type: system
+  #   condition:
+  #     conflict:
+  #       known: true
+  #       value: true
+  #   effect:
+  #     reset:
+  #       oneof:
+  #         outcomes:
+  #           reset-values:
+  #             updates:
+  #               have_allergy:
+  #                 known: false
+  #               food_restriction:
+  #                 known: false
+  #               cuisine:
+  #                 known: false
+  #               conflict:
+  #                 known: false 
+  #             response_variants:
+  #               - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+  # set-restaurant:
+  #   type: system
+  #   subtype: Context dependent determination
+  #   condition:
+  #     cuisine:
+  #       known: true
+  #     conflict:
+  #       known: true
+  #       value: false
+  #     restaurant:
+  #       known: false
+  #   effect:
+  #     assign_restaurant:
+  #       oneof:
+  #         outcomes:
+  #           set-mexican:
+  #             updates:
+  #               restaurant:
+  #                 value: Guac Grill
+  #                 known: true
+  #             context:
+  #               cuisine:
+  #                 value: mexican
+  #           set-italian:
+  #             updates:
+  #               restaurant:
+  #                 value: Alfredo's Pizza Café  
+  #                 known: true
+  #             context:
+  #               cuisine:
+  #                 value: italian
+  #           set-chinese:
+  #             updates:
+  #               restaurant:
+  #                 value: Mandarin
+  #                 known: true
+  #             context:
+  #               cuisine:
+  #                 value: chinese
+  #           set-dessert:
+  #             updates:
+  #               restaurant:
+  #                 value: Geneva Crepes
+  #                 known: true
+  #             context:
+  #               cuisine:
+  #                 value: dessert
+  # # get_outing:
+  # #   type: custom
+  # #   subtype: slot_fill
+  # #   parameters:
+  # #     action_name: get_outing_preference
+  # #     entities:
+  # #       - budget
+  # #       - outing_type
+  # #     message_variants:
+  # #       - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
+  # #     fallback_message_variants:
+  # #       - Sorry, that isn't a valid outing preference.
+  # #     config_entities:
+  # #       budget:
+  # #         fallback_message_variants:
+  # #           - Sorry, that isn't a valid budget option. Please select either high or low.
+  # #         single_slot_message_variants:
+  # #           - What is your budget preference? Please select either high or low.
+  # #       outing_type:
+  # #         fallback_message_variants:
+  # #           - Sorry, that isn't a valid outing type.
+  # #         single_slot_message_variants:
+  # #           - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
+  # #     additional_updates:
+  # #       - outcome:
+  # #           budget:
+  # #             known: true
+  # #         response_variants:
+  # #           - Ok, I'll take that into account.
+  # #       - outcome:
+  # #           outing_type:
+  # #             known: true
+  # #         response_variants:
+  # #           - Great choice!
+  # complete:
+  #   type: dialogue
+  #   condition:
+  #     restaurant:
+  #       known: true
+  #     # outing:
+  #     #   known: true
+  #   message_variants:
+  #     - test
+  #     # - Booked a reservation at $reservation as well as a spot at $outing.
+  #   effect:
+  #     finish:
+  #       oneof:
+  #         outcomes:
+  #           finish:
+  #             updates:
+  #               goal:
+  #                 value: true
+  #                 known: true

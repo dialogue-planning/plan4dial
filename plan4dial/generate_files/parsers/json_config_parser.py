@@ -291,6 +291,10 @@ def _instantiate_custom_actions(loaded_yaml: Dict) -> None:
     make changes to the context variables, etc. As a rule, the `loaded_yaml`
     should always be the first parameter.
 
+    NOTE: Custom actions should have "custom" as the `type`, and the name of
+    the function as the `subtype`. Parameters to the function should go in a
+    `parameters` dictionary.
+
     Args:
     - loaded_yaml (Dict): The loaded YAML configuration.
     """
@@ -305,7 +309,7 @@ def _instantiate_custom_actions(loaded_yaml: Dict) -> None:
                 act_name, act_function = custom_act[0], custom_act[1]
                 if act_name == custom_act_name:
                     act_function(
-                        processed, **act_config["custom"]["parameters"]
+                        processed, **act_config["parameters"]
                     )
                     break
             # delete the custom action instantiation outline
@@ -681,19 +685,18 @@ def _convert_actions(loaded_yaml: Dict) -> None:
     loaded_yaml["actions"] = processed
 
 
-def _convert_yaml(filename: str) -> Dict:
+def _convert_yaml(loaded_yaml: Dict) -> Dict:
     """Generates the JSON configuration required by Hovor from the provided
     YAML file. First preprocesses the YAML, adding clarification actions,
     follow-up actions, etc, then finally converts everything into Hovor
     format.
 
     Args:
-    - filename (str): the YAML file.
+    - loaded_yaml (Dict): The loaded YAML configuration.
 
     Returns:
     - (Dict): The JSON configuration required by Hovor.
     """
-    loaded_yaml = yaml.load(open(filename, "r"), Loader=yaml.FullLoader)
     _base_fallback_setup(loaded_yaml)
     _instantiate_custom_actions(loaded_yaml)
     _add_fallbacks(loaded_yaml)
