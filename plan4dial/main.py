@@ -35,19 +35,19 @@ def generate_files(
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     # convert to hovor json config
-    writer = open(f"{output_folder}/data.json", "w")
     converted_json = _convert_yaml(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader))
-    writer.write(json.dumps(converted_json, indent=4))
+    with open(f"{output_folder}/data.json", "w") as writer:
+        writer.write(json.dumps(converted_json, indent=4))
     # convert to PDDL
     domain, problem = _parse_to_pddl(converted_json)
     domain_str, problem_str = (
         f"{output_folder}/domain.pddl",
         f"{output_folder}/problem.pddl",
     )
-    writer2 = open(domain_str, "w")
-    writer2.write(domain)
-    writer3 = open(problem_str, "w")
-    writer3.write(problem)
+    with open(domain_str, "w") as writer:
+        writer.write(domain)
+    with open(problem_str, "w") as writer:
+        writer.write(problem)
 
     # train rasa NLU model
     # if train:
@@ -58,7 +58,7 @@ def generate_files(
     #     try:
     #         spacy.load("en_core_web_md")
     #     except OSError:
-    #         subprocess.run(["python -m spacy download en_core_web_md"])
+    #         subprocess.run(["python3", "-m", "spacy", "download", "en_core_web_md"])
     #     train_nlu(
     #         config=f"nlu_config.yml",
     #         nlu_data=f"{output_folder}/nlu.yml",
@@ -66,21 +66,22 @@ def generate_files(
     #         fixed_model_name=f"nlu_model",
     #     )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
-    # subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
-    # try:
-    #     with open(f"policy.out") as f:
-    #         plan_data = {f"plan": json.load(f)}
-    # except FileNotFoundError as err:
-    #     raise Exception("PDDL is invalid.") from err
-    # with open(f"{output_folder}/data.prp.json", "w") as f:
-    #     json.dump(plan_data, f, indent=4)
-    # # delete extra output files
-    # os.remove("./policy.out")
-    # os.remove("./output.sas")
-    # # generate configuration for rollout
-    # rollout_data = _rollout_config(converted_json)
-    # with open(f"{output_folder}/rollout_config.json", "w") as f:
-    #     json.dump(rollout_data, f, indent=4)
+    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
+
+    try:
+        with open(f"policy.out") as f:
+            plan_data = {f"plan": json.load(f)}
+    except FileNotFoundError as err:
+        raise Exception("PDDL is invalid.") from err
+    with open(f"{output_folder}/data.prp.json", "w") as f:
+        json.dump(plan_data, f, indent=4)
+    # delete extra output files
+    os.remove("./policy.out")
+    os.remove("./output.sas")
+    # generate configuration for rollout
+    rollout_data = _rollout_config(converted_json)
+    with open(f"{output_folder}/rollout_config.json", "w") as f:
+        json.dump(rollout_data, f, indent=4)
 
 
 if __name__ == "__main__":
@@ -88,6 +89,6 @@ if __name__ == "__main__":
     generate_files(
         f"{dirname}/gold_standard_bot.yml",
         f"{dirname}/output_files",
-        str((Path(__file__).parent.parent.parent / "rbp").resolve()),
+        "/home/vivi/rbp",
         True,
     )

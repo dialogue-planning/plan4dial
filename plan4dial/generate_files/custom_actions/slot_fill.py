@@ -122,14 +122,11 @@ def slot_fill(
                 p
                 for p in itertools.product(
                     [entity],
-                    # don't include "didnt-find" because if an entity is not
-                    # found by default (and it's in the condition); we only 
-                    # need to track what we found in a slot fill outcome
                     (
-                        ["found", "maybe-found"]
+                        ["found", "maybe-found", "didnt-find"]
                         if loaded_yaml["context_variables"][entity]["known"]["type"]
                         == "fflag"
-                        else ["found"]
+                        else ["found", "didnt-find"]
                     ),
                 )
             ]
@@ -148,46 +145,52 @@ def slot_fill(
     action["effect"] = {"validate-slot-fill": {"oneof": {"outcomes": {}}}}
     # iterate through all the possible entity combinations
     for combo in entity_combos:
-        next_out = {"updates": {}}
-        # store the intent based on the combo
-        next_out["intent"] = {
+        # refine combo by exluding "didnt-find" which we don't need for updates
+        refined_combo = {
             entity: certainty
             for entity, certainty in combo
+            if certainty != "didnt-find"
         }
-        outcome_name = "".join(
-            f"{entity}_{certainty}-"
-            for entity, certainty in combo)[:-1]
-        # add the updates based on what's in this combo
-        for entity, certainty in combo:
-            next_out["updates"].update(_map_assignment_update(entity, certainty))
+        # only consider outcomes in which we find at elast something
+        if refined_combo:
+            next_out = {"updates": {}}
+            # store the intent based on the refined combo
+            next_out["intent"] = refined_combo
+            outcome_name = "".join(
+                f"{entity}_{certainty}-"
+                for entity, certainty in refined_combo.items())[:-1]
+            # add the updates based on what's in this refined combo (again,
+            # ignoring what we didn't find)
+            for entity, certainty in refined_combo.items():
+                next_out["updates"].update(_map_assignment_update(entity, certainty))
 
-        if additional_updates:
-            # convert the current outcome into a frozenset to be compared
-            key = frozenset(
-                {
-                    entity: certainty
-                    for entity, certainty in combo
-                }.items()
-            )
-            # check if this frozenset is included in the dict of outcomes with
-            # additional updates; if so, add the appropriate updates
-            if key in cfg_updates:
-                new_upd_cfg = cfg_updates[key]
-                if "updates" in new_upd_cfg:
-                    next_out["updates"].update(new_upd_cfg["updates"])
-                if "response_variants" in new_upd_cfg:
-                    next_out["response_variants"] = new_upd_cfg[
-                        "response_variants"
-                    ]
-                if "follow_up" in new_upd_cfg:
-                    next_out["follow_up"] = new_upd_cfg["follow_up"]
-        action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
-            outcome_name
-        ] = next_out
+            if additional_updates:
+                # convert the current outcome into a frozenset to be compared
+                key = frozenset(
+                    {
+                        entity: certainty
+                        for entity, certainty in refined_combo.items()
+                    }.items()
+                )
+                # check if this frozenset is included in the dict of outcomes with
+                # additional updates; if so, add the appropriate updates
+                if key in cfg_updates:
+                    new_upd_cfg = cfg_updates[key]
+                    if "updates" in new_upd_cfg:
+                        next_out["updates"].update(new_upd_cfg["updates"])
+                    if "response_variants" in new_upd_cfg:
+                        next_out["response_variants"] = new_upd_cfg[
+                            "response_variants"
+                        ]
+                    if "follow_up" in new_upd_cfg:
+                        next_out["follow_up"] = new_upd_cfg["follow_up"]
+            action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
+                outcome_name
+            ] = next_out
     actions = {f"slot-fill__{action_name}": action}
     # create clarifications and single slot actions as necessary
     new_actions, new_ctx_vars = _create_clarifications_single_slots(
-        action_name, action, entities, config_entities, additional_updates
+        action_name, action, entities, config_entities, loaded_yaml["context_variables"], additional_updates
     )
     # update the loaded YAML with the new actions
     actions.update(new_actions)
@@ -250,7 +253,7 @@ def _clarify_act(entity: str, message_variants: List[str], single_slot: bool, ad
     return {f"clarify__{entity}": clarify}
 
 
-def _single_slot(entity: str, config_entity: Dict, additional_updates: Dict = None) -> None:
+def _single_slot(entity: str, config_entity: Dict, known_is_fflag: bool, additional_updates: Dict = None) -> None:
     """Generates a 'single slot' action for the entity provided. These are only
     necessary when multiple entities were specified, to handle the case where
     the bot is able to only extract some on its first go and `clarify` actions
@@ -262,6 +265,8 @@ def _single_slot(entity: str, config_entity: Dict, additional_updates: Dict = No
     - config_entity (Dict): The `config_entities` configuration for this
     entity. Necessary so that we can access the `single_slot_message_variants`
     and `fallback_message_variants` if they exist.
+    - known_is_fflag (bool): Indicates if the `known` setting for the entity in
+    question is of type `fflag`.
     - additional_updates (Dict, optional): Any additional updates. In reality,
     it will only consider those where just this entity is extracted, or maybe
     extracted. Defaults to None.
@@ -270,7 +275,7 @@ def _single_slot(entity: str, config_entity: Dict, additional_updates: Dict = No
     - (Dict): The `single_slot` action configuration.
     """
     fill_slot_updates = _map_assignment_update(entity, "found")
-    slot_unclear_updates = _map_assignment_update(entity, "maybe-found")
+    
     # if we successfully extract the entity, we should reset this flag.
     # while it might not seem important, if all the entities are reset to null
     # at some point, then we need to ensure that the original action runs first
@@ -281,9 +286,6 @@ def _single_slot(entity: str, config_entity: Dict, additional_updates: Dict = No
         key = frozenset({entity: "found"}.items())
         if key in additional_updates:
             fill_slot_updates.update(additional_updates[key])
-        key = frozenset({entity: "maybe-found"}.items())
-        if key in additional_updates:
-            slot_unclear_updates.update(additional_updates[key])
     # add message variants if they exist
     message_variants = (
         config_entity["single_slot_message_variants"]
@@ -307,20 +309,26 @@ def _single_slot(entity: str, config_entity: Dict, additional_updates: Dict = No
                     "fill-slot": {
                         "updates": fill_slot_updates,
                         "intent": {entity: "found"},
-                    },
-                    "slot-unclear": {
-                        "updates": slot_unclear_updates,
-                        "intent": {entity: "maybe-found"},
-                    },
+                    }
                 },
             }
         }
     }
+    if known_is_fflag:
+        # add additional updates if they exist
+        if additional_updates:
+            key = frozenset({entity: "maybe-found"}.items())
+            if key in additional_updates:
+                slot_unclear_updates.update(additional_updates[key])
+        slot_unclear_updates = _map_assignment_update(entity, "maybe-found")
+        single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"]["slot-unclear"] = {
+                        "updates": slot_unclear_updates,
+                        "intent": {entity: "maybe-found"},
+                    }
     if "fallback_message_variants" in config_entity:
         single_slot["fallback_message_variants"] = config_entity[
             "fallback_message_variants"
         ]
-
     return {f"single_slot__{entity}": single_slot}
 
 
@@ -329,6 +337,7 @@ def _create_clarifications_single_slots(
     original_act_config: Dict,
     entities: List[str],
     config_entities: Dict,
+    context_variables: Dict,
     additional_updates: Dict = None,
 ) -> Tuple[Dict, Dict]:
     """Used by the `slot_fill` action to generate `clarify` and `single_slot`
@@ -342,6 +351,8 @@ def _create_clarifications_single_slots(
     - entities (List[str]): The total list of entities to extract.
     - config_entities (Dict): Configurations for these entities that hold more
     information.
+    - context_variables (Dict): The context variable configuration from
+    `loaded_yaml`.
     - additional_updates (Dict, optional): Any additional updates. Defaults to
     None.
 
@@ -369,13 +380,13 @@ def _create_clarifications_single_slots(
                                 ][f"allow_single_slot_{entity}"] = {"value": True}
                                 new_actions.update(
                                     _single_slot(
-                                        entity, config_entities[entity], additional_updates
+                                        entity, config_entities[entity], context_variables[entity]["known"]["type"] == "fflag", additional_updates
                                     )
                                 )
         new_actions[original_act_name] = original_act_config
     for entity in entities:
         # only create clarify actions if clarify messages were specified
-        if "clarify_message_variants" in config_entities[entity]:
+        if context_variables[entity]["known"]["type"] == "fflag" and "clarify_message_variants" in config_entities[entity]:
             new_actions.update(
                 _clarify_act(
                     entity,
