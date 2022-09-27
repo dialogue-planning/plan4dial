@@ -1,14 +1,14 @@
 import json
 import os
 import subprocess
-# import spacy
+import spacy
 import yaml
 from pathlib import Path
 from generate_files.parsers.json_config_parser import _convert_yaml
 from generate_files.parsers.pddl_parser import _parse_to_pddl
 from generate_files.parsers.parse_for_rasa import _make_nlu_file
 from generate_files.parsers.pddl_for_rollout import _rollout_config
-# from rasa.model_training import train_nlu
+from rasa.model_training import train_nlu
 
 
 def generate_files(
@@ -50,21 +50,17 @@ def generate_files(
         writer.write(problem)
 
     # train rasa NLU model
-    # if train:
-    #     writer = open(f"{output_folder}/nlu.yml", "w")
-    #     # parse for rasa
-    #     yaml.dump(_make_nlu_file(converted_json), writer)
-    #     # download the spacy model if needed; wait until complete
-    #     try:
-    #         spacy.load("en_core_web_md")
-    #     except OSError:
-    #         subprocess.run(["python3", "-m", "spacy", "download", "en_core_web_md"])
-    #     train_nlu(
-    #         config=f"nlu_config.yml",
-    #         nlu_data=f"{output_folder}/nlu.yml",
-    #         output=f"{output_folder}",
-    #         fixed_model_name=f"nlu_model",
-    #     )
+    if train:
+        writer = open(f"{output_folder}/nlu.yml", "w")
+        # parse for rasa. need to use the original YAML because some of the NLU
+        # information is lost in the JSON configuration.
+        yaml.dump(_make_nlu_file(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader)), writer)
+        train_nlu(
+            config=f"./plan4dial/generate_files/nlu_config.yml",
+            nlu_data=f"{output_folder}/nlu.yml",
+            output=f"{output_folder}",
+            fixed_model_name=f"nlu_model",
+        )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
     subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
 
