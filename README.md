@@ -7,7 +7,9 @@ https://qumulab.github.io/plan4dial/plan4dial.html
 
 ## Requirements
 **Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.**
-Simply run `pip install -r requirements.txt` to install the necessary libraries before using.
+For ease of use and reducing the chance of import or versioning errors, it is recommended that you use a virtual environment such as `venv`.
+Run `pip install -r requirements.txt` to install the necessary libraries before using.
+Run `python -m spacy download en_core_web_md` to download the appropriate Spacy model.
 
 ## Usage
 ### 1. Create a YAML config file that specifies context variables, intents, and actions that your bot can take.
