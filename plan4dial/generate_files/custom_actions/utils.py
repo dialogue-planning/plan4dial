@@ -5,7 +5,7 @@ Authors:
 """
 from typing import Dict
 
-def _map_assignment_update(entity: str, assignment: str) -> Dict:
+def map_assignment_update(entity: str, assignment: str) -> Dict:
     """Given an entity and its assignment, returns the corresponding 
     update.
 

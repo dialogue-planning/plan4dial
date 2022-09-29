@@ -32,7 +32,7 @@ def _create_intent_example(extracted_value: str, entity: str, true_value: Union[
     return f'[{extracted_value}]{{"entity": "{entity}", "value": "{true_value}"}}'
 
 
-def _make_nlu_file(loaded_yaml: Dict) -> Dict:
+def make_nlu_file(loaded_yaml: Dict) -> Dict:
     """Generates the NLU configuration that Rasa requires to extract intents
     and entities.
 

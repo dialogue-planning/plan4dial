@@ -6,7 +6,6 @@ Authors:
 """
 
 from typing import Union, Dict
-import yaml
 from copy import deepcopy
 from inspect import getmembers, isfunction
 from nnf import Or, And, Var, config
@@ -75,7 +74,7 @@ def _configure_dialogue_statement() -> Dict:
     }
 
 
-def _configure_assignments(known: Union[bool, str]) -> str:
+def configure_assignments(known: Union[bool, str]) -> str:
     """Converts the parameter `known` (which is either True, False, or "maybe")
     to the equivalent Hovor assignment ("found", "didnt-find", and
     "maybe-found" respectively). Used for outcomes.
@@ -654,7 +653,7 @@ def _convert_actions(loaded_yaml: Dict) -> None:
                             if "known" in update_cfg:
                                 next_outcome["assignments"][
                                     f"${update_var}"
-                                ] = _configure_assignments(update_cfg["known"])
+                                ] = configure_assignments(update_cfg["known"])
                                 next_outcome["updates"][update_var][
                                     "certainty"
                                 ] = _configure_certainty(update_cfg["known"])
@@ -685,7 +684,7 @@ def _convert_actions(loaded_yaml: Dict) -> None:
     loaded_yaml["actions"] = processed
 
 
-def _convert_yaml(loaded_yaml: Dict) -> Dict:
+def convert_yaml(loaded_yaml: Dict) -> Dict:
     """Generates the JSON configuration required by Hovor from the provided
     YAML file. First preprocesses the YAML, adding clarification actions,
     follow-up actions, etc, then finally converts everything into Hovor

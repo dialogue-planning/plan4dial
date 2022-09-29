@@ -7,8 +7,8 @@ Authors:
 
 from typing import List, Dict, Tuple
 import itertools
-from .utils import _map_assignment_update
-from ..parsers.json_config_parser import _configure_assignments
+from .utils import map_assignment_update
+from ..parsers.json_config_parser import configure_assignments
 
 
 def slot_fill(
@@ -86,7 +86,7 @@ def slot_fill(
             for var in additional_updates[i]["outcome"]:
                 # convert to an assignment setting so we can more easily
                 # identify what outcome we're referring to
-                additional_updates[i]["outcome"][var] = _configure_assignments(additional_updates[i]["outcome"][var]["known"])
+                additional_updates[i]["outcome"][var] = configure_assignments(additional_updates[i]["outcome"][var]["known"])
         cfg_updates = {}
         for setting in additional_updates:
             # we don't want to consider when entities are NOT found because
@@ -141,7 +141,7 @@ def slot_fill(
     # condition: none of the entities can be found
     action["condition"] = {}
     for entity in entities:
-        action["condition"].update(_map_assignment_update(entity, "didnt-find"))
+        action["condition"].update(map_assignment_update(entity, "didnt-find"))
     action["effect"] = {"validate-slot-fill": {"oneof": {"outcomes": {}}}}
     # iterate through all the possible entity combinations
     for combo in entity_combos:
@@ -162,7 +162,7 @@ def slot_fill(
             # add the updates based on what's in this refined combo (again,
             # ignoring what we didn't find)
             for entity, certainty in refined_combo.items():
-                next_out["updates"].update(_map_assignment_update(entity, certainty))
+                next_out["updates"].update(map_assignment_update(entity, certainty))
 
             if additional_updates:
                 # convert the current outcome into a frozenset to be compared
@@ -216,13 +216,13 @@ def _clarify_act(entity: str, message_variants: List[str], single_slot: bool, ad
     Returns:
     - (Dict): The `clarify` action configuration.
     """
-    confirm_updates = _map_assignment_update(entity, "found")
+    confirm_updates = map_assignment_update(entity, "found")
     # consider additional updates if the entity is extracted
     if additional_updates:
         key = frozenset({entity: "found"}.items())
         if key in additional_updates:
             confirm_updates.update(additional_updates[key])
-    deny_updates = _map_assignment_update(entity, "didnt-find")
+    deny_updates = map_assignment_update(entity, "didnt-find")
     # if we were originally trying to extract multiple entities and we weren't
     # able to clarify one of them, we will have to move on to extracting the
     # entity with a single_slot action. the single_slot action has to be
@@ -274,7 +274,7 @@ def _single_slot(entity: str, config_entity: Dict, known_is_fflag: bool, additio
     Returns:
     - (Dict): The `single_slot` action configuration.
     """
-    fill_slot_updates = _map_assignment_update(entity, "found")
+    fill_slot_updates = map_assignment_update(entity, "found")
     
     # if we successfully extract the entity, we should reset this flag.
     # while it might not seem important, if all the entities are reset to null
@@ -320,7 +320,7 @@ def _single_slot(entity: str, config_entity: Dict, known_is_fflag: bool, additio
             key = frozenset({entity: "maybe-found"}.items())
             if key in additional_updates:
                 slot_unclear_updates.update(additional_updates[key])
-        slot_unclear_updates = _map_assignment_update(entity, "maybe-found")
+        slot_unclear_updates = map_assignment_update(entity, "maybe-found")
         single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"]["slot-unclear"] = {
                         "updates": slot_unclear_updates,
                         "intent": {entity: "maybe-found"},

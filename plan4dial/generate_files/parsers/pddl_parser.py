@@ -142,7 +142,7 @@ def _fluents_to_pddl(
     return fluents
 
 
-def _get_precond_fluents(context_variables: Dict, conditions: List[Union[str, bool]]) -> Set[str]:
+def get_precond_fluents(context_variables: Dict, conditions: List[Union[str, bool]]) -> Set[str]:
     """Convert an action precondition to PDDL fluents.
 
     Args:
@@ -171,7 +171,7 @@ def _get_precond_fluents(context_variables: Dict, conditions: List[Union[str, bo
     return precond
 
 
-def _get_update_fluents(context_variables: Dict, updates: Dict) -> Set[str]:
+def get_update_fluents(context_variables: Dict, updates: Dict) -> Set[str]:
     """Converts the update configuration of an action outcome to PDDL fluents.
 
     Args:
@@ -221,7 +221,7 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
 
     # convert the preconditions
     precond = _fluents_to_pddl(
-        fluents=_get_precond_fluents(context_variables, act_config["condition"]),
+        fluents=get_precond_fluents(context_variables, act_config["condition"]),
         tabs=2,
         name_wrap=":precondition",
         and_wrap=True,
@@ -233,7 +233,7 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
     for out_config in act_config["effect"]["outcomes"]:
         if "updates" in out_config:
             # for each outcome, get the update fluents
-            update_fluents = _get_update_fluents(
+            update_fluents = get_update_fluents(
                 context_variables, out_config["updates"]
             )
             # add the outcome to the effect string
@@ -265,7 +265,7 @@ def _actions_to_pddl(loaded_yaml: Dict) -> str:
     )
 
 
-def _parse_init(context_variables: Dict) -> Tuple[Set[str], Set[str]]:
+def get_init_fluents(context_variables: Dict) -> Tuple[Set[str], Set[str]]:
     """Convert the initial state of context variables to a PDDL initial state.
 
     Args:
@@ -337,7 +337,7 @@ def _parse_predicates(context_variables: Dict) -> List[str]:
     return predicates
 
 
-def _parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
+def parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
     """Converts the loaded YAML file to a PDDL specification.
 
     Args:
@@ -356,7 +356,7 @@ def _parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
     domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements :strips :typing)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB}(:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = _fluents_to_pddl(
-        fluents=_parse_init(loaded_yaml["context_variables"])[0],
+        fluents=get_init_fluents(loaded_yaml["context_variables"])[0],
         tabs=1,
         name_wrap=":init",
     )

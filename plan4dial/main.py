@@ -4,10 +4,10 @@ import subprocess
 import spacy
 import yaml
 from pathlib import Path
-from generate_files.parsers.json_config_parser import _convert_yaml
-from generate_files.parsers.pddl_parser import _parse_to_pddl
-from generate_files.parsers.parse_for_rasa import _make_nlu_file
-from generate_files.parsers.pddl_for_rollout import _rollout_config
+from generate_files.parsers.json_config_parser import convert_yaml
+from generate_files.parsers.pddl_parser import parse_to_pddl
+from generate_files.parsers.parse_for_rasa import make_nlu_file
+from generate_files.parsers.pddl_for_rollout import rollout_config
 from rasa.model_training import train_nlu
 
 
@@ -35,11 +35,11 @@ def generate_files(
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     # convert to hovor json config
-    converted_json = _convert_yaml(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader))
+    converted_json = convert_yaml(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader))
     with open(f"{output_folder}/data.json", "w") as writer:
         writer.write(json.dumps(converted_json, indent=4))
-    # convert to PDDL
-    domain, problem = _parse_to_pddl(converted_json)
+    # # convert to PDDL
+    domain, problem = parse_to_pddl(converted_json)
     domain_str, problem_str = (
         f"{output_folder}/domain.pddl",
         f"{output_folder}/problem.pddl",
@@ -54,7 +54,7 @@ def generate_files(
         writer = open(f"{output_folder}/nlu.yml", "w")
         # parse for rasa. need to use the original YAML because some of the NLU
         # information is lost in the JSON configuration.
-        yaml.dump(_make_nlu_file(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader)), writer)
+        yaml.dump(make_nlu_file(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader)), writer)
         train_nlu(
             config=f"./plan4dial/generate_files/nlu_config.yml",
             nlu_data=f"{output_folder}/nlu.yml",
@@ -75,7 +75,7 @@ def generate_files(
     os.remove("./policy.out")
     os.remove("./output.sas")
     # generate configuration for rollout
-    rollout_data = _rollout_config(converted_json)
+    rollout_data = rollout_config(converted_json)
     with open(f"{output_folder}/rollout_config.json", "w") as f:
         json.dump(rollout_data, f, indent=4)
 
