@@ -18,7 +18,7 @@
             "type": "enum",
             "config": [
                 "Guac Grill",
-                "Alfredo's Pizza Caf\u00e9",
+                "Alfredo's Pizza Caf\u00c3\u00a9",
                 "Mandarin",
                 "Geneva Crepes"
             ],
@@ -486,7 +486,7 @@
                         },
                         "context": {
                             "cuisine": {
-                                "value": "mexican"
+                                "value": "Mexican"
                             },
                             "food_restriction": {
                                 "value": "gluten-free"
@@ -509,7 +509,7 @@
                         },
                         "context": {
                             "cuisine": {
-                                "value": "italian"
+                                "value": "Italian"
                             }
                         },
                         "name": "check-conflicts_DETDUP_check-conflicts-EQ-no-restriction-1",
@@ -529,7 +529,7 @@
                         },
                         "context": {
                             "cuisine": {
-                                "value": "chinese"
+                                "value": "Chinese"
                             }
                         },
                         "name": "check-conflicts_DETDUP_check-conflicts-EQ-no-restriction-2",
@@ -572,7 +572,7 @@
                         },
                         "context": {
                             "cuisine": {
-                                "value": "mexican"
+                                "value": "Mexican"
                             },
                             "food_restriction": {
                                 "value": "dairy-free"
@@ -707,7 +707,7 @@
                         },
                         "context": {
                             "cuisine": {
-                                "value": "mexican"
+                                "value": "Mexican"
                             }
                         },
                         "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-mexican",
@@ -719,7 +719,7 @@
                     {
                         "updates": {
                             "restaurant": {
-                                "value": "Alfredo's Pizza Caf\u00e9",
+                                "value": "Alfredo's Pizza Caf\u00c3\u00a9",
                                 "variable": "restaurant",
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -727,7 +727,7 @@
                         },
                         "context": {
                             "cuisine": {
-                                "value": "italian"
+                                "value": "Italian"
                             }
                         },
                         "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-italian",
@@ -747,7 +747,7 @@
                         },
                         "context": {
                             "cuisine": {
-                                "value": "chinese"
+                                "value": "Chinese"
                             }
                         },
                         "name": "set-restaurant_DETDUP_assign_restaurant-EQ-set-chinese",
@@ -852,7 +852,7 @@
                 ]
             ],
             "message_variants": [
-                "Booked a reservation at $reservation as well as a spot at $outing."
+                "Booked a reservation at $restaurant as well as a spot at $outing."
             ],
             "effect": {
                 "global-outcome-name": "finish",
@@ -867,14 +867,15 @@
                                 "interpretation": "json"
                             }
                         },
-                        "name": "complete_DETDUP_finish-EQ-finish",
                         "intent": null,
+                        "name": "complete_DETDUP_finish-EQ-finish",
                         "assignments": {
                             "$goal": "found"
                         }
                     }
                 ]
-            }
+            },
+            "intents": {}
         },
         "dialogue_statement": {
             "type": "dialogue",

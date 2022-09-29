@@ -247,7 +247,7 @@ actions:
                   value: true
               context:
                 cuisine:
-                  value: mexican
+                  value: Mexican
                 food_restriction:
                   value: gluten-free
             no-restriction-1:
@@ -257,7 +257,7 @@ actions:
                   value: false
               context:
                 cuisine:
-                  value: italian
+                  value: Italian
             no-restriction-2:
               updates:
                 conflict:
@@ -265,7 +265,7 @@ actions:
                   value: false
               context:
                 cuisine:
-                  value: chinese
+                  value: Chinese
             no-restriction-3:
               updates:
                 conflict:
@@ -283,7 +283,7 @@ actions:
                   value: false
               context:
                 cuisine:
-                  value: mexican
+                  value: Mexican
                 food_restriction:
                   value: dairy-free
   reset-preferences:
@@ -330,7 +330,7 @@ actions:
                   known: true
               context:
                 cuisine:
-                  value: mexican
+                  value: Mexican
             set-italian:
               updates:
                 restaurant:
@@ -338,7 +338,7 @@ actions:
                   known: true
               context:
                 cuisine:
-                  value: italian
+                  value: Italian
             set-chinese:
               updates:
                 restaurant:
@@ -346,7 +346,7 @@ actions:
                   known: true
               context:
                 cuisine:
-                  value: chinese
+                  value: Chinese
             set-dessert:
               updates:
                 restaurant:
@@ -455,7 +455,7 @@ actions:
       outing:
         known: true
     message_variants:
-      - Booked a reservation at $reservation as well as a spot at $outing.
+      - Booked a reservation at $restaurant as well as a spot at $outing.
     effect:
       finish:
         oneof:
@@ -465,3 +465,4 @@ actions:
                 goal:
                   value: true
                   known: true
+              intent:
