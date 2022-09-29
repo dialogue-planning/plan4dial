@@ -447,10 +447,11 @@ actions:
                 outing_type:
                   value: high-energy
   complete:
+    disable-fallback: true
     type: dialogue
     condition:
-      # restaurant:
-      #   known: true
+      restaurant:
+        known: true
       outing:
         known: true
     message_variants:

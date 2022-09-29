@@ -831,8 +831,13 @@
             }
         },
         "complete": {
+            "disable-fallback": true,
             "type": "dialogue",
             "condition": [
+                [
+                    "restaurant",
+                    "Known"
+                ],
                 [
                     "outing",
                     "Known"
@@ -867,35 +872,8 @@
                         "assignments": {
                             "$goal": "found"
                         }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "complete_DETDUP_finish-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
-            "intents": {
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
             }
         },
         "dialogue_statement": {
