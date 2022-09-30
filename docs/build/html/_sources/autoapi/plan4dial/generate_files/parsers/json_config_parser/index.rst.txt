@@ -1,0 +1,289 @@
+:py:mod:`plan4dial.generate_files.parsers.json_config_parser`
+=============================================================
+
+.. py:module:: plan4dial.generate_files.parsers.json_config_parser
+
+.. autoapi-nested-parse::
+
+   This module contains all the base functions required to convert a YAML
+   configuration to the JSON configuration required by Hovor.
+
+   Authors:
+   - Rebecca De Venezia
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   plan4dial.generate_files.parsers.json_config_parser._configure_force_message_true
+   plan4dial.generate_files.parsers.json_config_parser._configure_fallback
+   plan4dial.generate_files.parsers.json_config_parser._configure_dialogue_statement
+   plan4dial.generate_files.parsers.json_config_parser.configure_assignments
+   plan4dial.generate_files.parsers.json_config_parser._configure_certainty
+   plan4dial.generate_files.parsers.json_config_parser._convert_to_formula
+   plan4dial.generate_files.parsers.json_config_parser._convert_to_DNF
+   plan4dial.generate_files.parsers.json_config_parser._configure_value_setter
+   plan4dial.generate_files.parsers.json_config_parser._base_fallback_setup
+   plan4dial.generate_files.parsers.json_config_parser._instantiate_custom_actions
+   plan4dial.generate_files.parsers.json_config_parser._add_fallbacks
+   plan4dial.generate_files.parsers.json_config_parser._add_follow_ups_and_responses
+   plan4dial.generate_files.parsers.json_config_parser._duplicate_for_or_condition
+   plan4dial.generate_files.parsers.json_config_parser._duplicate_for_or_when_condition
+   plan4dial.generate_files.parsers.json_config_parser._add_value_setters
+   plan4dial.generate_files.parsers.json_config_parser._convert_ctx_var
+   plan4dial.generate_files.parsers.json_config_parser._convert_intents
+   plan4dial.generate_files.parsers.json_config_parser._convert_actions
+   plan4dial.generate_files.parsers.json_config_parser.convert_yaml
+
+
+
+.. py:function:: _configure_force_message_true() -> Dict
+
+   Returns:
+   - (Dict): Configuration where `have-message` and `force-statement` are set to True.
+
+
+.. py:function:: _configure_fallback() -> Dict
+
+   Returns:
+   - (Dict): Update configuration for a fallback outcome.
+
+
+.. py:function:: _configure_dialogue_statement() -> Dict
+
+   Returns the base `dialogue_statement` action.
+
+   Most often, the `dialogue_statement` action is triggered when a fallback
+   occurs; in this case, `dialogue_statement` updates its
+   `message_variants` to the appropriate `fallback_message_variants`.
+   Dialogue statements are also used for responses, in which case
+   `dialogue_statement` updates its `message_variants` to the appropriate
+   `response_variants`.
+
+   Note that the intent `utter_dialogue_statement` is a blank intent because
+   `message` actions (`dialogue` type actions with a single outcome) do not
+   take user input into account and simply execute the single outcome.
+
+   Returns:
+   - (Dict): The full configuration for the `dialogue_statement` action.
+
+
+.. py:function:: configure_assignments(known: Union[bool, str]) -> str
+
+   Converts the parameter `known` (which is either True, False, or "maybe")
+   to the equivalent Hovor assignment ("found", "didnt-find", and
+   "maybe-found" respectively). Used for outcomes.
+
+   Args:
+   - known (bool or str): The "known" status of a context variable in the YAML.
+
+   Returns:
+   - (str): The Hovor assignment equivalent to the "known" parameter provided.
+
+
+.. py:function:: _configure_certainty(known: Union[bool, str]) -> str
+
+   Converts the parameter `known` (which is either True, False, or "maybe")
+   to the equivalent Hovor certainty ("Known", "Unknown", and
+   "Uncertain" respectively). Used for preconditions.
+
+   Args:
+   - known (bool or str): The "known" status of a context variable in the YAML.
+
+   Returns:
+   - (str): The Hovor certainty equivalent to the "known" parameter provided.
+
+
+.. py:function:: _convert_to_formula(condition: Dict) -> Union[nnf.And, nnf.Or]
+
+   Converts an action condition from the YAML to a list of terms for an
+   NNF formula.
+
+   Args:
+   - condition (Dict): An action condition from the YAML.
+
+   Returns:
+   - formula_terms (Union[nnf.And, nnf.Or]): An NNF formula.
+
+   TODO: Test extensively once arbitrary conversion to DNF becomes viable.
+
+
+.. py:function:: _convert_to_DNF(condition: Dict) -> nnf.And
+
+   Converts an action condition from the YAML to an NNF formula in
+   Disjunctive Normal Form. Eventually, this would be used for auto-
+   generating equivalent actions based on arbritrary logical formulas.
+
+   NOTE: Will not be in use until issue #4 is resolved.
+
+   Args:
+   - condition (Dict): An action condition from the YAML.
+
+   Returns:
+   - (nnf.And): The DNF formula that the action condition was converted to.
+
+
+.. py:function:: _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None
+
+   Configures the actions in loaded_yaml to allow for value setting. This
+   allows values to be used in preconditions, i.e. cuisine: {value: "Mexican"}.
+
+   This is done by creating flag context variables that represent the value
+   of the context variable; i.e. "cuisine-value-Mexican". We need to create
+   flag representations so that value knowledge is reflected in the PDDL and
+   ultimately the generated tree/controller. This flag is what would be used
+   as a precondition to check the value of the context variable.
+
+   Obviously, the flag values can be set when the context variable becomes
+   known, and reset when the context variable becomes unknown.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+   - ctx_var (str): The context variable referenced in value-dependent
+       preconditions.
+
+
+.. py:function:: _base_fallback_setup(loaded_yaml: Dict) -> None
+
+   Sets up the default intents, action, and context variables needed to
+   handle fallbacks.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: _instantiate_custom_actions(loaded_yaml: Dict) -> None
+
+   Instantiate custom actions.
+
+   NOTE: All custom action functions must be placed in a file in
+   plan4dial/generate_files/custom_actions.py. The name of the file should
+   be the same name as the function that configures the custom action.
+
+   NOTE: The custom actions are responsible for adding the actions to the
+   configuration. This is because some custom actions add multiple actions,
+   make changes to the context variables, etc. As a rule, the `loaded_yaml`
+   should always be the first parameter.
+
+   NOTE: Custom actions should have "custom" as the `type`, and the name of
+   the function as the `subtype`. Parameters to the function should go in a
+   `parameters` dictionary.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: _add_fallbacks(loaded_yaml: Dict) -> None
+
+   Ensure that non-fallback options can only run if a fallback did not just
+   occur. Add fallback outcomes to actions as necessary.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: _add_follow_ups_and_responses(loaded_yaml: Dict) -> None
+
+   Configures follow up actions and responses where they were specified
+   in the YAML.
+
+   Follow ups are actions that are forced to take place after an outcome.
+   Responses are messages that the agent must utter after an outcome.
+
+   NOTE: As it stands, follow ups only force the action that you specify and
+   disable all others. This means that for actions that, for example, lead into
+   clarifications, those clarifications will not be forced too. A more complex
+   configuration for robust follow_up functionality (as well as more
+   description of the issue) is detailed in #5, but this bare-bones
+   specification can be safely used in the meantime.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: _duplicate_for_or_condition(loaded_yaml: Dict) -> None
+
+   Creates equivalent actions to those with an "or" precondition by splitting
+   them up into separate actions.
+
+   NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #4).
+   Should not be deployed yet.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: _duplicate_for_or_when_condition(loaded_yaml: Dict) -> None
+
+   Creates equivalent "when" expressions to those with an "or" condition by splitting
+   them up into separate conditions.
+
+   NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #3 and #4).
+   Should not be deployed yet.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: _add_value_setters(loaded_yaml: Dict) -> None
+
+   Configures value setters when an action is contingent on the string value of a
+   context variable. Resets the precondition of these actions to rely on the flag values
+   that represent the true value of the context variable.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+   Raises:
+   - AssertionError: Raised if the user tried to specify an invalid value for a context
+   variable in a precondition.
+
+
+.. py:function:: _convert_ctx_var(loaded_yaml: Dict) -> None
+
+   Converts the context variables from how they were formatted in the YAML
+   to the JSON configuration that Hovor requires.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: _convert_intents(loaded_yaml: Dict) -> None
+
+   Converts the intents from how they were formatted in the YAML to the
+   JSON configuration that Hovor requires.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: _convert_actions(loaded_yaml: Dict) -> None
+
+   Converts the actions from how they were formatted in the YAML to the
+   JSON configuration that Hovor requires.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+
+.. py:function:: convert_yaml(loaded_yaml: Dict) -> Dict
+
+   Generates the JSON configuration required by Hovor from the provided
+   YAML file. First preprocesses the YAML, adding clarification actions,
+   follow-up actions, etc, then finally converts everything into Hovor
+   format.
+
+   Args:
+   - loaded_yaml (Dict): The loaded YAML configuration.
+
+   Returns:
+   - (Dict): The JSON configuration required by Hovor.
+
+

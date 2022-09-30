@@ -1,0 +1,24 @@
+:py:mod:`plan4dial`
+===================
+
+.. py:module:: plan4dial
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   generate_files/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   main/index.rst
+
+

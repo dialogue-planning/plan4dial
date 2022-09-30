@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>plan4dial.generate_files.custom_actions.slot_fill &#8212; Plan4Dial 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css" />
+    <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+    <script src="../../../../../_static/jquery.js"></script>
+    <script src="../../../../../_static/underscore.js"></script>
+    <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../../_static/doctools.js"></script>
+    <script src="../../../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="module-plan4dial.generate_files.custom_actions.slot_fill">
+<span id="plan4dial-generate-files-custom-actions-slot-fill"></span><h1><a class="reference internal" href="#module-plan4dial.generate_files.custom_actions.slot_fill" title="plan4dial.generate_files.custom_actions.slot_fill"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plan4dial.generate_files.custom_actions.slot_fill</span></code></a><a class="headerlink" href="#module-plan4dial.generate_files.custom_actions.slot_fill" title="Permalink to this heading">¶</a></h1>
+<p>Contains all the functions for the <cite>slot_fill</cite> custom action that is
+provided to bot designers by default.</p>
+<p>Authors:
+- Rebecca De Venezia</p>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+<section id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.generate_files.custom_actions.slot_fill.slot_fill" title="plan4dial.generate_files.custom_actions.slot_fill.slot_fill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slot_fill</span></code></a>(→ None)</p></td>
+<td><p>Custom action provided by default that allows bot designers to specify</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.generate_files.custom_actions.slot_fill._clarify_act" title="plan4dial.generate_files.custom_actions.slot_fill._clarify_act"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_clarify_act</span></code></a>(→ Dict)</p></td>
+<td><p>Generates a <cite>clarify</cite> action for an entity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.generate_files.custom_actions.slot_fill._single_slot" title="plan4dial.generate_files.custom_actions.slot_fill._single_slot"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_single_slot</span></code></a>(→ None)</p></td>
+<td><p>Generates a 'single slot' action for the entity provided. These are only</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.generate_files.custom_actions.slot_fill._create_clarifications_single_slots" title="plan4dial.generate_files.custom_actions.slot_fill._create_clarifications_single_slots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_create_clarifications_single_slots</span></code></a>(→ Tuple[Dict, Dict])</p></td>
+<td><p>Used by the <cite>slot_fill</cite> action to generate <cite>clarify</cite> and <cite>single_slot</cite></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.custom_actions.slot_fill.slot_fill">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.custom_actions.slot_fill.</span></span><span class="sig-name descname"><span class="pre">slot_fill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_variants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fallback_message_variants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#plan4dial.generate_files.custom_actions.slot_fill.slot_fill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Custom action provided by default that allows bot designers to specify
+entity slot fills with ease.</p>
+<p>Handles actions that can be clarified, as well as those that can’t, or a
+mix of both. This depends on what the <cite>known</cite>’s <cite>type</cite> setting is for each
+entity in the YAML.</p>
+<p>Also handles “partial” extraction, where the bot asks for multiple entities
+but is only able to extract some. In that case, the bot will follow up with
+<cite>clarify</cite> actions in which it tries to extract uncertain entities, or
+<cite>single_slot</cite> actions in which it tries to extract unknown entities
+individually in order to make up for the missing information (only used
+when there are &gt; 1 entities specified).</p>
+<p>Additional outcomes can also be specified for certain outcomes, i.e. when
+entity <cite>pizza</cite> is extracted, respond with the given <cite>response_variants</cite>.</p>
+<p>Args:
+- loaded_yaml (Dict): The loaded YAML configuration.
+- action_name (str): The name of this instance of the custom action.
+- message_variants (List[str]): Possible messages the bot will utter upon
+execution of this action.
+- entities (List[str]): The entities to be extracted or have their “slots
+filled.”
+- config_entities (Dict): Holds configurations that specify what the bot
+should do in certain situations regarding each entity. The keys are each
+entity and the values are the configuration for each entity. Defaults to
+None as this is not always necessary.</p>
+<dl>
+<dt>The 3 configuration options are:</dt><dd><ul class="simple">
+<li><p>clarify_message_variants (List[str]): The message variants that will</p></li>
+</ul>
+<p>be used for the clarify action for this entity. Only necessary if the
+<cite>known</cite> <cite>type</cite> of this entity is of type <cite>fflag</cite>.
+- single_slot_message_variants (List[str]): Custom message variants to
+utter for <cite>single_slot</cite> extractions of the given entity. Only necessary
+to specify if there are &gt; 1 entities.
+- fallback_message_variants (List[str]): Custom fallback messages to
+utter if the bot tries to extract this entity by itself with a
+<cite>single_slot</cite> action and fails. Differs from the outer
+<cite>fallback_message_variants</cite> parameter, which applies to the initial
+<cite>slot_fill</cite> action only. The default fallback messages will replace
+this parameter if not specified.</p>
+</dd>
+</dl>
+<ul class="simple">
+<li><p>fallback_message_variants (List[str]): Custom fallback messages to utter</p></li>
+</ul>
+<p>if the bot fails to extract any entities. Defaults to None.
+- additional_updates (Dict, optional): Additional updates to specify when
+a given extraction happens AT ANY POINT. Indicate the extraction that
+happens in the outcome by specifying the <cite>known</cite> status of the entities you
+desire. You can not only use this to add arbitrary context variable
+updates under <cite>also_update</cite>, but also other outcome-specific attributes
+such as <cite>response_variants</cite>. NOTE: Will only match to outcomes that match
+the given specification exactly. For example, if you specify an additional
+update for when <cite>test1</cite> is known, updates would only be added to actions
+where ONLY <cite>test1</cite> is extracted, and not when <cite>test1</cite>, <cite>test2</cite> and <cite>test3</cite>
+are extracted, for example. This is done to reduce ambiguity.
+Defaults to None.</p>
+<p>See the tutorial in <cite>README.md</cite> for an example of a <cite>slot_fill</cite> action.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.custom_actions.slot_fill._clarify_act">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.custom_actions.slot_fill.</span></span><span class="sig-name descname"><span class="pre">_clarify_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_variants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">single_slot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="headerlink" href="#plan4dial.generate_files.custom_actions.slot_fill._clarify_act" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a <cite>clarify</cite> action for an entity.</p>
+<p>Args:
+- entity (str): The entity to generate the action for.
+- message_variants (List[str]): The message variants for the clarification
+action.
+- single_slot (bool): Determines if this entity also has a <cite>single_slot</cite>
+action. This is necessary because of the situation where we “maybe” found
+the entity in the original action, try to clarify it and fail, and we were
+trying to extract &gt; 1 entities originally. In that case, we need to
+activate the appropriate <cite>single_slot</cite>
+- additional_updates (Dict, optional): Any additional updates. In reality,
+it will only consider those where just this entity is extracted. Defaults
+to None.</p>
+<p>Returns:
+- (Dict): The <cite>clarify</cite> action configuration.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.custom_actions.slot_fill._single_slot">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.custom_actions.slot_fill.</span></span><span class="sig-name descname"><span class="pre">_single_slot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">known_is_fflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#plan4dial.generate_files.custom_actions.slot_fill._single_slot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generates a ‘single slot’ action for the entity provided. These are only
+necessary when multiple entities were specified, to handle the case where
+the bot is able to only extract some on its first go and <cite>clarify</cite> actions
+as well as actions that extract an entity on its own (<cite>single_slot</cite>) need
+to take care of the rest.</p>
+<p>Args:
+- entity (str): The entity to generate the action for.
+- config_entity (Dict): The <cite>config_entities</cite> configuration for this
+entity. Necessary so that we can access the <cite>single_slot_message_variants</cite>
+and <cite>fallback_message_variants</cite> if they exist.
+- known_is_fflag (bool): Indicates if the <cite>known</cite> setting for the entity in
+question is of type <cite>fflag</cite>.
+- additional_updates (Dict, optional): Any additional updates. In reality,
+it will only consider those where just this entity is extracted, or maybe
+extracted. Defaults to None.</p>
+<p>Returns:
+- (Dict): The <cite>single_slot</cite> action configuration.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.custom_actions.slot_fill._create_clarifications_single_slots">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.custom_actions.slot_fill.</span></span><span class="sig-name descname"><span class="pre">_create_clarifications_single_slots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_act_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_act_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plan4dial.generate_files.custom_actions.slot_fill._create_clarifications_single_slots" title="Permalink to this definition">¶</a></dt>
+<dd><p>Used by the <cite>slot_fill</cite> action to generate <cite>clarify</cite> and <cite>single_slot</cite>
+actions where necessary.</p>
+<p>Args:
+- original_act_name (str): The action name given to the original
+<cite>slot_fill</cite> action
+- original_act_config (Dict): The configuration of the original <cite>slot_fill</cite>
+action.
+- entities (List[str]): The total list of entities to extract.
+- config_entities (Dict): Configurations for these entities that hold more
+information.
+- context_variables (Dict): The context variable configuration from
+<cite>loaded_yaml</cite>.
+- additional_updates (Dict, optional): Any additional updates. Defaults to
+None.</p>
+<p>Returns:
+(Tuple[Dict, Dict]): The new actions and context variables to be added.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../../index.html">Plan4Dial</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">API Reference</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, QuMuLab.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../../../../_sources/autoapi/plan4dial/generate_files/custom_actions/slot_fill/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -2,4 +2,4 @@ pyyaml
 rasa
 spacy
 nnf
-pdoc
+sphinx

@@ -1,0 +1,140 @@
+
+
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>plan4dial.generate_files.parsers.pddl_parser &#8212; Plan4Dial 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/bizstyle.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="plan4dial.generate_files.parsers.pddl_for_rollout" href="plan4dial.generate_files.parsers.pddl_for_rollout.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plan4dial.generate_files.parsers.pddl_for_rollout.html" title="plan4dial.generate_files.parsers.pddl_for_rollout"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Plan4Dial 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../api.html" >API</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="plan4dial.html" >plan4dial</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="plan4dial.generate_files.html" >plan4dial.generate_files</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="plan4dial.generate_files.parsers.html" accesskey="U">plan4dial.generate_files.parsers</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">plan4dial.generate_files.parsers.pddl_parser</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="module-plan4dial.generate_files.parsers.pddl_parser">
+<span id="plan4dial-generate-files-parsers-pddl-parser"></span><h1>plan4dial.generate_files.parsers.pddl_parser<a class="headerlink" href="#module-plan4dial.generate_files.parsers.pddl_parser" title="Permalink to this heading">¶</a></h1>
+<p>This module contains all the files necessary to convert from the HOVOR
+configuration to PDDL. This PDDL is later used to generate the controller/tree
+that determines how the conversation is navigated.</p>
+<p>Authors:
+- Rebecca De Venezia</p>
+<p class="rubric">Functions</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="../autoapi/plan4dial/generate_files/parsers/pddl_parser/index.html#plan4dial.generate_files.parsers.pddl_parser.get_init_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_init_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_init_fluents</span></code></a>(context_variables)</p></td>
+<td><p>Convert the initial state of context variables to a PDDL initial state.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../autoapi/plan4dial/generate_files/parsers/pddl_parser/index.html#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_precond_fluents</span></code></a>(context_variables, ...)</p></td>
+<td><p>Convert an action precondition to PDDL fluents.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../autoapi/plan4dial/generate_files/parsers/pddl_parser/index.html#plan4dial.generate_files.parsers.pddl_parser.get_update_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_update_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_update_fluents</span></code></a>(context_variables, updates)</p></td>
+<td><p>Converts the update configuration of an action outcome to PDDL fluents.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../autoapi/plan4dial/generate_files/parsers/pddl_parser/index.html#plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl" title="plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_to_pddl</span></code></a>(loaded_yaml)</p></td>
+<td><p>Converts the loaded YAML file to a PDDL specification.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="plan4dial.generate_files.parsers.pddl_for_rollout.html"
+                          title="previous chapter">plan4dial.generate_files.parsers.pddl_for_rollout</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/generated/plan4dial.generate_files.parsers.pddl_parser.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="plan4dial.generate_files.parsers.pddl_for_rollout.html" title="plan4dial.generate_files.parsers.pddl_for_rollout"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Plan4Dial 1.0.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../api.html" >API</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="plan4dial.html" >plan4dial</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="plan4dial.generate_files.html" >plan4dial.generate_files</a> &#187;</li>
+          <li class="nav-item nav-item-4"><a href="plan4dial.generate_files.parsers.html" >plan4dial.generate_files.parsers</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">plan4dial.generate_files.parsers.pddl_parser</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, QuMuLab.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.2.3.
+    </div>
+  </body>
+</html>

@@ -22,16 +22,11 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.9.5'
-
-      # ADJUST THIS: install all dependencies (including pdoc)
       - run: pip install -r requirements.txt
-      # ADJUST THIS: build your documentation into docs/.
-      # We use a custom build script for pdoc itself, ideally you just run `pdoc -o docs/ ...` here.
-      - run: PYTHONPATH=./plan4dial pdoc ./plan4dial -o ./docs
-
+      - run: docs/make html
       - uses: actions/upload-pages-artifact@v1
         with:
-          path: docs/
+          path: docs/html
 
   # Deploy the artifact to GitHub pages.
   # This is a separate job so that only actions/deploy-pages has the necessary permissions.

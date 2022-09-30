@@ -5,7 +5,7 @@ NOTE: We use a bare-bones specification so we rely on Rasa as little as
 possible (no roles, groups, stories, or anything too "Rasa-specific").
 
 Authors:
-- Rebecca De Venezia
+    Rebecca De Venezia
 """
 
 from itertools import product
@@ -13,19 +13,15 @@ from typing import Union, Dict
 
 
 def _create_intent_example(extracted_value: str, entity: str, true_value: Union[str, None] = None) -> str:
-    """Create an intent example according to the Rasa NLU format. Also
-    accounts for synonyms/variations if specified, while mapping back to the
-    "true" value that we want to set to.
+    """Create an intent example according to the Rasa NLU format. Also accounts for synonyms/variations if specified, while mapping back to the "true" value that we want to set to.
 
     Args:
-    - extracted_value (str): The value that was extracted.
-    - entity (str): The entity we are trying to extract.
-    - true_value (str or None): If we extracted a variation, this is the "true"
-    value that we want to set the extraction to. Defaults to None, in which
-    case we know that the true value was what was extracted.
+        extracted_value (str): The value that was extracted.
+        entity (str): The entity we are trying to extract.
+        true_value (str or None): If we extracted a variation, this is the "true" value that we want to set the extraction to. Defaults to None, in which case we know that the true value was what was extracted.
 
     Returns:
-    - (str): The intent example.
+        str: The intent example.
     """
     if not true_value:
         true_value = extracted_value
@@ -33,14 +29,13 @@ def _create_intent_example(extracted_value: str, entity: str, true_value: Union[
 
 
 def make_nlu_file(loaded_yaml: Dict) -> Dict:
-    """Generates the NLU configuration that Rasa requires to extract intents
-    and entities.
+    """Generates the NLU configuration that Rasa requires to extract intents and entities.
 
     Args:
-    - loaded_yaml (Dict): The loaded YAML configuration.
+        loaded_yaml (Dict): The loaded YAML configuration.
 
     Returns:
-    - nlu (Dict): The NLU configuration for Rasa.
+        Dict: The NLU configuration for Rasa.
     """
     intents = loaded_yaml["intents"]
     nlu = {"nlu": []}

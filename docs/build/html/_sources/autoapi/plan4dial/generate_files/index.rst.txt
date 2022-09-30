@@ -1,0 +1,16 @@
+:py:mod:`plan4dial.generate_files`
+==================================
+
+.. py:module:: plan4dial.generate_files
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   custom_actions/index.rst
+   parsers/index.rst
+
+
