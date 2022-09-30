@@ -23,10 +23,10 @@ jobs:
         with:
           python-version: '3.9.5'
       - run: pip install -r requirements.txt
-      - run: ./docs/make html
+      - run: PYTHONPATH=./plan4dial ./docs/make html
       - uses: actions/upload-pages-artifact@v1
         with:
-          path: ./docs/build/html
+          path: docs/build/html/
 
   # Deploy the artifact to GitHub pages.
   # This is a separate job so that only actions/deploy-pages has the necessary permissions.
