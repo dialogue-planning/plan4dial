@@ -3,3 +3,4 @@ rasa
 spacy
 nnf
 sphinx
+sphinx-autoapi
