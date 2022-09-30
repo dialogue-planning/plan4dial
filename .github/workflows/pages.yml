@@ -23,7 +23,7 @@ jobs:
         with:
           python-version: '3.9.5'
       - run: pip install -r requirements.txt
-      - run: docs/make html
+      - run: ./docs/make html
       - uses: actions/upload-pages-artifact@v1
         with:
           path: docs/html
