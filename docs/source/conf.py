@@ -22,6 +22,7 @@ extensions = [
     'sphinx.ext.napoleon',
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
+    'sphinx.ext.githubpages',
     'autoapi.extension']
 autoapi_type = 'python'
 autoapi_dirs = ['../../plan4dial']
