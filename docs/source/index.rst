@@ -7,7 +7,6 @@ Welcome to Plan4Dial's documentation!
 =====================================
 
 .. toctree::
-   :maxdepth: 2
    :caption: Contents:
 
    api
