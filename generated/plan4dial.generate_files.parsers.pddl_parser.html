@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>plan4dial.generate_files.parsers.pddl_parser &#8212; Plan4Dial 1.0.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-plan4dial.generate_files.parsers.pddl_parser">
+<span id="plan4dial-generate-files-parsers-pddl-parser"></span><h1>plan4dial.generate_files.parsers.pddl_parser<a class="headerlink" href="#module-plan4dial.generate_files.parsers.pddl_parser" title="Permalink to this headline">¶</a></h1>
+<p>This module contains all the files necessary to convert from the HOVOR
+configuration to PDDL. This PDDL is later used to generate the controller/tree
+that determines how the conversation is navigated.</p>
+<p>Authors:
+- Rebecca De Venezia</p>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_init_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_init_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_init_fluents</span></code></a>(context_variables)</p></td>
+<td><p>Convert the initial state of context variables to a PDDL initial state.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_precond_fluents</span></code></a>(context_variables, …)</p></td>
+<td><p>Convert an action precondition to PDDL fluents.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_update_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_update_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_update_fluents</span></code></a>(context_variables, updates)</p></td>
+<td><p>Converts the update configuration of an action outcome to PDDL fluents.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl" title="plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_to_pddl</span></code></a>(loaded_yaml)</p></td>
+<td><p>Converts the loaded YAML file to a PDDL specification.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser._action_to_pddl">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_action_to_pddl</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em>, <em class="sig-param">act: str</em>, <em class="sig-param">act_config: Dict</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._action_to_pddl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts an action from the YAML configuration to PDDL.</p>
+<p>Args:
+- context_variables (Dict): The configuration of all context variables.
+- act (str): The action name.
+- act_config (Dict): The action configuration.</p>
+<p>Returns:
+- (str): The converted action.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser._actions_to_pddl">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_actions_to_pddl</code><span class="sig-paren">(</span><em class="sig-param">loaded_yaml: Dict</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._actions_to_pddl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts actions from the YAML to PDDL format.</p>
+<p>Args:
+- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<p>Returns:
+- (str): The converted actions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser._fluents_to_pddl">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_fluents_to_pddl</code><span class="sig-paren">(</span><em class="sig-param">fluents: List[str], tabs: int, name_wrap: str = None, and_wrap: bool = False, outer_brackets: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._fluents_to_pddl" title="Permalink to this definition">¶</a></dt>
+<dd><dl>
+<dt>Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and</dt><dd><p>“and” wraps as appropriate.</p>
+<p>Args:
+- fluents (List[str]): A list of the string versions of the fluents.
+- tabs (int): The “base” indentation of the fluents.
+- outer_brackets (bool. optional): Setting to wrap the final statement
+with outer brackets, i.e. (outcome …) Defaults to True.
+- name_wrap (str, optional): Setting to wrap fluents with a name, i.e.
+“:predicates”. Defaults to None.
+- and_wrap (bool, optional): Setting to wrap fluents with an “and”, i.e.
+:precondition</p>
+</dd>
+<dt>(and</dt><dd><blockquote>
+<div><p>(…)). Defaults to False.</p>
+</div></blockquote>
+<p>Returns:
+- (str): The converted PDDL fluents.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser._get_is_fflag">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_get_is_fflag</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em>, <em class="sig-param">v_name: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._get_is_fflag" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines if the provided variable has a “known” setting of type fflag.</p>
+<p>Args:
+- context_variables (Dict): The configuration of all context variables.
+- v_name (str): The name of the variable.</p>
+<p>Returns:
+- (bool): Indicates if the provided variable has a “known” setting of type
+fflag.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser._parse_predicates">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_parse_predicates</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em><span class="sig-paren">)</span> &#x2192; List[str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._parse_predicates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the context variables to PDDL predicates.</p>
+<p>Args:
+- context_variables (Dict): The configuration of all context variables.</p>
+<p>Returns:
+- predicates (List[str]): The collection of converted predicates.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser._return_certainty_fluents">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_return_certainty_fluents</code><span class="sig-paren">(</span><em class="sig-param">v_name: str</em>, <em class="sig-param">is_fflag: bool</em>, <em class="sig-param">certainty: str</em><span class="sig-paren">)</span> &#x2192; List[str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._return_certainty_fluents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fluent version of the certainty setting of a context variable
+depending on the setting supplied.</p>
+<p>Args:
+- v_name (str): The name of the variable.
+- is_fflag (bool): Describes if the variable’s “known” type is fflag, in
+which case the “Uncertain” option can be considered.
+- certainty (str): The certainty setting of this context variable.</p>
+<p>Returns:
+- (List[str]): The list of fluents that reflect the certainty setting for
+the context variable supplied.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser._return_flag_value_fluent">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_return_flag_value_fluent</code><span class="sig-paren">(</span><em class="sig-param">v_name: str, is_fflag: bool, value: Union[bool, str]</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._return_flag_value_fluent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the fluent version of a flag or fflag context variable depending
+on the setting supplied.</p>
+<p>Args:
+- v_name (str): The name of the variable.
+- is_fflag (bool): Describes if the variable is of type fflag, in which
+case the “maybe” option can be considered.
+- value (bool or str): The value setting of this context variable.</p>
+<p>Returns:
+- (str): The fluent version of a flag or fflag context variable depending
+on the setting supplied.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser.get_init_fluents">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">get_init_fluents</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em><span class="sig-paren">)</span> &#x2192; Tuple[Set[str], Set[str]]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_init_fluents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert the initial state of context variables to a PDDL initial state.</p>
+<p>Args:
+- context_variables (Dict): The configuration of all context variables.</p>
+<p>Returns:
+- init_true (Set[str]): The partial initial state, which indicates all fluents that
+are initially true. Used in the PDDL.
+- init_complete (Set[str]): The complete initial state, which indicates the state of
+all fluents in the initial state. Used by the rollout configuration.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">get_precond_fluents</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict, conditions: List[Union[str, bool]]</em><span class="sig-paren">)</span> &#x2192; Set[str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert an action precondition to PDDL fluents.</p>
+<p>Args:
+- context_variables (Dict): The configuration of all context variables.
+- conditions (List[Union[str, bool]]): The conditions to be converted.</p>
+<p>Returns:
+- Set[str]: The set of converted fluents.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser.get_update_fluents">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">get_update_fluents</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em>, <em class="sig-param">updates: Dict</em><span class="sig-paren">)</span> &#x2192; Set[str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_update_fluents" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the update configuration of an action outcome to PDDL fluents.</p>
+<p>Args:
+- context_variables (Dict): The configuration of all context variables.
+- updates (Dict): The update configuration.</p>
+<p>Returns:
+- outcomes (Set[str]): The set of fluents that were added by the outcome update.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl">
+<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">parse_to_pddl</code><span class="sig-paren">(</span><em class="sig-param">loaded_yaml: Dict</em><span class="sig-paren">)</span> &#x2192; Tuple[str, str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts the loaded YAML file to a PDDL specification.</p>
+<p>Args:
+- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<p>Returns:
+- domain (str): The generated PDDL domain.
+- problem (str): The generated PDDL problem.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">Plan4Dial</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Rebecca De Venezia @ QuMuLab.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/generated/plan4dial.generate_files.parsers.pddl_parser.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
