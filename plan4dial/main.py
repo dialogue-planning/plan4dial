@@ -1,9 +1,7 @@
 import json
 import os
 import subprocess
-import spacy
 import yaml
-from pathlib import Path
 from generate_files.parsers.json_config_parser import convert_yaml
 from generate_files.parsers.pddl_parser import parse_to_pddl
 from generate_files.parsers.parse_for_rasa import make_nlu_file
