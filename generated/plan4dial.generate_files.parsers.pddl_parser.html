@@ -1,19 +1,22 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>plan4dial.generate_files.parsers.pddl_parser &#8212; Plan4Dial 1.0.0 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="plan4dial.generate_files.parsers.pddl_for_rollout" href="plan4dial.generate_files.parsers.pddl_for_rollout.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -31,14 +34,14 @@
           <div class="body" role="main">
             
   <div class="section" id="module-plan4dial.generate_files.parsers.pddl_parser">
-<span id="plan4dial-generate-files-parsers-pddl-parser"></span><h1>plan4dial.generate_files.parsers.pddl_parser<a class="headerlink" href="#module-plan4dial.generate_files.parsers.pddl_parser" title="Permalink to this headline">¶</a></h1>
+<span id="plan4dial-generate-files-parsers-pddl-parser"></span><h1>plan4dial.generate_files.parsers.pddl_parser<a class="headerlink" href="#module-plan4dial.generate_files.parsers.pddl_parser" title="Permalink to this heading">¶</a></h1>
 <p>This module contains all the files necessary to convert from the HOVOR
 configuration to PDDL. This PDDL is later used to generate the controller/tree
 that determines how the conversation is navigated.</p>
 <p>Authors:
 - Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -47,7 +50,7 @@ that determines how the conversation is navigated.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_init_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_init_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_init_fluents</span></code></a>(context_variables)</p></td>
 <td><p>Convert the initial state of context variables to a PDDL initial state.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_precond_fluents</span></code></a>(context_variables, …)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_precond_fluents</span></code></a>(context_variables, ...)</p></td>
 <td><p>Convert an action precondition to PDDL fluents.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_update_fluents" title="plan4dial.generate_files.parsers.pddl_parser.get_update_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_update_fluents</span></code></a>(context_variables, updates)</p></td>
@@ -58,9 +61,9 @@ that determines how the conversation is navigated.</p>
 </tr>
 </tbody>
 </table>
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser._action_to_pddl">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_action_to_pddl</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em>, <em class="sig-param">act: str</em>, <em class="sig-param">act_config: Dict</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._action_to_pddl" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser._action_to_pddl">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">_action_to_pddl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">act_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._action_to_pddl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts an action from the YAML configuration to PDDL.</p>
 <p>Args:
 - context_variables (Dict): The configuration of all context variables.
@@ -70,9 +73,9 @@ that determines how the conversation is navigated.</p>
 - (str): The converted action.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser._actions_to_pddl">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_actions_to_pddl</code><span class="sig-paren">(</span><em class="sig-param">loaded_yaml: Dict</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._actions_to_pddl" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser._actions_to_pddl">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">_actions_to_pddl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._actions_to_pddl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts actions from the YAML to PDDL format.</p>
 <p>Args:
 - loaded_yaml (Dict): The loaded YAML configuration.</p>
@@ -80,9 +83,9 @@ that determines how the conversation is navigated.</p>
 - (str): The converted actions.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser._fluents_to_pddl">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_fluents_to_pddl</code><span class="sig-paren">(</span><em class="sig-param">fluents: List[str], tabs: int, name_wrap: str = None, and_wrap: bool = False, outer_brackets: bool = True</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._fluents_to_pddl" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser._fluents_to_pddl">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">_fluents_to_pddl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tabs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_wrap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">and_wrap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outer_brackets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._fluents_to_pddl" title="Permalink to this definition">¶</a></dt>
 <dd><dl>
 <dt>Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and</dt><dd><p>“and” wraps as appropriate.</p>
 <p>Args:
@@ -104,9 +107,9 @@ with outer brackets, i.e. (outcome …) Defaults to True.
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser._get_is_fflag">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_get_is_fflag</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em>, <em class="sig-param">v_name: str</em><span class="sig-paren">)</span> &#x2192; bool<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._get_is_fflag" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser._get_is_fflag">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">_get_is_fflag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._get_is_fflag" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determines if the provided variable has a “known” setting of type fflag.</p>
 <p>Args:
 - context_variables (Dict): The configuration of all context variables.
@@ -116,9 +119,9 @@ with outer brackets, i.e. (outcome …) Defaults to True.
 fflag.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser._parse_predicates">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_parse_predicates</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em><span class="sig-paren">)</span> &#x2192; List[str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._parse_predicates" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser._parse_predicates">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">_parse_predicates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._parse_predicates" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts the context variables to PDDL predicates.</p>
 <p>Args:
 - context_variables (Dict): The configuration of all context variables.</p>
@@ -126,9 +129,9 @@ fflag.</p>
 - predicates (List[str]): The collection of converted predicates.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser._return_certainty_fluents">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_return_certainty_fluents</code><span class="sig-paren">(</span><em class="sig-param">v_name: str</em>, <em class="sig-param">is_fflag: bool</em>, <em class="sig-param">certainty: str</em><span class="sig-paren">)</span> &#x2192; List[str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._return_certainty_fluents" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser._return_certainty_fluents">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">_return_certainty_fluents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">certainty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._return_certainty_fluents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the fluent version of the certainty setting of a context variable
 depending on the setting supplied.</p>
 <p>Args:
@@ -141,9 +144,9 @@ which case the “Uncertain” option can be considered.
 the context variable supplied.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser._return_flag_value_fluent">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">_return_flag_value_fluent</code><span class="sig-paren">(</span><em class="sig-param">v_name: str, is_fflag: bool, value: Union[bool, str]</em><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._return_flag_value_fluent" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser._return_flag_value_fluent">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">_return_flag_value_fluent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser._return_flag_value_fluent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the fluent version of a flag or fflag context variable depending
 on the setting supplied.</p>
 <p>Args:
@@ -156,9 +159,9 @@ case the “maybe” option can be considered.
 on the setting supplied.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser.get_init_fluents">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">get_init_fluents</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em><span class="sig-paren">)</span> &#x2192; Tuple[Set[str], Set[str]]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_init_fluents" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser.get_init_fluents">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">get_init_fluents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_init_fluents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert the initial state of context variables to a PDDL initial state.</p>
 <p>Args:
 - context_variables (Dict): The configuration of all context variables.</p>
@@ -169,9 +172,9 @@ are initially true. Used in the PDDL.
 all fluents in the initial state. Used by the rollout configuration.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">get_precond_fluents</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict, conditions: List[Union[str, bool]]</em><span class="sig-paren">)</span> &#x2192; Set[str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">get_precond_fluents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">conditions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert an action precondition to PDDL fluents.</p>
 <p>Args:
 - context_variables (Dict): The configuration of all context variables.
@@ -180,9 +183,9 @@ all fluents in the initial state. Used by the rollout configuration.</p>
 - Set[str]: The set of converted fluents.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser.get_update_fluents">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">get_update_fluents</code><span class="sig-paren">(</span><em class="sig-param">context_variables: Dict</em>, <em class="sig-param">updates: Dict</em><span class="sig-paren">)</span> &#x2192; Set[str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_update_fluents" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser.get_update_fluents">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">get_update_fluents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.get_update_fluents" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts the update configuration of an action outcome to PDDL fluents.</p>
 <p>Args:
 - context_variables (Dict): The configuration of all context variables.
@@ -191,9 +194,9 @@ all fluents in the initial state. Used by the rollout configuration.</p>
 - outcomes (Set[str]): The set of fluents that were added by the outcome update.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl">
-<code class="sig-prename descclassname">plan4dial.generate_files.parsers.pddl_parser.</code><code class="sig-name descname">parse_to_pddl</code><span class="sig-paren">(</span><em class="sig-param">loaded_yaml: Dict</em><span class="sig-paren">)</span> &#x2192; Tuple[str, str]<a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.generate_files.parsers.pddl_parser.</span></span><span class="sig-name descname"><span class="pre">parse_to_pddl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl" title="Permalink to this definition">¶</a></dt>
 <dd><p>Converts the loaded YAML file to a PDDL specification.</p>
 <p>Args:
 - loaded_yaml (Dict): The loaded YAML configuration.</p>
@@ -221,11 +224,49 @@ all fluents in the initial state. Used by the rollout configuration.</p>
 
 
 <h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="plan4dial.html">plan4dial</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="plan4dial.generate_files.html">plan4dial.generate_files</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="plan4dial.generate_files.custom_actions.html">plan4dial.generate_files.custom_actions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="plan4dial.generate_files.parsers.html">plan4dial.generate_files.parsers</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="plan4dial.generate_files.parsers.parse_for_rasa.html">plan4dial.generate_files.parsers.parse_for_rasa</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plan4dial.generate_files.parsers.pddl_for_rollout.html">plan4dial.generate_files.parsers.pddl_for_rollout</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">plan4dial.generate_files.parsers.pddl_parser</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser._action_to_pddl"><code class="docutils literal notranslate"><span class="pre">_action_to_pddl()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser._actions_to_pddl"><code class="docutils literal notranslate"><span class="pre">_actions_to_pddl()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser._fluents_to_pddl"><code class="docutils literal notranslate"><span class="pre">_fluents_to_pddl()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser._get_is_fflag"><code class="docutils literal notranslate"><span class="pre">_get_is_fflag()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser._parse_predicates"><code class="docutils literal notranslate"><span class="pre">_parse_predicates()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser._return_certainty_fluents"><code class="docutils literal notranslate"><span class="pre">_return_certainty_fluents()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser._return_flag_value_fluent"><code class="docutils literal notranslate"><span class="pre">_return_flag_value_fluent()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_init_fluents"><code class="docutils literal notranslate"><span class="pre">get_init_fluents()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents"><code class="docutils literal notranslate"><span class="pre">get_precond_fluents()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.get_update_fluents"><code class="docutils literal notranslate"><span class="pre">get_update_fluents()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl"><code class="docutils literal notranslate"><span class="pre">parse_to_pddl()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">&lt;no title&gt;</a><ul>
+  <li><a href="plan4dial.html">plan4dial</a><ul>
+  <li><a href="plan4dial.generate_files.html">plan4dial.generate_files</a><ul>
+  <li><a href="plan4dial.generate_files.parsers.html">plan4dial.generate_files.parsers</a><ul>
+      <li>Previous: <a href="plan4dial.generate_files.parsers.pddl_for_rollout.html" title="previous chapter">plan4dial.generate_files.parsers.pddl_for_rollout</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -233,12 +274,12 @@ all fluents in the initial state. Used by the rollout configuration.</p>
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -255,7 +296,7 @@ all fluents in the initial state. Used by the rollout configuration.</p>
       &copy;2022, Rebecca De Venezia @ QuMuLab.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
