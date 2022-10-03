@@ -1,7 +1,6 @@
 sphinx>=5.2.3
 nnf
 spacy
-json
 os
 subprocess
 pyyaml
