@@ -13,8 +13,7 @@ jobs:
         python-version: '3.9.5'
     - name: Install requirements
       run: |
-        pip install -r requirements.txt
-        pip install -r docs/requirements.txt
+        sudo -H pip install -r docs/requirements.txt
     - name: Build HTML
       uses: ammaraskar/sphinx-action@master
     - name: Upload artifacts
