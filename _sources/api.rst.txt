@@ -2,4 +2,4 @@
    :toctree: generated
    :recursive:
 
-   src
+   plan4dial
