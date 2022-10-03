@@ -6,26 +6,33 @@
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-import pathlib
+import os
 import sys
-sys.path.insert(0, pathlib.Path(__file__).parents[2].resolve().as_posix())
+sys.path.insert(0, os.path.abspath('../..'))  # Source code dir relative to this file
+# Turn on sphinx.ext.autosummary and set autodoc options
+autosummary_generate = True
+autodoc_default_options = {
+    'members':          True,
+    'undoc-members':    True,
+    'private-members':  True,
+    'special-members':  True,
+    'inherited-members':True,
+    'show-inheritance': True
+}
 
 project = 'Plan4Dial'
-copyright = '2022, QuMuLab'
-author = 'QuMuLab'
+copyright = '2022, Rebecca De Venezia @ QuMuLab'
+author = 'Rebecca De Venezia @ QuMuLab'
 release = '1.0.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx.ext.napoleon',
-    'sphinx.ext.autodoc',
-    'sphinx.ext.autosummary',
-    'sphinx.ext.githubpages',
-    'autoapi.extension']
-autoapi_type = 'python'
-autoapi_dirs = ['../../plan4dial']
+   'sphinx.ext.autodoc', # gets docstrings from Python code
+   'sphinx.ext.autosummary', # auto-generates .rst files
+   'sphinx.ext.napoleon' # allows for Google/numpy style docstrings
+]
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -37,5 +44,3 @@ exclude_patterns = []
 
 html_theme = 'alabaster'
 html_static_path = ['_static']
-autodoc_default_flags = ['members', 'undoc-members', 'private-members', 'special-members', 'inherited-members', 'show-inheritance']
-autosummary_generate = True
