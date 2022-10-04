@@ -8,7 +8,7 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../..'))  # Source code dir relative to this file
+sys.path.insert(0, os.path.abspath('../../plan4dial'))  # Source code dir relative to this file
 # Turn on sphinx.ext.autosummary and set autodoc options
 autosummary_generate = True
 autodoc_default_options = {

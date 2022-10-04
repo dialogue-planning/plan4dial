@@ -1,12 +1,12 @@
-# import json
-# import os
-# import subprocess
-# import yaml
+import json
+import os
+import subprocess
+import yaml
 from generate_files.parsers.json_config_parser import convert_yaml
 from generate_files.parsers.pddl_parser import parse_to_pddl
 from generate_files.parsers.parse_for_rasa import make_nlu_file
 from generate_files.parsers.pddl_for_rollout import rollout_config
-#from rasa.model_training import train_nlu
+from rasa.model_training import train_nlu
 
 
 def generate_files(
