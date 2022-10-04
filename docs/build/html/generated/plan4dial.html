@@ -17,7 +17,7 @@
     <script src="../_static/sphinx_highlight.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="plan4dial.generate_files" href="plan4dial.generate_files.html" />
+    <link rel="next" title="plan4dial.for_generating" href="plan4dial.for_generating.html" />
     <link rel="prev" title="&lt;no title&gt;" href="../api.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -37,10 +37,29 @@
             
   <section id="module-plan4dial">
 <span id="plan4dial"></span><h1>plan4dial<a class="headerlink" href="#module-plan4dial" title="Permalink to this heading">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.generate_files">
+<span class="sig-prename descclassname"><span class="pre">plan4dial.</span></span><span class="sig-name descname"><span class="pre">generate_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbp_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.generate_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main file responsible for generating the files that will be sent to
+HOVOR (<cite>contingent-plan-executor</cite>) for executor.</p>
+<p>Args:
+- yaml_filename (str): The path to the filled out YAML configuration.
+- output_folder (str): Output folder where the files will be stored.
+- rbp_path (str): Path to the <cite>rbp</cite> directory so the planner can be run.
+- train (bool, optional): Determines if training is required. It is best to
+set to False if you made changes to the YAML that require some new output
+files, but the NLU model is not affected (no changes in the Rasa NLU YAML
+configuration). Defaults to True.</p>
+<p>Raises:
+- (Exception): Raised if the planner was not able to find a
+valid plan. Happens if the YAML configuration (and by proxy, the PDDL) is
+invalid in some way (i.e. missing actions, can’t get out of a loop, etc.)</p>
+</dd></dl>
+
 <p class="rubric">Modules</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="plan4dial.generate_files.html#module-plan4dial.generate_files" title="plan4dial.generate_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plan4dial.generate_files</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="plan4dial.for_generating.html#module-plan4dial.for_generating" title="plan4dial.for_generating"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plan4dial.for_generating</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="plan4dial.main.html#module-plan4dial.main" title="plan4dial.main"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plan4dial.main</span></code></a></p></td>
@@ -70,7 +89,8 @@
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">plan4dial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="plan4dial.generate_files.html">plan4dial.generate_files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plan4dial.generate_files"><code class="docutils literal notranslate"><span class="pre">generate_files()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="plan4dial.for_generating.html">plan4dial.for_generating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plan4dial.main.html">plan4dial.main</a></li>
 </ul>
 </li>
@@ -82,7 +102,7 @@
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">&lt;no title&gt;</a><ul>
       <li>Previous: <a href="../api.html" title="previous chapter">&lt;no title&gt;</a></li>
-      <li>Next: <a href="plan4dial.generate_files.html" title="next chapter">plan4dial.generate_files</a></li>
+      <li>Next: <a href="plan4dial.for_generating.html" title="next chapter">plan4dial.for_generating</a></li>
   </ul></li>
   </ul></li>
 </ul>

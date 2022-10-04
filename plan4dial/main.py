@@ -2,7 +2,7 @@ import json
 import os
 import subprocess
 import yaml
-from plan4dial import *
+from for_generating import *
 from rasa.model_training import train_nlu
 
 

@@ -28,24 +28,24 @@
         :parameters()
         :precondition
             (and
-                (not (know__have_allergy))
                 (not (force-statement))
                 (not (forcing__get-allergy))
+                (not (know__have_allergy))
             )
         :effect
             (labeled-oneof set-allergy
                 (outcome indicate_allergy
                     (and
-                        (have_allergy)
                         (forcing__get-allergy)
+                        (have_allergy)
                         (know__have_allergy)
                     )
                 )
                 (outcome indicate_no_allergy
                     (and
+                        (know__conflict)
                         (not (have_allergy))
                         (not (conflict))
-                        (know__conflict)
                         (know__have_allergy)
                     )
                 )
@@ -69,8 +69,8 @@
             (labeled-oneof set-allergy
                 (outcome update_allergy
                     (and
-                        (not (forcing__get-allergy))
                         (know__food_restriction)
+                        (not (forcing__get-allergy))
                     )
                 )
                 (outcome fallback
@@ -86,51 +86,51 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
+                (know__have_allergy)
                 (not (know__conflict))
                 (not (forcing__get-allergy))
+                (know__food_restriction)
+                (not (force-statement))
                 (not (maybe-know__cuisine))
                 (have_allergy)
                 (know__cuisine)
-                (know__food_restriction)
-                (know__have_allergy)
             )
         :effect
             (labeled-oneof check-conflicts
                 (outcome restriction-dessert
                     (and
-                        (conflict)
                         (know__conflict)
+                        (conflict)
                     )
                 )
                 (outcome restriction-mexican
                     (and
-                        (conflict)
                         (know__conflict)
+                        (conflict)
                     )
                 )
                 (outcome no-restriction-1
                     (and
-                        (not (conflict))
                         (know__conflict)
+                        (not (conflict))
                     )
                 )
                 (outcome no-restriction-2
                     (and
-                        (not (conflict))
                         (know__conflict)
+                        (not (conflict))
                     )
                 )
                 (outcome no-restriction-3
                     (and
-                        (not (conflict))
                         (know__conflict)
+                        (not (conflict))
                     )
                 )
                 (outcome no-restriction-4
                     (and
-                        (not (conflict))
                         (know__conflict)
+                        (not (conflict))
                     )
                 )
             )
@@ -139,22 +139,22 @@
         :parameters()
         :precondition
             (and
-                (not (forcing__get-allergy))
+                (know__conflict)
                 (not (force-statement))
                 (conflict)
-                (know__conflict)
+                (not (forcing__get-allergy))
             )
         :effect
             (labeled-oneof reset
                 (outcome reset-values
                     (and
-                        (not (know__have_allergy))
-                        (not (know__food_restriction))
                         (have-message)
+                        (not (know__have_allergy))
                         (not (know__conflict))
                         (not (know__cuisine))
-                        (not (maybe-know__cuisine))
+                        (not (know__food_restriction))
                         (force-statement)
+                        (not (maybe-know__cuisine))
                     )
                 )
             )
@@ -164,12 +164,12 @@
         :precondition
             (and
                 (not (conflict))
-                (know__conflict)
-                (not (force-statement))
                 (not (forcing__get-allergy))
+                (know__conflict)
+                (not (know__restaurant))
+                (not (force-statement))
                 (not (maybe-know__cuisine))
                 (know__cuisine)
-                (not (know__restaurant))
             )
         :effect
             (labeled-oneof assign_restaurant
@@ -199,11 +199,11 @@
         :parameters()
         :precondition
             (and
-                (not (maybe-know__outing_type))
-                (not (force-statement))
-                (not (forcing__get-allergy))
-                (know__outing_type)
                 (know__budget)
+                (not (maybe-know__outing_type))
+                (not (forcing__get-allergy))
+                (not (force-statement))
+                (know__outing_type)
             )
         :effect
             (labeled-oneof assign_outing
@@ -218,10 +218,10 @@
         :parameters()
         :precondition
             (and
-                (know__outing)
-                (not (force-statement))
-                (not (forcing__get-allergy))
                 (know__restaurant)
+                (not (force-statement))
+                (know__outing)
+                (not (forcing__get-allergy))
             )
         :effect
             (labeled-oneof finish
@@ -244,8 +244,8 @@
             (labeled-oneof reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )
@@ -254,25 +254,25 @@
         :parameters()
         :precondition
             (and
-                (not (know__cuisine))
-                (not (maybe-know__cuisine))
                 (not (force-statement))
+                (not (maybe-know__cuisine))
                 (not (forcing__get-allergy))
+                (not (know__cuisine))
             )
         :effect
             (labeled-oneof validate-slot-fill
                 (outcome cuisine_found
                     (and
-                        (not (maybe-know__cuisine))
-                        (have-message)
-                        (know__cuisine)
                         (force-statement)
+                        (not (maybe-know__cuisine))
+                        (know__cuisine)
+                        (have-message)
                     )
                 )
                 (outcome cuisine_maybe-found
                     (and
-                        (not (know__cuisine))
                         (maybe-know__cuisine)
+                        (not (know__cuisine))
                     )
                 )
                 (outcome fallback
@@ -287,10 +287,10 @@
         :parameters()
         :precondition
             (and
-                (not (know__cuisine))
+                (maybe-know__cuisine)
                 (not (force-statement))
                 (not (forcing__get-allergy))
-                (maybe-know__cuisine)
+                (not (know__cuisine))
             )
         :effect
             (labeled-oneof validate-clarification
@@ -302,8 +302,8 @@
                 )
                 (outcome deny
                     (and
-                        (not (know__cuisine))
                         (not (maybe-know__cuisine))
+                        (not (know__cuisine))
                     )
                 )
                 (outcome fallback
@@ -319,24 +319,24 @@
         :precondition
             (and
                 (not (maybe-know__outing_type))
-                (not (know__budget))
-                (not (force-statement))
                 (not (forcing__get-allergy))
                 (not (know__outing_type))
+                (not (know__budget))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof validate-slot-fill
                 (outcome budget_found-outing_type_found
                     (and
                         (not (maybe-know__outing_type))
-                        (know__outing_type)
                         (know__budget)
+                        (know__outing_type)
                     )
                 )
                 (outcome budget_found-outing_type_maybe-found
                     (and
-                        (maybe-know__outing_type)
                         (not (know__outing_type))
+                        (maybe-know__outing_type)
                         (know__budget)
                     )
                 )
@@ -350,8 +350,8 @@
                 )
                 (outcome outing_type_found
                     (and
-                        (not (maybe-know__outing_type))
                         (have-message)
+                        (not (maybe-know__outing_type))
                         (allow_single_slot_budget)
                         (force-statement)
                         (know__outing_type)
@@ -359,9 +359,9 @@
                 )
                 (outcome outing_type_maybe-found
                     (and
-                        (allow_single_slot_budget)
                         (not (know__outing_type))
                         (maybe-know__outing_type)
+                        (allow_single_slot_budget)
                     )
                 )
                 (outcome fallback
@@ -376,19 +376,19 @@
         :parameters()
         :precondition
             (and
-                (not (maybe-know__outing_type))
                 (allow_single_slot_outing_type)
-                (not (force-statement))
+                (not (maybe-know__outing_type))
                 (not (forcing__get-allergy))
                 (not (know__outing_type))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof validate-slot-fill
                 (outcome fill-slot
                     (and
                         (not (maybe-know__outing_type))
-                        (know__outing_type)
                         (not (allow_single_slot_outing_type))
+                        (know__outing_type)
                     )
                 )
                 (outcome slot-unclear
@@ -409,10 +409,10 @@
         :parameters()
         :precondition
             (and
-                (allow_single_slot_budget)
-                (not (know__budget))
-                (not (force-statement))
                 (not (forcing__get-allergy))
+                (not (force-statement))
+                (not (know__budget))
+                (allow_single_slot_budget)
             )
         :effect
             (labeled-oneof validate-slot-fill
@@ -434,10 +434,10 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (not (forcing__get-allergy))
                 (not (know__outing_type))
+                (not (force-statement))
                 (maybe-know__outing_type)
+                (not (forcing__get-allergy))
             )
         :effect
             (labeled-oneof validate-clarification
@@ -449,9 +449,9 @@
                 )
                 (outcome deny
                     (and
+                        (not (know__outing_type))
                         (not (maybe-know__outing_type))
                         (allow_single_slot_outing_type)
-                        (not (know__outing_type))
                     )
                 )
                 (outcome fallback

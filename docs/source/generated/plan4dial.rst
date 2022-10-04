@@ -27,6 +27,6 @@
    :toctree:
    :recursive:
 
-   plan4dial.generate_files
+   plan4dial.for_generating
    plan4dial.main
 

@@ -8,10 +8,13 @@
 
 import os
 import sys
-# sys.path.append(os.path.abspath('../plan4dial'))  # Source code dir relative to this file
-# sys.path.append(os.path.abspath('../plan4dial/plan4dial'))  # outer directory
-sys.path.append(os.path.abspath('../..')) # home path
-# sys.path.append(os.path.abspath('../plan4dial/docs'))
+import pathlib
+# sys.path.insert(0, os.path.abspath('../plan4dial'))  # Source code dir relative to this file
+# sys.path.insert(0, os.path.abspath('../plan4dial/plan4dial'))  # outer directory
+# sys.path.insert(0, os.path.abspath('../..')) # home path
+# sys.path.insert(0, os.path.abspath('../plan4dial/docs'))
+sys.path.insert(0, pathlib.Path(__file__).parents[2].resolve().as_posix())
+sys.path.insert(0, (pathlib.Path(__file__).parents[2] / "plan4dial").resolve().as_posix())
 print(sys.path)
 
 
