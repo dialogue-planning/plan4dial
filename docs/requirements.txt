@@ -1,4 +1,4 @@
-sphinx>=3.0.0
+sphinx>=5.2.3
 spacy
 rasa
 nnf
