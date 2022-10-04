@@ -47,7 +47,7 @@
 <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
 
 
-<div class="viewcode-block" id="_configure_force_message_true"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_force_message_true">[docs]</a><span class="k">def</span> <span class="nf">_configure_force_message_true</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="_configure_force_message_true"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._configure_force_message_true">[docs]</a><span class="k">def</span> <span class="nf">_configure_force_message_true</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">    - (Dict): Configuration where `have-message` and `force-statement` are set to True.</span>
@@ -58,7 +58,7 @@
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="_configure_fallback"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_fallback">[docs]</a><span class="k">def</span> <span class="nf">_configure_fallback</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="_configure_fallback"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._configure_fallback">[docs]</a><span class="k">def</span> <span class="nf">_configure_fallback</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Returns:</span>
 <span class="sd">    - (Dict): Update configuration for a fallback outcome.</span>
@@ -66,7 +66,7 @@
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">_configure_force_message_true</span><span class="p">(),</span> <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;fallback&quot;</span><span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="_configure_dialogue_statement"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_dialogue_statement">[docs]</a><span class="k">def</span> <span class="nf">_configure_dialogue_statement</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="_configure_dialogue_statement"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._configure_dialogue_statement">[docs]</a><span class="k">def</span> <span class="nf">_configure_dialogue_statement</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns the base `dialogue_statement` action.</span>
 
 <span class="sd">    Most often, the `dialogue_statement` action is triggered when a fallback</span>
@@ -109,7 +109,7 @@
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="configure_assignments"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser.configure_assignments">[docs]</a><span class="k">def</span> <span class="nf">configure_assignments</span><span class="p">(</span><span class="n">known</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="configure_assignments"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.configure_assignments">[docs]</a><span class="k">def</span> <span class="nf">configure_assignments</span><span class="p">(</span><span class="n">known</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts the parameter `known` (which is either True, False, or &quot;maybe&quot;)</span>
 <span class="sd">    to the equivalent Hovor assignment (&quot;found&quot;, &quot;didnt-find&quot;, and</span>
 <span class="sd">    &quot;maybe-found&quot; respectively). Used for outcomes.</span>
@@ -125,7 +125,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_configure_certainty"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_certainty">[docs]</a><span class="k">def</span> <span class="nf">_configure_certainty</span><span class="p">(</span><span class="n">known</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="_configure_certainty"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._configure_certainty">[docs]</a><span class="k">def</span> <span class="nf">_configure_certainty</span><span class="p">(</span><span class="n">known</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts the parameter `known` (which is either True, False, or &quot;maybe&quot;)</span>
 <span class="sd">    to the equivalent Hovor certainty (&quot;Known&quot;, &quot;Unknown&quot;, and</span>
 <span class="sd">    &quot;Uncertain&quot; respectively). Used for preconditions.</span>
@@ -139,7 +139,7 @@
     <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Known&quot;</span> <span class="k">if</span> <span class="n">known</span> <span class="k">else</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span> <span class="k">else</span> <span class="s2">&quot;Uncertain&quot;</span></div>
 
 
-<div class="viewcode-block" id="_convert_to_formula"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_to_formula">[docs]</a><span class="nd">@config</span><span class="p">(</span><span class="n">auto_simplify</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="_convert_to_formula"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._convert_to_formula">[docs]</a><span class="nd">@config</span><span class="p">(</span><span class="n">auto_simplify</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_convert_to_formula</span><span class="p">(</span><span class="n">condition</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">And</span><span class="p">,</span> <span class="n">Or</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Converts an action condition from the YAML to a list of terms for an</span>
 <span class="sd">    NNF formula.</span>
@@ -187,7 +187,7 @@
     <span class="k">return</span> <span class="n">formula_terms</span></div>
 
 
-<div class="viewcode-block" id="_convert_to_DNF"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_to_DNF">[docs]</a><span class="nd">@config</span><span class="p">(</span><span class="n">auto_simplify</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="_convert_to_DNF"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._convert_to_DNF">[docs]</a><span class="nd">@config</span><span class="p">(</span><span class="n">auto_simplify</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_convert_to_DNF</span><span class="p">(</span><span class="n">condition</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">And</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts an action condition from the YAML to an NNF formula in</span>
 <span class="sd">    Disjunctive Normal Form. Eventually, this would be used for auto-</span>
@@ -204,7 +204,7 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">_convert_to_formula</span><span class="p">(</span><span class="n">condition</span><span class="p">))</span><span class="o">.</span><span class="n">negate</span><span class="p">())</span><span class="o">.</span><span class="n">to_CNF</span><span class="p">()</span><span class="o">.</span><span class="n">negate</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="_configure_value_setter"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_value_setter">[docs]</a><span class="k">def</span> <span class="nf">_configure_value_setter</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">ctx_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_configure_value_setter"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._configure_value_setter">[docs]</a><span class="k">def</span> <span class="nf">_configure_value_setter</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">ctx_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Configures the actions in loaded_yaml to allow for value setting. This</span>
 <span class="sd">    allows values to be used in preconditions, i.e. cuisine: {value: &quot;Mexican&quot;}.</span>
 
@@ -288,7 +288,7 @@
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
 
 
-<div class="viewcode-block" id="_base_fallback_setup"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._base_fallback_setup">[docs]</a><span class="k">def</span> <span class="nf">_base_fallback_setup</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_base_fallback_setup"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._base_fallback_setup">[docs]</a><span class="k">def</span> <span class="nf">_base_fallback_setup</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Sets up the default intents, action, and context variables needed to</span>
 <span class="sd">    handle fallbacks. </span>
 
@@ -312,7 +312,7 @@
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="_instantiate_custom_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._instantiate_custom_actions">[docs]</a><span class="k">def</span> <span class="nf">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_instantiate_custom_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._instantiate_custom_actions">[docs]</a><span class="k">def</span> <span class="nf">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Instantiate custom actions.</span>
 
 <span class="sd">    NOTE: All custom action functions must be placed in a file in</span>
@@ -351,7 +351,7 @@
         <span class="n">loaded_yaml</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="_add_fallbacks"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._add_fallbacks">[docs]</a><span class="k">def</span> <span class="nf">_add_fallbacks</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_add_fallbacks"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._add_fallbacks">[docs]</a><span class="k">def</span> <span class="nf">_add_fallbacks</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Ensure that non-fallback options can only run if a fallback did not just</span>
 <span class="sd">    occur. Add fallback outcomes to actions as necessary.</span>
 
@@ -391,7 +391,7 @@
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
 
 
-<div class="viewcode-block" id="_add_follow_ups_and_responses"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._add_follow_ups_and_responses">[docs]</a><span class="k">def</span> <span class="nf">_add_follow_ups_and_responses</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_add_follow_ups_and_responses"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._add_follow_ups_and_responses">[docs]</a><span class="k">def</span> <span class="nf">_add_follow_ups_and_responses</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Configures follow up actions and responses where they were specified</span>
 <span class="sd">    in the YAML.</span>
 
@@ -463,7 +463,7 @@
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">with_forced</span></div>
 
 
-<div class="viewcode-block" id="_duplicate_for_or_condition"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._duplicate_for_or_condition">[docs]</a><span class="k">def</span> <span class="nf">_duplicate_for_or_condition</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_duplicate_for_or_condition"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._duplicate_for_or_condition">[docs]</a><span class="k">def</span> <span class="nf">_duplicate_for_or_condition</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Creates equivalent actions to those with an &quot;or&quot; precondition by splitting</span>
 <span class="sd">    them up into separate actions. </span>
 
@@ -494,7 +494,7 @@
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
 
 
-<div class="viewcode-block" id="_duplicate_for_or_when_condition"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._duplicate_for_or_when_condition">[docs]</a><span class="k">def</span> <span class="nf">_duplicate_for_or_when_condition</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_duplicate_for_or_when_condition"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._duplicate_for_or_when_condition">[docs]</a><span class="k">def</span> <span class="nf">_duplicate_for_or_when_condition</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Creates equivalent &quot;when&quot; expressions to those with an &quot;or&quot; condition by splitting</span>
 <span class="sd">    them up into separate conditions. </span>
 
@@ -536,7 +536,7 @@
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
 
 
-<div class="viewcode-block" id="_add_value_setters"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._add_value_setters">[docs]</a><span class="k">def</span> <span class="nf">_add_value_setters</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_add_value_setters"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._add_value_setters">[docs]</a><span class="k">def</span> <span class="nf">_add_value_setters</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Configures value setters when an action is contingent on the string value of a </span>
 <span class="sd">    context variable. Resets the precondition of these actions to rely on the flag values</span>
 <span class="sd">    that represent the true value of the context variable.</span>
@@ -579,7 +579,7 @@
         <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">],</span>
     <span class="p">)</span></div>
 
-<div class="viewcode-block" id="_convert_ctx_var"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_ctx_var">[docs]</a><span class="k">def</span> <span class="nf">_convert_ctx_var</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_convert_ctx_var"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._convert_ctx_var">[docs]</a><span class="k">def</span> <span class="nf">_convert_ctx_var</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts the context variables from how they were formatted in the YAML</span>
 <span class="sd">    to the JSON configuration that Hovor requires.</span>
 
@@ -617,7 +617,7 @@
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
 
 
-<div class="viewcode-block" id="_convert_intents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_intents">[docs]</a><span class="k">def</span> <span class="nf">_convert_intents</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_convert_intents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._convert_intents">[docs]</a><span class="k">def</span> <span class="nf">_convert_intents</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts the intents from how they were formatted in the YAML to the</span>
 <span class="sd">    JSON configuration that Hovor requires.</span>
 
@@ -638,7 +638,7 @@
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
 
 
-<div class="viewcode-block" id="_convert_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_actions">[docs]</a><span class="k">def</span> <span class="nf">_convert_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<div class="viewcode-block" id="_convert_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files._convert_actions">[docs]</a><span class="k">def</span> <span class="nf">_convert_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts the actions from how they were formatted in the YAML to the</span>
 <span class="sd">    JSON configuration that Hovor requires.</span>
 
@@ -718,7 +718,7 @@
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
 
 
-<div class="viewcode-block" id="convert_yaml"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser.convert_yaml">[docs]</a><span class="k">def</span> <span class="nf">convert_yaml</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+<div class="viewcode-block" id="convert_yaml"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.convert_yaml">[docs]</a><span class="k">def</span> <span class="nf">convert_yaml</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Generates the JSON configuration required by Hovor from the provided</span>
 <span class="sd">    YAML file. First preprocesses the YAML, adding clarification actions,</span>
 <span class="sd">    follow-up actions, etc, then finally converts everything into Hovor</span>
