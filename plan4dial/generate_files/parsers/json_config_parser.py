@@ -183,9 +183,8 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
     known, and reset when the context variable becomes unknown.
 
     Args:
-    - loaded_yaml (Dict): The loaded YAML configuration.
-    - ctx_var (str): The context variable referenced in value-dependent
-        preconditions.
+        loaded_yaml (Dict): The loaded YAML configuration.
+        ctx_var (str): The context variable referenced in value-dependent preconditions.
     """
     processed = deepcopy(loaded_yaml["actions"])
     ctx_var_cfg = loaded_yaml["context_variables"][ctx_var]

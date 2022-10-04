@@ -1,0 +1,811 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>plan4dial.generate_files.parsers.json_config_parser &#8212; Plan4Dial 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/alabaster.css" />
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for plan4dial.generate_files.parsers.json_config_parser</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;This module contains all the base functions required to convert a YAML </span>
+<span class="sd">configuration to the JSON configuration required by Hovor.</span>
+
+<span class="sd">Authors:</span>
+<span class="sd">- Rebecca De Venezia</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">from</span> <span class="nn">inspect</span> <span class="kn">import</span> <span class="n">getmembers</span><span class="p">,</span> <span class="n">isfunction</span>
+<span class="kn">from</span> <span class="nn">nnf</span> <span class="kn">import</span> <span class="n">Or</span><span class="p">,</span> <span class="n">And</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">config</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
+
+
+<div class="viewcode-block" id="_configure_force_message_true"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_force_message_true">[docs]</a><span class="k">def</span> <span class="nf">_configure_force_message_true</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    - (Dict): Configuration where `have-message` and `force-statement` are set to True.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;have-message&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="s2">&quot;force-statement&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="_configure_fallback"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_fallback">[docs]</a><span class="k">def</span> <span class="nf">_configure_fallback</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    - (Dict): Update configuration for a fallback outcome.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">_configure_force_message_true</span><span class="p">(),</span> <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;fallback&quot;</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="_configure_dialogue_statement"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_dialogue_statement">[docs]</a><span class="k">def</span> <span class="nf">_configure_dialogue_statement</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns the base `dialogue_statement` action.</span>
+
+<span class="sd">    Most often, the `dialogue_statement` action is triggered when a fallback</span>
+<span class="sd">    occurs; in this case, `dialogue_statement` updates its</span>
+<span class="sd">    `message_variants` to the appropriate `fallback_message_variants`.</span>
+<span class="sd">    Dialogue statements are also used for responses, in which case</span>
+<span class="sd">    `dialogue_statement` updates its `message_variants` to the appropriate</span>
+<span class="sd">    `response_variants`.</span>
+
+<span class="sd">    Note that the intent `utter_dialogue_statement` is a blank intent because</span>
+<span class="sd">    `message` actions (`dialogue` type actions with a single outcome) do not</span>
+<span class="sd">    take user input into account and simply execute the single outcome.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - (Dict): The full configuration for the `dialogue_statement` action.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;dialogue&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="n">_configure_force_message_true</span><span class="p">(),</span>
+        <span class="s2">&quot;effect&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;reset&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;lock&quot;</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;have-message&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                                <span class="p">},</span>
+                                <span class="s2">&quot;force-statement&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                                <span class="p">},</span>
+                            <span class="p">},</span>
+                            <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;utter_dialogue_statement&quot;</span><span class="p">,</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;message_variants&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="configure_assignments"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser.configure_assignments">[docs]</a><span class="k">def</span> <span class="nf">configure_assignments</span><span class="p">(</span><span class="n">known</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Converts the parameter `known` (which is either True, False, or &quot;maybe&quot;)</span>
+<span class="sd">    to the equivalent Hovor assignment (&quot;found&quot;, &quot;didnt-find&quot;, and</span>
+<span class="sd">    &quot;maybe-found&quot; respectively). Used for outcomes.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - known (bool or str): The &quot;known&quot; status of a context variable in the YAML.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - (str): The Hovor assignment equivalent to the &quot;known&quot; parameter provided.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span>
+        <span class="p">(</span><span class="s2">&quot;found&quot;</span> <span class="k">if</span> <span class="n">known</span> <span class="k">else</span> <span class="s2">&quot;didnt-find&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span> <span class="k">else</span> <span class="s2">&quot;maybe-found&quot;</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="_configure_certainty"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_certainty">[docs]</a><span class="k">def</span> <span class="nf">_configure_certainty</span><span class="p">(</span><span class="n">known</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Converts the parameter `known` (which is either True, False, or &quot;maybe&quot;)</span>
+<span class="sd">    to the equivalent Hovor certainty (&quot;Known&quot;, &quot;Unknown&quot;, and</span>
+<span class="sd">    &quot;Uncertain&quot; respectively). Used for preconditions.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - known (bool or str): The &quot;known&quot; status of a context variable in the YAML.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - (str): The Hovor certainty equivalent to the &quot;known&quot; parameter provided.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Known&quot;</span> <span class="k">if</span> <span class="n">known</span> <span class="k">else</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span> <span class="k">else</span> <span class="s2">&quot;Uncertain&quot;</span></div>
+
+
+<div class="viewcode-block" id="_convert_to_formula"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_to_formula">[docs]</a><span class="nd">@config</span><span class="p">(</span><span class="n">auto_simplify</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_convert_to_formula</span><span class="p">(</span><span class="n">condition</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">And</span><span class="p">,</span> <span class="n">Or</span><span class="p">]:</span>
+    <span class="sd">&quot;&quot;&quot;Converts an action condition from the YAML to a list of terms for an</span>
+<span class="sd">    NNF formula.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - condition (Dict): An action condition from the YAML.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - formula_terms (Union[nnf.And, nnf.Or]): An NNF formula.</span>
+
+<span class="sd">    TODO: Test extensively once arbitrary conversion to DNF becomes viable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">formula_terms</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># if we get passed a list, update formula_terms by the conversion of each</span>
+    <span class="c1"># element in the list</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span> <span class="o">==</span> <span class="nb">list</span><span class="p">:</span>
+        <span class="n">formula_terms</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="n">formula</span>
+                <span class="k">for</span> <span class="n">nesting</span> <span class="ow">in</span> <span class="n">condition</span>
+                <span class="k">for</span> <span class="n">formula</span> <span class="ow">in</span> <span class="n">_convert_to_formula</span><span class="p">(</span><span class="n">nesting</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># otherwise, inspect the parameter further</span>
+        <span class="k">for</span> <span class="n">connective</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="n">condition</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># if the key is not &quot;and&quot; or &quot;or&quot;, then we know we&#39;re dealing with</span>
+            <span class="c1"># a context variable and value setting. represent these with Vars.</span>
+            <span class="c1"># NOTE: we may want to store the Var to dict mappings so we can</span>
+            <span class="c1"># reference them later when constructing new actions from the</span>
+            <span class="c1"># formula terms.</span>
+            <span class="k">if</span> <span class="n">connective</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;and&quot;</span><span class="p">,</span> <span class="s2">&quot;or&quot;</span><span class="p">]:</span>
+                <span class="n">formula_terms</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                    <span class="n">Var</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">connective</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">base_key</span><span class="si">}</span><span class="s2">-</span><span class="si">{</span><span class="n">base_value</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">base_key</span><span class="p">,</span> <span class="n">base_value</span> <span class="ow">in</span> <span class="n">config</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># if we are dealing with an &quot;and&quot; or &quot;or&quot;, nest the terms in</span>
+                <span class="c1"># the respective connective.</span>
+                <span class="n">formula_terms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="n">And</span><span class="p">(</span><span class="n">_convert_to_formula</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>
+                    <span class="k">if</span> <span class="n">connective</span> <span class="o">==</span> <span class="s2">&quot;and&quot;</span>
+                    <span class="k">else</span> <span class="n">Or</span><span class="p">(</span><span class="n">_convert_to_formula</span><span class="p">(</span><span class="n">config</span><span class="p">))</span>
+                <span class="p">)</span>
+    <span class="k">return</span> <span class="n">formula_terms</span></div>
+
+
+<div class="viewcode-block" id="_convert_to_DNF"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_to_DNF">[docs]</a><span class="nd">@config</span><span class="p">(</span><span class="n">auto_simplify</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">_convert_to_DNF</span><span class="p">(</span><span class="n">condition</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">And</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Converts an action condition from the YAML to an NNF formula in</span>
+<span class="sd">    Disjunctive Normal Form. Eventually, this would be used for auto-</span>
+<span class="sd">    generating equivalent actions based on arbritrary logical formulas.</span>
+
+<span class="sd">    NOTE: Will not be in use until issue #4 is resolved.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - condition (Dict): An action condition from the YAML.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - (nnf.And): The DNF formula that the action condition was converted to.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">_convert_to_formula</span><span class="p">(</span><span class="n">condition</span><span class="p">))</span><span class="o">.</span><span class="n">negate</span><span class="p">())</span><span class="o">.</span><span class="n">to_CNF</span><span class="p">()</span><span class="o">.</span><span class="n">negate</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="_configure_value_setter"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._configure_value_setter">[docs]</a><span class="k">def</span> <span class="nf">_configure_value_setter</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">ctx_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Configures the actions in loaded_yaml to allow for value setting. This</span>
+<span class="sd">    allows values to be used in preconditions, i.e. cuisine: {value: &quot;Mexican&quot;}.</span>
+
+<span class="sd">    This is done by creating flag context variables that represent the value</span>
+<span class="sd">    of the context variable; i.e. &quot;cuisine-value-Mexican&quot;. We need to create</span>
+<span class="sd">    flag representations so that value knowledge is reflected in the PDDL and</span>
+<span class="sd">    ultimately the generated tree/controller. This flag is what would be used</span>
+<span class="sd">    as a precondition to check the value of the context variable.</span>
+
+<span class="sd">    Obviously, the flag values can be set when the context variable becomes</span>
+<span class="sd">    known, and reset when the context variable becomes unknown.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">        ctx_var (str): The context variable referenced in value-dependent preconditions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">])</span>
+    <span class="n">ctx_var_cfg</span> <span class="o">=</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="n">ctx_var</span><span class="p">]</span>
+    <span class="c1"># possible values the context variable can be set to</span>
+    <span class="n">var_options</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="nb">list</span><span class="p">(</span><span class="n">ctx_var_cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ctx_var_cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span>
+        <span class="k">else</span> <span class="n">ctx_var_cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="c1"># create flag context variables that represent the given ctx_var being set</span>
+    <span class="c1"># to all possible values; initialize all as False</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_options</span><span class="p">:</span>
+        <span class="n">option_value_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="n">option_value_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;flag&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;init&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+        <span class="p">}</span>
+    <span class="c1"># create a function that sets the relevant &quot;value flag&quot; context variables</span>
+    <span class="c1"># to true if the given context variable is known using context dependent</span>
+    <span class="c1"># determination</span>
+    <span class="n">processed</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;set-</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;subtype&quot;</span><span class="p">:</span> <span class="s2">&quot;Context dependent determination&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="o">**</span><span class="p">{</span><span class="n">ctx_var</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
+            <span class="o">**</span><span class="p">{</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+                <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_options</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;effect&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">&quot;set-valid-value&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">):</span> <span class="p">{</span>
+                            <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span>
+                                <span class="p">},</span>
+                            <span class="p">},</span>
+                            <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">ctx_var</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">v</span><span class="p">}},</span>
+                        <span class="p">}</span>
+                        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_options</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+    <span class="p">}</span>
+    <span class="c1"># whenever we lose knowledge of the context variable, reset all values</span>
+    <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">eff</span><span class="p">,</span> <span class="n">eff_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">out</span><span class="p">,</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">update_var</span><span class="p">,</span> <span class="n">update_cfg</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="n">ctx_var</span> <span class="o">==</span> <span class="n">update_var</span> <span class="ow">and</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">update_cfg</span><span class="p">:</span>
+                                <span class="k">if</span> <span class="n">update_cfg</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
+                                    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_options</span><span class="p">:</span>
+                                        <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span>
+                                            <span class="s2">&quot;outcomes&quot;</span>
+                                        <span class="p">][</span><span class="n">out</span><span class="p">][</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span>
+                                            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                                        <span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                            <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                                        <span class="p">}</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
+
+
+<div class="viewcode-block" id="_base_fallback_setup"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._base_fallback_setup">[docs]</a><span class="k">def</span> <span class="nf">_base_fallback_setup</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Sets up the default intents, action, and context variables needed to</span>
+<span class="sd">    handle fallbacks. </span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># set up the action, intent, and fluents needed for default fallback/unclear user input</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;fallback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;utter_dialogue_statement&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="p">}</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="s2">&quot;dialogue_statement&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_configure_dialogue_statement</span><span class="p">()</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="s2">&quot;have-message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;flag&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;init&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">}</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="s2">&quot;force-statement&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;flag&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;init&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="_instantiate_custom_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._instantiate_custom_actions">[docs]</a><span class="k">def</span> <span class="nf">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Instantiate custom actions.</span>
+
+<span class="sd">    NOTE: All custom action functions must be placed in a file in</span>
+<span class="sd">    plan4dial/generate_files/custom_actions.py. The name of the file should</span>
+<span class="sd">    be the same name as the function that configures the custom action.</span>
+
+<span class="sd">    NOTE: The custom actions are responsible for adding the actions to the</span>
+<span class="sd">    configuration. This is because some custom actions add multiple actions,</span>
+<span class="sd">    make changes to the context variables, etc. As a rule, the `loaded_yaml`</span>
+<span class="sd">    should always be the first parameter.</span>
+
+<span class="sd">    NOTE: Custom actions should have &quot;custom&quot; as the `type`, and the name of</span>
+<span class="sd">    the function as the `subtype`. Parameters to the function should go in a</span>
+<span class="sd">    `parameters` dictionary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="c1"># iterate through all actions</span>
+    <span class="k">for</span> <span class="n">act</span><span class="p">,</span> <span class="n">act_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># if we&#39;re dealing with a custom action</span>
+        <span class="k">if</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;custom&quot;</span><span class="p">:</span>
+            <span class="c1"># find the appropriate file in the custom_actions folder</span>
+            <span class="n">custom_act_name</span> <span class="o">=</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;subtype&quot;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">custom_act</span> <span class="ow">in</span> <span class="n">getmembers</span><span class="p">(</span><span class="n">import_module</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;generate_files.custom_actions.</span><span class="si">{</span><span class="n">custom_act_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span> <span class="n">isfunction</span><span class="p">):</span>
+                <span class="n">act_name</span><span class="p">,</span> <span class="n">act_function</span> <span class="o">=</span> <span class="n">custom_act</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">custom_act</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">act_name</span> <span class="o">==</span> <span class="n">custom_act_name</span><span class="p">:</span>
+                    <span class="n">act_function</span><span class="p">(</span>
+                        <span class="n">processed</span><span class="p">,</span> <span class="o">**</span><span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;parameters&quot;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="k">break</span>
+            <span class="c1"># delete the custom action instantiation outline</span>
+            <span class="k">del</span> <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">processed</span><span class="p">:</span>
+        <span class="n">loaded_yaml</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="_add_fallbacks"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._add_fallbacks">[docs]</a><span class="k">def</span> <span class="nf">_add_fallbacks</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Ensure that non-fallback options can only run if a fallback did not just</span>
+<span class="sd">    occur. Add fallback outcomes to actions as necessary.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">act</span><span class="p">,</span> <span class="n">act_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">fallback</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="c1"># for all non-fallback actions, make sure we can only execute that</span>
+        <span class="c1"># action if a fallback is not occurring</span>
+        <span class="k">if</span> <span class="n">act</span> <span class="o">!=</span> <span class="s2">&quot;dialogue_statement&quot;</span><span class="p">:</span>
+            <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="s2">&quot;force-statement&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+            <span class="c1"># check if either fallbacks are disabled or we have a system action</span>
+            <span class="c1"># (fallbacks are only needed for dialogue actions)</span>
+            <span class="n">fallback</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="ow">not</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;disable-fallback&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s2">&quot;disable-fallback&quot;</span> <span class="ow">in</span> <span class="n">act_config</span>
+                <span class="k">else</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;system&quot;</span>
+            <span class="p">)</span>
+            <span class="c1"># if this action has fallbacks enabled, and we haven&#39;t specified</span>
+            <span class="c1"># custom fallback message variants, add these as default</span>
+            <span class="k">if</span> <span class="n">fallback</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;fallback_message_variants&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">act_config</span><span class="p">:</span>
+                    <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;fallback_message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="s2">&quot;Sorry, I couldn&#39;t understand that input.&quot;</span><span class="p">,</span>
+                        <span class="s2">&quot;Sorry, I didn&#39;t quite get that.&quot;</span><span class="p">,</span>
+                    <span class="p">]</span>
+        <span class="c1"># if this action has fallbacks enabled, add fallback outcomes </span>
+        <span class="c1"># as necessary</span>
+        <span class="k">for</span> <span class="n">eff</span><span class="p">,</span> <span class="n">eff_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">fallback</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
+                    <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
+                        <span class="s2">&quot;fallback&quot;</span>
+                    <span class="p">]</span> <span class="o">=</span> <span class="n">_configure_fallback</span><span class="p">()</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
+
+
+<div class="viewcode-block" id="_add_follow_ups_and_responses"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._add_follow_ups_and_responses">[docs]</a><span class="k">def</span> <span class="nf">_add_follow_ups_and_responses</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Configures follow up actions and responses where they were specified</span>
+<span class="sd">    in the YAML.</span>
+
+<span class="sd">    Follow ups are actions that are forced to take place after an outcome.</span>
+<span class="sd">    Responses are messages that the agent must utter after an outcome.</span>
+
+<span class="sd">    NOTE: As it stands, follow ups only force the action that you specify and </span>
+<span class="sd">    disable all others. This means that for actions that, for example, lead into</span>
+<span class="sd">    clarifications, those clarifications will not be forced too. A more complex</span>
+<span class="sd">    configuration for robust follow_up functionality (as well as more</span>
+<span class="sd">    description of the issue) is detailed in #5, but this bare-bones</span>
+<span class="sd">    specification can be safely used in the meantime.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">])</span>
+    <span class="n">forced_acts</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">eff</span><span class="p">,</span> <span class="n">eff_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">out</span><span class="p">,</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">next_outcome</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">out_config</span><span class="p">)</span>
+                    <span class="c1"># if a follow up was specified, set the forcing__{action}</span>
+                    <span class="c1"># flag to True and keep track of which action was forced</span>
+                    <span class="k">if</span> <span class="s2">&quot;follow_up&quot;</span> <span class="ow">in</span> <span class="n">next_outcome</span><span class="p">:</span>
+                        <span class="n">forced</span> <span class="o">=</span> <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span>
+                        <span class="n">forcing_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;forcing__</span><span class="si">{</span><span class="n">forced</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">next_outcome</span><span class="p">:</span>
+                            <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">forcing_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">forcing_name</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}</span>
+                        <span class="n">forced_acts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">forced</span><span class="p">)</span>
+                    <span class="c1"># force a message if a response was indicated</span>
+                    <span class="k">if</span> <span class="s2">&quot;response_variants&quot;</span> <span class="ow">in</span> <span class="n">next_outcome</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">next_outcome</span><span class="p">:</span>
+                            <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">_configure_force_message_true</span><span class="p">())</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_configure_force_message_true</span><span class="p">()</span>
+                    <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
+                        <span class="n">out</span>
+                    <span class="p">]</span> <span class="o">=</span> <span class="n">next_outcome</span>
+    <span class="n">with_forced</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">processed</span><span class="p">)</span>
+    <span class="c1"># iterate through all the actions that are going to be forced at some point</span>
+    <span class="k">for</span> <span class="n">forced</span> <span class="ow">in</span> <span class="n">forced_acts</span><span class="p">:</span>
+        <span class="n">forcing_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;forcing__</span><span class="si">{</span><span class="n">forced</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="c1"># iterate through all actions</span>
+        <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">processed</span><span class="p">:</span>
+            <span class="c1"># don&#39;t lock the fallback so we can fallback on a forced action if needed</span>
+            <span class="c1"># don&#39;t lock the forced action itself, obviously</span>
+            <span class="k">if</span> <span class="n">act</span> <span class="o">!=</span> <span class="n">forced</span> <span class="ow">and</span> <span class="n">act</span> <span class="o">!=</span> <span class="s2">&quot;dialogue_statement&quot;</span><span class="p">:</span>
+                <span class="n">with_forced</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="n">forcing_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+        <span class="c1"># for all actions that are being forced, any outcome that IS NOT a fallback </span>
+        <span class="c1"># will end the force</span>
+        <span class="k">for</span> <span class="n">eff</span><span class="p">,</span> <span class="n">eff_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">forced</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">out</span><span class="p">,</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">with_forced</span><span class="p">[</span><span class="n">forced</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="s2">&quot;intent&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;intent&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;fallback&quot;</span><span class="p">:</span>
+                            <span class="n">reset_force</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">reset_force</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">if</span> <span class="n">reset_force</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
+                            <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">forcing_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">forcing_name</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}}</span>
+        <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="n">forcing_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;flag&quot;</span><span class="p">,</span> <span class="s2">&quot;init&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">with_forced</span></div>
+
+
+<div class="viewcode-block" id="_duplicate_for_or_condition"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._duplicate_for_or_condition">[docs]</a><span class="k">def</span> <span class="nf">_duplicate_for_or_condition</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Creates equivalent actions to those with an &quot;or&quot; precondition by splitting</span>
+<span class="sd">    them up into separate actions. </span>
+
+<span class="sd">    NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #4).  </span>
+<span class="sd">    Should not be deployed yet.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">act</span><span class="p">,</span> <span class="n">act_cfg</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">cond</span><span class="p">,</span> <span class="n">cond_cfg</span> <span class="ow">in</span> <span class="n">act_cfg</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="c1"># currently only handles &quot;or&quot;s and &quot;or&quot;s of &quot;ands&quot; (when multiple conditions are listed under one bullet)</span>
+            <span class="k">if</span> <span class="n">cond</span> <span class="o">==</span> <span class="s2">&quot;or&quot;</span><span class="p">:</span>
+                <span class="n">idx</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="c1"># for each or condition, create a new action with that </span>
+                <span class="c1"># condition and none of the other ones in the or clause</span>
+                <span class="k">for</span> <span class="n">or_cond</span> <span class="ow">in</span> <span class="n">cond_cfg</span><span class="p">:</span>
+                    <span class="n">new_cond</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">act_cfg</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">])</span>
+                    <span class="k">del</span> <span class="n">new_cond</span><span class="p">[</span><span class="s2">&quot;or&quot;</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">or_cond</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                        <span class="n">new_cond</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                    <span class="n">next_act_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">act</span><span class="si">}</span><span class="s2">-or-</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="n">processed</span><span class="p">[</span><span class="n">next_act_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">])</span>
+                    <span class="n">processed</span><span class="p">[</span><span class="n">next_act_name</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_cond</span>
+                    <span class="n">idx</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">del</span> <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">]</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
+
+
+<div class="viewcode-block" id="_duplicate_for_or_when_condition"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._duplicate_for_or_when_condition">[docs]</a><span class="k">def</span> <span class="nf">_duplicate_for_or_when_condition</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Creates equivalent &quot;when&quot; expressions to those with an &quot;or&quot; condition by splitting</span>
+<span class="sd">    them up into separate conditions. </span>
+
+<span class="sd">    NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #3 and #4).  </span>
+<span class="sd">    Should not be deployed yet.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]:</span>
+        <span class="k">for</span> <span class="n">eff</span><span class="p">,</span> <span class="n">eff_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">out</span><span class="p">,</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">update_var</span><span class="p">,</span> <span class="n">update_cfg</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="c1"># for now, assume we only use &quot;and&quot; explicitly to stack &quot;when&quot; expressions</span>
+                            <span class="k">if</span> <span class="n">update_var</span> <span class="o">==</span> <span class="s2">&quot;and&quot;</span><span class="p">:</span>
+                                <span class="k">for</span> <span class="n">when_expr</span> <span class="ow">in</span> <span class="n">update_cfg</span><span class="p">:</span>
+                                    <span class="k">for</span> <span class="n">when_cond</span><span class="p">,</span> <span class="n">when_cond_cfg</span> <span class="ow">in</span> <span class="n">when_expr</span><span class="p">[</span><span class="s2">&quot;when&quot;</span><span class="p">][</span>
+                                        <span class="s2">&quot;condition&quot;</span>
+                                    <span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                                        <span class="k">if</span> <span class="n">when_cond</span> <span class="o">==</span> <span class="s2">&quot;or&quot;</span><span class="p">:</span>
+                                            <span class="c1"># iterate through each &quot;or&quot; condition</span>
+                                            <span class="k">for</span> <span class="n">or_cond</span> <span class="ow">in</span> <span class="n">when_cond_cfg</span><span class="p">:</span>
+                                                <span class="n">new_when</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">when_expr</span><span class="p">)</span>
+                                                <span class="k">del</span> <span class="n">new_when</span><span class="p">[</span><span class="s2">&quot;when&quot;</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="s2">&quot;or&quot;</span><span class="p">]</span>
+                                                <span class="c1"># create new expressions for each condition</span>
+                                                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">or_cond</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                                                    <span class="n">new_when</span><span class="p">[</span><span class="s2">&quot;when&quot;</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+                                                <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span>
+                                                    <span class="s2">&quot;outcomes&quot;</span>
+                                                <span class="p">][</span><span class="n">out</span><span class="p">][</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">update_var</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                                                    <span class="n">new_when</span>
+                                                <span class="p">)</span>
+                                    <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
+                                        <span class="n">out</span>
+                                    <span class="p">][</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">update_var</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">when_expr</span><span class="p">)</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
+
+
+<div class="viewcode-block" id="_add_value_setters"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._add_value_setters">[docs]</a><span class="k">def</span> <span class="nf">_add_value_setters</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Configures value setters when an action is contingent on the string value of a </span>
+<span class="sd">    context variable. Resets the precondition of these actions to rely on the flag values</span>
+<span class="sd">    that represent the true value of the context variable.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">    - AssertionError: Raised if the user tried to specify an invalid value for a context</span>
+<span class="sd">    variable in a precondition.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">act</span><span class="p">,</span> <span class="n">act_cfg</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">cond</span><span class="p">,</span> <span class="n">cond_cfg</span> <span class="ow">in</span> <span class="n">act_cfg</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="s2">&quot;value&quot;</span> <span class="ow">in</span> <span class="n">cond_cfg</span><span class="p">:</span>
+                <span class="n">option</span> <span class="o">=</span> <span class="n">cond_cfg</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="n">cond</span><span class="p">][</span><span class="s2">&quot;options&quot;</span><span class="p">]:</span>
+                        <span class="k">raise</span> <span class="ne">AssertionError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s1">&#39;Cannot specify the value &quot;</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s1">&quot; for the context variable &quot;</span><span class="si">{</span><span class="n">cond</span><span class="si">}</span><span class="s1">&quot;.&#39;</span>
+                        <span class="p">)</span>
+                    <span class="c1"># if not done already, create new &quot;value-setting&quot; actions, conditions, etc.</span>
+                    <span class="k">if</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cond</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">option</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="ow">not</span> <span class="ow">in</span> <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">]</span>
+                    <span class="p">):</span>
+                        <span class="n">_configure_value_setter</span><span class="p">(</span><span class="n">processed</span><span class="p">,</span> <span class="n">cond</span><span class="p">)</span>
+                    <span class="c1"># reset old condition to the refactored condition so we can specify value</span>
+                    <span class="c1"># only delete the value portion (may still have &quot;known&quot;)</span>
+                    <span class="k">del</span> <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="n">cond</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+                    <span class="c1"># delete whole condition if empty</span>
+                    <span class="k">if</span> <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="n">cond</span><span class="p">]</span> <span class="o">==</span> <span class="p">{}:</span>
+                        <span class="k">del</span> <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="n">cond</span><span class="p">]</span>
+                    <span class="c1"># replace</span>
+                    <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">cond</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">option</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">],</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">],</span>
+        <span class="n">processed</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">],</span>
+    <span class="p">)</span></div>
+
+<div class="viewcode-block" id="_convert_ctx_var"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_ctx_var">[docs]</a><span class="k">def</span> <span class="nf">_convert_ctx_var</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Converts the context variables from how they were formatted in the YAML</span>
+<span class="sd">    to the JSON configuration that Hovor requires.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">])</span>
+    <span class="c1"># convert context variables</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="p">{</span><span class="n">var</span><span class="p">:</span> <span class="p">{}</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">]}</span>
+    <span class="k">for</span> <span class="n">ctx_var</span><span class="p">,</span> <span class="n">cfg</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">json_ctx_var</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span>
+            <span class="c1"># don&#39;t include variations in the config</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+                <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span>
+        <span class="c1"># for flags/fflags, the config is the initial setting</span>
+        <span class="k">elif</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;flag&quot;</span> <span class="ow">or</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fflag&quot;</span><span class="p">:</span>
+            <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;init&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># add other information to the config as necessary</span>
+            <span class="k">if</span> <span class="s2">&quot;extraction&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+                <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extraction&quot;</span><span class="p">:</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;extraction&quot;</span><span class="p">]}</span>
+                <span class="k">if</span> <span class="s2">&quot;method&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+                    <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">][</span><span class="s2">&quot;method&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="s2">&quot;pattern&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+                    <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">][</span><span class="s2">&quot;pattern&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;pattern&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;null&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+            <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">]</span>
+        <span class="n">processed</span><span class="p">[</span><span class="n">ctx_var</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_ctx_var</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
+
+
+<div class="viewcode-block" id="_convert_intents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_intents">[docs]</a><span class="k">def</span> <span class="nf">_convert_intents</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Converts the intents from how they were formatted in the YAML to the</span>
+<span class="sd">    JSON configuration that Hovor requires.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">intent</span><span class="p">,</span> <span class="n">intent_cfg</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">cur_intent</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">cur_intent</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># add the $ identifier to all variables</span>
+        <span class="k">if</span> <span class="s2">&quot;variables&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
+            <span class="n">cur_intent</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]]</span>
+            <span class="p">)</span>
+        <span class="n">cur_intent</span><span class="p">[</span><span class="s2">&quot;utterances&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;utterances&quot;</span><span class="p">]</span>
+        <span class="n">processed</span><span class="p">[</span><span class="n">intent</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_intent</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
+
+
+<div class="viewcode-block" id="_convert_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser._convert_actions">[docs]</a><span class="k">def</span> <span class="nf">_convert_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Converts the actions from how they were formatted in the YAML to the</span>
+<span class="sd">    JSON configuration that Hovor requires.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]:</span>
+        <span class="c1"># convert preconditions</span>
+        <span class="n">json_config_cond</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">cond</span><span class="p">,</span> <span class="n">cond_cfg</span> <span class="ow">in</span> <span class="n">condition</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">cond_config_key</span><span class="p">,</span> <span class="n">cond_config_val</span> <span class="ow">in</span> <span class="n">cond_cfg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">cond_config_key</span> <span class="o">==</span> <span class="s2">&quot;known&quot;</span><span class="p">:</span>
+                    <span class="n">json_config_cond</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">([</span><span class="n">cond</span><span class="p">,</span> <span class="s2">&quot;Known&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">cond_config_val</span> <span class="k">else</span> <span class="p">[</span><span class="n">cond</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">])</span>
+                        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cond_config_val</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span>
+                        <span class="k">else</span> <span class="p">[</span><span class="n">cond</span><span class="p">,</span> <span class="s2">&quot;Uncertain&quot;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="n">cond_config_key</span> <span class="o">==</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span>
+                    <span class="n">json_config_cond</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">cond</span><span class="p">,</span> <span class="n">cond_config_val</span><span class="p">])</span>
+        <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">json_config_cond</span>
+        <span class="c1"># convert effects</span>
+        <span class="k">for</span> <span class="n">eff</span><span class="p">,</span> <span class="n">eff_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">converted_eff</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">eff_config</span><span class="p">)</span>
+            <span class="n">converted_eff</span><span class="p">[</span><span class="s2">&quot;global-outcome-name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">eff</span>
+            <span class="n">intents</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
+                <span class="n">converted_eff</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">option</span>
+                <span class="n">outcomes_list</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">out</span><span class="p">,</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">next_outcome</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">out_config</span><span class="p">)</span>
+                    <span class="c1"># reformat name</span>
+                    <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">act</span><span class="si">}</span><span class="s2">_DETDUP_</span><span class="si">{</span><span class="n">eff</span><span class="si">}</span><span class="s2">-EQ-</span><span class="si">{</span><span class="n">out</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="c1"># use blank intent if no intent was specified</span>
+                    <span class="k">if</span> <span class="s2">&quot;intent&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
+                        <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;intent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">intents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;intent&quot;</span><span class="p">])</span>
+                    <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;assignments&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+                    <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">update_var</span><span class="p">,</span> <span class="n">update_cfg</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                            <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">update_var</span><span class="p">][</span><span class="s2">&quot;variable&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_var</span>
+                            <span class="c1"># set the assignments and certainty based on the &quot;known&quot; settings</span>
+                            <span class="c1"># that were updated</span>
+                            <span class="k">if</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">update_cfg</span><span class="p">:</span>
+                                <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;assignments&quot;</span><span class="p">][</span>
+                                    <span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">update_var</span><span class="si">}</span><span class="s2">&quot;</span>
+                                <span class="p">]</span> <span class="o">=</span> <span class="n">configure_assignments</span><span class="p">(</span><span class="n">update_cfg</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">])</span>
+                                <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">update_var</span><span class="p">][</span>
+                                    <span class="s2">&quot;certainty&quot;</span>
+                                <span class="p">]</span> <span class="o">=</span> <span class="n">_configure_certainty</span><span class="p">(</span><span class="n">update_cfg</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">])</span>
+                                <span class="k">del</span> <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">update_var</span><span class="p">][</span><span class="s2">&quot;known&quot;</span><span class="p">]</span>
+                            <span class="c1"># set value to None if not specified (i.e. if just setting </span>
+                            <span class="c1"># known: False)</span>
+                            <span class="k">if</span> <span class="s2">&quot;value&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">update_cfg</span><span class="p">:</span>
+                                <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">update_var</span><span class="p">][</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+                            <span class="c1"># JSON interpretations are handled in the most straightforward</span>
+                            <span class="c1"># way by Hovor (as opposed to spel, which requires a specific format)</span>
+                            <span class="n">next_outcome</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="n">update_var</span><span class="p">][</span>
+                                <span class="s2">&quot;interpretation&quot;</span>
+                            <span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;json&quot;</span>
+                    <span class="n">outcomes_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">next_outcome</span><span class="p">)</span>
+                <span class="n">converted_eff</span><span class="p">[</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">outcomes_list</span>
+                <span class="k">del</span> <span class="n">converted_eff</span><span class="p">[</span><span class="n">option</span><span class="p">]</span>
+                <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">converted_eff</span>
+        <span class="c1"># add the intents in a separate section</span>
+        <span class="k">if</span> <span class="n">intents</span><span class="p">:</span>
+            <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;intents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">intent</span> <span class="ow">in</span> <span class="n">intents</span><span class="p">:</span>
+                <span class="c1"># don&#39;t consider null or frozenset intents</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">intent</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">intent</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">]:</span>
+                        <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="n">intent</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span>
+                            <span class="n">intent</span>
+                        <span class="p">]</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
+
+
+<div class="viewcode-block" id="convert_yaml"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.json_config_parser.html#plan4dial.generate_files.parsers.json_config_parser.convert_yaml">[docs]</a><span class="k">def</span> <span class="nf">convert_yaml</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Generates the JSON configuration required by Hovor from the provided</span>
+<span class="sd">    YAML file. First preprocesses the YAML, adding clarification actions,</span>
+<span class="sd">    follow-up actions, etc, then finally converts everything into Hovor</span>
+<span class="sd">    format.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    - (Dict): The JSON configuration required by Hovor.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_base_fallback_setup</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_add_fallbacks</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_add_follow_ups_and_responses</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_duplicate_for_or_condition</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_duplicate_for_or_when_condition</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_add_value_setters</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_convert_ctx_var</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_convert_intents</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_convert_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loaded_yaml</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">Plan4Dial</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../generated/plan4dial.html">plan4dial</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, Rebecca De Venezia @ QuMuLab.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

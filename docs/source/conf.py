@@ -8,9 +8,12 @@
 
 import os
 import sys
-sys.path.append(os.path.abspath('../plan4dial/plan4dial/'))  # Source code dir relative to this file
-sys.path.append(os.path.abspath('../plan4dial/'))  # outer directory
-sys.path.append(os.path.abspath('../../')) # home path
+# sys.path.append(os.path.abspath('../plan4dial'))  # Source code dir relative to this file
+# sys.path.append(os.path.abspath('../plan4dial/plan4dial'))  # outer directory
+sys.path.append(os.path.abspath('../..')) # home path
+# sys.path.append(os.path.abspath('../plan4dial/docs'))
+print(sys.path)
+
 
 # Turn on sphinx.ext.autosummary and set autodoc options
 autosummary_generate = True
@@ -47,4 +50,4 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
-html_static_path = ['_static']
+#html_static_path = ['_static']

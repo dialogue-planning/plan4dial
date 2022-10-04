@@ -29,8 +29,7 @@ def slot_fill(
 
     Also handles "partial" extraction, where the bot asks for multiple entities
     but is only able to extract some. In that case, the bot will follow up with
-    `clarify` actions in which it tries to extract uncertain entities, or
-    `single_slot` actions in which it tries to extract unknown entities
+    `clarify` actions in which it tries to extract uncertain entities, or `single_slot` actions in which it tries to extract unknown entities
     individually in order to make up for the missing information (only used
     when there are > 1 entities specified).
 
@@ -38,34 +37,29 @@ def slot_fill(
     entity `pizza` is extracted, respond with the given `response_variants`.
 
     Args:
-    - loaded_yaml (Dict): The loaded YAML configuration.
-    - action_name (str): The name of this instance of the custom action.
-    - message_variants (List[str]): Possible messages the bot will utter upon
-    execution of this action.
-    - entities (List[str]): The entities to be extracted or have their "slots
-    filled."
-    - config_entities (Dict): Holds configurations that specify what the bot
-    should do in certain situations regarding each entity. The keys are each
-    entity and the values are the configuration for each entity. Defaults to
-    None as this is not always necessary.
+        loaded_yaml (Dict): The loaded YAML configuration.
+        action_name (str): The name of this instance of the custom action.
+        message_variants (List[str]): Possible messages the bot will utter uponexecution of this action.
+        entities (List[str]): The entities to be extracted or have their "slots filled."
+        config_entities (Dict): Holds configurations that specify what the botshould do in certain situations regarding each entity. The keys are each entity and the values are the configuration for each entity. Defaults to None as this is not always necessary.
 
     The 3 configuration options are:
-        - clarify_message_variants (List[str]): The message variants that will
+        clarify_message_variants (List[str]): The message variants that will
         be used for the clarify action for this entity. Only necessary if the
         `known` `type` of this entity is of type `fflag`.
-        - single_slot_message_variants (List[str]): Custom message variants to
+        single_slot_message_variants (List[str]): Custom message variants to
         utter for `single_slot` extractions of the given entity. Only necessary
         to specify if there are > 1 entities.
-        - fallback_message_variants (List[str]): Custom fallback messages to
+        fallback_message_variants (List[str]): Custom fallback messages to
         utter if the bot tries to extract this entity by itself with a
         `single_slot` action and fails. Differs from the outer 
         `fallback_message_variants` parameter, which applies to the initial
         `slot_fill` action only. The default fallback messages will replace 
         this parameter if not specified.
 
-    - fallback_message_variants (List[str]): Custom fallback messages to utter
+    fallback_message_variants (List[str]): Custom fallback messages to utter
     if the bot fails to extract any entities. Defaults to None.
-    - additional_updates (Dict, optional): Additional updates to specify when
+    additional_updates (Dict, optional): Additional updates to specify when
     a given extraction happens AT ANY POINT. Indicate the extraction that 
     happens in the outcome by specifying the `known` status of the entities you
     desire. You can not only use this to add arbitrary context variable
