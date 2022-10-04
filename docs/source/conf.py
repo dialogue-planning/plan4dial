@@ -31,7 +31,8 @@ release = '1.0.0'
 extensions = [
    'sphinx.ext.autodoc', # gets docstrings from Python code
    'sphinx.ext.autosummary', # auto-generates .rst files
-   'sphinx.ext.napoleon' # allows for Google/numpy style docstrings
+   'sphinx.ext.napoleon', # allows for Google/numpy style docstrings
+   'sphinx.ext.viewcode' # adds link to the source code in the docs
 ]
 
 templates_path = ['_templates']
