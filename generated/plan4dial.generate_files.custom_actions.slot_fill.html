@@ -125,33 +125,30 @@ mix of both. This depends on what the <cite>known</cite>’s <cite>type</cite> s
 entity in the YAML.</p>
 <p>Also handles “partial” extraction, where the bot asks for multiple entities
 but is only able to extract some. In that case, the bot will follow up with
-<cite>clarify</cite> actions in which it tries to extract uncertain entities, or
-<cite>single_slot</cite> actions in which it tries to extract unknown entities
+<cite>clarify</cite> actions in which it tries to extract uncertain entities, or <cite>single_slot</cite> actions in which it tries to extract unknown entities
 individually in order to make up for the missing information (only used
 when there are &gt; 1 entities specified).</p>
 <p>Additional outcomes can also be specified for certain outcomes, i.e. when
 entity <cite>pizza</cite> is extracted, respond with the given <cite>response_variants</cite>.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.
-- action_name (str): The name of this instance of the custom action.
-- message_variants (List[str]): Possible messages the bot will utter upon
-execution of this action.
-- entities (List[str]): The entities to be extracted or have their “slots
-filled.”
-- config_entities (Dict): Holds configurations that specify what the bot
-should do in certain situations regarding each entity. The keys are each
-entity and the values are the configuration for each entity. Defaults to
-None as this is not always necessary.</p>
-<dl>
-<dt>The 3 configuration options are:</dt><dd><ul class="simple">
-<li><p>clarify_message_variants (List[str]): The message variants that will</p></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p></li>
+<li><p><strong>action_name</strong> (<em>str</em>) – The name of this instance of the custom action.</p></li>
+<li><p><strong>message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Possible messages the bot will utter uponexecution of this action.</p></li>
+<li><p><strong>entities</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The entities to be extracted or have their “slots filled.”</p></li>
+<li><p><strong>config_entities</strong> (<em>Dict</em>) – Holds configurations that specify what the botshould do in certain situations regarding each entity. The keys are each entity and the values are the configuration for each entity. Defaults to None as this is not always necessary.</p></li>
 </ul>
-<p>be used for the clarify action for this entity. Only necessary if the
+</dd>
+</dl>
+<dl class="simple">
+<dt>The 3 configuration options are:</dt><dd><p>clarify_message_variants (List[str]): The message variants that will
+be used for the clarify action for this entity. Only necessary if the
 <cite>known</cite> <cite>type</cite> of this entity is of type <cite>fflag</cite>.
-- single_slot_message_variants (List[str]): Custom message variants to
+single_slot_message_variants (List[str]): Custom message variants to
 utter for <cite>single_slot</cite> extractions of the given entity. Only necessary
 to specify if there are &gt; 1 entities.
-- fallback_message_variants (List[str]): Custom fallback messages to
+fallback_message_variants (List[str]): Custom fallback messages to
 utter if the bot tries to extract this entity by itself with a
 <cite>single_slot</cite> action and fails. Differs from the outer
 <cite>fallback_message_variants</cite> parameter, which applies to the initial
@@ -159,11 +156,9 @@ utter if the bot tries to extract this entity by itself with a
 this parameter if not specified.</p>
 </dd>
 </dl>
-<ul class="simple">
-<li><p>fallback_message_variants (List[str]): Custom fallback messages to utter</p></li>
-</ul>
-<p>if the bot fails to extract any entities. Defaults to None.
-- additional_updates (Dict, optional): Additional updates to specify when
+<p>fallback_message_variants (List[str]): Custom fallback messages to utter
+if the bot fails to extract any entities. Defaults to None.
+additional_updates (Dict, optional): Additional updates to specify when
 a given extraction happens AT ANY POINT. Indicate the extraction that
 happens in the outcome by specifying the <cite>known</cite> status of the entities you
 desire. You can not only use this to add arbitrary context variable
@@ -200,6 +195,10 @@ Defaults to None.</p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="plan4dial.html">plan4dial</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="plan4dial.generate_files.html">plan4dial.generate_files</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="plan4dial.generate_files.html#plan4dial.generate_files.convert_yaml"><code class="docutils literal notranslate"><span class="pre">convert_yaml()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plan4dial.generate_files.html#plan4dial.generate_files.make_nlu_file"><code class="docutils literal notranslate"><span class="pre">make_nlu_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plan4dial.generate_files.html#plan4dial.generate_files.parse_to_pddl"><code class="docutils literal notranslate"><span class="pre">parse_to_pddl()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="plan4dial.generate_files.html#plan4dial.generate_files.rollout_config"><code class="docutils literal notranslate"><span class="pre">rollout_config()</span></code></a></li>
 <li class="toctree-l3 current"><a class="reference internal" href="plan4dial.generate_files.custom_actions.html">plan4dial.generate_files.custom_actions</a><ul class="current">
 <li class="toctree-l4 current"><a class="current reference internal" href="#">plan4dial.generate_files.custom_actions.slot_fill</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="#plan4dial.generate_files.custom_actions.slot_fill._clarify_act"><code class="docutils literal notranslate"><span class="pre">_clarify_act()</span></code></a></li>

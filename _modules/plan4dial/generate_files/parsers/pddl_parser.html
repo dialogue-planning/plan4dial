@@ -48,7 +48,7 @@
 <span class="n">TAB</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="mi">4</span>
 
 
-<div class="viewcode-block" id="_get_is_fflag"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser._get_is_fflag">[docs]</a><span class="k">def</span> <span class="nf">_get_is_fflag</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<div class="viewcode-block" id="_get_is_fflag"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files._get_is_fflag">[docs]</a><span class="k">def</span> <span class="nf">_get_is_fflag</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Determines if the provided variable has a &quot;known&quot; setting of type fflag.</span>
 
 <span class="sd">    Args:</span>
@@ -66,7 +66,7 @@
         <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_return_flag_value_fluent"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser._return_flag_value_fluent">[docs]</a><span class="k">def</span> <span class="nf">_return_flag_value_fluent</span><span class="p">(</span><span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="_return_flag_value_fluent"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files._return_flag_value_fluent">[docs]</a><span class="k">def</span> <span class="nf">_return_flag_value_fluent</span><span class="p">(</span><span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns the fluent version of a flag or fflag context variable depending</span>
 <span class="sd">    on the setting supplied.</span>
 
@@ -86,7 +86,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(maybe__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
-<div class="viewcode-block" id="_return_certainty_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser._return_certainty_fluents">[docs]</a><span class="k">def</span> <span class="nf">_return_certainty_fluents</span><span class="p">(</span><span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">certainty</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="_return_certainty_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files._return_certainty_fluents">[docs]</a><span class="k">def</span> <span class="nf">_return_certainty_fluents</span><span class="p">(</span><span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">certainty</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Returns the fluent version of the certainty setting of a context variable</span>
 <span class="sd">    depending on the setting supplied.</span>
 
@@ -124,7 +124,7 @@
         <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;(not (know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">))&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;(maybe-know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">]</span></div>
 
 
-<div class="viewcode-block" id="_fluents_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser._fluents_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">_fluents_to_pddl</span><span class="p">(</span>
+<div class="viewcode-block" id="_fluents_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files._fluents_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">_fluents_to_pddl</span><span class="p">(</span>
     <span class="n">fluents</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">tabs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">name_wrap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -177,7 +177,7 @@
     <span class="k">return</span> <span class="n">fluents</span></div>
 
 
-<div class="viewcode-block" id="get_precond_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser.get_precond_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_precond_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_precond_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.get_precond_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_precond_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Convert an action precondition to PDDL fluents.</span>
 
 <span class="sd">    Args:</span>
@@ -206,7 +206,7 @@
     <span class="k">return</span> <span class="n">precond</span></div>
 
 
-<div class="viewcode-block" id="get_update_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser.get_update_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_update_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">updates</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_update_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.get_update_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_update_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">updates</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Converts the update configuration of an action outcome to PDDL fluents.</span>
 
 <span class="sd">    Args:</span>
@@ -241,7 +241,7 @@
     <span class="k">return</span> <span class="n">outcomes</span></div>
 
 
-<div class="viewcode-block" id="_action_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser._action_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">_action_to_pddl</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">act</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">act_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="_action_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files._action_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">_action_to_pddl</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">act</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">act_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts an action from the YAML configuration to PDDL.</span>
 
 <span class="sd">    Args:</span>
@@ -283,7 +283,7 @@
     <span class="k">return</span> <span class="n">act_param</span> <span class="o">+</span> <span class="n">precond</span> <span class="o">+</span> <span class="n">effects</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
-<div class="viewcode-block" id="_actions_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser._actions_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">_actions_to_pddl</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<div class="viewcode-block" id="_actions_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files._actions_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">_actions_to_pddl</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Converts actions from the YAML to PDDL format.</span>
 
 <span class="sd">    Args:</span>
@@ -300,7 +300,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="get_init_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser.get_init_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_init_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<div class="viewcode-block" id="get_init_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.get_init_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_init_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
     <span class="sd">&quot;&quot;&quot;Convert the initial state of context variables to a PDDL initial state.</span>
 
 <span class="sd">    Args:</span>
@@ -347,7 +347,7 @@
     <span class="k">return</span> <span class="n">init_true</span><span class="p">,</span> <span class="n">init_complete</span></div>
 
 
-<div class="viewcode-block" id="_parse_predicates"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser._parse_predicates">[docs]</a><span class="k">def</span> <span class="nf">_parse_predicates</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="_parse_predicates"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files._parse_predicates">[docs]</a><span class="k">def</span> <span class="nf">_parse_predicates</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Converts the context variables to PDDL predicates.</span>
 
 <span class="sd">    Args:</span>
@@ -372,7 +372,7 @@
     <span class="k">return</span> <span class="n">predicates</span></div>
 
 
-<div class="viewcode-block" id="parse_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parsers.pddl_parser.parse_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">parse_to_pddl</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="parse_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.generate_files.parsers.pddl_parser.html#plan4dial.generate_files.parse_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">parse_to_pddl</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Converts the loaded YAML file to a PDDL specification.</span>
 
 <span class="sd">    Args:</span>

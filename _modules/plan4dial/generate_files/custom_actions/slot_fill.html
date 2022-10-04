@@ -64,8 +64,7 @@
 
 <span class="sd">    Also handles &quot;partial&quot; extraction, where the bot asks for multiple entities</span>
 <span class="sd">    but is only able to extract some. In that case, the bot will follow up with</span>
-<span class="sd">    `clarify` actions in which it tries to extract uncertain entities, or</span>
-<span class="sd">    `single_slot` actions in which it tries to extract unknown entities</span>
+<span class="sd">    `clarify` actions in which it tries to extract uncertain entities, or `single_slot` actions in which it tries to extract unknown entities</span>
 <span class="sd">    individually in order to make up for the missing information (only used</span>
 <span class="sd">    when there are &gt; 1 entities specified).</span>
 
@@ -73,34 +72,29 @@
 <span class="sd">    entity `pizza` is extracted, respond with the given `response_variants`.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
-<span class="sd">    - action_name (str): The name of this instance of the custom action.</span>
-<span class="sd">    - message_variants (List[str]): Possible messages the bot will utter upon</span>
-<span class="sd">    execution of this action.</span>
-<span class="sd">    - entities (List[str]): The entities to be extracted or have their &quot;slots</span>
-<span class="sd">    filled.&quot;</span>
-<span class="sd">    - config_entities (Dict): Holds configurations that specify what the bot</span>
-<span class="sd">    should do in certain situations regarding each entity. The keys are each</span>
-<span class="sd">    entity and the values are the configuration for each entity. Defaults to</span>
-<span class="sd">    None as this is not always necessary.</span>
+<span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">        action_name (str): The name of this instance of the custom action.</span>
+<span class="sd">        message_variants (List[str]): Possible messages the bot will utter uponexecution of this action.</span>
+<span class="sd">        entities (List[str]): The entities to be extracted or have their &quot;slots filled.&quot;</span>
+<span class="sd">        config_entities (Dict): Holds configurations that specify what the botshould do in certain situations regarding each entity. The keys are each entity and the values are the configuration for each entity. Defaults to None as this is not always necessary.</span>
 
 <span class="sd">    The 3 configuration options are:</span>
-<span class="sd">        - clarify_message_variants (List[str]): The message variants that will</span>
+<span class="sd">        clarify_message_variants (List[str]): The message variants that will</span>
 <span class="sd">        be used for the clarify action for this entity. Only necessary if the</span>
 <span class="sd">        `known` `type` of this entity is of type `fflag`.</span>
-<span class="sd">        - single_slot_message_variants (List[str]): Custom message variants to</span>
+<span class="sd">        single_slot_message_variants (List[str]): Custom message variants to</span>
 <span class="sd">        utter for `single_slot` extractions of the given entity. Only necessary</span>
 <span class="sd">        to specify if there are &gt; 1 entities.</span>
-<span class="sd">        - fallback_message_variants (List[str]): Custom fallback messages to</span>
+<span class="sd">        fallback_message_variants (List[str]): Custom fallback messages to</span>
 <span class="sd">        utter if the bot tries to extract this entity by itself with a</span>
 <span class="sd">        `single_slot` action and fails. Differs from the outer </span>
 <span class="sd">        `fallback_message_variants` parameter, which applies to the initial</span>
 <span class="sd">        `slot_fill` action only. The default fallback messages will replace </span>
 <span class="sd">        this parameter if not specified.</span>
 
-<span class="sd">    - fallback_message_variants (List[str]): Custom fallback messages to utter</span>
+<span class="sd">    fallback_message_variants (List[str]): Custom fallback messages to utter</span>
 <span class="sd">    if the bot fails to extract any entities. Defaults to None.</span>
-<span class="sd">    - additional_updates (Dict, optional): Additional updates to specify when</span>
+<span class="sd">    additional_updates (Dict, optional): Additional updates to specify when</span>
 <span class="sd">    a given extraction happens AT ANY POINT. Indicate the extraction that </span>
 <span class="sd">    happens in the outcome by specifying the `known` status of the entities you</span>
 <span class="sd">    desire. You can not only use this to add arbitrary context variable</span>
