@@ -1,42 +1,92 @@
-
 <!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-
-    <title>plan4dial.for_generating.parsers.pddl_for_rollout &#8212; Plan4Dial 1.0.0 documentation</title>
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-    <script src="../_static/jquery.js"></script>
-    <script src="../_static/underscore.js"></script>
-    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="../_static/doctools.js"></script>
-    <script src="../_static/sphinx_highlight.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>plan4dial.for_generating.parsers.pddl_for_rollout &mdash; Plan4Dial 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="plan4dial.for_generating.parsers.pddl_parser" href="plan4dial.for_generating.parsers.pddl_parser.html" />
-    <link rel="prev" title="plan4dial.for_generating.parsers.parse_for_rasa" href="plan4dial.for_generating.parsers.parse_for_rasa.html" />
-   
-  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+    <link rel="prev" title="plan4dial.for_generating.parsers.parse_for_rasa" href="plan4dial.for_generating.parsers.parse_for_rasa.html" /> 
+</head>
 
-  </head><body>
-  
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> Plan4Dial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="plan4dial.html">plan4dial</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="plan4dial.for_generating.html">plan4dial.for_generating</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.custom_actions.html">plan4dial.for_generating.custom_actions</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="plan4dial.for_generating.parsers.html">plan4dial.for_generating.parsers</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="plan4dial.for_generating.parsers.json_config_parser.html">plan4dial.for_generating.parsers.json_config_parser</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plan4dial.for_generating.parsers.parse_for_rasa.html">plan4dial.for_generating.parsers.parse_for_rasa</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">plan4dial.for_generating.parsers.pddl_for_rollout</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plan4dial.for_generating.parsers.pddl_parser.html">plan4dial.for_generating.parsers.pddl_parser</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="plan4dial.main.html">plan4dial.main</a></li>
+</ul>
+</li>
+</ul>
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          
+        </div>
+      </div>
+    </nav>
 
-          <div class="body" role="main">
-            
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Plan4Dial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="plan4dial.html">plan4dial</a> &raquo;</li>
+          <li><a href="plan4dial.for_generating.html">plan4dial.for_generating</a> &raquo;</li>
+          <li><a href="plan4dial.for_generating.parsers.html">plan4dial.for_generating.parsers</a> &raquo;</li>
+      <li>plan4dial.for_generating.parsers.pddl_for_rollout</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/generated/plan4dial.for_generating.parsers.pddl_for_rollout.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <section id="module-plan4dial.for_generating.parsers.pddl_for_rollout">
-<span id="plan4dial-for-generating-parsers-pddl-for-rollout"></span><h1>plan4dial.for_generating.parsers.pddl_for_rollout<a class="headerlink" href="#module-plan4dial.for_generating.parsers.pddl_for_rollout" title="Permalink to this heading">¶</a></h1>
+<span id="plan4dial-for-generating-parsers-pddl-for-rollout"></span><h1>plan4dial.for_generating.parsers.pddl_for_rollout<a class="headerlink" href="#module-plan4dial.for_generating.parsers.pddl_for_rollout" title="Permalink to this heading"></a></h1>
 <p>This module contains all the functions necessary to store the PDDL fluent
 configuration in an easy-to-access way so that given an action, we can easily
 retrieve what fluents are in its preconditions and which fluents are in each
@@ -47,6 +97,10 @@ applicable actions and not just the solution generated by the PRP planner.</p>
 - Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.for_generating.parsers.pddl_for_rollout.rollout_config" title="plan4dial.for_generating.parsers.pddl_for_rollout.rollout_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rollout_config</span></code></a>(configuration_data)</p></td>
 <td><p>Given the configuration data, generates a PDDL configuration in dict form for ease in calculating applicable actions in conversation rollouts.</p></td>
@@ -55,7 +109,7 @@ applicable actions and not just the solution generated by the PRP planner.</p>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.pddl_for_rollout.rollout_config">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.pddl_for_rollout.</span></span><span class="sig-name descname"><span class="pre">rollout_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_for_rollout.html#rollout_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.pddl_for_rollout.rollout_config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.pddl_for_rollout.</span></span><span class="sig-name descname"><span class="pre">rollout_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_for_rollout.html#rollout_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.pddl_for_rollout.rollout_config" title="Permalink to this definition"></a></dt>
 <dd><p>Given the configuration data, generates a PDDL configuration in dict
 form for ease in calculating applicable actions in conversation rollouts.</p>
 <p>Args:
@@ -67,102 +121,34 @@ form for ease in calculating applicable actions in conversation rollouts.</p>
 </section>
 
 
+           </div>
           </div>
-          
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plan4dial.for_generating.parsers.parse_for_rasa.html" class="btn btn-neutral float-left" title="plan4dial.for_generating.parsers.parse_for_rasa" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="plan4dial.for_generating.parsers.pddl_parser.html" class="btn btn-neutral float-right" title="plan4dial.for_generating.parsers.pddl_parser" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Rebecca De Venezia @ QuMuLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../index.html">Plan4Dial</a></h1>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
 
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="plan4dial.html">plan4dial</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="plan4dial.html#plan4dial.generate_files"><code class="docutils literal notranslate"><span class="pre">generate_files()</span></code></a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="plan4dial.for_generating.html">plan4dial.for_generating</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.html#plan4dial.for_generating.convert_yaml"><code class="docutils literal notranslate"><span class="pre">convert_yaml()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.html#plan4dial.for_generating.make_nlu_file"><code class="docutils literal notranslate"><span class="pre">make_nlu_file()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.html#plan4dial.for_generating.parse_to_pddl"><code class="docutils literal notranslate"><span class="pre">parse_to_pddl()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.html#plan4dial.for_generating.rollout_config"><code class="docutils literal notranslate"><span class="pre">rollout_config()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.custom_actions.html">plan4dial.for_generating.custom_actions</a></li>
-<li class="toctree-l3 current"><a class="reference internal" href="plan4dial.for_generating.parsers.html">plan4dial.for_generating.parsers</a><ul class="current">
-<li class="toctree-l4"><a class="reference internal" href="plan4dial.for_generating.parsers.json_config_parser.html">plan4dial.for_generating.parsers.json_config_parser</a></li>
-<li class="toctree-l4"><a class="reference internal" href="plan4dial.for_generating.parsers.parse_for_rasa.html">plan4dial.for_generating.parsers.parse_for_rasa</a></li>
-<li class="toctree-l4 current"><a class="current reference internal" href="#">plan4dial.for_generating.parsers.pddl_for_rollout</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#plan4dial.for_generating.parsers.pddl_for_rollout.rollout_config"><code class="docutils literal notranslate"><span class="pre">rollout_config()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="plan4dial.for_generating.parsers.pddl_parser.html">plan4dial.for_generating.parsers.pddl_parser</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="plan4dial.main.html">plan4dial.main</a></li>
-</ul>
-</li>
-</ul>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="../index.html">Documentation overview</a><ul>
-  <li><a href="../api.html">&lt;no title&gt;</a><ul>
-  <li><a href="plan4dial.html">plan4dial</a><ul>
-  <li><a href="plan4dial.for_generating.html">plan4dial.for_generating</a><ul>
-  <li><a href="plan4dial.for_generating.parsers.html">plan4dial.for_generating.parsers</a><ul>
-      <li>Previous: <a href="plan4dial.for_generating.parsers.parse_for_rasa.html" title="previous chapter">plan4dial.for_generating.parsers.parse_for_rasa</a></li>
-      <li>Next: <a href="plan4dial.for_generating.parsers.pddl_parser.html" title="next chapter">plan4dial.for_generating.parsers.pddl_parser</a></li>
-  </ul></li>
-  </ul></li>
-  </ul></li>
-  </ul></li>
-  </ul></li>
-</ul>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
-    </div>
-</div>
-<script>document.getElementById('searchbox').style.display = "block"</script>
-
-
-
-
-
-
-
-
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2022, Rebecca De Venezia @ QuMuLab.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="../_sources/generated/plan4dial.for_generating.parsers.pddl_for_rollout.rst.txt"
-          rel="nofollow">Page source</a>
-    </div>
-
-    
-
-    
-  </body>
+</body>
 </html>
