@@ -11,6 +11,7 @@ pyyaml
 protobuf<3.20,>=3.9.2
 # attrs<21.3,>=19.3
 sphinx>=3.0.0
+sphinx_rtd_theme
 nnf
 spacy
 rasa
