@@ -37,11 +37,11 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">yaml</span>
-<span class="kn">from</span> <span class="nn">plan4dial</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">for_generating</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">rasa.model_training</span> <span class="kn">import</span> <span class="n">train_nlu</span>
 
 
-<div class="viewcode-block" id="generate_files"><a class="viewcode-back" href="../../generated/plan4dial.main.html#plan4dial.main.generate_files">[docs]</a><span class="k">def</span> <span class="nf">generate_files</span><span class="p">(</span>
+<div class="viewcode-block" id="generate_files"><a class="viewcode-back" href="../../generated/plan4dial.main.html#plan4dial.generate_files">[docs]</a><span class="k">def</span> <span class="nf">generate_files</span><span class="p">(</span>
     <span class="n">yaml_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rbp_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Main file responsible for generating the files that will be sent to</span>

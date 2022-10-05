@@ -1,7 +1,7 @@
-plan4dial.generate\_files.custom\_actions.utils
+plan4dial.for\_generating.custom\_actions.utils
 ===============================================
 
-.. automodule:: plan4dial.generate_files.custom_actions.utils
+.. automodule:: plan4dial.for_generating.custom_actions.utils
 
    
    

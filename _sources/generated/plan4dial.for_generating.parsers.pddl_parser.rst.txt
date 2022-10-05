@@ -1,7 +1,7 @@
-plan4dial.generate\_files.parsers.pddl\_parser
+plan4dial.for\_generating.parsers.pddl\_parser
 ==============================================
 
-.. automodule:: plan4dial.generate_files.parsers.pddl_parser
+.. automodule:: plan4dial.for_generating.parsers.pddl_parser
 
    
    

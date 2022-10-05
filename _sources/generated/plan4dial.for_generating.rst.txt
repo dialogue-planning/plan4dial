@@ -1,7 +1,7 @@
-plan4dial.generate\_files
+plan4dial.for\_generating
 =========================
 
-.. automodule:: plan4dial.generate_files
+.. automodule:: plan4dial.for_generating
 
    
    
@@ -27,6 +27,6 @@ plan4dial.generate\_files
    :toctree:
    :recursive:
 
-   plan4dial.generate_files.custom_actions
-   plan4dial.generate_files.parsers
+   plan4dial.for_generating.custom_actions
+   plan4dial.for_generating.parsers
 
