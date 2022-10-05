@@ -6,6 +6,7 @@
   <title>plan4dial.for_generating &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -38,15 +39,9 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="plan4dial.html">plan4dial</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="plan4dial.html#plan4dial.generate_files"><code class="docutils literal notranslate"><span class="pre">generate_files()</span></code></a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">plan4dial.for_generating</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#plan4dial.for_generating.convert_yaml"><code class="docutils literal notranslate"><span class="pre">convert_yaml()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#plan4dial.for_generating.make_nlu_file"><code class="docutils literal notranslate"><span class="pre">make_nlu_file()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#plan4dial.for_generating.parse_to_pddl"><code class="docutils literal notranslate"><span class="pre">parse_to_pddl()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="#plan4dial.for_generating.rollout_config"><code class="docutils literal notranslate"><span class="pre">rollout_config()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.custom_actions.html">plan4dial.for_generating.custom_actions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.parsers.html">plan4dial.for_generating.parsers</a></li>
 </ul>
@@ -70,7 +65,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../api.html">&lt;no title&gt;</a> &raquo;</li>
           <li><a href="plan4dial.html">plan4dial</a> &raquo;</li>
       <li>plan4dial.for_generating</li>
       <li class="wy-breadcrumbs-aside">
@@ -84,58 +78,6 @@
              
   <div class="section" id="module-plan4dial.for_generating">
 <span id="plan4dial-for-generating"></span><h1>plan4dial.for_generating<a class="headerlink" href="#module-plan4dial.for_generating" title="Permalink to this heading"></a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="plan4dial.for_generating.convert_yaml">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.</span></span><span class="sig-name descname"><span class="pre">convert_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#convert_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.convert_yaml" title="Permalink to this definition"></a></dt>
-<dd><p>Generates the JSON configuration required by Hovor from the provided
-YAML file. First preprocesses the YAML, adding clarification actions,
-follow-up actions, etc, then finally converts everything into Hovor
-format.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
-<p>Returns:
-- (Dict): The JSON configuration required by Hovor.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="plan4dial.for_generating.make_nlu_file">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.</span></span><span class="sig-name descname"><span class="pre">make_nlu_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/parse_for_rasa.html#make_nlu_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.make_nlu_file" title="Permalink to this definition"></a></dt>
-<dd><p>Generates the NLU configuration that Rasa requires to extract intents and entities.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The NLU configuration for Rasa.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>Dict</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="plan4dial.for_generating.parse_to_pddl">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.</span></span><span class="sig-name descname"><span class="pre">parse_to_pddl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_parser.html#parse_to_pddl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parse_to_pddl" title="Permalink to this definition"></a></dt>
-<dd><p>Converts the loaded YAML file to a PDDL specification.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
-<p>Returns:
-- domain (str): The generated PDDL domain.
-- problem (str): The generated PDDL problem.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="plan4dial.for_generating.rollout_config">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.</span></span><span class="sig-name descname"><span class="pre">rollout_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">configuration_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_for_rollout.html#rollout_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.rollout_config" title="Permalink to this definition"></a></dt>
-<dd><p>Given the configuration data, generates a PDDL configuration in dict
-form for ease in calculating applicable actions in conversation rollouts.</p>
-<p>Args:
-- configuration_data (Dict): The configuration data for the domain.</p>
-<p>Returns:
-- (Dict): The PDDL configuration in a dict form.</p>
-</dd></dl>
-
 <p class="rubric">Modules</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>

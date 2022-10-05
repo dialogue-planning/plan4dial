@@ -6,6 +6,7 @@
   <title>plan4dial &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -20,7 +21,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="plan4dial.for_generating" href="plan4dial.for_generating.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="../api.html" /> 
+    <link rel="prev" title="Welcome to Plan4Dial’s documentation!" href="../index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -38,10 +39,8 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul class="current">
+              <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">plan4dial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#plan4dial.generate_files"><code class="docutils literal notranslate"><span class="pre">generate_files()</span></code></a></li>
 <li class="toctree-l2"><a class="reference internal" href="plan4dial.for_generating.html">plan4dial.for_generating</a></li>
 <li class="toctree-l2"><a class="reference internal" href="plan4dial.main.html">plan4dial.main</a></li>
 </ul>
@@ -62,7 +61,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../api.html">&lt;no title&gt;</a> &raquo;</li>
       <li>plan4dial</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/plan4dial.rst.txt" rel="nofollow"> View page source</a>
@@ -75,25 +73,6 @@
              
   <div class="section" id="module-plan4dial">
 <span id="plan4dial"></span><h1>plan4dial<a class="headerlink" href="#module-plan4dial" title="Permalink to this heading"></a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="plan4dial.generate_files">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.</span></span><span class="sig-name descname"><span class="pre">generate_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbp_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.generate_files" title="Permalink to this definition"></a></dt>
-<dd><p>Main file responsible for generating the files that will be sent to
-HOVOR (<cite>contingent-plan-executor</cite>) for executor.</p>
-<p>Args:
-- yaml_filename (str): The path to the filled out YAML configuration.
-- output_folder (str): Output folder where the files will be stored.
-- rbp_path (str): Path to the <cite>rbp</cite> directory so the planner can be run.
-- train (bool, optional): Determines if training is required. It is best to
-set to False if you made changes to the YAML that require some new output
-files, but the NLU model is not affected (no changes in the Rasa NLU YAML
-configuration). Defaults to True.</p>
-<p>Raises:
-- (Exception): Raised if the planner was not able to find a
-valid plan. Happens if the YAML configuration (and by proxy, the PDDL) is
-invalid in some way (i.e. missing actions, can’t get out of a loop, etc.)</p>
-</dd></dl>
-
 <p class="rubric">Modules</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
@@ -115,7 +94,7 @@ invalid in some way (i.e. missing actions, can’t get out of a loop, etc.)</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../api.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to Plan4Dial’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="plan4dial.for_generating.html" class="btn btn-neutral float-right" title="plan4dial.for_generating" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

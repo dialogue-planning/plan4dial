@@ -6,6 +6,7 @@
   <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -36,8 +37,7 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
+              <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../generated/plan4dial.html">plan4dial</a></li>
 </ul>
 
@@ -70,11 +70,15 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">yaml</span>
-<span class="kn">from</span> <span class="nn">for_generating</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">for_generating.parsers.json_config_parser</span> <span class="kn">import</span> <span class="n">convert_yaml</span>
+<span class="kn">from</span> <span class="nn">for_generating.parsers.pddl_parser</span> <span class="kn">import</span> <span class="n">parse_to_pddl</span>
+<span class="kn">from</span> <span class="nn">for_generating.parsers.parse_for_rasa</span> <span class="kn">import</span> <span class="n">make_nlu_file</span>
+<span class="kn">from</span> <span class="nn">for_generating.parsers.pddl_for_rollout</span> <span class="kn">import</span> <span class="n">rollout_config</span>
+
 <span class="kn">from</span> <span class="nn">rasa.model_training</span> <span class="kn">import</span> <span class="n">train_nlu</span>
 
 
-<div class="viewcode-block" id="generate_files"><a class="viewcode-back" href="../../generated/plan4dial.main.html#plan4dial.generate_files">[docs]</a><span class="k">def</span> <span class="nf">generate_files</span><span class="p">(</span>
+<div class="viewcode-block" id="generate_files"><a class="viewcode-back" href="../../generated/plan4dial.main.html#plan4dial.main.generate_files">[docs]</a><span class="k">def</span> <span class="nf">generate_files</span><span class="p">(</span>
     <span class="n">yaml_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rbp_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Main file responsible for generating the files that will be sent to</span>
