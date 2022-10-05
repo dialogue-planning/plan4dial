@@ -85,18 +85,18 @@
 <span class="sd">    HOVOR (`contingent-plan-executor`) for executor.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - yaml_filename (str): The path to the filled out YAML configuration. </span>
-<span class="sd">    - output_folder (str): Output folder where the files will be stored.</span>
-<span class="sd">    - rbp_path (str): Path to the `rbp` directory so the planner can be run.</span>
-<span class="sd">    - train (bool, optional): Determines if training is required. It is best to</span>
-<span class="sd">    set to False if you made changes to the YAML that require some new output</span>
-<span class="sd">    files, but the NLU model is not affected (no changes in the Rasa NLU YAML</span>
-<span class="sd">    configuration). Defaults to True.</span>
+<span class="sd">        yaml_filename (str): The path to the filled out YAML configuration. </span>
+<span class="sd">        output_folder (str): Output folder where the files will be stored.</span>
+<span class="sd">        rbp_path (str): Path to the `rbp` directory so the planner can be run.</span>
+<span class="sd">        train (bool, optional): Determines if training is required. It is best to</span>
+<span class="sd">        set to False if you made changes to the YAML that require some new output</span>
+<span class="sd">        files, but the NLU model is not affected (no changes in the Rasa NLU YAML</span>
+<span class="sd">        configuration). Defaults to True.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">    - (Exception): Raised if the planner was not able to find a</span>
-<span class="sd">    valid plan. Happens if the YAML configuration (and by proxy, the PDDL) is</span>
-<span class="sd">    invalid in some way (i.e. missing actions, can&#39;t get out of a loop, etc.)</span>
+<span class="sd">        (Exception): Raised if the planner was not able to find a</span>
+<span class="sd">        valid plan. Happens if the YAML configuration (and by proxy, the PDDL) is</span>
+<span class="sd">        invalid in some way (i.e. missing actions, can&#39;t get out of a loop, etc.)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># make a new directory for this domain if it doesn&#39;t exist</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_folder</span><span class="p">):</span>
