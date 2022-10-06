@@ -81,28 +81,32 @@
 <div class="viewcode-block" id="generate_files"><a class="viewcode-back" href="../../generated/plan4dial.main.html#plan4dial.main.generate_files">[docs]</a><span class="k">def</span> <span class="nf">generate_files</span><span class="p">(</span>
     <span class="n">yaml_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rbp_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Main file responsible for generating the files that will be sent to</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Main file responsible for generating the files that will be sent to</span>
 <span class="sd">    HOVOR (`contingent-plan-executor`) for executor.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - yaml_filename (str): The path to the filled out YAML configuration. </span>
-<span class="sd">    - output_folder (str): Output folder where the files will be stored.</span>
-<span class="sd">    - rbp_path (str): Path to the `rbp` directory so the planner can be run.</span>
-<span class="sd">    - train (bool, optional): Determines if training is required. It is best to</span>
-<span class="sd">    set to False if you made changes to the YAML that require some new output</span>
-<span class="sd">    files, but the NLU model is not affected (no changes in the Rasa NLU YAML</span>
-<span class="sd">    configuration). Defaults to True.</span>
+<span class="sd">        yaml_filename (str): The path to the filled out YAML configuration.</span>
+<span class="sd">        output_folder (str): Output folder where the files will be stored.</span>
+<span class="sd">        rbp_path (str): Path to the `rbp` directory so the planner can be run.</span>
+<span class="sd">        train (bool, optional): Determines if training is required. It is best</span>
+<span class="sd">            to set to False if you made changes to the YAML that require some</span>
+<span class="sd">            new output files, but the NLU model is not affected (no changes in</span>
+<span class="sd">            the Rasa NLU YAML configuration). Defaults to True.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">    - (Exception): Raised if the planner was not able to find a</span>
-<span class="sd">    valid plan. Happens if the YAML configuration (and by proxy, the PDDL) is</span>
-<span class="sd">    invalid in some way (i.e. missing actions, can&#39;t get out of a loop, etc.)</span>
+<span class="sd">        (Exception): Raised if the planner was not able to find a valid plan.</span>
+<span class="sd">            Happens if the YAML configuration (and by proxy, the PDDL) is</span>
+<span class="sd">            invalid in some way (i.e. missing actions, can&#39;t get out of a</span>
+<span class="sd">            loop, etc.)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># make a new directory for this domain if it doesn&#39;t exist</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_folder</span><span class="p">):</span>
         <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">output_folder</span><span class="p">)</span>
     <span class="c1"># convert to hovor json config</span>
-    <span class="n">converted_json</span> <span class="o">=</span> <span class="n">convert_yaml</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">yaml_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">))</span>
+    <span class="n">converted_json</span> <span class="o">=</span> <span class="n">convert_yaml</span><span class="p">(</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">yaml_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
+    <span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/data.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
         <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">converted_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
     <span class="c1"># # convert to PDDL</span>
@@ -121,7 +125,10 @@
         <span class="n">writer</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
         <span class="c1"># parse for rasa. need to use the original YAML because some of the NLU</span>
         <span class="c1"># information is lost in the JSON configuration.</span>
-        <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">make_nlu_file</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">yaml_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)),</span> <span class="n">writer</span><span class="p">)</span>
+        <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span>
+            <span class="n">make_nlu_file</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">yaml_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)),</span>
+            <span class="n">writer</span><span class="p">,</span>
+        <span class="p">)</span>
         <span class="n">train_nlu</span><span class="p">(</span>
             <span class="n">config</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;./plan4dial/generate_files/nlu_config.yml&quot;</span><span class="p">,</span>
             <span class="n">nlu_data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span>
