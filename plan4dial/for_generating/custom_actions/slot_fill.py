@@ -2,7 +2,7 @@
 provided to bot designers by default.
 
 Authors:
-- Rebecca De Venezia
+* Rebecca De Venezia
 """
 
 from typing import List, Dict, Tuple
@@ -27,11 +27,12 @@ def slot_fill(
     mix of both. This depends on what the `known`'s `type` setting is for each
     entity in the YAML.
 
-    Also handles "partial" extraction, where the bot asks for multiple entities
-    but is only able to extract some. In that case, the bot will follow up with
-    `clarify` actions in which it tries to extract uncertain entities, or `single_slot` actions in which it tries to extract unknown entities
-    individually in order to make up for the missing information (only used
-    when there are > 1 entities specified).
+    Also handles "partial" extraction, where the bot asks for multiple
+    entities but is only able to extract some. In that case, the bot will
+    follow up with `clarify` actions in which it tries to extract uncertain
+    entities, or `single_slot` actions in which it tries to extract unknown
+    entities individually in order to make up for the missing information
+    (only used when there are > 1 entities specified).
 
     Additional outcomes can also be specified for certain outcomes, i.e. when
     entity `pizza` is extracted, respond with the given `response_variants`.
@@ -39,7 +40,8 @@ def slot_fill(
     Args:
         loaded_yaml (Dict): The loaded YAML configuration.
         action_name (str): The name of this instance of the custom action.
-        message_variants (List[str]): Possible messages the bot will utter uponexecution of this action.
+        message_variants (List[str]): Possible messages the bot will utter
+        upon execution of this action.
         entities (List[str]): The entities to be extracted or have their "slots filled."
         config_entities (Dict): Holds configurations that specify what the botshould do in certain situations regarding each entity. The keys are each entity and the values are the configuration for each entity. Defaults to None as this is not always necessary.
 
@@ -52,15 +54,15 @@ def slot_fill(
         to specify if there are > 1 entities.
         fallback_message_variants (List[str]): Custom fallback messages to
         utter if the bot tries to extract this entity by itself with a
-        `single_slot` action and fails. Differs from the outer 
+        `single_slot` action and fails. Differs from the outer
         `fallback_message_variants` parameter, which applies to the initial
-        `slot_fill` action only. The default fallback messages will replace 
+        `slot_fill` action only. The default fallback messages will replace
         this parameter if not specified.
 
     fallback_message_variants (List[str]): Custom fallback messages to utter
     if the bot fails to extract any entities. Defaults to None.
     additional_updates (Dict, optional): Additional updates to specify when
-    a given extraction happens AT ANY POINT. Indicate the extraction that 
+    a given extraction happens AT ANY POINT. Indicate the extraction that
     happens in the outcome by specifying the `known` status of the entities you
     desire. You can not only use this to add arbitrary context variable
     updates under `also_update`, but also other outcome-specific attributes
@@ -68,7 +70,7 @@ def slot_fill(
     the given specification exactly. For example, if you specify an additional
     update for when `test1` is known, updates would only be added to actions
     where ONLY `test1` is extracted, and not when `test1`, `test2` and `test3`
-    are extracted, for example. This is done to reduce ambiguity. 
+    are extracted, for example. This is done to reduce ambiguity.
     Defaults to None.
 
     See the tutorial in `README.md` for an example of a `slot_fill` action.
@@ -80,7 +82,9 @@ def slot_fill(
             for var in additional_updates[i]["outcome"]:
                 # convert to an assignment setting so we can more easily
                 # identify what outcome we're referring to
-                additional_updates[i]["outcome"][var] = configure_assignments(additional_updates[i]["outcome"][var]["known"])
+                additional_updates[i]["outcome"][var] = configure_assignments(
+                    additional_updates[i]["outcome"][var]["known"]
+                )
         cfg_updates = {}
         for setting in additional_updates:
             # we don't want to consider when entities are NOT found because
@@ -151,8 +155,8 @@ def slot_fill(
             # store the intent based on the refined combo
             next_out["intent"] = refined_combo
             outcome_name = "".join(
-                f"{entity}_{certainty}-"
-                for entity, certainty in refined_combo.items())[:-1]
+                f"{entity}_{certainty}-" for entity, certainty in refined_combo.items()
+            )[:-1]
             # add the updates based on what's in this refined combo (again,
             # ignoring what we didn't find)
             for entity, certainty in refined_combo.items():
@@ -162,8 +166,7 @@ def slot_fill(
                 # convert the current outcome into a frozenset to be compared
                 key = frozenset(
                     {
-                        entity: certainty
-                        for entity, certainty in refined_combo.items()
+                        entity: certainty for entity, certainty in refined_combo.items()
                     }.items()
                 )
                 # check if this frozenset is included in the dict of outcomes with
@@ -173,9 +176,7 @@ def slot_fill(
                     if "updates" in new_upd_cfg:
                         next_out["updates"].update(new_upd_cfg["updates"])
                     if "response_variants" in new_upd_cfg:
-                        next_out["response_variants"] = new_upd_cfg[
-                            "response_variants"
-                        ]
+                        next_out["response_variants"] = new_upd_cfg["response_variants"]
                     if "follow_up" in new_upd_cfg:
                         next_out["follow_up"] = new_upd_cfg["follow_up"]
             action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
@@ -184,14 +185,25 @@ def slot_fill(
     actions = {f"slot-fill__{action_name}": action}
     # create clarifications and single slot actions as necessary
     new_actions, new_ctx_vars = _create_clarifications_single_slots(
-        action_name, action, entities, config_entities, loaded_yaml["context_variables"], additional_updates
+        action_name,
+        action,
+        entities,
+        config_entities,
+        loaded_yaml["context_variables"],
+        additional_updates,
     )
     # update the loaded YAML with the new actions
     actions.update(new_actions)
     loaded_yaml["actions"].update(actions)
     loaded_yaml["context_variables"].update(new_ctx_vars)
 
-def _clarify_act(entity: str, message_variants: List[str], single_slot: bool, additional_updates: Dict = None) -> Dict:
+
+def _clarify_act(
+    entity: str,
+    message_variants: List[str],
+    single_slot: bool,
+    additional_updates: Dict = None,
+) -> Dict:
     """Generates a `clarify` action for an entity.
 
     Args:
@@ -202,7 +214,7 @@ def _clarify_act(entity: str, message_variants: List[str], single_slot: bool, ad
     action. This is necessary because of the situation where we "maybe" found
     the entity in the original action, try to clarify it and fail, and we were
     trying to extract > 1 entities originally. In that case, we need to
-    activate the appropriate `single_slot` 
+    activate the appropriate `single_slot`
     - additional_updates (Dict, optional): Any additional updates. In reality,
     it will only consider those where just this entity is extracted. Defaults
     to None.
@@ -247,7 +259,12 @@ def _clarify_act(entity: str, message_variants: List[str], single_slot: bool, ad
     return {f"clarify__{entity}": clarify}
 
 
-def _single_slot(entity: str, config_entity: Dict, known_is_fflag: bool, additional_updates: Dict = None) -> None:
+def _single_slot(
+    entity: str,
+    config_entity: Dict,
+    known_is_fflag: bool,
+    additional_updates: Dict = None,
+) -> None:
     """Generates a 'single slot' action for the entity provided. These are only
     necessary when multiple entities were specified, to handle the case where
     the bot is able to only extract some on its first go and `clarify` actions
@@ -269,7 +286,7 @@ def _single_slot(entity: str, config_entity: Dict, known_is_fflag: bool, additio
     - (Dict): The `single_slot` action configuration.
     """
     fill_slot_updates = map_assignment_update(entity, "found")
-    
+
     # if we successfully extract the entity, we should reset this flag.
     # while it might not seem important, if all the entities are reset to null
     # at some point, then we need to ensure that the original action runs first
@@ -315,10 +332,12 @@ def _single_slot(entity: str, config_entity: Dict, known_is_fflag: bool, additio
             if key in additional_updates:
                 slot_unclear_updates.update(additional_updates[key])
         slot_unclear_updates = map_assignment_update(entity, "maybe-found")
-        single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"]["slot-unclear"] = {
-                        "updates": slot_unclear_updates,
-                        "intent": {entity: "maybe-found"},
-                    }
+        single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
+            "slot-unclear"
+        ] = {
+            "updates": slot_unclear_updates,
+            "intent": {entity: "maybe-found"},
+        }
     if "fallback_message_variants" in config_entity:
         single_slot["fallback_message_variants"] = config_entity[
             "fallback_message_variants"
@@ -369,24 +388,33 @@ def _create_clarifications_single_slots(
                                     "type": "flag",
                                     "init": False,
                                 }
-                                original_act_config["effect"][eff][option]["outcomes"][out][
-                                    "updates"
-                                ][f"allow_single_slot_{entity}"] = {"value": True}
+                                original_act_config["effect"][eff][option]["outcomes"][
+                                    out
+                                ]["updates"][f"allow_single_slot_{entity}"] = {
+                                    "value": True
+                                }
                                 new_actions.update(
                                     _single_slot(
-                                        entity, config_entities[entity], context_variables[entity]["known"]["type"] == "fflag", additional_updates
+                                        entity,
+                                        config_entities[entity],
+                                        context_variables[entity]["known"]["type"]
+                                        == "fflag",
+                                        additional_updates,
                                     )
                                 )
         new_actions[original_act_name] = original_act_config
     for entity in entities:
         # only create clarify actions if clarify messages were specified
-        if context_variables[entity]["known"]["type"] == "fflag" and "clarify_message_variants" in config_entities[entity]:
+        if (
+            context_variables[entity]["known"]["type"] == "fflag"
+            and "clarify_message_variants" in config_entities[entity]
+        ):
             new_actions.update(
                 _clarify_act(
                     entity,
                     config_entities[entity]["clarify_message_variants"],
                     f"allow_single_slot_{entity}" in new_ctx_vars,
-                    additional_updates
+                    additional_updates,
                 )
             )
     return new_actions, new_ctx_vars

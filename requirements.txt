@@ -4,3 +4,4 @@ rasa
 spacy
 nnf
 pre-commit
+flake8
