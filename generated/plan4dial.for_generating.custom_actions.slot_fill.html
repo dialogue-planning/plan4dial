@@ -86,7 +86,7 @@
 <p>Contains all the functions for the <cite>slot_fill</cite> custom action that is
 provided to bot designers by default.</p>
 <p>Authors:
-- Rebecca De Venezia</p>
+* Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
@@ -170,11 +170,12 @@ entity slot fills with ease.</p>
 <p>Handles actions that can be clarified, as well as those that can’t, or a
 mix of both. This depends on what the <cite>known</cite>’s <cite>type</cite> setting is for each
 entity in the YAML.</p>
-<p>Also handles “partial” extraction, where the bot asks for multiple entities
-but is only able to extract some. In that case, the bot will follow up with
-<cite>clarify</cite> actions in which it tries to extract uncertain entities, or <cite>single_slot</cite> actions in which it tries to extract unknown entities
-individually in order to make up for the missing information (only used
-when there are &gt; 1 entities specified).</p>
+<p>Also handles “partial” extraction, where the bot asks for multiple
+entities but is only able to extract some. In that case, the bot will
+follow up with <cite>clarify</cite> actions in which it tries to extract uncertain
+entities, or <cite>single_slot</cite> actions in which it tries to extract unknown
+entities individually in order to make up for the missing information
+(only used when there are &gt; 1 entities specified).</p>
 <p>Additional outcomes can also be specified for certain outcomes, i.e. when
 entity <cite>pizza</cite> is extracted, respond with the given <cite>response_variants</cite>.</p>
 <dl class="field-list simple">
@@ -182,7 +183,8 @@ entity <cite>pizza</cite> is extracted, respond with the given <cite>response_va
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p></li>
 <li><p><strong>action_name</strong> (<em>str</em>) – The name of this instance of the custom action.</p></li>
-<li><p><strong>message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Possible messages the bot will utter uponexecution of this action.</p></li>
+<li><p><strong>message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Possible messages the bot will utter</p></li>
+<li><p><strong>action.</strong> (<em>upon execution</em><em> of </em><em>this</em>) – </p></li>
 <li><p><strong>entities</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The entities to be extracted or have their “slots filled.”</p></li>
 <li><p><strong>config_entities</strong> (<em>Dict</em>) – Holds configurations that specify what the botshould do in certain situations regarding each entity. The keys are each entity and the values are the configuration for each entity. Defaults to None as this is not always necessary.</p></li>
 </ul>
