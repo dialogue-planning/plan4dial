@@ -1,3 +1,10 @@
+"""
+Main file responsible for generating the files that will be sent to HOVOR
+(`contingent-plan-executor`) for executor.
+Authors:
+* Rebecca De Venezia
+"""
+
 import json
 import os
 import subprocess
@@ -14,23 +21,22 @@ def generate_files(
     yaml_filename: str, output_folder: str, rbp_path: str, train: bool = True
 ):
     """
-    Main file responsible for generating the files that will be sent to
-    HOVOR (`contingent-plan-executor`) for executor.
+    Responsible for generating the files that will be sent to HOVOR
+    (`contingent-plan-executor`) for executor.
 
     Args:
         yaml_filename (str): The path to the filled out YAML configuration.
         output_folder (str): Output folder where the files will be stored.
         rbp_path (str): Path to the `rbp` directory so the planner can be run.
-        train (bool, optional): Determines if training is required. It is best
-            to set to False if you made changes to the YAML that require some
-            new output files, but the NLU model is not affected (no changes in
-            the Rasa NLU YAML configuration). Defaults to True.
+        train (bool, optional): Determines if training is required. It is best to set
+            to False if you made changes to the YAML that require some new output
+            files, but the NLU model is not affected (no changes in the Rasa NLU YAML
+            configuration). Defaults to True.
 
     Raises:
-        (Exception): Raised if the planner was not able to find a valid plan.
-            Happens if the YAML configuration (and by proxy, the PDDL) is
-            invalid in some way (i.e. missing actions, can't get out of a
-            loop, etc.)
+        (Exception): Raised if the planner was not able to find a valid plan. Happens
+            if the YAML configuration (and by proxy, the PDDL) is invalid in some way
+            (i.e. missing actions, can't get out of a loop, etc.)
     """
     # make a new directory for this domain if it doesn't exist
     if not os.path.exists(output_folder):
@@ -62,21 +68,21 @@ def generate_files(
             writer,
         )
         train_nlu(
-            config=f"./plan4dial/generate_files/nlu_config.yml",
+            config="./plan4dial/generate_files/nlu_config.yml",
             nlu_data=f"{output_folder}/nlu.yml",
             output=f"{output_folder}",
-            fixed_model_name=f"nlu_model",
+            fixed_model_name="nlu_model",
         )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
     subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
 
     try:
-        with open(f"policy.out") as f:
-            plan_data = {f"plan": json.load(f)}
+        with open("policy.out") as file:
+            plan_data = {"plan": json.load(file)}
     except FileNotFoundError as err:
         raise Exception("PDDL is invalid.") from err
-    with open(f"{output_folder}/data.prp.json", "w") as f:
-        json.dump(plan_data, f, indent=4)
+    with open(f"{output_folder}/data.prp.json", "w") as file:
+        json.dump(plan_data, file, indent=4)
     # delete extra output files
     os.remove("./policy.out")
     os.remove("./output.sas")
