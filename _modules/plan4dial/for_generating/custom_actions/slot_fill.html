@@ -65,11 +65,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for plan4dial.for_generating.custom_actions.slot_fill</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;Contains all the functions for the `slot_fill` custom action that is</span>
-<span class="sd">provided to bot designers by default.</span>
+<span></span><span class="sd">&quot;&quot;&quot;Contains all the functions for the </span>
+<span class="sd">:py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` custom action</span>
+<span class="sd">that is provided to bot designers by default.</span>
 
 <span class="sd">Authors:</span>
-<span class="sd">* Rebecca De Venezia</span>
+<span class="sd">    * Rebecca De Venezia</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
@@ -113,35 +114,38 @@
 <span class="sd">        config_entities (Dict): Holds configurations that specify what the bot should</span>
 <span class="sd">            do in certain situations regarding each entity. The keys are each entity</span>
 <span class="sd">            and the values are the configuration for each entity. Defaults to None as</span>
-<span class="sd">            this is not always necessary.</span>
+<span class="sd">            this is not always necessary. The 3 configuration options are:</span>
+<span class="sd">                clarify_message_variants (List[str]):</span>
+<span class="sd">                    The message variants that will be used for the clarify action for</span>
+<span class="sd">                    this entity. Only necessary if the `known` `type` of this entity is</span>
+<span class="sd">                    of type `fflag`.</span>
+<span class="sd">                single_slot_message_variants (List[str]):</span>
+<span class="sd">                    Custom message variants to utter for `single_slot` extractions of</span>
+<span class="sd">                    the given entity. Only necessary to specify if there are &gt; 1</span>
+<span class="sd">                    entities.</span>
+<span class="sd">                fallback_message_variants (List[str]):</span>
+<span class="sd">                    Custom fallback messages to utter if the bot tries to extract this</span>
+<span class="sd">                    entity by itself with a `single_slot` action and fails. Differs</span>
+<span class="sd">                    from the outer `fallback_message_variants` parameter, which applies</span>
+<span class="sd">                    to the initial</span>
+<span class="sd">                    :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
+<span class="sd">                    action only. The default fallback messages will replace this</span>
+<span class="sd">                    parameter if not specified.</span>
+<span class="sd">        fallback_message_variants (List[str]): Custom fallback messages to utter if the bot</span>
+<span class="sd">            fails to extract any entities. Defaults to None.</span>
+<span class="sd">        additional_updates (Dict, optional): Additional updates to specify when a given</span>
+<span class="sd">            extraction happens AT ANY POINT. Indicate the extraction that happens in the</span>
+<span class="sd">            outcome by specifying the `known` status of the entities you desire. You can</span>
+<span class="sd">            not only use this to add arbitrary context variable updates under `also_update`</span>
+<span class="sd">            but also other outcome-specific attributes such as `response_variants`.</span>
+<span class="sd">            NOTE: Will only match to outcomes that match the given specification exactly.</span>
+<span class="sd">            For example, if you specify an additional update for when `test1` is known,</span>
+<span class="sd">            updates would only be added to actions where ONLY `test1` is extracted, and not</span>
+<span class="sd">            when `test1`, `test2` and `test3`are extracted, for example. This is done to</span>
+<span class="sd">            reduce ambiguity. Defaults to None.</span>
 
-<span class="sd">    The 3 configuration options are:</span>
-<span class="sd">        * clarify_message_variants (List[str]): The message variants that will be used</span>
-<span class="sd">        for the clarify action for this entity. Only necessary if the `known` `type` of</span>
-<span class="sd">        this entity is of type `fflag`.</span>
-<span class="sd">        * single_slot_message_variants (List[str]): Custom message variants to utter</span>
-<span class="sd">        for `single_slot` extractions of the given entity. Only necessary to specify if</span>
-<span class="sd">        there are &gt; 1 entities.</span>
-<span class="sd">        * fallback_message_variants (List[str]): Custom fallback messages to utter if</span>
-<span class="sd">        the bot tries to extract this entity by itself with a `single_slot` action and</span>
-<span class="sd">        fails. Differs from the outer `fallback_message_variants` parameter, which</span>
-<span class="sd">        applies to the initial `slot_fill` action only. The default fallback messages</span>
-<span class="sd">        will replace this parameter if not specified.</span>
-
-<span class="sd">    fallback_message_variants (List[str]): Custom fallback messages to utter if the bot</span>
-<span class="sd">        fails to extract any entities. Defaults to None.</span>
-<span class="sd">    additional_updates (Dict, optional): Additional updates to specify when a given</span>
-<span class="sd">        extraction happens AT ANY POINT. Indicate the extraction that happens in the</span>
-<span class="sd">        outcome by specifying the `known` status of the entities you desire. You can</span>
-<span class="sd">        not only use this to add arbitrary context variable updates under `also_update`</span>
-<span class="sd">        but also other outcome-specific attributes such as `response_variants`.</span>
-<span class="sd">        NOTE: Will only match to outcomes that match the given specification exactly.</span>
-<span class="sd">        For example, if you specify an additional update for when `test1` is known,</span>
-<span class="sd">        updates would only be added to actions where ONLY `test1` is extracted, and not</span>
-<span class="sd">        when `test1`, `test2` and `test3`are extracted, for example. This is done to</span>
-<span class="sd">        reduce ambiguity. Defaults to None.</span>
-
-<span class="sd">    See the tutorial in `README.md` for an example of a `slot_fill` action.</span>
+<span class="sd">    See the tutorial for an example of a</span>
+<span class="sd">    :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="c1"># iterate through all additional updates</span>
@@ -375,7 +379,7 @@
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;subtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span><span class="p">,</span> <span class="s2">&quot;dialogue disambiguation&quot;</span>
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message_variants</span>
     <span class="c1"># condition: we can&#39;t know the entity and we have to have tried to extract it with</span>
-    <span class="c1"># the original `slot_fill` action along with the other entities already</span>
+    <span class="c1"># the original slot_fill action along with the other entities already</span>
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">entity</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
         <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
@@ -420,13 +424,13 @@
     <span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Used by the `slot_fill` action to generate `clarify` and `single_slot` actions</span>
+    <span class="sd">&quot;&quot;&quot;Used by the :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action to generate `clarify` and `single_slot` actions</span>
 <span class="sd">    where necessary.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        original_act_name (str): The action name given to the original `slot_fill`</span>
+<span class="sd">        original_act_name (str): The action name given to the original :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
 <span class="sd">            action</span>
-<span class="sd">        original_act_config (Dict): The configuration of the original `slot_fill`</span>
+<span class="sd">        original_act_config (Dict): The configuration of the original :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
 <span class="sd">            action.</span>
 <span class="sd">        entities (List[str]): The total list of entities to extract.</span>
 <span class="sd">        config_entities (Dict): Configurations for these entities that hold more</span>
