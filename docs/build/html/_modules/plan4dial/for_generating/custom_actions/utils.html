@@ -6,7 +6,6 @@
   <title>plan4dial.for_generating.custom_actions.utils &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -69,22 +68,20 @@
 <span></span><span class="sd">&quot;&quot;&quot;Util functions that are useful in custom actions.</span>
 
 <span class="sd">Authors:</span>
-<span class="sd">- Rebecca De Venezia</span>
+<span class="sd">    * Rebecca De Venezia</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 
+
 <div class="viewcode-block" id="map_assignment_update"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.utils.html#plan4dial.for_generating.custom_actions.utils.map_assignment_update">[docs]</a><span class="k">def</span> <span class="nf">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">assignment</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Given an entity and its assignment, returns the corresponding </span>
-<span class="sd">    update.</span>
+    <span class="sd">&quot;&quot;&quot;Given an entity and its assignment, returns the corresponding update.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - entity (str): The entity in the update.</span>
-<span class="sd">    - assignment (str): The assignment that describes if/how the entity</span>
-<span class="sd">    was found.</span>
+<span class="sd">        entity (str): The entity in the update.</span>
+<span class="sd">        assignment (str): The assignment that describes if/how the entity was found.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - (Dict): The update that corresponds to the entity and assignment</span>
-<span class="sd">    provided.</span>
+<span class="sd">        (Dict): The update that corresponds to the entity and assignment provided.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;found&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">entity</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>

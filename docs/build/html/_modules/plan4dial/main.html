@@ -6,7 +6,6 @@
   <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -66,7 +65,14 @@
            <div itemprop="articleBody">
              
   <h1>Source code for plan4dial.main</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Main file responsible for generating the files that will be sent to HOVOR</span>
+<span class="sd">(`contingent-plan-executor`) for executor.</span>
+<span class="sd">Authors:</span>
+<span class="sd">    * Rebecca De Venezia</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="kn">import</span> <span class="nn">yaml</span>
@@ -82,23 +88,23 @@
     <span class="n">yaml_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rbp_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">train</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Main file responsible for generating the files that will be sent to</span>
-<span class="sd">    HOVOR (`contingent-plan-executor`) for executor.</span>
+<span class="sd">    Responsible for generating the files that will be sent to HOVOR</span>
+<span class="sd">    (`contingent-plan-executor`) for executor.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        yaml_filename (str): The path to the filled out YAML configuration.</span>
 <span class="sd">        output_folder (str): Output folder where the files will be stored.</span>
-<span class="sd">        rbp_path (str): Path to the `rbp` directory so the planner can be run.</span>
-<span class="sd">        train (bool, optional): Determines if training is required. It is best</span>
-<span class="sd">            to set to False if you made changes to the YAML that require some</span>
-<span class="sd">            new output files, but the NLU model is not affected (no changes in</span>
-<span class="sd">            the Rasa NLU YAML configuration). Defaults to True.</span>
+<span class="sd">        rbp_path (str): Path to the `rbp &lt;https://github.com/QuMuLab/rbp&gt;`_ directory so</span>
+<span class="sd">            the planner can be run.</span>
+<span class="sd">        train (bool, optional): Determines if training is required. It is best to set</span>
+<span class="sd">            to False if you made changes to the YAML that require some new output</span>
+<span class="sd">            files, but the NLU model is not affected (no changes in the Rasa NLU YAML</span>
+<span class="sd">            configuration). Defaults to True.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        (Exception): Raised if the planner was not able to find a valid plan.</span>
-<span class="sd">            Happens if the YAML configuration (and by proxy, the PDDL) is</span>
-<span class="sd">            invalid in some way (i.e. missing actions, can&#39;t get out of a</span>
-<span class="sd">            loop, etc.)</span>
+<span class="sd">        (Exception): Raised if the planner was not able to find a valid plan. Happens</span>
+<span class="sd">            if the YAML configuration (and by proxy, the PDDL) is invalid in some way</span>
+<span class="sd">            (i.e. missing actions, can&#39;t get out of a loop, etc.)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># make a new directory for this domain if it doesn&#39;t exist</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">output_folder</span><span class="p">):</span>
@@ -130,21 +136,21 @@
             <span class="n">writer</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">train_nlu</span><span class="p">(</span>
-            <span class="n">config</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;./plan4dial/generate_files/nlu_config.yml&quot;</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="s2">&quot;./plan4dial/generate_files/nlu_config.yml&quot;</span><span class="p">,</span>
             <span class="n">nlu_data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span>
             <span class="n">output</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">fixed_model_name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;nlu_model&quot;</span><span class="p">,</span>
+            <span class="n">fixed_model_name</span><span class="o">=</span><span class="s2">&quot;nlu_model&quot;</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="c1"># generate PDDL files; convert policy.out to a prp.json file; wait until complete</span>
     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rbp_path</span><span class="si">}</span><span class="s2">/prp&quot;</span><span class="p">,</span> <span class="n">domain_str</span><span class="p">,</span> <span class="n">problem_str</span><span class="p">,</span> <span class="s2">&quot;--output-format&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">])</span>
 
     <span class="k">try</span><span class="p">:</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;policy.out&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">plan_data</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;plan&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)}</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;policy.out&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">plan_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;plan&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)}</span>
     <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;PDDL is invalid.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/data.prp.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">plan_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/data.prp.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">plan_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
     <span class="c1"># delete extra output files</span>
     <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;./policy.out&quot;</span><span class="p">)</span>
     <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;./output.sas&quot;</span><span class="p">)</span>

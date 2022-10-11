@@ -7,7 +7,6 @@
   <title>plan4dial.for_generating.parsers.json_config_parser &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -87,10 +86,14 @@
              
   <section id="module-plan4dial.for_generating.parsers.json_config_parser">
 <span id="plan4dial-for-generating-parsers-json-config-parser"></span><h1>plan4dial.for_generating.parsers.json_config_parser<a class="headerlink" href="#module-plan4dial.for_generating.parsers.json_config_parser" title="Permalink to this heading"></a></h1>
-<p>This module contains all the base functions required to convert a YAML
-configuration to the JSON configuration required by Hovor.</p>
-<p>Authors:
-- Rebecca De Venezia</p>
+<p>This module contains all the base functions required to convert a YAML configuration
+to the JSON configuration required by Hovor.</p>
+<dl class="simple">
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Rebecca De Venezia</p></li>
+</ul>
+</dd>
+</dl>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
@@ -108,107 +111,135 @@ configuration to the JSON configuration required by Hovor.</p>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._add_fallbacks">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_add_fallbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_add_fallbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._add_fallbacks" title="Permalink to this definition"></a></dt>
-<dd><p>Ensure that non-fallback options can only run if a fallback did not just
-occur. Add fallback outcomes to actions as necessary.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<span class="sig-name descname"><span class="pre">_add_fallbacks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_add_fallbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._add_fallbacks" title="Permalink to this definition"></a></dt>
+<dd><p>Ensure that non-fallback options can only run if a fallback did not just occur.
+Add fallback outcomes to actions as necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._add_follow_ups_and_responses">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_add_follow_ups_and_responses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_add_follow_ups_and_responses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._add_follow_ups_and_responses" title="Permalink to this definition"></a></dt>
-<dd><p>Configures follow up actions and responses where they were specified
-in the YAML.</p>
-<p>Follow ups are actions that are forced to take place after an outcome.
-Responses are messages that the agent must utter after an outcome.</p>
-<p>NOTE: As it stands, follow ups only force the action that you specify and
-disable all others. This means that for actions that, for example, lead into
+<span class="sig-name descname"><span class="pre">_add_follow_ups_and_responses</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_add_follow_ups_and_responses"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._add_follow_ups_and_responses" title="Permalink to this definition"></a></dt>
+<dd><p>Configures follow up actions and responses where they were specified in th
+YAML.</p>
+<p>Follow ups are actions that are forced to take place after an outcome. Responses
+are messages that the agent must utter after an outcome.</p>
+<p>NOTE: As it stands, follow ups only force the action that you specify and disable
+all others. This means that for actions that, for example, lead into
 clarifications, those clarifications will not be forced too. A more complex
-configuration for robust follow_up functionality (as well as more
-description of the issue) is detailed in #5, but this bare-bones
-specification can be safely used in the meantime.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+configuration for robust follow_up functionality (as well as more description of
+the issue) is detailed in #5, but this bare-bones specification can be safely used
+in the meantime.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._add_value_setters">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_add_value_setters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_add_value_setters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._add_value_setters" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_add_value_setters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_add_value_setters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._add_value_setters" title="Permalink to this definition"></a></dt>
 <dd><p>Configures value setters when an action is contingent on the string value of a
-context variable. Resets the precondition of these actions to rely on the flag values
-that represent the true value of the context variable.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
-<p>Raises:
-- AssertionError: Raised if the user tried to specify an invalid value for a context
-variable in a precondition.</p>
+context variable. Resets the precondition of these actions to rely on the flag
+values that represent the true value of the context variable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>AssertionError</strong> – Raised if the user tried to specify an invalid value for a
+    context variable in a precondition.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._base_fallback_setup">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_base_fallback_setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_base_fallback_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._base_fallback_setup" title="Permalink to this definition"></a></dt>
-<dd><p>Sets up the default intents, action, and context variables needed to
-handle fallbacks.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<span class="sig-name descname"><span class="pre">_base_fallback_setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_base_fallback_setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._base_fallback_setup" title="Permalink to this definition"></a></dt>
+<dd><p>Sets up the default intents, action, and context variables needed to handle
+fallbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_certainty">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_configure_certainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_certainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_certainty" title="Permalink to this definition"></a></dt>
-<dd><p>Converts the parameter <cite>known</cite> (which is either True, False, or “maybe”)
-to the equivalent Hovor certainty (“Known”, “Unknown”, and
-“Uncertain” respectively). Used for preconditions.</p>
-<p>Args:
-- known (bool or str): The “known” status of a context variable in the YAML.</p>
-<p>Returns:
-- (str): The Hovor certainty equivalent to the “known” parameter provided.</p>
+<span class="sig-name descname"><span class="pre">_configure_certainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_certainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_certainty" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the parameter <cite>known</cite> (which is either True, False, or “maybe”) to the
+equivalent Hovor certainty (“Known”, “Unknown”, and “Uncertain” respectively). Used
+for preconditions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>known</strong> (<em>bool</em><em> or </em><em>str</em>) – The “known” status of a context variable in the YAML.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Hovor certainty equivalent to the “known” parameter provided.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_dialogue_statement">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_configure_dialogue_statement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_dialogue_statement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_dialogue_statement" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_configure_dialogue_statement</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_dialogue_statement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_dialogue_statement" title="Permalink to this definition"></a></dt>
 <dd><p>Returns the base <cite>dialogue_statement</cite> action.</p>
-<p>Most often, the <cite>dialogue_statement</cite> action is triggered when a fallback
-occurs; in this case, <cite>dialogue_statement</cite> updates its
-<cite>message_variants</cite> to the appropriate <cite>fallback_message_variants</cite>.
-Dialogue statements are also used for responses, in which case
-<cite>dialogue_statement</cite> updates its <cite>message_variants</cite> to the appropriate
+<p>Most often, the <cite>dialogue_statement</cite> action is triggered when a fallback occurs; in
+this case, <cite>dialogue_statement</cite> updates its <cite>message_variants</cite> to the appropriate
+<cite>fallback_message_variants</cite>. Dialogue statements are also used for responses, in
+which case <cite>dialogue_statement</cite> updates its <cite>message_variants</cite> to the appropriate
 <cite>response_variants</cite>.</p>
-<p>Note that the intent <cite>utter_dialogue_statement</cite> is a blank intent because
-<cite>message</cite> actions (<cite>dialogue</cite> type actions with a single outcome) do not
-take user input into account and simply execute the single outcome.</p>
-<p>Returns:
-- (Dict): The full configuration for the <cite>dialogue_statement</cite> action.</p>
+<p>Note that the intent <cite>utter_dialogue_statement</cite> is a blank intent because <cite>message</cite>
+actions (<cite>dialogue</cite> type actions with a single outcome) do not take user input into
+account and simply execute the single outcome.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The full configuration for the <cite>dialogue_statement</cite> action.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>(Dict)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_fallback">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_configure_fallback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_fallback" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_configure_fallback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_fallback" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
-- (Dict): Update configuration for a fallback outcome.</p>
+(Dict): Update configuration for a fallback outcome.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_force_message_true">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_configure_force_message_true</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_force_message_true"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_force_message_true" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_configure_force_message_true</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_force_message_true"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_force_message_true" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
-- (Dict): Configuration where <cite>have-message</cite> and <cite>force-statement</cite> are set to True.</p>
+(Dict): Configuration where <cite>have-message</cite> and <cite>force-statement</cite> are set to</p>
+<blockquote>
+<div><p>True.</p>
+</div></blockquote>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_value_setter">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_configure_value_setter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_value_setter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_value_setter" title="Permalink to this definition"></a></dt>
-<dd><p>Configures the actions in loaded_yaml to allow for value setting. This
-allows values to be used in preconditions, i.e. cuisine: {value: “Mexican”}.</p>
-<p>This is done by creating flag context variables that represent the value
-of the context variable; i.e. “cuisine-value-Mexican”. We need to create
-flag representations so that value knowledge is reflected in the PDDL and
-ultimately the generated tree/controller. This flag is what would be used
-as a precondition to check the value of the context variable.</p>
-<p>Obviously, the flag values can be set when the context variable becomes
-known, and reset when the context variable becomes unknown.</p>
+<span class="sig-name descname"><span class="pre">_configure_value_setter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_value_setter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_value_setter" title="Permalink to this definition"></a></dt>
+<dd><p>Configures the actions in loaded_yaml to allow for value setting. This allows
+values to be used in preconditions, i.e. cuisine: {value: “Mexican”}.</p>
+<p>This is done by creating flag context variables that represent the value of the
+context variable; i.e. “cuisine-value-Mexican”. We need to create flag
+representations so that value knowledge is reflected in the PDDL and ultimately the
+generated tree/controller. This flag is what would be used as a precondition to
+check the value of the context variable.</p>
+<p>Obviously, the flag values can be set when the context variable becomes known, and
+reset when the context variable becomes unknown.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -221,119 +252,163 @@ known, and reset when the context variable becomes unknown.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._convert_actions">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_convert_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_actions" title="Permalink to this definition"></a></dt>
-<dd><p>Converts the actions from how they were formatted in the YAML to the
-JSON configuration that Hovor requires.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<span class="sig-name descname"><span class="pre">_convert_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_actions" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the actions from how they were formatted in the YAML to the JSON
+configuration that Hovor requires.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._convert_ctx_var">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_convert_ctx_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_ctx_var"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_ctx_var" title="Permalink to this definition"></a></dt>
-<dd><p>Converts the context variables from how they were formatted in the YAML
-to the JSON configuration that Hovor requires.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<span class="sig-name descname"><span class="pre">_convert_ctx_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_ctx_var"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_ctx_var" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the context variables from how they were formatted in the YAML to the
+JSON configuration that Hovor requires.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._convert_intents">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_convert_intents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_intents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_intents" title="Permalink to this definition"></a></dt>
-<dd><p>Converts the intents from how they were formatted in the YAML to the
-JSON configuration that Hovor requires.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<span class="sig-name descname"><span class="pre">_convert_intents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_intents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_intents" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the intents from how they were formatted in the YAML to the JSON
+configuration that Hovor requires.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._convert_to_DNF">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_convert_to_DNF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">And</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_to_DNF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_to_DNF" title="Permalink to this definition"></a></dt>
-<dd><p>Converts an action condition from the YAML to an NNF formula in
-Disjunctive Normal Form. Eventually, this would be used for auto-
-generating equivalent actions based on arbritrary logical formulas.</p>
+<span class="sig-name descname"><span class="pre">_convert_to_DNF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">And</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_to_DNF"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_to_DNF" title="Permalink to this definition"></a></dt>
+<dd><p>Converts an action condition from the YAML to an NNF formula in Disjunctive
+Normal Form. Eventually, this would be used for auto-generating equivalent actions
+based on arbritrary logical formulas.</p>
 <p>NOTE: Will not be in use until issue #4 is resolved.</p>
-<p>Args:
-- condition (Dict): An action condition from the YAML.</p>
-<p>Returns:
-- (nnf.And): The DNF formula that the action condition was converted to.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>condition</strong> (<em>Dict</em>) – An action condition from the YAML.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The DNF formula that the action condition was converted to.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(nnf.And)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._convert_to_formula">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_convert_to_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">And</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Or</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_to_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_to_formula" title="Permalink to this definition"></a></dt>
-<dd><p>Converts an action condition from the YAML to a list of terms for an
-NNF formula.</p>
-<p>Args:
-- condition (Dict): An action condition from the YAML.</p>
-<p>Returns:
-- formula_terms (Union[nnf.And, nnf.Or]): An NNF formula.</p>
+<span class="sig-name descname"><span class="pre">_convert_to_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">And</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Or</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_to_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_to_formula" title="Permalink to this definition"></a></dt>
+<dd><p>Converts an action condition from the YAML to a list of terms for an NNF
+formula.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>condition</strong> (<em>Dict</em>) – An action condition from the YAML.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An NNF formula.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>formula_terms (Union[nnf.And, nnf.Or])</p>
+</dd>
+</dl>
 <p>TODO: Test extensively once arbitrary conversion to DNF becomes viable.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._duplicate_for_or_condition">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_duplicate_for_or_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_duplicate_for_or_condition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._duplicate_for_or_condition" title="Permalink to this definition"></a></dt>
-<dd><p>Creates equivalent actions to those with an “or” precondition by splitting
-them up into separate actions.</p>
-<p>NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #4).
-Should not be deployed yet.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<span class="sig-name descname"><span class="pre">_duplicate_for_or_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_duplicate_for_or_condition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._duplicate_for_or_condition" title="Permalink to this definition"></a></dt>
+<dd><p>Creates equivalent actions to those with an “or” precondition by splitting them
+up into separate actions.</p>
+<p>NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #4). Should not be deployed yet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._duplicate_for_or_when_condition">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_duplicate_for_or_when_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_duplicate_for_or_when_condition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._duplicate_for_or_when_condition" title="Permalink to this definition"></a></dt>
-<dd><p>Creates equivalent “when” expressions to those with an “or” condition by splitting
-them up into separate conditions.</p>
-<p>NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #3 and #4).
-Should not be deployed yet.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+<span class="sig-name descname"><span class="pre">_duplicate_for_or_when_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_duplicate_for_or_when_condition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._duplicate_for_or_when_condition" title="Permalink to this definition"></a></dt>
+<dd><p>Creates equivalent “when” expressions to those with an “or” condition by
+splitting them up into separate conditions.</p>
+<p>NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #3 and #4). Should not be
+deployed yet.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._instantiate_custom_actions">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">_instantiate_custom_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_instantiate_custom_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._instantiate_custom_actions" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_instantiate_custom_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_instantiate_custom_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._instantiate_custom_actions" title="Permalink to this definition"></a></dt>
 <dd><p>Instantiate custom actions.</p>
 <p>NOTE: All custom action functions must be placed in a file in
-plan4dial/generate_files/custom_actions.py. The name of the file should
-be the same name as the function that configures the custom action.</p>
+plan4dial/generate_files/custom_actions.py. The name of the file should be the same
+name as the function that configures the custom action.</p>
 <p>NOTE: The custom actions are responsible for adding the actions to the
-configuration. This is because some custom actions add multiple actions,
-make changes to the context variables, etc. As a rule, the <cite>loaded_yaml</cite>
-should always be the first parameter.</p>
-<p>NOTE: Custom actions should have “custom” as the <cite>type</cite>, and the name of
-the function as the <cite>subtype</cite>. Parameters to the function should go in a
-<cite>parameters</cite> dictionary.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
+configuration. This is because some custom actions add multiple actions, make
+changes to the context variables, etc. As a rule, the <a href="#id1"><span class="problematic" id="id2">`</span></a>loaded_yaml`should always be
+the first parameter.</p>
+<p>NOTE: Custom actions should have “custom” as the <cite>type</cite>, and the name of the
+function as the <cite>subtype</cite>. Parameters to the function should go in a <cite>parameters</cite>
+dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser.configure_assignments">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">configure_assignments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#configure_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser.configure_assignments" title="Permalink to this definition"></a></dt>
-<dd><p>Converts the parameter <cite>known</cite> (which is either True, False, or “maybe”)
-to the equivalent Hovor assignment (“found”, “didnt-find”, and
-“maybe-found” respectively). Used for outcomes.</p>
-<p>Args:
-- known (bool or str): The “known” status of a context variable in the YAML.</p>
-<p>Returns:
-- (str): The Hovor assignment equivalent to the “known” parameter provided.</p>
+<span class="sig-name descname"><span class="pre">configure_assignments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#configure_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser.configure_assignments" title="Permalink to this definition"></a></dt>
+<dd><p>Converts the parameter <cite>known</cite> (which is either True, False, or “maybe”) to the
+equivalent Hovor assignment (“found”, “didnt-find”, and “maybe-found”
+respectively). Used for outcomes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>known</strong> (<em>bool</em><em> or </em><em>str</em>) – The “known” status of a context variable in the YAML.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The Hovor assignment equivalent to the “known” parameter provided.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(str)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser.convert_yaml">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.json_config_parser.</span></span><span class="sig-name descname"><span class="pre">convert_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#convert_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser.convert_yaml" title="Permalink to this definition"></a></dt>
-<dd><p>Generates the JSON configuration required by Hovor from the provided
-YAML file. First preprocesses the YAML, adding clarification actions,
-follow-up actions, etc, then finally converts everything into Hovor
-format.</p>
-<p>Args:
-- loaded_yaml (Dict): The loaded YAML configuration.</p>
-<p>Returns:
-- (Dict): The JSON configuration required by Hovor.</p>
+<span class="sig-name descname"><span class="pre">convert_yaml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#convert_yaml"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser.convert_yaml" title="Permalink to this definition"></a></dt>
+<dd><p>Generates the JSON configuration required by Hovor from the provided YAML file.
+First preprocesses the YAML, adding clarification actions, follow-up actions, etc.,
+then finally converts everything into Hovor format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The JSON configuration required by Hovor.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>(Dict)</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>

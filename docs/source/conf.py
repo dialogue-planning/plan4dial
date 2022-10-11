@@ -40,7 +40,7 @@ extensions = [
     "sphinx.ext.autosummary",  # auto-generates .rst files
     "sphinx.ext.napoleon",  # allows for Google/numpy style docstrings
     "sphinx.ext.viewcode",  # adds link to the source code in the docs
-    "sphinx_rtd_theme",
+    "sphinx_rtd_theme",  # read the docs theme
 ]
 
 templates_path = ["_templates"]
@@ -52,3 +52,4 @@ exclude_patterns = []
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
+add_module_names = False

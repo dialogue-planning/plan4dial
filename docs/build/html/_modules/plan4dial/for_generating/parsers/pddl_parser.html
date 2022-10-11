@@ -6,7 +6,6 @@
   <title>plan4dial.for_generating.parsers.pddl_parser &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -66,12 +65,12 @@
            <div itemprop="articleBody">
              
   <h1>Source code for plan4dial.for_generating.parsers.pddl_parser</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;This module contains all the files necessary to convert from the HOVOR</span>
-<span class="sd">configuration to PDDL. This PDDL is later used to generate the controller/tree</span>
-<span class="sd">that determines how the conversation is navigated.</span>
+<span></span><span class="sd">&quot;&quot;&quot;This module contains all the files necessary to convert from the HOVOR configuration</span>
+<span class="sd">to PDDL. This PDDL is later used to generate the controller/tree that determines how</span>
+<span class="sd">the conversation is navigated.</span>
 
 <span class="sd">Authors:</span>
-<span class="sd">- Rebecca De Venezia</span>
+<span class="sd">    * Rebecca De Venezia</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
@@ -85,33 +84,34 @@
     <span class="sd">&quot;&quot;&quot;Determines if the provided variable has a &quot;known&quot; setting of type fflag.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - context_variables (Dict): The configuration of all context variables.</span>
-<span class="sd">    - v_name (str): The name of the variable.</span>
+<span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
+<span class="sd">        v_name (str): The name of the variable.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - (bool): Indicates if the provided variable has a &quot;known&quot; setting of type</span>
-<span class="sd">    fflag.</span>
+<span class="sd">        (bool): Indicates if the provided variable has a &quot;known&quot; setting of type fflag.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
-            <span class="p">(</span><span class="n">context_variables</span><span class="p">[</span><span class="n">v_name</span><span class="p">][</span><span class="s2">&quot;known&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fflag&quot;</span><span class="p">)</span>
-            <span class="k">if</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">context_variables</span><span class="p">[</span><span class="n">v_name</span><span class="p">]</span>
-            <span class="k">else</span> <span class="kc">False</span>
-        <span class="p">)</span></div>
+        <span class="p">(</span><span class="n">context_variables</span><span class="p">[</span><span class="n">v_name</span><span class="p">][</span><span class="s2">&quot;known&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fflag&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">context_variables</span><span class="p">[</span><span class="n">v_name</span><span class="p">]</span>
+        <span class="k">else</span> <span class="kc">False</span>
+    <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_return_flag_value_fluent"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._return_flag_value_fluent">[docs]</a><span class="k">def</span> <span class="nf">_return_flag_value_fluent</span><span class="p">(</span><span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Returns the fluent version of a flag or fflag context variable depending</span>
-<span class="sd">    on the setting supplied.</span>
+<div class="viewcode-block" id="_return_flag_value_fluent"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._return_flag_value_fluent">[docs]</a><span class="k">def</span> <span class="nf">_return_flag_value_fluent</span><span class="p">(</span>
+    <span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Returns the fluent version of a flag or fflag context variable depending on the</span>
+<span class="sd">    setting supplied.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - v_name (str): The name of the variable.</span>
-<span class="sd">    - is_fflag (bool): Describes if the variable is of type fflag, in which </span>
-<span class="sd">    case the &quot;maybe&quot; option can be considered.</span>
-<span class="sd">    - value (bool or str): The value setting of this context variable.</span>
+<span class="sd">        v_name (str): The name of the variable.</span>
+<span class="sd">        is_fflag (bool): Describes if the variable is of type fflag, in which case the</span>
+<span class="sd">            &quot;maybe&quot; option can be considered.</span>
+<span class="sd">        value (bool or str): The value setting of this context variable.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - (str): The fluent version of a flag or fflag context variable depending</span>
-<span class="sd">    on the setting supplied.</span>
+<span class="sd">        (str): The fluent version of a flag or fflag context variable depending on the</span>
+<span class="sd">            setting supplied.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;(not (</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">))&quot;</span>
@@ -124,14 +124,14 @@
 <span class="sd">    depending on the setting supplied.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - v_name (str): The name of the variable.</span>
-<span class="sd">    - is_fflag (bool): Describes if the variable&#39;s &quot;known&quot; type is fflag, in </span>
-<span class="sd">    which case the &quot;Uncertain&quot; option can be considered.</span>
-<span class="sd">    - certainty (str): The certainty setting of this context variable.</span>
+<span class="sd">        v_name (str): The name of the variable.</span>
+<span class="sd">        is_fflag (bool): Describes if the variable&#39;s &quot;known&quot; type is fflag, in which</span>
+<span class="sd">            case the &quot;Uncertain&quot; option can be considered.</span>
+<span class="sd">        certainty (str): The certainty setting of this context variable.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - (List[str]): The list of fluents that reflect the certainty setting for</span>
-<span class="sd">    the context variable supplied.</span>
+<span class="sd">        (List[str]): The list of fluents that reflect the certainty setting for the</span>
+<span class="sd">            context variable supplied.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># convert to a simpler representation</span>
     <span class="k">if</span> <span class="n">certainty</span> <span class="o">==</span> <span class="s2">&quot;Known&quot;</span><span class="p">:</span>
@@ -162,30 +162,30 @@
     <span class="n">tabs</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="n">name_wrap</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">and_wrap</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">outer_brackets</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">outer_brackets</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and</span>
-<span class="sd">    &quot;and&quot; wraps as appropriate.</span>
+    <span class="sd">&quot;&quot;&quot;Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and &quot;and&quot;</span>
+<span class="sd">    wraps as appropriate.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - fluents (List[str]): A list of the string versions of the fluents.</span>
-<span class="sd">    - tabs (int): The &quot;base&quot; indentation of the fluents.</span>
-<span class="sd">    - outer_brackets (bool. optional): Setting to wrap the final statement</span>
-<span class="sd">    with outer brackets, i.e. (outcome ...) Defaults to True.</span>
-<span class="sd">    - name_wrap (str, optional): Setting to wrap fluents with a name, i.e.</span>
-<span class="sd">    &quot;:predicates&quot;. Defaults to None.</span>
-<span class="sd">    - and_wrap (bool, optional): Setting to wrap fluents with an &quot;and&quot;, i.e.</span>
-<span class="sd">    :precondition\n(and\n\t(...)). Defaults to False.</span>
+<span class="sd">        fluents (List[str]): A list of the string versions of the fluents.</span>
+<span class="sd">        tabs (int): The &quot;base&quot; indentation of the fluents.</span>
+<span class="sd">        outer_brackets (bool. optional): Setting to wrap the final statement with outer</span>
+<span class="sd">            brackets, i.e. (outcome ...) Defaults to True.</span>
+<span class="sd">        name_wrap (str, optional): Setting to wrap fluents with a name, i.e.</span>
+<span class="sd">            &quot;:predicates&quot;. Defaults to None.</span>
+<span class="sd">        and_wrap (bool, optional): Setting to wrap fluents with an &quot;and&quot;, i.e.</span>
+<span class="sd">            :precondition\n(and\n\t(...\n\t)). Defaults to False.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - (str): The converted PDDL fluents.</span>
+<span class="sd">        (str): The converted PDDL fluents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># set up the base tabbing before each fluent</span>
     <span class="n">fluent_tabs</span> <span class="o">=</span> <span class="n">TAB</span> <span class="o">*</span> <span class="p">(</span><span class="n">tabs</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
     <span class="c1"># set up the base fluent before the and wrap</span>
     <span class="n">and_wrap_tabs</span> <span class="o">=</span> <span class="n">TAB</span> <span class="o">*</span> <span class="n">tabs</span>
-    <span class="c1"># if we are also including a name wrap with an and wrap, then everything</span>
-    <span class="c1"># needs to be indented one more tab to make room for that</span>
+    <span class="c1"># if we are also including a name wrap with an and wrap, then everything needs to</span>
+    <span class="c1"># be indented one more tab to make room for that</span>
     <span class="k">if</span> <span class="n">name_wrap</span> <span class="ow">and</span> <span class="n">and_wrap</span><span class="p">:</span>
         <span class="n">and_wrap_tabs</span> <span class="o">+=</span> <span class="n">TAB</span>
         <span class="n">fluent_tabs</span> <span class="o">+=</span> <span class="n">TAB</span>
@@ -210,15 +210,17 @@
     <span class="k">return</span> <span class="n">fluents</span></div>
 
 
-<div class="viewcode-block" id="get_precond_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser.get_precond_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_precond_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="get_precond_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser.get_precond_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_precond_fluents</span><span class="p">(</span>
+    <span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Convert an action precondition to PDDL fluents.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - context_variables (Dict): The configuration of all context variables.</span>
-<span class="sd">    - conditions (List[Union[str, bool]]): The conditions to be converted.</span>
+<span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
+<span class="sd">        conditions (List[Union[str, bool]]): The conditions to be converted.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - Set[str]: The set of converted fluents.</span>
+<span class="sd">        Set[str]: The set of converted fluents.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">precond</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="c1"># iterate through all the conditions</span>
@@ -227,7 +229,7 @@
         <span class="n">cond_val</span> <span class="o">=</span> <span class="n">cond</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
         <span class="n">cond_key_fflag</span> <span class="o">=</span> <span class="n">_get_is_fflag</span><span class="p">(</span><span class="n">context_variables</span><span class="p">,</span> <span class="n">cond_key</span><span class="p">)</span>
         <span class="c1"># update precond depending on the type of condition value</span>
-        <span class="k">if</span> <span class="n">cond_val</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cond_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cond_val</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
                 <span class="n">precond</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
                     <span class="n">_return_flag_value_fluent</span><span class="p">(</span><span class="n">cond_key</span><span class="p">,</span> <span class="n">cond_key_fflag</span><span class="p">,</span> <span class="n">cond_val</span><span class="p">)</span>
@@ -243,17 +245,17 @@
     <span class="sd">&quot;&quot;&quot;Converts the update configuration of an action outcome to PDDL fluents.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - context_variables (Dict): The configuration of all context variables.</span>
-<span class="sd">    - updates (Dict): The update configuration.</span>
+<span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
+<span class="sd">        updates (Dict): The update configuration.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - outcomes (Set[str]): The set of fluents that were added by the outcome update.</span>
+<span class="sd">        outcomes (Set[str]): The set of fluents that were added by the outcome update.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">outcomes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="c1"># iterate through all the update configurations</span>
     <span class="k">for</span> <span class="n">update_var</span><span class="p">,</span> <span class="n">update_config</span> <span class="ow">in</span> <span class="n">updates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="c1"># if the context variable has a &quot;known&quot; configuration, check if that is</span>
-        <span class="c1"># of type fflag</span>
+        <span class="c1"># if the context variable has a &quot;known&quot; configuration, check if that is of type</span>
+        <span class="c1"># fflag</span>
         <span class="n">update_var_fflag</span> <span class="o">=</span> <span class="n">_get_is_fflag</span><span class="p">(</span><span class="n">context_variables</span><span class="p">,</span> <span class="n">update_var</span><span class="p">)</span>
         <span class="c1"># add fluents based on the certainty if those were updated</span>
         <span class="k">if</span> <span class="s2">&quot;certainty&quot;</span> <span class="ow">in</span> <span class="n">update_config</span><span class="p">:</span>
@@ -264,7 +266,7 @@
             <span class="p">)</span>
         <span class="c1"># add fluents based on the value if we&#39;re dealing with a flag/fflag type</span>
         <span class="k">if</span> <span class="s2">&quot;value&quot;</span> <span class="ow">in</span> <span class="n">update_config</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">update_config</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">update_config</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">context_variables</span><span class="p">[</span><span class="n">update_var</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;flag&quot;</span><span class="p">,</span> <span class="s2">&quot;fflag&quot;</span><span class="p">]:</span>
                     <span class="n">outcomes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
                         <span class="n">_return_flag_value_fluent</span><span class="p">(</span>
@@ -278,12 +280,12 @@
     <span class="sd">&quot;&quot;&quot;Converts an action from the YAML configuration to PDDL.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - context_variables (Dict): The configuration of all context variables.</span>
-<span class="sd">    - act (str): The action name.</span>
-<span class="sd">    - act_config (Dict): The action configuration.</span>
+<span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
+<span class="sd">        act (str): The action name.</span>
+<span class="sd">        act_config (Dict): The action configuration.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - (str): The converted action.</span>
+<span class="sd">        (str): The converted action.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">act_param</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:action </span><span class="si">{</span><span class="n">act</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">2</span><span class="si">}</span><span class="s2">:parameters()&quot;</span>
 
@@ -293,10 +295,11 @@
         <span class="n">tabs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="n">name_wrap</span><span class="o">=</span><span class="s2">&quot;:precondition&quot;</span><span class="p">,</span>
         <span class="n">and_wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">outer_brackets</span><span class="o">=</span><span class="kc">False</span>
+        <span class="n">outer_brackets</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="c1"># convert the effects</span>
-    <span class="n">effects</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">2</span><span class="si">}</span><span class="s2">:effect</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">3</span><span class="si">}</span><span class="s2">(labeled-oneof </span><span class="si">{</span><span class="n">act_config</span><span class="p">[</span><span class="s1">&#39;effect&#39;</span><span class="p">][</span><span class="s1">&#39;global-outcome-name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">effects</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">2</span><span class="si">}</span><span class="s2">:effect</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">3</span><span class="si">}</span><span class="s2">(labeled-oneof </span><span class="se">\</span>
+<span class="s2">        </span><span class="si">{</span><span class="n">act_config</span><span class="p">[</span><span class="s1">&#39;effect&#39;</span><span class="p">][</span><span class="s1">&#39;global-outcome-name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="c1"># iterate through all the outcomes</span>
     <span class="k">for</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
@@ -320,10 +323,10 @@
     <span class="sd">&quot;&quot;&quot;Converts actions from the YAML to PDDL format.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - (str): The converted actions.</span>
+<span class="sd">        (str): The converted actions.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
         <span class="p">[</span>
@@ -337,13 +340,13 @@
     <span class="sd">&quot;&quot;&quot;Convert the initial state of context variables to a PDDL initial state.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - context_variables (Dict): The configuration of all context variables.</span>
+<span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - init_true (Set[str]): The partial initial state, which indicates all fluents that</span>
-<span class="sd">    are initially true. Used in the PDDL.</span>
-<span class="sd">    - init_complete (Set[str]): The complete initial state, which indicates the state of</span>
-<span class="sd">    all fluents in the initial state. Used by the rollout configuration.</span>
+<span class="sd">        init_true (Set[str]): The partial initial state, which indicates all fluents</span>
+<span class="sd">            that are initially true. Used in the PDDL.</span>
+<span class="sd">        init_complete (Set[str]): The complete initial state, which indicates the state</span>
+<span class="sd">            of all fluents in the initial state. Used by the rollout configuration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">init_true</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">init_complete</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
@@ -384,10 +387,10 @@
     <span class="sd">&quot;&quot;&quot;Converts the context variables to PDDL predicates.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - context_variables (Dict): The configuration of all context variables.</span>
+<span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - predicates (List[str]): The collection of converted predicates.</span>
+<span class="sd">        predicates (List[str]): The collection of converted predicates.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">predicates</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="c1"># iterate through all context variables</span>
@@ -409,11 +412,11 @@
     <span class="sd">&quot;&quot;&quot;Converts the loaded YAML file to a PDDL specification.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">    - loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">    - domain (str): The generated PDDL domain.</span>
-<span class="sd">    - problem (str): The generated PDDL problem.</span>
+<span class="sd">        domain (str): The generated PDDL domain.</span>
+<span class="sd">        problem (str): The generated PDDL problem.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">predicates</span> <span class="o">=</span> <span class="n">_fluents_to_pddl</span><span class="p">(</span>
         <span class="n">fluents</span><span class="o">=</span><span class="n">_parse_predicates</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">]),</span>
@@ -421,8 +424,10 @@
         <span class="n">name_wrap</span><span class="o">=</span><span class="s2">&quot;:predicates&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">actions</span> <span class="o">=</span> <span class="n">_actions_to_pddl</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
-    <span class="n">domain</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;(define</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(domain </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:requirements :strips :typing)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:types )</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:constants )</span><span class="si">{</span><span class="n">predicates</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">actions</span><span class="si">}</span><span class="se">\n</span><span class="s2">)&quot;</span>
-    <span class="n">problem_def</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;(define</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(problem </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">-problem)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:domain </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:objects )&quot;</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;(define</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(domain </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:requirements </span><span class="se">\</span>
+<span class="s2">        :strips :typing)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:types )</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:constants )</span><span class="si">{</span><span class="n">predicates</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">actions</span><span class="si">}</span><span class="se">\n</span><span class="s2">)&quot;</span>
+    <span class="n">problem_def</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;(define</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(problem </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">-problem)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2"> </span><span class="se">\</span>
+<span class="s2">        (:domain </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:objects )&quot;</span>
     <span class="n">init</span> <span class="o">=</span> <span class="n">_fluents_to_pddl</span><span class="p">(</span>
         <span class="n">fluents</span><span class="o">=</span><span class="n">get_init_fluents</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">])[</span><span class="mi">0</span><span class="p">],</span>
         <span class="n">tabs</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>

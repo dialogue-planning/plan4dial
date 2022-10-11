@@ -6,7 +6,6 @@
   <title>plan4dial.for_generating.parsers.parse_for_rasa &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -66,30 +65,36 @@
            <div itemprop="articleBody">
              
   <h1>Source code for plan4dial.for_generating.parsers.parse_for_rasa</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;This module contains all the functions necessary to generate a NLU file</span>
-<span class="sd">that Rasa can use to extract intents and entities.</span>
+<span></span><span class="sd">&quot;&quot;&quot;This module contains all the functions necessary to generate a NLU file that Rasa</span>
+<span class="sd">can use to extract intents and entities.</span>
 
-<span class="sd">NOTE: We use a bare-bones specification so we rely on Rasa as little as </span>
-<span class="sd">possible (no roles, groups, stories, or anything too &quot;Rasa-specific&quot;).</span>
+<span class="sd">NOTE: We use a bare-bones specification so we rely on Rasa as little as possible (no</span>
+<span class="sd">roles, groups, stories, or anything too &quot;Rasa-specific&quot;).</span>
 
 <span class="sd">Authors:</span>
-<span class="sd">    Rebecca De Venezia</span>
+<span class="sd">    * Rebecca De Venezia</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
 
 
-<div class="viewcode-block" id="_create_intent_example"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.parse_for_rasa.html#plan4dial.for_generating.parsers.parse_for_rasa._create_intent_example">[docs]</a><span class="k">def</span> <span class="nf">_create_intent_example</span><span class="p">(</span><span class="n">extracted_value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">true_value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create an intent example according to the Rasa NLU format. Also accounts for synonyms/variations if specified, while mapping back to the &quot;true&quot; value that we want to set to.</span>
+<div class="viewcode-block" id="_create_intent_example"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.parse_for_rasa.html#plan4dial.for_generating.parsers.parse_for_rasa._create_intent_example">[docs]</a><span class="k">def</span> <span class="nf">_create_intent_example</span><span class="p">(</span>
+    <span class="n">extracted_value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">true_value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Create an intent example according to the Rasa NLU format. Also accounts for</span>
+<span class="sd">    synonyms/variations if specified, while mapping back to the &quot;true&quot; value that we</span>
+<span class="sd">    want to set to.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        extracted_value (str): The value that was extracted.</span>
 <span class="sd">        entity (str): The entity we are trying to extract.</span>
-<span class="sd">        true_value (str or None): If we extracted a variation, this is the &quot;true&quot; value that we want to set the extraction to. Defaults to None, in which case we know that the true value was what was extracted.</span>
+<span class="sd">        true_value (str or None): If we extracted a variation, this is the &quot;true&quot; value</span>
+<span class="sd">            that we want to set the extraction to. Defaults to None, in which case we</span>
+<span class="sd">            know that the true value was what was extracted.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        str: The intent example.</span>
+<span class="sd">        (str): The intent example.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">true_value</span><span class="p">:</span>
         <span class="n">true_value</span> <span class="o">=</span> <span class="n">extracted_value</span>
@@ -97,7 +102,8 @@
 
 
 <div class="viewcode-block" id="make_nlu_file"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.parse_for_rasa.html#plan4dial.for_generating.parsers.parse_for_rasa.make_nlu_file">[docs]</a><span class="k">def</span> <span class="nf">make_nlu_file</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Generates the NLU configuration that Rasa requires to extract intents and entities.</span>
+    <span class="sd">&quot;&quot;&quot;Generates the NLU configuration that Rasa requires to extract intents and</span>
+<span class="sd">    entities.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
@@ -121,15 +127,17 @@
                 <span class="c1"># create intent examples based on provided examples</span>
                 <span class="k">if</span> <span class="s2">&quot;examples&quot;</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">:</span>
                     <span class="k">for</span> <span class="n">ex</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;examples&quot;</span><span class="p">]:</span>
-                        <span class="n">variations</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">_create_intent_example</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">variable</span><span class="p">))</span>
+                        <span class="n">variations</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                            <span class="n">_create_intent_example</span><span class="p">(</span><span class="n">ex</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
+                        <span class="p">)</span>
                 <span class="c1"># create intent examples based on the options</span>
                 <span class="k">if</span> <span class="s2">&quot;options&quot;</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">:</span>
                     <span class="n">variations</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
                         <span class="n">_create_intent_example</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
                         <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span>
                     <span class="p">]</span>
-                    <span class="c1"># if the options have variations, make intent examples of</span>
-                    <span class="c1"># the variations, using the original option as the true val</span>
+                    <span class="c1"># if the options have variations, make intent examples of the</span>
+                    <span class="c1"># variations, using the original option as the true val</span>
                     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
                         <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">option_var</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                             <span class="n">variations</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
@@ -142,14 +150,14 @@
                         <span class="n">nlu</span><span class="p">[</span><span class="s2">&quot;nlu&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                             <span class="p">{</span><span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="n">variable</span><span class="p">,</span> <span class="s2">&quot;examples&quot;</span><span class="p">:</span> <span class="s2">&quot;- &quot;</span> <span class="o">+</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;pattern&quot;</span><span class="p">]}</span>
                         <span class="p">)</span>
-            <span class="c1"># get the product of all the variations in this intent. this is</span>
-            <span class="c1"># so we can generate examples of this intent with every combination</span>
-            <span class="c1"># of variations for each entity.</span>
+            <span class="c1"># get the product of all the variations in this intent. this is so we can</span>
+            <span class="c1"># generate examples of this intent with every combination of variations for</span>
+            <span class="c1"># each entity.</span>
             <span class="n">variations</span> <span class="o">=</span> <span class="p">[</span><span class="n">tup</span> <span class="k">for</span> <span class="n">tup</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">variations</span><span class="o">.</span><span class="n">values</span><span class="p">())]</span>
             <span class="k">for</span> <span class="n">variation</span> <span class="ow">in</span> <span class="n">variations</span><span class="p">:</span>
-                <span class="c1"># for each utterance, iterate through all variables in the</span>
-                <span class="c1"># utterance. replace each variable with the current variation</span>
-                <span class="c1"># on the intent example.</span>
+                <span class="c1"># for each utterance, iterate through all variables in the utterance.</span>
+                <span class="c1"># replace each variable with the current variation on the intent</span>
+                <span class="c1"># example.</span>
                 <span class="k">for</span> <span class="n">utterance</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;utterances&quot;</span><span class="p">]:</span>
                     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">variables</span><span class="p">)):</span>
                         <span class="n">utterance</span> <span class="o">=</span> <span class="n">utterance</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>

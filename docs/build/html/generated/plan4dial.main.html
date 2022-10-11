@@ -7,7 +7,6 @@
   <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -77,6 +76,14 @@
              
   <section id="module-plan4dial.main">
 <span id="plan4dial-main"></span><h1>plan4dial.main<a class="headerlink" href="#module-plan4dial.main" title="Permalink to this heading"></a></h1>
+<p>Main file responsible for generating the files that will be sent to HOVOR
+(<cite>contingent-plan-executor</cite>) for executor.
+Authors:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Rebecca De Venezia</p></li>
+</ul>
+</div></blockquote>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
@@ -85,32 +92,32 @@
 </colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_files</span></code></a>(yaml_filename, output_folder, ...)</p></td>
-<td><p>Main file responsible for generating the files that will be sent to HOVOR (<cite>contingent-plan-executor</cite>) for executor.</p></td>
+<td><p>Responsible for generating the files that will be sent to HOVOR (<cite>contingent-plan-executor</cite>) for executor.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.main.generate_files">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.main.</span></span><span class="sig-name descname"><span class="pre">generate_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbp_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.main.generate_files" title="Permalink to this definition"></a></dt>
-<dd><p>Main file responsible for generating the files that will be sent to
-HOVOR (<cite>contingent-plan-executor</cite>) for executor.</p>
+<span class="sig-name descname"><span class="pre">generate_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbp_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.main.generate_files" title="Permalink to this definition"></a></dt>
+<dd><p>Responsible for generating the files that will be sent to HOVOR
+(<cite>contingent-plan-executor</cite>) for executor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>yaml_filename</strong> (<em>str</em>) – The path to the filled out YAML configuration.</p></li>
 <li><p><strong>output_folder</strong> (<em>str</em>) – Output folder where the files will be stored.</p></li>
-<li><p><strong>rbp_path</strong> (<em>str</em>) – Path to the <cite>rbp</cite> directory so the planner can be run.</p></li>
-<li><p><strong>train</strong> (<em>bool</em><em>, </em><em>optional</em>) – Determines if training is required. It is best
-to set to False if you made changes to the YAML that require some
-new output files, but the NLU model is not affected (no changes in
-the Rasa NLU YAML configuration). Defaults to True.</p></li>
+<li><p><strong>rbp_path</strong> (<em>str</em>) – Path to the <a class="reference external" href="https://github.com/QuMuLab/rbp">rbp</a> directory so
+the planner can be run.</p></li>
+<li><p><strong>train</strong> (<em>bool</em><em>, </em><em>optional</em>) – Determines if training is required. It is best to set
+to False if you made changes to the YAML that require some new output
+files, but the NLU model is not affected (no changes in the Rasa NLU YAML
+configuration). Defaults to True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Raises</dt>
-<dd class="field-even"><p><strong>(</strong><strong>Exception</strong><strong>)</strong> – Raised if the planner was not able to find a valid plan.
-    Happens if the YAML configuration (and by proxy, the PDDL) is
-    invalid in some way (i.e. missing actions, can’t get out of a
-    loop, etc.)</p>
+<dd class="field-even"><p><strong>(</strong><strong>Exception</strong><strong>)</strong> – Raised if the planner was not able to find a valid plan. Happens
+    if the YAML configuration (and by proxy, the PDDL) is invalid in some way
+    (i.e. missing actions, can’t get out of a loop, etc.)</p>
 </dd>
 </dl>
 </dd></dl>

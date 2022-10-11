@@ -7,7 +7,6 @@
   <title>plan4dial.for_generating.parsers.parse_for_rasa &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
@@ -87,12 +86,14 @@
              
   <section id="module-plan4dial.for_generating.parsers.parse_for_rasa">
 <span id="plan4dial-for-generating-parsers-parse-for-rasa"></span><h1>plan4dial.for_generating.parsers.parse_for_rasa<a class="headerlink" href="#module-plan4dial.for_generating.parsers.parse_for_rasa" title="Permalink to this heading"></a></h1>
-<p>This module contains all the functions necessary to generate a NLU file
-that Rasa can use to extract intents and entities.</p>
-<p>NOTE: We use a bare-bones specification so we rely on Rasa as little as
-possible (no roles, groups, stories, or anything too “Rasa-specific”).</p>
+<p>This module contains all the functions necessary to generate a NLU file that Rasa
+can use to extract intents and entities.</p>
+<p>NOTE: We use a bare-bones specification so we rely on Rasa as little as possible (no
+roles, groups, stories, or anything too “Rasa-specific”).</p>
 <dl class="simple">
-<dt>Authors:</dt><dd><p>Rebecca De Venezia</p>
+<dt>Authors:</dt><dd><ul class="simple">
+<li><p>Rebecca De Venezia</p></li>
+</ul>
 </dd>
 </dl>
 <p class="rubric">Functions</p>
@@ -109,29 +110,34 @@ possible (no roles, groups, stories, or anything too “Rasa-specific”).</p>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.parse_for_rasa._create_intent_example">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.parse_for_rasa.</span></span><span class="sig-name descname"><span class="pre">_create_intent_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extracted_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/parse_for_rasa.html#_create_intent_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.parse_for_rasa._create_intent_example" title="Permalink to this definition"></a></dt>
-<dd><p>Create an intent example according to the Rasa NLU format. Also accounts for synonyms/variations if specified, while mapping back to the “true” value that we want to set to.</p>
+<span class="sig-name descname"><span class="pre">_create_intent_example</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extracted_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">true_value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/parse_for_rasa.html#_create_intent_example"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.parse_for_rasa._create_intent_example" title="Permalink to this definition"></a></dt>
+<dd><p>Create an intent example according to the Rasa NLU format. Also accounts for
+synonyms/variations if specified, while mapping back to the “true” value that we
+want to set to.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>extracted_value</strong> (<em>str</em>) – The value that was extracted.</p></li>
 <li><p><strong>entity</strong> (<em>str</em>) – The entity we are trying to extract.</p></li>
-<li><p><strong>true_value</strong> (<em>str</em><em> or </em><em>None</em>) – If we extracted a variation, this is the “true” value that we want to set the extraction to. Defaults to None, in which case we know that the true value was what was extracted.</p></li>
+<li><p><strong>true_value</strong> (<em>str</em><em> or </em><em>None</em>) – If we extracted a variation, this is the “true” value
+that we want to set the extraction to. Defaults to None, in which case we
+know that the true value was what was extracted.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The intent example.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
+<dd class="field-odd"><p>(str)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.parse_for_rasa.make_nlu_file">
-<span class="sig-prename descclassname"><span class="pre">plan4dial.for_generating.parsers.parse_for_rasa.</span></span><span class="sig-name descname"><span class="pre">make_nlu_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/parse_for_rasa.html#make_nlu_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.parse_for_rasa.make_nlu_file" title="Permalink to this definition"></a></dt>
-<dd><p>Generates the NLU configuration that Rasa requires to extract intents and entities.</p>
+<span class="sig-name descname"><span class="pre">make_nlu_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/parse_for_rasa.html#make_nlu_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.parse_for_rasa.make_nlu_file" title="Permalink to this definition"></a></dt>
+<dd><p>Generates the NLU configuration that Rasa requires to extract intents and
+entities.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>

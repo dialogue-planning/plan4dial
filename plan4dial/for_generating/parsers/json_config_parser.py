@@ -2,7 +2,7 @@
 to the JSON configuration required by Hovor.
 
 Authors:
-* Rebecca De Venezia
+    * Rebecca De Venezia
 """
 
 from typing import Union, Dict
