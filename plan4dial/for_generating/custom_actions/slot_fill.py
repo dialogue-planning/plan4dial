@@ -346,11 +346,12 @@ def _single_slot(
         }
     }
     if known_is_fflag:
+        slot_unclear_updates = map_assignment_update(entity, "maybe-found")
         # add additional updates if they exist
         if additional_updates:
             key = frozenset({entity: "maybe-found"}.items())
             if key in additional_updates:
-                slot_unclear_updates = map_assignment_update(entity, "maybe-found")
+                
                 slot_unclear_updates.update(additional_updates[key])
         single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
             "slot-unclear"

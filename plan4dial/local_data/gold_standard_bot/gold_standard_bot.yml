@@ -2,6 +2,7 @@
 name: day-planner
 context_variables:
   location:
+    type: json
     extraction:
       method: spacy
       config_method: gpe

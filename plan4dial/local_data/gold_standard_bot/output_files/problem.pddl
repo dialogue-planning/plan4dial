@@ -1,6 +1,6 @@
 (define
     (problem day-planner-problem)
-    (:domain day-planner)
+             (:domain day-planner)
     (:objects )
     (:init
     )

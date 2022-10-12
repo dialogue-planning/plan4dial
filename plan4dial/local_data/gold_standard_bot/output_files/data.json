@@ -1,6 +1,21 @@
 {
     "name": "day-planner",
     "context_variables": {
+        "location": {
+            "type": "json",
+            "config": {
+                "extraction": {
+                    "method": "spacy",
+                    "config_method": "gpe"
+                },
+                "method": "spacy",
+                "config_method": "gpe"
+            },
+            "known": {
+                "type": "fflag",
+                "init": false
+            }
+        },
         "cuisine": {
             "type": "enum",
             "config": [
@@ -11,19 +26,6 @@
             ],
             "known": {
                 "type": "fflag",
-                "init": false
-            }
-        },
-        "restaurant": {
-            "type": "enum",
-            "config": [
-                "Guac Grill",
-                "Alfredo's Pizza Caf\u00c3\u00a9",
-                "Mandarin",
-                "Geneva Crepes"
-            ],
-            "known": {
-                "type": "flag",
                 "init": false
             }
         },
@@ -41,14 +43,6 @@
                 "dairy-free",
                 "gluten-free"
             ],
-            "known": {
-                "type": "flag",
-                "init": false
-            }
-        },
-        "conflict": {
-            "type": "flag",
-            "config": false,
             "known": {
                 "type": "flag",
                 "init": false
@@ -73,6 +67,27 @@
             ],
             "known": {
                 "type": "fflag",
+                "init": false
+            }
+        },
+        "conflict": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "restaurant": {
+            "type": "enum",
+            "config": [
+                "Guac Grill",
+                "Alfredo's Pizza Caf\u00e9",
+                "Mandarin",
+                "Geneva Crepes"
+            ],
+            "known": {
+                "type": "flag",
                 "init": false
             }
         },
@@ -142,6 +157,16 @@
                 "nah",
                 "no thanks",
                 "no thank you"
+            ]
+        },
+        "share_location": {
+            "variables": [
+                "$location"
+            ],
+            "utterances": [
+                "I live in $location.",
+                "I am located in $location.",
+                "Can you help me find things to do in $location?"
             ]
         },
         "share_cuisine": {
@@ -719,7 +744,7 @@
                     {
                         "updates": {
                             "restaurant": {
-                                "value": "Alfredo's Pizza Caf\u00c3\u00a9",
+                                "value": "Alfredo's Pizza Caf\u00e9",
                                 "variable": "restaurant",
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -835,6 +860,10 @@
             "type": "dialogue",
             "condition": [
                 [
+                    "location",
+                    "Known"
+                ],
+                [
                     "restaurant",
                     "Known"
                 ],
@@ -852,7 +881,7 @@
                 ]
             ],
             "message_variants": [
-                "Booked a reservation at $restaurant as well as a spot at $outing."
+                "Booked a reservation at $restaurant as well as a spot at $outing in $location."
             ],
             "effect": {
                 "global-outcome-name": "finish",
@@ -915,6 +944,219 @@
             "message_variants": [],
             "intents": {
                 "utter_dialogue_statement": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "slot-fill__get-location": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "Where are you located?"
+            ],
+            "fallback_message_variants": [
+                "Sorry, that isn't a valid location."
+            ],
+            "condition": [
+                [
+                    "location",
+                    null
+                ],
+                [
+                    "location",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__get-allergy",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "validate-slot-fill",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "location": {
+                                "value": "$location",
+                                "variable": "location",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": {
+                            "location": "found"
+                        },
+                        "response_variants": [
+                            "Tailoring your results to what's available in $location..."
+                        ],
+                        "name": "slot-fill__get-location_DETDUP_validate-slot-fill-EQ-location_found",
+                        "assignments": {
+                            "$location": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "location": {
+                                "value": "$location",
+                                "variable": "location",
+                                "certainty": "Uncertain",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": {
+                            "location": "maybe-found"
+                        },
+                        "name": "slot-fill__get-location_DETDUP_validate-slot-fill-EQ-location_maybe-found",
+                        "assignments": {
+                            "$location": "maybe-found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-location_DETDUP_validate-slot-fill-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "clarify__location": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "I didn't quite get your location. Are you located in $location?"
+            ],
+            "condition": [
+                [
+                    "location",
+                    "Uncertain"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__get-allergy",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "validate-clarification",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "location": {
+                                "value": "$location",
+                                "variable": "location",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "clarify__location_DETDUP_validate-clarification-EQ-confirm",
+                        "assignments": {
+                            "$location": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "location": {
+                                "value": null,
+                                "variable": "location",
+                                "certainty": "Unknown",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "clarify__location_DETDUP_validate-clarification-EQ-deny",
+                        "assignments": {
+                            "$location": "didnt-find"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "clarify__location_DETDUP_validate-clarification-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
+                "fallback": {
                     "variables": [],
                     "utterances": []
                 }
