@@ -416,11 +416,12 @@
         <span class="p">}</span>
     <span class="p">}</span>
     <span class="k">if</span> <span class="n">known_is_fflag</span><span class="p">:</span>
+        <span class="n">slot_unclear_updates</span> <span class="o">=</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;maybe-found&quot;</span><span class="p">)</span>
         <span class="c1"># add additional updates if they exist</span>
         <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
             <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">({</span><span class="n">entity</span><span class="p">:</span> <span class="s2">&quot;maybe-found&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">:</span>
-                <span class="n">slot_unclear_updates</span> <span class="o">=</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;maybe-found&quot;</span><span class="p">)</span>
+                
                 <span class="n">slot_unclear_updates</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
         <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">][</span><span class="s2">&quot;oneof&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
             <span class="s2">&quot;slot-unclear&quot;</span>
