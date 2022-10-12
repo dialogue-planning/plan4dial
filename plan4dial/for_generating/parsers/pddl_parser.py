@@ -21,7 +21,7 @@ def _get_is_fflag(context_variables: Dict, v_name: str) -> bool:
         v_name (str): The name of the variable.
 
     Returns:
-        (bool): Indicates if the provided variable has a "known" setting of type fflag.
+        bool: Indicates if the provided variable has a "known" setting of type fflag.
     """
     return (
         (context_variables[v_name]["known"]["type"] == "fflag")
@@ -43,7 +43,7 @@ def _return_flag_value_fluent(
         value (bool or str): The value setting of this context variable.
 
     Returns:
-        (str): The fluent version of a flag or fflag context variable depending on the
+        str: The fluent version of a flag or fflag context variable depending on the
             setting supplied.
     """
     if type(value) == bool:
@@ -63,7 +63,7 @@ def _return_certainty_fluents(v_name: str, is_fflag: bool, certainty: str) -> Li
         certainty (str): The certainty setting of this context variable.
 
     Returns:
-        (List[str]): The list of fluents that reflect the certainty setting for the
+        List[str]: The list of fluents that reflect the certainty setting for the
             context variable supplied.
     """
     # convert to a simpler representation
@@ -111,7 +111,7 @@ def _fluents_to_pddl(
             :precondition\n(and\n\t(...\n\t)). Defaults to False.
 
     Returns:
-        (str): The converted PDDL fluents.
+        str: The converted PDDL fluents.
     """
     # set up the base tabbing before each fluent
     fluent_tabs = TAB * (tabs + 1)
@@ -182,7 +182,7 @@ def get_update_fluents(context_variables: Dict, updates: Dict) -> Set[str]:
         updates (Dict): The update configuration.
 
     Returns:
-        outcomes (Set[str]): The set of fluents that were added by the outcome update.
+        Set[str]: The set of fluents that were added by the outcome update.
     """
     outcomes = set()
     # iterate through all the update configurations
@@ -218,7 +218,7 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
         act_config (Dict): The action configuration.
 
     Returns:
-        (str): The converted action.
+        str: The converted action.
     """
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
 
@@ -259,7 +259,7 @@ def _actions_to_pddl(loaded_yaml: Dict) -> str:
         loaded_yaml (Dict): The loaded YAML configuration.
 
     Returns:
-        (str): The converted actions.
+        str: The converted actions.
     """
     return "\n".join(
         [
@@ -276,10 +276,10 @@ def get_init_fluents(context_variables: Dict) -> Tuple[Set[str], Set[str]]:
         context_variables (Dict): The configuration of all context variables.
 
     Returns:
-        init_true (Set[str]): The partial initial state, which indicates all fluents
-            that are initially true. Used in the PDDL.
-        init_complete (Set[str]): The complete initial state, which indicates the state
-            of all fluents in the initial state. Used by the rollout configuration.
+        Tuple[Set[str], Set[str]]: The partial initial state, which indicates all
+            fluents that are initially true; used in the PDDL. Also returns the
+            complete initial state, which indicates the state of all fluents in the
+            initial state. Used by the rollout configuration.
     """
     init_true = set()
     init_complete = set()
@@ -323,7 +323,7 @@ def _parse_predicates(context_variables: Dict) -> List[str]:
         context_variables (Dict): The configuration of all context variables.
 
     Returns:
-        predicates (List[str]): The collection of converted predicates.
+        List[str]: The collection of converted predicates.
     """
     predicates = []
     # iterate through all context variables
@@ -348,8 +348,7 @@ def parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
         loaded_yaml (Dict): The loaded YAML configuration.
 
     Returns:
-        domain (str): The generated PDDL domain.
-        problem (str): The generated PDDL problem.
+        Tuple[str, str]: The generated PDDL domain and problem.
     """
     predicates = _fluents_to_pddl(
         fluents=_parse_predicates(loaded_yaml["context_variables"]),

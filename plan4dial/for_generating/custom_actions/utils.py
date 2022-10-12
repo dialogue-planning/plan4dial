@@ -14,7 +14,7 @@ def map_assignment_update(entity: str, assignment: str) -> Dict:
         assignment (str): The assignment that describes if/how the entity was found.
 
     Returns:
-        (Dict): The update that corresponds to the entity and assignment provided.
+        Dict: The update that corresponds to the entity and assignment provided.
     """
     return {
         "found": {entity: {"value": f"${entity}", "known": True}},

@@ -9,7 +9,7 @@
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
+
         <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
         <script src="../../../../_static/underscore.js"></script>
@@ -18,10 +18,10 @@
         <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../../search.html" /> 
+    <link rel="search" title="Search" href="../../../../search.html" />
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
@@ -63,11 +63,11 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+
   <h1>Source code for plan4dial.for_generating.custom_actions.slot_fill</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;Contains all the functions for the </span>
-<span class="sd">:py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` custom action</span>
-<span class="sd">that is provided to bot designers by default.</span>
+<span class="sd">:py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
+<span class="sd">custom action that is provided to bot designers by default.</span>
 
 <span class="sd">Authors:</span>
 <span class="sd">    * Rebecca De Venezia</span>
@@ -97,12 +97,14 @@
 
 <span class="sd">    Also handles &quot;partial&quot; extraction, where the bot asks for multiple entities but is</span>
 <span class="sd">    only able to extract some. In that case, the bot will follow up with `clarify`</span>
-<span class="sd">    actions in which it tries to extract uncertain entities, or `single_slot` actions</span>
-<span class="sd">    in which it tries to extract unknown entities individually in order to make up for</span>
-<span class="sd">    the missing information (only used when there are &gt; 1 entities specified).</span>
+<span class="sd">    actions in which it tries to extract uncertain entities, or </span>
+<span class="sd">    :py:func:`single_slot &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;` </span>
+<span class="sd">    actions in which </span>
+<span class="sd">    it tries to extract unknown entities individually in order to make up for the</span>
+<span class="sd">    missing information (only used when there are &gt; 1 entities specified).</span>
 
 <span class="sd">    Additional outcomes can also be specified for certain outcomes, i.e. when entity</span>
-<span class="sd">    `pizza` is extracted, respond with the given `response_variants`.</span>
+<span class="sd">    *pizza* is extracted, respond with the given `response_variants`.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
@@ -115,27 +117,44 @@
 <span class="sd">            do in certain situations regarding each entity. The keys are each entity</span>
 <span class="sd">            and the values are the configuration for each entity. Defaults to None as</span>
 <span class="sd">            this is not always necessary. The 3 configuration options are:</span>
-<span class="sd">                clarify_message_variants (List[str]):</span>
-<span class="sd">                    The message variants that will be used for the clarify action for this entity. Only necessary if the `known` `type` of this entity is of type `fflag`.</span>
-<span class="sd">                single_slot_message_variants (List[str]):  </span>
-<span class="sd">                    Custom message variants to utter for `single_slot` extractions of the given entity. Only necessary to specify if there are &gt; 1 entities.</span>
-<span class="sd">                fallback_message_variants (List[str]):  </span>
-<span class="sd">                    Custom fallback messages to utter if the bot tries to extract this entity by itself with a `single_slot` action and fails. Differs from the outer `fallback_message_variants` parameter, which applies to the initial :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action only. The default fallback messages will replace this parameter if not specified.</span>
 
-<span class="sd">        fallback_message_variants (List[str]): Custom fallback messages to utter if the bot</span>
-<span class="sd">            fails to extract any entities. Defaults to None.</span>
+<span class="sd">                | **clarify_message_variants** *(List[str])*: The message variants that </span>
+<span class="sd">                    will be used for the clarify action for this entity. Only necessary </span>
+<span class="sd">                    if the `known` `type` of this entity is of type `fflag`.</span>
+<span class="sd">                | **single_slot_message_variants** *(List[str])*: Custom message </span>
+<span class="sd">                    variants to utter for :py:func:`single_slot </span>
+<span class="sd">                    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`</span>
+<span class="sd">                    extractions of the given entity. Only necessary to specify if there </span>
+<span class="sd">                    are &gt; 1 entities.</span>
+<span class="sd">                | **fallback_message_variants** *(List[str])*: Custom fallback messages </span>
+<span class="sd">                    to utter if the bot tries to extract this entity by itself with a </span>
+<span class="sd">                    :py:func:`single_slot </span>
+<span class="sd">                    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;` </span>
+<span class="sd">                    action and fails. Differs from the outer </span>
+<span class="sd">                    `fallback_message_variants` parameter, which applies to the initial</span>
+<span class="sd">                    :py:func:`slot_fill </span>
+<span class="sd">                    &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` </span>
+<span class="sd">                    action only. The default fallback messages will replace this</span>
+<span class="sd">                    parameter if not specified.</span>
+
+<span class="sd">        fallback_message_variants (List[str]): Custom fallback messages to utter if the </span>
+<span class="sd">            bot fails to extract any entities. Defaults to None.</span>
 <span class="sd">        additional_updates (Dict, optional): Additional updates to specify when a given</span>
 <span class="sd">            extraction happens AT ANY POINT. Indicate the extraction that happens in the</span>
 <span class="sd">            outcome by specifying the `known` status of the entities you desire. You can</span>
 <span class="sd">            not only use this to add arbitrary context variable updates under `also_update`</span>
 <span class="sd">            but also other outcome-specific attributes such as `response_variants`.</span>
-<span class="sd">            NOTE: Will only match to outcomes that match the given specification exactly.</span>
-<span class="sd">            For example, if you specify an additional update for when `test1` is known,</span>
-<span class="sd">            updates would only be added to actions where ONLY `test1` is extracted, and not</span>
-<span class="sd">            when `test1`, `test2` and `test3`are extracted, for example. This is done to</span>
-<span class="sd">            reduce ambiguity. Defaults to None.</span>
 
-<span class="sd">    See the tutorial in `README.md` for an example of a :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action.</span>
+<span class="sd">                | **NOTE**: Will only match to outcomes that match the given </span>
+<span class="sd">                    specification exactly. For example, if you specify an additional </span>
+<span class="sd">                    update for when *test1* is known, updates would only be added to </span>
+<span class="sd">                    actions where ONLY *test1* is extracted, and not when *test1*, </span>
+<span class="sd">                    *test2* and *test3* are extracted, for example. This is done to </span>
+<span class="sd">                    reduce ambiguity. Defaults to None.</span>
+
+<span class="sd">    See the tutorial for an example of a</span>
+<span class="sd">    :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
+<span class="sd">    action.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="c1"># iterate through all additional updates</span>
@@ -272,11 +291,14 @@
 <span class="sd">        entity (str): The entity to generate the action for.</span>
 <span class="sd">        message_variants (List[str]): The message variants for the clarification</span>
 <span class="sd">            action.</span>
-<span class="sd">        single_slot (bool): Determines if this entity also has a `single_slot` action.</span>
+<span class="sd">        single_slot (bool): Determines if this entity also has a</span>
+<span class="sd">            :py:func:`single_slot</span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;` action. </span>
 <span class="sd">            This is necessary because of the situation where we &quot;maybe&quot; found the</span>
 <span class="sd">            entity in the original action, try to clarify it and fail, and we were</span>
 <span class="sd">            trying to extract &gt; 1 entities originally. In that case, we need to</span>
-<span class="sd">            activate the appropriate `single_slot`.</span>
+<span class="sd">            activate the appropriate :py:func:`single_slot </span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`.</span>
 <span class="sd">        additional_updates (Dict, optional): Any additional updates. In reality, it</span>
 <span class="sd">            will only consider those where just this entity is extracted. Defaults to</span>
 <span class="sd">            None.</span>
@@ -330,8 +352,9 @@
     <span class="sd">&quot;&quot;&quot;Generates a &#39;single slot&#39; action for the entity provided. These are only</span>
 <span class="sd">    necessary when multiple entities were specified, to handle the case where the bot</span>
 <span class="sd">    is able to only extract some on its first go and `clarify` actions as well as</span>
-<span class="sd">    actions that extract an entity on its own (`single_slot`) need to take care of the</span>
-<span class="sd">    rest.</span>
+<span class="sd">    actions that extract an entity on its own (:py:func:`single_slot </span>
+<span class="sd">    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`) need to take </span>
+<span class="sd">    care of the rest.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        entity (str): The entity to generate the action for.</span>
@@ -345,7 +368,9 @@
 <span class="sd">            extracted. Defaults to None.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (Dict): The `single_slot` action configuration.</span>
+<span class="sd">        (Dict): The :py:func:`single_slot </span>
+<span class="sd">        &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;` action </span>
+<span class="sd">        configuration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fill_slot_updates</span> <span class="o">=</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">)</span>
 
@@ -414,19 +439,24 @@
     <span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Used by the :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action to generate `clarify` and `single_slot` actions</span>
-<span class="sd">    where necessary.</span>
+    <span class="sd">&quot;&quot;&quot;Used by the :py:func:`slot_fill </span>
+<span class="sd">    &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action to generate </span>
+<span class="sd">    `clarify` and :py:func:`single_slot </span>
+<span class="sd">    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;` actions where </span>
+<span class="sd">    necessary.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        original_act_name (str): The action name given to the original :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
-<span class="sd">            action</span>
-<span class="sd">        original_act_config (Dict): The configuration of the original :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
-<span class="sd">            action.</span>
+<span class="sd">        original_act_name (str): The action name given to the original </span>
+<span class="sd">            :py:func:`slot_fill </span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action.</span>
+<span class="sd">        original_act_config (Dict): The configuration of the original </span>
+<span class="sd">            :py:func:`slot_fill </span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action.</span>
 <span class="sd">        entities (List[str]): The total list of entities to extract.</span>
 <span class="sd">        config_entities (Dict): Configurations for these entities that hold more</span>
 <span class="sd">            information.</span>
 <span class="sd">        context_variables (Dict): The context variable configuration from</span>
-<span class="sd">            `loaded_yaml`.</span>
+<span class="sd">            *loaded_yaml*.</span>
 <span class="sd">        additional_updates (Dict, optional): Any additional updates. Defaults to None.</span>
 
 <span class="sd">    Returns:</span>
@@ -494,7 +524,7 @@
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+
 
 </footer>
         </div>
@@ -505,7 +535,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
 
 </body>
 </html>

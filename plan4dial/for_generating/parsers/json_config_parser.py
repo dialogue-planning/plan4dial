@@ -14,8 +14,8 @@ from importlib import import_module
 
 def _configure_force_message_true() -> Dict:
     """Returns:
-    (Dict): Configuration where `have-message` and `force-statement` are set to
-        True.
+    Dict: Configuration where *have-message* and *force-statement* are set to
+        True. Used to force a `dialogue_statement` action.
     """
     return {
         "have-message": {"value": True},
@@ -25,7 +25,7 @@ def _configure_force_message_true() -> Dict:
 
 def _configure_fallback() -> Dict:
     """Returns:
-    (Dict): Update configuration for a fallback outcome.
+    Dict: Update configuration for a fallback outcome.
     """
     return {"updates": _configure_force_message_true(), "intent": "fallback"}
 
@@ -39,12 +39,12 @@ def _configure_dialogue_statement() -> Dict:
     which case `dialogue_statement` updates its `message_variants` to the appropriate
     `response_variants`.
 
-    Note that the intent `utter_dialogue_statement` is a blank intent because `message`
+    Note that the intent *utter_dialogue_statement* is a blank intent because `message`
     actions (`dialogue` type actions with a single outcome) do not take user input into
     account and simply execute the single outcome.
 
     Returns:
-        (Dict): The full configuration for the `dialogue_statement` action.
+        Dict: The full configuration for the `dialogue_statement` action.
     """
     return {
         "type": "dialogue",
@@ -81,7 +81,7 @@ def configure_assignments(known: Union[bool, str]) -> str:
         known (bool or str): The "known" status of a context variable in the YAML.
 
     Returns:
-        (str): The Hovor assignment equivalent to the "known" parameter provided.
+        str: The Hovor assignment equivalent to the "known" parameter provided.
     """
     return (
         ("found" if known else "didnt-find") if type(known) == bool else "maybe-found"
@@ -97,7 +97,7 @@ def _configure_certainty(known: Union[bool, str]) -> str:
         known (bool or str): The "known" status of a context variable in the YAML.
 
     Returns:
-        (str): The Hovor certainty equivalent to the "known" parameter provided.
+        str: The Hovor certainty equivalent to the "known" parameter provided.
     """
     return ("Known" if known else "Unknown") if type(known) == bool else "Uncertain"
 
@@ -111,7 +111,7 @@ def _convert_to_formula(condition: Dict) -> Union[And, Or]:
         condition (Dict): An action condition from the YAML.
 
     Returns:
-        formula_terms (Union[nnf.And, nnf.Or]): An NNF formula.
+        Union[nnf.And, nnf.Or]: An NNF formula.
 
     TODO: Test extensively once arbitrary conversion to DNF becomes viable.
     """
@@ -161,7 +161,7 @@ def _convert_to_DNF(condition: Dict) -> And:
         condition (Dict): An action condition from the YAML.
 
     Returns:
-        (nnf.And): The DNF formula that the action condition was converted to.
+        nnf.And: The DNF formula that the action condition was converted to.
     """
     return (And(_convert_to_formula(condition)).negate()).to_CNF().negate()
 
@@ -283,11 +283,11 @@ def _instantiate_custom_actions(loaded_yaml: Dict) -> None:
 
     NOTE: The custom actions are responsible for adding the actions to the
     configuration. This is because some custom actions add multiple actions, make
-    changes to the context variables, etc. As a rule, the `loaded_yaml`should always be
+    changes to the context variables, etc. As a rule, the *loaded_yaml* should always be
     the first parameter.
 
     NOTE: Custom actions should have "custom" as the `type`, and the name of the
-    function as the `subtype`. Parameters to the function should go in a `parameters`
+    function as the `subtype`. Parameters to the function should go in a *parameters*
     dictionary.
 
     Args:
@@ -699,7 +699,7 @@ def convert_yaml(loaded_yaml: Dict) -> Dict:
         loaded_yaml (Dict): The loaded YAML configuration.
 
     Returns:
-        (Dict): The JSON configuration required by Hovor.
+        Dict: The JSON configuration required by Hovor.
     """
     _base_fallback_setup(loaded_yaml)
     _instantiate_custom_actions(loaded_yaml)

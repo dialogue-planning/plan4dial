@@ -27,7 +27,7 @@ def _create_intent_example(
             know that the true value was what was extracted.
 
     Returns:
-        (str): The intent example.
+        str: The intent example.
     """
     if not true_value:
         true_value = extracted_value

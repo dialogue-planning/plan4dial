@@ -25,7 +25,7 @@ def rollout_config(configuration_data: Dict) -> Dict:
         configuration_data (Dict): The configuration data for the domain.
 
     Returns:
-        (Dict): The PDDL configuration in a dict form.
+        Dict: The PDDL configuration in a dict form.
     """
     # initialize the actions with conditions
     actions = {

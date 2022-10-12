@@ -10,7 +10,7 @@
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
+
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
@@ -21,10 +21,10 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="plan4dial.for_generating.custom_actions.utils" href="plan4dial.for_generating.custom_actions.utils.html" />
-    <link rel="prev" title="plan4dial.for_generating.custom_actions" href="plan4dial.for_generating.custom_actions.html" /> 
+    <link rel="prev" title="plan4dial.for_generating.custom_actions" href="plan4dial.for_generating.custom_actions.html" />
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
@@ -81,12 +81,12 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+
   <section id="module-plan4dial.for_generating.custom_actions.slot_fill">
 <span id="plan4dial-for-generating-custom-actions-slot-fill"></span><h1>plan4dial.for_generating.custom_actions.slot_fill<a class="headerlink" href="#module-plan4dial.for_generating.custom_actions.slot_fill" title="Permalink to this heading"></a></h1>
 <p>Contains all the functions for the
-<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> custom action
-that is provided to bot designers by default.</p>
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
+custom action that is provided to bot designers by default.</p>
 <dl class="simple">
 <dt>Authors:</dt><dd><ul class="simple">
 <li><p>Rebecca De Venezia</p></li>
@@ -115,11 +115,12 @@ that is provided to bot designers by default.</p>
 <li><p><strong>entity</strong> (<em>str</em>) – The entity to generate the action for.</p></li>
 <li><p><strong>message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The message variants for the clarification
 action.</p></li>
-<li><p><strong>single_slot</strong> (<em>bool</em>) – Determines if this entity also has a <cite>single_slot</cite> action.
+<li><p><strong>single_slot</strong> (<em>bool</em>) – Determines if this entity also has a
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a> action.
 This is necessary because of the situation where we “maybe” found the
 entity in the original action, try to clarify it and fail, and we were
 trying to extract &gt; 1 entities originally. In that case, we need to
-activate the appropriate <cite>single_slot</cite>.</p></li>
+activate the appropriate <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>.</p></li>
 <li><p><strong>additional_updates</strong> (<em>Dict</em><em>, </em><em>optional</em>) – Any additional updates. In reality, it
 will only consider those where just this entity is extracted. Defaults to
 None.</p></li>
@@ -137,20 +138,21 @@ None.</p></li>
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.custom_actions.slot_fill._create_clarifications_single_slots">
 <span class="sig-name descname"><span class="pre">_create_clarifications_single_slots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">original_act_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">original_act_config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/custom_actions/slot_fill.html#_create_clarifications_single_slots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.custom_actions.slot_fill._create_clarifications_single_slots" title="Permalink to this definition"></a></dt>
-<dd><p>Used by the <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action to generate <cite>clarify</cite> and <cite>single_slot</cite> actions
-where necessary.</p>
+<dd><p>Used by the <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action to generate
+<cite>clarify</cite> and <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a> actions where
+necessary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>original_act_name</strong> (<em>str</em>) – The action name given to the original <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
-action</p></li>
-<li><p><strong>original_act_config</strong> (<em>Dict</em>) – The configuration of the original <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
-action.</p></li>
+<li><p><strong>original_act_name</strong> (<em>str</em>) – The action name given to the original
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action.</p></li>
+<li><p><strong>original_act_config</strong> (<em>Dict</em>) – The configuration of the original
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action.</p></li>
 <li><p><strong>entities</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The total list of entities to extract.</p></li>
 <li><p><strong>config_entities</strong> (<em>Dict</em>) – Configurations for these entities that hold more
 information.</p></li>
 <li><p><strong>context_variables</strong> (<em>Dict</em>) – The context variable configuration from
-<cite>loaded_yaml</cite>.</p></li>
+<em>loaded_yaml</em>.</p></li>
 <li><p><strong>additional_updates</strong> (<em>Dict</em><em>, </em><em>optional</em>) – Any additional updates. Defaults to None.</p></li>
 </ul>
 </dd>
@@ -169,8 +171,8 @@ information.</p></li>
 <dd><p>Generates a ‘single slot’ action for the entity provided. These are only
 necessary when multiple entities were specified, to handle the case where the bot
 is able to only extract some on its first go and <cite>clarify</cite> actions as well as
-actions that extract an entity on its own (<cite>single_slot</cite>) need to take care of the
-rest.</p>
+actions that extract an entity on its own (<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>) need to take
+care of the rest.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -186,7 +188,8 @@ extracted. Defaults to None.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The <cite>single_slot</cite> action configuration.</p>
+<dd class="field-even"><p>The <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a> action
+configuration.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>(Dict)</p>
@@ -204,11 +207,13 @@ both. This depends on what the <cite>known</cite>’s <cite>type</cite> setting 
 YAML.</p>
 <p>Also handles “partial” extraction, where the bot asks for multiple entities but is
 only able to extract some. In that case, the bot will follow up with <cite>clarify</cite>
-actions in which it tries to extract uncertain entities, or <cite>single_slot</cite> actions
-in which it tries to extract unknown entities individually in order to make up for
-the missing information (only used when there are &gt; 1 entities specified).</p>
+actions in which it tries to extract uncertain entities, or
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>
+actions in which
+it tries to extract unknown entities individually in order to make up for the
+missing information (only used when there are &gt; 1 entities specified).</p>
 <p>Additional outcomes can also be specified for certain outcomes, i.e. when entity
-<cite>pizza</cite> is extracted, respond with the given <cite>response_variants</cite>.</p>
+<em>pizza</em> is extracted, respond with the given <cite>response_variants</cite>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -223,32 +228,49 @@ do in certain situations regarding each entity. The keys are each entity
 and the values are the configuration for each entity. Defaults to None as
 this is not always necessary. The 3 configuration options are:</p>
 <blockquote>
-<div><dl class="simple">
-<dt>clarify_message_variants (List[str]):</dt><dd><p>The message variants that will be used for the clarify action for this entity. Only necessary if the <cite>known</cite> <cite>type</cite> of this entity is of type <cite>fflag</cite>.</p>
-</dd>
-<dt>single_slot_message_variants (List[str]):</dt><dd><p>Custom message variants to utter for <cite>single_slot</cite> extractions of the given entity. Only necessary to specify if there are &gt; 1 entities.</p>
-</dd>
-<dt>fallback_message_variants (List[str]):</dt><dd><p>Custom fallback messages to utter if the bot tries to extract this entity by itself with a <cite>single_slot</cite> action and fails. Differs from the outer <cite>fallback_message_variants</cite> parameter, which applies to the initial <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action only. The default fallback messages will replace this parameter if not specified.</p>
-</dd>
-</dl>
+<div><div class="line-block">
+<div class="line"><strong>clarify_message_variants</strong> <em>(List[str])</em>: The message variants that
+will be used for the clarify action for this entity. Only necessary
+if the <cite>known</cite> <cite>type</cite> of this entity is of type <cite>fflag</cite>.</div>
+<div class="line"><strong>single_slot_message_variants</strong> <em>(List[str])</em>: Custom message
+variants to utter for <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>
+extractions of the given entity. Only necessary to specify if there
+are &gt; 1 entities.</div>
+<div class="line"><strong>fallback_message_variants</strong> <em>(List[str])</em>: Custom fallback messages
+to utter if the bot tries to extract this entity by itself with a
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>
+action and fails. Differs from the outer
+<cite>fallback_message_variants</cite> parameter, which applies to the initial
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
+action only. The default fallback messages will replace this
+parameter if not specified.</div>
+</div>
 </div></blockquote>
 </p></li>
-<li><p><strong>fallback_message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Custom fallback messages to utter if the bot
-fails to extract any entities. Defaults to None.</p></li>
-<li><p><strong>additional_updates</strong> (<em>Dict</em><em>, </em><em>optional</em>) – Additional updates to specify when a given
+<li><p><strong>fallback_message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Custom fallback messages to utter if the
+bot fails to extract any entities. Defaults to None.</p></li>
+<li><p><strong>additional_updates</strong> (<em>Dict</em><em>, </em><em>optional</em>) – <p>Additional updates to specify when a given
 extraction happens AT ANY POINT. Indicate the extraction that happens in the
 outcome by specifying the <cite>known</cite> status of the entities you desire. You can
 not only use this to add arbitrary context variable updates under <cite>also_update</cite>
-but also other outcome-specific attributes such as <cite>response_variants</cite>.
-NOTE: Will only match to outcomes that match the given specification exactly.
-For example, if you specify an additional update for when <cite>test1</cite> is known,
-updates would only be added to actions where ONLY <cite>test1</cite> is extracted, and not
-when <cite>test1</cite>, <cite>test2</cite> and <a href="#id1"><span class="problematic" id="id2">`</span></a>test3`are extracted, for example. This is done to
-reduce ambiguity. Defaults to None.</p></li>
+but also other outcome-specific attributes such as <cite>response_variants</cite>.</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><strong>NOTE</strong>: Will only match to outcomes that match the given
+specification exactly. For example, if you specify an additional
+update for when <em>test1</em> is known, updates would only be added to
+actions where ONLY <em>test1</em> is extracted, and not when <em>test1</em>,
+<em>test2</em> and <em>test3</em> are extracted, for example. This is done to
+reduce ambiguity. Defaults to None.</div>
+</div>
+</div></blockquote>
+</p></li>
 </ul>
 </dd>
 </dl>
-<p>See the tutorial in <cite>README.md</cite> for an example of a <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action.</p>
+<p>See the tutorial for an example of a
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
+action.</p>
 </dd></dl>
 
 </section>
@@ -270,7 +292,7 @@ reduce ambiguity. Defaults to None.</p></li>
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+
 
 </footer>
         </div>
@@ -281,7 +303,7 @@ reduce ambiguity. Defaults to None.</p></li>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
 
 </body>
 </html>
