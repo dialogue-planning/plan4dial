@@ -138,14 +138,13 @@
             <span class="n">writer</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">train_nlu</span><span class="p">(</span>
-            <span class="n">config</span><span class="o">=</span><span class="s2">&quot;./plan4dial/generate_files/nlu_config.yml&quot;</span><span class="p">,</span>
+            <span class="n">config</span><span class="o">=</span><span class="s2">&quot;./plan4dial/for_generating/nlu_config.yml&quot;</span><span class="p">,</span>
             <span class="n">nlu_data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span>
             <span class="n">output</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
             <span class="n">fixed_model_name</span><span class="o">=</span><span class="s2">&quot;nlu_model&quot;</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="c1"># generate PDDL files; convert policy.out to a prp.json file; wait until complete</span>
-    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rbp_path</span><span class="si">}</span><span class="s2">/prp&quot;</span><span class="p">,</span> <span class="n">domain_str</span><span class="p">,</span> <span class="n">problem_str</span><span class="p">,</span> <span class="s2">&quot;--output-format&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;3&quot;</span><span class="p">])</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">rbp_path</span><span class="si">}</span><span class="s2">/prp&quot;</span><span class="p">,</span> <span class="n">domain_str</span><span class="p">,</span> <span class="n">problem_str</span><span class="p">,</span> <span class="s2">&quot;--output-format&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">])</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;policy.out&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
