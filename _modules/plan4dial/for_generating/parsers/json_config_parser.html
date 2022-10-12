@@ -81,8 +81,8 @@
 
 <div class="viewcode-block" id="_configure_force_message_true"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._configure_force_message_true">[docs]</a><span class="k">def</span> <span class="nf">_configure_force_message_true</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns:</span>
-<span class="sd">    (Dict): Configuration where `have-message` and `force-statement` are set to</span>
-<span class="sd">        True.</span>
+<span class="sd">    Dict: Configuration where *have-message* and *force-statement* are set to</span>
+<span class="sd">        True. Used to force a `dialogue_statement` action.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;have-message&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
@@ -92,7 +92,7 @@
 
 <div class="viewcode-block" id="_configure_fallback"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._configure_fallback">[docs]</a><span class="k">def</span> <span class="nf">_configure_fallback</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns:</span>
-<span class="sd">    (Dict): Update configuration for a fallback outcome.</span>
+<span class="sd">    Dict: Update configuration for a fallback outcome.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">_configure_force_message_true</span><span class="p">(),</span> <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;fallback&quot;</span><span class="p">}</span></div>
 
@@ -106,12 +106,12 @@
 <span class="sd">    which case `dialogue_statement` updates its `message_variants` to the appropriate</span>
 <span class="sd">    `response_variants`.</span>
 
-<span class="sd">    Note that the intent `utter_dialogue_statement` is a blank intent because `message`</span>
+<span class="sd">    Note that the intent *utter_dialogue_statement* is a blank intent because `message`</span>
 <span class="sd">    actions (`dialogue` type actions with a single outcome) do not take user input into</span>
 <span class="sd">    account and simply execute the single outcome.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (Dict): The full configuration for the `dialogue_statement` action.</span>
+<span class="sd">        Dict: The full configuration for the `dialogue_statement` action.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;dialogue&quot;</span><span class="p">,</span>
@@ -148,7 +148,7 @@
 <span class="sd">        known (bool or str): The &quot;known&quot; status of a context variable in the YAML.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (str): The Hovor assignment equivalent to the &quot;known&quot; parameter provided.</span>
+<span class="sd">        str: The Hovor assignment equivalent to the &quot;known&quot; parameter provided.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="p">(</span><span class="s2">&quot;found&quot;</span> <span class="k">if</span> <span class="n">known</span> <span class="k">else</span> <span class="s2">&quot;didnt-find&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span> <span class="k">else</span> <span class="s2">&quot;maybe-found&quot;</span>
@@ -164,7 +164,7 @@
 <span class="sd">        known (bool or str): The &quot;known&quot; status of a context variable in the YAML.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (str): The Hovor certainty equivalent to the &quot;known&quot; parameter provided.</span>
+<span class="sd">        str: The Hovor certainty equivalent to the &quot;known&quot; parameter provided.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="s2">&quot;Known&quot;</span> <span class="k">if</span> <span class="n">known</span> <span class="k">else</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span> <span class="k">else</span> <span class="s2">&quot;Uncertain&quot;</span></div>
 
@@ -178,7 +178,7 @@
 <span class="sd">        condition (Dict): An action condition from the YAML.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        formula_terms (Union[nnf.And, nnf.Or]): An NNF formula.</span>
+<span class="sd">        Union[nnf.And, nnf.Or]: An NNF formula.</span>
 
 <span class="sd">    TODO: Test extensively once arbitrary conversion to DNF becomes viable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -228,7 +228,7 @@
 <span class="sd">        condition (Dict): An action condition from the YAML.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (nnf.And): The DNF formula that the action condition was converted to.</span>
+<span class="sd">        nnf.And: The DNF formula that the action condition was converted to.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">_convert_to_formula</span><span class="p">(</span><span class="n">condition</span><span class="p">))</span><span class="o">.</span><span class="n">negate</span><span class="p">())</span><span class="o">.</span><span class="n">to_CNF</span><span class="p">()</span><span class="o">.</span><span class="n">negate</span><span class="p">()</span></div>
 
@@ -350,11 +350,11 @@
 
 <span class="sd">    NOTE: The custom actions are responsible for adding the actions to the</span>
 <span class="sd">    configuration. This is because some custom actions add multiple actions, make</span>
-<span class="sd">    changes to the context variables, etc. As a rule, the `loaded_yaml`should always be</span>
+<span class="sd">    changes to the context variables, etc. As a rule, the *loaded_yaml* should always be</span>
 <span class="sd">    the first parameter.</span>
 
 <span class="sd">    NOTE: Custom actions should have &quot;custom&quot; as the `type`, and the name of the</span>
-<span class="sd">    function as the `subtype`. Parameters to the function should go in a `parameters`</span>
+<span class="sd">    function as the `subtype`. Parameters to the function should go in a *parameters*</span>
 <span class="sd">    dictionary.</span>
 
 <span class="sd">    Args:</span>
@@ -766,7 +766,7 @@
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        (Dict): The JSON configuration required by Hovor.</span>
+<span class="sd">        Dict: The JSON configuration required by Hovor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_base_fallback_setup</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
     <span class="n">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>

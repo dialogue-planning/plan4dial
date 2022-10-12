@@ -183,7 +183,7 @@ for preconditions.</p>
 <dd class="field-even"><p>The Hovor certainty equivalent to the “known” parameter provided.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(str)</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -197,7 +197,7 @@ this case, <cite>dialogue_statement</cite> updates its <cite>message_variants</c
 <cite>fallback_message_variants</cite>. Dialogue statements are also used for responses, in
 which case <cite>dialogue_statement</cite> updates its <cite>message_variants</cite> to the appropriate
 <cite>response_variants</cite>.</p>
-<p>Note that the intent <cite>utter_dialogue_statement</cite> is a blank intent because <cite>message</cite>
+<p>Note that the intent <em>utter_dialogue_statement</em> is a blank intent because <cite>message</cite>
 actions (<cite>dialogue</cite> type actions with a single outcome) do not take user input into
 account and simply execute the single outcome.</p>
 <dl class="field-list simple">
@@ -205,7 +205,7 @@ account and simply execute the single outcome.</p>
 <dd class="field-odd"><p>The full configuration for the <cite>dialogue_statement</cite> action.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p>(Dict)</p>
+<dd class="field-even"><p>Dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -214,16 +214,16 @@ account and simply execute the single outcome.</p>
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_fallback">
 <span class="sig-name descname"><span class="pre">_configure_fallback</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_fallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_fallback" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
-(Dict): Update configuration for a fallback outcome.</p>
+Dict: Update configuration for a fallback outcome.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_force_message_true">
 <span class="sig-name descname"><span class="pre">_configure_force_message_true</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_force_message_true"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_force_message_true" title="Permalink to this definition"></a></dt>
 <dd><p>Returns:
-(Dict): Configuration where <cite>have-message</cite> and <cite>force-statement</cite> are set to</p>
+Dict: Configuration where <em>have-message</em> and <em>force-statement</em> are set to</p>
 <blockquote>
-<div><p>True.</p>
+<div><p>True. Used to force a <cite>dialogue_statement</cite> action.</p>
 </div></blockquote>
 </dd></dl>
 
@@ -300,7 +300,7 @@ based on arbritrary logical formulas.</p>
 <dd class="field-even"><p>The DNF formula that the action condition was converted to.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(nnf.And)</p>
+<dd class="field-odd"><p>nnf.And</p>
 </dd>
 </dl>
 </dd></dl>
@@ -318,7 +318,7 @@ formula.</p>
 <dd class="field-even"><p>An NNF formula.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>formula_terms (Union[nnf.And, nnf.Or])</p>
+<dd class="field-odd"><p>Union[nnf.And, nnf.Or]</p>
 </dd>
 </dl>
 <p>TODO: Test extensively once arbitrary conversion to DNF becomes viable.</p>
@@ -360,10 +360,10 @@ plan4dial/generate_files/custom_actions.py. The name of the file should be the s
 name as the function that configures the custom action.</p>
 <p>NOTE: The custom actions are responsible for adding the actions to the
 configuration. This is because some custom actions add multiple actions, make
-changes to the context variables, etc. As a rule, the <a href="#id1"><span class="problematic" id="id2">`</span></a>loaded_yaml`should always be
+changes to the context variables, etc. As a rule, the <em>loaded_yaml</em> should always be
 the first parameter.</p>
 <p>NOTE: Custom actions should have “custom” as the <cite>type</cite>, and the name of the
-function as the <cite>subtype</cite>. Parameters to the function should go in a <cite>parameters</cite>
+function as the <cite>subtype</cite>. Parameters to the function should go in a <em>parameters</em>
 dictionary.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -386,7 +386,7 @@ respectively). Used for outcomes.</p>
 <dd class="field-even"><p>The Hovor assignment equivalent to the “known” parameter provided.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(str)</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -405,7 +405,7 @@ then finally converts everything into Hovor format.</p>
 <dd class="field-even"><p>The JSON configuration required by Hovor.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(Dict)</p>
+<dd class="field-odd"><p>Dict</p>
 </dd>
 </dl>
 </dd></dl>
