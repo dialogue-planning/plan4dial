@@ -82,7 +82,7 @@
             "type": "enum",
             "config": [
                 "Guac Grill",
-                "Alfredo's Pizza Caf\u00e9",
+                "Alfredo's Pizza Caf\u00c3\u00a9",
                 "Mandarin",
                 "Geneva Crepes"
             ],
@@ -744,7 +744,7 @@
                     {
                         "updates": {
                             "restaurant": {
-                                "value": "Alfredo's Pizza Caf\u00e9",
+                                "value": "Alfredo's Pizza Caf\u00c3\u00a9",
                                 "variable": "restaurant",
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -832,6 +832,75 @@
                     {
                         "updates": {
                             "outing": {
+                                "value": "Stages",
+                                "variable": "outing",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "budget": {
+                                "value": "low"
+                            },
+                            "outing_type": {
+                                "value": "high-energy"
+                            }
+                        },
+                        "name": "set-outing_DETDUP_assign_outing-EQ-set-club",
+                        "intent": null,
+                        "assignments": {
+                            "$outing": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "outing": {
+                                "value": "Stauffer Library",
+                                "variable": "outing",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "budget": {
+                                "value": "low"
+                            },
+                            "outing_type": {
+                                "value": "low-energy"
+                            }
+                        },
+                        "name": "set-outing_DETDUP_assign_outing-EQ-set-library",
+                        "intent": null,
+                        "assignments": {
+                            "$outing": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "outing": {
+                                "value": "Princess of Wales Theater",
+                                "variable": "outing",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "budget": {
+                                "value": "high"
+                            },
+                            "outing_type": {
+                                "value": "low-energy"
+                            }
+                        },
+                        "name": "set-outing_DETDUP_assign_outing-EQ-set-theater",
+                        "intent": null,
+                        "assignments": {
+                            "$outing": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "outing": {
                                 "value": "Smith's Golfing Club",
                                 "variable": "outing",
                                 "certainty": "Known",
@@ -846,7 +915,7 @@
                                 "value": "high-energy"
                             }
                         },
-                        "name": "set-outing_DETDUP_assign_outing-EQ-set-club",
+                        "name": "set-outing_DETDUP_assign_outing-EQ-set-golf",
                         "intent": null,
                         "assignments": {
                             "$outing": "found"

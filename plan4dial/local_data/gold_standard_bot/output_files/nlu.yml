@@ -29,6 +29,8 @@ nlu:
 
     - no thank you'
   intent: deny
+- examples: '- '
+  intent: share_location
 - examples: '- I want to eat [Mexican]{"entity": "cuisine", "value": "Mexican"}.
 
     - Do you have restaurants of type [Mexican]{"entity": "cuisine", "value": "Mexican"}?

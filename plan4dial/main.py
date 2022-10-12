@@ -68,14 +68,13 @@ def generate_files(
             writer,
         )
         train_nlu(
-            config="./plan4dial/generate_files/nlu_config.yml",
+            config="./plan4dial/for_generating/nlu_config.yml",
             nlu_data=f"{output_folder}/nlu.yml",
             output=f"{output_folder}",
             fixed_model_name="nlu_model",
         )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
-    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format",
-    "3"])
+    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
 
     try:
         with open("policy.out") as file:

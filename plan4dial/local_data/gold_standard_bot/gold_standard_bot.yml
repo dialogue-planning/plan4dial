@@ -450,8 +450,7 @@ actions:
                   value: low
                 outing_type:
                   value: high-energy
-          outcomes:
-            set-club:
+            set-library:
               updates:
                 outing:
                   value: Stauffer Library
@@ -461,8 +460,7 @@ actions:
                   value: low
                 outing_type:
                   value: low-energy
-          outcomes:
-            set-club:
+            set-theater:
               updates:
                 outing:
                   value: Princess of Wales Theater
@@ -472,8 +470,7 @@ actions:
                   value: high
                 outing_type:
                   value: low-energy
-          outcomes:
-            set-club:
+            set-golf:
               updates:
                 outing:
                   value: Smith's Golfing Club
