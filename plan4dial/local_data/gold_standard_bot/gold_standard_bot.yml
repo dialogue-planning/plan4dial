@@ -1,7 +1,17 @@
 ---
 name: day-planner
-
 context_variables:
+  location:
+    extraction:
+      method: spacy
+      config_method: gpe
+    known:
+      type: fflag
+      init: false
+    # options:
+    #   - Toronto
+    #   - Kingston
+    #   - Ottawa
   cuisine:
     type: enum
     known:
@@ -12,16 +22,6 @@ context_variables:
       - Italian
       - Chinese
       - Dessert
-  restaurant:
-    type: enum
-    known:
-      type: flag
-      init: false
-    options:
-      - Guac Grill
-      - Alfredo's Pizza Café
-      - Mandarin
-      - Geneva Crepes
   have_allergy:
     type: flag
     init: false
@@ -36,12 +36,6 @@ context_variables:
     options:
       - dairy-free
       - gluten-free
-  conflict:
-    type: flag
-    init: false
-    known:
-      type: flag
-      init: false
   budget:
     type: enum
     known:
@@ -66,6 +60,22 @@ context_variables:
           - chill
           - relaxing
           - laid-back
+  conflict:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  restaurant:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Guac Grill
+      - Alfredo's Pizza Café
+      - Mandarin
+      - Geneva Crepes
   outing:
     type: enum
     known:
@@ -82,7 +92,6 @@ context_variables:
     known:
       type: flag
       init: false
-
 intents:
   confirm:
     utterances:
@@ -103,6 +112,13 @@ intents:
       - nah
       - no thanks
       - no thank you
+  share_location:
+    variables:
+      - location
+    utterances:
+      - I live in $location.
+      - I am located in $location.
+      - Can you help me find things to do in $location?
   share_cuisine:
     variables:
       - cuisine
@@ -139,8 +155,28 @@ intents:
       - I would prefer a $outing_type atmosphere today.
       - I want to go to a $outing_type place.
       - What is the most $outing_type place in the city?
-
 actions:
+  get-location:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-location
+      entities:
+        - location
+      message_variants:
+        - Where are you located?
+      fallback_message_variants:
+        - Sorry, that isn't a valid location.
+      config_entities:
+        location:
+          clarify_message_variants:
+            - I didn't quite get your location. Are you located in $location?
+      additional_updates:
+        - outcome:
+            location:
+              known: true
+          response_variants:
+            - Tailoring your results to what's available in $location...
   get-cuisine:
     type: custom
     subtype: slot_fill
@@ -450,12 +486,14 @@ actions:
     disable-fallback: true
     type: dialogue
     condition:
+      location:
+        known: true
       restaurant:
         known: true
       outing:
         known: true
     message_variants:
-      - Booked a reservation at $restaurant as well as a spot at $outing.
+      - Booked a reservation at $restaurant as well as a spot at $outing in $location.
     effect:
       finish:
         oneof:
@@ -466,3 +504,4 @@ actions:
                   value: true
                   known: true
               intent:
+...

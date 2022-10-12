@@ -3,7 +3,7 @@ to PDDL. This PDDL is later used to generate the controller/tree that determines
 the conversation is navigated.
 
 Authors:
-    * Rebecca De Venezia
+    - Rebecca De Venezia
 """
 
 from typing import Dict, List, Set, Union, Tuple

@@ -56,6 +56,9 @@
 </ul>
 </li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
 
         </div>
       </div>
@@ -132,7 +135,7 @@ the conversation is navigated.</p>
 <dd class="field-even"><p>The converted action.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(str)</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -149,7 +152,7 @@ the conversation is navigated.</p>
 <dd class="field-even"><p>The converted actions.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(str)</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -180,7 +183,7 @@ outer_brackets (bool. optional): Setting to wrap the final statement with outer<
 )). Defaults to False.</p>
 </div></blockquote>
 <dl class="simple">
-<dt>Returns:</dt><dd><p>(str): The converted PDDL fluents.</p>
+<dt>Returns:</dt><dd><p>str: The converted PDDL fluents.</p>
 </dd>
 </dl>
 </dd>
@@ -202,7 +205,7 @@ outer_brackets (bool. optional): Setting to wrap the final statement with outer<
 <dd class="field-even"><p>Indicates if the provided variable has a “known” setting of type fflag.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(bool)</p>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -219,7 +222,7 @@ outer_brackets (bool. optional): Setting to wrap the final statement with outer<
 <dd class="field-even"><p>The collection of converted predicates.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>predicates (List[str])</p>
+<dd class="field-odd"><p>List[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -246,7 +249,7 @@ case the “Uncertain” option can be considered.</p></li>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(List[str])</p>
+<dd class="field-odd"><p>List[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -273,7 +276,7 @@ setting supplied.</p>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(str)</p>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -288,15 +291,15 @@ setting supplied.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><dl class="simple">
-<dt>The partial initial state, which indicates all fluents</dt><dd><p>that are initially true. Used in the PDDL.</p>
-</dd>
-<dt>init_complete (Set[str]): The complete initial state, which indicates the state</dt><dd><p>of all fluents in the initial state. Used by the rollout configuration.</p>
+<dt>The partial initial state, which indicates all</dt><dd><p>fluents that are initially true; used in the PDDL. Also returns the
+complete initial state, which indicates the state of all fluents in the
+initial state. Used by the rollout configuration.</p>
 </dd>
 </dl>
 </p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>init_true (Set[str])</p>
+<dd class="field-odd"><p>Tuple[Set[str], Set[str]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -336,7 +339,7 @@ setting supplied.</p>
 <dd class="field-even"><p>The set of fluents that were added by the outcome update.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>outcomes (Set[str])</p>
+<dd class="field-odd"><p>Set[str]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -350,11 +353,10 @@ setting supplied.</p>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The generated PDDL domain.
-problem (str): The generated PDDL problem.</p>
+<dd class="field-even"><p>The generated PDDL domain and problem.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>domain (str)</p>
+<dd class="field-odd"><p>Tuple[str, str]</p>
 </dd>
 </dl>
 </dd></dl>

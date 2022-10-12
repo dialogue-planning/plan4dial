@@ -1,7 +1,7 @@
 """Util functions that are useful in custom actions.
 
 Authors:
-    * Rebecca De Venezia
+    - Rebecca De Venezia
 """
 from typing import Dict
 

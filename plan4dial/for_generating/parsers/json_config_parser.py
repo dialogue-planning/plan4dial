@@ -2,7 +2,7 @@
 to the JSON configuration required by Hovor.
 
 Authors:
-    * Rebecca De Venezia
+    - Rebecca De Venezia
 """
 
 from typing import Union, Dict
@@ -14,8 +14,8 @@ from importlib import import_module
 
 def _configure_force_message_true() -> Dict:
     """Returns:
-    Dict: Configuration where *have-message* and *force-statement* are set to
-        True. Used to force a `dialogue_statement` action.
+    Dict: Configuration where *have-message* and *force-statement* are set to True.
+    Used to force a `dialogue_statement` action.
     """
     return {
         "have-message": {"value": True},
@@ -576,10 +576,14 @@ def _convert_ctx_var(loaded_yaml: Dict) -> None:
             # add other information to the config as necessary
             if "extraction" in cfg:
                 json_ctx_var["config"] = {"extraction": cfg["extraction"]}
-                if "method" in cfg:
-                    json_ctx_var["config"]["method"] = cfg["method"]
-                elif "pattern" in cfg:
-                    json_ctx_var["config"]["pattern"] = cfg["pattern"]
+                if "method" in cfg["extraction"]:
+                    json_ctx_var["config"]["method"] = cfg["extraction"]["method"]
+                    if "config_method" in cfg["extraction"]:
+                        json_ctx_var["config"]["config_method"] = cfg["extraction"][
+                            "config_method"
+                        ]
+                elif "pattern" in cfg["extraction"]:
+                    json_ctx_var["config"]["pattern"] = cfg["extraction"]["pattern"]
             else:
                 json_ctx_var["config"] = "null"
         if "known" in cfg:

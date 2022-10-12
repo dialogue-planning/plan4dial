@@ -5,7 +5,7 @@ NOTE: We use a bare-bones specification so we rely on Rasa as little as possible
 roles, groups, stories, or anything too "Rasa-specific").
 
 Authors:
-    * Rebecca De Venezia
+    - Rebecca De Venezia
 """
 
 from itertools import product

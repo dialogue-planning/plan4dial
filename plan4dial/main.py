@@ -2,12 +2,13 @@
 Main file responsible for generating the files that will be sent to HOVOR
 (`contingent-plan-executor`) for executor.
 Authors:
-    * Rebecca De Venezia
+    - Rebecca De Venezia
 """
 
 import json
 import os
-import subprocess
+
+# import subprocess
 import yaml
 from for_generating.parsers.json_config_parser import convert_yaml
 from for_generating.parsers.pddl_parser import parse_to_pddl
@@ -74,19 +75,20 @@ def generate_files(
             output=f"{output_folder}",
             fixed_model_name="nlu_model",
         )
-    # generate PDDL files; convert policy.out to a prp.json file; wait until complete
-    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
+    # # generate PDDL files; convert policy.out to a prp.json file; wait until complete
+    # subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format",
+    # "3"])
 
-    try:
-        with open("policy.out") as file:
-            plan_data = {"plan": json.load(file)}
-    except FileNotFoundError as err:
-        raise Exception("PDDL is invalid.") from err
-    with open(f"{output_folder}/data.prp.json", "w") as file:
-        json.dump(plan_data, file, indent=4)
-    # delete extra output files
-    os.remove("./policy.out")
-    os.remove("./output.sas")
+    # try:
+    #     with open("policy.out") as file:
+    #         plan_data = {"plan": json.load(file)}
+    # except FileNotFoundError as err:
+    #     raise Exception("PDDL is invalid.") from err
+    # with open(f"{output_folder}/data.prp.json", "w") as file:
+    #     json.dump(plan_data, file, indent=4)
+    # # delete extra output files
+    # os.remove("./policy.out")
+    # os.remove("./output.sas")
     # generate configuration for rollout
     rollout_data = rollout_config(converted_json)
     with open(f"{output_folder}/rollout_config.json", "w") as f:

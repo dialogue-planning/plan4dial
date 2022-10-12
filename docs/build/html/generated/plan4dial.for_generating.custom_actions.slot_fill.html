@@ -10,7 +10,7 @@
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-
+  
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
@@ -21,10 +21,10 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="plan4dial.for_generating.custom_actions.utils" href="plan4dial.for_generating.custom_actions.utils.html" />
-    <link rel="prev" title="plan4dial.for_generating.custom_actions" href="plan4dial.for_generating.custom_actions.html" />
+    <link rel="prev" title="plan4dial.for_generating.custom_actions" href="plan4dial.for_generating.custom_actions.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
@@ -54,6 +54,9 @@
 </ul>
 </li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+</ul>
 
         </div>
       </div>
@@ -81,7 +84,7 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-
+             
   <section id="module-plan4dial.for_generating.custom_actions.slot_fill">
 <span id="plan4dial-for-generating-custom-actions-slot-fill"></span><h1>plan4dial.for_generating.custom_actions.slot_fill<a class="headerlink" href="#module-plan4dial.for_generating.custom_actions.slot_fill" title="Permalink to this heading"></a></h1>
 <p>Contains all the functions for the
@@ -130,7 +133,7 @@ None.</p></li>
 <dd class="field-even"><p>The <cite>clarify</cite> action configuration.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(Dict)</p>
+<dd class="field-odd"><p>Dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -160,7 +163,7 @@ information.</p></li>
 <dd class="field-even"><p>The new actions and context variables to be added.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(Tuple[Dict, Dict])</p>
+<dd class="field-odd"><p>Tuple[Dict, Dict]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -192,7 +195,7 @@ extracted. Defaults to None.</p></li>
 configuration.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>(Dict)</p>
+<dd class="field-odd"><p>Dict</p>
 </dd>
 </dl>
 </dd></dl>
@@ -208,8 +211,7 @@ YAML.</p>
 <p>Also handles “partial” extraction, where the bot asks for multiple entities but is
 only able to extract some. In that case, the bot will follow up with <cite>clarify</cite>
 actions in which it tries to extract uncertain entities, or
-<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>
-actions in which
+<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a> actions in which
 it tries to extract unknown entities individually in order to make up for the
 missing information (only used when there are &gt; 1 entities specified).</p>
 <p>Additional outcomes can also be specified for certain outcomes, i.e. when entity
@@ -250,10 +252,11 @@ parameter if not specified.</div>
 <li><p><strong>fallback_message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Custom fallback messages to utter if the
 bot fails to extract any entities. Defaults to None.</p></li>
 <li><p><strong>additional_updates</strong> (<em>Dict</em><em>, </em><em>optional</em>) – <p>Additional updates to specify when a given
-extraction happens AT ANY POINT. Indicate the extraction that happens in the
-outcome by specifying the <cite>known</cite> status of the entities you desire. You can
-not only use this to add arbitrary context variable updates under <cite>also_update</cite>
-but also other outcome-specific attributes such as <cite>response_variants</cite>.</p>
+extraction happens AT ANY POINT. Indicate the extraction that happens in
+the outcome by specifying the <cite>known</cite> status of the entities you desire.
+You can not only use this to add arbitrary context variable updates under
+<cite>also_update</cite> but also other outcome-specific attributes such as
+<cite>response_variants</cite>.</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line"><strong>NOTE</strong>: Will only match to outcomes that match the given
@@ -292,7 +295,7 @@ action.</p>
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-
+   
 
 </footer>
         </div>
@@ -303,7 +306,7 @@ action.</p>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
+  </script> 
 
 </body>
 </html>

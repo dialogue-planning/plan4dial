@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial &mdash; Plan4Dial 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="plan4dial.main" href="generated/plan4dial.main.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> Plan4Dial
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="generated/plan4dial.html">plan4dial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-steps">Usage Steps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#create-a-yaml-config-file-that-defines-your-bot">1. Create a YAML config file that defines your bot.</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#context-variables">Context Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#deploy-the-bot-with-hovor">2. Deploy the bot with HOVOR.</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Plan4Dial</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="tutorial">
+<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
+<section id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
+<p><strong>Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.</strong>
+For ease of use and reducing the chance of import or versioning errors, it is recommended that you use a virtual environment such as <code class="docutils literal notranslate"><span class="pre">venv</span></code>.</p>
+<div class="line-block">
+<div class="line">Run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install the necessary libraries before using.</div>
+<div class="line">Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">spacy</span> <span class="pre">download</span> <span class="pre">en_core_web_md</span></code> to download the appropriate Spacy model. This is used for NLU along with Rasa.</div>
+</div>
+</section>
+<section id="usage-steps">
+<h2>Usage Steps<a class="headerlink" href="#usage-steps" title="Permalink to this heading"></a></h2>
+<section id="create-a-yaml-config-file-that-defines-your-bot">
+<h3>1. Create a YAML config file that defines your bot.<a class="headerlink" href="#create-a-yaml-config-file-that-defines-your-bot" title="Permalink to this heading"></a></h3>
+<p>Let’s go through an example. Suppose we want to create a chatbot that helps you decide what to do on your day off. This will be a fairly simple bot that picks a restaurant and outing location based on the user’s preferences.</p>
+<p>(For later reference, the full YAML file as well as the output files can be found <a class="reference external" href="https://github.com/QuMuLab/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot">here</a>).</p>
+<p>First, create a YAML file and pick a name for the domain:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nn">---</span><span class="w"></span>
+<span class="linenos">2</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">day-planner</span><span class="w"></span>
+</pre></div>
+</div>
+<p>There are three main parts to the YAML file you will need to define.
+They are <code class="docutils literal notranslate"><span class="pre">context</span> <span class="pre">variables</span></code>, <code class="docutils literal notranslate"><span class="pre">intents</span></code>, and <code class="docutils literal notranslate"><span class="pre">actions</span></code>. We will examine each of these in turn.</p>
+<section id="context-variables">
+<h4>Context Variables<a class="headerlink" href="#context-variables" title="Permalink to this heading"></a></h4>
+<p>Context variables are variables that your bot will store throughout the course of the conversation to keep track of the context gathered so far.
+Without context variables, the bot would not be able to store information from one line of dialogue to the next.</p>
+<div class="line-block">
+<div class="line">One of the most common use cases of context variables is to store information gathered from the user. However, they can also be used internally to keep track of states in the conversation, the most common example being an indication of when the “goal” is reached.</div>
+</div>
+<p>In this case, we know we want to keep track of the user’s preferences, which include options for cuisine, allergy/food restrictions, budget, and outing type.</p>
+<div class="line-block">
+<div class="line">Let’s look at the cuisine context variable first:</div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 3</span><span class="w"> </span><span class="nt">context_variables</span><span class="p">:</span><span class="w"></span>
+<span class="linenos"> 4</span><span class="w">     </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="linenos"> 5</span><span class="w">         </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
+<span class="linenos"> 6</span><span class="w">         </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="linenos"> 7</span><span class="w">             </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span><span class="w"></span>
+<span class="linenos"> 8</span><span class="w">             </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="linenos"> 9</span><span class="w">         </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">10</span><span class="w">             </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mexican</span><span class="w"></span>
+<span class="linenos">11</span><span class="w">             </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Italian</span><span class="w"></span>
+<span class="linenos">12</span><span class="w">             </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Chinese</span><span class="w"></span>
+<span class="linenos">13</span><span class="w">             </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Dessert</span><span class="w"></span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="deploy-the-bot-with-hovor">
+<h3>2. Deploy the bot with HOVOR.<a class="headerlink" href="#deploy-the-bot-with-hovor" title="Permalink to this heading"></a></h3>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="generated/plan4dial.main.html" class="btn btn-neutral float-left" title="plan4dial.main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, Rebecca De Venezia @ QuMuLab.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

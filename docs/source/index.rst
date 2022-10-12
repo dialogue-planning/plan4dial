@@ -6,14 +6,12 @@
 Welcome to Plan4Dial's documentation!
 =====================================
 
+
 .. autosummary::
    :toctree: generated
    :recursive:
 
    plan4dial
 
-Indices and tables
-==================
-
-* :ref:`modindex`
-* :ref:`search`
+.. toctree::
+   tutorial
