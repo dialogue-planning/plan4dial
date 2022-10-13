@@ -29,7 +29,12 @@ nlu:
 
     - no thank you'
   intent: deny
-- examples: '- '
+- examples: '- I live in [$location]{"entity": "location", "value": "$location"}.
+
+    - I am located in [$location]{"entity": "location", "value": "$location"}.
+
+    - Can you help me find things to do in [$location]{"entity": "location", "value":
+    "$location"}?'
   intent: share_location
 - examples: '- I want to eat [Mexican]{"entity": "cuisine", "value": "Mexican"}.
 

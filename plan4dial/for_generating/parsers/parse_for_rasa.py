@@ -77,6 +77,17 @@ def make_nlu_file(loaded_yaml: Dict) -> Dict:
                                 _create_intent_example(v, variable, true_value=option)
                                 for v in option_var["variations"]
                             )
+                # if no examples were provided, use the variable name as the default
+                # (useful for when we are extracting with spacy for example).
+                # only viable for json type context variables.
+                if (
+                    "examples" not in ctx_var
+                    and "options" not in ctx_var
+                    and ctx_var["type"] == "json"
+                ):
+                    variations[variable].append(
+                        _create_intent_example(f"${variable}", variable)
+                    )
                 # add extraction pattern if necessary
                 elif "extraction" in ctx_var:
                     if ctx_var["extraction"] == "regex":
