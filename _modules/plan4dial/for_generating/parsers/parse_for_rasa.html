@@ -147,6 +147,17 @@
                                 <span class="n">_create_intent_example</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">true_value</span><span class="o">=</span><span class="n">option</span><span class="p">)</span>
                                 <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">option_var</span><span class="p">[</span><span class="s2">&quot;variations&quot;</span><span class="p">]</span>
                             <span class="p">)</span>
+                <span class="c1"># if no examples were provided, use the variable name as the default</span>
+                <span class="c1"># (useful for when we are extracting with spacy for example).</span>
+                <span class="c1"># only viable for json type context variables.</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="s2">&quot;examples&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ctx_var</span>
+                    <span class="ow">and</span> <span class="s2">&quot;options&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ctx_var</span>
+                    <span class="ow">and</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span>
+                <span class="p">):</span>
+                    <span class="n">variations</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">_create_intent_example</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
+                    <span class="p">)</span>
                 <span class="c1"># add extraction pattern if necessary</span>
                 <span class="k">elif</span> <span class="s2">&quot;extraction&quot;</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;extraction&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;regex&quot;</span><span class="p">:</span>
