@@ -91,12 +91,8 @@
 <span id="plan4dial-for-generating-parsers-json-config-parser"></span><h1>plan4dial.for_generating.parsers.json_config_parser<a class="headerlink" href="#module-plan4dial.for_generating.parsers.json_config_parser" title="Permalink to this heading"></a></h1>
 <p>This module contains all the base functions required to convert a YAML configuration
 to the JSON configuration required by Hovor.</p>
-<dl class="simple">
-<dt>Authors:</dt><dd><ul class="simple">
-<li><p>Rebecca De Venezia</p></li>
-</ul>
-</dd>
-</dl>
+<p>Authors:
+- Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
@@ -131,12 +127,12 @@ Add fallback outcomes to actions as necessary.</p>
 YAML.</p>
 <p>Follow ups are actions that are forced to take place after an outcome. Responses
 are messages that the agent must utter after an outcome.</p>
-<p>NOTE: As it stands, follow ups only force the action that you specify and disable
+<p><strong>NOTE</strong>: As it stands, follow ups only force the action that you specify and disable
 all others. This means that for actions that, for example, lead into
 clarifications, those clarifications will not be forced too. A more complex
 configuration for robust follow_up functionality (as well as more description of
-the issue) is detailed in #5, but this bare-bones specification can be safely used
-in the meantime.</p>
+the issue) is detailed in <a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/5">#5</a>,
+but this bare-bones specification can be safely used in the meantime.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
@@ -233,7 +229,7 @@ Used to force a <cite>dialogue_statement</cite> action.</p>
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_value_setter">
 <span class="sig-name descname"><span class="pre">_configure_value_setter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ctx_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_value_setter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_value_setter" title="Permalink to this definition"></a></dt>
 <dd><p>Configures the actions in loaded_yaml to allow for value setting. This allows
-values to be used in preconditions, i.e. cuisine: {value: “Mexican”}.</p>
+values to be used in preconditions, i.e. <code class="docutils literal notranslate"><span class="pre">cuisine:</span> <span class="pre">{value:</span> <span class="pre">&quot;Mexican&quot;}</span></code>.</p>
 <p>This is done by creating flag context variables that represent the value of the
 context variable; i.e. “cuisine-value-Mexican”. We need to create flag
 representations so that value knowledge is reflected in the PDDL and ultimately the
@@ -293,7 +289,8 @@ configuration that Hovor requires.</p>
 <dd><p>Converts an action condition from the YAML to an NNF formula in Disjunctive
 Normal Form. Eventually, this would be used for auto-generating equivalent actions
 based on arbritrary logical formulas.</p>
-<p>NOTE: Will not be in use until issue #4 is resolved.</p>
+<p><strong>NOTE</strong>: Will not be in use until issue
+<a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/4">#4</a> is resolved.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>condition</strong> (<em>Dict</em>) – An action condition from the YAML.</p>
@@ -323,7 +320,7 @@ formula.</p>
 <dd class="field-odd"><p>Union[nnf.And, nnf.Or]</p>
 </dd>
 </dl>
-<p>TODO: Test extensively once arbitrary conversion to DNF becomes viable.</p>
+<p><strong>TODO</strong>: Test extensively once arbitrary conversion to DNF becomes viable.</p>
 </dd></dl>
 
 <dl class="py function">
@@ -331,7 +328,8 @@ formula.</p>
 <span class="sig-name descname"><span class="pre">_duplicate_for_or_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_duplicate_for_or_condition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._duplicate_for_or_condition" title="Permalink to this definition"></a></dt>
 <dd><p>Creates equivalent actions to those with an “or” precondition by splitting them
 up into separate actions.</p>
-<p>NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #4). Should not be deployed yet.</p>
+<p><strong>NOTE</strong>: ARBITRARY FORMULAS ARE NOT YET HANDLED (see
+<a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/4">#4</a>). Should not be deployed yet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
@@ -344,8 +342,9 @@ up into separate actions.</p>
 <span class="sig-name descname"><span class="pre">_duplicate_for_or_when_condition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_duplicate_for_or_when_condition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._duplicate_for_or_when_condition" title="Permalink to this definition"></a></dt>
 <dd><p>Creates equivalent “when” expressions to those with an “or” condition by
 splitting them up into separate conditions.</p>
-<p>NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #3 and #4). Should not be
-deployed yet.</p>
+<p><strong>NOTE</strong>: ARBITRARY FORMULAS ARE NOT YET HANDLED (see
+<a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/3">#3</a> and
+<a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/4">#4</a>). Should not be deployed yet.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
@@ -357,14 +356,14 @@ deployed yet.</p>
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._instantiate_custom_actions">
 <span class="sig-name descname"><span class="pre">_instantiate_custom_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_instantiate_custom_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._instantiate_custom_actions" title="Permalink to this definition"></a></dt>
 <dd><p>Instantiate custom actions.</p>
-<p>NOTE: All custom action functions must be placed in a file in
+<p><strong>NOTE</strong>: All custom action functions must be placed in a file in
 plan4dial/generate_files/custom_actions.py. The name of the file should be the same
 name as the function that configures the custom action.</p>
-<p>NOTE: The custom actions are responsible for adding the actions to the
+<p><strong>NOTE</strong>: The custom actions are responsible for adding the actions to the
 configuration. This is because some custom actions add multiple actions, make
 changes to the context variables, etc. As a rule, the <em>loaded_yaml</em> should always be
 the first parameter.</p>
-<p>NOTE: Custom actions should have “custom” as the <cite>type</cite>, and the name of the
+<p><strong>NOTE</strong>: Custom actions should have “custom” as the <cite>type</cite>, and the name of the
 function as the <cite>subtype</cite>. Parameters to the function should go in a <em>parameters</em>
 dictionary.</p>
 <dl class="field-list simple">

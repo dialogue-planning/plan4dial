@@ -2,7 +2,7 @@
 to the JSON configuration required by Hovor.
 
 Authors:
-    - Rebecca De Venezia
+- Rebecca De Venezia
 """
 
 from typing import Union, Dict
@@ -113,7 +113,7 @@ def _convert_to_formula(condition: Dict) -> Union[And, Or]:
     Returns:
         Union[nnf.And, nnf.Or]: An NNF formula.
 
-    TODO: Test extensively once arbitrary conversion to DNF becomes viable.
+    **TODO**: Test extensively once arbitrary conversion to DNF becomes viable.
     """
     formula_terms = []
     # if we get passed a list, update formula_terms by the conversion of each element
@@ -155,7 +155,8 @@ def _convert_to_DNF(condition: Dict) -> And:
     Normal Form. Eventually, this would be used for auto-generating equivalent actions
     based on arbritrary logical formulas.
 
-    NOTE: Will not be in use until issue #4 is resolved.
+    **NOTE**: Will not be in use until issue
+    `#4 <https://github.com/QuMuLab/plan4dial/issues/4>`_ is resolved.
 
     Args:
         condition (Dict): An action condition from the YAML.
@@ -168,7 +169,7 @@ def _convert_to_DNF(condition: Dict) -> And:
 
 def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
     """Configures the actions in loaded_yaml to allow for value setting. This allows
-    values to be used in preconditions, i.e. cuisine: {value: "Mexican"}.
+    values to be used in preconditions, i.e. ``cuisine: {value: "Mexican"}``.
 
     This is done by creating flag context variables that represent the value of the
     context variable; i.e. "cuisine-value-Mexican". We need to create flag
@@ -258,10 +259,10 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
     """
     # set up the action, intent, and fluents needed for default fallback/unclear user
     # input
-    loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
+    loaded_yaml["intents"]["fallback"] = {"utterances": [], "entities": []}
     loaded_yaml["intents"]["utter_dialogue_statement"] = {
         "utterances": [],
-        "variables": [],
+        "entities": [],
     }
     loaded_yaml["actions"]["dialogue_statement"] = _configure_dialogue_statement()
     loaded_yaml["context_variables"]["have-message"] = {
@@ -277,16 +278,16 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
 def _instantiate_custom_actions(loaded_yaml: Dict) -> None:
     """Instantiate custom actions.
 
-    NOTE: All custom action functions must be placed in a file in
+    **NOTE**: All custom action functions must be placed in a file in
     plan4dial/generate_files/custom_actions.py. The name of the file should be the same
     name as the function that configures the custom action.
 
-    NOTE: The custom actions are responsible for adding the actions to the
+    **NOTE**: The custom actions are responsible for adding the actions to the
     configuration. This is because some custom actions add multiple actions, make
     changes to the context variables, etc. As a rule, the *loaded_yaml* should always be
     the first parameter.
 
-    NOTE: Custom actions should have "custom" as the `type`, and the name of the
+    **NOTE**: Custom actions should have "custom" as the `type`, and the name of the
     function as the `subtype`. Parameters to the function should go in a *parameters*
     dictionary.
 
@@ -360,12 +361,12 @@ def _add_follow_ups_and_responses(loaded_yaml: Dict) -> None:
     Follow ups are actions that are forced to take place after an outcome. Responses
     are messages that the agent must utter after an outcome.
 
-    NOTE: As it stands, follow ups only force the action that you specify and disable
-    all others. This means that for actions that, for example, lead into
+    **NOTE**: As it stands, follow ups only force the action that you specify and
+    disable all others. This means that for actions that, for example, lead into
     clarifications, those clarifications will not be forced too. A more complex
     configuration for robust follow_up functionality (as well as more description of
-    the issue) is detailed in #5, but this bare-bones specification can be safely used
-    in the meantime.
+    the issue) is detailed in `#5 <https://github.com/QuMuLab/plan4dial/issues/5>`_,
+    but this bare-bones specification can be safely used in the meantime.
 
     Args:
         loaded_yaml (Dict): The loaded YAML configuration.
@@ -433,7 +434,8 @@ def _duplicate_for_or_condition(loaded_yaml: Dict) -> None:
     """Creates equivalent actions to those with an "or" precondition by splitting them
     up into separate actions.
 
-    NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #4). Should not be deployed yet.
+    **NOTE**: ARBITRARY FORMULAS ARE NOT YET HANDLED (see
+    `#4 <https://github.com/QuMuLab/plan4dial/issues/4>`_). Should not be deployed yet.
 
     Args:
         loaded_yaml (Dict): The loaded YAML configuration.
@@ -464,8 +466,9 @@ def _duplicate_for_or_when_condition(loaded_yaml: Dict) -> None:
     """Creates equivalent "when" expressions to those with an "or" condition by
     splitting them up into separate conditions.
 
-    NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #3 and #4). Should not be
-    deployed yet.
+    **NOTE**: ARBITRARY FORMULAS ARE NOT YET HANDLED (see
+    `#3 <https://github.com/QuMuLab/plan4dial/issues/3>`_ and
+    `#4 <https://github.com/QuMuLab/plan4dial/issues/4>`_). Should not be deployed yet.
 
     Args:
         loaded_yaml (Dict): The loaded YAML configuration.
@@ -594,12 +597,10 @@ def _convert_intents(loaded_yaml: Dict) -> None:
     processed = deepcopy(loaded_yaml["intents"])
     for intent, intent_cfg in loaded_yaml["intents"].items():
         cur_intent = {}
-        cur_intent["variables"] = []
+        cur_intent["entities"] = []
         # add the $ identifier to all variables
-        if "variables" in intent_cfg:
-            cur_intent["variables"].extend(
-                [f"${var}" for var in intent_cfg["variables"]]
-            )
+        if "entities" in intent_cfg:
+            cur_intent["entities"].extend([f"${var}" for var in intent_cfg["entities"]])
         cur_intent["utterances"] = intent_cfg["utterances"]
         processed[intent] = cur_intent
     loaded_yaml["intents"] = processed

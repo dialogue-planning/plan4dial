@@ -2,7 +2,7 @@
 Main file responsible for generating the files that will be sent to HOVOR
 (`contingent-plan-executor`) for executor.
 Authors:
-    - Rebecca De Venezia
+- Rebecca De Venezia
 """
 
 import json

@@ -1,13 +1,12 @@
 """This module contains all the functions necessary to generate a NLU file that Rasa
 can use to extract intents and entities.
 
-NOTE: We use a bare-bones specification so we rely on Rasa as little as possible (no
-roles, groups, stories, or anything too "Rasa-specific").
+**NOTE**: We use a bare-bones specification so we rely on Rasa as little as possible
+(no roles, groups, stories, or anything too "Rasa-specific").
 
 Authors:
-    - Rebecca De Venezia
+- Rebecca De Venezia
 """
-
 from itertools import product
 from typing import Union, Dict
 
@@ -51,8 +50,8 @@ def make_nlu_file(loaded_yaml: Dict) -> Dict:
         examples = []
         variations = {}
         # if this intent has variables, iterate through them
-        if "variables" in intent_cfg:
-            variables = intent_cfg["variables"]
+        if "entities" in intent_cfg:
+            variables = intent_cfg["entities"]
             # for each variable, access the context variable
             for variable in variables:
                 ctx_var = loaded_yaml["context_variables"][variable]

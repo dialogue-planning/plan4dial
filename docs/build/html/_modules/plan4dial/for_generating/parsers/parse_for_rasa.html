@@ -71,11 +71,11 @@
 <span></span><span class="sd">&quot;&quot;&quot;This module contains all the functions necessary to generate a NLU file that Rasa</span>
 <span class="sd">can use to extract intents and entities.</span>
 
-<span class="sd">NOTE: We use a bare-bones specification so we rely on Rasa as little as possible (no</span>
-<span class="sd">roles, groups, stories, or anything too &quot;Rasa-specific&quot;).</span>
+<span class="sd">**NOTE**: We use a bare-bones specification so we rely on Rasa as little as possible </span>
+<span class="sd">(no roles, groups, stories, or anything too &quot;Rasa-specific&quot;).</span>
 
 <span class="sd">Authors:</span>
-<span class="sd">    - Rebecca De Venezia</span>
+<span class="sd">- Rebecca De Venezia</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
@@ -121,8 +121,8 @@
         <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">variations</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># if this intent has variables, iterate through them</span>
-        <span class="k">if</span> <span class="s2">&quot;variables&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
-            <span class="n">variables</span> <span class="o">=</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;entities&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
+            <span class="n">variables</span> <span class="o">=</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">]</span>
             <span class="c1"># for each variable, access the context variable</span>
             <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
                 <span class="n">ctx_var</span> <span class="o">=</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="n">variable</span><span class="p">]</span>
@@ -147,6 +147,17 @@
                                 <span class="n">_create_intent_example</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">true_value</span><span class="o">=</span><span class="n">option</span><span class="p">)</span>
                                 <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">option_var</span><span class="p">[</span><span class="s2">&quot;variations&quot;</span><span class="p">]</span>
                             <span class="p">)</span>
+                <span class="c1"># if no examples were provided, use the variable name as the default</span>
+                <span class="c1"># (useful for when we are extracting with spacy for example).</span>
+                <span class="c1"># only viable for json type context variables.</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="s2">&quot;examples&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ctx_var</span>
+                    <span class="ow">and</span> <span class="s2">&quot;options&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ctx_var</span>
+                    <span class="ow">and</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span>
+                <span class="p">):</span>
+                    <span class="n">variations</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="n">_create_intent_example</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
+                    <span class="p">)</span>
                 <span class="c1"># add extraction pattern if necessary</span>
                 <span class="k">elif</span> <span class="s2">&quot;extraction&quot;</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;extraction&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;regex&quot;</span><span class="p">:</span>

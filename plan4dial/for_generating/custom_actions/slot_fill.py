@@ -3,7 +3,7 @@
 custom action that is provided to bot designers by default.
 
 Authors:
-    - Rebecca De Venezia
+- Rebecca De Venezia
 """
 
 from typing import List, Dict, Tuple

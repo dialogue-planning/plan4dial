@@ -92,12 +92,8 @@
 <p>This module contains all the files necessary to convert from the HOVOR configuration
 to PDDL. This PDDL is later used to generate the controller/tree that determines how
 the conversation is navigated.</p>
-<dl class="simple">
-<dt>Authors:</dt><dd><ul class="simple">
-<li><p>Rebecca De Venezia</p></li>
-</ul>
-</dd>
-</dl>
+<p>Authors:
+- Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <colgroup>
@@ -160,32 +156,31 @@ the conversation is navigated.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.pddl_parser._fluents_to_pddl">
 <span class="sig-name descname"><span class="pre">_fluents_to_pddl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fluents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tabs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name_wrap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">and_wrap</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outer_brackets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_parser.html#_fluents_to_pddl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.pddl_parser._fluents_to_pddl" title="Permalink to this definition"></a></dt>
-<dd><dl>
-<dt>Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and “and”</dt><dd><p>wraps as appropriate.</p>
-<dl>
-<dt>Args:</dt><dd><p>fluents (List[str]): A list of the string versions of the fluents.
-tabs (int): The “base” indentation of the fluents.
-outer_brackets (bool. optional): Setting to wrap the final statement with outer</p>
-<blockquote>
-<div><p>brackets, i.e. (outcome …) Defaults to True.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>name_wrap (str, optional): Setting to wrap fluents with a name, i.e.</dt><dd><p>“:predicates”. Defaults to None.</p>
+<dd><p>Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and “and”
+wraps as appropriate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fluents</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of the string versions of the fluents.</p></li>
+<li><p><strong>tabs</strong> (<em>int</em>) – The “base” indentation of the fluents.</p></li>
+<li><p><strong>outer_brackets</strong> (<em>bool. optional</em>) – Setting to wrap the final statement with
+outer brackets, i.e. <code class="docutils literal notranslate"><span class="pre">(outcome</span> <span class="pre">...)</span></code> Defaults to True.</p></li>
+<li><p><strong>name_wrap</strong> (<em>str</em><em>, </em><em>optional</em>) – Setting to wrap fluents with a name, i.e.
+<code class="docutils literal notranslate"><span class="pre">:predicates</span></code>. Defaults to None.</p></li>
+<li><p><strong>and_wrap</strong> (<em>bool</em><em>, </em><em>optional</em>) – <p>Setting to wrap fluents with an “and”, i.e.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">:</span><span class="n">precondition</span>
+    <span class="p">(</span><span class="ow">and</span> <span class="p">(</span><span class="o">...</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Defaults to False.</p>
+</p></li>
+</ul>
 </dd>
-<dt>and_wrap (bool, optional): Setting to wrap fluents with an “and”, i.e.</dt><dd><p>:precondition</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The converted PDDL fluents.</p>
 </dd>
-</dl>
-</dd>
-</dl>
-</dd>
-<dt>(and</dt><dd><blockquote>
-<div><p>(…
-)). Defaults to False.</p>
-</div></blockquote>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>str: The converted PDDL fluents.</p>
-</dd>
-</dl>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
@@ -242,11 +237,8 @@ case the “Uncertain” option can be considered.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The list of fluents that reflect the certainty setting for the</dt><dd><p>context variable supplied.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>The list of fluents that reflect the certainty setting for the
+context variable supplied.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>List[str]</p>
@@ -269,11 +261,8 @@ setting supplied.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The fluent version of a flag or fflag context variable depending on the</dt><dd><p>setting supplied.</p>
-</dd>
-</dl>
-</p>
+<dd class="field-even"><p>The fluent version of a flag or fflag context variable depending on the
+setting supplied.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>str</p>
@@ -290,13 +279,10 @@ setting supplied.</p>
 <dd class="field-odd"><p><strong>context_variables</strong> (<em>Dict</em>) – The configuration of all context variables.</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The partial initial state, which indicates all</dt><dd><p>fluents that are initially true; used in the PDDL. Also returns the
+<dd class="field-even"><p>The partial initial state, which indicates all
+fluents that are initially true; used in the PDDL. Also returns the
 complete initial state, which indicates the state of all fluents in the
 initial state. Used by the rollout configuration.</p>
-</dd>
-</dl>
-</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tuple[Set[str], Set[str]]</p>

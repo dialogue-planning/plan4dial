@@ -73,7 +73,7 @@
 <span class="sd">the conversation is navigated.</span>
 
 <span class="sd">Authors:</span>
-<span class="sd">    - Rebecca De Venezia</span>
+<span class="sd">- Rebecca De Venezia</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Set</span><span class="p">,</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Tuple</span>
@@ -114,7 +114,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        str: The fluent version of a flag or fflag context variable depending on the</span>
-<span class="sd">            setting supplied.</span>
+<span class="sd">        setting supplied.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;(not (</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">))&quot;</span>
@@ -134,7 +134,7 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        List[str]: The list of fluents that reflect the certainty setting for the</span>
-<span class="sd">            context variable supplied.</span>
+<span class="sd">        context variable supplied.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># convert to a simpler representation</span>
     <span class="k">if</span> <span class="n">certainty</span> <span class="o">==</span> <span class="s2">&quot;Known&quot;</span><span class="p">:</span>
@@ -173,12 +173,18 @@
 <span class="sd">    Args:</span>
 <span class="sd">        fluents (List[str]): A list of the string versions of the fluents.</span>
 <span class="sd">        tabs (int): The &quot;base&quot; indentation of the fluents.</span>
-<span class="sd">        outer_brackets (bool. optional): Setting to wrap the final statement with outer</span>
-<span class="sd">            brackets, i.e. (outcome ...) Defaults to True.</span>
-<span class="sd">        name_wrap (str, optional): Setting to wrap fluents with a name, i.e.</span>
-<span class="sd">            &quot;:predicates&quot;. Defaults to None.</span>
+<span class="sd">        outer_brackets (bool. optional): Setting to wrap the final statement with </span>
+<span class="sd">            outer brackets, i.e. ``(outcome ...)`` Defaults to True.</span>
+<span class="sd">        name_wrap (str, optional): Setting to wrap fluents with a name, i.e. </span>
+<span class="sd">            ``:predicates``. Defaults to None.</span>
 <span class="sd">        and_wrap (bool, optional): Setting to wrap fluents with an &quot;and&quot;, i.e.</span>
-<span class="sd">            :precondition\n(and\n\t(...\n\t)). Defaults to False.</span>
+
+<span class="sd">            .. code-block:: python</span>
+<span class="sd">    </span>
+<span class="sd">               :precondition</span>
+<span class="sd">                   (and (...))</span>
+
+<span class="sd">            Defaults to False.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        str: The converted PDDL fluents.</span>
@@ -347,9 +353,9 @@
 
 <span class="sd">    Returns:</span>
 <span class="sd">        Tuple[Set[str], Set[str]]: The partial initial state, which indicates all</span>
-<span class="sd">            fluents that are initially true; used in the PDDL. Also returns the</span>
-<span class="sd">            complete initial state, which indicates the state of all fluents in the</span>
-<span class="sd">            initial state. Used by the rollout configuration.</span>
+<span class="sd">        fluents that are initially true; used in the PDDL. Also returns the</span>
+<span class="sd">        complete initial state, which indicates the state of all fluents in the</span>
+<span class="sd">        initial state. Used by the rollout configuration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">init_true</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">init_complete</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>

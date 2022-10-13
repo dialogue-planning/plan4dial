@@ -72,7 +72,7 @@
 <span class="sd">to the JSON configuration required by Hovor.</span>
 
 <span class="sd">Authors:</span>
-<span class="sd">    - Rebecca De Venezia</span>
+<span class="sd">- Rebecca De Venezia</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span><span class="p">,</span> <span class="n">Dict</span>
@@ -81,10 +81,11 @@
 <span class="kn">from</span> <span class="nn">nnf</span> <span class="kn">import</span> <span class="n">Or</span><span class="p">,</span> <span class="n">And</span><span class="p">,</span> <span class="n">Var</span><span class="p">,</span> <span class="n">config</span>
 <span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
 
+
 <div class="viewcode-block" id="_configure_force_message_true"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._configure_force_message_true">[docs]</a><span class="k">def</span> <span class="nf">_configure_force_message_true</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns:</span>
-<span class="sd">        Dict: Configuration where *have-message* and *force-statement* are set to True.</span>
-<span class="sd">        Used to force a `dialogue_statement` action.</span>
+<span class="sd">    Dict: Configuration where *have-message* and *force-statement* are set to True.</span>
+<span class="sd">    Used to force a `dialogue_statement` action.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;have-message&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
@@ -94,7 +95,7 @@
 
 <div class="viewcode-block" id="_configure_fallback"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._configure_fallback">[docs]</a><span class="k">def</span> <span class="nf">_configure_fallback</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns:</span>
-<span class="sd">        Dict: Update configuration for a fallback outcome.</span>
+<span class="sd">    Dict: Update configuration for a fallback outcome.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">_configure_force_message_true</span><span class="p">(),</span> <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;fallback&quot;</span><span class="p">}</span></div>
 
@@ -182,7 +183,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Union[nnf.And, nnf.Or]: An NNF formula.</span>
 
-<span class="sd">    TODO: Test extensively once arbitrary conversion to DNF becomes viable.</span>
+<span class="sd">    **TODO**: Test extensively once arbitrary conversion to DNF becomes viable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">formula_terms</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="c1"># if we get passed a list, update formula_terms by the conversion of each element</span>
@@ -224,7 +225,8 @@
 <span class="sd">    Normal Form. Eventually, this would be used for auto-generating equivalent actions</span>
 <span class="sd">    based on arbritrary logical formulas.</span>
 
-<span class="sd">    NOTE: Will not be in use until issue #4 is resolved.</span>
+<span class="sd">    **NOTE**: Will not be in use until issue </span>
+<span class="sd">    `#4 &lt;https://github.com/QuMuLab/plan4dial/issues/4&gt;`_ is resolved.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        condition (Dict): An action condition from the YAML.</span>
@@ -237,7 +239,7 @@
 
 <div class="viewcode-block" id="_configure_value_setter"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._configure_value_setter">[docs]</a><span class="k">def</span> <span class="nf">_configure_value_setter</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">ctx_var</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Configures the actions in loaded_yaml to allow for value setting. This allows</span>
-<span class="sd">    values to be used in preconditions, i.e. cuisine: {value: &quot;Mexican&quot;}.</span>
+<span class="sd">    values to be used in preconditions, i.e. ``cuisine: {value: &quot;Mexican&quot;}``.</span>
 
 <span class="sd">    This is done by creating flag context variables that represent the value of the</span>
 <span class="sd">    context variable; i.e. &quot;cuisine-value-Mexican&quot;. We need to create flag</span>
@@ -327,10 +329,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># set up the action, intent, and fluents needed for default fallback/unclear user</span>
     <span class="c1"># input</span>
-    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;fallback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;fallback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">[]}</span>
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;utter_dialogue_statement&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">&quot;variables&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">}</span>
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="s2">&quot;dialogue_statement&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_configure_dialogue_statement</span><span class="p">()</span>
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="s2">&quot;have-message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
@@ -346,16 +348,16 @@
 <div class="viewcode-block" id="_instantiate_custom_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._instantiate_custom_actions">[docs]</a><span class="k">def</span> <span class="nf">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Instantiate custom actions.</span>
 
-<span class="sd">    NOTE: All custom action functions must be placed in a file in</span>
+<span class="sd">    **NOTE**: All custom action functions must be placed in a file in</span>
 <span class="sd">    plan4dial/generate_files/custom_actions.py. The name of the file should be the same</span>
 <span class="sd">    name as the function that configures the custom action.</span>
 
-<span class="sd">    NOTE: The custom actions are responsible for adding the actions to the</span>
+<span class="sd">    **NOTE**: The custom actions are responsible for adding the actions to the</span>
 <span class="sd">    configuration. This is because some custom actions add multiple actions, make</span>
 <span class="sd">    changes to the context variables, etc. As a rule, the *loaded_yaml* should always be</span>
 <span class="sd">    the first parameter.</span>
 
-<span class="sd">    NOTE: Custom actions should have &quot;custom&quot; as the `type`, and the name of the</span>
+<span class="sd">    **NOTE**: Custom actions should have &quot;custom&quot; as the `type`, and the name of the</span>
 <span class="sd">    function as the `subtype`. Parameters to the function should go in a *parameters*</span>
 <span class="sd">    dictionary.</span>
 
@@ -429,12 +431,12 @@
 <span class="sd">    Follow ups are actions that are forced to take place after an outcome. Responses</span>
 <span class="sd">    are messages that the agent must utter after an outcome.</span>
 
-<span class="sd">    NOTE: As it stands, follow ups only force the action that you specify and disable</span>
+<span class="sd">    **NOTE**: As it stands, follow ups only force the action that you specify and disable</span>
 <span class="sd">    all others. This means that for actions that, for example, lead into</span>
 <span class="sd">    clarifications, those clarifications will not be forced too. A more complex</span>
 <span class="sd">    configuration for robust follow_up functionality (as well as more description of</span>
-<span class="sd">    the issue) is detailed in #5, but this bare-bones specification can be safely used</span>
-<span class="sd">    in the meantime.</span>
+<span class="sd">    the issue) is detailed in `#5 &lt;https://github.com/QuMuLab/plan4dial/issues/5&gt;`_, </span>
+<span class="sd">    but this bare-bones specification can be safely used in the meantime.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
@@ -502,7 +504,8 @@
     <span class="sd">&quot;&quot;&quot;Creates equivalent actions to those with an &quot;or&quot; precondition by splitting them</span>
 <span class="sd">    up into separate actions.</span>
 
-<span class="sd">    NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #4). Should not be deployed yet.</span>
+<span class="sd">    **NOTE**: ARBITRARY FORMULAS ARE NOT YET HANDLED (see </span>
+<span class="sd">    `#4 &lt;https://github.com/QuMuLab/plan4dial/issues/4&gt;`_). Should not be deployed yet.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
@@ -533,8 +536,9 @@
     <span class="sd">&quot;&quot;&quot;Creates equivalent &quot;when&quot; expressions to those with an &quot;or&quot; condition by</span>
 <span class="sd">    splitting them up into separate conditions.</span>
 
-<span class="sd">    NOTE: ARBITRARY FORMULAS ARE NOT YET HANDLED (see #3 and #4). Should not be</span>
-<span class="sd">    deployed yet.</span>
+<span class="sd">    **NOTE**: ARBITRARY FORMULAS ARE NOT YET HANDLED (see </span>
+<span class="sd">    `#3 &lt;https://github.com/QuMuLab/plan4dial/issues/3&gt;`_ and </span>
+<span class="sd">    `#4 &lt;https://github.com/QuMuLab/plan4dial/issues/4&gt;`_). Should not be deployed yet.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
@@ -645,10 +649,6 @@
             <span class="c1"># add other information to the config as necessary</span>
             <span class="k">if</span> <span class="s2">&quot;extraction&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
                 <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;extraction&quot;</span><span class="p">:</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;extraction&quot;</span><span class="p">]}</span>
-                <span class="k">if</span> <span class="s2">&quot;method&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
-                    <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">][</span><span class="s2">&quot;method&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;method&quot;</span><span class="p">]</span>
-                <span class="k">elif</span> <span class="s2">&quot;pattern&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
-                    <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">][</span><span class="s2">&quot;pattern&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;pattern&quot;</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;null&quot;</span>
         <span class="k">if</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
@@ -667,11 +667,11 @@
     <span class="n">processed</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">intent</span><span class="p">,</span> <span class="n">intent_cfg</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">cur_intent</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="n">cur_intent</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">cur_intent</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="c1"># add the $ identifier to all variables</span>
-        <span class="k">if</span> <span class="s2">&quot;variables&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
-            <span class="n">cur_intent</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
-                <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="s2">&quot;entities&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
+            <span class="n">cur_intent</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">]]</span>
             <span class="p">)</span>
         <span class="n">cur_intent</span><span class="p">[</span><span class="s2">&quot;utterances&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;utterances&quot;</span><span class="p">]</span>
         <span class="n">processed</span><span class="p">[</span><span class="n">intent</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_intent</span>

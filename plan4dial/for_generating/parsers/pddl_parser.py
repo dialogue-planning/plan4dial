@@ -3,7 +3,7 @@ to PDDL. This PDDL is later used to generate the controller/tree that determines
 the conversation is navigated.
 
 Authors:
-    - Rebecca De Venezia
+- Rebecca De Venezia
 """
 
 from typing import Dict, List, Set, Union, Tuple
@@ -44,7 +44,7 @@ def _return_flag_value_fluent(
 
     Returns:
         str: The fluent version of a flag or fflag context variable depending on the
-            setting supplied.
+        setting supplied.
     """
     if type(value) == bool:
         return f"({v_name})" if value else f"(not ({v_name}))"
@@ -64,7 +64,7 @@ def _return_certainty_fluents(v_name: str, is_fflag: bool, certainty: str) -> Li
 
     Returns:
         List[str]: The list of fluents that reflect the certainty setting for the
-            context variable supplied.
+        context variable supplied.
     """
     # convert to a simpler representation
     if certainty == "Known":
@@ -103,12 +103,18 @@ def _fluents_to_pddl(
     Args:
         fluents (List[str]): A list of the string versions of the fluents.
         tabs (int): The "base" indentation of the fluents.
-        outer_brackets (bool. optional): Setting to wrap the final statement with outer
-            brackets, i.e. (outcome ...) Defaults to True.
+        outer_brackets (bool. optional): Setting to wrap the final statement with
+            outer brackets, i.e. ``(outcome ...)`` Defaults to True.
         name_wrap (str, optional): Setting to wrap fluents with a name, i.e.
-            ":predicates". Defaults to None.
+            ``:predicates``. Defaults to None.
         and_wrap (bool, optional): Setting to wrap fluents with an "and", i.e.
-            :precondition\n(and\n\t(...\n\t)). Defaults to False.
+
+            .. code-block:: python
+
+               :precondition
+                   (and (...))
+
+            Defaults to False.
 
     Returns:
         str: The converted PDDL fluents.
@@ -277,9 +283,9 @@ def get_init_fluents(context_variables: Dict) -> Tuple[Set[str], Set[str]]:
 
     Returns:
         Tuple[Set[str], Set[str]]: The partial initial state, which indicates all
-            fluents that are initially true; used in the PDDL. Also returns the
-            complete initial state, which indicates the state of all fluents in the
-            initial state. Used by the rollout configuration.
+        fluents that are initially true; used in the PDDL. Also returns the
+        complete initial state, which indicates the state of all fluents in the
+        initial state. Used by the rollout configuration.
     """
     init_true = set()
     init_complete = set()
