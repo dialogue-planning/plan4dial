@@ -351,7 +351,6 @@ def _single_slot(
         if additional_updates:
             key = frozenset({entity: "maybe-found"}.items())
             if key in additional_updates:
-                
                 slot_unclear_updates.update(additional_updates[key])
         single_slot["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
             "slot-unclear"
