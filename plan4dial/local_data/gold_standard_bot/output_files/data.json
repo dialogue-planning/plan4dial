@@ -7,9 +7,7 @@
                 "extraction": {
                     "method": "spacy",
                     "config_method": "gpe"
-                },
-                "method": "spacy",
-                "config_method": "gpe"
+                }
             },
             "known": {
                 "type": "fflag",
@@ -96,7 +94,7 @@
             "config": [
                 "Stages",
                 "Stauffer Library",
-                "Princess of Wales Theater",
+                "Broadway Theater",
                 "Smith's Golfing Club"
             ],
             "known": {
@@ -878,7 +876,7 @@
                     {
                         "updates": {
                             "outing": {
-                                "value": "Princess of Wales Theater",
+                                "value": "Broadway Theater",
                                 "variable": "outing",
                                 "certainty": "Known",
                                 "interpretation": "json"

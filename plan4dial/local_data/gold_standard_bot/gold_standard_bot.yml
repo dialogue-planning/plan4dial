@@ -85,7 +85,7 @@ context_variables:
     options:
       - Stages
       - Stauffer Library
-      - Princess of Wales Theater
+      - Broadway Theater
       - Smith's Golfing Club
   goal:
     type: flag
@@ -463,7 +463,7 @@ actions:
             set-theater:
               updates:
                 outing:
-                  value: Princess of Wales Theater
+                  value: Broadway Theater
                   known: true
               context:
                 budget:

@@ -576,14 +576,6 @@ def _convert_ctx_var(loaded_yaml: Dict) -> None:
             # add other information to the config as necessary
             if "extraction" in cfg:
                 json_ctx_var["config"] = {"extraction": cfg["extraction"]}
-                if "method" in cfg["extraction"]:
-                    json_ctx_var["config"]["method"] = cfg["extraction"]["method"]
-                    if "config_method" in cfg["extraction"]:
-                        json_ctx_var["config"]["config_method"] = cfg["extraction"][
-                            "config_method"
-                        ]
-                elif "pattern" in cfg["extraction"]:
-                    json_ctx_var["config"]["pattern"] = cfg["extraction"]["pattern"]
             else:
                 json_ctx_var["config"] = "null"
         if "known" in cfg:
