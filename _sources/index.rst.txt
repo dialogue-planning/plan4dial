@@ -6,6 +6,10 @@
 Welcome to Plan4Dial's documentation!
 =====================================
 
+.. _why:
+
+Why Plan4Dial?
+
 
 .. autosummary::
    :toctree: generated
