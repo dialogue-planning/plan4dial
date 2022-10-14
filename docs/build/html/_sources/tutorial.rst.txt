@@ -90,7 +90,7 @@ These are the only **four** types that we can define in the YAML. They are defin
 .. _types:
 
 +------------+--------------------------------------------------------------------+
-| type       |  definition                                                        |
+| type       | definition                                                         |
 +============+====================================================================+
 | flag       | A boolean value; can only be set to ``true`` or ``false``.         |
 +------------+--------------------------------------------------------------------+
@@ -304,11 +304,72 @@ Let's see what the intents for our ``day-planner`` bot look like:
   Second, there is functionally no reason for multiple intents to accomplish the exact same goal but map to different outcomes.
   If you want to handle things differently depending on the extracted *value* of the entities, that is a separate process handled in the actions (to be seen later).
 
+If this is a bit confusing, it may make more sense after reviewing the ``actions`` section below and coming back to this.
 
 **NOTE**: All ``utterances`` must include *exactly* all the entities listed under ``entities``; no more, no less.
 
 3. Define the Actions
 .....................
+
+``actions`` are the core of dialogue agent design as they specify what your agent can do and when.
+We use a **declarative** specification powered by automated planning that allows you to treat actions as separate pieces of a puzzle.
+You won't have to draw out complex dialogue trees that you will have to completely dismantle if you decide late in the game that you want to add a new action near the top.
+Instead, actions are chosen based on what is true in the state of the world. 
+Only actions whose ``preconditions`` are satisfied are executed.
+
+It is important to reiterate that ``actions`` refer only to the actions that the dialogue agent can take, and that chatbot creation is seen primarily through the lens of the agent's perspective.
+User utterances are only handled by deciphering ``intents`` as described above
+
+There are **four** types of actions:
+
++------------+--------------------------------------------------------------------+
+| type       | definition                                                         |
++============+====================================================================+
+| dialogue   | Actions where the agent utters something to the user.              |
+|            |                                                                    |
+|            | Often the user's intent is extracted, which is then used to        |
+|            | determine the outcome.                                             |
+|            |                                                                    |
+|            | However, the agent can also utter a message without taking any     |
+|            | user input.                                                        |
+|            |                                                                    |
+|            | This happens if you only specify a single outcome for a dialogue   | 
+|            | action as the agent knows it will end up in the same place         |
+|            | regardless of what the user says, and so skips getting input       |
+|            | entirely.                                                          |
++------------+--------------------------------------------------------------------+
+| system     | Actions that are completely internal the agent, usually changing   |
+|            | the value of some context variable based on logic.                 |
++------------+--------------------------------------------------------------------+
+| api        | Actions that make API calls, the status of which determines the    |
+|            | outcome.                                                           |
+|            |                                                                    |
+|            | **NOTE**: Still in development.                                    |
++------------+--------------------------------------------------------------------+
+| custom     | Custom actions created by you, the bot designer.                   |
+|            |                                                                    |
+|            | These are written in Python and stored under                       |
+|            | ``plan4dial/for_generating/custom_actions``.                       |
+|            |                                                                    |
+|            | :py:func:`slot_fill                                                |
+|            | <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`     |
+|            | is a useful example available for use.                             |
+|            |                                                                    |
+|            | These action will end up being one of the above types, but can be  |
+|            | configured in a custom way.                                        |
++------------+--------------------------------------------------------------------+
+
+There is also an important subtype you should know.
+
+The **Context dependent determination** subtype can only be applied to system actions.
+Using this subtype indicates that you are going to have mini if-elif statements (called contexts) that determine which outcome is executed.
+
+This is different than "vanilla"/non-subtyped system actions which don't check any context when activated and execute the single outcome.
+A **context** is one (or multiple) settings to context variables.
+For example, some outcome A could depend on  *location* being "Toronto",
+while outcome B could depend on *time* being "12 pm".
+
+We will see examples of every type (other than api) and subtype in our ``day-planner`` example.
 
 
 Deploy the bot with HOVOR.

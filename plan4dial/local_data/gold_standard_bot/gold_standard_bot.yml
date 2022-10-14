@@ -163,6 +163,33 @@ intents:
       - I want to go to a $outing_type place.
       - What is the most $outing_type place in the city?
 actions:
+  get-have-allergy:
+    type: dialogue
+    message_variants:
+      - Do you have any allergies? (Y/N)
+    condition:
+      have_allergy:
+        known: false 
+    effect:
+      set-allergy:
+        oneof:
+          outcomes:
+            indicate_allergy:
+              updates:
+                have_allergy:
+                  value: true
+                  known: true
+              intent: confirm
+              follow_up: get-allergy
+            indicate_no_allergy:
+              updates:
+                have_allergy:
+                  known: true
+                  value: false
+                conflict:
+                  known: true
+                  value: false
+              intent: deny
   get-location:
     type: custom
     subtype: slot_fill
@@ -207,37 +234,8 @@ actions:
               known: true
           response_variants:
             - Cuisine preference has been logged.
-  get-have-allergy:
-    type: dialogue
-    subtype: dialogue disambiguation
-    message_variants:
-      - Do you have any allergies? (Y/N)
-    condition:
-      have_allergy:
-        known: false 
-    effect:
-      set-allergy:
-        oneof:
-          outcomes:
-            indicate_allergy:
-              updates:
-                have_allergy:
-                  value: true
-                  known: true
-              intent: confirm
-              follow_up: get-allergy
-            indicate_no_allergy:
-              updates:
-                have_allergy:
-                  known: true
-                  value: false
-                conflict:
-                  known: true
-                  value: false
-              intent: deny
   get-allergy:
     type: dialogue
-    subtype: dialogue disambiguation
     message_variants:
       - What type of allergy do you have? (I currently account for dairy and gluten allergies).
     fallback_message_variants:

@@ -90,7 +90,7 @@ These are the only **four** types that we can define in the YAML. They are defin
 .. _types:
 
 +------------+--------------------------------------------------------------------+
-| type       |  definition                                                        |
+| type       | definition                                                         |
 +============+====================================================================+
 | flag       | A boolean value; can only be set to ``true`` or ``false``.         |
 +------------+--------------------------------------------------------------------+
@@ -304,11 +304,156 @@ Let's see what the intents for our ``day-planner`` bot look like:
   Second, there is functionally no reason for multiple intents to accomplish the exact same goal but map to different outcomes.
   If you want to handle things differently depending on the extracted *value* of the entities, that is a separate process handled in the actions (to be seen later).
 
+If this is a bit confusing, it may make more sense after reviewing the ``actions`` section below and coming back to this.
 
 **NOTE**: All ``utterances`` must include *exactly* all the entities listed under ``entities``; no more, no less.
 
 3. Define the Actions
 .....................
+
+``actions`` are the core of dialogue agent design as they specify what your agent can do and when.
+We use a **declarative** specification powered by automated planning that allows you to treat actions as separate pieces of a puzzle.
+You won't have to draw out complex dialogue trees that you will have to completely dismantle if you decide late in the game that you want to add a new action near the top.
+Instead, actions are chosen based on what is true in the state of the world. 
+Only actions whose ``preconditions`` are satisfied are executed.
+
+It is important to reiterate that ``actions`` refer only to the actions that the dialogue agent can take, and that chatbot creation is seen primarily through the lens of the agent's perspective.
+User utterances are only handled by deciphering ``intents`` as described above
+
+There are **four** types of actions:
+
++------------+--------------------------------------------------------------------+
+| type       | definition                                                         |
++============+====================================================================+
+| dialogue   | Actions where the agent utters something to the user.              |
+|            |                                                                    |
+|            | Often the user's intent is extracted, which is then used to        |
+|            | determine the outcome.                                             |
+|            |                                                                    |
+|            | However, the agent can also utter a message without taking any     |
+|            | user input.                                                        |
+|            |                                                                    |
+|            | This happens if you only specify a single outcome for a dialogue   | 
+|            | action as the agent knows it will end up in the same place         |
+|            | regardless of what the user says, and so skips getting input       |
+|            | entirely.                                                          |
++------------+--------------------------------------------------------------------+
+| system     | Actions that are completely internal the agent, usually changing   |
+|            | the value of some context variable based on logic.                 |
++------------+--------------------------------------------------------------------+
+| api        | Actions that make API calls, the status of which determines the    |
+|            | outcome.                                                           |
+|            |                                                                    |
+|            | **NOTE**: Still in development.                                    |
++------------+--------------------------------------------------------------------+
+| custom     | Custom actions created by you, the bot designer.                   |
+|            |                                                                    |
+|            | These are written in Python and stored under                       |
+|            | ``plan4dial/for_generating/custom_actions``.                       |
+|            |                                                                    |
+|            | :py:func:`slot_fill                                                |
+|            | <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`     |
+|            | is a useful example available for use.                             |
+|            |                                                                    |
+|            | These action will end up being one of the above types, but can be  |
+|            | configured in a custom way.                                        |
++------------+--------------------------------------------------------------------+
+
+There is also an important subtype you should know.
+
+The **Context dependent determination** subtype can only be applied to system actions.
+Using this subtype indicates that you are going to have mini if-elif statements (called contexts) that determine which outcome is executed.
+This is different than "vanilla"/non-subtyped system actions which don't check any context when activated and execute the single outcome.
+
+A **context** is one (or multiple) settings to context variables.
+For example, some outcome A could depend on  *location* being "Toronto",
+while outcome B could depend on *time* being "12 pm".
+
+We will see examples of every type (other than api) and subtype in our ``day-planner`` example.
+
+Let's start with a simple action to get the ball rolling.
+We'll create an action ``get-have-allergy`` that asks the user if they have an allergy or not, which expects a simple yes/no response.
+
+.. code-block:: yaml
+   :linenos:
+   :lineno-start: 165
+
+      actions:
+        get-have-allergy:
+          type: dialogue
+          message_variants:
+            - Do you have any allergies? (Y/N)
+          condition:
+            have_allergy:
+              known: false 
+          effect:
+            set-allergy:
+              oneof:
+                outcomes:
+                  indicate_allergy:
+                    updates:
+                      have_allergy:
+                        value: true
+                        known: true
+                    intent: confirm
+                    follow_up: get-allergy
+                  indicate_no_allergy:
+                    updates:
+                      have_allergy:
+                        known: true
+                        value: false
+                      conflict:
+                        known: true
+                        value: false
+                    intent: deny
+
+We can see that actions take a number of parameters, including ``type`` as discussed above.
+
+``message_variants`` are messages that the agent can utter when this action takes place.
+This parameter can only be supplied for dialogue actions.
+You can supply as many messages as you want, and one will be randomly selected at runtime.
+
+The ``condition`` is what you would think of as a "precondition" in automated planning.
+Whatever you supply in the ``condition`` is what must be true for the action to take place.
+This offers a lot more flexibility than determining a hard-coded sequence of actions through a dialogue tree
+as you don't need to know all the details about where exactly in the conversation the action takes place,
+you only need to know in what states it's allowed to trigger. 
+This also allows for inserting new actions at any point in development with ease.
+
+In this case, the only condition is that we don't know if the user has an allergy or not yet.
+
+The ``effect`` is what occurs when the action takes place. 
+It consists of a name (in this case ``set-allergy``), followed by ``oneof`` and a list of ``outcomes``.
+As the names suggest, only one of the outcomes will be executed depending on the factors at play.
+
+Each outcome also consists of a name, in this case ``indicate_allergy`` and ``indicate_no_allergy``.
+
+There are **four** different parameters that outcomes can take.
+Outcomes can use multiple and need at least one.
+
++------------+--------------------------------------------------------------------+
+| parameters | definition                                                         |
++============+====================================================================+
+| updates    | A boolean value; can only be set to ``true`` or ``false``.         |
++------------+--------------------------------------------------------------------+
+| fflag      | "Fuzzy flag"; can only be set to ``true``, ``false``, or ``maybe``.|
++------------+--------------------------------------------------------------------+
+| enum       | Can only be set to the values set under the ``options`` list.      |
++------------+--------------------------------------------------------------------+
+| json       | Used if you want to use an alternate extraction method,            |
+|            | i.e. Spacy GPE.                                                    |
+|            |                                                                    |
+|            | **NOTE**: Currently, only Spacy is compatible with this            |
+|            | option.                                                            |
++------------+--------------------------------------------------------------------+
+
+updates:
+Necessary for pretty much every outcome.
+Here you define the changing ``value``s of context variables.
+You also define how the ``known`` status of each variable has updated.
+This is **extremely important** to do correctly as "knowing what you know" is a huge part of conversation navigation!
+**NOTE** if you want to set the variable to the value taken from the user, precede
+the variable name with ``$``.
 
 
 Deploy the bot with HOVOR.

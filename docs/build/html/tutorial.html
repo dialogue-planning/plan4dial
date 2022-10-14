@@ -356,10 +356,72 @@ First, it will likely be harder to extract the “correct” intent because the 
 Second, there is functionally no reason for multiple intents to accomplish the exact same goal but map to different outcomes.
 If you want to handle things differently depending on the extracted <em>value</em> of the entities, that is a separate process handled in the actions (to be seen later).</p></li>
 </ul>
+<p>If this is a bit confusing, it may make more sense after reviewing the <code class="docutils literal notranslate"><span class="pre">actions</span></code> section below and coming back to this.</p>
 <p><strong>NOTE</strong>: All <code class="docutils literal notranslate"><span class="pre">utterances</span></code> must include <em>exactly</em> all the entities listed under <code class="docutils literal notranslate"><span class="pre">entities</span></code>; no more, no less.</p>
 </section>
 <section id="define-the-actions">
 <h4>3. Define the Actions<a class="headerlink" href="#define-the-actions" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">actions</span></code> are the core of dialogue agent design as they specify what your agent can do and when.
+We use a <strong>declarative</strong> specification powered by automated planning that allows you to treat actions as separate pieces of a puzzle.
+You won’t have to draw out complex dialogue trees that you will have to completely dismantle if you decide late in the game that you want to add a new action near the top.
+Instead, actions are chosen based on what is true in the state of the world.
+Only actions whose <code class="docutils literal notranslate"><span class="pre">preconditions</span></code> are satisfied are executed.</p>
+<p>It is important to reiterate that <code class="docutils literal notranslate"><span class="pre">actions</span></code> refer only to the actions that the dialogue agent can take, and that chatbot creation is seen primarily through the lens of the agent’s perspective.
+User utterances are only handled by deciphering <code class="docutils literal notranslate"><span class="pre">intents</span></code> as described above</p>
+<p>There are <strong>four</strong> types of actions:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>type</p></th>
+<th class="head"><p>definition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>dialogue</p></td>
+<td><p>Actions where the agent utters something to the user.</p>
+<p>Often the user’s intent is extracted, which is then used to
+determine the outcome.</p>
+<p>However, the agent can also utter a message without taking any
+user input.</p>
+<p>This happens if you only specify a single outcome for a dialogue
+action as the agent knows it will end up in the same place
+regardless of what the user says, and so skips getting input
+entirely.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>system</p></td>
+<td><p>Actions that are completely internal the agent, usually changing
+the value of some context variable based on logic.</p></td>
+</tr>
+<tr class="row-even"><td><p>api</p></td>
+<td><p>Actions that make API calls, the status of which determines the
+outcome.</p>
+<p><strong>NOTE</strong>: Still in development.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>custom</p></td>
+<td><p>Custom actions created by you, the bot designer.</p>
+<p>These are written in Python and stored under
+<code class="docutils literal notranslate"><span class="pre">plan4dial/for_generating/custom_actions</span></code>.</p>
+<p><a class="reference internal" href="generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
+is a useful example available for use.</p>
+<p>These action will end up being one of the above types, but can be
+configured in a custom way.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>There is also an important subtype you should know.</p>
+<p>The <strong>Context dependent determination</strong> subtype can only be applied to system actions.
+Using this subtype indicates that you are going to have mini if-elif statements (called contexts) that determine which outcome is executed.</p>
+<p>This is different than “vanilla”/non-subtyped system actions which don’t check any context when activated and execute the single outcome.
+A <strong>context</strong> is one (or multiple) settings to context variables.
+For example, some outcome A could depend on  <em>location</em> being “Toronto”,
+while outcome B could depend on <em>time</em> being “12 pm”.</p>
+<p>We will see examples of every type (other than api) and subtype in our <code class="docutils literal notranslate"><span class="pre">day-planner</span></code> example.</p>
 </section>
 </section>
 <section id="deploy-the-bot-with-hovor">
