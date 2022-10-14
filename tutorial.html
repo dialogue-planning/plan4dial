@@ -355,10 +355,157 @@ First, it will likely be harder to extract the “correct” intent because the 
 Second, there is functionally no reason for multiple intents to accomplish the exact same goal but map to different outcomes.
 If you want to handle things differently depending on the extracted <em>value</em> of the entities, that is a separate process handled in the actions (to be seen later).</p></li>
 </ul>
+<p>If this is a bit confusing, it may make more sense after reviewing the <code class="docutils literal notranslate"><span class="pre">actions</span></code> section below and coming back to this.</p>
 <p><strong>NOTE</strong>: All <code class="docutils literal notranslate"><span class="pre">utterances</span></code> must include <em>exactly</em> all the entities listed under <code class="docutils literal notranslate"><span class="pre">entities</span></code>; no more, no less.</p>
 </div>
 <div class="section" id="define-the-actions">
 <h4>3. Define the Actions<a class="headerlink" href="#define-the-actions" title="Permalink to this heading"></a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">actions</span></code> are the core of dialogue agent design as they specify what your agent can do and when.
+We use a <strong>declarative</strong> specification powered by automated planning that allows you to treat actions as separate pieces of a puzzle.
+You won’t have to draw out complex dialogue trees that you will have to completely dismantle if you decide late in the game that you want to add a new action near the top.
+Instead, actions are chosen based on what is true in the state of the world.
+Only actions whose <code class="docutils literal notranslate"><span class="pre">preconditions</span></code> are satisfied are executed.</p>
+<p>It is important to reiterate that <code class="docutils literal notranslate"><span class="pre">actions</span></code> refer only to the actions that the dialogue agent can take, and that chatbot creation is seen primarily through the lens of the agent’s perspective.
+User utterances are only handled by deciphering <code class="docutils literal notranslate"><span class="pre">intents</span></code> as described above</p>
+<p>There are <strong>four</strong> types of actions:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>type</p></th>
+<th class="head"><p>definition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>dialogue</p></td>
+<td><p>Actions where the agent utters something to the user.</p>
+<p>Often the user’s intent is extracted, which is then used to
+determine the outcome.</p>
+<p>However, the agent can also utter a message without taking any
+user input.</p>
+<p>This happens if you only specify a single outcome for a dialogue
+action as the agent knows it will end up in the same place
+regardless of what the user says, and so skips getting input
+entirely.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>system</p></td>
+<td><p>Actions that are completely internal the agent, usually changing
+the value of some context variable based on logic.</p></td>
+</tr>
+<tr class="row-even"><td><p>api</p></td>
+<td><p>Actions that make API calls, the status of which determines the
+outcome.</p>
+<p><strong>NOTE</strong>: Still in development.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><p>custom</p></td>
+<td><p>Custom actions created by you, the bot designer.</p>
+<p>These are written in Python and stored under
+<code class="docutils literal notranslate"><span class="pre">plan4dial/for_generating/custom_actions</span></code>.</p>
+<p><a class="reference internal" href="generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
+is a useful example available for use.</p>
+<p>These action will end up being one of the above types, but can be
+configured in a custom way.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>There is also an important subtype you should know.</p>
+<p>The <strong>Context dependent determination</strong> subtype can only be applied to system actions.
+Using this subtype indicates that you are going to have mini if-elif statements (called contexts) that determine which outcome is executed.
+This is different than “vanilla”/non-subtyped system actions which don’t check any context when activated and execute the single outcome.</p>
+<p>A <strong>context</strong> is one (or multiple) settings to context variables.
+For example, some outcome A could depend on  <em>location</em> being “Toronto”,
+while outcome B could depend on <em>time</em> being “12 pm”.</p>
+<p>We will see examples of every type (other than api) and subtype in our <code class="docutils literal notranslate"><span class="pre">day-planner</span></code> example.</p>
+<p>Let’s start with a simple action to get the ball rolling.
+We’ll create an action <code class="docutils literal notranslate"><span class="pre">get-have-allergy</span></code> that asks the user if they have an allergy or not, which expects a simple yes/no response.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">165</span><span class="w">   </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">166</span><span class="w">     </span><span class="nt">get-have-allergy</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">167</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dialogue</span><span class="w"></span>
+<span class="linenos">168</span><span class="w">       </span><span class="nt">message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">169</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Do you have any allergies? (Y/N)</span><span class="w"></span>
+<span class="linenos">170</span><span class="w">       </span><span class="nt">condition</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">171</span><span class="w">         </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">172</span><span class="w">           </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="linenos">173</span><span class="w">       </span><span class="nt">effect</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">174</span><span class="w">         </span><span class="nt">set-allergy</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">175</span><span class="w">           </span><span class="nt">oneof</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">176</span><span class="w">             </span><span class="nt">outcomes</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">177</span><span class="w">               </span><span class="nt">indicate_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">178</span><span class="w">                 </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">179</span><span class="w">                   </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">180</span><span class="w">                     </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="linenos">181</span><span class="w">                     </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="linenos">182</span><span class="w">                 </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">confirm</span><span class="w"></span>
+<span class="linenos">183</span><span class="w">                 </span><span class="nt">follow_up</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-allergy</span><span class="w"></span>
+<span class="linenos">184</span><span class="w">               </span><span class="nt">indicate_no_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">185</span><span class="w">                 </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">186</span><span class="w">                   </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">187</span><span class="w">                     </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="linenos">188</span><span class="w">                     </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="linenos">189</span><span class="w">                   </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="linenos">190</span><span class="w">                     </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="linenos">191</span><span class="w">                     </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="linenos">192</span><span class="w">                 </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deny</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We can see that actions take a number of parameters, including <code class="docutils literal notranslate"><span class="pre">type</span></code> as discussed above.</p>
+<p><code class="docutils literal notranslate"><span class="pre">message_variants</span></code> are messages that the agent can utter when this action takes place.
+This parameter can only be supplied for dialogue actions.
+You can supply as many messages as you want, and one will be randomly selected at runtime.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">condition</span></code> is what you would think of as a “precondition” in automated planning.
+Whatever you supply in the <code class="docutils literal notranslate"><span class="pre">condition</span></code> is what must be true for the action to take place.
+This offers a lot more flexibility than determining a hard-coded sequence of actions through a dialogue tree
+as you don’t need to know all the details about where exactly in the conversation the action takes place,
+you only need to know in what states it’s allowed to trigger.
+This also allows for inserting new actions at any point in development with ease.</p>
+<p>In this case, the only condition is that we don’t know if the user has an allergy or not yet.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">effect</span></code> is what occurs when the action takes place.
+It consists of a name (in this case <code class="docutils literal notranslate"><span class="pre">set-allergy</span></code>), followed by <code class="docutils literal notranslate"><span class="pre">oneof</span></code> and a list of <code class="docutils literal notranslate"><span class="pre">outcomes</span></code>.
+As the names suggest, only one of the outcomes will be executed depending on the factors at play.</p>
+<p>Each outcome also consists of a name, in this case <code class="docutils literal notranslate"><span class="pre">indicate_allergy</span></code> and <code class="docutils literal notranslate"><span class="pre">indicate_no_allergy</span></code>.</p>
+<p>There are <strong>four</strong> different parameters that outcomes can take.
+Outcomes can use multiple and need at least one.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 85%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>parameters</p></th>
+<th class="head"><p>definition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>updates</p></td>
+<td><p>A boolean value; can only be set to <code class="docutils literal notranslate"><span class="pre">true</span></code> or <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>fflag</p></td>
+<td><p>“Fuzzy flag”; can only be set to <code class="docutils literal notranslate"><span class="pre">true</span></code>, <code class="docutils literal notranslate"><span class="pre">false</span></code>, or <code class="docutils literal notranslate"><span class="pre">maybe</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p>enum</p></td>
+<td><p>Can only be set to the values set under the <code class="docutils literal notranslate"><span class="pre">options</span></code> list.</p></td>
+</tr>
+<tr class="row-odd"><td><p>json</p></td>
+<td><p>Used if you want to use an alternate extraction method,
+i.e. Spacy GPE.</p>
+<p><strong>NOTE</strong>: Currently, only Spacy is compatible with this
+option.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>updates:
+Necessary for pretty much every outcome.
+Here you define the changing <code class="docutils literal notranslate"><span class="pre">value``s</span> <span class="pre">of</span> <span class="pre">context</span> <span class="pre">variables.</span>
+<span class="pre">You</span> <span class="pre">also</span> <span class="pre">define</span> <span class="pre">how</span> <span class="pre">the</span> <span class="pre">``known</span></code> status of each variable has updated.
+This is <strong>extremely important</strong> to do correctly as “knowing what you know” is a huge part of conversation navigation!
+<strong>NOTE</strong> if you want to set the variable to the value taken from the user, precede
+the variable name with <code class="docutils literal notranslate"><span class="pre">$</span></code>.</p>
 </div>
 </div>
 <div class="section" id="deploy-the-bot-with-hovor">
