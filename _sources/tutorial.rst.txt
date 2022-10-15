@@ -732,4 +732,8 @@ In this case, that means setting the value to ``conflict`` depending on what com
 Generate the files needed to test the bot with HOVOR.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Navigate to :py:func:`slot_fill <plan4dial.main.generate_files>`
+Call :py:func:`generate_files <plan4dial.main.generate_files>`.
+
+Then, clone HOVOR from `this branch <https://github.com/QuMuLab/contingent-plan-executor/tree/create_bot_integrate_rollout>`_.
+
+In the repo you just cloned, navigate to ``local_main.py`` and run ``run_local_conversation`` with your output files directory as the parameter.
