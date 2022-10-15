@@ -11,8 +11,10 @@ Requirements
 
 Usage Steps
 --------------
+
 Create a YAML config file that defines your bot.
 +++++++++++++++++++++++++++++++++++++++++++++++++++
+
 Let's go through an example. Suppose we want to create a chatbot that helps you decide what to do on your day off. This will be a fairly simple bot that picks a restaurant and outing location based on the user's preferences.   
 
 (For later reference, the full YAML file as well as the output files can be found `here <https://github.com/QuMuLab/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot>`_).  
@@ -342,6 +344,8 @@ There are **four** types of actions:
 |            | **NOTE**: Still in development.                                    |
 +------------+--------------------------------------------------------------------+
 | custom     | Custom actions created by you, the bot designer.                   |
+|            | These allow you to create action templates which speeds up action  |
+|            | creation.                                                          |
 |            |                                                                    |
 |            | These are written in Python and stored under                       |
 |            | ``plan4dial/for_generating/custom_actions``.                       |
@@ -468,6 +472,129 @@ We also force a ``follow_up`` where we try to determine what the user's allergy 
 In the outcome ``indicate_no_allergy``, we can see that ``conflict`` is set to a value of false.
 This is because we know that if the user has no allergies, we will never come across a conflict between their allergies and their chosen cuisine.
 
+Next, let's take a look at the actions that actually extract information from the user.
+
+``get_outing``, the action where we try to extract both the user's budget and preference of outing, is the most comprehensive example:
+
+.. code-block:: yaml
+
+    get_outing:
+      type: custom
+      subtype: slot_fill
+      parameters:
+        action_name: get_outing
+        entities:
+          - budget
+          - outing_type
+        message_variants:
+          - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
+        fallback_message_variants:
+          - Sorry, that isn't a valid outing preference.
+        config_entities:
+          budget:
+            fallback_message_variants:
+              - Sorry, that isn't a valid budget option. Please select either high or low.
+            single_slot_message_variants:
+              - What is your budget preference? Please select either high or low.
+          outing_type:
+            fallback_message_variants:
+              - Sorry, that isn't a valid outing type.
+            single_slot_message_variants:
+              - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
+            clarify_message_variants:
+              - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?
+        additional_updates:
+          - outcome:
+              budget:
+                known: true
+            response_variants:
+              - Ok, I'll take that into account.
+          - outcome:
+              outing_type:
+                known: true
+            response_variants:
+              - Great choice!
+
+We can see that this action is configured quite differently than the rest -
+this is because it is a :ref:`custom action <action_types>`.
+
+In this case, the action is built from the :py:func:`slot_fill <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`
+template, which is provided by default in Plan4Dial.
+This template allows you to extract any number of entities, and even accounts for all the possible combinations of certainties --
+i.e. budget is ``known`` and outing_type is ``maybe`` ``known``, vice versa, etc.
+
+If you go to the source code of the function, you'll see that the parameters of the custom action are provided under ``parameters``
+of ``get_outing``. A full explanation of what each parameter is can be seen in the documentation for :py:func:`slot_fill <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`.
+
+The values for location, cuisine, and food restrictions are extracted with the same custom action:
+
+.. code-block:: yaml
+
+    get-location:
+      type: custom
+      subtype: slot_fill
+      parameters:
+        action_name: get-location
+        entities:
+          - location
+        message_variants:
+          - Where are you located?
+        fallback_message_variants:
+          - Sorry, that isn't a valid location.
+        config_entities:
+          location:
+            clarify_message_variants:
+              - I didn't quite get your location. Are you located in $location?
+        additional_updates:
+          - outcome:
+              location:
+                known: true
+            response_variants:
+              - Tailoring your results to what's available in $location...
+    get-cuisine:
+      type: custom
+      subtype: slot_fill
+      parameters:
+        action_name: get-cuisine
+        entities:
+          - cuisine
+        message_variants:
+          - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+        fallback_message_variants:
+          - Sorry, that isn't a valid cuisine. 
+        config_entities:
+          cuisine:
+            fallback_message_variants:
+              - Sorry, that still isn't a valid cuisine.
+            clarify_message_variants:
+              - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
+        additional_updates:
+          - outcome:
+              cuisine:
+                known: true
+            response_variants:
+              - Cuisine preference has been logged.
+    get-allergy:
+        type: dialogue
+        message_variants:
+          - What type of allergy do you have? (I currently account for dairy and gluten allergies).
+        fallback_message_variants:
+          - Sorry, I don't recognize that type of allergy.
+        condition:
+          have_allergy:
+            known: true
+            value: true
+        effect:
+          set-allergy:
+            oneof:
+              outcomes:
+                update_allergy:
+                  updates:
+                    food_restriction:
+                      value: $food_restriction
+                      known: true
+                  intent: share_allergies
+
 Next, let's take a look at a simple :ref:`system action <action_types>` our bot will use.
 
 .. code-block:: yaml
@@ -495,14 +622,112 @@ Next, let's take a look at a simple :ref:`system action <action_types>` our bot 
                 response_variants:
                   - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
 
-We can see that a ``system`` action is only concerned with changing the values of some context variables given that a given state is true.
+We can see that a :ref:`system action <action_types>` is only concerned with changing the values of some context variables given that a given state is true.
 
 The purpose of this action in particular is to reset the user's inputs for allergies/food restriction as well as cuisine choice and the conflict flag when a conflict has been detected.
 The response variants indicate what the bot will tell the user after it performed the action.
 
 Note that since this is a "vanilla" system action, we have only specified one outcome, so the execution of this action is deterministic.
-We will see an example soon where the special subtype of system action uses multiple outcomes.
+We will now see an example where the special subtype of system action uses multiple outcomes.
 
+Let's take a look at the action ``check-conflicts``:
 
-Deploy the bot with HOVOR.
-++++++++++++++++++++++++++
+.. code-block:: yaml
+
+  check-conflicts:
+    type: system
+    subtype: Context dependent determination
+    condition:
+      location:
+        known: true
+      have_allergy:
+        known: true
+        value: true
+      food_restriction:
+        known: true
+      cuisine:
+        known: true
+      conflict:
+        known: false
+    effect:
+      check-conflicts:
+        oneof:
+          outcomes:
+            restriction-dessert:
+              updates:
+                conflict:
+                  known: true
+                  value: true
+              context:
+                cuisine:
+                  value: dessert
+                food_restriction:
+                  value: dairy-free
+            restriction-mexican:
+              updates:
+                conflict:
+                  known: true
+                  value: true
+              context:
+                cuisine:
+                  value: Mexican
+                food_restriction:
+                  value: gluten-free
+            no-restriction-1:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+              context:
+                cuisine:
+                  value: Italian
+            no-restriction-2:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+              context:
+                cuisine:
+                  value: Chinese
+            no-restriction-3:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+              context:
+                cuisine:
+                  value: dessert
+                food_restriction:
+                  value: gluten-free               
+            no-restriction-4:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+              context:
+                cuisine:
+                  value: Mexican
+                food_restriction:
+                  value: dairy-free
+
+For the sake of making a good example, we have arbitrarily decided that there are two possible conflicts with the user's choices:
+there are no gluten-free Mexican restaurants or dairy-free dessert places in the area.
+With this in mind, we need to check if there's a conflict with the user's responses.
+
+The ``precondition`` of ``check-conflicts`` ensures we've gathered all the information on location, food restrictions, and cuisine that the user specified.
+It also ensures that we don't know the conflict yet (so we don't loop back on the same action).
+
+Unlike the first :ref:`system action <action_types>` example, this action has multiple outcomes.
+But without any input from the user (which is only taken in :ref:`dialogue action <action_types>`),
+how will the outcome be chosen? The answer lies in the ``context`` provided in each outcome.
+
+When this type of action is executed, the outcome determiner will run through each outcome and select the one whose ``context`` setting is a *subset of the current state of the world*.
+
+In this case, that means setting the value to ``conflict`` depending on what combination of input the user entered previously.
+
+**NOTE**: This specification will become shorter and cleaner with the closing of `#4 <https://github.com/QuMuLab/plan4dial/issues/4>`_. 
+
+**And that's all the action types! Now you have every piece of the puzzle you need to specify your bot**.
+
+Generate the files needed to test the bot with HOVOR.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
