@@ -80,7 +80,7 @@
             "type": "enum",
             "config": [
                 "Guac Grill",
-                "Alfredo's Pizza Caf\u00c3\u00a9",
+                "Alfredo's Pizza Caf\u00e9",
                 "Mandarin",
                 "Geneva Crepes"
             ],
@@ -744,7 +744,7 @@
                     {
                         "updates": {
                             "restaurant": {
-                                "value": "Alfredo's Pizza Caf\u00c3\u00a9",
+                                "value": "Alfredo's Pizza Caf\u00e9",
                                 "variable": "restaurant",
                                 "certainty": "Known",
                                 "interpretation": "json"
