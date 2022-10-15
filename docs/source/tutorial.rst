@@ -727,7 +727,10 @@ In this case, that means setting the value to ``conflict`` depending on what com
 
 **NOTE**: This specification will become shorter and cleaner with the closing of `#4 <https://github.com/QuMuLab/plan4dial/issues/4>`_. 
 
-**And that's all the action types! Now you have every piece of the puzzle you need to specify your bot**.
+**And that's all the action types!** Now you have every piece of the puzzle you need to specify your bot.
+There are a few actions we didn't cover, but they are all more examples of the above.
+
+You can see the full YAML file at ``plan4dial/plan4dial/local_data/gold_standard_bot/gold_standard_bot.yml``. 
 
 Generate the files needed to test the bot with HOVOR.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
