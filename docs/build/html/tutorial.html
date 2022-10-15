@@ -51,7 +51,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#define-the-actions">3. Define the Actions</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#deploy-the-bot-with-hovor">Deploy the bot with HOVOR.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#generate-the-files-needed-to-test-the-bot-with-hovor">Generate the files needed to test the bot with HOVOR.</a></li>
 </ul>
 </li>
 </ul>
@@ -527,36 +527,6 @@ The <code class="docutils literal notranslate"><span class="pre">updates</span><
 We also force a <code class="docutils literal notranslate"><span class="pre">follow_up</span></code> where we try to determine what the user’s allergy is.</p>
 <p>In the outcome <code class="docutils literal notranslate"><span class="pre">indicate_no_allergy</span></code>, we can see that <code class="docutils literal notranslate"><span class="pre">conflict</span></code> is set to a value of false.
 This is because we know that if the user has no allergies, we will never come across a conflict between their allergies and their chosen cuisine.</p>
-<p>Next, let’s take a look at a simple <a class="reference internal" href="#action-types"><span class="std std-ref">system action</span></a> our bot will use.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">reset-preferences</span><span class="p">:</span><span class="w"></span>
-<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span><span class="w"></span>
-<span class="w">  </span><span class="nt">condition</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="w">  </span><span class="nt">effect</span><span class="p">:</span><span class="w"></span>
-<span class="w">    </span><span class="nt">reset</span><span class="p">:</span><span class="w"></span>
-<span class="w">      </span><span class="nt">oneof</span><span class="p">:</span><span class="w"></span>
-<span class="w">        </span><span class="nt">outcomes</span><span class="p">:</span><span class="w"></span>
-<span class="w">          </span><span class="nt">reset-values</span><span class="p">:</span><span class="w"></span>
-<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
-<span class="w">              </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
-<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
-<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
-<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
-<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="w">            </span><span class="nt">response_variants</span><span class="p">:</span><span class="w"></span>
-<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.</span><span class="w"></span>
-</pre></div>
-</div>
-<p>We can see that a <code class="docutils literal notranslate"><span class="pre">system</span></code> action is only concerned with changing the values of some context variables given that a given state is true.</p>
-<p>The purpose of this action in particular is to reset the user’s inputs for allergies/food restriction as well as cuisine choice and the conflict flag when a conflict has been detected.
-The response variants indicate what the bot will tell the user after it performed the action.</p>
-<p>Note that since this is a “vanilla” system action, we have only specified one outcome, so the execution of this action is deterministic.
-We will see an example soon where the special subtype of system action uses multiple outcomes.</p>
 <p>Next, let’s take a look at the actions that actually extract information from the user.</p>
 <p><code class="docutils literal notranslate"><span class="pre">get_outing</span></code>, the action where we try to extract both the user’s budget and preference of outing, is the most comprehensive example:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">get_outing</span><span class="p">:</span><span class="w"></span>
@@ -600,15 +570,203 @@ We will see an example soon where the special subtype of system action uses mult
 <p>We can see that this action is configured quite differently than the rest -
 this is because it is a <a class="reference internal" href="#action-types"><span class="std std-ref">custom action</span></a>.</p>
 <p>In this case, the action is built from the <a class="reference internal" href="generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
-template, which is provided by default in Plan4Dial.</p>
-<p>This template allows you to extract any number of entities, and even accounts for all the possible combinations of certainties –
+template, which is provided by default in Plan4Dial.
+This template allows you to extract any number of entities, and even accounts for all the possible combinations of certainties –
 i.e. budget is <code class="docutils literal notranslate"><span class="pre">known</span></code> and outing_type is <code class="docutils literal notranslate"><span class="pre">maybe</span></code> <code class="docutils literal notranslate"><span class="pre">known</span></code>, vice versa, etc.</p>
 <p>If you go to the source code of the function, you’ll see that the parameters of the custom action are provided under <code class="docutils literal notranslate"><span class="pre">parameters</span></code>
-of <code class="docutils literal notranslate"><span class="pre">get_outing</span></code>.</p>
+of <code class="docutils literal notranslate"><span class="pre">get_outing</span></code>. A full explanation of what each parameter is can be seen in the documentation for <a class="reference internal" href="generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>.</p>
+<p>The values for location, cuisine, and food restrictions are extracted with the same custom action:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">get-location</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom</span><span class="w"></span>
+<span class="w">  </span><span class="nt">subtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slot_fill</span><span class="w"></span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">action_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-location</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span><span class="w"></span>
+<span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Where are you located?</span><span class="w"></span>
+<span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that isn&#39;t a valid location.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">config_entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">clarify_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I didn&#39;t quite get your location. Are you located in $location?</span><span class="w"></span>
+<span class="w">    </span><span class="nt">additional_updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">outcome</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">response_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Tailoring your results to what&#39;s available in $location...</span><span class="w"></span>
+<span class="nt">get-cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom</span><span class="w"></span>
+<span class="w">  </span><span class="nt">subtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slot_fill</span><span class="w"></span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">action_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-cuisine</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cuisine</span><span class="w"></span>
+<span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that isn&#39;t a valid cuisine.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">config_entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">fallback_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that still isn&#39;t a valid cuisine.</span><span class="w"></span>
+<span class="w">        </span><span class="nt">clarify_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I didn&#39;t quite get your cuisine preference. Do you want to eat $cuisine?</span><span class="w"></span>
+<span class="w">    </span><span class="nt">additional_updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">outcome</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">response_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cuisine preference has been logged.</span><span class="w"></span>
+<span class="nt">get-allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dialogue</span><span class="w"></span>
+<span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What type of allergy do you have? (I currently account for dairy and gluten allergies).</span><span class="w"></span>
+<span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, I don&#39;t recognize that type of allergy.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">condition</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">effect</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">set-allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">oneof</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">outcomes</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">update_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$food_restriction</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">              </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_allergies</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Next, let’s take a look at a simple <a class="reference internal" href="#action-types"><span class="std std-ref">system action</span></a> our bot will use.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">reset-preferences</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span><span class="w"></span>
+<span class="w">  </span><span class="nt">condition</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">effect</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">reset</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">oneof</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">outcomes</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">reset-values</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">            </span><span class="nt">response_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We can see that a <a class="reference internal" href="#action-types"><span class="std std-ref">system action</span></a> is only concerned with changing the values of some context variables given that a given state is true.</p>
+<p>The purpose of this action in particular is to reset the user’s inputs for allergies/food restriction as well as cuisine choice and the conflict flag when a conflict has been detected.
+The response variants indicate what the bot will tell the user after it performed the action.</p>
+<p>Note that since this is a “vanilla” system action, we have only specified one outcome, so the execution of this action is deterministic.
+We will now see an example where the special subtype of system action uses multiple outcomes.</p>
+<p>Let’s take a look at the action <code class="docutils literal notranslate"><span class="pre">check-conflicts</span></code>:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">check-conflicts</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span><span class="w"></span>
+<span class="w">  </span><span class="nt">subtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Context dependent determination</span><span class="w"></span>
+<span class="w">  </span><span class="nt">condition</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">    </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">effect</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">check-conflicts</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">oneof</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">outcomes</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">restriction-dessert</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">            </span><span class="nt">context</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dessert</span><span class="w"></span>
+<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dairy-free</span><span class="w"></span>
+<span class="w">          </span><span class="nt">restriction-mexican</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">            </span><span class="nt">context</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mexican</span><span class="w"></span>
+<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gluten-free</span><span class="w"></span>
+<span class="w">          </span><span class="nt">no-restriction-1</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">            </span><span class="nt">context</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Italian</span><span class="w"></span>
+<span class="w">          </span><span class="nt">no-restriction-2</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">            </span><span class="nt">context</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Chinese</span><span class="w"></span>
+<span class="w">          </span><span class="nt">no-restriction-3</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">            </span><span class="nt">context</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dessert</span><span class="w"></span>
+<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gluten-free</span><span class="w"></span>
+<span class="w">          </span><span class="nt">no-restriction-4</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">            </span><span class="nt">context</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mexican</span><span class="w"></span>
+<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dairy-free</span><span class="w"></span>
+</pre></div>
+</div>
+<p>For the sake of making a good example, we have arbitrarily decided that there are two possible conflicts with the user’s choices:
+there are no gluten-free Mexican restaurants or dairy-free dessert places in the area.
+With this in mind, we need to check if there’s a conflict with the user’s responses.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">precondition</span></code> of <code class="docutils literal notranslate"><span class="pre">check-conflicts</span></code> ensures we’ve gathered all the information on location, food restrictions, and cuisine that the user specified.
+It also ensures that we don’t know the conflict yet (so we don’t loop back on the same action).</p>
+<p>Unlike the first <a class="reference internal" href="#action-types"><span class="std std-ref">system action</span></a> example, this action has multiple outcomes.
+But without any input from the user (which is only taken in <a class="reference internal" href="#action-types"><span class="std std-ref">dialogue action</span></a>),
+how will the outcome be chosen? The answer lies in the <code class="docutils literal notranslate"><span class="pre">context</span></code> provided in each outcome.</p>
+<p>When this type of action is executed, the outcome determiner will run through each outcome and select the one whose <code class="docutils literal notranslate"><span class="pre">context</span></code> setting is a <em>subset of the current state of the world</em>.</p>
+<p>In this case, that means setting the value to <code class="docutils literal notranslate"><span class="pre">conflict</span></code> depending on what combination of input the user entered previously.</p>
+<p><strong>NOTE</strong>: This specification will become shorter and cleaner with the closing of <a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/4">#4</a>.</p>
+<p><strong>And that’s all the action types! Now you have every piece of the puzzle you need to specify your bot</strong>.</p>
 </section>
 </section>
-<section id="deploy-the-bot-with-hovor">
-<h3>Deploy the bot with HOVOR.<a class="headerlink" href="#deploy-the-bot-with-hovor" title="Permalink to this heading"></a></h3>
+<section id="generate-the-files-needed-to-test-the-bot-with-hovor">
+<h3>Generate the files needed to test the bot with HOVOR.<a class="headerlink" href="#generate-the-files-needed-to-test-the-bot-with-hovor" title="Permalink to this heading"></a></h3>
+<p>Navigate to <a class="reference internal" href="generated/plan4dial.main.html#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a></p>
 </section>
 </section>
 </section>

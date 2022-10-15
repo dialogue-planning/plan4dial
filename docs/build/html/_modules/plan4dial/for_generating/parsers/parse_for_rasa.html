@@ -120,8 +120,8 @@
         <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">variations</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># if this intent has variables, iterate through them</span>
-        <span class="k">if</span> <span class="s2">&quot;entities&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
-            <span class="n">variables</span> <span class="o">=</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;variables&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
+            <span class="n">variables</span> <span class="o">=</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span>
             <span class="c1"># for each variable, access the context variable</span>
             <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
                 <span class="n">ctx_var</span> <span class="o">=</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="n">variable</span><span class="p">]</span>
