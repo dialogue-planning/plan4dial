@@ -57,11 +57,11 @@ nlu:
     - Are there any [Chinese]{"entity": "cuisine", "value": "Chinese"} restaurants
     in the area?
 
-    - I want to eat [Dessert]{"entity": "cuisine", "value": "Dessert"}.
+    - I want to eat [dessert]{"entity": "cuisine", "value": "dessert"}.
 
-    - Do you have restaurants of type [Dessert]{"entity": "cuisine", "value": "Dessert"}?
+    - Do you have restaurants of type [dessert]{"entity": "cuisine", "value": "dessert"}?
 
-    - Are there any [Dessert]{"entity": "cuisine", "value": "Dessert"} restaurants
+    - Are there any [dessert]{"entity": "cuisine", "value": "dessert"} restaurants
     in the area?'
   intent: share_cuisine
 - examples: '- I have to eat [dairy-free]{"entity": "food_restriction", "value": "dairy-free"}.

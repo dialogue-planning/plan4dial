@@ -490,6 +490,8 @@ actions:
     disable-fallback: true
     type: dialogue
     condition:
+      location:
+        known: true
       restaurant:
         known: true
       outing:

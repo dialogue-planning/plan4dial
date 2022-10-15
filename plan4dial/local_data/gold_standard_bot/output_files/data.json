@@ -929,6 +929,10 @@
             "type": "dialogue",
             "condition": [
                 [
+                    "location",
+                    "Known"
+                ],
+                [
                     "restaurant",
                     "Known"
                 ],
