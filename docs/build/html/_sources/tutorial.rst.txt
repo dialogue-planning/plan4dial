@@ -20,7 +20,6 @@ Let's go through an example. Suppose we want to create a chatbot that helps you 
 First, create a YAML file and pick a name for the domain:
 
 .. code-block:: yaml
-   :linenos:
 
    ---
    name: day-planner
@@ -41,8 +40,6 @@ In this case, we know we want to keep track of the user's preferences, which inc
 Let's examine the context variables for location, cuisine, and food restrictions first.
 
 .. code-block:: yaml
-   :linenos:
-   :lineno-start: 3
 
       context_variables:
         # user's location
@@ -122,8 +119,6 @@ For simpler variables like *have_allergy*, a ``known`` ``type`` setting of ``fla
 With this in mind, let's add the rest of the context variables.
 
 .. code-block:: yaml
-   :linenos:
-   :lineno-start: 40
 
       # possible budget options
       budget:
@@ -223,8 +218,6 @@ Within the intent, each entity must be preceded with a ``$`` symbol to indicate 
 Let's see what the intents for our ``day-planner`` bot look like:
 
 .. code-block:: yaml
-   :linenos:
-   :lineno-start: 102
 
       intents:
         confirm:
@@ -349,6 +342,8 @@ There are **four** types of actions:
 |            | **NOTE**: Still in development.                                    |
 +------------+--------------------------------------------------------------------+
 | custom     | Custom actions created by you, the bot designer.                   |
+|            | These allow you to create action templates which speeds up action  |
+|            | creation.                                                          |
 |            |                                                                    |
 |            | These are written in Python and stored under                       |
 |            | ``plan4dial/for_generating/custom_actions``.                       |
@@ -377,8 +372,6 @@ Let's start by examining a simple :ref:`dialogue action <action_types>`.
 We'll create an action ``get-have-allergy`` that asks the user if they have an allergy or not, which expects a simple yes/no response.
 
 .. code-block:: yaml
-   :linenos:
-   :lineno-start: 165
 
       actions:
         get-have-allergy:
@@ -478,6 +471,96 @@ In the outcome ``indicate_no_allergy``, we can see that ``conflict`` is set to a
 This is because we know that if the user has no allergies, we will never come across a conflict between their allergies and their chosen cuisine.
 
 Next, let's take a look at a simple :ref:`system action <action_types>` our bot will use.
+
+.. code-block:: yaml
+
+    reset-preferences:
+      type: system
+      condition:
+        conflict:
+          known: true
+          value: true
+      effect:
+        reset:
+          oneof:
+            outcomes:
+              reset-values:
+                updates:
+                  have_allergy:
+                    known: false
+                  food_restriction:
+                    known: false
+                  cuisine:
+                    known: false
+                  conflict:
+                    known: false 
+                response_variants:
+                  - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+
+We can see that a ``system`` action is only concerned with changing the values of some context variables given that a given state is true.
+
+The purpose of this action in particular is to reset the user's inputs for allergies/food restriction as well as cuisine choice and the conflict flag when a conflict has been detected.
+The response variants indicate what the bot will tell the user after it performed the action.
+
+Note that since this is a "vanilla" system action, we have only specified one outcome, so the execution of this action is deterministic.
+We will see an example soon where the special subtype of system action uses multiple outcomes.
+
+Next, let's take a look at the actions that actually extract information from the user.
+
+``get_outing``, the action where we try to extract both the user's budget and preference of outing, is the most comprehensive example:
+
+.. code-block:: yaml
+
+    get_outing:
+      type: custom
+      subtype: slot_fill
+      parameters:
+        action_name: get_outing
+        entities:
+          - budget
+          - outing_type
+        message_variants:
+          - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
+        fallback_message_variants:
+          - Sorry, that isn't a valid outing preference.
+        config_entities:
+          budget:
+            fallback_message_variants:
+              - Sorry, that isn't a valid budget option. Please select either high or low.
+            single_slot_message_variants:
+              - What is your budget preference? Please select either high or low.
+          outing_type:
+            fallback_message_variants:
+              - Sorry, that isn't a valid outing type.
+            single_slot_message_variants:
+              - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
+            clarify_message_variants:
+              - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?
+        additional_updates:
+          - outcome:
+              budget:
+                known: true
+            response_variants:
+              - Ok, I'll take that into account.
+          - outcome:
+              outing_type:
+                known: true
+            response_variants:
+              - Great choice!
+
+We can see that this action is configured quite differently than the rest -
+this is because it is a :ref:`custom action <action_types>`.
+
+In this case, the action is built from the :py:func:`slot_fill <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`
+template, which is provided by default in Plan4Dial.
+
+This template allows you to extract any number of entities, and even accounts for all the possible combinations of certainties --
+i.e. budget is ``known`` and outing_type is ``maybe`` ``known``, vice versa, etc.
+
+If you go to the source code of the function, you'll see that the parameters of the custom action are provided under ``parameters``
+of ``get_outing``.
+
+
 
 Deploy the bot with HOVOR.
 ++++++++++++++++++++++++++

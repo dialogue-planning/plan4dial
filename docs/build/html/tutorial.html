@@ -100,8 +100,8 @@
 <p>Let’s go through an example. Suppose we want to create a chatbot that helps you decide what to do on your day off. This will be a fairly simple bot that picks a restaurant and outing location based on the user’s preferences.</p>
 <p>(For later reference, the full YAML file as well as the output files can be found <a class="reference external" href="https://github.com/QuMuLab/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot">here</a>).</p>
 <p>First, create a YAML file and pick a name for the domain:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">1</span><span class="nn">---</span><span class="w"></span>
-<span class="linenos">2</span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">day-planner</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span><span class="w"></span>
+<span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">day-planner</span><span class="w"></span>
 </pre></div>
 </div>
 <p>There are three main parts to the YAML file you will need to define.
@@ -113,43 +113,43 @@ Without context variables, the bot would not be able to store information from o
 <p>One of the most common use cases of context variables is to store information gathered from the user. However, they can also be used internally to keep track of states in the conversation, the most common example being an indication of when the “goal” is reached.</p>
 <p>In this case, we know we want to keep track of the user’s preferences, which include options for location, cuisine, allergy/food restrictions, budget, and outing type.
 Let’s examine the context variables for location, cuisine, and food restrictions first.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 3</span><span class="w">   </span><span class="nt">context_variables</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 4</span><span class="w">     </span><span class="c1"># user&#39;s location</span><span class="w"></span>
-<span class="linenos"> 5</span><span class="w">     </span><span class="nt">location</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 6</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span><span class="w"></span>
-<span class="linenos"> 7</span><span class="w">       </span><span class="nt">extraction</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 8</span><span class="w">         </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spacy</span><span class="w"></span>
-<span class="linenos"> 9</span><span class="w">         </span><span class="nt">config_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpe</span><span class="w"></span>
-<span class="linenos">10</span><span class="w">       </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">11</span><span class="w">         </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span><span class="w"></span>
-<span class="linenos">12</span><span class="w">         </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos">13</span><span class="w">     </span><span class="c1"># user&#39;s preferred cuisine; must map to one of the 4 options</span><span class="w"></span>
-<span class="linenos">14</span><span class="w">     </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">15</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
-<span class="linenos">16</span><span class="w">       </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">17</span><span class="w">         </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span><span class="w"></span>
-<span class="linenos">18</span><span class="w">         </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos">19</span><span class="w">       </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">20</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mexican</span><span class="w"></span>
-<span class="linenos">21</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Italian</span><span class="w"></span>
-<span class="linenos">22</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Chinese</span><span class="w"></span>
-<span class="linenos">23</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dessert</span><span class="w"></span>
-<span class="linenos">24</span><span class="w">     </span><span class="c1"># indicates if the user has an allergy</span><span class="w"></span>
-<span class="linenos">25</span><span class="w">     </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">26</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos">27</span><span class="w">       </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos">28</span><span class="w">       </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">29</span><span class="w">         </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos">30</span><span class="w">         </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos">31</span><span class="w">     </span><span class="c1"># food restrictions/allergies that the bot can take into account</span><span class="w"></span>
-<span class="linenos">32</span><span class="w">     </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">33</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
-<span class="linenos">34</span><span class="w">       </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">35</span><span class="w">         </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos">36</span><span class="w">         </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos">37</span><span class="w">       </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">38</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dairy-free</span><span class="w"></span>
-<span class="linenos">39</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gluten-free</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">context_variables</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># user&#39;s location</span><span class="w"></span>
+<span class="w">  </span><span class="nt">location</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span><span class="w"></span>
+<span class="w">    </span><span class="nt">extraction</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spacy</span><span class="w"></span>
+<span class="w">      </span><span class="nt">config_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpe</span><span class="w"></span>
+<span class="w">    </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span><span class="w"></span>
+<span class="w">      </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># user&#39;s preferred cuisine; must map to one of the 4 options</span><span class="w"></span>
+<span class="w">  </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
+<span class="w">    </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span><span class="w"></span>
+<span class="w">      </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mexican</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Italian</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Chinese</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dessert</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># indicates if the user has an allergy</span><span class="w"></span>
+<span class="w">  </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">    </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">      </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="c1"># food restrictions/allergies that the bot can take into account</span><span class="w"></span>
+<span class="w">  </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
+<span class="w">    </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">      </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dairy-free</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gluten-free</span><span class="w"></span>
 </pre></div>
 </div>
 <p>We can see that each context variable has been assigned a type: <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">enum</span></code>, and <code class="docutils literal notranslate"><span class="pre">flag</span></code> respectively. We can also see that another type, <code class="docutils literal notranslate"><span class="pre">fflag</span></code>, exists under the <code class="docutils literal notranslate"><span class="pre">known</span></code> section of <em>cuisine</em> (more on this later).</p>
@@ -191,68 +191,68 @@ You can see that under <code class="docutils literal notranslate"><span class="p
 <p>In most cases, the <code class="docutils literal notranslate"><span class="pre">known</span></code>’s <code class="docutils literal notranslate"><span class="pre">init</span></code> setting is set to <code class="docutils literal notranslate"><span class="pre">false</span></code>, but the <code class="docutils literal notranslate"><span class="pre">type</span></code> setting depends on what makes the most sense for the variable. Often in the case of <code class="docutils literal notranslate"><span class="pre">enum</span></code> type variables like <em>cuisine</em>, it makes the most sense to allow for a little variance in user input. They may something that somewhat resembles one of the available options, and it is helpful to store their answer, classify it as “maybe known”, and clarify the user’s intention.
 For simpler variables like <em>have_allergy</em>, a <code class="docutils literal notranslate"><span class="pre">known</span></code> <code class="docutils literal notranslate"><span class="pre">type</span></code> setting of <code class="docutils literal notranslate"><span class="pre">flag</span></code> should suffice.</p>
 <p>With this in mind, let’s add the rest of the context variables.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos"> 40</span><span class="w">   </span><span class="c1"># possible budget options</span><span class="w"></span>
-<span class="linenos"> 41</span><span class="w">   </span><span class="nt">budget</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 42</span><span class="w">     </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
-<span class="linenos"> 43</span><span class="w">     </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 44</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos"> 45</span><span class="w">       </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos"> 46</span><span class="w">     </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 47</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">low</span><span class="w"></span>
-<span class="linenos"> 48</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">high</span><span class="w"></span>
-<span class="linenos"> 49</span><span class="w">   </span><span class="c1"># user&#39;s outing preferences</span><span class="w"></span>
-<span class="linenos"> 50</span><span class="w">   </span><span class="nt">outing_type</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 51</span><span class="w">     </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
-<span class="linenos"> 52</span><span class="w">     </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 53</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span><span class="w"></span>
-<span class="linenos"> 54</span><span class="w">       </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos"> 55</span><span class="w">     </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 56</span><span class="w">       </span><span class="nt">high-energy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 57</span><span class="w">         </span><span class="nt">variations</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 58</span><span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fun</span><span class="w"></span>
-<span class="linenos"> 59</span><span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">exciting</span><span class="w"></span>
-<span class="linenos"> 60</span><span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">social</span><span class="w"></span>
-<span class="linenos"> 61</span><span class="w">       </span><span class="nt">low-energy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 62</span><span class="w">         </span><span class="nt">variations</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 63</span><span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chill</span><span class="w"></span>
-<span class="linenos"> 64</span><span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">relaxing</span><span class="w"></span>
-<span class="linenos"> 65</span><span class="w">           </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">laid-back</span><span class="w"></span>
-<span class="linenos"> 66</span><span class="w">   </span><span class="c1"># activated if there is a conflict between the user&#39;s cuisine preference and food restrictions</span><span class="w"></span>
-<span class="linenos"> 67</span><span class="w">   </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 68</span><span class="w">     </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos"> 69</span><span class="w">     </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos"> 70</span><span class="w">     </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 71</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos"> 72</span><span class="w">       </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos"> 73</span><span class="w">   </span><span class="c1"># possible restaurant options</span><span class="w"></span>
-<span class="linenos"> 74</span><span class="w">   </span><span class="nt">restaurant</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 75</span><span class="w">     </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
-<span class="linenos"> 76</span><span class="w">     </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 77</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos"> 78</span><span class="w">       </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos"> 79</span><span class="w">     </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 80</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Guac Grill</span><span class="w"></span>
-<span class="linenos"> 81</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Alfredo&#39;s Pizza Café</span><span class="w"></span>
-<span class="linenos"> 82</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mandarin</span><span class="w"></span>
-<span class="linenos"> 83</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Geneva Crepes</span><span class="w"></span>
-<span class="linenos"> 84</span><span class="w">   </span><span class="c1"># possible outing options</span><span class="w"></span>
-<span class="linenos"> 85</span><span class="w">   </span><span class="nt">outing</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 86</span><span class="w">     </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
-<span class="linenos"> 87</span><span class="w">     </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 88</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos"> 89</span><span class="w">       </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos"> 90</span><span class="w">     </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 91</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Stages</span><span class="w"></span>
-<span class="linenos"> 92</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Stauffer Library</span><span class="w"></span>
-<span class="linenos"> 93</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Broadway Theater</span><span class="w"></span>
-<span class="linenos"> 94</span><span class="w">       </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Smith&#39;s Golfing Club</span><span class="w"></span>
-<span class="linenos"> 95</span><span class="w">   </span><span class="c1"># ends the conversation if true</span><span class="w"></span>
-<span class="linenos"> 96</span><span class="w">   </span><span class="nt">goal</span><span class="p">:</span><span class="w"></span>
-<span class="linenos"> 97</span><span class="w">     </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos"> 98</span><span class="w">     </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos"> 99</span><span class="w">     </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">100</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
-<span class="linenos">101</span><span class="w">       </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># possible budget options</span><span class="w"></span>
+<span class="nt">budget</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
+<span class="w">  </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">    </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">low</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">high</span><span class="w"></span>
+<span class="c1"># user&#39;s outing preferences</span><span class="w"></span>
+<span class="nt">outing_type</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
+<span class="w">  </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span><span class="w"></span>
+<span class="w">    </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">high-energy</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">variations</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fun</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">exciting</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">social</span><span class="w"></span>
+<span class="w">    </span><span class="nt">low-energy</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">variations</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chill</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">relaxing</span><span class="w"></span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">laid-back</span><span class="w"></span>
+<span class="c1"># activated if there is a conflict between the user&#39;s cuisine preference and food restrictions</span><span class="w"></span>
+<span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">  </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">    </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="c1"># possible restaurant options</span><span class="w"></span>
+<span class="nt">restaurant</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
+<span class="w">  </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">    </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Guac Grill</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Alfredo&#39;s Pizza Café</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Mandarin</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Geneva Crepes</span><span class="w"></span>
+<span class="c1"># possible outing options</span><span class="w"></span>
+<span class="nt">outing</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span><span class="w"></span>
+<span class="w">  </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">    </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">options</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Stages</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Stauffer Library</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Broadway Theater</span><span class="w"></span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Smith&#39;s Golfing Club</span><span class="w"></span>
+<span class="c1"># ends the conversation if true</span><span class="w"></span>
+<span class="nt">goal</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">  </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">  </span><span class="nt">known</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span><span class="w"></span>
+<span class="w">    </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
 </pre></div>
 </div>
 <p>While most of this you’ve already seen, let’s draw attention to a couple things.</p>
@@ -279,69 +279,69 @@ Ideally, you shouldn’t have intents with utterances that are too similar to on
 Entities are variables that are extracted from the user.
 Within the intent, each entity must be preceded with a <code class="docutils literal notranslate"><span class="pre">$</span></code> symbol to indicate the location of the entity in the utterance.</p>
 <p>Let’s see what the intents for our <code class="docutils literal notranslate"><span class="pre">day-planner</span></code> bot look like:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">102</span><span class="w">   </span><span class="nt">intents</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">103</span><span class="w">     </span><span class="nt">confirm</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">104</span><span class="w">       </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">105</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;yes&quot;</span><span class="w"></span>
-<span class="linenos">106</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yeah</span><span class="w"></span>
-<span class="linenos">107</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">that&#39;s it</span><span class="w"></span>
-<span class="linenos">108</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="w"></span>
-<span class="linenos">109</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mhm</span><span class="w"></span>
-<span class="linenos">110</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">confirm</span><span class="w"></span>
-<span class="linenos">111</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes please</span><span class="w"></span>
-<span class="linenos">112</span><span class="w">     </span><span class="nt">deny</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">113</span><span class="w">       </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">114</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;no&quot;</span><span class="w"></span>
-<span class="linenos">115</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">not at all</span><span class="w"></span>
-<span class="linenos">116</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">that&#39;s not what i meant</span><span class="w"></span>
-<span class="linenos">117</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">absolutely not</span><span class="w"></span>
-<span class="linenos">118</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">i don&#39;t want that</span><span class="w"></span>
-<span class="linenos">119</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nah</span><span class="w"></span>
-<span class="linenos">120</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no thanks</span><span class="w"></span>
-<span class="linenos">121</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no thank you</span><span class="w"></span>
-<span class="linenos">122</span><span class="w">     </span><span class="nt">share_location</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">123</span><span class="w">       </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">124</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span><span class="w"></span>
-<span class="linenos">125</span><span class="w">       </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">126</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I live in $location.</span><span class="w"></span>
-<span class="linenos">127</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I am located in $location.</span><span class="w"></span>
-<span class="linenos">128</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Can you help me find things to do in $location?</span><span class="w"></span>
-<span class="linenos">129</span><span class="w">     </span><span class="nt">share_cuisine</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">130</span><span class="w">       </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">131</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cuisine</span><span class="w"></span>
-<span class="linenos">132</span><span class="w">       </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">133</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I want to eat $cuisine.</span><span class="w"></span>
-<span class="linenos">134</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Do you have restaurants of type $cuisine?</span><span class="w"></span>
-<span class="linenos">135</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Are there any $cuisine restaurants in the area?</span><span class="w"></span>
-<span class="linenos">136</span><span class="w">     </span><span class="nt">share_allergies</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">137</span><span class="w">       </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">138</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">food_restriction</span><span class="w"></span>
-<span class="linenos">139</span><span class="w">       </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">140</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I have to eat $food_restriction.</span><span class="w"></span>
-<span class="linenos">141</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I can only eat foods that are $food_restriction.</span><span class="w"></span>
-<span class="linenos">142</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I am allergic to any foods that are not $food_restriction.</span><span class="w"></span>
-<span class="linenos">143</span><span class="w">     </span><span class="nt">share_all_outing_preferences</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">144</span><span class="w">       </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">145</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">budget</span><span class="w"></span>
-<span class="linenos">146</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">outing_type</span><span class="w"></span>
-<span class="linenos">147</span><span class="w">       </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">148</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I have a $budget budget and I would prefer a $outing_type atmosphere today.</span><span class="w"></span>
-<span class="linenos">149</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I am operating within a $budget budget and I want to go to a $outing_type place.</span><span class="w"></span>
-<span class="linenos">150</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I can do activities with a $budget budget and I want to find the most $outing_type place in the city.</span><span class="w"></span>
-<span class="linenos">151</span><span class="w">     </span><span class="nt">share_budget</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">152</span><span class="w">       </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">153</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">budget</span><span class="w"></span>
-<span class="linenos">154</span><span class="w">       </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">155</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I have a $budget budget.</span><span class="w"></span>
-<span class="linenos">156</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I am operating within a $budget budget.</span><span class="w"></span>
-<span class="linenos">157</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I can do activities with a $budget budget.</span><span class="w"></span>
-<span class="linenos">158</span><span class="w">     </span><span class="nt">share_outing_type</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">159</span><span class="w">       </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">160</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">outing_type</span><span class="w"></span>
-<span class="linenos">161</span><span class="w">       </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">162</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I would prefer a $outing_type atmosphere today.</span><span class="w"></span>
-<span class="linenos">163</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I want to go to a $outing_type place.</span><span class="w"></span>
-<span class="linenos">164</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is the most $outing_type place in the city?</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">intents</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">confirm</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;yes&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yeah</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">that&#39;s it</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;Y&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mhm</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">confirm</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">yes please</span><span class="w"></span>
+<span class="w">  </span><span class="nt">deny</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;no&quot;</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">not at all</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">that&#39;s not what i meant</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">absolutely not</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">i don&#39;t want that</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nah</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no thanks</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no thank you</span><span class="w"></span>
+<span class="w">  </span><span class="nt">share_location</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span><span class="w"></span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I live in $location.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I am located in $location.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Can you help me find things to do in $location?</span><span class="w"></span>
+<span class="w">  </span><span class="nt">share_cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cuisine</span><span class="w"></span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I want to eat $cuisine.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Do you have restaurants of type $cuisine?</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Are there any $cuisine restaurants in the area?</span><span class="w"></span>
+<span class="w">  </span><span class="nt">share_allergies</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">food_restriction</span><span class="w"></span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I have to eat $food_restriction.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I can only eat foods that are $food_restriction.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I am allergic to any foods that are not $food_restriction.</span><span class="w"></span>
+<span class="w">  </span><span class="nt">share_all_outing_preferences</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">budget</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">outing_type</span><span class="w"></span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I have a $budget budget and I would prefer a $outing_type atmosphere today.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I am operating within a $budget budget and I want to go to a $outing_type place.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I can do activities with a $budget budget and I want to find the most $outing_type place in the city.</span><span class="w"></span>
+<span class="w">  </span><span class="nt">share_budget</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">budget</span><span class="w"></span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I have a $budget budget.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I am operating within a $budget budget.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I can do activities with a $budget budget.</span><span class="w"></span>
+<span class="w">  </span><span class="nt">share_outing_type</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">outing_type</span><span class="w"></span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I would prefer a $outing_type atmosphere today.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I want to go to a $outing_type place.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is the most $outing_type place in the city?</span><span class="w"></span>
 </pre></div>
 </div>
 <p><strong>NOTE</strong>: No intents can extract the exact same entities. Why?</p>
@@ -403,7 +403,9 @@ outcome.</p>
 </td>
 </tr>
 <tr class="row-odd"><td><p>custom</p></td>
-<td><p>Custom actions created by you, the bot designer.</p>
+<td><p>Custom actions created by you, the bot designer.
+These allow you to create action templates which speeds up action
+creation.</p>
 <p>These are written in Python and stored under
 <code class="docutils literal notranslate"><span class="pre">plan4dial/for_generating/custom_actions</span></code>.</p>
 <p><a class="reference internal" href="generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
@@ -424,34 +426,34 @@ while outcome B could depend on <em>time</em> being “12 pm”.</p>
 <p>We will see examples of every type (other than api) and subtype in our <code class="docutils literal notranslate"><span class="pre">day-planner</span></code> example.</p>
 <p>Let’s start by examining a simple <a class="reference internal" href="#action-types"><span class="std std-ref">dialogue action</span></a>.
 We’ll create an action <code class="docutils literal notranslate"><span class="pre">get-have-allergy</span></code> that asks the user if they have an allergy or not, which expects a simple yes/no response.</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="linenos">165</span><span class="w">   </span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">166</span><span class="w">     </span><span class="nt">get-have-allergy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">167</span><span class="w">       </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dialogue</span><span class="w"></span>
-<span class="linenos">168</span><span class="w">       </span><span class="nt">message_variants</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">169</span><span class="w">         </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Do you have any allergies? (Y/N)</span><span class="w"></span>
-<span class="linenos">170</span><span class="w">       </span><span class="nt">condition</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">171</span><span class="w">         </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">172</span><span class="w">           </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos">173</span><span class="w">       </span><span class="nt">effect</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">174</span><span class="w">         </span><span class="nt">set-allergy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">175</span><span class="w">           </span><span class="nt">oneof</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">176</span><span class="w">             </span><span class="nt">outcomes</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">177</span><span class="w">               </span><span class="nt">indicate_allergy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">178</span><span class="w">                 </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">179</span><span class="w">                   </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">180</span><span class="w">                     </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="linenos">181</span><span class="w">                     </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="linenos">182</span><span class="w">                 </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">confirm</span><span class="w"></span>
-<span class="linenos">183</span><span class="w">                 </span><span class="nt">follow_up</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-allergy</span><span class="w"></span>
-<span class="linenos">184</span><span class="w">               </span><span class="nt">indicate_no_allergy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">185</span><span class="w">                 </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">186</span><span class="w">                   </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">187</span><span class="w">                     </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="linenos">188</span><span class="w">                     </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos">189</span><span class="w">                   </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
-<span class="linenos">190</span><span class="w">                     </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
-<span class="linenos">191</span><span class="w">                     </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
-<span class="linenos">192</span><span class="w">                 </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deny</span><span class="w"></span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">actions</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">get-have-allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dialogue</span><span class="w"></span>
+<span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Do you have any allergies? (Y/N)</span><span class="w"></span>
+<span class="w">    </span><span class="nt">condition</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">    </span><span class="nt">effect</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">set-allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">oneof</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">outcomes</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">indicate_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">              </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">confirm</span><span class="w"></span>
+<span class="w">              </span><span class="nt">follow_up</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-allergy</span><span class="w"></span>
+<span class="w">            </span><span class="nt">indicate_no_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">                </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">              </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">deny</span><span class="w"></span>
 </pre></div>
 </div>
 <p>We can see that actions take a number of parameters, including <code class="docutils literal notranslate"><span class="pre">type</span></code> as discussed above.</p>
@@ -526,6 +528,83 @@ We also force a <code class="docutils literal notranslate"><span class="pre">fol
 <p>In the outcome <code class="docutils literal notranslate"><span class="pre">indicate_no_allergy</span></code>, we can see that <code class="docutils literal notranslate"><span class="pre">conflict</span></code> is set to a value of false.
 This is because we know that if the user has no allergies, we will never come across a conflict between their allergies and their chosen cuisine.</p>
 <p>Next, let’s take a look at a simple <a class="reference internal" href="#action-types"><span class="std std-ref">system action</span></a> our bot will use.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">reset-preferences</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system</span><span class="w"></span>
+<span class="w">  </span><span class="nt">condition</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">  </span><span class="nt">effect</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">reset</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">oneof</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">outcomes</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">reset-values</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="nt">have_allergy</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">              </span><span class="nt">cuisine</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">              </span><span class="nt">conflict</span><span class="p">:</span><span class="w"></span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w"></span>
+<span class="w">            </span><span class="nt">response_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">              </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We can see that a <code class="docutils literal notranslate"><span class="pre">system</span></code> action is only concerned with changing the values of some context variables given that a given state is true.</p>
+<p>The purpose of this action in particular is to reset the user’s inputs for allergies/food restriction as well as cuisine choice and the conflict flag when a conflict has been detected.
+The response variants indicate what the bot will tell the user after it performed the action.</p>
+<p>Note that since this is a “vanilla” system action, we have only specified one outcome, so the execution of this action is deterministic.
+We will see an example soon where the special subtype of system action uses multiple outcomes.</p>
+<p>Next, let’s take a look at the actions that actually extract information from the user.</p>
+<p><code class="docutils literal notranslate"><span class="pre">get_outing</span></code>, the action where we try to extract both the user’s budget and preference of outing, is the most comprehensive example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">get_outing</span><span class="p">:</span><span class="w"></span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom</span><span class="w"></span>
+<span class="w">  </span><span class="nt">subtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slot_fill</span><span class="w"></span>
+<span class="w">  </span><span class="nt">parameters</span><span class="p">:</span><span class="w"></span>
+<span class="w">    </span><span class="nt">action_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get_outing</span><span class="w"></span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">budget</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">outing_type</span><span class="w"></span>
+<span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you&#39;re looking for (i.e. fun, relaxing, etc.)</span><span class="w"></span>
+<span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that isn&#39;t a valid outing preference.</span><span class="w"></span>
+<span class="w">    </span><span class="nt">config_entities</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="nt">budget</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">fallback_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that isn&#39;t a valid budget option. Please select either high or low.</span><span class="w"></span>
+<span class="w">        </span><span class="nt">single_slot_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is your budget preference? Please select either high or low.</span><span class="w"></span>
+<span class="w">      </span><span class="nt">outing_type</span><span class="p">:</span><span class="w"></span>
+<span class="w">        </span><span class="nt">fallback_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that isn&#39;t a valid outing type.</span><span class="w"></span>
+<span class="w">        </span><span class="nt">single_slot_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.</span><span class="w"></span>
+<span class="w">        </span><span class="nt">clarify_message_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, I wasn&#39;t quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?</span><span class="w"></span>
+<span class="w">    </span><span class="nt">additional_updates</span><span class="p">:</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">outcome</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">budget</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">response_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ok, I&#39;ll take that into account.</span><span class="w"></span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">outcome</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="nt">outing_type</span><span class="p">:</span><span class="w"></span>
+<span class="w">            </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"></span>
+<span class="w">        </span><span class="nt">response_variants</span><span class="p">:</span><span class="w"></span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Great choice!</span><span class="w"></span>
+</pre></div>
+</div>
+<p>We can see that this action is configured quite differently than the rest -
+this is because it is a <a class="reference internal" href="#action-types"><span class="std std-ref">custom action</span></a>.</p>
+<p>In this case, the action is built from the <a class="reference internal" href="generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
+template, which is provided by default in Plan4Dial.</p>
+<p>This template allows you to extract any number of entities, and even accounts for all the possible combinations of certainties –
+i.e. budget is <code class="docutils literal notranslate"><span class="pre">known</span></code> and outing_type is <code class="docutils literal notranslate"><span class="pre">maybe</span></code> <code class="docutils literal notranslate"><span class="pre">known</span></code>, vice versa, etc.</p>
+<p>If you go to the source code of the function, you’ll see that the parameters of the custom action are provided under <code class="docutils literal notranslate"><span class="pre">parameters</span></code>
+of <code class="docutils literal notranslate"><span class="pre">get_outing</span></code>.</p>
 </section>
 </section>
 <section id="deploy-the-bot-with-hovor">

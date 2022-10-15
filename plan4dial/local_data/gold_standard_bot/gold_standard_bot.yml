@@ -1,6 +1,6 @@
 ---
 name: day-planner
-context_entities:
+context_variables:
   # user's location
   location:
     type: json
@@ -258,6 +258,8 @@ actions:
     type: system
     subtype: Context dependent determination
     condition:
+      location:
+        known: true
       have_allergy:
         known: true
         value: true
@@ -488,8 +490,6 @@ actions:
     disable-fallback: true
     type: dialogue
     condition:
-      location:
-        known: true
       restaurant:
         known: true
       outing:
