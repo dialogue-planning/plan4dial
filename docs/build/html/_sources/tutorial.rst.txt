@@ -87,7 +87,7 @@ We can see that each context variable has been assigned a type: ``json``, ``enum
 These are the only **four** types that we can define in the YAML. They are defined as follows:
 
 
-.. _types:
+.. _variable_types:
 
 +------------+--------------------------------------------------------------------+
 | type       | definition                                                         |
@@ -318,9 +318,11 @@ Instead, actions are chosen based on what is true in the state of the world.
 Only actions whose ``preconditions`` are satisfied are executed.
 
 It is important to reiterate that ``actions`` refer only to the actions that the dialogue agent can take, and that chatbot creation is seen primarily through the lens of the agent's perspective.
-User utterances are only handled by deciphering ``intents`` as described above
+User utterances are only handled by deciphering ``intents`` as described above.
 
 There are **four** types of actions:
+
+.. _action_types:
 
 +------------+--------------------------------------------------------------------+
 | type       | definition                                                         |
@@ -363,14 +365,119 @@ There is also an important subtype you should know.
 
 The **Context dependent determination** subtype can only be applied to system actions.
 Using this subtype indicates that you are going to have mini if-elif statements (called contexts) that determine which outcome is executed.
-
 This is different than "vanilla"/non-subtyped system actions which don't check any context when activated and execute the single outcome.
+
 A **context** is one (or multiple) settings to context variables.
 For example, some outcome A could depend on  *location* being "Toronto",
 while outcome B could depend on *time* being "12 pm".
 
 We will see examples of every type (other than api) and subtype in our ``day-planner`` example.
 
+Let's start by examining a simple :ref:`dialogue action <action_types>`.
+We'll create an action ``get-have-allergy`` that asks the user if they have an allergy or not, which expects a simple yes/no response.
+
+.. code-block:: yaml
+   :linenos:
+   :lineno-start: 165
+
+      actions:
+        get-have-allergy:
+          type: dialogue
+          message_variants:
+            - Do you have any allergies? (Y/N)
+          condition:
+            have_allergy:
+              known: false 
+          effect:
+            set-allergy:
+              oneof:
+                outcomes:
+                  indicate_allergy:
+                    updates:
+                      have_allergy:
+                        value: true
+                        known: true
+                    intent: confirm
+                    follow_up: get-allergy
+                  indicate_no_allergy:
+                    updates:
+                      have_allergy:
+                        known: true
+                        value: false
+                      conflict:
+                        known: true
+                        value: false
+                    intent: deny
+
+We can see that actions take a number of parameters, including ``type`` as discussed above.
+
+``message_variants`` are messages that the agent can utter when this action takes place.
+This parameter can only be supplied for dialogue actions.
+You can supply as many messages as you want, and one will be randomly selected at runtime.
+
+The ``condition`` is what you would think of as a "precondition" in automated planning.
+Whatever you supply in the ``condition`` is what must be true for the action to take place.
+This offers a lot more flexibility than determining a hard-coded sequence of actions through a dialogue tree
+as you don't need to know all the details about where exactly in the conversation the action takes place,
+you only need to know in what states it's allowed to trigger. 
+This also allows for inserting new actions at any point in development with ease.
+
+In this case, the only condition is that we don't know if the user has an allergy or not yet.
+
+The ``effect`` is what occurs when the action takes place. 
+It consists of a name (in this case ``set-allergy``), followed by ``oneof`` and a list of ``outcomes``.
+As the names suggest, only one of the outcomes will be executed depending on the factors at play.
+
+Each outcome also consists of a name, in this case ``indicate_allergy`` and ``indicate_no_allergy``.
+
+There are **four** different parameters that outcomes can take.
+Outcomes can use multiple and need at least one.
+
++---------------------+------------------------------------------------------------------------+
+| parameters          | definition                                                             |
++=====================+========================================================================+
+| updates             | Used in practically every outcome.                                     |
+|                     | Here you define the changing ``value`` s of context variables.         |
+|                     |                                                                        |
+|                     | You also define how the ``known`` status of each variable has updated. |
+|                     |                                                                        |
+|                     | This is **extremely important** to do correctly as "knowing what you   |
+|                     | know" is a huge part of conversation navigation!                       |
+|                     |                                                                        |
+|                     | **NOTE** if you want to set the variable to the value taken from the   |
+|                     | user, precede the variable name with ``$``.                            |
++---------------------+------------------------------------------------------------------------+
+| intent              | Used for dialogue actions with > 1 outcome,                            |
+|                     | where the user's input will be disambiguated.                          |
+|                     |                                                                        |
+|                     | By specifying the intent, you are indicating that this outcome will be |
+|                     | the course of action taken when the user's input matches that intent.  |
++---------------------+------------------------------------------------------------------------+
+| follow_up           | Forces a particular action to "follow up" this outcome.                |
+|                     |                                                                        |
+|                     | This is meant to be situational and not used for every single action,  |
+|                     | in which case you are essentially building a dialogue tree.            |
++---------------------+------------------------------------------------------------------------+
+| response_variants   | A response, or message, that the bot will utter *after* the action has |
+|                     | been executed.                                                         |
+|                     |                                                                        |
+|                     | Any one of the variants will be picked at random at runtime.           |
++---------------------+------------------------------------------------------------------------+
+| context             | Only used in actions with type ``system`` and subtype                  |
+|                     | **Context dependent determination**.                                   |
+|                     |                                                                        |
+|                     | Specifies what context must be true in order for the outcome to take   |
+|                     | place.                                                                 |
++---------------------+------------------------------------------------------------------------+
+
+With this in mind, we can see that the outcome ``indicate_allergy`` is triggered when the user answers with ``confirm``.
+The ``updates`` indicate that ``have_allergy`` is set to a value of ``true`` and is now ``known``.
+We also force a ``follow_up`` where we try to determine what the user's allergy is.
+
+In the outcome ``indicate_no_allergy``, we can see that ``conflict`` is set to a value of false.
+This is because we know that if the user has no allergies, we will never come across a conflict between their allergies and their chosen cuisine.
+
+Next, let's take a look at a simple :ref:`system action <action_types>` our bot will use.
 
 Deploy the bot with HOVOR.
 ++++++++++++++++++++++++++

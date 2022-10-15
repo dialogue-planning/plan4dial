@@ -20,7 +20,6 @@ Let's go through an example. Suppose we want to create a chatbot that helps you 
 First, create a YAML file and pick a name for the domain:
 
 .. code-block:: yaml
-   :linenos:
 
    ---
    name: day-planner
@@ -41,8 +40,6 @@ In this case, we know we want to keep track of the user's preferences, which inc
 Let's examine the context variables for location, cuisine, and food restrictions first.
 
 .. code-block:: yaml
-   :linenos:
-   :lineno-start: 3
 
       context_variables:
         # user's location
@@ -87,7 +84,7 @@ We can see that each context variable has been assigned a type: ``json``, ``enum
 These are the only **four** types that we can define in the YAML. They are defined as follows:
 
 
-.. _types:
+.. _variable_types:
 
 +------------+--------------------------------------------------------------------+
 | type       | definition                                                         |
@@ -122,8 +119,6 @@ For simpler variables like *have_allergy*, a ``known`` ``type`` setting of ``fla
 With this in mind, let's add the rest of the context variables.
 
 .. code-block:: yaml
-   :linenos:
-   :lineno-start: 40
 
       # possible budget options
       budget:
@@ -223,8 +218,6 @@ Within the intent, each entity must be preceded with a ``$`` symbol to indicate 
 Let's see what the intents for our ``day-planner`` bot look like:
 
 .. code-block:: yaml
-   :linenos:
-   :lineno-start: 102
 
       intents:
         confirm:
@@ -318,9 +311,11 @@ Instead, actions are chosen based on what is true in the state of the world.
 Only actions whose ``preconditions`` are satisfied are executed.
 
 It is important to reiterate that ``actions`` refer only to the actions that the dialogue agent can take, and that chatbot creation is seen primarily through the lens of the agent's perspective.
-User utterances are only handled by deciphering ``intents`` as described above
+User utterances are only handled by deciphering ``intents`` as described above.
 
 There are **four** types of actions:
+
+.. _action_types:
 
 +------------+--------------------------------------------------------------------+
 | type       | definition                                                         |
@@ -371,12 +366,10 @@ while outcome B could depend on *time* being "12 pm".
 
 We will see examples of every type (other than api) and subtype in our ``day-planner`` example.
 
-Let's start with a simple action to get the ball rolling.
+Let's start by examining a simple :ref:`dialogue action <action_types>`.
 We'll create an action ``get-have-allergy`` that asks the user if they have an allergy or not, which expects a simple yes/no response.
 
 .. code-block:: yaml
-   :linenos:
-   :lineno-start: 165
 
       actions:
         get-have-allergy:
@@ -431,29 +424,84 @@ Each outcome also consists of a name, in this case ``indicate_allergy`` and ``in
 There are **four** different parameters that outcomes can take.
 Outcomes can use multiple and need at least one.
 
-+------------+--------------------------------------------------------------------+
-| parameters | definition                                                         |
-+============+====================================================================+
-| updates    | A boolean value; can only be set to ``true`` or ``false``.         |
-+------------+--------------------------------------------------------------------+
-| fflag      | "Fuzzy flag"; can only be set to ``true``, ``false``, or ``maybe``.|
-+------------+--------------------------------------------------------------------+
-| enum       | Can only be set to the values set under the ``options`` list.      |
-+------------+--------------------------------------------------------------------+
-| json       | Used if you want to use an alternate extraction method,            |
-|            | i.e. Spacy GPE.                                                    |
-|            |                                                                    |
-|            | **NOTE**: Currently, only Spacy is compatible with this            |
-|            | option.                                                            |
-+------------+--------------------------------------------------------------------+
++---------------------+------------------------------------------------------------------------+
+| parameters          | definition                                                             |
++=====================+========================================================================+
+| updates             | Used in practically every outcome.                                     |
+|                     | Here you define the changing ``value`` s of context variables.         |
+|                     |                                                                        |
+|                     | You also define how the ``known`` status of each variable has updated. |
+|                     |                                                                        |
+|                     | This is **extremely important** to do correctly as "knowing what you   |
+|                     | know" is a huge part of conversation navigation!                       |
+|                     |                                                                        |
+|                     | **NOTE** if you want to set the variable to the value taken from the   |
+|                     | user, precede the variable name with ``$``.                            |
++---------------------+------------------------------------------------------------------------+
+| intent              | Used for dialogue actions with > 1 outcome,                            |
+|                     | where the user's input will be disambiguated.                          |
+|                     |                                                                        |
+|                     | By specifying the intent, you are indicating that this outcome will be |
+|                     | the course of action taken when the user's input matches that intent.  |
++---------------------+------------------------------------------------------------------------+
+| follow_up           | Forces a particular action to "follow up" this outcome.                |
+|                     |                                                                        |
+|                     | This is meant to be situational and not used for every single action,  |
+|                     | in which case you are essentially building a dialogue tree.            |
++---------------------+------------------------------------------------------------------------+
+| response_variants   | A response, or message, that the bot will utter *after* the action has |
+|                     | been executed.                                                         |
+|                     |                                                                        |
+|                     | Any one of the variants will be picked at random at runtime.           |
++---------------------+------------------------------------------------------------------------+
+| context             | Only used in actions with type ``system`` and subtype                  |
+|                     | **Context dependent determination**.                                   |
+|                     |                                                                        |
+|                     | Specifies what context must be true in order for the outcome to take   |
+|                     | place.                                                                 |
++---------------------+------------------------------------------------------------------------+
 
-updates:
-Necessary for pretty much every outcome.
-Here you define the changing ``value``s of context variables.
-You also define how the ``known`` status of each variable has updated.
-This is **extremely important** to do correctly as "knowing what you know" is a huge part of conversation navigation!
-**NOTE** if you want to set the variable to the value taken from the user, precede
-the variable name with ``$``.
+With this in mind, we can see that the outcome ``indicate_allergy`` is triggered when the user answers with ``confirm``.
+The ``updates`` indicate that ``have_allergy`` is set to a value of ``true`` and is now ``known``.
+We also force a ``follow_up`` where we try to determine what the user's allergy is.
+
+In the outcome ``indicate_no_allergy``, we can see that ``conflict`` is set to a value of false.
+This is because we know that if the user has no allergies, we will never come across a conflict between their allergies and their chosen cuisine.
+
+Next, let's take a look at a simple :ref:`system action <action_types>` our bot will use.
+
+.. code-block:: yaml
+
+    reset-preferences:
+      type: system
+      condition:
+        conflict:
+          known: true
+          value: true
+      effect:
+        reset:
+          oneof:
+            outcomes:
+              reset-values:
+                updates:
+                  have_allergy:
+                    known: false
+                  food_restriction:
+                    known: false
+                  cuisine:
+                    known: false
+                  conflict:
+                    known: false 
+                response_variants:
+                  - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+
+We can see that a ``system`` action is only concerned with changing the values of some context variables given that a given state is true.
+
+The purpose of this action in particular is to reset the user's inputs for allergies/food restriction as well as cuisine choice and the conflict flag when a conflict has been detected.
+The response variants indicate what the bot will tell the user after it performed the action.
+
+Note that since this is a "vanilla" system action, we have only specified one outcome, so the execution of this action is deterministic.
+We will see an example soon where the special subtype of system action uses multiple outcomes.
 
 
 Deploy the bot with HOVOR.
