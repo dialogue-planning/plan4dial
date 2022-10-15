@@ -731,3 +731,5 @@ In this case, that means setting the value to ``conflict`` depending on what com
 
 Generate the files needed to test the bot with HOVOR.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Navigate to :py:func:`slot_fill <plan4dial.main.generate_files>`

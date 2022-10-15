@@ -120,28 +120,28 @@ intents:
       - no thanks
       - no thank you
   share_location:
-    entities:
+    variables:
       - location
     utterances:
       - I live in $location.
       - I am located in $location.
       - Can you help me find things to do in $location?
   share_cuisine:
-    entities:
+    variables:
       - cuisine
     utterances:
       - I want to eat $cuisine.
       - Do you have restaurants of type $cuisine?
       - Are there any $cuisine restaurants in the area?
   share_allergies:
-    entities:
+    variables:
       - food_restriction
     utterances:
       - I have to eat $food_restriction.
       - I can only eat foods that are $food_restriction.
       - I am allergic to any foods that are not $food_restriction.
   share_all_outing_preferences:
-    entities:
+    variables:
       - budget
       - outing_type
     utterances:
@@ -149,14 +149,14 @@ intents:
       - I am operating within a $budget budget and I want to go to a $outing_type place.
       - I can do activities with a $budget budget and I want to find the most $outing_type place in the city.
   share_budget:
-    entities:
+    variables:
       - budget
     utterances:
       - I have a $budget budget.
       - I am operating within a $budget budget.
       - I can do activities with a $budget budget.
   share_outing_type:
-    entities:
+    variables:
       - outing_type
     utterances:
       - I would prefer a $outing_type atmosphere today.

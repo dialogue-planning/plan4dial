@@ -50,8 +50,8 @@ def make_nlu_file(loaded_yaml: Dict) -> Dict:
         examples = []
         variations = {}
         # if this intent has variables, iterate through them
-        if "entities" in intent_cfg:
-            variables = intent_cfg["entities"]
+        if "variables" in intent_cfg:
+            variables = intent_cfg["variables"]
             # for each variable, access the context variable
             for variable in variables:
                 ctx_var = loaded_yaml["context_variables"][variable]
