@@ -51,7 +51,7 @@ Let's examine the context variables for location, cuisine, and food restrictions
             method: spacy
             config_method: gpe
           known:
-            type: fflag
+            type: flag
             init: false
         # user's preferred cuisine; must map to one of the 4 options
         cuisine:
@@ -113,9 +113,13 @@ You can see that under ``extraction``, we specified both the method ``spacy`` an
 
 .. _known:
 
-Each variable also has a ``known`` option which determines the knowledge we have about the variable. The ``known`` ``type`` can only be set to either ``flag`` or ``fflag``, and functions in the same way. This parameter is extermely important as conversation navigation is often predicated on what context we know, maybe know, or don't know so far.
+Each variable also has a ``known`` option which determines the knowledge we have about the variable.
+The ``known`` ``type`` can only be set to either ``flag`` or ``fflag``, and functions in the same way.
+This parameter is extermely important as conversation navigation is often predicated on what context we know, maybe know, or don't know so far.
 
-In most cases, the ``known``'s ``init`` setting is set to ``false``, but the ``type`` setting depends on what makes the most sense for the variable. Often in the case of ``enum`` type variables like *cuisine*, it makes the most sense to allow for a little variance in user input. They may something that somewhat resembles one of the available options, and it is helpful to store their answer, classify it as "maybe known", and clarify the user's intention.
+In most cases, the ``known``'s ``init`` setting is set to ``false``, but the ``type`` setting depends on what makes the most sense for the variable.
+Often in the case of ``enum`` type variables like *cuisine*, it makes the most sense to allow for a little variance in user input.
+They may something that somewhat resembles one of the available options, and it is helpful to store their answer, classify it as "maybe known", and clarify the user's intention.
 For simpler variables like *have_allergy*, a ``known`` ``type`` setting of ``flag`` should suffice.  
 
 With this in mind, let's add the rest of the context variables.
@@ -541,10 +545,6 @@ The values for location, cuisine, and food restrictions are extracted with the s
           - Where are you located?
         fallback_message_variants:
           - Sorry, that isn't a valid location.
-        config_entities:
-          location:
-            clarify_message_variants:
-              - I didn't quite get your location. Are you located in $location?
         additional_updates:
           - outcome:
               location:
