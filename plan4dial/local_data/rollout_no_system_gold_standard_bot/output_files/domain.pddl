@@ -1,14 +1,14 @@
 (define
     (domain order-pizza)
-    (:requirements :strips :typing)
+    (:requirements         :strips :typing)
     (:types )
     (:constants )
     (:predicates
-        (have_base)
-        (have_size)
-        (have_toppings)
-        (have_drink)
-        (have_side)
+        (know__base)
+        (know__size)
+        (know__toppings)
+        (know__drink)
+        (know__side)
         (goal)
         (have-message)
         (force-statement)
@@ -18,19 +18,19 @@
         :precondition
             (and
                 (not (force-statement))
-                (not (have_base))
+                (not (know__base))
             )
         :effect
-            (labeled-oneof set-base
+            (labeled-oneof         set-base
                 (outcome valid
                     (and
-                        (have_base)
+                        (know__base)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -39,20 +39,20 @@
         :parameters()
         :precondition
             (and
-                (not (have_toppings))
+                (not (know__toppings))
                 (not (force-statement))
             )
         :effect
-            (labeled-oneof set-toppings
+            (labeled-oneof         set-toppings
                 (outcome valid
                     (and
-                        (have_toppings)
+                        (know__toppings)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -61,20 +61,20 @@
         :parameters()
         :precondition
             (and
+                (not (know__size))
                 (not (force-statement))
-                (not (have_size))
             )
         :effect
-            (labeled-oneof set-size
+            (labeled-oneof         set-size
                 (outcome valid
                     (and
-                        (have_size)
+                        (know__size)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -83,20 +83,20 @@
         :parameters()
         :precondition
             (and
+                (not (know__drink))
                 (not (force-statement))
-                (not (have_drink))
             )
         :effect
-            (labeled-oneof set-drink
+            (labeled-oneof         set-drink
                 (outcome valid
                     (and
-                        (have_drink)
+                        (know__drink)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -105,20 +105,20 @@
         :parameters()
         :precondition
             (and
+                (not (know__side))
                 (not (force-statement))
-                (not (have_side))
             )
         :effect
-            (labeled-oneof set-side
+            (labeled-oneof         set-side
                 (outcome valid
                     (and
-                        (have_side)
+                        (know__side)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -127,24 +127,18 @@
         :parameters()
         :precondition
             (and
-                (have_size)
-                (have_side)
-                (have_base)
+                (know__size)
                 (not (force-statement))
-                (have_drink)
-                (have_toppings)
+                (know__side)
+                (know__toppings)
+                (know__base)
+                (know__drink)
             )
         :effect
-            (labeled-oneof goal
+            (labeled-oneof         goal
                 (outcome valid
                     (and
                         (goal)
-                    )
-                )
-                (outcome fallback
-                    (and
-                        (force-statement)
-                        (have-message)
                     )
                 )
             )
@@ -153,15 +147,15 @@
         :parameters()
         :precondition
             (and
-                (force-statement)
                 (have-message)
+                (force-statement)
             )
         :effect
-            (labeled-oneof reset
+            (labeled-oneof         reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )

@@ -246,6 +246,7 @@ actions:
   complete:
     type: dialogue
     subtype: dialogue disambiguation
+    disable-fallback: true
     message_variants:
       - Ordering a pizza of size $size with $base as a base and $toppings as toppings, as well as a $drink and $side.
     condition:

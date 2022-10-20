@@ -145,6 +145,10 @@
         "fallback": {
             "variables": [],
             "utterances": []
+        },
+        "utter_dialogue_statement": {
+            "variables": [],
+            "utterances": []
         }
     },
     "actions": {
@@ -172,9 +176,9 @@
                         "updates": {
                             "base": {
                                 "value": "$base",
-                                "known": true,
+                                "variable": "base",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_base",
@@ -187,10 +191,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -202,7 +208,7 @@
             },
             "fallback_message_variants": [
                 "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
+                "Sorry, I didn't quite get that."
             ],
             "intents": {
                 "share_base": {
@@ -245,9 +251,9 @@
                         "updates": {
                             "toppings": {
                                 "value": "$toppings",
-                                "known": true,
+                                "variable": "toppings",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_toppings",
@@ -260,10 +266,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -275,7 +283,7 @@
             },
             "fallback_message_variants": [
                 "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
+                "Sorry, I didn't quite get that."
             ],
             "intents": {
                 "share_toppings": {
@@ -319,9 +327,9 @@
                         "updates": {
                             "size": {
                                 "value": "$size",
-                                "known": true,
+                                "variable": "size",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_size",
@@ -334,10 +342,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -349,7 +359,7 @@
             },
             "fallback_message_variants": [
                 "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
+                "Sorry, I didn't quite get that."
             ],
             "intents": {
                 "share_size": {
@@ -392,9 +402,9 @@
                         "updates": {
                             "drink": {
                                 "value": "$drink",
-                                "known": true,
+                                "variable": "drink",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_drink",
@@ -407,10 +417,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -422,7 +434,7 @@
             },
             "fallback_message_variants": [
                 "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
+                "Sorry, I didn't quite get that."
             ],
             "intents": {
                 "share_drink": {
@@ -465,9 +477,9 @@
                         "updates": {
                             "side": {
                                 "value": "$side",
-                                "known": true,
+                                "variable": "side",
                                 "certainty": "Known",
-                                "interpretation": "spel"
+                                "interpretation": "json"
                             }
                         },
                         "intent": "share_side",
@@ -480,10 +492,12 @@
                         "updates": {
                             "have-message": {
                                 "value": true,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
@@ -495,7 +509,7 @@
             },
             "fallback_message_variants": [
                 "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
+                "Sorry, I didn't quite get that."
             ],
             "intents": {
                 "share_side": {
@@ -517,6 +531,7 @@
         "complete": {
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
+            "disable-fallback": true,
             "message_variants": [
                 "Ordering a pizza of size $size with $base as a base and $toppings as toppings, as well as a $drink and $side."
             ],
@@ -554,34 +569,16 @@
                         "updates": {
                             "goal": {
                                 "value": true,
+                                "variable": "goal",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "thank",
                         "name": "complete_DETDUP_goal-EQ-valid",
                         "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "complete_DETDUP_goal-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
             },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "I couldn't quite get that."
-            ],
             "intents": {
                 "thank": {
                     "variables": [],
@@ -595,10 +592,6 @@
                         "thx",
                         "ty"
                     ]
-                },
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
                 }
             }
         },
@@ -622,14 +615,16 @@
                         "updates": {
                             "have-message": {
                                 "value": false,
+                                "variable": "have-message",
                                 "interpretation": "json"
                             },
                             "force-statement": {
                                 "value": false,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "fallback",
+                        "intent": "utter_dialogue_statement",
                         "name": "dialogue_statement_DETDUP_reset-EQ-lock",
                         "assignments": {}
                     }
@@ -637,7 +632,7 @@
             },
             "message_variants": [],
             "intents": {
-                "fallback": {
+                "utter_dialogue_statement": {
                     "variables": [],
                     "utterances": []
                 }

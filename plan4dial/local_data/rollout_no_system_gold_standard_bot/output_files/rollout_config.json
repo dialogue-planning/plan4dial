@@ -2,119 +2,115 @@
     "actions": {
         "get-base": {
             "condition": [
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_base()"
+                "(not (force-statement))",
+                "(not (know__base))"
             ],
             "effect": {
                 "get-base_DETDUP_set-base-EQ-valid": [
-                    "Atom have_base()"
+                    "(know__base)"
                 ],
                 "get-base_DETDUP_set-base-EQ-fallback": [
-                    "Atom force-statement()",
-                    "Atom have-message()"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "get-toppings": {
             "condition": [
-                "NegatedAtom have_toppings()",
-                "NegatedAtom force-statement()"
+                "(not (know__toppings))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-toppings_DETDUP_set-toppings-EQ-valid": [
-                    "Atom have_toppings()"
+                    "(know__toppings)"
                 ],
                 "get-toppings_DETDUP_set-toppings-EQ-fallback": [
-                    "Atom force-statement()",
-                    "Atom have-message()"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "get-size": {
             "condition": [
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_size()"
+                "(not (know__size))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-size_DETDUP_set-size-EQ-valid": [
-                    "Atom have_size()"
+                    "(know__size)"
                 ],
                 "get-size_DETDUP_set-size-EQ-fallback": [
-                    "Atom force-statement()",
-                    "Atom have-message()"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "get-drink": {
             "condition": [
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_drink()"
+                "(not (know__drink))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-drink_DETDUP_set-drink-EQ-valid": [
-                    "Atom have_drink()"
+                    "(know__drink)"
                 ],
                 "get-drink_DETDUP_set-drink-EQ-fallback": [
-                    "Atom force-statement()",
-                    "Atom have-message()"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "get-side": {
             "condition": [
-                "NegatedAtom force-statement()",
-                "NegatedAtom have_side()"
+                "(not (know__side))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-side_DETDUP_set-side-EQ-valid": [
-                    "Atom have_side()"
+                    "(know__side)"
                 ],
                 "get-side_DETDUP_set-side-EQ-fallback": [
-                    "Atom force-statement()",
-                    "Atom have-message()"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "complete": {
             "condition": [
-                "Atom have_size()",
-                "Atom have_side()",
-                "Atom have_base()",
-                "NegatedAtom force-statement()",
-                "Atom have_drink()",
-                "Atom have_toppings()"
+                "(know__size)",
+                "(not (force-statement))",
+                "(know__side)",
+                "(know__toppings)",
+                "(know__base)",
+                "(know__drink)"
             ],
             "effect": {
                 "complete_DETDUP_goal-EQ-valid": [
-                    "Atom goal()"
-                ],
-                "complete_DETDUP_goal-EQ-fallback": [
-                    "Atom force-statement()",
-                    "Atom have-message()"
+                    "(goal)"
                 ]
             }
         },
         "dialogue_statement": {
             "condition": [
-                "Atom force-statement()",
-                "Atom have-message()"
+                "(have-message)",
+                "(force-statement)"
             ],
             "effect": {
                 "dialogue_statement_DETDUP_reset-EQ-lock": [
-                    "NegatedAtom force-statement()",
-                    "NegatedAtom have-message()"
+                    "(not (have-message))",
+                    "(not (force-statement))"
                 ]
             }
         }
     },
     "initial_state": [
-        "NegatedAtom have_toppings()",
-        "NegatedAtom have_drink()",
-        "NegatedAtom have_size()",
-        "NegatedAtom have_base()",
-        "NegatedAtom have-message()",
-        "NegatedAtom force-statement()",
-        "NegatedAtom goal()",
-        "NegatedAtom have_side()"
+        "(not (know__size))",
+        "(not (know__side))",
+        "(not (force-statement))",
+        "(not (have-message))",
+        "(not (know__base))",
+        "(not (know__toppings))",
+        "(not (goal))",
+        "(not (know__drink))"
     ]
 }
