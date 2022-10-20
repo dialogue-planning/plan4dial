@@ -10,7 +10,7 @@
                 }
             },
             "known": {
-                "type": "fflag",
+                "type": "flag",
                 "init": false
             }
         },
@@ -80,7 +80,7 @@
             "type": "enum",
             "config": [
                 "Guac Grill",
-                "Alfredo's Pizza Caf\u00e9",
+                "Alfredo's Pizza Caf\u00c3\u00a9",
                 "Mandarin",
                 "Geneva Crepes"
             ],
@@ -744,7 +744,7 @@
                     {
                         "updates": {
                             "restaurant": {
-                                "value": "Alfredo's Pizza Caf\u00e9",
+                                "value": "Alfredo's Pizza Caf\u00c3\u00a9",
                                 "variable": "restaurant",
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -1081,23 +1081,6 @@
                     },
                     {
                         "updates": {
-                            "location": {
-                                "value": "$location",
-                                "variable": "location",
-                                "certainty": "Uncertain",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": {
-                            "location": "maybe-found"
-                        },
-                        "name": "slot-fill__get-location_DETDUP_validate-slot-fill-EQ-location_maybe-found",
-                        "assignments": {
-                            "$location": "maybe-found"
-                        }
-                    },
-                    {
-                        "updates": {
                             "have-message": {
                                 "value": true,
                                 "variable": "have-message",
@@ -1116,115 +1099,6 @@
                 ]
             },
             "intents": {
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
-            }
-        },
-        "clarify__location": {
-            "type": "dialogue",
-            "subtype": "dialogue disambiguation",
-            "message_variants": [
-                "I didn't quite get your location. Are you located in $location?"
-            ],
-            "condition": [
-                [
-                    "location",
-                    "Uncertain"
-                ],
-                [
-                    "force-statement",
-                    false
-                ],
-                [
-                    "forcing__get-allergy",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "validate-clarification",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "location": {
-                                "value": "$location",
-                                "variable": "location",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "confirm",
-                        "name": "clarify__location_DETDUP_validate-clarification-EQ-confirm",
-                        "assignments": {
-                            "$location": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "location": {
-                                "value": null,
-                                "variable": "location",
-                                "certainty": "Unknown",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "deny",
-                        "name": "clarify__location_DETDUP_validate-clarification-EQ-deny",
-                        "assignments": {
-                            "$location": "didnt-find"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "clarify__location_DETDUP_validate-clarification-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
-            "intents": {
-                "confirm": {
-                    "variables": [],
-                    "utterances": [
-                        "yes",
-                        "yeah",
-                        "that's it",
-                        "Y",
-                        "mhm",
-                        "confirm",
-                        "yes please"
-                    ]
-                },
-                "deny": {
-                    "variables": [],
-                    "utterances": [
-                        "no",
-                        "not at all",
-                        "that's not what i meant",
-                        "absolutely not",
-                        "i don't want that",
-                        "nah",
-                        "no thanks",
-                        "no thank you"
-                    ]
-                },
                 "fallback": {
                     "variables": [],
                     "utterances": []

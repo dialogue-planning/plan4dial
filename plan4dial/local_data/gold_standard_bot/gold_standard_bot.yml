@@ -8,7 +8,7 @@ context_variables:
       method: spacy
       config_method: gpe
     known:
-      type: fflag
+      type: flag
       init: false
   # user's preferred cuisine; must map to one of the 4 options
   cuisine:
@@ -174,10 +174,6 @@ actions:
         - Where are you located?
       fallback_message_variants:
         - Sorry, that isn't a valid location.
-      config_entities:
-        location:
-          clarify_message_variants:
-            - I didn't quite get your location. Are you located in $location?
       additional_updates:
         - outcome:
             location:
