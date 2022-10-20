@@ -1,0 +1,421 @@
+{
+    "plan": {
+        "init": "6",
+        "goal": "0",
+        "nodes": {
+            "0": {
+                "expected_successor": false,
+                "action": "---",
+                "state": "0x1607f00",
+                "distance": 0,
+                "is_relevant": 1,
+                "is_goal": 1,
+                "is_sc": 1,
+                "successors": []
+            },
+            "1": {
+                "expected_successor": "0",
+                "action": "complete",
+                "state": "0x160e2f0",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "complete_DETDUP_goal-EQ-fallback",
+                        "successor_id": "7"
+                    },
+                    {
+                        "outcome_label": "complete_DETDUP_goal-EQ-valid",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "7": {
+                "expected_successor": "1",
+                "action": "dialogue_statement",
+                "state": "0x1614b10",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "1"
+                    }
+                ]
+            },
+            "10": {
+                "expected_successor": "4",
+                "action": "dialogue_statement",
+                "state": "0x1615460",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "4"
+                    }
+                ]
+            },
+            "11": {
+                "expected_successor": "5",
+                "action": "dialogue_statement",
+                "state": "0x1615280",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "5"
+                    }
+                ]
+            },
+            "12": {
+                "expected_successor": "6",
+                "action": "dialogue_statement",
+                "state": "0x1612780",
+                "distance": 7,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "6"
+                    }
+                ]
+            },
+            "8": {
+                "expected_successor": "2",
+                "action": "dialogue_statement",
+                "state": "0x16156d0",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "2"
+                    }
+                ]
+            },
+            "9": {
+                "expected_successor": "3",
+                "action": "dialogue_statement",
+                "state": "0x16160f0",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "3"
+                    }
+                ]
+            },
+            "2": {
+                "expected_successor": "1",
+                "action": "get-toppings",
+                "state": "0x1612300",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-toppings_DETDUP_set-toppings-EQ-fallback",
+                        "successor_id": "8"
+                    },
+                    {
+                        "outcome_label": "get-toppings_DETDUP_set-toppings-EQ-valid",
+                        "successor_id": "1"
+                    }
+                ]
+            },
+            "3": {
+                "expected_successor": "2",
+                "action": "get-size",
+                "state": "0x160e920",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-size_DETDUP_set-size-EQ-fallback",
+                        "successor_id": "9"
+                    },
+                    {
+                        "outcome_label": "get-size_DETDUP_set-size-EQ-valid",
+                        "successor_id": "2"
+                    }
+                ]
+            },
+            "4": {
+                "expected_successor": "3",
+                "action": "get-side",
+                "state": "0x1616b20",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-side_DETDUP_set-side-EQ-fallback",
+                        "successor_id": "10"
+                    },
+                    {
+                        "outcome_label": "get-side_DETDUP_set-side-EQ-valid",
+                        "successor_id": "3"
+                    }
+                ]
+            },
+            "5": {
+                "expected_successor": "4",
+                "action": "get-drink",
+                "state": "0x1616ca0",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-drink_DETDUP_set-drink-EQ-fallback",
+                        "successor_id": "11"
+                    },
+                    {
+                        "outcome_label": "get-drink_DETDUP_set-drink-EQ-valid",
+                        "successor_id": "4"
+                    }
+                ]
+            },
+            "6": {
+                "expected_successor": "5",
+                "action": "get-base",
+                "state": "0x16171e0",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-base_DETDUP_set-base-EQ-fallback",
+                        "successor_id": "12"
+                    },
+                    {
+                        "outcome_label": "get-base_DETDUP_set-base-EQ-valid",
+                        "successor_id": "5"
+                    }
+                ]
+            }
+        },
+        "edges": [
+            [
+                "1",
+                ">",
+                "7"
+            ],
+            [
+                "1",
+                ">",
+                "0"
+            ],
+            [
+                "7",
+                ">",
+                "1"
+            ],
+            [
+                "10",
+                ">",
+                "4"
+            ],
+            [
+                "11",
+                ">",
+                "5"
+            ],
+            [
+                "12",
+                ">",
+                "6"
+            ],
+            [
+                "8",
+                ">",
+                "2"
+            ],
+            [
+                "9",
+                ">",
+                "3"
+            ],
+            [
+                "2",
+                ">",
+                "8"
+            ],
+            [
+                "2",
+                ">",
+                "1"
+            ],
+            [
+                "3",
+                ">",
+                "9"
+            ],
+            [
+                "3",
+                ">",
+                "2"
+            ],
+            [
+                "4",
+                ">",
+                "10"
+            ],
+            [
+                "4",
+                ">",
+                "3"
+            ],
+            [
+                "5",
+                ">",
+                "11"
+            ],
+            [
+                "5",
+                ">",
+                "4"
+            ],
+            [
+                "6",
+                ">",
+                "12"
+            ],
+            [
+                "6",
+                ">",
+                "5"
+            ]
+        ],
+        "states": {
+            "0x1607f00": [
+                "Atom goal()"
+            ],
+            "0x160e2f0": [
+                "Atom know__base()",
+                "Atom know__drink()",
+                "Atom know__side()",
+                "Atom know__size()",
+                "Atom know__toppings()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1614b10": [
+                "Atom know__base()",
+                "Atom know__drink()",
+                "Atom know__side()",
+                "Atom know__size()",
+                "Atom know__toppings()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1615460": [
+                "Atom know__base()",
+                "Atom know__drink()",
+                "NegatedAtom know__side()",
+                "NegatedAtom know__size()",
+                "NegatedAtom know__toppings()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1615280": [
+                "Atom know__base()",
+                "NegatedAtom know__drink()",
+                "NegatedAtom know__side()",
+                "NegatedAtom know__size()",
+                "NegatedAtom know__toppings()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1612780": [
+                "NegatedAtom know__base()",
+                "NegatedAtom know__drink()",
+                "NegatedAtom know__side()",
+                "NegatedAtom know__size()",
+                "NegatedAtom know__toppings()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x16156d0": [
+                "Atom know__base()",
+                "Atom know__drink()",
+                "Atom know__side()",
+                "Atom know__size()",
+                "NegatedAtom know__toppings()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x16160f0": [
+                "Atom know__base()",
+                "Atom know__drink()",
+                "Atom know__side()",
+                "NegatedAtom know__size()",
+                "NegatedAtom know__toppings()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1612300": [
+                "Atom know__base()",
+                "Atom know__drink()",
+                "Atom know__side()",
+                "Atom know__size()",
+                "NegatedAtom know__toppings()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x160e920": [
+                "Atom know__base()",
+                "Atom know__drink()",
+                "Atom know__side()",
+                "NegatedAtom know__size()",
+                "NegatedAtom know__toppings()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1616b20": [
+                "Atom know__base()",
+                "Atom know__drink()",
+                "NegatedAtom know__side()",
+                "NegatedAtom know__size()",
+                "NegatedAtom know__toppings()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1616ca0": [
+                "Atom know__base()",
+                "NegatedAtom know__drink()",
+                "NegatedAtom know__side()",
+                "NegatedAtom know__size()",
+                "NegatedAtom know__toppings()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x16171e0": [
+                "NegatedAtom know__base()",
+                "NegatedAtom know__drink()",
+                "NegatedAtom know__side()",
+                "NegatedAtom know__size()",
+                "NegatedAtom know__toppings()",
+                "NegatedAtom force-statement()"
+            ]
+        }
+    }
+}
