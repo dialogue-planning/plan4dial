@@ -3,7 +3,9 @@ Tutorial
  
 Requirements
 ------------
-**Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.**  
+**Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.**
+
+**Note: Please use a version of Python < 3.10 because of issues with Rasa compatibility**.  
 
 | For ease of use and reducing the chance of import or versioning errors, it is recommended that you use a virtual environment such as ``venv``.
 | Run ``pip install -r requirements.txt`` to install the necessary libraries before using.  
