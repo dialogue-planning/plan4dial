@@ -1,14 +1,38 @@
 FROM python:3.8
-WORKDIR /home/usr/src/app/
+
+WORKDIR /root
+COPY install-apptainer-ubuntu.sh /root/install-apptainer-ubuntu.sh
+RUN bash install-apptainer-ubuntu.sh 1.0.3 1.18.3 \
+    && apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
+    bash-completion \
+    ca-certificates \
+    git \
+    libseccomp-dev \
+    python3 \
+    python3-pip \
+    python3-venv \
+    tzdata \
+    unzip \
+    vim \
+    wget \
+    build-essential \
+    gcc-x86-64-linux-gnu \
+    python3-dev \
+    g++ \
+    cmake \
+    make \
+    && rm -rf /var/lib/apt/lists/*
+
+
+WORKDIR /root/app/
+
 COPY requirements.txt .
-# COPY . .
 
 RUN pip install -r requirements.txt
 
 RUN python -m spacy download en_core_web_md
-# make a directory for the rbp files
-RUN mkdir -p /home/vivi/rbp/prp
 
-RUN chmod -R u=rwx,g=rwx,o=rwx /home/vivi/rbp
-# RUN chown root /home/vivi/rbp/prp
-# USER newuser
+
+COPY rbp.sif /root/rbp.sif
+RUN chmod +x /root/rbp.sif
