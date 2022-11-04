@@ -5,7 +5,7 @@ Generates a chatbot given a simple YAML configuration using automated planning f
 ## Documentation
 https://qumulab.github.io/plan4dial/
 
-## Requirements
+## Requirements - Local Install
 **Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.**  
 For ease of use and reducing the chance of import or versioning errors, it is recommended that you use a virtual environment such as `venv`.  
 Run `pip install -r requirements.txt` to install the necessary libraries before using.  
@@ -14,7 +14,7 @@ Run `python -m spacy download en_core_web_md` to download the appropriate Spacy 
 ## Requirements - Docker
 To ensure development works identically accross systems, Docker should be used to run Plan4Dial.  
 Inside the repository, follow these steps to run with Docker:
-1. Retrieve a copy of the rbp.sif executable from Christian Muise (christian.muise@queensu.ca) and place this in the cloned repository
+1. Retrieve a copy of the rbp.sif executable from Christian Muise (christian.muise@queensu.ca) and place this in the cloned repository.
 2. Build the docker image from Dockerfile: `docker build -t plan4dial:latest .`
 3. Run a bash session inside a new docker container: `docker run -it --name plan4dial --rm --volume $(pwd)/plan4dial:/root/app/plan4dial --net=host --privileged plan4dial:latest sh`
 4. Run the command in the bash session: `python plan4dial/main.py`
