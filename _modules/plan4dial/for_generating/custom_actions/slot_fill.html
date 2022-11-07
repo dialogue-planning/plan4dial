@@ -56,9 +56,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      <li>plan4dial.for_generating.custom_actions.slot_fill</li>
+      <li><a href="../../../../index.html" class="icon icon-home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">plan4dial.for_generating.custom_actions.slot_fill</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -217,7 +217,7 @@
     <span class="n">entity_combos</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">entity_combos</span><span class="p">)</span>
     <span class="c1"># instantiate the action</span>
     <span class="n">action</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">action</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">action</span><span class="p">[</span><span class="s2">&quot;subtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span><span class="p">,</span> <span class="s2">&quot;dialogue disambiguation&quot;</span>
+    <span class="n">action</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span>
     <span class="n">action</span><span class="p">[</span><span class="s2">&quot;message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message_variants</span>
     <span class="k">if</span> <span class="n">fallback_message_variants</span><span class="p">:</span>
         <span class="n">action</span><span class="p">[</span><span class="s2">&quot;fallback_message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fallback_message_variants</span>
