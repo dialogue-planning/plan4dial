@@ -1,0 +1,201 @@
+---
+name: order-pizza
+
+context_variables:
+  informed_user:
+    type: flag
+    init: false
+  available-7:
+    type: flag
+    init: false 
+  available-8:
+    type: flag
+    init: false 
+  available-9:
+    type: flag
+    init: false
+  attending-7:
+    type: flag
+    init: false 
+  attending-8:
+    type: flag
+    init: false 
+  attending-9:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Planning Representations and Scheduling
+      - Verfication
+  goal:
+    type: flag
+    init: false
+intents:
+  attend-social:
+    utterances:
+      - I want to attend the social.
+      - I want to socialize with my ICAPS peers.
+      - The social will be good for networking, so I definitely want to go!
+  prefer-topic:
+    variables:
+      - attending-9
+    utterances:
+      - $attending-9
+      - The talk on $attending-9 seems really interesting!
+      - I would definitely rather check out the $attending-9 talk.
+      - I really want to learn about $attending-9.
+      - I would prefer to check out the $attending-9 panel!
+  not-interested:
+    utterances:
+      - I am not interested in any of these talks.
+      - I think I will skip these panels.
+      - I'll take a break during this panel.
+      - I would rather take a break.
+      - I think I will take a break and grab some food.
+      - I would prefer to take a breather before getting back to the conference.
+actions:
+  start:
+    disable-fallback: true
+    type: dialogue
+    message_variants:
+      - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
+        I will suggest the best talks for you based on what topics you are the most interested in.
+    condition:
+      informed_user:
+        value: false
+    effect:
+      start:
+        oneof:
+          outcomes:
+            inform:
+              updates:
+                informed_user:
+                  value: true
+              intent:
+  get-available-7:
+    type: custom
+    subtype: entity_yes_no
+    parameters:
+      action_name: get-available-7
+      message_variants:
+        - Are you available at 7 UTC?
+        - Do you want to attend the conference at 7 UTC?
+      entity: available-7
+  get-available-8:
+    type: custom
+    subtype: entity_yes_no
+    parameters:
+      action_name: get-available-8
+      message_variants:
+        - Are you available at 8 UTC?
+        - Do you want to attend the conference at 8 UTC?
+      entity: available-8
+      additional_conditions:
+        available-7:
+          known: true
+  get-available-9:
+    type: custom
+    subtype: entity_yes_no
+    parameters:
+      action_name: get-available-9
+      message_variants:
+        - Are you available at 9 UTC?
+        - Do you want to attend the conference at 9 UTC?
+      entity: available-9
+      additional_conditions:
+        available-9:
+          known: true
+  # get-available-10:
+  #   type: custom
+  #   subtype: entity_yes_no
+  #   parameters:
+  #     action_name: get-available-10
+  #     message_variants:
+  #       - Are you available at 10 UTC?
+  #       - Do you want to attend the conference at 10 UTC?
+  #     entity: available-10
+  #     additional_conditions:
+  #       available-9:
+  #         known: true
+  # get-available-11:
+  #   type: custom
+  #   subtype: entity_yes_no
+  #   parameters:
+  #     action_name: get-available-11
+  #     message_variants:
+  #       - Are you available at 11 UTC?
+  #       - Do you want to attend the conference at 11 UTC?
+  #     entity: available-11
+  #     additional_conditions:
+  #       available-10:
+  #         known: true
+  get-attending-7:
+    type: custom
+    subtype: entity_yes_no
+    parameters:
+      action_name: get-attending-7
+      message_variants:
+        - Are you interested in attending Malte's Invited Talk on Factored Transition Systems?
+      entity: attending-7
+      additional_conditions:
+        available-7:
+          value: true
+  get-attending-8:
+    type: custom
+    subtype: entity_yes_no
+    parameters:
+      action_name: get-attending-8
+      message_variants:
+        - Are you interested in attending Malte's Invited Talk on Factored Transition Systems?
+      entity: attending-8
+      additional_conditions:
+        available-8:
+          value: true
+  get-attending-9:
+    type: dialogue
+    message_variants:
+      - Are you interested in either Planning Representations and Scheduling or Verification?
+    condition:
+      attending-9:
+        known: false
+      available-9:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-9:
+                  value: $attending-9
+                  known: true
+              intent: prefer-topic
+            do-not-attend:
+              updates:
+                attending-9:
+                  value: null
+                  known: true
+              intent: not_interested
+  complete:
+    disable-fallback: true
+    type: dialogue
+    condition:
+      attending-7:
+        known: true
+      attending-8:
+        known: true
+      attending-9:
+        known: true
+    message_variants:
+      - $attending-7, $attending-8, $attending-9  
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            finish:
+              updates:
+                goal:
+                  value: true
+                  known: true
+              intent:

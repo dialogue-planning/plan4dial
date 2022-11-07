@@ -1,0 +1,48 @@
+nlu:
+- examples: '- I want to attend the social.
+
+    - I want to socialize with my ICAPS peers.
+
+    - The social will be good for networking, so I definitely want to go!'
+  intent: attend-social
+- examples: '- [Planning Representations and Scheduling]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"}
+
+    - The talk on [Planning Representations and Scheduling]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"} seems really interesting!
+
+    - I would definitely rather check out the [Planning Representations and Scheduling]{"entity":
+    "attending-9", "value": "Planning Representations and Scheduling"} talk.
+
+    - I really want to learn about [Planning Representations and Scheduling]{"entity":
+    "attending-9", "value": "Planning Representations and Scheduling"}.
+
+    - I would prefer to check out the [Planning Representations and Scheduling]{"entity":
+    "attending-9", "value": "Planning Representations and Scheduling"} panel!
+
+    - [Verfication]{"entity": "attending-9", "value": "Verfication"}
+
+    - The talk on [Verfication]{"entity": "attending-9", "value": "Verfication"} seems
+    really interesting!
+
+    - I would definitely rather check out the [Verfication]{"entity": "attending-9",
+    "value": "Verfication"} talk.
+
+    - I really want to learn about [Verfication]{"entity": "attending-9", "value":
+    "Verfication"}.
+
+    - I would prefer to check out the [Verfication]{"entity": "attending-9", "value":
+    "Verfication"} panel!'
+  intent: prefer-topic
+- examples: '- I am not interested in any of these talks.
+
+    - I think I will skip these panels.
+
+    - I''ll take a break during this panel.
+
+    - I would rather take a break.
+
+    - I think I will take a break and grab some food.
+
+    - I would prefer to take a breather before getting back to the conference.'
+  intent: not-interested

@@ -1,0 +1,726 @@
+{
+    "name": "order-pizza",
+    "context_variables": {
+        "informed_user": {
+            "type": "flag",
+            "config": false
+        },
+        "available-7": {
+            "type": "flag",
+            "config": false
+        },
+        "available-8": {
+            "type": "flag",
+            "config": false
+        },
+        "available-9": {
+            "type": "flag",
+            "config": false
+        },
+        "attending-7": {
+            "type": "flag",
+            "config": false
+        },
+        "attending-8": {
+            "type": "flag",
+            "config": false
+        },
+        "attending-9": {
+            "type": "enum",
+            "config": [
+                "Planning Representations and Scheduling",
+                "Verfication"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "goal": {
+            "type": "flag",
+            "config": false
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "attend-social": {
+            "variables": [],
+            "utterances": [
+                "I want to attend the social.",
+                "I want to socialize with my ICAPS peers.",
+                "The social will be good for networking, so I definitely want to go!"
+            ]
+        },
+        "prefer-topic": {
+            "variables": [
+                "$attending-9"
+            ],
+            "utterances": [
+                "$attending-9",
+                "The talk on $attending-9 seems really interesting!",
+                "I would definitely rather check out the $attending-9 talk.",
+                "I really want to learn about $attending-9.",
+                "I would prefer to check out the $attending-9 panel!"
+            ]
+        },
+        "not-interested": {
+            "variables": [],
+            "utterances": [
+                "I am not interested in any of these talks.",
+                "I think I will skip these panels.",
+                "I'll take a break during this panel.",
+                "I would rather take a break.",
+                "I think I will take a break and grab some food.",
+                "I would prefer to take a breather before getting back to the conference."
+            ]
+        },
+        "fallback": {
+            "variables": [],
+            "utterances": []
+        },
+        "utter_dialogue_statement": {
+            "variables": [],
+            "utterances": []
+        }
+    },
+    "actions": {
+        "start": {
+            "disable-fallback": true,
+            "type": "dialogue",
+            "message_variants": [
+                "Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend. I will suggest the best talks for you based on what topics you are the most interested in."
+            ],
+            "condition": [
+                [
+                    "informed_user",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "start",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "informed_user": {
+                                "value": true,
+                                "variable": "informed_user",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": null,
+                        "name": "start_DETDUP_start-EQ-inform",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {}
+        },
+        "get-attending-9": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you interested in either Planning Representations and Scheduling or Verification?"
+            ],
+            "condition": [
+                [
+                    "attending-9",
+                    "Unknown"
+                ],
+                [
+                    "available-9",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "attending-9": {
+                                "value": "$attending-9",
+                                "variable": "attending-9",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "prefer-topic",
+                        "name": "get-attending-9_DETDUP_get-response-EQ-choose-preference",
+                        "assignments": {
+                            "$attending-9": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "attending-9": {
+                                "value": null,
+                                "variable": "attending-9",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "not_interested",
+                        "name": "get-attending-9_DETDUP_get-response-EQ-do-not-attend",
+                        "assignments": {
+                            "$attending-9": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-attending-9_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "prefer-topic": {
+                    "variables": [
+                        "$attending-9"
+                    ],
+                    "utterances": [
+                        "$attending-9",
+                        "The talk on $attending-9 seems really interesting!",
+                        "I would definitely rather check out the $attending-9 talk.",
+                        "I really want to learn about $attending-9.",
+                        "I would prefer to check out the $attending-9 panel!"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "complete": {
+            "disable-fallback": true,
+            "type": "dialogue",
+            "condition": [
+                [
+                    "attending-7",
+                    "Known"
+                ],
+                [
+                    "attending-8",
+                    "Known"
+                ],
+                [
+                    "attending-9",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "message_variants": [
+                "$attending-7, $attending-8, $attending-9"
+            ],
+            "effect": {
+                "global-outcome-name": "finish",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": null,
+                        "name": "complete_DETDUP_finish-EQ-finish",
+                        "assignments": {
+                            "$goal": "found"
+                        }
+                    }
+                ]
+            },
+            "intents": {}
+        },
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_dialogue_statement",
+                        "name": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "intents": {
+                "utter_dialogue_statement": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "slot-fill__get-available-7": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you available at 7 UTC?",
+                "Do you want to attend the conference at 7 UTC?"
+            ],
+            "condition": [
+                [
+                    "available-7",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "available-7": {
+                                "value": true,
+                                "variable": "available-7",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get-available-7_DETDUP_get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$available-7": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "available-7": {
+                                "value": false,
+                                "variable": "available-7",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get-available-7_DETDUP_get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$available-7": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-available-7_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "slot-fill__get-available-8": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you available at 8 UTC?",
+                "Do you want to attend the conference at 8 UTC?"
+            ],
+            "condition": [
+                [
+                    "available-8",
+                    "Unknown"
+                ],
+                [
+                    "available-7",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "available-8": {
+                                "value": true,
+                                "variable": "available-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get-available-8_DETDUP_get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$available-8": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "available-8": {
+                                "value": false,
+                                "variable": "available-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get-available-8_DETDUP_get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$available-8": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-available-8_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "slot-fill__get-available-9": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you available at 9 UTC?",
+                "Do you want to attend the conference at 9 UTC?"
+            ],
+            "condition": [
+                [
+                    "available-9",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "available-9": {
+                                "value": true,
+                                "variable": "available-9",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get-available-9_DETDUP_get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$available-9": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "available-9": {
+                                "value": false,
+                                "variable": "available-9",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get-available-9_DETDUP_get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$available-9": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-available-9_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "slot-fill__get-attending-7": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you interested in attending Malte's Invited Talk on Factored Transition Systems?"
+            ],
+            "condition": [
+                [
+                    "attending-7",
+                    "Unknown"
+                ],
+                [
+                    "available-7",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "attending-7": {
+                                "value": true,
+                                "variable": "attending-7",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get-attending-7_DETDUP_get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$attending-7": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "attending-7": {
+                                "value": false,
+                                "variable": "attending-7",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get-attending-7_DETDUP_get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$attending-7": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-attending-7_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "slot-fill__get-attending-8": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you interested in attending Malte's Invited Talk on Factored Transition Systems?"
+            ],
+            "condition": [
+                [
+                    "attending-8",
+                    "Unknown"
+                ],
+                [
+                    "available-8",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "attending-8": {
+                                "value": true,
+                                "variable": "attending-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get-attending-8_DETDUP_get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$attending-8": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "attending-8": {
+                                "value": false,
+                                "variable": "attending-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get-attending-8_DETDUP_get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$attending-8": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-attending-8_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        }
+    }
+}
