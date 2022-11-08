@@ -47,6 +47,25 @@ context_variables:
     type: flag
     init: false
 intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
   attend-social:
     utterances:
       - I want to attend the social.

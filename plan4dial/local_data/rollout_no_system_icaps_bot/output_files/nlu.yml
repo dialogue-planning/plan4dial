@@ -1,4 +1,34 @@
 nlu:
+- examples: '- yes
+
+    - yeah
+
+    - that''s it
+
+    - Y
+
+    - mhm
+
+    - confirm
+
+    - yes please'
+  intent: confirm
+- examples: '- no
+
+    - not at all
+
+    - that''s not what i meant
+
+    - absolutely not
+
+    - i don''t want that
+
+    - nah
+
+    - no thanks
+
+    - no thank you'
+  intent: deny
 - examples: '- I want to attend the social.
 
     - I want to socialize with my ICAPS peers.

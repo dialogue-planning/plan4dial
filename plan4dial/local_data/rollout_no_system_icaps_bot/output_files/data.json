@@ -70,6 +70,31 @@
         }
     },
     "intents": {
+        "confirm": {
+            "variables": [],
+            "utterances": [
+                "yes",
+                "yeah",
+                "that's it",
+                "Y",
+                "mhm",
+                "confirm",
+                "yes please"
+            ]
+        },
+        "deny": {
+            "variables": [],
+            "utterances": [
+                "no",
+                "not at all",
+                "that's not what i meant",
+                "absolutely not",
+                "i don't want that",
+                "nah",
+                "no thanks",
+                "no thank you"
+            ]
+        },
         "attend-social": {
             "variables": [],
             "utterances": [
@@ -410,6 +435,31 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
                 "fallback": {
                     "variables": [],
                     "utterances": []
@@ -501,6 +551,31 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
                 "fallback": {
                     "variables": [],
                     "utterances": []
@@ -588,6 +663,31 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
                 "fallback": {
                     "variables": [],
                     "utterances": []
@@ -671,6 +771,31 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
                 "fallback": {
                     "variables": [],
                     "utterances": []
@@ -754,6 +879,31 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
                 "fallback": {
                     "variables": [],
                     "utterances": []
