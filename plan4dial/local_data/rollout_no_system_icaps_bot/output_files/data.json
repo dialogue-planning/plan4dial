@@ -219,7 +219,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "not_interested",
+                        "intent": "not-interested",
                         "name": "get-attending-9_DETDUP_get-response-EQ-do-not-attend",
                         "assignments": {
                             "$attending-9": "found"
@@ -259,6 +259,17 @@
                         "I would definitely rather check out the $attending-9 talk.",
                         "I really want to learn about $attending-9.",
                         "I would prefer to check out the $attending-9 panel!"
+                    ]
+                },
+                "not-interested": {
+                    "variables": [],
+                    "utterances": [
+                        "I am not interested in any of these talks.",
+                        "I think I will skip these panels.",
+                        "I'll take a break during this panel.",
+                        "I would rather take a break.",
+                        "I think I will take a break and grab some food.",
+                        "I would prefer to take a breather before getting back to the conference."
                     ]
                 },
                 "fallback": {
