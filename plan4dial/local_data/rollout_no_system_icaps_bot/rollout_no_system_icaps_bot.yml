@@ -151,13 +151,13 @@ actions:
         - Do you want to attend the conference at 9 UTC?
       entity: available-9
       additional_conditions:
-        available-9:
+        available-8:
           known: true
       additional_updates:
         deny_outcome:
           attending-9:
             known: true
-            value: false
+            value: null
   # get-available-10:
   #   type: custom
   #   subtype: entity_yes_no
@@ -237,9 +237,8 @@ actions:
         known: true
       attending-8:
         known: true
-      #attending-9:
-      # available-9:
-      #   known: true
+      attending-9:
+        known: true
     message_variants:
       - $attending-7, $attending-8, $attending-9  
     effect:

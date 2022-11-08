@@ -24,8 +24,8 @@
         :parameters()
         :precondition
             (and
-                (not (informed-user))
                 (not (force-statement))
+                (not (informed-user))
             )
         :effect
             (labeled-oneof         start
@@ -41,8 +41,8 @@
         :precondition
             (and
                 (available-9)
-                (not (know__attending-9))
                 (not (force-statement))
+                (not (know__attending-9))
             )
         :effect
             (labeled-oneof         get-response
@@ -68,9 +68,10 @@
         :parameters()
         :precondition
             (and
-                (know__attending-7)
                 (know__attending-8)
+                (know__attending-9)
                 (not (force-statement))
+                (know__attending-7)
             )
         :effect
             (labeled-oneof         finish
@@ -103,23 +104,23 @@
         :precondition
             (and
                 (informed-user)
-                (not (know__available-7))
                 (not (force-statement))
+                (not (know__available-7))
             )
         :effect
             (labeled-oneof         get-response
                 (outcome confirm_outcome
                     (and
-                        (know__available-7)
                         (available-7)
+                        (know__available-7)
                     )
                 )
                 (outcome deny_outcome
                     (and
+                        (not (attending-7))
+                        (know__available-7)
                         (know__attending-7)
                         (not (available-7))
-                        (know__available-7)
-                        (not (attending-7))
                     )
                 )
                 (outcome fallback
@@ -135,8 +136,8 @@
         :precondition
             (and
                 (not (force-statement))
-                (not (know__available-8))
                 (know__available-7)
+                (not (know__available-8))
             )
         :effect
             (labeled-oneof         get-response
@@ -166,8 +167,9 @@
         :parameters()
         :precondition
             (and
+                (not (know__available-9))
+                (know__available-8)
                 (not (force-statement))
-                (know__available-9)
             )
         :effect
             (labeled-oneof         get-response
@@ -179,9 +181,9 @@
                 )
                 (outcome deny_outcome
                     (and
+                        (know__attending-9)
                         (not (available-9))
                         (know__available-9)
-                        (know__attending-9)
                     )
                 )
                 (outcome fallback
@@ -196,16 +198,16 @@
         :parameters()
         :precondition
             (and
-                (not (know__attending-7))
                 (not (force-statement))
                 (available-7)
+                (not (know__attending-7))
             )
         :effect
             (labeled-oneof         get-response
                 (outcome confirm_outcome
                     (and
-                        (know__attending-7)
                         (attending-7)
+                        (know__attending-7)
                     )
                 )
                 (outcome deny_outcome
@@ -234,8 +236,8 @@
             (labeled-oneof         get-response
                 (outcome confirm_outcome
                     (and
-                        (know__attending-8)
                         (attending-8)
+                        (know__attending-8)
                     )
                 )
                 (outcome deny_outcome

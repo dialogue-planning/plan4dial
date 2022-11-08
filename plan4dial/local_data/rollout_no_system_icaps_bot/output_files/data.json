@@ -280,6 +280,10 @@
                     "Known"
                 ],
                 [
+                    "attending-9",
+                    "Known"
+                ],
+                [
                     "force-statement",
                     false
                 ]
@@ -591,6 +595,10 @@
             "condition": [
                 [
                     "available-9",
+                    "Unknown"
+                ],
+                [
+                    "available-8",
                     "Known"
                 ],
                 [
@@ -626,7 +634,7 @@
                                 "interpretation": "json"
                             },
                             "attending-9": {
-                                "value": false,
+                                "value": null,
                                 "variable": "attending-9",
                                 "certainty": "Known",
                                 "interpretation": "json"
