@@ -13,7 +13,7 @@ from for_generating.parsers.json_config_parser import convert_yaml
 from for_generating.parsers.pddl_parser import parse_to_pddl
 from for_generating.parsers.parse_for_rasa import make_nlu_file
 from for_generating.parsers.pddl_for_rollout import rollout_config
-from rasa.model_training import train_nlu
+# from rasa.model_training import train_nlu
 
 
 def generate_files(
@@ -58,21 +58,21 @@ def generate_files(
     with open(problem_str, "w") as writer:
         writer.write(problem)
 
-    # train rasa NLU model
-    if train:
-        writer = open(f"{output_folder}/nlu.yml", "w")
-        # parse for rasa. need to use the original YAML because some of the NLU
-        # information is lost in the JSON configuration.
-        yaml.dump(
-            make_nlu_file(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader)),
-            writer,
-        )
-        train_nlu(
-            config="./plan4dial/for_generating/nlu_config.yml",
-            nlu_data=f"{output_folder}/nlu.yml",
-            output=f"{output_folder}",
-            fixed_model_name="nlu_model",
-        )
+    # # train rasa NLU model
+    # if train:
+    #     writer = open(f"{output_folder}/nlu.yml", "w")
+    #     # parse for rasa. need to use the original YAML because some of the NLU
+    #     # information is lost in the JSON configuration.
+    #     yaml.dump(
+    #         make_nlu_file(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader)),
+    #         writer,
+    #     )
+    #     train_nlu(
+    #         config="./plan4dial/for_generating/nlu_config.yml",
+    #         nlu_data=f"{output_folder}/nlu.yml",
+    #         output=f"{output_folder}",
+    #         fixed_model_name="nlu_model",
+    #     )
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
     subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
 
@@ -93,9 +93,9 @@ def generate_files(
 
 
 if __name__ == "__main__":
-    dirname = "./plan4dial/local_data/gold_standard_bot"
+    dirname = "./plan4dial/local_data/rollout_no_system_icaps_bot"
     generate_files(
-        f"{dirname}/gold_standard_bot.yml",
+        f"{dirname}/rollout_no_system_icaps_bot.yml",
         f"{dirname}/output_files",
         "/home/vivi/rbp",
         True,

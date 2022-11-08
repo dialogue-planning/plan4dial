@@ -6,9 +6,10 @@ def entity_yes_no(
     action_name: str,
     message_variants: List[str],
     entity: str,
-    additional_conditions: Dict = None,
     confirm_intent: str = "confirm",
     deny_intent: str = "deny",
+    additional_conditions: Dict = None,
+    additional_updates: Dict = None
 ):
     # instantiate the action
     action = {}
@@ -17,18 +18,25 @@ def entity_yes_no(
     action["condition"] = {entity: {"known": False}}
     if additional_conditions:
         action["condition"].update(additional_conditions)
+    confirm_outcome_upd = {entity: {"known": True, "value": True}}
+    deny_outcome_upd = {entity: {"known": True, "value": False}}
+    if additional_updates:
+        if "confirm_outcome" in additional_updates:
+            confirm_outcome_upd.update(additional_updates["confirm_outcome"])
+        if "deny_outcome" in additional_updates:
+            deny_outcome_upd.update(additional_updates["deny_outcome"])
     action["effect"] = {
         "get-response": {
             "oneof": {
                 "outcomes": {
                     "confirm_outcome": {
-                        "updates": {entity: {"known": True, "value": True}},
+                        "updates": confirm_outcome_upd,
                         "intent": confirm_intent,
                     },
                     "deny_outcome": {
-                        "updates": {entity: {"known": True, "value": False}},
+                        "updates": deny_outcome_upd,
                         "intent": deny_intent,
-                    },
+                    }
                 }
             }
         }

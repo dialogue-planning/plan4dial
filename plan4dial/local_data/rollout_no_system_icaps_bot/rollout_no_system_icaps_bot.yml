@@ -1,25 +1,40 @@
 ---
-name: order-pizza
+name: icaps_bot
 
 context_variables:
-  informed_user:
+  informed-user:
     type: flag
     init: false
   available-7:
     type: flag
-    init: false 
+    init: false
+    known:
+      type: flag
+      init: false
   available-8:
     type: flag
-    init: false 
+    init: false
+    known:
+      type: flag
+      init: false
   available-9:
     type: flag
     init: false
+    known:
+      type: flag
+      init: false
   attending-7:
     type: flag
-    init: false 
+    init: false
+    known:
+      type: flag
+      init: false
   attending-8:
     type: flag
-    init: false 
+    init: false
+    known:
+      type: flag
+      init: false
   attending-9:
     type: enum
     known:
@@ -62,7 +77,7 @@ actions:
       - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
         I will suggest the best talks for you based on what topics you are the most interested in.
     condition:
-      informed_user:
+      informed-user:
         value: false
     effect:
       start:
@@ -70,7 +85,7 @@ actions:
           outcomes:
             inform:
               updates:
-                informed_user:
+                informed-user:
                   value: true
               intent:
   get-available-7:
@@ -82,6 +97,14 @@ actions:
         - Are you available at 7 UTC?
         - Do you want to attend the conference at 7 UTC?
       entity: available-7
+      additional_conditions:
+        informed-user:
+          value: true
+      additional_updates:
+        deny_outcome:
+          attending-7:
+            known: true
+            value: false
   get-available-8:
     type: custom
     subtype: entity_yes_no
@@ -94,6 +117,11 @@ actions:
       additional_conditions:
         available-7:
           known: true
+      additional_updates:
+        deny_outcome:
+          attending-8:
+            known: true
+            value: false
   get-available-9:
     type: custom
     subtype: entity_yes_no
@@ -106,6 +134,11 @@ actions:
       additional_conditions:
         available-9:
           known: true
+      additional_updates:
+        deny_outcome:
+          attending-9:
+            known: true
+            value: false
   # get-available-10:
   #   type: custom
   #   subtype: entity_yes_no
@@ -185,8 +218,9 @@ actions:
         known: true
       attending-8:
         known: true
-      attending-9:
-        known: true
+      #attending-9:
+      # available-9:
+      #   known: true
     message_variants:
       - $attending-7, $attending-8, $attending-9  
     effect:
@@ -197,5 +231,4 @@ actions:
               updates:
                 goal:
                   value: true
-                  known: true
               intent:

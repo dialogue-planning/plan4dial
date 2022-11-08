@@ -1,29 +1,49 @@
 {
-    "name": "order-pizza",
+    "name": "icaps_bot",
     "context_variables": {
-        "informed_user": {
+        "informed-user": {
             "type": "flag",
             "config": false
         },
         "available-7": {
             "type": "flag",
-            "config": false
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
         },
         "available-8": {
             "type": "flag",
-            "config": false
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
         },
         "available-9": {
             "type": "flag",
-            "config": false
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
         },
         "attending-7": {
             "type": "flag",
-            "config": false
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
         },
         "attending-8": {
             "type": "flag",
-            "config": false
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
         },
         "attending-9": {
             "type": "enum",
@@ -99,7 +119,7 @@
             ],
             "condition": [
                 [
-                    "informed_user",
+                    "informed-user",
                     false
                 ],
                 [
@@ -113,9 +133,9 @@
                 "outcomes": [
                     {
                         "updates": {
-                            "informed_user": {
+                            "informed-user": {
                                 "value": true,
-                                "variable": "informed_user",
+                                "variable": "informed-user",
                                 "interpretation": "json"
                             }
                         },
@@ -235,10 +255,6 @@
                     "Known"
                 ],
                 [
-                    "attending-9",
-                    "Known"
-                ],
-                [
                     "force-statement",
                     false
                 ]
@@ -255,15 +271,12 @@
                             "goal": {
                                 "value": true,
                                 "variable": "goal",
-                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": null,
                         "name": "complete_DETDUP_finish-EQ-finish",
-                        "assignments": {
-                            "$goal": "found"
-                        }
+                        "assignments": {}
                     }
                 ]
             },
@@ -324,6 +337,10 @@
                     "Unknown"
                 ],
                 [
+                    "informed-user",
+                    true
+                ],
+                [
                     "force-statement",
                     false
                 ]
@@ -354,12 +371,19 @@
                                 "variable": "available-7",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "attending-7": {
+                                "value": false,
+                                "variable": "attending-7",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "deny",
                         "name": "slot-fill__get-available-7_DETDUP_get-response-EQ-deny_outcome",
                         "assignments": {
-                            "$available-7": "found"
+                            "$available-7": "found",
+                            "$attending-7": "found"
                         }
                     },
                     {
@@ -438,12 +462,19 @@
                                 "variable": "available-8",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "attending-8": {
+                                "value": false,
+                                "variable": "attending-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "deny",
                         "name": "slot-fill__get-available-8_DETDUP_get-response-EQ-deny_outcome",
                         "assignments": {
-                            "$available-8": "found"
+                            "$available-8": "found",
+                            "$attending-8": "found"
                         }
                     },
                     {
@@ -518,12 +549,19 @@
                                 "variable": "available-9",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "attending-9": {
+                                "value": false,
+                                "variable": "attending-9",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "deny",
                         "name": "slot-fill__get-available-9_DETDUP_get-response-EQ-deny_outcome",
                         "assignments": {
-                            "$available-9": "found"
+                            "$available-9": "found",
+                            "$attending-9": "found"
                         }
                     },
                     {
