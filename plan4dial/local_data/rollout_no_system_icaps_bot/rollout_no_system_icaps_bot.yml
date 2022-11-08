@@ -228,7 +228,7 @@ actions:
                 attending-9:
                   value: null
                   known: true
-              intent: not_interested
+              intent: not-interested
   complete:
     disable-fallback: true
     type: dialogue
