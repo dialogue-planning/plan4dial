@@ -46,16 +46,20 @@
             }
         },
         "attending-7": {
-            "type": "flag",
-            "config": false,
+            "type": "enum",
+            "config": [
+                "Invited Talk: Malte Helmert"
+            ],
             "known": {
                 "type": "flag",
                 "init": false
             }
         },
         "attending-8": {
-            "type": "flag",
-            "config": false,
+            "type": "enum",
+            "config": [
+                "Social: Get Together"
+            ],
             "known": {
                 "type": "flag",
                 "init": false
@@ -84,8 +88,10 @@
             }
         },
         "attending-11": {
-            "type": "flag",
-            "config": false,
+            "type": "enum",
+            "config": [
+                "Poster and Demo Session"
+            ],
             "known": {
                 "type": "flag",
                 "init": false
@@ -461,7 +467,7 @@
                 ]
             ],
             "message_variants": [
-                "Below is your generated schedule:\n 7 UTC: $attending-7 \n8 UTC: $attending-8 \n9 UTC: $attending-9 \n10 UTC: $attending-10 \n11 UTC: $attending-11 \nEnjoy your morning!"
+                "Below is your generated schedule:\n7 UTC: $attending-7 \n8 UTC: $attending-8 \n9 UTC: $attending-9 \n10 UTC: $attending-10 \n11 UTC: $attending-11 \nEnjoy your morning!"
             ],
             "effect": {
                 "global-outcome-name": "finish",
@@ -1127,17 +1133,14 @@
                     {
                         "updates": {
                             "attending-7": {
-                                "value": true,
+                                "value": "Invited Talk: Malte Helmert",
                                 "variable": "attending-7",
-                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "slot-fill__get-attending-7_DETDUP_get-response-EQ-confirm_outcome",
-                        "assignments": {
-                            "$attending-7": "found"
-                        }
+                        "assignments": {}
                     },
                     {
                         "updates": {
@@ -1235,17 +1238,14 @@
                     {
                         "updates": {
                             "attending-8": {
-                                "value": true,
+                                "value": "Social: Get Together",
                                 "variable": "attending-8",
-                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "slot-fill__get-attending-8_DETDUP_get-response-EQ-confirm_outcome",
-                        "assignments": {
-                            "$attending-8": "found"
-                        }
+                        "assignments": {}
                     },
                     {
                         "updates": {

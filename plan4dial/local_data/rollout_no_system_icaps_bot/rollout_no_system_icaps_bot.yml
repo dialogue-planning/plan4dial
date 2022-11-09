@@ -36,17 +36,19 @@ context_variables:
       type: flag
       init: false      
   attending-7:
-    type: flag
-    init: false
+    type: enum
     known:
       type: flag
       init: false
+    options:
+      - "Invited Talk: Malte Helmert"
   attending-8:
-    type: flag
-    init: false
+    type: enum
     known:
       type: flag
       init: false
+    options:
+      - "Social: Get Together"
   attending-9:
     type: enum
     known:
@@ -78,11 +80,12 @@ context_variables:
           - heuristics
           - classical planning heuristics
   attending-11:
-    type: flag
-    init: false
+    type: enum
     known:
       type: flag
       init: false
+    options:
+      - Poster and Demo Session
   goal:
     type: flag
     init: false
@@ -247,6 +250,10 @@ actions:
       additional_conditions:
         available-7:
           value: true
+      additional_updates:
+        confirm_outcome:
+          attending-7:
+            value: "Invited Talk: Malte Helmert"
   get-attending-8:
     type: custom
     subtype: entity_yes_no
@@ -258,6 +265,10 @@ actions:
       additional_conditions:
         available-8:
           value: true
+      additional_updates:
+        confirm_outcome:
+          attending-8:
+            value: "Social: Get Together"
   get-attending-9:
     type: dialogue
     message_variants:
@@ -319,6 +330,9 @@ actions:
       additional_conditions:
         available-11:
           value: true
+      additional_updates:
+        attending-11:
+          value: Poster and Demo Session
   complete:
     disable-fallback: true
     type: dialogue
@@ -334,7 +348,7 @@ actions:
       attending-11:
         known: true
     message_variants:
-      - "Below is your generated schedule:\n 7 UTC: $attending-7 \n8 UTC: $attending-8 \n9 UTC: $attending-9 \n10 UTC: $attending-10 \n11 UTC: $attending-11 \nEnjoy your morning!"
+      - "Below is your generated schedule:\n7 UTC: $attending-7 \n8 UTC: $attending-8 \n9 UTC: $attending-9 \n10 UTC: $attending-10 \n11 UTC: $attending-11 \nEnjoy your morning!"
     effect:
       finish:
         oneof:
