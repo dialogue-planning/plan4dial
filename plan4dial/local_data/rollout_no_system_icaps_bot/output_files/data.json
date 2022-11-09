@@ -652,7 +652,7 @@
                     "Unknown"
                 ],
                 [
-                    "available-7",
+                    "attending-7",
                     "Known"
                 ],
                 [
@@ -767,7 +767,7 @@
                     "Unknown"
                 ],
                 [
-                    "available-8",
+                    "attending-8",
                     "Known"
                 ],
                 [
@@ -882,7 +882,7 @@
                     "Unknown"
                 ],
                 [
-                    "available-9",
+                    "attending-9",
                     "Known"
                 ],
                 [
@@ -997,7 +997,7 @@
                     "Unknown"
                 ],
                 [
-                    "available-10",
+                    "attending-10",
                     "Known"
                 ],
                 [
@@ -1212,7 +1212,7 @@
         "slot-fill__get-attending-8": {
             "type": "dialogue",
             "message_variants": [
-                "Are you interested in attending Malte's Invited Talk on Factored Transition Systems?"
+                "Are you interested in attending the ICAPS social?"
             ],
             "condition": [
                 [

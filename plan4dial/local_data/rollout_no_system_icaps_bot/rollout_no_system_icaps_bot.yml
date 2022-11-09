@@ -181,7 +181,7 @@ actions:
         - Are you available at 8 UTC?
       entity: available-8
       additional_conditions:
-        available-7:
+        attending-7:
           known: true
       additional_updates:
         deny_outcome:
@@ -197,7 +197,7 @@ actions:
         - Are you available at 9 UTC?
       entity: available-9
       additional_conditions:
-        available-8:
+        attending-8:
           known: true
       additional_updates:
         deny_outcome:
@@ -213,7 +213,7 @@ actions:
         - Are you available at 10 UTC?
       entity: available-10
       additional_conditions:
-        available-9:
+        attending-9:
           known: true
       additional_updates:
         deny_outcome:
@@ -229,7 +229,7 @@ actions:
         - Are you available at 11 UTC?
       entity: available-11
       additional_conditions:
-        available-10:
+        attending-10:
           known: true
       additional_updates:
         deny_outcome:
@@ -253,7 +253,7 @@ actions:
     parameters:
       action_name: get-attending-8
       message_variants:
-        - Are you interested in attending Malte's Invited Talk on Factored Transition Systems?
+        - Are you interested in attending the ICAPS social?
       entity: attending-8
       additional_conditions:
         available-8:
