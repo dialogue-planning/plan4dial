@@ -215,6 +215,11 @@ actions:
       additional_conditions:
         available-9:
           known: true
+      additional_updates:
+        deny_outcome:
+          attending-10:
+            known: true
+            value: null
   get-available-11:
     type: custom
     subtype: entity_yes_no
@@ -319,10 +324,11 @@ actions:
         known: true
       attending-9:
         known: true
-      attending-10:
+      # attending-10:
+      available-10:
         known: true
-      attending-11:
-        known: true
+      # attending-11:
+      #   known: true
     message_variants:
       - "Below is your generated schedule:\n7 UTC: $attending-7\n8 UTC: $attending-8\n9 UTC: $attending-9\n10 UTC: $attending-10\n11 UTC: attending-11\nEnjoy your morning!"
     effect:

@@ -448,11 +448,7 @@
                     "Known"
                 ],
                 [
-                    "attending-10",
-                    "Known"
-                ],
-                [
-                    "attending-11",
+                    "available-10",
                     "Known"
                 ],
                 [
@@ -916,12 +912,19 @@
                                 "variable": "available-10",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "attending-10": {
+                                "value": null,
+                                "variable": "attending-10",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "deny",
                         "name": "slot-fill__get-available-10_DETDUP_get-response-EQ-deny_outcome",
                         "assignments": {
-                            "$available-10": "found"
+                            "$available-10": "found",
+                            "$attending-10": "found"
                         }
                     },
                     {
