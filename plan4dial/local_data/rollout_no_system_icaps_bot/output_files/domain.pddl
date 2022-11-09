@@ -24,29 +24,13 @@
         (have-message)
         (force-statement)
     )
-    (:action start
-        :parameters()
-        :precondition
-            (and
-                (not (informed-user))
-                (not (force-statement))
-            )
-        :effect
-            (labeled-oneof         start
-                (outcome inform
-                    (and
-                        (informed-user)
-                    )
-                )
-            )
-    )
     (:action get-attending-7
         :parameters()
         :precondition
             (and
                 (not (force-statement))
-                (available-7)
                 (not (know__attending-7))
+                (available-7)
             )
         :effect
             (labeled-oneof         get-response
@@ -62,8 +46,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -72,9 +56,9 @@
         :parameters()
         :precondition
             (and
-                (available-8)
-                (not (know__attending-8))
                 (not (force-statement))
+                (not (know__attending-8))
+                (available-8)
             )
         :effect
             (labeled-oneof         get-response
@@ -90,8 +74,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -100,9 +84,9 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (available-9)
                 (not (know__attending-9))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         get-response
@@ -118,8 +102,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -129,8 +113,8 @@
         :precondition
             (and
                 (available-10)
-                (not (force-statement))
                 (not (know__attending-10))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         get-response
@@ -146,8 +130,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -174,8 +158,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -184,12 +168,12 @@
         :parameters()
         :precondition
             (and
-                (know__attending-10)
-                (not (force-statement))
-                (know__attending-9)
                 (know__attending-8)
-                (know__attending-11)
                 (know__attending-7)
+                (not (force-statement))
+                (know__attending-11)
+                (know__attending-9)
+                (know__attending-10)
             )
         :effect
             (labeled-oneof         finish
@@ -204,15 +188,15 @@
         :parameters()
         :precondition
             (and
-                (have-message)
                 (force-statement)
+                (have-message)
             )
         :effect
             (labeled-oneof         reset
                 (outcome lock
                     (and
-                        (not (have-message))
                         (not (force-statement))
+                        (not (have-message))
                     )
                 )
             )
@@ -221,7 +205,6 @@
         :parameters()
         :precondition
             (and
-                (informed-user)
                 (not (force-statement))
                 (not (know__available-7))
             )
@@ -242,8 +225,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -260,21 +243,21 @@
             (labeled-oneof         get-response
                 (outcome confirm_outcome
                     (and
-                        (available-8)
                         (know__available-8)
+                        (available-8)
                     )
                 )
                 (outcome deny_outcome
                     (and
-                        (know__attending-8)
                         (not (available-8))
                         (know__available-8)
+                        (know__attending-8)
                     )
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -284,28 +267,28 @@
         :precondition
             (and
                 (not (know__available-9))
-                (know__attending-8)
                 (not (force-statement))
+                (know__attending-8)
             )
         :effect
             (labeled-oneof         get-response
                 (outcome confirm_outcome
                     (and
-                        (available-9)
                         (know__available-9)
+                        (available-9)
                     )
                 )
                 (outcome deny_outcome
                     (and
+                        (know__available-9)
                         (not (available-9))
                         (know__attending-9)
-                        (know__available-9)
                     )
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -314,9 +297,9 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (know__attending-9)
                 (not (know__available-10))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         get-response
@@ -335,8 +318,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -345,29 +328,29 @@
         :parameters()
         :precondition
             (and
+                (not (know__available-11))
                 (not (force-statement))
                 (know__attending-10)
-                (not (know__available-11))
             )
         :effect
             (labeled-oneof         get-response
                 (outcome confirm_outcome
                     (and
-                        (available-11)
                         (know__available-11)
+                        (available-11)
                     )
                 )
                 (outcome deny_outcome
                     (and
+                        (know__available-11)
                         (not (available-11))
                         (know__attending-11)
-                        (know__available-11)
                     )
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )

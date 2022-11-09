@@ -141,35 +141,37 @@ intents:
       - I think I will take a break and grab some food.
       - I would prefer to take a breather before getting back to the conference.
 actions:
-  start:
-    disable-fallback: true
-    type: dialogue
-    message_variants:
-      - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
-        I will suggest the best talks for you based on what topics you are the most interested in.
-    condition:
-      informed-user:
-        value: false
-    effect:
-      start:
-        oneof:
-          outcomes:
-            inform:
-              updates:
-                informed-user:
-                  value: true
-              intent:
+  # start:
+  #   disable-fallback: true
+  #   type: dialogue
+  #   message_variants:
+  #     - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
+  #       I will suggest the best talks for you based on what topics you are the most interested in.
+  #   condition:
+  #     informed-user:
+  #       value: false
+  #   effect:
+  #     start:
+  #       oneof:
+  #         outcomes:
+  #           inform:
+  #             updates:
+  #               informed-user:
+  #                 value: true
+  #             intent:
   get-available-7:
     type: custom
     subtype: flag_entity_yes_no
     parameters:
       action_name: get-available-7
       message_variants:
-        - Are you available at 7 UTC?
+        - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
+          I will suggest the best talks for you based on what topics you are the most interested in.
+          First, are you available at 7 UTC?
       entity: available-7
-      additional_conditions:
-        informed-user:
-          value: true
+      # additional_conditions:
+      #   informed-user:
+      #     value: true
       additional_updates:
         deny_outcome:
           attending-7:

@@ -189,42 +189,6 @@
         }
     },
     "actions": {
-        "start": {
-            "disable-fallback": true,
-            "type": "dialogue",
-            "message_variants": [
-                "Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend. I will suggest the best talks for you based on what topics you are the most interested in."
-            ],
-            "condition": [
-                [
-                    "informed-user",
-                    false
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "start",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "informed-user": {
-                                "value": true,
-                                "variable": "informed-user",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": null,
-                        "name": "start_DETDUP_start-EQ-inform",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "intents": {}
-        },
         "get-attending-7": {
             "type": "dialogue",
             "message_variants": [
@@ -859,16 +823,12 @@
         "slot-fill__get-available-7": {
             "type": "dialogue",
             "message_variants": [
-                "Are you available at 7 UTC?"
+                "Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend. I will suggest the best talks for you based on what topics you are the most interested in. First, are you available at 7 UTC?"
             ],
             "condition": [
                 [
                     "available-7",
                     "Unknown"
-                ],
-                [
-                    "informed-user",
-                    true
                 ],
                 [
                     "force-statement",
