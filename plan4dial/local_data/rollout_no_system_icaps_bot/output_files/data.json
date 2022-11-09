@@ -225,6 +225,222 @@
             },
             "intents": {}
         },
+        "get-attending-7": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you interested in attending Malte's Invited Talk on Factored Transition Systems?"
+            ],
+            "condition": [
+                [
+                    "attending-7",
+                    "Unknown"
+                ],
+                [
+                    "available-7",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "attending-7": {
+                                "value": "Invited Talk: Malte Helmert",
+                                "variable": "attending-7",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "get-attending-7_DETDUP_get-response-EQ-choose-preference",
+                        "assignments": {
+                            "$attending-7": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "attending-7": {
+                                "value": null,
+                                "variable": "attending-7",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "get-attending-7_DETDUP_get-response-EQ-do-not-attend",
+                        "assignments": {
+                            "$attending-7": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-attending-7_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-attending-8": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you interested in attending the ICAPS social?"
+            ],
+            "condition": [
+                [
+                    "attending-8",
+                    "Unknown"
+                ],
+                [
+                    "available-8",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "attending-8": {
+                                "value": "Social: Get Together",
+                                "variable": "attending-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "get-attending-8_DETDUP_get-response-EQ-choose-preference",
+                        "assignments": {
+                            "$attending-8": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "attending-8": {
+                                "value": null,
+                                "variable": "attending-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "get-attending-8_DETDUP_get-response-EQ-do-not-attend",
+                        "assignments": {
+                            "$attending-8": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-attending-8_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
         "get-attending-9": {
             "type": "dialogue",
             "message_variants": [
@@ -429,6 +645,114 @@
                         "I would rather take a break.",
                         "I think I will take a break and grab some food.",
                         "I would prefer to take a breather before getting back to the conference."
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-attending-11": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you interested in attending the Poster and Demo Session?"
+            ],
+            "condition": [
+                [
+                    "attending-11",
+                    "Unknown"
+                ],
+                [
+                    "available-11",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "attending-11": {
+                                "value": "Poster and Demo Session",
+                                "variable": "attending-11",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "get-attending-11_DETDUP_get-response-EQ-choose-preference",
+                        "assignments": {
+                            "$attending-11": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "attending-11": {
+                                "value": null,
+                                "variable": "attending-11",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "get-attending-11_DETDUP_get-response-EQ-do-not-attend",
+                        "assignments": {
+                            "$attending-11": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-attending-11_DETDUP_get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ]
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
                     ]
                 },
                 "fallback": {
@@ -1067,324 +1391,6 @@
                         },
                         "intent": "fallback",
                         "name": "slot-fill__get-available-11_DETDUP_get-response-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
-            "intents": {
-                "confirm": {
-                    "variables": [],
-                    "utterances": [
-                        "yes",
-                        "yeah",
-                        "that's it",
-                        "Y",
-                        "mhm",
-                        "confirm",
-                        "yes please"
-                    ]
-                },
-                "deny": {
-                    "variables": [],
-                    "utterances": [
-                        "no",
-                        "not at all",
-                        "that's not what i meant",
-                        "absolutely not",
-                        "i don't want that",
-                        "nah",
-                        "no thanks",
-                        "no thank you"
-                    ]
-                },
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
-            }
-        },
-        "slot-fill__get-attending-7": {
-            "type": "dialogue",
-            "message_variants": [
-                "Are you interested in attending Malte's Invited Talk on Factored Transition Systems?"
-            ],
-            "condition": [
-                [
-                    "attending-7",
-                    "Unknown"
-                ],
-                [
-                    "available-7",
-                    true
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "get-response",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "attending-7": {
-                                "value": "Invited Talk: Malte Helmert",
-                                "variable": "attending-7",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "confirm",
-                        "name": "slot-fill__get-attending-7_DETDUP_get-response-EQ-confirm_outcome",
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "attending-7": {
-                                "value": false,
-                                "variable": "attending-7",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "deny",
-                        "name": "slot-fill__get-attending-7_DETDUP_get-response-EQ-deny_outcome",
-                        "assignments": {
-                            "$attending-7": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "slot-fill__get-attending-7_DETDUP_get-response-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
-            "intents": {
-                "confirm": {
-                    "variables": [],
-                    "utterances": [
-                        "yes",
-                        "yeah",
-                        "that's it",
-                        "Y",
-                        "mhm",
-                        "confirm",
-                        "yes please"
-                    ]
-                },
-                "deny": {
-                    "variables": [],
-                    "utterances": [
-                        "no",
-                        "not at all",
-                        "that's not what i meant",
-                        "absolutely not",
-                        "i don't want that",
-                        "nah",
-                        "no thanks",
-                        "no thank you"
-                    ]
-                },
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
-            }
-        },
-        "slot-fill__get-attending-8": {
-            "type": "dialogue",
-            "message_variants": [
-                "Are you interested in attending the ICAPS social?"
-            ],
-            "condition": [
-                [
-                    "attending-8",
-                    "Unknown"
-                ],
-                [
-                    "available-8",
-                    true
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "get-response",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "attending-8": {
-                                "value": "Social: Get Together",
-                                "variable": "attending-8",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "confirm",
-                        "name": "slot-fill__get-attending-8_DETDUP_get-response-EQ-confirm_outcome",
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "attending-8": {
-                                "value": false,
-                                "variable": "attending-8",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "deny",
-                        "name": "slot-fill__get-attending-8_DETDUP_get-response-EQ-deny_outcome",
-                        "assignments": {
-                            "$attending-8": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "slot-fill__get-attending-8_DETDUP_get-response-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
-            "intents": {
-                "confirm": {
-                    "variables": [],
-                    "utterances": [
-                        "yes",
-                        "yeah",
-                        "that's it",
-                        "Y",
-                        "mhm",
-                        "confirm",
-                        "yes please"
-                    ]
-                },
-                "deny": {
-                    "variables": [],
-                    "utterances": [
-                        "no",
-                        "not at all",
-                        "that's not what i meant",
-                        "absolutely not",
-                        "i don't want that",
-                        "nah",
-                        "no thanks",
-                        "no thank you"
-                    ]
-                },
-                "fallback": {
-                    "variables": [],
-                    "utterances": []
-                }
-            }
-        },
-        "slot-fill__get-attending-11": {
-            "type": "dialogue",
-            "message_variants": [
-                "Are you interested in attending the Poster and Demo Session?"
-            ],
-            "condition": [
-                [
-                    "attending-11",
-                    "Unknown"
-                ],
-                [
-                    "available-11",
-                    true
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "get-response",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "attending-11": {
-                                "value": true,
-                                "variable": "attending-11",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "confirm",
-                        "name": "slot-fill__get-attending-11_DETDUP_get-response-EQ-confirm_outcome",
-                        "assignments": {
-                            "$attending-11": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "attending-11": {
-                                "value": false,
-                                "variable": "attending-11",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "deny",
-                        "name": "slot-fill__get-attending-11_DETDUP_get-response-EQ-deny_outcome",
-                        "assignments": {
-                            "$attending-11": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "slot-fill__get-attending-11_DETDUP_get-response-EQ-fallback",
                         "assignments": {}
                     }
                 ]

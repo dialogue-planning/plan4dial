@@ -161,7 +161,7 @@ actions:
               intent:
   get-available-7:
     type: custom
-    subtype: entity_yes_no
+    subtype: flag_entity_yes_no
     parameters:
       action_name: get-available-7
       message_variants:
@@ -177,7 +177,7 @@ actions:
             value: null
   get-available-8:
     type: custom
-    subtype: entity_yes_no
+    subtype: flag_entity_yes_no
     parameters:
       action_name: get-available-8
       message_variants:
@@ -193,7 +193,7 @@ actions:
             value: null
   get-available-9:
     type: custom
-    subtype: entity_yes_no
+    subtype: flag_entity_yes_no
     parameters:
       action_name: get-available-9
       message_variants:
@@ -209,7 +209,7 @@ actions:
             value: null
   get-available-10:
     type: custom
-    subtype: entity_yes_no
+    subtype: flag_entity_yes_no
     parameters:
       action_name: get-available-10
       message_variants:
@@ -225,7 +225,7 @@ actions:
             value: null
   get-available-11:
     type: custom
-    subtype: entity_yes_no
+    subtype: flag_entity_yes_no
     parameters:
       action_name: get-available-11
       message_variants:
@@ -240,35 +240,55 @@ actions:
             known: true
             value: null
   get-attending-7:
-    type: custom
-    subtype: entity_yes_no
-    parameters:
-      action_name: get-attending-7
-      message_variants:
-        - Are you interested in attending Malte's Invited Talk on Factored Transition Systems?
-      entity: attending-7
-      additional_conditions:
-        available-7:
-          value: true
-      additional_updates:
-        confirm_outcome:
-          attending-7:
-            value: "Invited Talk: Malte Helmert"
+    type: dialogue
+    message_variants:
+      - Are you interested in attending Malte's Invited Talk on Factored Transition Systems?
+    condition:
+      attending-7:
+        known: false
+      available-7:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-7:
+                  value: "Invited Talk: Malte Helmert"
+                  known: true
+              intent: confirm
+            do-not-attend:
+              updates:
+                attending-7:
+                  value: null
+                  known: true
+              intent: deny
   get-attending-8:
-    type: custom
-    subtype: entity_yes_no
-    parameters:
-      action_name: get-attending-8
-      message_variants:
-        - Are you interested in attending the ICAPS social?
-      entity: attending-8
-      additional_conditions:
-        available-8:
-          value: true
-      additional_updates:
-        confirm_outcome:
-          attending-8:
-            value: "Social: Get Together"
+    type: dialogue
+    message_variants:
+      - Are you interested in attending the ICAPS social?
+    condition:
+      attending-8:
+        known: false
+      available-8:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-8:
+                  value: "Social: Get Together"
+                  known: true
+              intent: confirm
+            do-not-attend:
+              updates:
+                attending-8:
+                  value: null
+                  known: true
+              intent: deny
   get-attending-9:
     type: dialogue
     message_variants:
@@ -320,19 +340,30 @@ actions:
                   known: true
               intent: not-interested
   get-attending-11:
-    type: custom
-    subtype: entity_yes_no
-    parameters:
-      action_name: get-attending-11
-      message_variants:
-        - Are you interested in attending the Poster and Demo Session?
-      entity: attending-11
-      additional_conditions:
-        available-11:
-          value: true
-      additional_updates:
-        attending-11:
-          value: Poster and Demo Session
+    type: dialogue
+    message_variants:
+      - Are you interested in attending the Poster and Demo Session?
+    condition:
+      attending-11:
+        known: false
+      available-11:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-11:
+                  value: Poster and Demo Session
+                  known: true
+              intent: confirm
+            do-not-attend:
+              updates:
+                attending-11:
+                  value: null
+                  known: true
+              intent: deny
   complete:
     disable-fallback: true
     type: dialogue

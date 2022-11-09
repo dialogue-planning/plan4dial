@@ -1,7 +1,7 @@
 from typing import List, Dict
 
 
-def entity_yes_no(
+def flag_entity_yes_no(
     loaded_yaml: Dict,
     action_name: str,
     message_variants: List[str],
