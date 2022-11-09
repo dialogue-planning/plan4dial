@@ -448,7 +448,11 @@
                     "Known"
                 ],
                 [
-                    "available-10",
+                    "attending-10",
+                    "Known"
+                ],
+                [
+                    "attending-11",
                     "Known"
                 ],
                 [
@@ -457,7 +461,7 @@
                 ]
             ],
             "message_variants": [
-                "Below is your generated schedule:\n7 UTC: $attending-7\n8 UTC: $attending-8\n9 UTC: $attending-9\n10 UTC: $attending-10\n11 UTC: attending-11\nEnjoy your morning!"
+                "Below is your generated schedule:\n 7 UTC: $attending-7 \n8 UTC: $attending-8 \n9 UTC: $attending-9 \n10 UTC: $attending-10 \n11 UTC: $attending-11 \nEnjoy your morning!"
             ],
             "effect": {
                 "global-outcome-name": "finish",
@@ -1027,12 +1031,19 @@
                                 "variable": "available-11",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "attending-11": {
+                                "value": null,
+                                "variable": "attending-11",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "deny",
                         "name": "slot-fill__get-available-11_DETDUP_get-response-EQ-deny_outcome",
                         "assignments": {
-                            "$available-11": "found"
+                            "$available-11": "found",
+                            "$attending-11": "found"
                         }
                     },
                     {

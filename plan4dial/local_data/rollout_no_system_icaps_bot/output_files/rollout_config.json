@@ -13,9 +13,9 @@
         },
         "get-attending-9": {
             "condition": [
-                "(not (know__attending-9))",
                 "(available-9)",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__attending-9))"
             ],
             "effect": {
                 "get-attending-9_DETDUP_get-response-EQ-choose-preference": [
@@ -51,11 +51,12 @@
         },
         "complete": {
             "condition": [
-                "(not (force-statement))",
                 "(know__attending-9)",
                 "(know__attending-7)",
-                "(know__available-10)",
-                "(know__attending-8)"
+                "(know__attending-11)",
+                "(know__attending-10)",
+                "(know__attending-8)",
+                "(not (force-statement))"
             ],
             "effect": {
                 "complete_DETDUP_finish-EQ-finish": [
@@ -77,8 +78,8 @@
         },
         "slot-fill__get-available-7": {
             "condition": [
-                "(not (force-statement))",
                 "(not (know__available-7))",
+                "(not (force-statement))",
                 "(informed-user)"
             ],
             "effect": {
@@ -87,9 +88,9 @@
                     "(know__available-7)"
                 ],
                 "slot-fill__get-available-7_DETDUP_get-response-EQ-deny_outcome": [
-                    "(not (available-7))",
+                    "(know__attending-7)",
                     "(know__available-7)",
-                    "(know__attending-7)"
+                    "(not (available-7))"
                 ],
                 "slot-fill__get-available-7_DETDUP_get-response-EQ-fallback": [
                     "(force-statement)",
@@ -99,19 +100,19 @@
         },
         "slot-fill__get-available-8": {
             "condition": [
-                "(not (force-statement))",
                 "(not (know__available-8))",
-                "(know__available-7)"
+                "(know__available-7)",
+                "(not (force-statement))"
             ],
             "effect": {
                 "slot-fill__get-available-8_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(available-8)",
-                    "(know__available-8)"
+                    "(know__available-8)",
+                    "(available-8)"
                 ],
                 "slot-fill__get-available-8_DETDUP_get-response-EQ-deny_outcome": [
                     "(know__available-8)",
-                    "(not (available-8))",
-                    "(know__attending-8)"
+                    "(know__attending-8)",
+                    "(not (available-8))"
                 ],
                 "slot-fill__get-available-8_DETDUP_get-response-EQ-fallback": [
                     "(force-statement)",
@@ -121,9 +122,9 @@
         },
         "slot-fill__get-available-9": {
             "condition": [
-                "(not (know__available-9))",
                 "(know__available-8)",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__available-9))"
             ],
             "effect": {
                 "slot-fill__get-available-9_DETDUP_get-response-EQ-confirm_outcome": [
@@ -144,13 +145,13 @@
         "slot-fill__get-available-10": {
             "condition": [
                 "(not (force-statement))",
-                "(not (know__available-10))",
-                "(know__available-9)"
+                "(know__available-9)",
+                "(not (know__available-10))"
             ],
             "effect": {
                 "slot-fill__get-available-10_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(available-10)",
-                    "(know__available-10)"
+                    "(know__available-10)",
+                    "(available-10)"
                 ],
                 "slot-fill__get-available-10_DETDUP_get-response-EQ-deny_outcome": [
                     "(not (available-10))",
@@ -165,18 +166,19 @@
         },
         "slot-fill__get-available-11": {
             "condition": [
-                "(not (force-statement))",
+                "(not (know__available-11))",
                 "(know__available-10)",
-                "(not (know__available-11))"
+                "(not (force-statement))"
             ],
             "effect": {
                 "slot-fill__get-available-11_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(know__available-11)",
-                    "(available-11)"
+                    "(available-11)",
+                    "(know__available-11)"
                 ],
                 "slot-fill__get-available-11_DETDUP_get-response-EQ-deny_outcome": [
-                    "(know__available-11)",
-                    "(not (available-11))"
+                    "(not (available-11))",
+                    "(know__attending-11)",
+                    "(know__available-11)"
                 ],
                 "slot-fill__get-available-11_DETDUP_get-response-EQ-fallback": [
                     "(force-statement)",
@@ -186,9 +188,9 @@
         },
         "slot-fill__get-attending-7": {
             "condition": [
-                "(not (force-statement))",
+                "(available-7)",
                 "(not (know__attending-7))",
-                "(available-7)"
+                "(not (force-statement))"
             ],
             "effect": {
                 "slot-fill__get-attending-7_DETDUP_get-response-EQ-confirm_outcome": [
@@ -207,9 +209,9 @@
         },
         "slot-fill__get-attending-8": {
             "condition": [
-                "(available-8)",
+                "(not (force-statement))",
                 "(not (know__attending-8))",
-                "(not (force-statement))"
+                "(available-8)"
             ],
             "effect": {
                 "slot-fill__get-attending-8_DETDUP_get-response-EQ-confirm_outcome": [
@@ -228,18 +230,18 @@
         },
         "slot-fill__get-attending-11": {
             "condition": [
+                "(available-11)",
                 "(not (force-statement))",
-                "(not (know__attending-11))",
-                "(available-11)"
+                "(not (know__attending-11))"
             ],
             "effect": {
                 "slot-fill__get-attending-11_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(attending-11)",
-                    "(know__attending-11)"
+                    "(know__attending-11)",
+                    "(attending-11)"
                 ],
                 "slot-fill__get-attending-11_DETDUP_get-response-EQ-deny_outcome": [
-                    "(know__attending-11)",
-                    "(not (attending-11))"
+                    "(not (attending-11))",
+                    "(know__attending-11)"
                 ],
                 "slot-fill__get-attending-11_DETDUP_get-response-EQ-fallback": [
                     "(force-statement)",
@@ -249,27 +251,27 @@
         }
     },
     "initial_state": [
-        "(not (force-statement))",
-        "(not (available-10))",
-        "(not (attending-7))",
-        "(not (know__attending-8))",
-        "(not (informed-user))",
+        "(not (know__available-8))",
+        "(not (know__available-11))",
+        "(not (available-9))",
         "(not (goal))",
+        "(not (available-11))",
+        "(not (force-statement))",
+        "(not (informed-user))",
         "(not (attending-8))",
         "(not (know__available-9))",
-        "(not (available-7))",
-        "(not (available-9))",
-        "(not (know__available-10))",
-        "(not (know__available-7))",
-        "(not (know__available-11))",
-        "(not (know__attending-7))",
         "(not (have-message))",
-        "(not (know__available-8))",
-        "(not (available-8))",
+        "(not (attending-7))",
+        "(not (available-10))",
+        "(not (available-7))",
         "(not (attending-11))",
         "(not (know__attending-10))",
+        "(not (know__attending-11))",
+        "(not (know__available-7))",
+        "(not (know__available-10))",
         "(not (know__attending-9))",
-        "(not (available-11))",
-        "(not (know__attending-11))"
+        "(not (know__attending-7))",
+        "(not (available-8))",
+        "(not (know__attending-8))"
     ]
 }
