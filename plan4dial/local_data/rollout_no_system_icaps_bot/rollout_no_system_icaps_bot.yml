@@ -23,6 +23,18 @@ context_variables:
     known:
       type: flag
       init: false
+  available-10:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  available-11:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false      
   attending-7:
     type: flag
     init: false
@@ -41,8 +53,36 @@ context_variables:
       type: flag
       init: false
     options:
-      - Planning Representations and Scheduling
-      - Verfication
+      Planning Representations and Scheduling:
+        variations:
+          - planning rep
+          - scheduling
+          - representations
+          - planning representations
+      Verification:
+        variations:
+          - verif
+          - planning verif
+          - planning verifications
+  attending-10:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      Reinforcement Learning:
+        variations:
+          - RL
+      Heuristics in Classical Planning:
+        variations:
+          - heuristics
+          - classical planning heuristics
+  attending-11:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
   goal:
     type: flag
     init: false
@@ -71,7 +111,7 @@ intents:
       - I want to attend the social.
       - I want to socialize with my ICAPS peers.
       - The social will be good for networking, so I definitely want to go!
-  prefer-topic:
+  state-pref-9:
     variables:
       - attending-9
     utterances:
@@ -80,6 +120,15 @@ intents:
       - I would definitely rather check out the $attending-9 talk.
       - I really want to learn about $attending-9.
       - I would prefer to check out the $attending-9 panel!
+  state-pref-10:
+    variables:
+      - attending-10
+    utterances:
+      - $attending-10
+      - The talk on $attending-10 seems really interesting!
+      - I would definitely rather check out the $attending-10 talk.
+      - I really want to learn about $attending-10.
+      - I would prefer to check out the $attending-10 panel!
   not-interested:
     utterances:
       - I am not interested in any of these talks.
@@ -114,7 +163,6 @@ actions:
       action_name: get-available-7
       message_variants:
         - Are you available at 7 UTC?
-        - Do you want to attend the conference at 7 UTC?
       entity: available-7
       additional_conditions:
         informed-user:
@@ -123,7 +171,7 @@ actions:
         deny_outcome:
           attending-7:
             known: true
-            value: false
+            value: null
   get-available-8:
     type: custom
     subtype: entity_yes_no
@@ -131,7 +179,6 @@ actions:
       action_name: get-available-8
       message_variants:
         - Are you available at 8 UTC?
-        - Do you want to attend the conference at 8 UTC?
       entity: available-8
       additional_conditions:
         available-7:
@@ -140,7 +187,7 @@ actions:
         deny_outcome:
           attending-8:
             known: true
-            value: false
+            value: null
   get-available-9:
     type: custom
     subtype: entity_yes_no
@@ -148,7 +195,6 @@ actions:
       action_name: get-available-9
       message_variants:
         - Are you available at 9 UTC?
-        - Do you want to attend the conference at 9 UTC?
       entity: available-9
       additional_conditions:
         available-8:
@@ -158,30 +204,28 @@ actions:
           attending-9:
             known: true
             value: null
-  # get-available-10:
-  #   type: custom
-  #   subtype: entity_yes_no
-  #   parameters:
-  #     action_name: get-available-10
-  #     message_variants:
-  #       - Are you available at 10 UTC?
-  #       - Do you want to attend the conference at 10 UTC?
-  #     entity: available-10
-  #     additional_conditions:
-  #       available-9:
-  #         known: true
-  # get-available-11:
-  #   type: custom
-  #   subtype: entity_yes_no
-  #   parameters:
-  #     action_name: get-available-11
-  #     message_variants:
-  #       - Are you available at 11 UTC?
-  #       - Do you want to attend the conference at 11 UTC?
-  #     entity: available-11
-  #     additional_conditions:
-  #       available-10:
-  #         known: true
+  get-available-10:
+    type: custom
+    subtype: entity_yes_no
+    parameters:
+      action_name: get-available-10
+      message_variants:
+        - Are you available at 10 UTC?
+      entity: available-10
+      additional_conditions:
+        available-9:
+          known: true
+  get-available-11:
+    type: custom
+    subtype: entity_yes_no
+    parameters:
+      action_name: get-available-11
+      message_variants:
+        - Are you available at 11 UTC?
+      entity: available-11
+      additional_conditions:
+        available-10:
+          known: true
   get-attending-7:
     type: custom
     subtype: entity_yes_no
@@ -222,13 +266,49 @@ actions:
                 attending-9:
                   value: $attending-9
                   known: true
-              intent: prefer-topic
+              intent: state-pref-9
             do-not-attend:
               updates:
                 attending-9:
                   value: null
                   known: true
               intent: not-interested
+  get-attending-10:
+    type: dialogue
+    message_variants:
+      - Are you interested in either Reinforcement Learning or Heuristics in Classical Planning?
+    condition:
+      attending-10:
+        known: false
+      available-10:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-10:
+                  value: $attending-10
+                  known: true
+              intent: state-pref-10
+            do-not-attend:
+              updates:
+                attending-10:
+                  value: null
+                  known: true
+              intent: not-interested
+  get-attending-11:
+    type: custom
+    subtype: entity_yes_no
+    parameters:
+      action_name: get-attending-11
+      message_variants:
+        - Are you interested in attending the Poster and Demo Session?
+      entity: attending-11
+      additional_conditions:
+        available-11:
+          value: true
   complete:
     disable-fallback: true
     type: dialogue
@@ -239,8 +319,12 @@ actions:
         known: true
       attending-9:
         known: true
+      attending-10:
+        known: true
+      attending-11:
+        known: true
     message_variants:
-      - $attending-7, $attending-8, $attending-9  
+      - "Below is your generated schedule:\n7 UTC: $attending-7\n8 UTC: $attending-8\n9 UTC: $attending-9\n10 UTC: $attending-10\n11 UTC: attending-11\nEnjoy your morning!"
     effect:
       finish:
         oneof:
