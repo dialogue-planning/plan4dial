@@ -15,9 +15,13 @@ nlu:
 
     - ty'
   intent: thank
-- examples: '- I want to see the invited talk on [Beyond Distance Estimates: Reasoning
-    about Solutions in Factored Transition Systems]{"entity": "invited-talk", "value":
-    "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems"}.
+- examples: '- [Beyond Distance Estimates: Reasoning about Solutions in Factored Transition
+    Systems]{"entity": "invited-talk", "value": "Beyond Distance Estimates: Reasoning
+    about Solutions in Factored Transition Systems"}
+
+    - I want to see the invited talk on [Beyond Distance Estimates: Reasoning about
+    Solutions in Factored Transition Systems]{"entity": "invited-talk", "value": "Beyond
+    Distance Estimates: Reasoning about Solutions in Factored Transition Systems"}.
 
     - I am really interested in the talk on [Beyond Distance Estimates: Reasoning
     about Solutions in Factored Transition Systems]{"entity": "invited-talk", "value":
@@ -28,6 +32,9 @@ nlu:
     "value": "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition
     Systems"}?
 
+    - [Multi-Agent Path Finding and Its Applications]{"entity": "invited-talk", "value":
+    "Multi-Agent Path Finding and Its Applications"}
+
     - I want to see the invited talk on [Multi-Agent Path Finding and Its Applications]{"entity":
     "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}.
 
@@ -36,9 +43,109 @@ nlu:
 
     - Can you schedule me in to watch the invited talk on [Multi-Agent Path Finding
     and Its Applications]{"entity": "invited-talk", "value": "Multi-Agent Path Finding
-    and Its Applications"}?'
+    and Its Applications"}?
+
+    - [beyond distance estimates]{"entity": "invited-talk", "value": "Beyond Distance
+    Estimates: Reasoning about Solutions in Factored Transition Systems"}
+
+    - I want to see the invited talk on [beyond distance estimates]{"entity": "invited-talk",
+    "value": "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition
+    Systems"}.
+
+    - I am really interested in the talk on [beyond distance estimates]{"entity":
+    "invited-talk", "value": "Beyond Distance Estimates: Reasoning about Solutions
+    in Factored Transition Systems"}.
+
+    - Can you schedule me in to watch the invited talk on [beyond distance estimates]{"entity":
+    "invited-talk", "value": "Beyond Distance Estimates: Reasoning about Solutions
+    in Factored Transition Systems"}?
+
+    - [factored transition systems]{"entity": "invited-talk", "value": "Beyond Distance
+    Estimates: Reasoning about Solutions in Factored Transition Systems"}
+
+    - I want to see the invited talk on [factored transition systems]{"entity": "invited-talk",
+    "value": "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition
+    Systems"}.
+
+    - I am really interested in the talk on [factored transition systems]{"entity":
+    "invited-talk", "value": "Beyond Distance Estimates: Reasoning about Solutions
+    in Factored Transition Systems"}.
+
+    - Can you schedule me in to watch the invited talk on [factored transition systems]{"entity":
+    "invited-talk", "value": "Beyond Distance Estimates: Reasoning about Solutions
+    in Factored Transition Systems"}?
+
+    - [factored transitions]{"entity": "invited-talk", "value": "Beyond Distance Estimates:
+    Reasoning about Solutions in Factored Transition Systems"}
+
+    - I want to see the invited talk on [factored transitions]{"entity": "invited-talk",
+    "value": "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition
+    Systems"}.
+
+    - I am really interested in the talk on [factored transitions]{"entity": "invited-talk",
+    "value": "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition
+    Systems"}.
+
+    - Can you schedule me in to watch the invited talk on [factored transitions]{"entity":
+    "invited-talk", "value": "Beyond Distance Estimates: Reasoning about Solutions
+    in Factored Transition Systems"}?
+
+    - [reasoning in factored transition systems]{"entity": "invited-talk", "value":
+    "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems"}
+
+    - I want to see the invited talk on [reasoning in factored transition systems]{"entity":
+    "invited-talk", "value": "Beyond Distance Estimates: Reasoning about Solutions
+    in Factored Transition Systems"}.
+
+    - I am really interested in the talk on [reasoning in factored transition systems]{"entity":
+    "invited-talk", "value": "Beyond Distance Estimates: Reasoning about Solutions
+    in Factored Transition Systems"}.
+
+    - Can you schedule me in to watch the invited talk on [reasoning in factored transition
+    systems]{"entity": "invited-talk", "value": "Beyond Distance Estimates: Reasoning
+    about Solutions in Factored Transition Systems"}?
+
+    - [multi-agent path finding apps]{"entity": "invited-talk", "value": "Multi-Agent
+    Path Finding and Its Applications"}
+
+    - I want to see the invited talk on [multi-agent path finding apps]{"entity":
+    "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}.
+
+    - I am really interested in the talk on [multi-agent path finding apps]{"entity":
+    "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}.
+
+    - Can you schedule me in to watch the invited talk on [multi-agent path finding
+    apps]{"entity": "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}?
+
+    - [path finding applications]{"entity": "invited-talk", "value": "Multi-Agent
+    Path Finding and Its Applications"}
+
+    - I want to see the invited talk on [path finding applications]{"entity": "invited-talk",
+    "value": "Multi-Agent Path Finding and Its Applications"}.
+
+    - I am really interested in the talk on [path finding applications]{"entity":
+    "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}.
+
+    - Can you schedule me in to watch the invited talk on [path finding applications]{"entity":
+    "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}?
+
+    - [applications for multi-agent path finding]{"entity": "invited-talk", "value":
+    "Multi-Agent Path Finding and Its Applications"}
+
+    - I want to see the invited talk on [applications for multi-agent path finding]{"entity":
+    "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}.
+
+    - I am really interested in the talk on [applications for multi-agent path finding]{"entity":
+    "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}.
+
+    - Can you schedule me in to watch the invited talk on [applications for multi-agent
+    path finding]{"entity": "invited-talk", "value": "Multi-Agent Path Finding and
+    Its Applications"}?'
   intent: share-invited-talk
-- examples: '- I want to see the session on [Planning Representations and Scheduling]{"entity":
+- examples: '- [Planning Representations and Scheduling]{"entity": "morning-session",
+    "value": "Planning Representations and Scheduling"}
+
+    - I want to see the session on [Planning Representations and Scheduling]{"entity":
     "morning-session", "value": "Planning Representations and Scheduling"}.
 
     - I am really interested in the session on [Planning Representations and Scheduling]{"entity":
@@ -47,6 +154,8 @@ nlu:
     - Can you schedule me in to watch the session on [Planning Representations and
     Scheduling]{"entity": "morning-session", "value": "Planning Representations and
     Scheduling"}?
+
+    - [Verification]{"entity": "morning-session", "value": "Verification"}
 
     - I want to see the session on [Verification]{"entity": "morning-session", "value":
     "Verification"}.
@@ -57,6 +166,9 @@ nlu:
     - Can you schedule me in to watch the session on [Verification]{"entity": "morning-session",
     "value": "Verification"}?
 
+    - [Reinforcement Learning]{"entity": "morning-session", "value": "Reinforcement
+    Learning"}
+
     - I want to see the session on [Reinforcement Learning]{"entity": "morning-session",
     "value": "Reinforcement Learning"}.
 
@@ -66,6 +178,9 @@ nlu:
     - Can you schedule me in to watch the session on [Reinforcement Learning]{"entity":
     "morning-session", "value": "Reinforcement Learning"}?
 
+    - [Heuristics in Classical Planning]{"entity": "morning-session", "value": "Heuristics
+    in Classical Planning"}
+
     - I want to see the session on [Heuristics in Classical Planning]{"entity": "morning-session",
     "value": "Heuristics in Classical Planning"}.
 
@@ -73,9 +188,81 @@ nlu:
     "morning-session", "value": "Heuristics in Classical Planning"}.
 
     - Can you schedule me in to watch the session on [Heuristics in Classical Planning]{"entity":
+    "morning-session", "value": "Heuristics in Classical Planning"}?
+
+    - [planning representations]{"entity": "morning-session", "value": "Planning Representations
+    and Scheduling"}
+
+    - I want to see the session on [planning representations]{"entity": "morning-session",
+    "value": "Planning Representations and Scheduling"}.
+
+    - I am really interested in the session on [planning representations]{"entity":
+    "morning-session", "value": "Planning Representations and Scheduling"}.
+
+    - Can you schedule me in to watch the session on [planning representations]{"entity":
+    "morning-session", "value": "Planning Representations and Scheduling"}?
+
+    - [planning rep and scheduling]{"entity": "morning-session", "value": "Planning
+    Representations and Scheduling"}
+
+    - I want to see the session on [planning rep and scheduling]{"entity": "morning-session",
+    "value": "Planning Representations and Scheduling"}.
+
+    - I am really interested in the session on [planning rep and scheduling]{"entity":
+    "morning-session", "value": "Planning Representations and Scheduling"}.
+
+    - Can you schedule me in to watch the session on [planning rep and scheduling]{"entity":
+    "morning-session", "value": "Planning Representations and Scheduling"}?
+
+    - [representations and scheduling]{"entity": "morning-session", "value": "Planning
+    Representations and Scheduling"}
+
+    - I want to see the session on [representations and scheduling]{"entity": "morning-session",
+    "value": "Planning Representations and Scheduling"}.
+
+    - I am really interested in the session on [representations and scheduling]{"entity":
+    "morning-session", "value": "Planning Representations and Scheduling"}.
+
+    - Can you schedule me in to watch the session on [representations and scheduling]{"entity":
+    "morning-session", "value": "Planning Representations and Scheduling"}?
+
+    - [verif]{"entity": "morning-session", "value": "Verification"}
+
+    - I want to see the session on [verif]{"entity": "morning-session", "value": "Verification"}.
+
+    - I am really interested in the session on [verif]{"entity": "morning-session",
+    "value": "Verification"}.
+
+    - Can you schedule me in to watch the session on [verif]{"entity": "morning-session",
+    "value": "Verification"}?
+
+    - [RL]{"entity": "morning-session", "value": "Reinforcement Learning"}
+
+    - I want to see the session on [RL]{"entity": "morning-session", "value": "Reinforcement
+    Learning"}.
+
+    - I am really interested in the session on [RL]{"entity": "morning-session", "value":
+    "Reinforcement Learning"}.
+
+    - Can you schedule me in to watch the session on [RL]{"entity": "morning-session",
+    "value": "Reinforcement Learning"}?
+
+    - [classical planning heuristics]{"entity": "morning-session", "value": "Heuristics
+    in Classical Planning"}
+
+    - I want to see the session on [classical planning heuristics]{"entity": "morning-session",
+    "value": "Heuristics in Classical Planning"}.
+
+    - I am really interested in the session on [classical planning heuristics]{"entity":
+    "morning-session", "value": "Heuristics in Classical Planning"}.
+
+    - Can you schedule me in to watch the session on [classical planning heuristics]{"entity":
     "morning-session", "value": "Heuristics in Classical Planning"}?'
   intent: share-morning-session
-- examples: '- I want to see the session on [Model-Based Reasoning in Classical Planning]{"entity":
+- examples: '- [Model-Based Reasoning in Classical Planning]{"entity": "early-afternoon-session",
+    "value": "Model-Based Reasoning in Classical Planning"}
+
+    - I want to see the session on [Model-Based Reasoning in Classical Planning]{"entity":
     "early-afternoon-session", "value": "Model-Based Reasoning in Classical Planning"}.
 
     - I am really interested in the session on [Model-Based Reasoning in Classical
@@ -86,6 +273,9 @@ nlu:
     Planning]{"entity": "early-afternoon-session", "value": "Model-Based Reasoning
     in Classical Planning"}?
 
+    - [Learning in Scheduling Applications]{"entity": "early-afternoon-session", "value":
+    "Learning in Scheduling Applications"}
+
     - I want to see the session on [Learning in Scheduling Applications]{"entity":
     "early-afternoon-session", "value": "Learning in Scheduling Applications"}.
 
@@ -94,6 +284,8 @@ nlu:
 
     - Can you schedule me in to watch the session on [Learning in Scheduling Applications]{"entity":
     "early-afternoon-session", "value": "Learning in Scheduling Applications"}?
+
+    - [Search]{"entity": "early-afternoon-session", "value": "Search"}
 
     - I want to see the session on [Search]{"entity": "early-afternoon-session", "value":
     "Search"}.
@@ -104,6 +296,8 @@ nlu:
     - Can you schedule me in to watch the session on [Search]{"entity": "early-afternoon-session",
     "value": "Search"}?
 
+    - [Optimal Planning]{"entity": "early-afternoon-session", "value": "Optimal Planning"}
+
     - I want to see the session on [Optimal Planning]{"entity": "early-afternoon-session",
     "value": "Optimal Planning"}.
 
@@ -111,9 +305,130 @@ nlu:
     "value": "Optimal Planning"}.
 
     - Can you schedule me in to watch the session on [Optimal Planning]{"entity":
+    "early-afternoon-session", "value": "Optimal Planning"}?
+
+    - [model-based reasoning]{"entity": "early-afternoon-session", "value": "Model-Based
+    Reasoning in Classical Planning"}
+
+    - I want to see the session on [model-based reasoning]{"entity": "early-afternoon-session",
+    "value": "Model-Based Reasoning in Classical Planning"}.
+
+    - I am really interested in the session on [model-based reasoning]{"entity": "early-afternoon-session",
+    "value": "Model-Based Reasoning in Classical Planning"}.
+
+    - Can you schedule me in to watch the session on [model-based reasoning]{"entity":
+    "early-afternoon-session", "value": "Model-Based Reasoning in Classical Planning"}?
+
+    - [reasoning]{"entity": "early-afternoon-session", "value": "Model-Based Reasoning
+    in Classical Planning"}
+
+    - I want to see the session on [reasoning]{"entity": "early-afternoon-session",
+    "value": "Model-Based Reasoning in Classical Planning"}.
+
+    - I am really interested in the session on [reasoning]{"entity": "early-afternoon-session",
+    "value": "Model-Based Reasoning in Classical Planning"}.
+
+    - Can you schedule me in to watch the session on [reasoning]{"entity": "early-afternoon-session",
+    "value": "Model-Based Reasoning in Classical Planning"}?
+
+    - [reasoning in classical planning]{"entity": "early-afternoon-session", "value":
+    "Model-Based Reasoning in Classical Planning"}
+
+    - I want to see the session on [reasoning in classical planning]{"entity": "early-afternoon-session",
+    "value": "Model-Based Reasoning in Classical Planning"}.
+
+    - I am really interested in the session on [reasoning in classical planning]{"entity":
+    "early-afternoon-session", "value": "Model-Based Reasoning in Classical Planning"}.
+
+    - Can you schedule me in to watch the session on [reasoning in classical planning]{"entity":
+    "early-afternoon-session", "value": "Model-Based Reasoning in Classical Planning"}?
+
+    - [learning]{"entity": "early-afternoon-session", "value": "Learning in Scheduling
+    Applications"}
+
+    - I want to see the session on [learning]{"entity": "early-afternoon-session",
+    "value": "Learning in Scheduling Applications"}.
+
+    - I am really interested in the session on [learning]{"entity": "early-afternoon-session",
+    "value": "Learning in Scheduling Applications"}.
+
+    - Can you schedule me in to watch the session on [learning]{"entity": "early-afternoon-session",
+    "value": "Learning in Scheduling Applications"}?
+
+    - [scheduling applications]{"entity": "early-afternoon-session", "value": "Learning
+    in Scheduling Applications"}
+
+    - I want to see the session on [scheduling applications]{"entity": "early-afternoon-session",
+    "value": "Learning in Scheduling Applications"}.
+
+    - I am really interested in the session on [scheduling applications]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}.
+
+    - Can you schedule me in to watch the session on [scheduling applications]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}?
+
+    - [learning in scheduling]{"entity": "early-afternoon-session", "value": "Learning
+    in Scheduling Applications"}
+
+    - I want to see the session on [learning in scheduling]{"entity": "early-afternoon-session",
+    "value": "Learning in Scheduling Applications"}.
+
+    - I am really interested in the session on [learning in scheduling]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}.
+
+    - Can you schedule me in to watch the session on [learning in scheduling]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}?
+
+    - [learning for scheduling]{"entity": "early-afternoon-session", "value": "Learning
+    in Scheduling Applications"}
+
+    - I want to see the session on [learning for scheduling]{"entity": "early-afternoon-session",
+    "value": "Learning in Scheduling Applications"}.
+
+    - I am really interested in the session on [learning for scheduling]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}.
+
+    - Can you schedule me in to watch the session on [learning for scheduling]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}?
+
+    - [planning search]{"entity": "early-afternoon-session", "value": "Search"}
+
+    - I want to see the session on [planning search]{"entity": "early-afternoon-session",
+    "value": "Search"}.
+
+    - I am really interested in the session on [planning search]{"entity": "early-afternoon-session",
+    "value": "Search"}.
+
+    - Can you schedule me in to watch the session on [planning search]{"entity": "early-afternoon-session",
+    "value": "Search"}?
+
+    - [optimization]{"entity": "early-afternoon-session", "value": "Optimal Planning"}
+
+    - I want to see the session on [optimization]{"entity": "early-afternoon-session",
+    "value": "Optimal Planning"}.
+
+    - I am really interested in the session on [optimization]{"entity": "early-afternoon-session",
+    "value": "Optimal Planning"}.
+
+    - Can you schedule me in to watch the session on [optimization]{"entity": "early-afternoon-session",
+    "value": "Optimal Planning"}?
+
+    - [optimization for planning]{"entity": "early-afternoon-session", "value": "Optimal
+    Planning"}
+
+    - I want to see the session on [optimization for planning]{"entity": "early-afternoon-session",
+    "value": "Optimal Planning"}.
+
+    - I am really interested in the session on [optimization for planning]{"entity":
+    "early-afternoon-session", "value": "Optimal Planning"}.
+
+    - Can you schedule me in to watch the session on [optimization for planning]{"entity":
     "early-afternoon-session", "value": "Optimal Planning"}?'
   intent: share-early-afternoon-session
-- examples: '- I want to see the session on [Problem Reformulation]{"entity": "afternoon-session",
+- examples: '- [Problem Reformulation]{"entity": "afternoon-session", "value": "Problem
+    Reformulation"}
+
+    - I want to see the session on [Problem Reformulation]{"entity": "afternoon-session",
     "value": "Problem Reformulation"}.
 
     - I am really interested in the session on [Problem Reformulation]{"entity": "afternoon-session",
@@ -121,6 +436,9 @@ nlu:
 
     - Can you schedule me in to watch the session on [Problem Reformulation]{"entity":
     "afternoon-session", "value": "Problem Reformulation"}?
+
+    - [Heuristics and Heuristic Search]{"entity": "afternoon-session", "value": "Heuristics
+    and Heuristic Search"}
 
     - I want to see the session on [Heuristics and Heuristic Search]{"entity": "afternoon-session",
     "value": "Heuristics and Heuristic Search"}.
@@ -131,6 +449,9 @@ nlu:
     - Can you schedule me in to watch the session on [Heuristics and Heuristic Search]{"entity":
     "afternoon-session", "value": "Heuristics and Heuristic Search"}?
 
+    - [Multi-Agent Path Finding]{"entity": "afternoon-session", "value": "Multi-Agent
+    Path Finding"}
+
     - I want to see the session on [Multi-Agent Path Finding]{"entity": "afternoon-session",
     "value": "Multi-Agent Path Finding"}.
 
@@ -140,6 +461,8 @@ nlu:
     - Can you schedule me in to watch the session on [Multi-Agent Path Finding]{"entity":
     "afternoon-session", "value": "Multi-Agent Path Finding"}?
 
+    - [Deep Learning]{"entity": "afternoon-session", "value": "Deep Learning"}
+
     - I want to see the session on [Deep Learning]{"entity": "afternoon-session",
     "value": "Deep Learning"}.
 
@@ -147,9 +470,81 @@ nlu:
     "value": "Deep Learning"}.
 
     - Can you schedule me in to watch the session on [Deep Learning]{"entity": "afternoon-session",
+    "value": "Deep Learning"}?
+
+    - [reformulating problems]{"entity": "afternoon-session", "value": "Problem Reformulation"}
+
+    - I want to see the session on [reformulating problems]{"entity": "afternoon-session",
+    "value": "Problem Reformulation"}.
+
+    - I am really interested in the session on [reformulating problems]{"entity":
+    "afternoon-session", "value": "Problem Reformulation"}.
+
+    - Can you schedule me in to watch the session on [reformulating problems]{"entity":
+    "afternoon-session", "value": "Problem Reformulation"}?
+
+    - [reformulation]{"entity": "afternoon-session", "value": "Problem Reformulation"}
+
+    - I want to see the session on [reformulation]{"entity": "afternoon-session",
+    "value": "Problem Reformulation"}.
+
+    - I am really interested in the session on [reformulation]{"entity": "afternoon-session",
+    "value": "Problem Reformulation"}.
+
+    - Can you schedule me in to watch the session on [reformulation]{"entity": "afternoon-session",
+    "value": "Problem Reformulation"}?
+
+    - [heuristics for search]{"entity": "afternoon-session", "value": "Heuristics
+    and Heuristic Search"}
+
+    - I want to see the session on [heuristics for search]{"entity": "afternoon-session",
+    "value": "Heuristics and Heuristic Search"}.
+
+    - I am really interested in the session on [heuristics for search]{"entity": "afternoon-session",
+    "value": "Heuristics and Heuristic Search"}.
+
+    - Can you schedule me in to watch the session on [heuristics for search]{"entity":
+    "afternoon-session", "value": "Heuristics and Heuristic Search"}?
+
+    - [heuristic search]{"entity": "afternoon-session", "value": "Heuristics and Heuristic
+    Search"}
+
+    - I want to see the session on [heuristic search]{"entity": "afternoon-session",
+    "value": "Heuristics and Heuristic Search"}.
+
+    - I am really interested in the session on [heuristic search]{"entity": "afternoon-session",
+    "value": "Heuristics and Heuristic Search"}.
+
+    - Can you schedule me in to watch the session on [heuristic search]{"entity":
+    "afternoon-session", "value": "Heuristics and Heuristic Search"}?
+
+    - [path finding for multiple agents]{"entity": "afternoon-session", "value": "Multi-Agent
+    Path Finding"}
+
+    - I want to see the session on [path finding for multiple agents]{"entity": "afternoon-session",
+    "value": "Multi-Agent Path Finding"}.
+
+    - I am really interested in the session on [path finding for multiple agents]{"entity":
+    "afternoon-session", "value": "Multi-Agent Path Finding"}.
+
+    - Can you schedule me in to watch the session on [path finding for multiple agents]{"entity":
+    "afternoon-session", "value": "Multi-Agent Path Finding"}?
+
+    - [DL]{"entity": "afternoon-session", "value": "Deep Learning"}
+
+    - I want to see the session on [DL]{"entity": "afternoon-session", "value": "Deep
+    Learning"}.
+
+    - I am really interested in the session on [DL]{"entity": "afternoon-session",
+    "value": "Deep Learning"}.
+
+    - Can you schedule me in to watch the session on [DL]{"entity": "afternoon-session",
     "value": "Deep Learning"}?'
   intent: share-afternoon-session
-- examples: '- I want to see the session on [Probabilistic Planning]{"entity": "evening-session",
+- examples: '- [Probabilistic Planning]{"entity": "evening-session", "value": "Probabilistic
+    Planning"}
+
+    - I want to see the session on [Probabilistic Planning]{"entity": "evening-session",
     "value": "Probabilistic Planning"}.
 
     - I am really interested in the session on [Probabilistic Planning]{"entity":
@@ -157,6 +552,9 @@ nlu:
 
     - Can you schedule me in to watch the session on [Probabilistic Planning]{"entity":
     "evening-session", "value": "Probabilistic Planning"}?
+
+    - [Multi-Agent Planning and Scheduling]{"entity": "evening-session", "value":
+    "Multi-Agent Planning and Scheduling"}
 
     - I want to see the session on [Multi-Agent Planning and Scheduling]{"entity":
     "evening-session", "value": "Multi-Agent Planning and Scheduling"}.
@@ -167,6 +565,9 @@ nlu:
     - Can you schedule me in to watch the session on [Multi-Agent Planning and Scheduling]{"entity":
     "evening-session", "value": "Multi-Agent Planning and Scheduling"}?
 
+    - [Hierarchical Task Networks]{"entity": "evening-session", "value": "Hierarchical
+    Task Networks"}
+
     - I want to see the session on [Hierarchical Task Networks]{"entity": "evening-session",
     "value": "Hierarchical Task Networks"}.
 
@@ -176,6 +577,9 @@ nlu:
     - Can you schedule me in to watch the session on [Hierarchical Task Networks]{"entity":
     "evening-session", "value": "Hierarchical Task Networks"}?
 
+    - [Rewards in Reinforcement Learning]{"entity": "evening-session", "value": "Rewards
+    in Reinforcement Learning"}
+
     - I want to see the session on [Rewards in Reinforcement Learning]{"entity": "evening-session",
     "value": "Rewards in Reinforcement Learning"}.
 
@@ -183,5 +587,110 @@ nlu:
     "evening-session", "value": "Rewards in Reinforcement Learning"}.
 
     - Can you schedule me in to watch the session on [Rewards in Reinforcement Learning]{"entity":
+    "evening-session", "value": "Rewards in Reinforcement Learning"}?
+
+    - [probabilities]{"entity": "evening-session", "value": "Probabilistic Planning"}
+
+    - I want to see the session on [probabilities]{"entity": "evening-session", "value":
+    "Probabilistic Planning"}.
+
+    - I am really interested in the session on [probabilities]{"entity": "evening-session",
+    "value": "Probabilistic Planning"}.
+
+    - Can you schedule me in to watch the session on [probabilities]{"entity": "evening-session",
+    "value": "Probabilistic Planning"}?
+
+    - [probabilities for planning]{"entity": "evening-session", "value": "Probabilistic
+    Planning"}
+
+    - I want to see the session on [probabilities for planning]{"entity": "evening-session",
+    "value": "Probabilistic Planning"}.
+
+    - I am really interested in the session on [probabilities for planning]{"entity":
+    "evening-session", "value": "Probabilistic Planning"}.
+
+    - Can you schedule me in to watch the session on [probabilities for planning]{"entity":
+    "evening-session", "value": "Probabilistic Planning"}?
+
+    - [multi-agent planning]{"entity": "evening-session", "value": "Multi-Agent Planning
+    and Scheduling"}
+
+    - I want to see the session on [multi-agent planning]{"entity": "evening-session",
+    "value": "Multi-Agent Planning and Scheduling"}.
+
+    - I am really interested in the session on [multi-agent planning]{"entity": "evening-session",
+    "value": "Multi-Agent Planning and Scheduling"}.
+
+    - Can you schedule me in to watch the session on [multi-agent planning]{"entity":
+    "evening-session", "value": "Multi-Agent Planning and Scheduling"}?
+
+    - [multi-agent scheduling]{"entity": "evening-session", "value": "Multi-Agent
+    Planning and Scheduling"}
+
+    - I want to see the session on [multi-agent scheduling]{"entity": "evening-session",
+    "value": "Multi-Agent Planning and Scheduling"}.
+
+    - I am really interested in the session on [multi-agent scheduling]{"entity":
+    "evening-session", "value": "Multi-Agent Planning and Scheduling"}.
+
+    - Can you schedule me in to watch the session on [multi-agent scheduling]{"entity":
+    "evening-session", "value": "Multi-Agent Planning and Scheduling"}?
+
+    - [HTNs]{"entity": "evening-session", "value": "Hierarchical Task Networks"}
+
+    - I want to see the session on [HTNs]{"entity": "evening-session", "value": "Hierarchical
+    Task Networks"}.
+
+    - I am really interested in the session on [HTNs]{"entity": "evening-session",
+    "value": "Hierarchical Task Networks"}.
+
+    - Can you schedule me in to watch the session on [HTNs]{"entity": "evening-session",
+    "value": "Hierarchical Task Networks"}?
+
+    - [hierarchical planning]{"entity": "evening-session", "value": "Hierarchical
+    Task Networks"}
+
+    - I want to see the session on [hierarchical planning]{"entity": "evening-session",
+    "value": "Hierarchical Task Networks"}.
+
+    - I am really interested in the session on [hierarchical planning]{"entity": "evening-session",
+    "value": "Hierarchical Task Networks"}.
+
+    - Can you schedule me in to watch the session on [hierarchical planning]{"entity":
+    "evening-session", "value": "Hierarchical Task Networks"}?
+
+    - [task networks]{"entity": "evening-session", "value": "Hierarchical Task Networks"}
+
+    - I want to see the session on [task networks]{"entity": "evening-session", "value":
+    "Hierarchical Task Networks"}.
+
+    - I am really interested in the session on [task networks]{"entity": "evening-session",
+    "value": "Hierarchical Task Networks"}.
+
+    - Can you schedule me in to watch the session on [task networks]{"entity": "evening-session",
+    "value": "Hierarchical Task Networks"}?
+
+    - [rewards in RL]{"entity": "evening-session", "value": "Rewards in Reinforcement
+    Learning"}
+
+    - I want to see the session on [rewards in RL]{"entity": "evening-session", "value":
+    "Rewards in Reinforcement Learning"}.
+
+    - I am really interested in the session on [rewards in RL]{"entity": "evening-session",
+    "value": "Rewards in Reinforcement Learning"}.
+
+    - Can you schedule me in to watch the session on [rewards in RL]{"entity": "evening-session",
+    "value": "Rewards in Reinforcement Learning"}?
+
+    - [reinforcement learning rewards]{"entity": "evening-session", "value": "Rewards
+    in Reinforcement Learning"}
+
+    - I want to see the session on [reinforcement learning rewards]{"entity": "evening-session",
+    "value": "Rewards in Reinforcement Learning"}.
+
+    - I am really interested in the session on [reinforcement learning rewards]{"entity":
+    "evening-session", "value": "Rewards in Reinforcement Learning"}.
+
+    - Can you schedule me in to watch the session on [reinforcement learning rewards]{"entity":
     "evening-session", "value": "Rewards in Reinforcement Learning"}?'
   intent: share-evening-session

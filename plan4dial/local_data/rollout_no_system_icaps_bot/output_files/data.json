@@ -96,6 +96,7 @@
                 "$invited-talk"
             ],
             "utterances": [
+                "$invited-talk",
                 "I want to see the invited talk on $invited-talk.",
                 "I am really interested in the talk on $invited-talk.",
                 "Can you schedule me in to watch the invited talk on $invited-talk?"
@@ -106,6 +107,7 @@
                 "$morning-session"
             ],
             "utterances": [
+                "$morning-session",
                 "I want to see the session on $morning-session.",
                 "I am really interested in the session on $morning-session.",
                 "Can you schedule me in to watch the session on $morning-session?"
@@ -116,6 +118,7 @@
                 "$early-afternoon-session"
             ],
             "utterances": [
+                "$early-afternoon-session",
                 "I want to see the session on $early-afternoon-session.",
                 "I am really interested in the session on $early-afternoon-session.",
                 "Can you schedule me in to watch the session on $early-afternoon-session?"
@@ -126,6 +129,7 @@
                 "$afternoon-session"
             ],
             "utterances": [
+                "$afternoon-session",
                 "I want to see the session on $afternoon-session.",
                 "I am really interested in the session on $afternoon-session.",
                 "Can you schedule me in to watch the session on $afternoon-session?"
@@ -136,6 +140,7 @@
                 "$evening-session"
             ],
             "utterances": [
+                "$evening-session",
                 "I want to see the session on $evening-session.",
                 "I am really interested in the session on $evening-session.",
                 "Can you schedule me in to watch the session on $evening-session?"
@@ -155,7 +160,7 @@
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
-                "What invited talk do you want to see on Day 1? Your options are:\\n\"Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems\"\\n\"Multi-Agent Path Finding and Its Applications\""
+                "What invited talk do you want to see on Day 1? Your options are:\n\tBeyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems\n\tMulti-Agent Path Finding and Its Applications"
             ],
             "condition": [
                 [
@@ -215,6 +220,7 @@
                         "$invited-talk"
                     ],
                     "utterances": [
+                        "$invited-talk",
                         "I want to see the invited talk on $invited-talk.",
                         "I am really interested in the talk on $invited-talk.",
                         "Can you schedule me in to watch the invited talk on $invited-talk?"
@@ -230,7 +236,7 @@
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
-                "What session do you want to see in the morning? Your options are:\\n\"Planning Representations and Scheduling\"\\n\"Verification\"\\n\"Reinforcement Learning\"\\n\"Heuristics in Classical Planning\""
+                "What session do you want to see in the morning? Your options are:\n\tPlanning Representations and Scheduling\n\tVerification\n\tReinforcement Learning\n\tHeuristics in Classical Planning"
             ],
             "condition": [
                 [
@@ -290,6 +296,7 @@
                         "$morning-session"
                     ],
                     "utterances": [
+                        "$morning-session",
                         "I want to see the session on $morning-session.",
                         "I am really interested in the session on $morning-session.",
                         "Can you schedule me in to watch the session on $morning-session?"
@@ -305,7 +312,7 @@
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
-                "What sessions do you want to see in the early afternoon? Your options are:\\n\"Model-Based Reasoning in Classical Planning\"\\n\"Learning in Scheduling Applications\"\\n\"Search\"\\n\"Optimal Planning\""
+                "What sessions do you want to see in the early afternoon? Your options are:\n\tModel-Based Reasoning in Classical Planning\n\tLearning in Scheduling Applications\n\tSearch\n\tOptimal Planning"
             ],
             "condition": [
                 [
@@ -365,6 +372,7 @@
                         "$early-afternoon-session"
                     ],
                     "utterances": [
+                        "$early-afternoon-session",
                         "I want to see the session on $early-afternoon-session.",
                         "I am really interested in the session on $early-afternoon-session.",
                         "Can you schedule me in to watch the session on $early-afternoon-session?"
@@ -380,7 +388,7 @@
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
-                "What sessions do you want to see in the afternoon? Your options are:\\n\"Problem Reformulation\"\\n\"Heuristics and Heuristic Search\"\\n\"Multi-Agent Path Finding\"\\n\"Deep Learning\""
+                "What sessions do you want to see in the afternoon? Your options are:\n\tProblem Reformulation\n\tHeuristics and Heuristic Search\n\tMulti-Agent Path Finding\n\tDeep Learning"
             ],
             "condition": [
                 [
@@ -440,6 +448,7 @@
                         "$afternoon-session"
                     ],
                     "utterances": [
+                        "$afternoon-session",
                         "I want to see the session on $afternoon-session.",
                         "I am really interested in the session on $afternoon-session.",
                         "Can you schedule me in to watch the session on $afternoon-session?"
@@ -455,7 +464,7 @@
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
-                "What session do you want to see in the evening? Your options are:\\n\"Probabilistic Planning\"\\n\"Multi-Agent Planning and Scheduling\"\\n\"Hierarchical Task Networks\"\\n\"Rewards in Reinforcement Learning\""
+                "What session do you want to see in the evening? Your options are:\n\tProbabilistic Planning\n\tMulti-Agent Planning and Scheduling\n\tHierarchical Task Networks\n\tRewards in Reinforcement Learning"
             ],
             "condition": [
                 [
@@ -515,6 +524,7 @@
                         "$evening-session"
                     ],
                     "utterances": [
+                        "$evening-session",
                         "I want to see the session on $evening-session.",
                         "I am really interested in the session on $evening-session.",
                         "Can you schedule me in to watch the session on $evening-session?"
@@ -531,7 +541,7 @@
             "subtype": "dialogue disambiguation",
             "disable-fallback": true,
             "message_variants": [
-                "Below is your generated schedule:\\n Invited Talk:\\n\\t$invited-talk\\n Morning Session:\\n\\t$morning-session\\n Early Afternoon Session:\\n\\t$early-afternoon-session\\n Afternoon Session:\\n\\t$afternoon-session\\n Evening Session:\\n\\t$evening-session\\n Enjoy your day!"
+                "Below is your generated schedule: \n\tInvited Talk: $invited-talk \n\tMorning Session: $morning-session \n\tEarly Afternoon Session: $early-afternoon-session \n\tAfternoon Session: $afternoon-session \n\tEvening Session: $evening-session Enjoy your day!"
             ],
             "condition": [
                 [

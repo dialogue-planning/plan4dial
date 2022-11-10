@@ -17,8 +17,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__invited-talk))
                 (not (force-statement))
+                (not (know__invited-talk))
             )
         :effect
             (labeled-oneof         set-invited-talk
@@ -39,8 +39,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__morning-session))
                 (not (force-statement))
+                (not (know__morning-session))
             )
         :effect
             (labeled-oneof         set-morning-session
@@ -61,8 +61,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__early-afternoon-session))
                 (not (force-statement))
+                (not (know__early-afternoon-session))
             )
         :effect
             (labeled-oneof         set-early-afternoon-session
@@ -83,8 +83,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__afternoon-session))
                 (not (force-statement))
+                (not (know__afternoon-session))
             )
         :effect
             (labeled-oneof         set-afternoon-session
@@ -105,8 +105,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__evening-session))
                 (not (force-statement))
+                (not (know__evening-session))
             )
         :effect
             (labeled-oneof         set-evening-session
@@ -127,12 +127,12 @@
         :parameters()
         :precondition
             (and
-                (know__afternoon-session)
-                (know__invited-talk)
-                (not (force-statement))
                 (know__early-afternoon-session)
+                (know__afternoon-session)
                 (know__morning-session)
+                (not (force-statement))
                 (know__evening-session)
+                (know__invited-talk)
             )
         :effect
             (labeled-oneof         goal
