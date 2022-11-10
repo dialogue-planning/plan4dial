@@ -1,6 +1,6 @@
 (define
-    (problem icaps_bot-problem)
-             (:domain icaps_bot)
+    (problem order-pizza-problem)
+             (:domain order-pizza)
     (:objects )
     (:init
     )

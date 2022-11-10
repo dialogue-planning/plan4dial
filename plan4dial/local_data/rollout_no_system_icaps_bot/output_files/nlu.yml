@@ -1,252 +1,187 @@
 nlu:
-- examples: '- yes
+- examples: '- Thank you!
 
-    - yeah
+    - Thanks!
 
-    - that''s it
+    - thank
 
-    - Y
+    - thanks so much!
 
-    - mhm
+    - have a good day!
 
-    - confirm
+    - have a good night!
 
-    - yes please'
-  intent: confirm
-- examples: '- no
+    - thx
 
-    - not at all
+    - ty'
+  intent: thank
+- examples: '- I want to see the invited talk on [Beyond Distance Estimates: Reasoning
+    about Solutions in Factored Transition Systems]{"entity": "invited-talk", "value":
+    "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems"}.
 
-    - that''s not what i meant
+    - I am really interested in the talk on [Beyond Distance Estimates: Reasoning
+    about Solutions in Factored Transition Systems]{"entity": "invited-talk", "value":
+    "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems"}.
 
-    - absolutely not
+    - Can you schedule me in to watch the invited talk on [Beyond Distance Estimates:
+    Reasoning about Solutions in Factored Transition Systems]{"entity": "invited-talk",
+    "value": "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition
+    Systems"}?
 
-    - i don''t want that
+    - I want to see the invited talk on [Multi-Agent Path Finding and Its Applications]{"entity":
+    "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}.
 
-    - nah
+    - I am really interested in the talk on [Multi-Agent Path Finding and Its Applications]{"entity":
+    "invited-talk", "value": "Multi-Agent Path Finding and Its Applications"}.
 
-    - no thanks
+    - Can you schedule me in to watch the invited talk on [Multi-Agent Path Finding
+    and Its Applications]{"entity": "invited-talk", "value": "Multi-Agent Path Finding
+    and Its Applications"}?'
+  intent: share-invited-talk
+- examples: '- I want to see the session on [Planning Representations and Scheduling]{"entity":
+    "morning-session", "value": "Planning Representations and Scheduling"}.
 
-    - no thank you'
-  intent: deny
-- examples: '- I want to attend the social.
+    - I am really interested in the session on [Planning Representations and Scheduling]{"entity":
+    "morning-session", "value": "Planning Representations and Scheduling"}.
 
-    - I want to socialize with my ICAPS peers.
+    - Can you schedule me in to watch the session on [Planning Representations and
+    Scheduling]{"entity": "morning-session", "value": "Planning Representations and
+    Scheduling"}?
 
-    - The social will be good for networking, so I definitely want to go!'
-  intent: attend-social
-- examples: '- [Planning Representations and Scheduling]{"entity": "attending-9",
-    "value": "Planning Representations and Scheduling"}
-
-    - The talk on [Planning Representations and Scheduling]{"entity": "attending-9",
-    "value": "Planning Representations and Scheduling"} seems really interesting!
-
-    - I would definitely rather check out the [Planning Representations and Scheduling]{"entity":
-    "attending-9", "value": "Planning Representations and Scheduling"} talk.
-
-    - I really want to learn about [Planning Representations and Scheduling]{"entity":
-    "attending-9", "value": "Planning Representations and Scheduling"}.
-
-    - I would prefer to check out the [Planning Representations and Scheduling]{"entity":
-    "attending-9", "value": "Planning Representations and Scheduling"} panel!
-
-    - [Verification]{"entity": "attending-9", "value": "Verification"}
-
-    - The talk on [Verification]{"entity": "attending-9", "value": "Verification"}
-    seems really interesting!
-
-    - I would definitely rather check out the [Verification]{"entity": "attending-9",
-    "value": "Verification"} talk.
-
-    - I really want to learn about [Verification]{"entity": "attending-9", "value":
+    - I want to see the session on [Verification]{"entity": "morning-session", "value":
     "Verification"}.
 
-    - I would prefer to check out the [Verification]{"entity": "attending-9", "value":
-    "Verification"} panel!
-
-    - [planning rep]{"entity": "attending-9", "value": "Planning Representations and
-    Scheduling"}
-
-    - The talk on [planning rep]{"entity": "attending-9", "value": "Planning Representations
-    and Scheduling"} seems really interesting!
-
-    - I would definitely rather check out the [planning rep]{"entity": "attending-9",
-    "value": "Planning Representations and Scheduling"} talk.
-
-    - I really want to learn about [planning rep]{"entity": "attending-9", "value":
-    "Planning Representations and Scheduling"}.
-
-    - I would prefer to check out the [planning rep]{"entity": "attending-9", "value":
-    "Planning Representations and Scheduling"} panel!
-
-    - [scheduling]{"entity": "attending-9", "value": "Planning Representations and
-    Scheduling"}
-
-    - The talk on [scheduling]{"entity": "attending-9", "value": "Planning Representations
-    and Scheduling"} seems really interesting!
-
-    - I would definitely rather check out the [scheduling]{"entity": "attending-9",
-    "value": "Planning Representations and Scheduling"} talk.
-
-    - I really want to learn about [scheduling]{"entity": "attending-9", "value":
-    "Planning Representations and Scheduling"}.
-
-    - I would prefer to check out the [scheduling]{"entity": "attending-9", "value":
-    "Planning Representations and Scheduling"} panel!
-
-    - [representations]{"entity": "attending-9", "value": "Planning Representations
-    and Scheduling"}
-
-    - The talk on [representations]{"entity": "attending-9", "value": "Planning Representations
-    and Scheduling"} seems really interesting!
-
-    - I would definitely rather check out the [representations]{"entity": "attending-9",
-    "value": "Planning Representations and Scheduling"} talk.
-
-    - I really want to learn about [representations]{"entity": "attending-9", "value":
-    "Planning Representations and Scheduling"}.
-
-    - I would prefer to check out the [representations]{"entity": "attending-9", "value":
-    "Planning Representations and Scheduling"} panel!
-
-    - [planning representations]{"entity": "attending-9", "value": "Planning Representations
-    and Scheduling"}
-
-    - The talk on [planning representations]{"entity": "attending-9", "value": "Planning
-    Representations and Scheduling"} seems really interesting!
-
-    - I would definitely rather check out the [planning representations]{"entity":
-    "attending-9", "value": "Planning Representations and Scheduling"} talk.
-
-    - I really want to learn about [planning representations]{"entity": "attending-9",
-    "value": "Planning Representations and Scheduling"}.
-
-    - I would prefer to check out the [planning representations]{"entity": "attending-9",
-    "value": "Planning Representations and Scheduling"} panel!
-
-    - [verif]{"entity": "attending-9", "value": "Verification"}
-
-    - The talk on [verif]{"entity": "attending-9", "value": "Verification"} seems
-    really interesting!
-
-    - I would definitely rather check out the [verif]{"entity": "attending-9", "value":
-    "Verification"} talk.
-
-    - I really want to learn about [verif]{"entity": "attending-9", "value": "Verification"}.
-
-    - I would prefer to check out the [verif]{"entity": "attending-9", "value": "Verification"}
-    panel!
-
-    - [planning verif]{"entity": "attending-9", "value": "Verification"}
-
-    - The talk on [planning verif]{"entity": "attending-9", "value": "Verification"}
-    seems really interesting!
-
-    - I would definitely rather check out the [planning verif]{"entity": "attending-9",
-    "value": "Verification"} talk.
-
-    - I really want to learn about [planning verif]{"entity": "attending-9", "value":
-    "Verification"}.
-
-    - I would prefer to check out the [planning verif]{"entity": "attending-9", "value":
-    "Verification"} panel!
-
-    - [planning verifications]{"entity": "attending-9", "value": "Verification"}
-
-    - The talk on [planning verifications]{"entity": "attending-9", "value": "Verification"}
-    seems really interesting!
-
-    - I would definitely rather check out the [planning verifications]{"entity": "attending-9",
-    "value": "Verification"} talk.
-
-    - I really want to learn about [planning verifications]{"entity": "attending-9",
+    - I am really interested in the session on [Verification]{"entity": "morning-session",
     "value": "Verification"}.
 
-    - I would prefer to check out the [planning verifications]{"entity": "attending-9",
-    "value": "Verification"} panel!'
-  intent: state-pref-9
-- examples: '- [Reinforcement Learning]{"entity": "attending-10", "value": "Reinforcement
-    Learning"}
+    - Can you schedule me in to watch the session on [Verification]{"entity": "morning-session",
+    "value": "Verification"}?
 
-    - The talk on [Reinforcement Learning]{"entity": "attending-10", "value": "Reinforcement
-    Learning"} seems really interesting!
-
-    - I would definitely rather check out the [Reinforcement Learning]{"entity": "attending-10",
-    "value": "Reinforcement Learning"} talk.
-
-    - I really want to learn about [Reinforcement Learning]{"entity": "attending-10",
+    - I want to see the session on [Reinforcement Learning]{"entity": "morning-session",
     "value": "Reinforcement Learning"}.
 
-    - I would prefer to check out the [Reinforcement Learning]{"entity": "attending-10",
-    "value": "Reinforcement Learning"} panel!
+    - I am really interested in the session on [Reinforcement Learning]{"entity":
+    "morning-session", "value": "Reinforcement Learning"}.
 
-    - [Heuristics in Classical Planning]{"entity": "attending-10", "value": "Heuristics
-    in Classical Planning"}
+    - Can you schedule me in to watch the session on [Reinforcement Learning]{"entity":
+    "morning-session", "value": "Reinforcement Learning"}?
 
-    - The talk on [Heuristics in Classical Planning]{"entity": "attending-10", "value":
-    "Heuristics in Classical Planning"} seems really interesting!
-
-    - I would definitely rather check out the [Heuristics in Classical Planning]{"entity":
-    "attending-10", "value": "Heuristics in Classical Planning"} talk.
-
-    - I really want to learn about [Heuristics in Classical Planning]{"entity": "attending-10",
+    - I want to see the session on [Heuristics in Classical Planning]{"entity": "morning-session",
     "value": "Heuristics in Classical Planning"}.
 
-    - I would prefer to check out the [Heuristics in Classical Planning]{"entity":
-    "attending-10", "value": "Heuristics in Classical Planning"} panel!
+    - I am really interested in the session on [Heuristics in Classical Planning]{"entity":
+    "morning-session", "value": "Heuristics in Classical Planning"}.
 
-    - [RL]{"entity": "attending-10", "value": "Reinforcement Learning"}
+    - Can you schedule me in to watch the session on [Heuristics in Classical Planning]{"entity":
+    "morning-session", "value": "Heuristics in Classical Planning"}?'
+  intent: share-morning-session
+- examples: '- I want to see the session on [Model-Based Reasoning in Classical Planning]{"entity":
+    "early-afternoon-session", "value": "Model-Based Reasoning in Classical Planning"}.
 
-    - The talk on [RL]{"entity": "attending-10", "value": "Reinforcement Learning"}
-    seems really interesting!
+    - I am really interested in the session on [Model-Based Reasoning in Classical
+    Planning]{"entity": "early-afternoon-session", "value": "Model-Based Reasoning
+    in Classical Planning"}.
 
-    - I would definitely rather check out the [RL]{"entity": "attending-10", "value":
-    "Reinforcement Learning"} talk.
+    - Can you schedule me in to watch the session on [Model-Based Reasoning in Classical
+    Planning]{"entity": "early-afternoon-session", "value": "Model-Based Reasoning
+    in Classical Planning"}?
 
-    - I really want to learn about [RL]{"entity": "attending-10", "value": "Reinforcement
-    Learning"}.
+    - I want to see the session on [Learning in Scheduling Applications]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}.
 
-    - I would prefer to check out the [RL]{"entity": "attending-10", "value": "Reinforcement
-    Learning"} panel!
+    - I am really interested in the session on [Learning in Scheduling Applications]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}.
 
-    - [heuristics]{"entity": "attending-10", "value": "Heuristics in Classical Planning"}
+    - Can you schedule me in to watch the session on [Learning in Scheduling Applications]{"entity":
+    "early-afternoon-session", "value": "Learning in Scheduling Applications"}?
 
-    - The talk on [heuristics]{"entity": "attending-10", "value": "Heuristics in Classical
-    Planning"} seems really interesting!
+    - I want to see the session on [Search]{"entity": "early-afternoon-session", "value":
+    "Search"}.
 
-    - I would definitely rather check out the [heuristics]{"entity": "attending-10",
-    "value": "Heuristics in Classical Planning"} talk.
+    - I am really interested in the session on [Search]{"entity": "early-afternoon-session",
+    "value": "Search"}.
 
-    - I really want to learn about [heuristics]{"entity": "attending-10", "value":
-    "Heuristics in Classical Planning"}.
+    - Can you schedule me in to watch the session on [Search]{"entity": "early-afternoon-session",
+    "value": "Search"}?
 
-    - I would prefer to check out the [heuristics]{"entity": "attending-10", "value":
-    "Heuristics in Classical Planning"} panel!
+    - I want to see the session on [Optimal Planning]{"entity": "early-afternoon-session",
+    "value": "Optimal Planning"}.
 
-    - [classical planning heuristics]{"entity": "attending-10", "value": "Heuristics
-    in Classical Planning"}
+    - I am really interested in the session on [Optimal Planning]{"entity": "early-afternoon-session",
+    "value": "Optimal Planning"}.
 
-    - The talk on [classical planning heuristics]{"entity": "attending-10", "value":
-    "Heuristics in Classical Planning"} seems really interesting!
+    - Can you schedule me in to watch the session on [Optimal Planning]{"entity":
+    "early-afternoon-session", "value": "Optimal Planning"}?'
+  intent: share-early-afternoon-session
+- examples: '- I want to see the session on [Problem Reformulation]{"entity": "afternoon-session",
+    "value": "Problem Reformulation"}.
 
-    - I would definitely rather check out the [classical planning heuristics]{"entity":
-    "attending-10", "value": "Heuristics in Classical Planning"} talk.
+    - I am really interested in the session on [Problem Reformulation]{"entity": "afternoon-session",
+    "value": "Problem Reformulation"}.
 
-    - I really want to learn about [classical planning heuristics]{"entity": "attending-10",
-    "value": "Heuristics in Classical Planning"}.
+    - Can you schedule me in to watch the session on [Problem Reformulation]{"entity":
+    "afternoon-session", "value": "Problem Reformulation"}?
 
-    - I would prefer to check out the [classical planning heuristics]{"entity": "attending-10",
-    "value": "Heuristics in Classical Planning"} panel!'
-  intent: state-pref-10
-- examples: '- I am not interested in any of these talks.
+    - I want to see the session on [Heuristics and Heuristic Search]{"entity": "afternoon-session",
+    "value": "Heuristics and Heuristic Search"}.
 
-    - I think I will skip these panels.
+    - I am really interested in the session on [Heuristics and Heuristic Search]{"entity":
+    "afternoon-session", "value": "Heuristics and Heuristic Search"}.
 
-    - I''ll take a break during this panel.
+    - Can you schedule me in to watch the session on [Heuristics and Heuristic Search]{"entity":
+    "afternoon-session", "value": "Heuristics and Heuristic Search"}?
 
-    - I would rather take a break.
+    - I want to see the session on [Multi-Agent Path Finding]{"entity": "afternoon-session",
+    "value": "Multi-Agent Path Finding"}.
 
-    - I think I will take a break and grab some food.
+    - I am really interested in the session on [Multi-Agent Path Finding]{"entity":
+    "afternoon-session", "value": "Multi-Agent Path Finding"}.
 
-    - I would prefer to take a breather before getting back to the conference.'
-  intent: not-interested
+    - Can you schedule me in to watch the session on [Multi-Agent Path Finding]{"entity":
+    "afternoon-session", "value": "Multi-Agent Path Finding"}?
+
+    - I want to see the session on [Deep Learning]{"entity": "afternoon-session",
+    "value": "Deep Learning"}.
+
+    - I am really interested in the session on [Deep Learning]{"entity": "afternoon-session",
+    "value": "Deep Learning"}.
+
+    - Can you schedule me in to watch the session on [Deep Learning]{"entity": "afternoon-session",
+    "value": "Deep Learning"}?'
+  intent: share-afternoon-session
+- examples: '- I want to see the session on [Probabilistic Planning]{"entity": "evening-session",
+    "value": "Probabilistic Planning"}.
+
+    - I am really interested in the session on [Probabilistic Planning]{"entity":
+    "evening-session", "value": "Probabilistic Planning"}.
+
+    - Can you schedule me in to watch the session on [Probabilistic Planning]{"entity":
+    "evening-session", "value": "Probabilistic Planning"}?
+
+    - I want to see the session on [Multi-Agent Planning and Scheduling]{"entity":
+    "evening-session", "value": "Multi-Agent Planning and Scheduling"}.
+
+    - I am really interested in the session on [Multi-Agent Planning and Scheduling]{"entity":
+    "evening-session", "value": "Multi-Agent Planning and Scheduling"}.
+
+    - Can you schedule me in to watch the session on [Multi-Agent Planning and Scheduling]{"entity":
+    "evening-session", "value": "Multi-Agent Planning and Scheduling"}?
+
+    - I want to see the session on [Hierarchical Task Networks]{"entity": "evening-session",
+    "value": "Hierarchical Task Networks"}.
+
+    - I am really interested in the session on [Hierarchical Task Networks]{"entity":
+    "evening-session", "value": "Hierarchical Task Networks"}.
+
+    - Can you schedule me in to watch the session on [Hierarchical Task Networks]{"entity":
+    "evening-session", "value": "Hierarchical Task Networks"}?
+
+    - I want to see the session on [Rewards in Reinforcement Learning]{"entity": "evening-session",
+    "value": "Rewards in Reinforcement Learning"}.
+
+    - I am really interested in the session on [Rewards in Reinforcement Learning]{"entity":
+    "evening-session", "value": "Rewards in Reinforcement Learning"}.
+
+    - Can you schedule me in to watch the session on [Rewards in Reinforcement Learning]{"entity":
+    "evening-session", "value": "Rewards in Reinforcement Learning"}?'
+  intent: share-evening-session

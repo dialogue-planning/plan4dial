@@ -1,95 +1,75 @@
 {
     "actions": {
-        "get-attending-7": {
+        "get-invited-talk": {
             "condition": [
                 "(not (force-statement))",
-                "(not (know__attending-7))",
-                "(available-7)"
+                "(not (know__invited-talk))"
             ],
             "effect": {
-                "get-attending-7_DETDUP_get-response-EQ-choose-preference": [
-                    "(know__attending-7)"
+                "get-invited-talk_DETDUP_set-invited-talk-EQ-valid": [
+                    "(know__invited-talk)"
                 ],
-                "get-attending-7_DETDUP_get-response-EQ-do-not-attend": [
-                    "(know__attending-7)"
-                ],
-                "get-attending-7_DETDUP_get-response-EQ-fallback": [
+                "get-invited-talk_DETDUP_set-invited-talk-EQ-fallback": [
                     "(force-statement)",
                     "(have-message)"
                 ]
             }
         },
-        "get-attending-8": {
+        "get-morning-session": {
             "condition": [
                 "(not (force-statement))",
-                "(not (know__attending-8))",
-                "(available-8)"
+                "(not (know__morning-session))"
             ],
             "effect": {
-                "get-attending-8_DETDUP_get-response-EQ-choose-preference": [
-                    "(know__attending-8)"
+                "get-morning-session_DETDUP_set-morning-session-EQ-valid": [
+                    "(know__morning-session)"
                 ],
-                "get-attending-8_DETDUP_get-response-EQ-do-not-attend": [
-                    "(know__attending-8)"
-                ],
-                "get-attending-8_DETDUP_get-response-EQ-fallback": [
+                "get-morning-session_DETDUP_set-morning-session-EQ-fallback": [
                     "(force-statement)",
                     "(have-message)"
                 ]
             }
         },
-        "get-attending-9": {
+        "get-early-afternoon-session": {
             "condition": [
-                "(available-9)",
-                "(not (know__attending-9))",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__early-afternoon-session))"
             ],
             "effect": {
-                "get-attending-9_DETDUP_get-response-EQ-choose-preference": [
-                    "(know__attending-9)"
+                "get-early-afternoon-session_DETDUP_set-early-afternoon-session-EQ-valid": [
+                    "(know__early-afternoon-session)"
                 ],
-                "get-attending-9_DETDUP_get-response-EQ-do-not-attend": [
-                    "(know__attending-9)"
-                ],
-                "get-attending-9_DETDUP_get-response-EQ-fallback": [
+                "get-early-afternoon-session_DETDUP_set-early-afternoon-session-EQ-fallback": [
                     "(force-statement)",
                     "(have-message)"
                 ]
             }
         },
-        "get-attending-10": {
+        "get-afternoon-session": {
             "condition": [
-                "(available-10)",
-                "(not (know__attending-10))",
+                "(not (know__afternoon-session))",
                 "(not (force-statement))"
             ],
             "effect": {
-                "get-attending-10_DETDUP_get-response-EQ-choose-preference": [
-                    "(know__attending-10)"
+                "get-afternoon-session_DETDUP_set-afternoon-session-EQ-valid": [
+                    "(know__afternoon-session)"
                 ],
-                "get-attending-10_DETDUP_get-response-EQ-do-not-attend": [
-                    "(know__attending-10)"
-                ],
-                "get-attending-10_DETDUP_get-response-EQ-fallback": [
+                "get-afternoon-session_DETDUP_set-afternoon-session-EQ-fallback": [
                     "(force-statement)",
                     "(have-message)"
                 ]
             }
         },
-        "get-attending-11": {
+        "get-evening-session": {
             "condition": [
-                "(available-11)",
-                "(not (know__attending-11))",
+                "(not (know__evening-session))",
                 "(not (force-statement))"
             ],
             "effect": {
-                "get-attending-11_DETDUP_get-response-EQ-choose-preference": [
-                    "(know__attending-11)"
+                "get-evening-session_DETDUP_set-evening-session-EQ-valid": [
+                    "(know__evening-session)"
                 ],
-                "get-attending-11_DETDUP_get-response-EQ-do-not-attend": [
-                    "(know__attending-11)"
-                ],
-                "get-attending-11_DETDUP_get-response-EQ-fallback": [
+                "get-evening-session_DETDUP_set-evening-session-EQ-fallback": [
                     "(force-statement)",
                     "(have-message)"
                 ]
@@ -97,15 +77,15 @@
         },
         "complete": {
             "condition": [
-                "(know__attending-8)",
-                "(know__attending-7)",
+                "(know__afternoon-session)",
+                "(know__early-afternoon-session)",
+                "(know__evening-session)",
+                "(know__morning-session)",
                 "(not (force-statement))",
-                "(know__attending-11)",
-                "(know__attending-9)",
-                "(know__attending-10)"
+                "(know__invited-talk)"
             ],
             "effect": {
-                "complete_DETDUP_finish-EQ-finish": [
+                "complete_DETDUP_goal-EQ-valid": [
                     "(goal)"
                 ]
             }
@@ -117,140 +97,20 @@
             ],
             "effect": {
                 "dialogue_statement_DETDUP_reset-EQ-lock": [
-                    "(not (force-statement))",
-                    "(not (have-message))"
-                ]
-            }
-        },
-        "slot-fill__get-available-7": {
-            "condition": [
-                "(not (force-statement))",
-                "(not (know__available-7))"
-            ],
-            "effect": {
-                "slot-fill__get-available-7_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(available-7)",
-                    "(know__available-7)"
-                ],
-                "slot-fill__get-available-7_DETDUP_get-response-EQ-deny_outcome": [
-                    "(know__attending-7)",
-                    "(not (available-7))",
-                    "(know__available-7)"
-                ],
-                "slot-fill__get-available-7_DETDUP_get-response-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
-                ]
-            }
-        },
-        "slot-fill__get-available-8": {
-            "condition": [
-                "(not (know__available-8))",
-                "(not (force-statement))",
-                "(know__attending-7)"
-            ],
-            "effect": {
-                "slot-fill__get-available-8_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(know__available-8)",
-                    "(available-8)"
-                ],
-                "slot-fill__get-available-8_DETDUP_get-response-EQ-deny_outcome": [
-                    "(not (available-8))",
-                    "(know__available-8)",
-                    "(know__attending-8)"
-                ],
-                "slot-fill__get-available-8_DETDUP_get-response-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
-                ]
-            }
-        },
-        "slot-fill__get-available-9": {
-            "condition": [
-                "(not (know__available-9))",
-                "(not (force-statement))",
-                "(know__attending-8)"
-            ],
-            "effect": {
-                "slot-fill__get-available-9_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(know__available-9)",
-                    "(available-9)"
-                ],
-                "slot-fill__get-available-9_DETDUP_get-response-EQ-deny_outcome": [
-                    "(know__available-9)",
-                    "(not (available-9))",
-                    "(know__attending-9)"
-                ],
-                "slot-fill__get-available-9_DETDUP_get-response-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
-                ]
-            }
-        },
-        "slot-fill__get-available-10": {
-            "condition": [
-                "(know__attending-9)",
-                "(not (know__available-10))",
-                "(not (force-statement))"
-            ],
-            "effect": {
-                "slot-fill__get-available-10_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(know__available-10)",
-                    "(available-10)"
-                ],
-                "slot-fill__get-available-10_DETDUP_get-response-EQ-deny_outcome": [
-                    "(know__available-10)",
-                    "(not (available-10))",
-                    "(know__attending-10)"
-                ],
-                "slot-fill__get-available-10_DETDUP_get-response-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
-                ]
-            }
-        },
-        "slot-fill__get-available-11": {
-            "condition": [
-                "(not (know__available-11))",
-                "(not (force-statement))",
-                "(know__attending-10)"
-            ],
-            "effect": {
-                "slot-fill__get-available-11_DETDUP_get-response-EQ-confirm_outcome": [
-                    "(know__available-11)",
-                    "(available-11)"
-                ],
-                "slot-fill__get-available-11_DETDUP_get-response-EQ-deny_outcome": [
-                    "(know__available-11)",
-                    "(not (available-11))",
-                    "(know__attending-11)"
-                ],
-                "slot-fill__get-available-11_DETDUP_get-response-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(not (have-message))",
+                    "(not (force-statement))"
                 ]
             }
         }
     },
     "initial_state": [
-        "(not (know__attending-9))",
-        "(not (know__attending-10))",
-        "(not (know__attending-7))",
-        "(not (goal))",
-        "(not (available-8))",
-        "(not (available-10))",
-        "(not (available-7))",
-        "(not (know__available-8))",
-        "(not (know__available-10))",
-        "(not (force-statement))",
-        "(not (know__available-7))",
-        "(not (available-11))",
-        "(not (informed-user))",
+        "(not (know__invited-talk))",
         "(not (have-message))",
-        "(not (know__available-9))",
-        "(not (available-9))",
-        "(not (know__attending-8))",
-        "(not (know__attending-11))",
-        "(not (know__available-11))"
+        "(not (know__afternoon-session))",
+        "(not (know__evening-session))",
+        "(not (know__morning-session))",
+        "(not (goal))",
+        "(not (know__early-afternoon-session))",
+        "(not (force-statement))"
     ]
 }

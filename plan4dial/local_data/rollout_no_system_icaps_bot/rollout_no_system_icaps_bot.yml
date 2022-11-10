@@ -1,393 +1,225 @@
 ---
-name: icaps_bot
+name: order-pizza
 
 context_variables:
-  informed-user:
-    type: flag
-    init: false
-  available-7:
-    type: flag
-    init: false
-    known:
-      type: flag
-      init: false
-  available-8:
-    type: flag
-    init: false
-    known:
-      type: flag
-      init: false
-  available-9:
-    type: flag
-    init: false
-    known:
-      type: flag
-      init: false
-  available-10:
-    type: flag
-    init: false
-    known:
-      type: flag
-      init: false
-  available-11:
-    type: flag
-    init: false
-    known:
-      type: flag
-      init: false      
-  attending-7:
+  invited-talk:
     type: enum
     known:
       type: flag
       init: false
     options:
-      - "Invited Talk: Malte Helmert"
-  attending-8:
+      - "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems"
+      - Multi-Agent Path Finding and Its Applications
+  morning-session:
     type: enum
     known:
       type: flag
       init: false
     options:
-      - "Social: Get Together"
-  attending-9:
+      - Planning Representations and Scheduling
+      - Verification
+      - Reinforcement Learning
+      - Heuristics in Classical Planning
+  early-afternoon-session:
     type: enum
     known:
       type: flag
       init: false
     options:
-      Planning Representations and Scheduling:
-        variations:
-          - planning rep
-          - scheduling
-          - representations
-          - planning representations
-      Verification:
-        variations:
-          - verif
-          - planning verif
-          - planning verifications
-  attending-10:
+      - Model-Based Reasoning in Classical Planning
+      - Learning in Scheduling Applications
+      - Search
+      - Optimal Planning
+  afternoon-session:
     type: enum
     known:
       type: flag
       init: false
     options:
-      Reinforcement Learning:
-        variations:
-          - RL
-      Heuristics in Classical Planning:
-        variations:
-          - heuristics
-          - classical planning heuristics
-  attending-11:
+      - Problem Reformulation
+      - Heuristics and Heuristic Search
+      - Multi-Agent Path Finding
+      - Deep Learning
+  evening-session:
     type: enum
     known:
       type: flag
       init: false
     options:
-      - Poster and Demo Session
+      - Probabilistic Planning
+      - Multi-Agent Planning and Scheduling
+      - Hierarchical Task Networks
+      - Rewards in Reinforcement Learning
   goal:
     type: flag
     init: false
 intents:
-  confirm:
+  thank:
     utterances:
-      - "yes"
-      - yeah
-      - that's it
-      - "Y"
-      - mhm
-      - confirm
-      - yes please
-  deny:
+      - Thank you!
+      - Thanks!
+      - thank
+      - thanks so much!
+      - have a good day!
+      - have a good night!
+      - thx
+      - ty
+  share-invited-talk:
+    variables: 
+      - invited-talk 
     utterances:
-      - "no"
-      - not at all
-      - that's not what i meant
-      - absolutely not
-      - i don't want that
-      - nah
-      - no thanks
-      - no thank you
-  attend-social:
+      - I want to see the invited talk on $invited-talk.
+      - I am really interested in the talk on $invited-talk. 
+      - Can you schedule me in to watch the invited talk on $invited-talk?
+  share-morning-session:
+    variables: 
+      - morning-session 
     utterances:
-      - I want to attend the social.
-      - I want to socialize with my ICAPS peers.
-      - The social will be good for networking, so I definitely want to go!
-  state-pref-9:
-    variables:
-      - attending-9
+      - I want to see the session on $morning-session.
+      - I am really interested in the session on $morning-session. 
+      - Can you schedule me in to watch the session on $morning-session?
+  share-early-afternoon-session:
+    variables: 
+      - early-afternoon-session 
     utterances:
-      - $attending-9
-      - The talk on $attending-9 seems really interesting!
-      - I would definitely rather check out the $attending-9 talk.
-      - I really want to learn about $attending-9.
-      - I would prefer to check out the $attending-9 panel!
-  state-pref-10:
-    variables:
-      - attending-10
+      - I want to see the session on $early-afternoon-session.
+      - I am really interested in the session on $early-afternoon-session. 
+      - Can you schedule me in to watch the session on $early-afternoon-session?
+  share-afternoon-session:
+    variables: 
+      - afternoon-session 
     utterances:
-      - $attending-10
-      - The talk on $attending-10 seems really interesting!
-      - I would definitely rather check out the $attending-10 talk.
-      - I really want to learn about $attending-10.
-      - I would prefer to check out the $attending-10 panel!
-  not-interested:
+      - I want to see the session on $afternoon-session.
+      - I am really interested in the session on $afternoon-session. 
+      - Can you schedule me in to watch the session on $afternoon-session?
+  share-evening-session:
+    variables: 
+      - evening-session 
     utterances:
-      - I am not interested in any of these talks.
-      - I think I will skip these panels.
-      - I'll take a break during this panel.
-      - I would rather take a break.
-      - I think I will take a break and grab some food.
-      - I would prefer to take a breather before getting back to the conference.
+      - I want to see the session on $evening-session.
+      - I am really interested in the session on $evening-session. 
+      - Can you schedule me in to watch the session on $evening-session?
 actions:
-  # start:
-  #   disable-fallback: true
-  #   type: dialogue
-  #   message_variants:
-  #     - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
-  #       I will suggest the best talks for you based on what topics you are the most interested in.
-  #   condition:
-  #     informed-user:
-  #       value: false
-  #   effect:
-  #     start:
-  #       oneof:
-  #         outcomes:
-  #           inform:
-  #             updates:
-  #               informed-user:
-  #                 value: true
-  #             intent:
-  get-available-7:
-    type: custom
-    subtype: flag_entity_yes_no
-    parameters:
-      action_name: get-available-7
-      message_variants:
-        - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
-          I will suggest the best talks for you based on what topics you are the most interested in.
-          First, are you available at 7 UTC?
-      entity: available-7
-      # additional_conditions:
-      #   informed-user:
-      #     value: true
-      additional_updates:
-        deny_outcome:
-          attending-7:
-            known: true
-            value: null
-  get-available-8:
-    type: custom
-    subtype: flag_entity_yes_no
-    parameters:
-      action_name: get-available-8
-      message_variants:
-        - Are you available at 8 UTC?
-      entity: available-8
-      additional_conditions:
-        attending-7:
-          known: true
-      additional_updates:
-        deny_outcome:
-          attending-8:
-            known: true
-            value: null
-  get-available-9:
-    type: custom
-    subtype: flag_entity_yes_no
-    parameters:
-      action_name: get-available-9
-      message_variants:
-        - Are you available at 9 UTC?
-      entity: available-9
-      additional_conditions:
-        attending-8:
-          known: true
-      additional_updates:
-        deny_outcome:
-          attending-9:
-            known: true
-            value: null
-  get-available-10:
-    type: custom
-    subtype: flag_entity_yes_no
-    parameters:
-      action_name: get-available-10
-      message_variants:
-        - Are you available at 10 UTC?
-      entity: available-10
-      additional_conditions:
-        attending-9:
-          known: true
-      additional_updates:
-        deny_outcome:
-          attending-10:
-            known: true
-            value: null
-  get-available-11:
-    type: custom
-    subtype: flag_entity_yes_no
-    parameters:
-      action_name: get-available-11
-      message_variants:
-        - Are you available at 11 UTC?
-      entity: available-11
-      additional_conditions:
-        attending-10:
-          known: true
-      additional_updates:
-        deny_outcome:
-          attending-11:
-            known: true
-            value: null
-  get-attending-7:
+  get-invited-talk:
     type: dialogue
+    subtype: dialogue disambiguation
     message_variants:
-      - Are you interested in attending Malte's Invited Talk on Factored Transition Systems?
+      - 'What invited talk do you want to see on Day 1? Your options are:\n"Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems"\n"Multi-Agent Path Finding and Its Applications"'
     condition:
-      attending-7:
+      invited-talk:
         known: false
-      available-7:
-        value: true
     effect:
-      get-response:
+      set-invited-talk:
         oneof:
           outcomes:
-            choose-preference:
+            valid:
               updates:
-                attending-7:
-                  value: "Invited Talk: Malte Helmert"
+                invited-talk:
+                  value: $invited-talk
                   known: true
-              intent: confirm
-            do-not-attend:
-              updates:
-                attending-7:
-                  value: null
-                  known: true
-              intent: deny
-  get-attending-8:
+              intent: share-invited-talk
+  get-morning-session:
     type: dialogue
+    subtype: dialogue disambiguation
     message_variants:
-      - Are you interested in attending the ICAPS social?
+      - 'What session do you want to see in the morning? Your options are:\n"Planning Representations and Scheduling"\n"Verification"\n"Reinforcement Learning"\n"Heuristics in Classical Planning"'
     condition:
-      attending-8:
+      morning-session:
         known: false
-      available-8:
-        value: true
     effect:
-      get-response:
+      set-morning-session:
         oneof:
           outcomes:
-            choose-preference:
+            valid:
               updates:
-                attending-8:
-                  value: "Social: Get Together"
+                morning-session:
+                  value: $morning-session
                   known: true
-              intent: confirm
-            do-not-attend:
-              updates:
-                attending-8:
-                  value: null
-                  known: true
-              intent: deny
-  get-attending-9:
+              intent: share-morning-session
+  get-early-afternoon-session:
     type: dialogue
+    subtype: dialogue disambiguation
     message_variants:
-      - Are you interested in either Planning Representations and Scheduling or Verification?
+      - 'What sessions do you want to see in the early afternoon? Your options are:\n"Model-Based Reasoning in Classical Planning"\n"Learning in Scheduling Applications"\n"Search"\n"Optimal Planning"'
     condition:
-      attending-9:
+      early-afternoon-session:
         known: false
-      available-9:
-        value: true
     effect:
-      get-response:
+      set-early-afternoon-session:
         oneof:
           outcomes:
-            choose-preference:
+            valid:
               updates:
-                attending-9:
-                  value: $attending-9
+                early-afternoon-session:
+                  value: $early-afternoon-session
                   known: true
-              intent: state-pref-9
-            do-not-attend:
-              updates:
-                attending-9:
-                  value: null
-                  known: true
-              intent: not-interested
-  get-attending-10:
+              intent: share-early-afternoon-session
+  get-afternoon-session:
     type: dialogue
+    subtype: dialogue disambiguation
     message_variants:
-      - Are you interested in either Reinforcement Learning or Heuristics in Classical Planning?
+      - 'What sessions do you want to see in the afternoon? Your options are:\n"Problem Reformulation"\n"Heuristics and Heuristic Search"\n"Multi-Agent Path Finding"\n"Deep Learning"'
     condition:
-      attending-10:
+      afternoon-session:
         known: false
-      available-10:
-        value: true
     effect:
-      get-response:
+      set-afternoon-session:
         oneof:
           outcomes:
-            choose-preference:
+            valid:
               updates:
-                attending-10:
-                  value: $attending-10
+                afternoon-session:
+                  value: $afternoon-session
                   known: true
-              intent: state-pref-10
-            do-not-attend:
-              updates:
-                attending-10:
-                  value: null
-                  known: true
-              intent: not-interested
-  get-attending-11:
+              intent: share-afternoon-session
+  get-evening-session:
     type: dialogue
+    subtype: dialogue disambiguation
     message_variants:
-      - Are you interested in attending the Poster and Demo Session?
+      - 'What session do you want to see in the evening? Your options are:\n"Probabilistic Planning"\n"Multi-Agent Planning and Scheduling"\n"Hierarchical Task Networks"\n"Rewards in Reinforcement Learning"'
     condition:
-      attending-11:
+      evening-session:
         known: false
-      available-11:
-        value: true
     effect:
-      get-response:
+      set-evening-session:
         oneof:
           outcomes:
-            choose-preference:
+            valid:
               updates:
-                attending-11:
-                  value: Poster and Demo Session
+                evening-session:
+                  value: $evening-session
                   known: true
-              intent: confirm
-            do-not-attend:
-              updates:
-                attending-11:
-                  value: null
-                  known: true
-              intent: deny
+              intent: share-evening-session
   complete:
-    disable-fallback: true
     type: dialogue
-    condition:
-      attending-7:
-        known: true
-      attending-8:
-        known: true
-      attending-9:
-        known: true
-      attending-10:
-        known: true
-      attending-11:
-        known: true
+    subtype: dialogue disambiguation
+    disable-fallback: true
     message_variants:
-      - "Below is your generated schedule:\n7 UTC: $attending-7 \n8 UTC: $attending-8 \n9 UTC: $attending-9 \n10 UTC: $attending-10 \n11 UTC: $attending-11 \nEnjoy your morning!"
+      - 'Below is your generated schedule:\n
+        Invited Talk:\n\t$invited-talk\n
+        Morning Session:\n\t$morning-session\n
+        Early Afternoon Session:\n\t$early-afternoon-session\n
+        Afternoon Session:\n\t$afternoon-session\n
+        Evening Session:\n\t$evening-session\n
+        Enjoy your day!'
+    condition:
+      invited-talk:
+        known: true
+      morning-session:
+        known: true
+      early-afternoon-session:
+        known: true
+      afternoon-session:
+        known: true
+      evening-session:
+        known: true
     effect:
-      finish:
+      goal:
         oneof:
           outcomes:
-            finish:
+            valid:
               updates:
                 goal:
                   value: true
-              intent:
+              intent: thank
+...

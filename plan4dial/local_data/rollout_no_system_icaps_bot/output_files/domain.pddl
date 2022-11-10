@@ -1,47 +1,30 @@
 (define
-    (domain icaps_bot)
+    (domain order-pizza)
     (:requirements         :strips :typing)
     (:types )
     (:constants )
     (:predicates
-        (informed-user)
-        (know__available-7)
-        (available-7)
-        (know__available-8)
-        (available-8)
-        (know__available-9)
-        (available-9)
-        (know__available-10)
-        (available-10)
-        (know__available-11)
-        (available-11)
-        (know__attending-7)
-        (know__attending-8)
-        (know__attending-9)
-        (know__attending-10)
-        (know__attending-11)
+        (know__invited-talk)
+        (know__morning-session)
+        (know__early-afternoon-session)
+        (know__afternoon-session)
+        (know__evening-session)
         (goal)
         (have-message)
         (force-statement)
     )
-    (:action get-attending-7
+    (:action get-invited-talk
         :parameters()
         :precondition
             (and
                 (not (force-statement))
-                (not (know__attending-7))
-                (available-7)
+                (not (know__invited-talk))
             )
         :effect
-            (labeled-oneof         get-response
-                (outcome choose-preference
+            (labeled-oneof         set-invited-talk
+                (outcome valid
                     (and
-                        (know__attending-7)
-                    )
-                )
-                (outcome do-not-attend
-                    (and
-                        (know__attending-7)
+                        (know__invited-talk)
                     )
                 )
                 (outcome fallback
@@ -52,24 +35,18 @@
                 )
             )
     )
-    (:action get-attending-8
+    (:action get-morning-session
         :parameters()
         :precondition
             (and
                 (not (force-statement))
-                (not (know__attending-8))
-                (available-8)
+                (not (know__morning-session))
             )
         :effect
-            (labeled-oneof         get-response
-                (outcome choose-preference
+            (labeled-oneof         set-morning-session
+                (outcome valid
                     (and
-                        (know__attending-8)
-                    )
-                )
-                (outcome do-not-attend
-                    (and
-                        (know__attending-8)
+                        (know__morning-session)
                     )
                 )
                 (outcome fallback
@@ -80,24 +57,18 @@
                 )
             )
     )
-    (:action get-attending-9
+    (:action get-early-afternoon-session
         :parameters()
         :precondition
             (and
-                (available-9)
-                (not (know__attending-9))
                 (not (force-statement))
+                (not (know__early-afternoon-session))
             )
         :effect
-            (labeled-oneof         get-response
-                (outcome choose-preference
+            (labeled-oneof         set-early-afternoon-session
+                (outcome valid
                     (and
-                        (know__attending-9)
-                    )
-                )
-                (outcome do-not-attend
-                    (and
-                        (know__attending-9)
+                        (know__early-afternoon-session)
                     )
                 )
                 (outcome fallback
@@ -108,24 +79,18 @@
                 )
             )
     )
-    (:action get-attending-10
+    (:action get-afternoon-session
         :parameters()
         :precondition
             (and
-                (available-10)
-                (not (know__attending-10))
+                (not (know__afternoon-session))
                 (not (force-statement))
             )
         :effect
-            (labeled-oneof         get-response
-                (outcome choose-preference
+            (labeled-oneof         set-afternoon-session
+                (outcome valid
                     (and
-                        (know__attending-10)
-                    )
-                )
-                (outcome do-not-attend
-                    (and
-                        (know__attending-10)
+                        (know__afternoon-session)
                     )
                 )
                 (outcome fallback
@@ -136,24 +101,18 @@
                 )
             )
     )
-    (:action get-attending-11
+    (:action get-evening-session
         :parameters()
         :precondition
             (and
-                (available-11)
-                (not (know__attending-11))
+                (not (know__evening-session))
                 (not (force-statement))
             )
         :effect
-            (labeled-oneof         get-response
-                (outcome choose-preference
+            (labeled-oneof         set-evening-session
+                (outcome valid
                     (and
-                        (know__attending-11)
-                    )
-                )
-                (outcome do-not-attend
-                    (and
-                        (know__attending-11)
+                        (know__evening-session)
                     )
                 )
                 (outcome fallback
@@ -168,16 +127,16 @@
         :parameters()
         :precondition
             (and
-                (know__attending-8)
-                (know__attending-7)
+                (know__afternoon-session)
+                (know__early-afternoon-session)
+                (know__evening-session)
+                (know__morning-session)
                 (not (force-statement))
-                (know__attending-11)
-                (know__attending-9)
-                (know__attending-10)
+                (know__invited-talk)
             )
         :effect
-            (labeled-oneof         finish
-                (outcome finish
+            (labeled-oneof         goal
+                (outcome valid
                     (and
                         (goal)
                     )
@@ -195,162 +154,8 @@
             (labeled-oneof         reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
-                    )
-                )
-            )
-    )
-    (:action slot-fill__get-available-7
-        :parameters()
-        :precondition
-            (and
-                (not (force-statement))
-                (not (know__available-7))
-            )
-        :effect
-            (labeled-oneof         get-response
-                (outcome confirm_outcome
-                    (and
-                        (available-7)
-                        (know__available-7)
-                    )
-                )
-                (outcome deny_outcome
-                    (and
-                        (know__attending-7)
-                        (not (available-7))
-                        (know__available-7)
-                    )
-                )
-                (outcome fallback
-                    (and
-                        (force-statement)
-                        (have-message)
-                    )
-                )
-            )
-    )
-    (:action slot-fill__get-available-8
-        :parameters()
-        :precondition
-            (and
-                (not (know__available-8))
-                (not (force-statement))
-                (know__attending-7)
-            )
-        :effect
-            (labeled-oneof         get-response
-                (outcome confirm_outcome
-                    (and
-                        (know__available-8)
-                        (available-8)
-                    )
-                )
-                (outcome deny_outcome
-                    (and
-                        (not (available-8))
-                        (know__available-8)
-                        (know__attending-8)
-                    )
-                )
-                (outcome fallback
-                    (and
-                        (force-statement)
-                        (have-message)
-                    )
-                )
-            )
-    )
-    (:action slot-fill__get-available-9
-        :parameters()
-        :precondition
-            (and
-                (not (know__available-9))
-                (not (force-statement))
-                (know__attending-8)
-            )
-        :effect
-            (labeled-oneof         get-response
-                (outcome confirm_outcome
-                    (and
-                        (know__available-9)
-                        (available-9)
-                    )
-                )
-                (outcome deny_outcome
-                    (and
-                        (know__available-9)
-                        (not (available-9))
-                        (know__attending-9)
-                    )
-                )
-                (outcome fallback
-                    (and
-                        (force-statement)
-                        (have-message)
-                    )
-                )
-            )
-    )
-    (:action slot-fill__get-available-10
-        :parameters()
-        :precondition
-            (and
-                (know__attending-9)
-                (not (know__available-10))
-                (not (force-statement))
-            )
-        :effect
-            (labeled-oneof         get-response
-                (outcome confirm_outcome
-                    (and
-                        (know__available-10)
-                        (available-10)
-                    )
-                )
-                (outcome deny_outcome
-                    (and
-                        (know__available-10)
-                        (not (available-10))
-                        (know__attending-10)
-                    )
-                )
-                (outcome fallback
-                    (and
-                        (force-statement)
-                        (have-message)
-                    )
-                )
-            )
-    )
-    (:action slot-fill__get-available-11
-        :parameters()
-        :precondition
-            (and
-                (not (know__available-11))
-                (not (force-statement))
-                (know__attending-10)
-            )
-        :effect
-            (labeled-oneof         get-response
-                (outcome confirm_outcome
-                    (and
-                        (know__available-11)
-                        (available-11)
-                    )
-                )
-                (outcome deny_outcome
-                    (and
-                        (know__available-11)
-                        (not (available-11))
-                        (know__attending-11)
-                    )
-                )
-                (outcome fallback
-                    (and
-                        (force-statement)
-                        (have-message)
+                        (not (force-statement))
                     )
                 )
             )

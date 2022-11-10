@@ -1,0 +1,899 @@
+{
+    "plan": {
+        "init": "45",
+        "goal": "0",
+        "nodes": {
+            "0": {
+                "expected_successor": false,
+                "action": "---",
+                "state": "0x16ae670",
+                "distance": 0,
+                "is_relevant": 1,
+                "is_goal": 1,
+                "is_sc": 1,
+                "successors": []
+            },
+            "1": {
+                "expected_successor": "0",
+                "action": "complete",
+                "state": "0x16b7c40",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "complete_DETDUP_finish-EQ-finish",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "9": {
+                "expected_successor": "1",
+                "action": "get-attending-11",
+                "state": "0x16c20f0",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-attending-11_DETDUP_get-response-EQ-choose-preference",
+                        "successor_id": "1"
+                    },
+                    {
+                        "outcome_label": "get-attending-11_DETDUP_get-response-EQ-do-not-attend",
+                        "successor_id": "1"
+                    },
+                    {
+                        "outcome_label": "get-attending-11_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "17"
+                    }
+                ]
+            },
+            "10": {
+                "expected_successor": "1",
+                "action": "slot-fill__get-available-11",
+                "state": "0x16c34d0",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get-available-11_DETDUP_get-response-EQ-confirm_outcome",
+                        "successor_id": "9"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-11_DETDUP_get-response-EQ-deny_outcome",
+                        "successor_id": "1"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-11_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "16"
+                    }
+                ]
+            },
+            "16": {
+                "expected_successor": "10",
+                "action": "dialogue_statement",
+                "state": "0x16c5730",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "10"
+                    }
+                ]
+            },
+            "17": {
+                "expected_successor": "9",
+                "action": "dialogue_statement",
+                "state": "0x16c5a60",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "9"
+                    }
+                ]
+            },
+            "19": {
+                "expected_successor": "10",
+                "action": "get-attending-10",
+                "state": "0x16c88a0",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-attending-10_DETDUP_get-response-EQ-choose-preference",
+                        "successor_id": "10"
+                    },
+                    {
+                        "outcome_label": "get-attending-10_DETDUP_get-response-EQ-do-not-attend",
+                        "successor_id": "10"
+                    },
+                    {
+                        "outcome_label": "get-attending-10_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "26"
+                    }
+                ]
+            },
+            "20": {
+                "expected_successor": "10",
+                "action": "slot-fill__get-available-10",
+                "state": "0x16c8ab0",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get-available-10_DETDUP_get-response-EQ-confirm_outcome",
+                        "successor_id": "19"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-10_DETDUP_get-response-EQ-deny_outcome",
+                        "successor_id": "10"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-10_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "25"
+                    }
+                ]
+            },
+            "25": {
+                "expected_successor": "20",
+                "action": "dialogue_statement",
+                "state": "0x16c9250",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "20"
+                    }
+                ]
+            },
+            "26": {
+                "expected_successor": "19",
+                "action": "dialogue_statement",
+                "state": "0x16c94c0",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "19"
+                    }
+                ]
+            },
+            "28": {
+                "expected_successor": "20",
+                "action": "get-attending-9",
+                "state": "0x16cafd0",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-attending-9_DETDUP_get-response-EQ-choose-preference",
+                        "successor_id": "20"
+                    },
+                    {
+                        "outcome_label": "get-attending-9_DETDUP_get-response-EQ-do-not-attend",
+                        "successor_id": "20"
+                    },
+                    {
+                        "outcome_label": "get-attending-9_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "34"
+                    }
+                ]
+            },
+            "29": {
+                "expected_successor": "20",
+                "action": "slot-fill__get-available-9",
+                "state": "0x16ca660",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get-available-9_DETDUP_get-response-EQ-confirm_outcome",
+                        "successor_id": "28"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-9_DETDUP_get-response-EQ-deny_outcome",
+                        "successor_id": "20"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-9_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "33"
+                    }
+                ]
+            },
+            "33": {
+                "expected_successor": "29",
+                "action": "dialogue_statement",
+                "state": "0x16ccaf0",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "29"
+                    }
+                ]
+            },
+            "34": {
+                "expected_successor": "28",
+                "action": "dialogue_statement",
+                "state": "0x16ca480",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "28"
+                    }
+                ]
+            },
+            "37": {
+                "expected_successor": "29",
+                "action": "slot-fill__get-available-8",
+                "state": "0x16ce7a0",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get-available-8_DETDUP_get-response-EQ-confirm_outcome",
+                        "successor_id": "36"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-8_DETDUP_get-response-EQ-deny_outcome",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-8_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "40"
+                    }
+                ]
+            },
+            "36": {
+                "expected_successor": "29",
+                "action": "get-attending-8",
+                "state": "0x16cdea0",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-attending-8_DETDUP_get-response-EQ-choose-preference",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "get-attending-8_DETDUP_get-response-EQ-do-not-attend",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "get-attending-8_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "41"
+                    }
+                ]
+            },
+            "40": {
+                "expected_successor": "37",
+                "action": "dialogue_statement",
+                "state": "0x16cff10",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "37"
+                    }
+                ]
+            },
+            "41": {
+                "expected_successor": "36",
+                "action": "dialogue_statement",
+                "state": "0x16d0140",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "36"
+                    }
+                ]
+            },
+            "43": {
+                "expected_successor": "37",
+                "action": "get-attending-7",
+                "state": "0x16d2a10",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-attending-7_DETDUP_get-response-EQ-choose-preference",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "get-attending-7_DETDUP_get-response-EQ-do-not-attend",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "get-attending-7_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "47"
+                    }
+                ]
+            },
+            "44": {
+                "expected_successor": "37",
+                "action": "slot-fill__get-available-7",
+                "state": "0x16d1370",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get-available-7_DETDUP_get-response-EQ-confirm_outcome",
+                        "successor_id": "43"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-7_DETDUP_get-response-EQ-deny_outcome",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get-available-7_DETDUP_get-response-EQ-fallback",
+                        "successor_id": "46"
+                    }
+                ]
+            },
+            "45": {
+                "expected_successor": "44",
+                "action": "start",
+                "state": "0x16d0e00",
+                "distance": 7,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "start_DETDUP_start-EQ-inform",
+                        "successor_id": "44"
+                    }
+                ]
+            },
+            "46": {
+                "expected_successor": "44",
+                "action": "dialogue_statement",
+                "state": "0x16d11d0",
+                "distance": 7,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "44"
+                    }
+                ]
+            },
+            "47": {
+                "expected_successor": "43",
+                "action": "dialogue_statement",
+                "state": "0x16d3520",
+                "distance": 7,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "43"
+                    }
+                ]
+            }
+        },
+        "edges": [
+            [
+                "1",
+                ">",
+                "0"
+            ],
+            [
+                "9",
+                ">",
+                "1"
+            ],
+            [
+                "9",
+                ">",
+                "1"
+            ],
+            [
+                "9",
+                ">",
+                "17"
+            ],
+            [
+                "10",
+                ">",
+                "9"
+            ],
+            [
+                "10",
+                ">",
+                "1"
+            ],
+            [
+                "10",
+                ">",
+                "16"
+            ],
+            [
+                "16",
+                ">",
+                "10"
+            ],
+            [
+                "17",
+                ">",
+                "9"
+            ],
+            [
+                "19",
+                ">",
+                "10"
+            ],
+            [
+                "19",
+                ">",
+                "10"
+            ],
+            [
+                "19",
+                ">",
+                "26"
+            ],
+            [
+                "20",
+                ">",
+                "19"
+            ],
+            [
+                "20",
+                ">",
+                "10"
+            ],
+            [
+                "20",
+                ">",
+                "25"
+            ],
+            [
+                "25",
+                ">",
+                "20"
+            ],
+            [
+                "26",
+                ">",
+                "19"
+            ],
+            [
+                "28",
+                ">",
+                "20"
+            ],
+            [
+                "28",
+                ">",
+                "20"
+            ],
+            [
+                "28",
+                ">",
+                "34"
+            ],
+            [
+                "29",
+                ">",
+                "28"
+            ],
+            [
+                "29",
+                ">",
+                "20"
+            ],
+            [
+                "29",
+                ">",
+                "33"
+            ],
+            [
+                "33",
+                ">",
+                "29"
+            ],
+            [
+                "34",
+                ">",
+                "28"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "37",
+                ">",
+                "29"
+            ],
+            [
+                "37",
+                ">",
+                "40"
+            ],
+            [
+                "36",
+                ">",
+                "29"
+            ],
+            [
+                "36",
+                ">",
+                "29"
+            ],
+            [
+                "36",
+                ">",
+                "41"
+            ],
+            [
+                "40",
+                ">",
+                "37"
+            ],
+            [
+                "41",
+                ">",
+                "36"
+            ],
+            [
+                "43",
+                ">",
+                "37"
+            ],
+            [
+                "43",
+                ">",
+                "37"
+            ],
+            [
+                "43",
+                ">",
+                "47"
+            ],
+            [
+                "44",
+                ">",
+                "43"
+            ],
+            [
+                "44",
+                ">",
+                "37"
+            ],
+            [
+                "44",
+                ">",
+                "46"
+            ],
+            [
+                "45",
+                ">",
+                "44"
+            ],
+            [
+                "46",
+                ">",
+                "44"
+            ],
+            [
+                "47",
+                ">",
+                "43"
+            ]
+        ],
+        "states": {
+            "0x16ae670": [
+                "Atom goal()"
+            ],
+            "0x16b7c40": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "Atom know__attending-10()",
+                "NegatedAtom force-statement()",
+                "Atom know__attending-11()"
+            ],
+            "0x16c20f0": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "Atom know__attending-10()",
+                "Atom available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16c34d0": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "Atom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16c5730": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "Atom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16c5a60": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "Atom know__attending-10()",
+                "Atom available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16c88a0": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "Atom available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16c8ab0": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16c9250": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16c94c0": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom know__attending-9()",
+                "Atom available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16cafd0": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16ca660": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16ccaf0": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16ca480": [
+                "Atom know__attending-7()",
+                "Atom know__attending-8()",
+                "Atom available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16ce7a0": [
+                "Atom know__attending-7()",
+                "NegatedAtom know__available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16cdea0": [
+                "Atom know__attending-7()",
+                "Atom available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16cff10": [
+                "Atom know__attending-7()",
+                "NegatedAtom know__available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16d0140": [
+                "Atom know__attending-7()",
+                "Atom available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16d2a10": [
+                "Atom available-7()",
+                "NegatedAtom know__attending-7()",
+                "NegatedAtom know__available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16d1370": [
+                "Atom informed-user()",
+                "NegatedAtom know__available-7()",
+                "NegatedAtom know__attending-7()",
+                "NegatedAtom know__available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16d0e00": [
+                "NegatedAtom informed-user()",
+                "NegatedAtom know__available-7()",
+                "NegatedAtom know__attending-7()",
+                "NegatedAtom know__available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "NegatedAtom force-statement()",
+                "NegatedAtom know__attending-11()"
+            ],
+            "0x16d11d0": [
+                "Atom informed-user()",
+                "NegatedAtom know__available-7()",
+                "NegatedAtom know__attending-7()",
+                "NegatedAtom know__available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ],
+            "0x16d3520": [
+                "Atom available-7()",
+                "NegatedAtom know__attending-7()",
+                "NegatedAtom know__available-8()",
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom know__available-9()",
+                "NegatedAtom know__attending-9()",
+                "NegatedAtom know__available-10()",
+                "NegatedAtom know__attending-10()",
+                "NegatedAtom know__available-11()",
+                "Atom force-statement()",
+                "NegatedAtom know__attending-11()",
+                "Atom have-message()"
+            ]
+        }
+    }
+}
