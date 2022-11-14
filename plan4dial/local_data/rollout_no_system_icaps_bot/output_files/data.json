@@ -312,7 +312,7 @@
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
-                "What sessions do you want to see in the early afternoon? Your options are:\n\tModel-Based Reasoning in Classical Planning\n\tLearning in Scheduling Applications\n\tSearch\n\tOptimal Planning"
+                "What session do you want to see in the early afternoon? Your options are:\n\tModel-Based Reasoning in Classical Planning\n\tLearning in Scheduling Applications\n\tSearch\n\tOptimal Planning"
             ],
             "condition": [
                 [
@@ -388,7 +388,7 @@
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
-                "What sessions do you want to see in the afternoon? Your options are:\n\tProblem Reformulation\n\tHeuristics and Heuristic Search\n\tMulti-Agent Path Finding\n\tDeep Learning"
+                "What session do you want to see in the afternoon? Your options are:\n\tProblem Reformulation\n\tHeuristics and Heuristic Search\n\tMulti-Agent Path Finding\n\tDeep Learning"
             ],
             "condition": [
                 [

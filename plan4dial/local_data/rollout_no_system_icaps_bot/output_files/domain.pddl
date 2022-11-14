@@ -39,8 +39,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__morning-session))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         set-morning-session
@@ -105,8 +105,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__evening-session))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         set-evening-session
@@ -127,12 +127,12 @@
         :parameters()
         :precondition
             (and
-                (know__early-afternoon-session)
                 (know__afternoon-session)
+                (know__early-afternoon-session)
+                (know__invited-talk)
+                (know__evening-session)
                 (know__morning-session)
                 (not (force-statement))
-                (know__evening-session)
-                (know__invited-talk)
             )
         :effect
             (labeled-oneof         goal
@@ -154,8 +154,8 @@
             (labeled-oneof         reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )
