@@ -1,0 +1,185 @@
+---
+name: order-pizza
+
+context_variables:
+  invited-talk:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems":
+        variations:
+          - beyond distance estimates
+          - factored transition systems
+          - factored transitions
+          - reasoning in factored transition systems
+      Multi-Agent Path Finding and Its Applications:
+        variations:
+          - multi-agent path finding apps
+          - path finding applications
+          - applications for multi-agent path finding
+  morning-session:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      Planning Representations and Scheduling:
+        variations:
+          - planning representations
+          - planning rep and scheduling
+          - representations and scheduling
+      Verification:
+        variations:
+          - verif
+      Reinforcement Learning:
+        variations:
+          - RL
+      Heuristics in Classical Planning:
+        variations:
+          - classical planning heuristics
+  afternoon-session:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      Model-Based Reasoning in Classical Planning:
+        variations:
+          - model-based reasoning
+          - reasoning
+          - reasoning in classical planning
+      Learning in Scheduling Applications:
+        variations:
+          - learning
+          - scheduling applications
+          - learning in scheduling
+          - learning for scheduling
+      Search:
+        variations:
+          - planning search
+      Optimal Planning:
+        variations:
+          - optimization
+          - optimization for planning
+  goal:
+    type: flag
+    init: false
+intents:
+  thank:
+    utterances:
+      - Thank you!
+      - Thanks!
+      - thank
+      - thanks so much!
+      - have a good day!
+      - have a good night!
+      - thx
+      - ty
+  share-invited-talk:
+    variables: 
+      - invited-talk 
+    utterances:
+      - $invited-talk
+      - I want to see the invited talk on $invited-talk.
+      - I am really interested in the talk on $invited-talk. 
+      - Can you schedule me in to watch the invited talk on $invited-talk?
+  share-morning-session:
+    variables: 
+      - morning-session
+    utterances:
+      - $morning-session
+      - I want to see the session on $morning-session.
+      - I am really interested in the session on $morning-session. 
+      - Can you schedule me in to watch the session on $morning-session?
+  share-afternoon-session:
+    variables: 
+      - afternoon-session 
+    utterances:
+      - $afternoon-session
+      - I want to see the session on $afternoon-session.
+      - I am really interested in the session on $afternoon-session. 
+      - Can you schedule me in to watch the session on $afternoon-session?
+actions:
+  get-invited-talk:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - "What invited talk do you want to see on Day 1? Your options are:\n\tBeyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems\n\tMulti-Agent Path Finding and Its Applications"
+    condition:
+      invited-talk:
+        known: false
+    effect:
+      set-invited-talk:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                invited-talk:
+                  value: $invited-talk
+                  known: true
+              intent: share-invited-talk
+  get-morning-session:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - "What session do you want to see in the morning? Your options are:\n\tPlanning Representations and Scheduling\n\tVerification\n\tReinforcement Learning\n\tHeuristics in Classical Planning"
+    condition:
+      morning-session:
+        known: false
+    effect:
+      set-morning-session:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                morning-session:
+                  value: $morning-session
+                  known: true
+              intent: share-morning-session
+  get-afternoon-session:
+    type: dialogue
+    subtype: dialogue disambiguation
+    message_variants:
+      - "What session do you want to see in the afternoon? Your options are:\n\tModel-Based Reasoning in Classical Planning\n\tLearning in Scheduling Applications\n\tSearch\n\tOptimal Planning"
+    condition:
+      afternoon-session:
+        known: false
+    effect:
+      set-afternoon-session:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                afternoon-session:
+                  value: $afternoon-session
+                  known: true
+              intent: share-afternoon-session
+  complete:
+    type: dialogue
+    subtype: dialogue disambiguation
+    disable-fallback: true
+    message_variants:
+      - "Below is your generated schedule:
+        \n\tInvited Talk: $invited-talk
+        \n\tMorning Session: $morning-session
+        \n\tAfternoon Session: $afternoon-session
+        Enjoy your day!"
+    condition:
+      invited-talk:
+        known: true
+      morning-session:
+        known: true
+      afternoon-session:
+        known: true
+    effect:
+      goal:
+        oneof:
+          outcomes:
+            valid:
+              updates:
+                goal:
+                  value: true
+              intent: thank
+...
