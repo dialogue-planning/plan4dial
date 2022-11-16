@@ -93,9 +93,9 @@ def generate_files(
 
 
 if __name__ == "__main__":
-    dirname = "./plan4dial/local_data/rollout_no_system_icaps_bot"
+    dirname = "./plan4dial/local_data/rollout_no_system_icaps_bot_mini"
     generate_files(
-        f"{dirname}/rollout_no_system_icaps_bot.yml",
+        f"{dirname}/rollout_no_system_icaps_bot_mini.yml",
         f"{dirname}/output_files",
         "/home/vivi/rbp",
         True,

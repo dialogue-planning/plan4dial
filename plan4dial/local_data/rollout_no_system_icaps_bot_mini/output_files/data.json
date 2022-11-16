@@ -65,7 +65,7 @@
                 "ty"
             ]
         },
-        "share-invited-talk": {
+        "share-invited": {
             "variables": [
                 "$invited-talk"
             ],
@@ -76,7 +76,7 @@
                 "Can you schedule me in to watch the invited talk on $invited-talk?"
             ]
         },
-        "share-morning-session": {
+        "share-morning": {
             "variables": [
                 "$morning-session"
             ],
@@ -87,7 +87,7 @@
                 "Can you schedule me in to watch the session on $morning-session?"
             ]
         },
-        "share-afternoon-session": {
+        "share-afternoon": {
             "variables": [
                 "$afternoon-session"
             ],
@@ -108,7 +108,7 @@
         }
     },
     "actions": {
-        "get-invited-talk": {
+        "get-invited": {
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
@@ -137,8 +137,8 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "share-invited-talk",
-                        "name": "get-invited-talk_DETDUP_set-invited-talk-EQ-valid",
+                        "intent": "share-invited",
+                        "name": "get-invited_DETDUP_set-invited-talk-EQ-valid",
                         "assignments": {
                             "$invited-talk": "found"
                         }
@@ -157,7 +157,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-invited-talk_DETDUP_set-invited-talk-EQ-fallback",
+                        "name": "get-invited_DETDUP_set-invited-talk-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -167,7 +167,7 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
-                "share-invited-talk": {
+                "share-invited": {
                     "variables": [
                         "$invited-talk"
                     ],
@@ -184,7 +184,7 @@
                 }
             }
         },
-        "get-morning-session": {
+        "get-morning": {
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
@@ -213,8 +213,8 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "share-morning-session",
-                        "name": "get-morning-session_DETDUP_set-morning-session-EQ-valid",
+                        "intent": "share-morning",
+                        "name": "get-morning_DETDUP_set-morning-session-EQ-valid",
                         "assignments": {
                             "$morning-session": "found"
                         }
@@ -233,7 +233,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-morning-session_DETDUP_set-morning-session-EQ-fallback",
+                        "name": "get-morning_DETDUP_set-morning-session-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -243,7 +243,7 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
-                "share-morning-session": {
+                "share-morning": {
                     "variables": [
                         "$morning-session"
                     ],
@@ -260,7 +260,7 @@
                 }
             }
         },
-        "get-afternoon-session": {
+        "get-afternoon": {
             "type": "dialogue",
             "subtype": "dialogue disambiguation",
             "message_variants": [
@@ -289,8 +289,8 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "share-afternoon-session",
-                        "name": "get-afternoon-session_DETDUP_set-afternoon-session-EQ-valid",
+                        "intent": "share-afternoon",
+                        "name": "get-afternoon_DETDUP_set-afternoon-session-EQ-valid",
                         "assignments": {
                             "$afternoon-session": "found"
                         }
@@ -309,7 +309,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-afternoon-session_DETDUP_set-afternoon-session-EQ-fallback",
+                        "name": "get-afternoon_DETDUP_set-afternoon-session-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -319,7 +319,7 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
-                "share-afternoon-session": {
+                "share-afternoon": {
                     "variables": [
                         "$afternoon-session"
                     ],

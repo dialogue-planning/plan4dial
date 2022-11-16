@@ -77,7 +77,7 @@ intents:
       - have a good night!
       - thx
       - ty
-  share-invited-talk:
+  share-invited:
     variables: 
       - invited-talk 
     utterances:
@@ -85,7 +85,7 @@ intents:
       - I want to see the invited talk on $invited-talk.
       - I am really interested in the talk on $invited-talk. 
       - Can you schedule me in to watch the invited talk on $invited-talk?
-  share-morning-session:
+  share-morning:
     variables: 
       - morning-session
     utterances:
@@ -93,7 +93,7 @@ intents:
       - I want to see the session on $morning-session.
       - I am really interested in the session on $morning-session. 
       - Can you schedule me in to watch the session on $morning-session?
-  share-afternoon-session:
+  share-afternoon:
     variables: 
       - afternoon-session 
     utterances:
@@ -102,7 +102,7 @@ intents:
       - I am really interested in the session on $afternoon-session. 
       - Can you schedule me in to watch the session on $afternoon-session?
 actions:
-  get-invited-talk:
+  get-invited:
     type: dialogue
     subtype: dialogue disambiguation
     message_variants:
@@ -119,8 +119,8 @@ actions:
                 invited-talk:
                   value: $invited-talk
                   known: true
-              intent: share-invited-talk
-  get-morning-session:
+              intent: share-invited
+  get-morning:
     type: dialogue
     subtype: dialogue disambiguation
     message_variants:
@@ -137,8 +137,8 @@ actions:
                 morning-session:
                   value: $morning-session
                   known: true
-              intent: share-morning-session
-  get-afternoon-session:
+              intent: share-morning
+  get-afternoon:
     type: dialogue
     subtype: dialogue disambiguation
     message_variants:
@@ -155,7 +155,7 @@ actions:
                 afternoon-session:
                   value: $afternoon-session
                   known: true
-              intent: share-afternoon-session
+              intent: share-afternoon
   complete:
     type: dialogue
     subtype: dialogue disambiguation

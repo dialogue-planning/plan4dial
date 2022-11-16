@@ -11,7 +11,7 @@
         (have-message)
         (force-statement)
     )
-    (:action get-invited-talk
+    (:action get-invited
         :parameters()
         :precondition
             (and
@@ -27,13 +27,13 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
     )
-    (:action get-morning-session
+    (:action get-morning
         :parameters()
         :precondition
             (and
@@ -49,18 +49,18 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
     )
-    (:action get-afternoon-session
+    (:action get-afternoon
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__afternoon-session))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         set-afternoon-session
@@ -71,8 +71,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -81,9 +81,9 @@
         :parameters()
         :precondition
             (and
-                (know__invited-talk)
-                (know__morning-session)
                 (not (force-statement))
+                (know__morning-session)
+                (know__invited-talk)
                 (know__afternoon-session)
             )
         :effect
@@ -99,15 +99,15 @@
         :parameters()
         :precondition
             (and
-                (have-message)
                 (force-statement)
+                (have-message)
             )
         :effect
             (labeled-oneof         reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )

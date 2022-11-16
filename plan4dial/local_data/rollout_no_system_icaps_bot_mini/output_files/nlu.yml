@@ -141,7 +141,7 @@ nlu:
     - Can you schedule me in to watch the invited talk on [applications for multi-agent
     path finding]{"entity": "invited-talk", "value": "Multi-Agent Path Finding and
     Its Applications"}?'
-  intent: share-invited-talk
+  intent: share-invited
 - examples: '- [Planning Representations and Scheduling]{"entity": "morning-session",
     "value": "Planning Representations and Scheduling"}
 
@@ -258,7 +258,7 @@ nlu:
 
     - Can you schedule me in to watch the session on [classical planning heuristics]{"entity":
     "morning-session", "value": "Heuristics in Classical Planning"}?'
-  intent: share-morning-session
+  intent: share-morning
 - examples: '- [Model-Based Reasoning in Classical Planning]{"entity": "afternoon-session",
     "value": "Model-Based Reasoning in Classical Planning"}
 
@@ -423,4 +423,4 @@ nlu:
 
     - Can you schedule me in to watch the session on [optimization for planning]{"entity":
     "afternoon-session", "value": "Optimal Planning"}?'
-  intent: share-afternoon-session
+  intent: share-afternoon
