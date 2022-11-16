@@ -174,7 +174,7 @@
             "variables": [],
             "utterances": []
         },
-        "utter_dialogue_statement": {
+        "utter_ds": {
             "variables": [],
             "utterances": []
         }
@@ -647,7 +647,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "utter_dialogue_statement",
+                        "intent": "utter_ds",
                         "name": "dialogue_statement_DETDUP_reset-EQ-lock",
                         "assignments": {}
                     }
@@ -655,7 +655,7 @@
             },
             "message_variants": [],
             "intents": {
-                "utter_dialogue_statement": {
+                "utter_ds": {
                     "variables": [],
                     "utterances": []
                 }

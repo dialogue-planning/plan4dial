@@ -27,8 +27,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -37,8 +37,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__morning-session))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         set-morning-session
@@ -49,8 +49,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -59,8 +59,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__afternoon-session))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         set-afternoon-session
@@ -71,8 +71,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -81,10 +81,10 @@
         :parameters()
         :precondition
             (and
-                (know__afternoon-session)
-                (know__invited-talk)
                 (know__morning-session)
                 (not (force-statement))
+                (know__invited-talk)
+                (know__afternoon-session)
             )
         :effect
             (labeled-oneof         goal
@@ -99,8 +99,8 @@
         :parameters()
         :precondition
             (and
-                (force-statement)
                 (have-message)
+                (force-statement)
             )
         :effect
             (labeled-oneof         reset

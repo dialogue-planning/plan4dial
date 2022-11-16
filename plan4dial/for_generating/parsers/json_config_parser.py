@@ -39,7 +39,7 @@ def _configure_dialogue_statement() -> Dict:
     which case `dialogue_statement` updates its `message_variants` to the appropriate
     `response_variants`.
 
-    Note that the intent *utter_dialogue_statement* is a blank intent because `message`
+    Note that the intent *utter_ds* is a blank intent because `message`
     actions (`dialogue` type actions with a single outcome) do not take user input into
     account and simply execute the single outcome.
 
@@ -62,7 +62,7 @@ def _configure_dialogue_statement() -> Dict:
                                     "value": False,
                                 },
                             },
-                            "intent": "utter_dialogue_statement",
+                            "intent": "utter_ds",
                         }
                     }
                 }
@@ -260,7 +260,7 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
     # set up the action, intent, and fluents needed for default fallback/unclear user
     # input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
-    loaded_yaml["intents"]["utter_dialogue_statement"] = {
+    loaded_yaml["intents"]["utter_ds"] = {
         "utterances": [],
         "variables": [],
     }
