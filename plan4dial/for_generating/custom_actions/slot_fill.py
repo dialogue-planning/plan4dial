@@ -147,7 +147,7 @@ def slot_fill(
     entity_combos = itertools.product(*entity_combos)
     # instantiate the action
     action = {}
-    action["type"], action["subtype"] = "dialogue", "dialogue disambiguation"
+    action["type"] = "dialogue"
     action["message_variants"] = message_variants
     if fallback_message_variants:
         action["fallback_message_variants"] = fallback_message_variants

@@ -1,0 +1,237 @@
+{
+    "plan": {
+        "init": "4",
+        "goal": "0",
+        "nodes": {
+            "0": {
+                "expected_successor": false,
+                "action": "---",
+                "state": "0x28539c0",
+                "distance": 0,
+                "is_relevant": 1,
+                "is_goal": 1,
+                "is_sc": 1,
+                "successors": []
+            },
+            "1": {
+                "expected_successor": "0",
+                "action": "complete",
+                "state": "0x28595e0",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "complete_DETDUP_goal-EQ-valid",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "2": {
+                "expected_successor": "1",
+                "action": "get-morning",
+                "state": "0x2859030",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-morning_DETDUP_set-morning-session-EQ-fallback",
+                        "successor_id": "5"
+                    },
+                    {
+                        "outcome_label": "get-morning_DETDUP_set-morning-session-EQ-valid",
+                        "successor_id": "1"
+                    }
+                ]
+            },
+            "3": {
+                "expected_successor": "2",
+                "action": "get-invited",
+                "state": "0x285b170",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-invited_DETDUP_set-invited-talk-EQ-fallback",
+                        "successor_id": "6"
+                    },
+                    {
+                        "outcome_label": "get-invited_DETDUP_set-invited-talk-EQ-valid",
+                        "successor_id": "2"
+                    }
+                ]
+            },
+            "4": {
+                "expected_successor": "3",
+                "action": "get-afternoon",
+                "state": "0x285b280",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get-afternoon_DETDUP_set-afternoon-session-EQ-fallback",
+                        "successor_id": "7"
+                    },
+                    {
+                        "outcome_label": "get-afternoon_DETDUP_set-afternoon-session-EQ-valid",
+                        "successor_id": "3"
+                    }
+                ]
+            },
+            "7": {
+                "expected_successor": "4",
+                "action": "dialogue_statement",
+                "state": "0x285fc40",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "4"
+                    }
+                ]
+            },
+            "5": {
+                "expected_successor": "2",
+                "action": "dialogue_statement",
+                "state": "0x285cbc0",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "2"
+                    }
+                ]
+            },
+            "6": {
+                "expected_successor": "3",
+                "action": "dialogue_statement",
+                "state": "0x285d510",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "successor_id": "3"
+                    }
+                ]
+            }
+        },
+        "edges": [
+            [
+                "1",
+                ">",
+                "0"
+            ],
+            [
+                "2",
+                ">",
+                "5"
+            ],
+            [
+                "2",
+                ">",
+                "1"
+            ],
+            [
+                "3",
+                ">",
+                "6"
+            ],
+            [
+                "3",
+                ">",
+                "2"
+            ],
+            [
+                "4",
+                ">",
+                "7"
+            ],
+            [
+                "4",
+                ">",
+                "3"
+            ],
+            [
+                "7",
+                ">",
+                "4"
+            ],
+            [
+                "5",
+                ">",
+                "2"
+            ],
+            [
+                "6",
+                ">",
+                "3"
+            ]
+        ],
+        "states": {
+            "0x28539c0": [
+                "Atom goal()"
+            ],
+            "0x28595e0": [
+                "Atom know__afternoon-session()",
+                "Atom know__invited-talk()",
+                "Atom know__morning-session()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x2859030": [
+                "Atom know__afternoon-session()",
+                "Atom know__invited-talk()",
+                "NegatedAtom know__morning-session()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x285b170": [
+                "Atom know__afternoon-session()",
+                "NegatedAtom know__invited-talk()",
+                "NegatedAtom know__morning-session()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x285b280": [
+                "NegatedAtom know__afternoon-session()",
+                "NegatedAtom know__invited-talk()",
+                "NegatedAtom know__morning-session()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x285fc40": [
+                "NegatedAtom know__afternoon-session()",
+                "NegatedAtom know__invited-talk()",
+                "NegatedAtom know__morning-session()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x285cbc0": [
+                "Atom know__afternoon-session()",
+                "Atom know__invited-talk()",
+                "NegatedAtom know__morning-session()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x285d510": [
+                "Atom know__afternoon-session()",
+                "NegatedAtom know__invited-talk()",
+                "NegatedAtom know__morning-session()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ]
+        }
+    }
+}

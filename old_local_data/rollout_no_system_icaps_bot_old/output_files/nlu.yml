@@ -1,0 +1,258 @@
+nlu:
+- examples: '- inform
+
+    - inform2
+
+    - inform3'
+  intent: utter_inform
+- examples: '- yes
+
+    - yeah
+
+    - that''s it
+
+    - Y
+
+    - mhm
+
+    - confirm
+
+    - yes please'
+  intent: confirm
+- examples: '- no
+
+    - not at all
+
+    - that''s not what i meant
+
+    - absolutely not
+
+    - i don''t want that
+
+    - nah
+
+    - no thanks
+
+    - no thank you'
+  intent: deny
+- examples: '- I want to attend the social.
+
+    - I want to socialize with my ICAPS peers.
+
+    - The social will be good for networking, so I definitely want to go!'
+  intent: attend-social
+- examples: '- [Planning Representations and Scheduling]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"}
+
+    - The talk on [Planning Representations and Scheduling]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"} seems really interesting!
+
+    - I would definitely rather check out the [Planning Representations and Scheduling]{"entity":
+    "attending-9", "value": "Planning Representations and Scheduling"} talk.
+
+    - I really want to learn about [Planning Representations and Scheduling]{"entity":
+    "attending-9", "value": "Planning Representations and Scheduling"}.
+
+    - I would prefer to check out the [Planning Representations and Scheduling]{"entity":
+    "attending-9", "value": "Planning Representations and Scheduling"} panel!
+
+    - [Verification]{"entity": "attending-9", "value": "Verification"}
+
+    - The talk on [Verification]{"entity": "attending-9", "value": "Verification"}
+    seems really interesting!
+
+    - I would definitely rather check out the [Verification]{"entity": "attending-9",
+    "value": "Verification"} talk.
+
+    - I really want to learn about [Verification]{"entity": "attending-9", "value":
+    "Verification"}.
+
+    - I would prefer to check out the [Verification]{"entity": "attending-9", "value":
+    "Verification"} panel!
+
+    - [planning rep]{"entity": "attending-9", "value": "Planning Representations and
+    Scheduling"}
+
+    - The talk on [planning rep]{"entity": "attending-9", "value": "Planning Representations
+    and Scheduling"} seems really interesting!
+
+    - I would definitely rather check out the [planning rep]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"} talk.
+
+    - I really want to learn about [planning rep]{"entity": "attending-9", "value":
+    "Planning Representations and Scheduling"}.
+
+    - I would prefer to check out the [planning rep]{"entity": "attending-9", "value":
+    "Planning Representations and Scheduling"} panel!
+
+    - [scheduling]{"entity": "attending-9", "value": "Planning Representations and
+    Scheduling"}
+
+    - The talk on [scheduling]{"entity": "attending-9", "value": "Planning Representations
+    and Scheduling"} seems really interesting!
+
+    - I would definitely rather check out the [scheduling]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"} talk.
+
+    - I really want to learn about [scheduling]{"entity": "attending-9", "value":
+    "Planning Representations and Scheduling"}.
+
+    - I would prefer to check out the [scheduling]{"entity": "attending-9", "value":
+    "Planning Representations and Scheduling"} panel!
+
+    - [representations]{"entity": "attending-9", "value": "Planning Representations
+    and Scheduling"}
+
+    - The talk on [representations]{"entity": "attending-9", "value": "Planning Representations
+    and Scheduling"} seems really interesting!
+
+    - I would definitely rather check out the [representations]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"} talk.
+
+    - I really want to learn about [representations]{"entity": "attending-9", "value":
+    "Planning Representations and Scheduling"}.
+
+    - I would prefer to check out the [representations]{"entity": "attending-9", "value":
+    "Planning Representations and Scheduling"} panel!
+
+    - [planning representations]{"entity": "attending-9", "value": "Planning Representations
+    and Scheduling"}
+
+    - The talk on [planning representations]{"entity": "attending-9", "value": "Planning
+    Representations and Scheduling"} seems really interesting!
+
+    - I would definitely rather check out the [planning representations]{"entity":
+    "attending-9", "value": "Planning Representations and Scheduling"} talk.
+
+    - I really want to learn about [planning representations]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"}.
+
+    - I would prefer to check out the [planning representations]{"entity": "attending-9",
+    "value": "Planning Representations and Scheduling"} panel!
+
+    - [verif]{"entity": "attending-9", "value": "Verification"}
+
+    - The talk on [verif]{"entity": "attending-9", "value": "Verification"} seems
+    really interesting!
+
+    - I would definitely rather check out the [verif]{"entity": "attending-9", "value":
+    "Verification"} talk.
+
+    - I really want to learn about [verif]{"entity": "attending-9", "value": "Verification"}.
+
+    - I would prefer to check out the [verif]{"entity": "attending-9", "value": "Verification"}
+    panel!
+
+    - [planning verif]{"entity": "attending-9", "value": "Verification"}
+
+    - The talk on [planning verif]{"entity": "attending-9", "value": "Verification"}
+    seems really interesting!
+
+    - I would definitely rather check out the [planning verif]{"entity": "attending-9",
+    "value": "Verification"} talk.
+
+    - I really want to learn about [planning verif]{"entity": "attending-9", "value":
+    "Verification"}.
+
+    - I would prefer to check out the [planning verif]{"entity": "attending-9", "value":
+    "Verification"} panel!
+
+    - [planning verifications]{"entity": "attending-9", "value": "Verification"}
+
+    - The talk on [planning verifications]{"entity": "attending-9", "value": "Verification"}
+    seems really interesting!
+
+    - I would definitely rather check out the [planning verifications]{"entity": "attending-9",
+    "value": "Verification"} talk.
+
+    - I really want to learn about [planning verifications]{"entity": "attending-9",
+    "value": "Verification"}.
+
+    - I would prefer to check out the [planning verifications]{"entity": "attending-9",
+    "value": "Verification"} panel!'
+  intent: state-pref-9
+- examples: '- [Reinforcement Learning]{"entity": "attending-10", "value": "Reinforcement
+    Learning"}
+
+    - The talk on [Reinforcement Learning]{"entity": "attending-10", "value": "Reinforcement
+    Learning"} seems really interesting!
+
+    - I would definitely rather check out the [Reinforcement Learning]{"entity": "attending-10",
+    "value": "Reinforcement Learning"} talk.
+
+    - I really want to learn about [Reinforcement Learning]{"entity": "attending-10",
+    "value": "Reinforcement Learning"}.
+
+    - I would prefer to check out the [Reinforcement Learning]{"entity": "attending-10",
+    "value": "Reinforcement Learning"} panel!
+
+    - [Heuristics in Classical Planning]{"entity": "attending-10", "value": "Heuristics
+    in Classical Planning"}
+
+    - The talk on [Heuristics in Classical Planning]{"entity": "attending-10", "value":
+    "Heuristics in Classical Planning"} seems really interesting!
+
+    - I would definitely rather check out the [Heuristics in Classical Planning]{"entity":
+    "attending-10", "value": "Heuristics in Classical Planning"} talk.
+
+    - I really want to learn about [Heuristics in Classical Planning]{"entity": "attending-10",
+    "value": "Heuristics in Classical Planning"}.
+
+    - I would prefer to check out the [Heuristics in Classical Planning]{"entity":
+    "attending-10", "value": "Heuristics in Classical Planning"} panel!
+
+    - [RL]{"entity": "attending-10", "value": "Reinforcement Learning"}
+
+    - The talk on [RL]{"entity": "attending-10", "value": "Reinforcement Learning"}
+    seems really interesting!
+
+    - I would definitely rather check out the [RL]{"entity": "attending-10", "value":
+    "Reinforcement Learning"} talk.
+
+    - I really want to learn about [RL]{"entity": "attending-10", "value": "Reinforcement
+    Learning"}.
+
+    - I would prefer to check out the [RL]{"entity": "attending-10", "value": "Reinforcement
+    Learning"} panel!
+
+    - [heuristics]{"entity": "attending-10", "value": "Heuristics in Classical Planning"}
+
+    - The talk on [heuristics]{"entity": "attending-10", "value": "Heuristics in Classical
+    Planning"} seems really interesting!
+
+    - I would definitely rather check out the [heuristics]{"entity": "attending-10",
+    "value": "Heuristics in Classical Planning"} talk.
+
+    - I really want to learn about [heuristics]{"entity": "attending-10", "value":
+    "Heuristics in Classical Planning"}.
+
+    - I would prefer to check out the [heuristics]{"entity": "attending-10", "value":
+    "Heuristics in Classical Planning"} panel!
+
+    - [classical planning heuristics]{"entity": "attending-10", "value": "Heuristics
+    in Classical Planning"}
+
+    - The talk on [classical planning heuristics]{"entity": "attending-10", "value":
+    "Heuristics in Classical Planning"} seems really interesting!
+
+    - I would definitely rather check out the [classical planning heuristics]{"entity":
+    "attending-10", "value": "Heuristics in Classical Planning"} talk.
+
+    - I really want to learn about [classical planning heuristics]{"entity": "attending-10",
+    "value": "Heuristics in Classical Planning"}.
+
+    - I would prefer to check out the [classical planning heuristics]{"entity": "attending-10",
+    "value": "Heuristics in Classical Planning"} panel!'
+  intent: state-pref-10
+- examples: '- I am not interested in any of these talks.
+
+    - I think I will skip these panels.
+
+    - I''ll take a break during this panel.
+
+    - I would rather take a break.
+
+    - I think I will take a break and grab some food.
+
+    - I would prefer to take a breather before getting back to the conference.'
+  intent: not-interested

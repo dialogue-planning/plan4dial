@@ -1,0 +1,398 @@
+---
+name: icaps_bot
+
+context_variables:
+  informed-user:
+    type: flag
+    init: false
+  available-7:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  available-8:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  available-9:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  available-10:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  available-11:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false      
+  attending-7:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - "Invited Talk: Malte Helmert"
+  attending-8:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - "Social: Get Together"
+  attending-9:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      Planning Representations and Scheduling:
+        variations:
+          - planning rep
+          - scheduling
+          - representations
+          - planning representations
+      Verification:
+        variations:
+          - verif
+          - planning verif
+          - planning verifications
+  attending-10:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      Reinforcement Learning:
+        variations:
+          - RL
+      Heuristics in Classical Planning:
+        variations:
+          - heuristics
+          - classical planning heuristics
+  attending-11:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Poster and Demo Session
+  goal:
+    type: flag
+    init: false
+intents:
+  utter_inform:
+    utterances:
+      - inform
+      - inform2
+      - inform3
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  attend-social:
+    utterances:
+      - I want to attend the social.
+      - I want to socialize with my ICAPS peers.
+      - The social will be good for networking, so I definitely want to go!
+  state-pref-9:
+    variables:
+      - attending-9
+    utterances:
+      - $attending-9
+      - The talk on $attending-9 seems really interesting!
+      - I would definitely rather check out the $attending-9 talk.
+      - I really want to learn about $attending-9.
+      - I would prefer to check out the $attending-9 panel!
+  state-pref-10:
+    variables:
+      - attending-10
+    utterances:
+      - $attending-10
+      - The talk on $attending-10 seems really interesting!
+      - I would definitely rather check out the $attending-10 talk.
+      - I really want to learn about $attending-10.
+      - I would prefer to check out the $attending-10 panel!
+  not-interested:
+    utterances:
+      - I am not interested in any of these talks.
+      - I think I will skip these panels.
+      - I'll take a break during this panel.
+      - I would rather take a break.
+      - I think I will take a break and grab some food.
+      - I would prefer to take a breather before getting back to the conference.
+actions:
+  start:
+    disable-fallback: true
+    type: dialogue
+    message_variants:
+      - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
+        I will suggest the best talks for you based on what topics you are the most interested in.
+    condition:
+      informed-user:
+        value: false
+    effect:
+      start:
+        oneof:
+          outcomes:
+            inform:
+              updates:
+                informed-user:
+                  value: true
+              intent:
+  get-available-7:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get-available-7
+      message_variants:
+        - Welcome to ICAPS 2022! I am here to help you plan the morning of your first day by helping you pick the panels that you want to attend.
+          I will suggest the best talks for you based on what topics you are the most interested in.
+          First, are you available at 7 UTC?
+      entity: available-7
+      additional_conditions:
+        informed-user:
+          value: true
+      additional_updates:
+        deny_outcome:
+          attending-7:
+            known: true
+            value: null
+  get-available-8:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get-available-8
+      message_variants:
+        - Are you available at 8 UTC?
+      entity: available-8
+      additional_conditions:
+        attending-7:
+          known: true
+      additional_updates:
+        deny_outcome:
+          attending-8:
+            known: true
+            value: null
+  get-available-9:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get-available-9
+      message_variants:
+        - Are you available at 9 UTC?
+      entity: available-9
+      additional_conditions:
+        attending-8:
+          known: true
+      additional_updates:
+        deny_outcome:
+          attending-9:
+            known: true
+            value: null
+  get-available-10:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get-available-10
+      message_variants:
+        - Are you available at 10 UTC?
+      entity: available-10
+      additional_conditions:
+        attending-9:
+          known: true
+      additional_updates:
+        deny_outcome:
+          attending-10:
+            known: true
+            value: null
+  get-available-11:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get-available-11
+      message_variants:
+        - Are you available at 11 UTC?
+      entity: available-11
+      additional_conditions:
+        attending-10:
+          known: true
+      additional_updates:
+        deny_outcome:
+          attending-11:
+            known: true
+            value: null
+  get-attending-7:
+    type: dialogue
+    message_variants:
+      - Are you interested in attending Malte's Invited Talk on Factored Transition Systems?
+    condition:
+      attending-7:
+        known: false
+      available-7:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-7:
+                  value: "Invited Talk: Malte Helmert"
+                  known: true
+              intent: confirm
+            do-not-attend:
+              updates:
+                attending-7:
+                  value: null
+                  known: true
+              intent: deny
+  get-attending-8:
+    type: dialogue
+    message_variants:
+      - Are you interested in attending the ICAPS social?
+    condition:
+      attending-8:
+        known: false
+      available-8:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-8:
+                  value: "Social: Get Together"
+                  known: true
+              intent: confirm
+            do-not-attend:
+              updates:
+                attending-8:
+                  value: null
+                  known: true
+              intent: deny
+  get-attending-9:
+    type: dialogue
+    message_variants:
+      - Are you interested in either Planning Representations and Scheduling or Verification?
+    condition:
+      attending-9:
+        known: false
+      available-9:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-9:
+                  value: $attending-9
+                  known: true
+              intent: state-pref-9
+            do-not-attend:
+              updates:
+                attending-9:
+                  value: null
+                  known: true
+              intent: not-interested
+  get-attending-10:
+    type: dialogue
+    message_variants:
+      - Are you interested in either Reinforcement Learning or Heuristics in Classical Planning?
+    condition:
+      attending-10:
+        known: false
+      available-10:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-10:
+                  value: $attending-10
+                  known: true
+              intent: state-pref-10
+            do-not-attend:
+              updates:
+                attending-10:
+                  value: null
+                  known: true
+              intent: not-interested
+  get-attending-11:
+    type: dialogue
+    message_variants:
+      - Are you interested in attending the Poster and Demo Session?
+    condition:
+      attending-11:
+        known: false
+      available-11:
+        value: true
+    effect:
+      get-response:
+        oneof:
+          outcomes:
+            choose-preference:
+              updates:
+                attending-11:
+                  value: Poster and Demo Session
+                  known: true
+              intent: confirm
+            do-not-attend:
+              updates:
+                attending-11:
+                  value: null
+                  known: true
+              intent: deny
+  complete:
+    disable-fallback: true
+    type: dialogue
+    condition:
+      attending-7:
+        known: true
+      attending-8:
+        known: true
+      attending-9:
+        known: true
+      attending-10:
+        known: true
+      attending-11:
+        known: true
+    message_variants:
+      - "Below is your generated schedule:\n7 UTC: $attending-7 \n8 UTC: $attending-8 \n9 UTC: $attending-9 \n10 UTC: $attending-10 \n11 UTC: $attending-11 \nEnjoy your morning!"
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            finish:
+              updates:
+                goal:
+                  value: true
+              intent:

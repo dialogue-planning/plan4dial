@@ -48,7 +48,7 @@ def generate_files(
     )
     with open(f"{output_folder}/data.json", "w") as writer:
         writer.write(json.dumps(converted_json, indent=4))
-    # # convert to PDDL
+    # convert to PDDL
     domain, problem = parse_to_pddl(converted_json)
     domain_str, problem_str = (
         f"{output_folder}/domain.pddl",

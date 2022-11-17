@@ -1,0 +1,442 @@
+{
+    "name": "order-pizza",
+    "context_variables": {
+        "invited-talk": {
+            "type": "enum",
+            "config": [
+                "Beyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems",
+                "Multi-Agent Path Finding and Its Applications"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "morning-session": {
+            "type": "enum",
+            "config": [
+                "Planning Representations and Scheduling",
+                "Verification",
+                "Reinforcement Learning",
+                "Heuristics in Classical Planning"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "afternoon-session": {
+            "type": "enum",
+            "config": [
+                "Model-Based Reasoning in Classical Planning",
+                "Learning in Scheduling Applications",
+                "Search",
+                "Optimal Planning"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "goal": {
+            "type": "flag",
+            "config": false
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "thank": {
+            "variables": [],
+            "utterances": [
+                "Thank you!",
+                "Thanks!",
+                "thank",
+                "thanks so much!",
+                "have a good day!",
+                "have a good night!",
+                "thx",
+                "ty"
+            ]
+        },
+        "share-invited": {
+            "variables": [
+                "$invited-talk"
+            ],
+            "utterances": [
+                "$invited-talk",
+                "I want to see the invited talk on $invited-talk.",
+                "I am really interested in the talk on $invited-talk.",
+                "Can you schedule me in to watch the invited talk on $invited-talk?"
+            ]
+        },
+        "share-morning": {
+            "variables": [
+                "$morning-session"
+            ],
+            "utterances": [
+                "$morning-session",
+                "I want to see the session on $morning-session.",
+                "I am really interested in the session on $morning-session.",
+                "Can you schedule me in to watch the session on $morning-session?"
+            ]
+        },
+        "share-afternoon": {
+            "variables": [
+                "$afternoon-session"
+            ],
+            "utterances": [
+                "$afternoon-session",
+                "I want to see the session on $afternoon-session.",
+                "I am really interested in the session on $afternoon-session.",
+                "Can you schedule me in to watch the session on $afternoon-session?"
+            ]
+        },
+        "fallback": {
+            "variables": [],
+            "utterances": []
+        },
+        "utter_ds": {
+            "variables": [],
+            "utterances": []
+        }
+    },
+    "actions": {
+        "get-invited": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What invited talk do you want to see on Day 1? Your options are:\n\tBeyond Distance Estimates: Reasoning about Solutions in Factored Transition Systems\n\tMulti-Agent Path Finding and Its Applications"
+            ],
+            "condition": [
+                [
+                    "invited-talk",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-invited-talk",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "invited-talk": {
+                                "value": "$invited-talk",
+                                "variable": "invited-talk",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share-invited",
+                        "name": "get-invited_DETDUP_set-invited-talk-EQ-valid",
+                        "assignments": {
+                            "$invited-talk": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-invited_DETDUP_set-invited-talk-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "share-invited": {
+                    "variables": [
+                        "$invited-talk"
+                    ],
+                    "utterances": [
+                        "$invited-talk",
+                        "I want to see the invited talk on $invited-talk.",
+                        "I am really interested in the talk on $invited-talk.",
+                        "Can you schedule me in to watch the invited talk on $invited-talk?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-morning": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What session do you want to see in the morning? Your options are:\n\tPlanning Representations and Scheduling\n\tVerification\n\tReinforcement Learning\n\tHeuristics in Classical Planning"
+            ],
+            "condition": [
+                [
+                    "morning-session",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-morning-session",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "morning-session": {
+                                "value": "$morning-session",
+                                "variable": "morning-session",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share-morning",
+                        "name": "get-morning_DETDUP_set-morning-session-EQ-valid",
+                        "assignments": {
+                            "$morning-session": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-morning_DETDUP_set-morning-session-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "share-morning": {
+                    "variables": [
+                        "$morning-session"
+                    ],
+                    "utterances": [
+                        "$morning-session",
+                        "I want to see the session on $morning-session.",
+                        "I am really interested in the session on $morning-session.",
+                        "Can you schedule me in to watch the session on $morning-session?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "get-afternoon": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "message_variants": [
+                "What session do you want to see in the afternoon? Your options are:\n\tModel-Based Reasoning in Classical Planning\n\tLearning in Scheduling Applications\n\tSearch\n\tOptimal Planning"
+            ],
+            "condition": [
+                [
+                    "afternoon-session",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "set-afternoon-session",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "afternoon-session": {
+                                "value": "$afternoon-session",
+                                "variable": "afternoon-session",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share-afternoon",
+                        "name": "get-afternoon_DETDUP_set-afternoon-session-EQ-valid",
+                        "assignments": {
+                            "$afternoon-session": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-afternoon_DETDUP_set-afternoon-session-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "share-afternoon": {
+                    "variables": [
+                        "$afternoon-session"
+                    ],
+                    "utterances": [
+                        "$afternoon-session",
+                        "I want to see the session on $afternoon-session.",
+                        "I am really interested in the session on $afternoon-session.",
+                        "Can you schedule me in to watch the session on $afternoon-session?"
+                    ]
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        },
+        "complete": {
+            "type": "dialogue",
+            "subtype": "dialogue disambiguation",
+            "disable-fallback": true,
+            "message_variants": [
+                "Below is your generated schedule: \n\tInvited Talk: $invited-talk \n\tMorning Session: $morning-session \n\tAfternoon Session: $afternoon-session Enjoy your day!"
+            ],
+            "condition": [
+                [
+                    "invited-talk",
+                    "Known"
+                ],
+                [
+                    "morning-session",
+                    "Known"
+                ],
+                [
+                    "afternoon-session",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "goal",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "thank",
+                        "name": "complete_DETDUP_goal-EQ-valid",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "thank": {
+                    "variables": [],
+                    "utterances": [
+                        "Thank you!",
+                        "Thanks!",
+                        "thank",
+                        "thanks so much!",
+                        "have a good day!",
+                        "have a good night!",
+                        "thx",
+                        "ty"
+                    ]
+                }
+            }
+        },
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_ds",
+                        "name": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "intents": {
+                "utter_ds": {
+                    "variables": [],
+                    "utterances": []
+                }
+            }
+        }
+    }
+}
