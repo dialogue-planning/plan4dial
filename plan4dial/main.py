@@ -9,6 +9,7 @@ import json
 import os
 import subprocess
 import yaml
+import sys
 from for_generating.parsers.json_config_parser import convert_yaml
 from for_generating.parsers.pddl_parser import parse_to_pddl
 from for_generating.parsers.parse_for_rasa import make_nlu_file
@@ -99,10 +100,14 @@ def generate_files(
 
 
 if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        bot_name = sys.argv[1]
+    else:
+        bot_name = "gold_standard_bot"
     # we can hardcode the path as it will stay the same in docker container
-    dirname = "/root/app/plan4dial/local_data/gold_standard_bot"
+    dirname = f"/root/app/plan4dial/local_data/{bot_name}"
     generate_files(
-        f"{dirname}/gold_standard_bot.yml",
+        f"{dirname}/{bot_name}.yml",
         f"{dirname}/output_files",
         "/root/rbp.sif",
         True,
