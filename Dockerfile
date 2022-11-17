@@ -1,7 +1,15 @@
 FROM python:3.8
 
 WORKDIR /root
+
+# This run command will make dockerfile auto convert line endings
+RUN apt-get update -q \
+        && apt-get upgrade -qy \
+        && apt-get install -qy dos2unix
+
 COPY install-apptainer-ubuntu.sh /root/install-apptainer-ubuntu.sh
+RUN dos2unix install-apptainer-ubuntu.sh
+
 RUN bash install-apptainer-ubuntu.sh 1.0.3 1.18.3 \
     && apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
