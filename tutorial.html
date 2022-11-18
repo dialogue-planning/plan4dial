@@ -42,7 +42,8 @@
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-local-install">Requirements - Local Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requirements-docker">Requirements - Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#usage-steps">Usage Steps</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#create-a-yaml-config-file-that-defines-your-bot">Create a YAML config file that defines your bot.</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#define-the-context-variables">1. Define the Context Variables</a></li>
@@ -83,15 +84,28 @@
              
   <div class="section" id="tutorial">
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
-<div class="section" id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
-<p><strong>Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.</strong></p>
-<p><strong>Note: Please use a version of Python &lt; 3.10 because of issues with Rasa compatibility</strong>.</p>
+<div class="section" id="requirements-local-install">
+<h2>Requirements - Local Install<a class="headerlink" href="#requirements-local-install" title="Permalink to this heading"></a></h2>
+<p><strong>Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.</strong>
+<strong>Note: Please use a version of Python &lt; 3.10 because of issues with Rasa compatibility</strong>.</p>
 <div class="line-block">
 <div class="line">For ease of use and reducing the chance of import or versioning errors, it is recommended that you use a virtual environment such as <code class="docutils literal notranslate"><span class="pre">venv</span></code>.</div>
 <div class="line">Run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install the necessary libraries before using.</div>
 <div class="line">Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">spacy</span> <span class="pre">download</span> <span class="pre">en_core_web_md</span></code> to download the appropriate Spacy model. This is used for NLU along with Rasa.</div>
 </div>
+</div>
+<div class="section" id="requirements-docker">
+<h2>Requirements - Docker<a class="headerlink" href="#requirements-docker" title="Permalink to this heading"></a></h2>
+<div class="line-block">
+<div class="line">To ensure development works identically accross systems, Docker should be used to run Plan4Dial.</div>
+<div class="line">Inside the repository, follow these steps to run with Docker:</div>
+<div class="line">Retrieve a copy of the rbp.sif executable from Christian Muise (<a class="reference external" href="mailto:christian&#46;muise&#37;&#52;&#48;queensu&#46;ca">christian<span>&#46;</span>muise<span>&#64;</span>queensu<span>&#46;</span>ca</a>) and place this in the cloned repository.</div>
+<div class="line">Build the docker image from Dockerfile: <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">build</span> <span class="pre">-t</span> <span class="pre">plan4dial:latest</span> <span class="pre">.</span></code></div>
+<div class="line">Run a bash session inside a new docker container: <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span> <span class="pre">-it</span> <span class="pre">--name</span> <span class="pre">plan4dial</span> <span class="pre">--rm</span> <span class="pre">--volume</span> <span class="pre">$(pwd)/plan4dial:/root/app/plan4dial</span> <span class="pre">--net=host</span> <span class="pre">--privileged</span> <span class="pre">plan4dial:latest</span> <span class="pre">sh</span></code></div>
+<div class="line">Run the command in the bash session: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">plan4dial/main.py</span> <span class="pre">gold_standard_bot</span></code></div>
+<div class="line">Now you should see output files were created and successful output in the bash session in the container. You can copy these output files out from the filesystem outside the container, as the /plan4dial subdirectory is mounted.</div>
+</div>
+<p>Note: You can make changes to python files inside subfolder /plan4dial without rebuilding the docker container as it is mounted as as simple volume.</p>
 </div>
 <div class="section" id="usage-steps">
 <h2>Usage Steps<a class="headerlink" href="#usage-steps" title="Permalink to this heading"></a></h2>
