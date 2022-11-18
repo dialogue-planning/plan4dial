@@ -9,6 +9,7 @@ import json
 import os
 import subprocess
 import yaml
+import sys
 from for_generating.parsers.json_config_parser import convert_yaml
 from for_generating.parsers.pddl_parser import parse_to_pddl
 from for_generating.parsers.parse_for_rasa import make_nlu_file
@@ -26,8 +27,9 @@ def generate_files(
     Args:
         yaml_filename (str): The path to the filled out YAML configuration.
         output_folder (str): Output folder where the files will be stored.
-        rbp_path (str): Path to the `rbp <https://github.com/QuMuLab/rbp>`_ directory so
-            the planner can be run.
+        rbp_path (str): Path to the `rbp <https://github.com/QuMuLab/rbp>`_ directory
+            so the planner can be run. This can be a path directly to the
+            executable .sif file.
         train (bool, optional): Determines if training is required. It is best to set
             to False if you made changes to the YAML that require some new output
             files, but the NLU model is not affected (no changes in the Rasa NLU YAML
@@ -73,9 +75,14 @@ def generate_files(
             output=f"{output_folder}",
             fixed_model_name="nlu_model",
         )
-    # generate PDDL files; convert policy.out to a prp.json file; wait until complete
-    subprocess.run([f"{rbp_path}/prp", domain_str, problem_str, "--output-format", "3"])
 
+    print(f'Using rbp from path: {rbp_path}')
+    print(f'with domain string path: {domain_str}')
+    print(f'with problem string path: {problem_str}')
+
+    # generate PDDL files; convert policy.out to a prp.json file; wait until complete
+    subprocess.run([rbp_path, domain_str, problem_str, "--output-format", "3"])
+    print('Ran the subprocess to generate pddl files.')
     try:
         with open("policy.out") as file:
             plan_data = {"plan": json.load(file)}
@@ -93,10 +100,16 @@ def generate_files(
 
 
 if __name__ == "__main__":
-    dirname = "./plan4dial/local_data/rollout_no_system_icaps_bot_mini"
+    if len(sys.argv) > 1:
+        bot_name = sys.argv[1]
+    else:
+        bot_name = "gold_standard_bot"
+    # we can hardcode the path as it will stay the same in docker container
+    dirname = f"/root/app/plan4dial/local_data/{bot_name}"
     generate_files(
-        f"{dirname}/rollout_no_system_icaps_bot_mini.yml",
+        f"{dirname}/{bot_name}.yml",
         f"{dirname}/output_files",
-        "/home/vivi/rbp",
+        "/root/rbp.sif",
         True,
     )
+    print("Completed")
