@@ -83,8 +83,6 @@
     <span class="n">get_precond_fluents</span><span class="p">,</span>
     <span class="n">get_update_fluents</span><span class="p">,</span>
     <span class="n">get_init_fluents</span><span class="p">,</span>
-    <span class="n">return_flag_value_fluent</span><span class="p">,</span>
-    <span class="n">return_certainty_fluents</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Dict</span>
 
@@ -121,34 +119,12 @@
                         <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">],</span> <span class="n">out</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span>
                     <span class="p">)</span>
                 <span class="p">)</span>
-    <span class="n">all_fluents</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">ctx_var</span><span class="p">,</span> <span class="n">ctx_var_cfg</span> <span class="ow">in</span> <span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="n">ctx_var_cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;flag&quot;</span><span class="p">,</span> <span class="s2">&quot;fflag&quot;</span><span class="p">]:</span>
-            <span class="n">is_fflag</span> <span class="o">=</span> <span class="n">ctx_var_cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fflag&quot;</span>
-            <span class="n">all_fluents</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                <span class="p">[</span>
-                    <span class="n">return_flag_value_fluent</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span>
-                    <span class="n">return_flag_value_fluent</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
-                <span class="p">]</span>
-            <span class="p">)</span>
-            <span class="k">if</span> <span class="n">is_fflag</span><span class="p">:</span>
-                <span class="n">all_fluents</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">return_flag_value_fluent</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">,</span> <span class="s2">&quot;maybe&quot;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">ctx_var_cfg</span><span class="p">:</span>
-            <span class="n">is_fflag</span> <span class="o">=</span> <span class="n">ctx_var_cfg</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fflag&quot;</span>
-            <span class="n">all_fluents</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">return_certainty_fluents</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">,</span> <span class="s2">&quot;Known&quot;</span><span class="p">))</span>
-            <span class="n">all_fluents</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">return_certainty_fluents</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">))</span>
-            <span class="k">if</span> <span class="n">is_fflag</span><span class="p">:</span>
-                <span class="n">all_fluents</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                    <span class="n">return_certainty_fluents</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">,</span> <span class="s2">&quot;Uncertain&quot;</span><span class="p">)</span>
-                <span class="p">)</span>
-
     <span class="c1"># return the actions, and initial state, and all fluents</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">&quot;actions&quot;</span><span class="p">:</span> <span class="n">actions</span><span class="p">,</span>
         <span class="s2">&quot;initial_state&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span>
             <span class="n">get_init_fluents</span><span class="p">(</span><span class="n">configuration_data</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
         <span class="p">),</span>
-        <span class="s2">&quot;all_fluents&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">all_fluents</span><span class="p">),</span>
     <span class="p">}</span></div>
 </pre></div>
 
