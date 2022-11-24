@@ -13,6 +13,8 @@ from .pddl_parser import (
     get_precond_fluents,
     get_update_fluents,
     get_init_fluents,
+    return_flag_value_fluent,
+    return_certainty_fluents,
 )
 from typing import Dict
 
@@ -27,7 +29,7 @@ def rollout_config(configuration_data: Dict) -> Dict:
     Returns:
         Dict: The PDDL configuration in a dict form.
     """
-    all_fluents = set()
+
     # initialize the actions with conditions
     actions = {
         act: {
@@ -40,18 +42,35 @@ def rollout_config(configuration_data: Dict) -> Dict:
         }
         for act, act_cfg in configuration_data["actions"].items()
     }
-    all_fluents.update(f for act in actions for f in actions[act]["condition"])
     # instantiate the outcomes with update fluents
     for act, act_cfg in configuration_data["actions"].items():
         for out in act_cfg["effect"]["outcomes"]:
             if "updates" in out:
-                update_fluents = list(
+                actions[act]["effect"][out["name"]] = list(
                     get_update_fluents(
                         configuration_data["context_variables"], out["updates"]
                     )
                 )
-                actions[act]["effect"][out["name"]] = update_fluents
-                all_fluents.update(f for f in update_fluents)
+    all_fluents = set()
+    for ctx_var, ctx_var_cfg in configuration_data["context_variables"].items():
+        if ctx_var_cfg["type"] in ["flag", "fflag"]:
+            is_fflag = ctx_var_cfg["type"] == "fflag"
+            all_fluents.update(
+                [
+                    return_flag_value_fluent(ctx_var, is_fflag, True),
+                    return_flag_value_fluent(ctx_var, is_fflag, False),
+                ]
+            )
+            if is_fflag:
+                all_fluents.add(return_flag_value_fluent(ctx_var, is_fflag, "maybe"))
+        if "known" in ctx_var_cfg:
+            is_fflag = ctx_var_cfg["known"]["type"] == "fflag"
+            all_fluents.update(return_certainty_fluents(ctx_var, is_fflag, "Known"))
+            all_fluents.update(return_certainty_fluents(ctx_var, is_fflag, "Unknown"))
+            if is_fflag:
+                all_fluents.update(
+                    return_certainty_fluents(ctx_var, is_fflag, "Uncertain")
+                )
 
     # return the actions, and initial state, and all fluents
     return {
