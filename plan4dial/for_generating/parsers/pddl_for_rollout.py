@@ -13,8 +13,6 @@ from .pddl_parser import (
     get_precond_fluents,
     get_update_fluents,
     get_init_fluents,
-    return_flag_value_fluent,
-    return_certainty_fluents,
 )
 from typing import Dict
 
@@ -51,32 +49,10 @@ def rollout_config(configuration_data: Dict) -> Dict:
                         configuration_data["context_variables"], out["updates"]
                     )
                 )
-    all_fluents = set()
-    for ctx_var, ctx_var_cfg in configuration_data["context_variables"].items():
-        if ctx_var_cfg["type"] in ["flag", "fflag"]:
-            is_fflag = ctx_var_cfg["type"] == "fflag"
-            all_fluents.update(
-                [
-                    return_flag_value_fluent(ctx_var, is_fflag, True),
-                    return_flag_value_fluent(ctx_var, is_fflag, False),
-                ]
-            )
-            if is_fflag:
-                all_fluents.add(return_flag_value_fluent(ctx_var, is_fflag, "maybe"))
-        if "known" in ctx_var_cfg:
-            is_fflag = ctx_var_cfg["known"]["type"] == "fflag"
-            all_fluents.update(return_certainty_fluents(ctx_var, is_fflag, "Known"))
-            all_fluents.update(return_certainty_fluents(ctx_var, is_fflag, "Unknown"))
-            if is_fflag:
-                all_fluents.update(
-                    return_certainty_fluents(ctx_var, is_fflag, "Uncertain")
-                )
-
     # return the actions, and initial state, and all fluents
     return {
         "actions": actions,
         "initial_state": list(
             get_init_fluents(configuration_data["context_variables"])[1]
         ),
-        "all_fluents": list(all_fluents),
     }

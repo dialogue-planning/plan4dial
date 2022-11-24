@@ -30,7 +30,7 @@ def _get_is_fflag(context_variables: Dict, v_name: str) -> bool:
     )
 
 
-def return_flag_value_fluent(
+def _return_flag_value_fluent(
     v_name: str, is_fflag: bool, value: Union[bool, str]
 ) -> str:
     """Returns the fluent version of a flag or fflag context variable depending on the
@@ -52,7 +52,7 @@ def return_flag_value_fluent(
         return f"(maybe__{v_name})"
 
 
-def return_certainty_fluents(v_name: str, is_fflag: bool, certainty: str) -> List[str]:
+def _return_certainty_fluents(v_name: str, is_fflag: bool, certainty: str) -> List[str]:
     """Returns the fluent version of the certainty setting of a context variable
     depending on the setting supplied.
 
@@ -171,11 +171,11 @@ def get_precond_fluents(
         if cond_val is not None:
             if type(cond_val) == bool:
                 precond.add(
-                    return_flag_value_fluent(cond_key, cond_key_fflag, cond_val)
+                    _return_flag_value_fluent(cond_key, cond_key_fflag, cond_val)
                 )
             elif cond_val in ["Known", "Unknown", "Uncertain"]:
                 precond.update(
-                    return_certainty_fluents(cond_key, cond_key_fflag, cond_val)
+                    _return_certainty_fluents(cond_key, cond_key_fflag, cond_val)
                 )
     return precond
 
@@ -199,7 +199,7 @@ def get_update_fluents(context_variables: Dict, updates: Dict) -> Set[str]:
         # add fluents based on the certainty if those were updated
         if "certainty" in update_config:
             outcomes.update(
-                return_certainty_fluents(
+                _return_certainty_fluents(
                     update_var, update_var_fflag, update_config["certainty"]
                 )
             )
@@ -208,7 +208,7 @@ def get_update_fluents(context_variables: Dict, updates: Dict) -> Set[str]:
             if update_config["value"] is not None:
                 if context_variables[update_var]["type"] in ["flag", "fflag"]:
                     outcomes.add(
-                        return_flag_value_fluent(
+                        _return_flag_value_fluent(
                             update_var, update_var_fflag, update_config["value"]
                         )
                     )
