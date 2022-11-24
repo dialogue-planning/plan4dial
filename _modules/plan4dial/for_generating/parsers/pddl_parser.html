@@ -100,7 +100,7 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_return_flag_value_fluent"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._return_flag_value_fluent">[docs]</a><span class="k">def</span> <span class="nf">_return_flag_value_fluent</span><span class="p">(</span>
+<div class="viewcode-block" id="return_flag_value_fluent"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser.return_flag_value_fluent">[docs]</a><span class="k">def</span> <span class="nf">return_flag_value_fluent</span><span class="p">(</span>
     <span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;Returns the fluent version of a flag or fflag context variable depending on the</span>
@@ -122,7 +122,7 @@
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(maybe__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
-<div class="viewcode-block" id="_return_certainty_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._return_certainty_fluents">[docs]</a><span class="k">def</span> <span class="nf">_return_certainty_fluents</span><span class="p">(</span><span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">certainty</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<div class="viewcode-block" id="return_certainty_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser.return_certainty_fluents">[docs]</a><span class="k">def</span> <span class="nf">return_certainty_fluents</span><span class="p">(</span><span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">certainty</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
     <span class="sd">&quot;&quot;&quot;Returns the fluent version of the certainty setting of a context variable</span>
 <span class="sd">    depending on the setting supplied.</span>
 
@@ -155,7 +155,7 @@
             <span class="k">if</span> <span class="n">is_fflag</span>
             <span class="k">else</span> <span class="p">([</span><span class="sa">f</span><span class="s2">&quot;(know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">known</span> <span class="k">else</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;(not (know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">))&quot;</span><span class="p">])</span>
         <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">is_fflag</span><span class="p">:</span>
         <span class="c1"># &quot;maybe&quot;/&quot;Uncertain&quot; option chosen</span>
         <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;(not (know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">))&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;(maybe-know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">]</span></div>
 
@@ -241,11 +241,11 @@
         <span class="k">if</span> <span class="n">cond_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cond_val</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
                 <span class="n">precond</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-                    <span class="n">_return_flag_value_fluent</span><span class="p">(</span><span class="n">cond_key</span><span class="p">,</span> <span class="n">cond_key_fflag</span><span class="p">,</span> <span class="n">cond_val</span><span class="p">)</span>
+                    <span class="n">return_flag_value_fluent</span><span class="p">(</span><span class="n">cond_key</span><span class="p">,</span> <span class="n">cond_key_fflag</span><span class="p">,</span> <span class="n">cond_val</span><span class="p">)</span>
                 <span class="p">)</span>
             <span class="k">elif</span> <span class="n">cond_val</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;Known&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">,</span> <span class="s2">&quot;Uncertain&quot;</span><span class="p">]:</span>
                 <span class="n">precond</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                    <span class="n">_return_certainty_fluents</span><span class="p">(</span><span class="n">cond_key</span><span class="p">,</span> <span class="n">cond_key_fflag</span><span class="p">,</span> <span class="n">cond_val</span><span class="p">)</span>
+                    <span class="n">return_certainty_fluents</span><span class="p">(</span><span class="n">cond_key</span><span class="p">,</span> <span class="n">cond_key_fflag</span><span class="p">,</span> <span class="n">cond_val</span><span class="p">)</span>
                 <span class="p">)</span>
     <span class="k">return</span> <span class="n">precond</span></div>
 
@@ -269,7 +269,7 @@
         <span class="c1"># add fluents based on the certainty if those were updated</span>
         <span class="k">if</span> <span class="s2">&quot;certainty&quot;</span> <span class="ow">in</span> <span class="n">update_config</span><span class="p">:</span>
             <span class="n">outcomes</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-                <span class="n">_return_certainty_fluents</span><span class="p">(</span>
+                <span class="n">return_certainty_fluents</span><span class="p">(</span>
                     <span class="n">update_var</span><span class="p">,</span> <span class="n">update_var_fflag</span><span class="p">,</span> <span class="n">update_config</span><span class="p">[</span><span class="s2">&quot;certainty&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
             <span class="p">)</span>
@@ -278,7 +278,7 @@
             <span class="k">if</span> <span class="n">update_config</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">context_variables</span><span class="p">[</span><span class="n">update_var</span><span class="p">][</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;flag&quot;</span><span class="p">,</span> <span class="s2">&quot;fflag&quot;</span><span class="p">]:</span>
                     <span class="n">outcomes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-                        <span class="n">_return_flag_value_fluent</span><span class="p">(</span>
+                        <span class="n">return_flag_value_fluent</span><span class="p">(</span>
                             <span class="n">update_var</span><span class="p">,</span> <span class="n">update_var_fflag</span><span class="p">,</span> <span class="n">update_config</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
                         <span class="p">)</span>
                     <span class="p">)</span>

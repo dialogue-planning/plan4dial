@@ -112,6 +112,12 @@ the conversation is navigated.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.for_generating.parsers.pddl_parser.parse_to_pddl" title="plan4dial.for_generating.parsers.pddl_parser.parse_to_pddl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_to_pddl</span></code></a>(loaded_yaml)</p></td>
 <td><p>Converts the loaded YAML file to a PDDL specification.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.for_generating.parsers.pddl_parser.return_certainty_fluents" title="plan4dial.for_generating.parsers.pddl_parser.return_certainty_fluents"><code class="xref py py-obj docutils literal notranslate"><span class="pre">return_certainty_fluents</span></code></a>(v_name, is_fflag, ...)</p></td>
+<td><p>Returns the fluent version of the certainty setting of a context variable depending on the setting supplied.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.for_generating.parsers.pddl_parser.return_flag_value_fluent" title="plan4dial.for_generating.parsers.pddl_parser.return_flag_value_fluent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">return_flag_value_fluent</span></code></a>(v_name, is_fflag, value)</p></td>
+<td><p>Returns the fluent version of a flag or fflag context variable depending on the setting supplied.</p></td>
+</tr>
 </tbody>
 </table>
 <dl class="py function">
@@ -222,54 +228,6 @@ outer brackets, i.e. <code class="docutils literal notranslate"><span class="pre
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="plan4dial.for_generating.parsers.pddl_parser._return_certainty_fluents">
-<span class="sig-name descname"><span class="pre">_return_certainty_fluents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">certainty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_parser.html#_return_certainty_fluents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.pddl_parser._return_certainty_fluents" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the fluent version of the certainty setting of a context variable
-depending on the setting supplied.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>v_name</strong> (<em>str</em>) – The name of the variable.</p></li>
-<li><p><strong>is_fflag</strong> (<em>bool</em>) – Describes if the variable’s “known” type is fflag, in which
-case the “Uncertain” option can be considered.</p></li>
-<li><p><strong>certainty</strong> (<em>str</em>) – The certainty setting of this context variable.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The list of fluents that reflect the certainty setting for the
-context variable supplied.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>List[str]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="plan4dial.for_generating.parsers.pddl_parser._return_flag_value_fluent">
-<span class="sig-name descname"><span class="pre">_return_flag_value_fluent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_parser.html#_return_flag_value_fluent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.pddl_parser._return_flag_value_fluent" title="Permalink to this definition"></a></dt>
-<dd><p>Returns the fluent version of a flag or fflag context variable depending on the
-setting supplied.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>v_name</strong> (<em>str</em>) – The name of the variable.</p></li>
-<li><p><strong>is_fflag</strong> (<em>bool</em>) – Describes if the variable is of type fflag, in which case the
-“maybe” option can be considered.</p></li>
-<li><p><strong>value</strong> (<em>bool</em><em> or </em><em>str</em>) – The value setting of this context variable.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The fluent version of a flag or fflag context variable depending on the
-setting supplied.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.pddl_parser.get_init_fluents">
 <span class="sig-name descname"><span class="pre">get_init_fluents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">context_variables</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Set</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_parser.html#get_init_fluents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.pddl_parser.get_init_fluents" title="Permalink to this definition"></a></dt>
 <dd><p>Convert the initial state of context variables to a PDDL initial state.</p>
@@ -342,6 +300,54 @@ initial state. Used by the rollout configuration.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>Tuple[str, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.for_generating.parsers.pddl_parser.return_certainty_fluents">
+<span class="sig-name descname"><span class="pre">return_certainty_fluents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">certainty</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_parser.html#return_certainty_fluents"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.pddl_parser.return_certainty_fluents" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the fluent version of the certainty setting of a context variable
+depending on the setting supplied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_name</strong> (<em>str</em>) – The name of the variable.</p></li>
+<li><p><strong>is_fflag</strong> (<em>bool</em>) – Describes if the variable’s “known” type is fflag, in which
+case the “Uncertain” option can be considered.</p></li>
+<li><p><strong>certainty</strong> (<em>str</em>) – The certainty setting of this context variable.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The list of fluents that reflect the certainty setting for the
+context variable supplied.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.for_generating.parsers.pddl_parser.return_flag_value_fluent">
+<span class="sig-name descname"><span class="pre">return_flag_value_fluent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_fflag</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/pddl_parser.html#return_flag_value_fluent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.pddl_parser.return_flag_value_fluent" title="Permalink to this definition"></a></dt>
+<dd><p>Returns the fluent version of a flag or fflag context variable depending on the
+setting supplied.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v_name</strong> (<em>str</em>) – The name of the variable.</p></li>
+<li><p><strong>is_fflag</strong> (<em>bool</em>) – Describes if the variable is of type fflag, in which case the
+“maybe” option can be considered.</p></li>
+<li><p><strong>value</strong> (<em>bool</em><em> or </em><em>str</em>) – The value setting of this context variable.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The fluent version of a flag or fflag context variable depending on the
+setting supplied.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
