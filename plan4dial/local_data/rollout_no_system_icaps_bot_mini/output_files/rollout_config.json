@@ -17,8 +17,8 @@
         },
         "get-morning": {
             "condition": [
-                "(not (know__morning-session))",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__morning-session))"
             ],
             "effect": {
                 "get-morning_DETDUP_set-morning-session-EQ-valid": [
@@ -32,8 +32,8 @@
         },
         "get-afternoon": {
             "condition": [
-                "(not (know__afternoon-session))",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__afternoon-session))"
             ],
             "effect": {
                 "get-afternoon_DETDUP_set-afternoon-session-EQ-valid": [
@@ -48,9 +48,9 @@
         "complete": {
             "condition": [
                 "(know__morning-session)",
+                "(know__afternoon-session)",
                 "(not (force-statement))",
-                "(know__invited-talk)",
-                "(know__afternoon-session)"
+                "(know__invited-talk)"
             ],
             "effect": {
                 "complete_DETDUP_goal-EQ-valid": [
@@ -72,11 +72,24 @@
         }
     },
     "initial_state": [
+        "(not (have-message))",
+        "(not (know__invited-talk))",
+        "(not (know__afternoon-session))",
         "(not (know__morning-session))",
         "(not (force-statement))",
-        "(not (know__afternoon-session))",
+        "(not (goal))"
+    ],
+    "all_fluents": [
+        "(know__morning-session)",
+        "(goal)",
+        "(not (have-message))",
+        "(know__afternoon-session)",
+        "(force-statement)",
         "(not (know__invited-talk))",
-        "(not (goal))",
-        "(not (have-message))"
+        "(not (know__afternoon-session))",
+        "(know__invited-talk)",
+        "(not (know__morning-session))",
+        "(have-message)",
+        "(not (force-statement))"
     ]
 }

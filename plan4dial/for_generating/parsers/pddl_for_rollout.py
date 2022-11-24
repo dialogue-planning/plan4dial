@@ -27,6 +27,7 @@ def rollout_config(configuration_data: Dict) -> Dict:
     Returns:
         Dict: The PDDL configuration in a dict form.
     """
+    all_fluents = set()
     # initialize the actions with conditions
     actions = {
         act: {
@@ -39,19 +40,24 @@ def rollout_config(configuration_data: Dict) -> Dict:
         }
         for act, act_cfg in configuration_data["actions"].items()
     }
+    all_fluents.update(f for act in actions for f in actions[act]["condition"])
     # instantiate the outcomes with update fluents
     for act, act_cfg in configuration_data["actions"].items():
         for out in act_cfg["effect"]["outcomes"]:
             if "updates" in out:
-                actions[act]["effect"][out["name"]] = list(
+                update_fluents = list(
                     get_update_fluents(
                         configuration_data["context_variables"], out["updates"]
                     )
                 )
-    # return both the actions and initial state
+                actions[act]["effect"][out["name"]] = update_fluents
+                all_fluents.update(f for f in update_fluents)
+
+    # return the actions, and initial state, and all fluents
     return {
         "actions": actions,
         "initial_state": list(
             get_init_fluents(configuration_data["context_variables"])[1]
         ),
+        "all_fluents": list(all_fluents),
     }
