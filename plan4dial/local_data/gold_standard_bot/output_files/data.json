@@ -142,7 +142,8 @@
                 "mhm",
                 "confirm",
                 "yes please"
-            ]
+            ],
+            "type": "regular"
         },
         "deny": {
             "variables": [],
@@ -155,7 +156,8 @@
                 "nah",
                 "no thanks",
                 "no thank you"
-            ]
+            ],
+            "type": "regular"
         },
         "share_location": {
             "variables": [
@@ -165,7 +167,8 @@
                 "I live in $location.",
                 "I am located in $location.",
                 "Can you help me find things to do in $location?"
-            ]
+            ],
+            "type": "regular"
         },
         "share_cuisine": {
             "variables": [
@@ -175,7 +178,8 @@
                 "I want to eat $cuisine.",
                 "Do you have restaurants of type $cuisine?",
                 "Are there any $cuisine restaurants in the area?"
-            ]
+            ],
+            "type": "regular"
         },
         "share_allergies": {
             "variables": [
@@ -185,7 +189,8 @@
                 "I have to eat $food_restriction.",
                 "I can only eat foods that are $food_restriction.",
                 "I am allergic to any foods that are not $food_restriction."
-            ]
+            ],
+            "type": "regular"
         },
         "share_all_outing_preferences": {
             "variables": [
@@ -196,7 +201,8 @@
                 "I have a $budget budget and I would prefer a $outing_type atmosphere today.",
                 "I am operating within a $budget budget and I want to go to a $outing_type place.",
                 "I can do activities with a $budget budget and I want to find the most $outing_type place in the city."
-            ]
+            ],
+            "type": "regular"
         },
         "share_budget": {
             "variables": [
@@ -206,7 +212,8 @@
                 "I have a $budget budget.",
                 "I am operating within a $budget budget.",
                 "I can do activities with a $budget budget."
-            ]
+            ],
+            "type": "regular"
         },
         "share_outing_type": {
             "variables": [
@@ -216,15 +223,18 @@
                 "I would prefer a $outing_type atmosphere today.",
                 "I want to go to a $outing_type place.",
                 "What is the most $outing_type place in the city?"
-            ]
+            ],
+            "type": "regular"
         },
         "fallback": {
             "variables": [],
-            "utterances": []
+            "utterances": [],
+            "type": "fallback"
         },
         "utter_ds": {
             "variables": [],
-            "utterances": []
+            "utterances": [],
+            "type": "regular"
         }
     },
     "actions": {
@@ -328,7 +338,8 @@
                         "mhm",
                         "confirm",
                         "yes please"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "deny": {
                     "variables": [],
@@ -341,11 +352,13 @@
                         "nah",
                         "no thanks",
                         "no thank you"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -428,11 +441,13 @@
                         "I have to eat $food_restriction.",
                         "I can only eat foods that are $food_restriction.",
                         "I am allergic to any foods that are not $food_restriction."
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -1014,13 +1029,13 @@
             "intents": {
                 "utter_ds": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "regular"
                 }
             }
         },
         "slot-fill__get-location": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "Where are you located?"
             ],
@@ -1101,13 +1116,13 @@
             "intents": {
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
         "slot-fill__get-cuisine": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area."
             ],
@@ -1205,7 +1220,8 @@
             "intents": {
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -1297,7 +1313,8 @@
                         "mhm",
                         "confirm",
                         "yes please"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "deny": {
                     "variables": [],
@@ -1310,17 +1327,18 @@
                         "nah",
                         "no thanks",
                         "no thank you"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
         "slot-fill__get_outing": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)"
             ],
@@ -1521,7 +1539,8 @@
             "intents": {
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -1617,7 +1636,8 @@
             "intents": {
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -1696,7 +1716,8 @@
             "intents": {
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -1793,7 +1814,8 @@
                         "mhm",
                         "confirm",
                         "yes please"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "deny": {
                     "variables": [],
@@ -1806,11 +1828,13 @@
                         "nah",
                         "no thanks",
                         "no thank you"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         }
