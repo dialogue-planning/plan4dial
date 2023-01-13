@@ -17,6 +17,7 @@ def slot_fill(
     action_name: str,
     message_variants: List[str],
     entities: List[str],
+    intent: str,
     config_entities: Dict = None,
     fallback_message_variants: List[str] = None,
     additional_updates: Dict = None,
@@ -46,10 +47,12 @@ def slot_fill(
             upon execution of this action.
         entities (List[str]): The entities to be extracted or have their "slots
             filled."
+        intent (str): The name of the intent that will extract all the entities.
         config_entities (Dict): Holds configurations that specify what the bot should
             do in certain situations regarding each entity. The keys are each entity
             and the values are the configuration for each entity. Defaults to None as
-            this is not always necessary. The 3 configuration options are:
+            this is not always necessary. The 4 configuration options for each entity 
+            are:
 
                 | **clarify_message_variants** *(List[str])*: The message variants that
                     will be used for the clarify action for this entity. Only necessary
@@ -59,6 +62,10 @@ def slot_fill(
                     <plan4dial.for_generating.custom_actions.slot_fill._single_slot>`
                     extractions of the given entity. Only necessary to specify if there
                     are > 1 entities.
+                | **single_slot_intent** *(str)*: If :py:func:`single_slot
+                    <plan4dial.for_generating.custom_actions.slot_fill._single_slot>`
+                    extraction is being used, this indicates the intent to detect for
+                    that extraction (the intent that extracts this singular entity).
                 | **fallback_message_variants** *(List[str])*: Custom fallback messages
                     to utter if the bot tries to extract this entity by itself with a
                     :py:func:`single_slot
@@ -168,7 +175,7 @@ def slot_fill(
         if refined_combo:
             next_out = {"updates": {}}
             # store the intent based on the refined combo
-            next_out["intent"] = refined_combo
+            next_out["intent"] = intent
             outcome_name = "".join(
                 f"{entity}_{certainty}-" for entity, certainty in refined_combo.items()
             )[:-1]
@@ -184,19 +191,19 @@ def slot_fill(
                         entity: certainty for entity, certainty in refined_combo.items()
                     }.items()
                 )
-                # check if this frozenset is included in the dict of outcomes with
-                # additional updates; if so, add the appropriate updates
-                if key in cfg_updates:
-                    new_upd_cfg = cfg_updates[key]
-                    if "updates" in new_upd_cfg:
-                        next_out["updates"].update(new_upd_cfg["updates"])
-                    if "response_variants" in new_upd_cfg:
-                        next_out["response_variants"] = new_upd_cfg["response_variants"]
-                    if "follow_up" in new_upd_cfg:
-                        next_out["follow_up"] = new_upd_cfg["follow_up"]
-            action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
-                outcome_name
-            ] = next_out
+            # check if this frozenset is included in the dict of outcomes with
+            # additional updates; if so, add the appropriate updates
+            if key in cfg_updates:
+                new_upd_cfg = cfg_updates[key]
+                if "updates" in new_upd_cfg:
+                    next_out["updates"].update(new_upd_cfg["updates"])
+                if "response_variants" in new_upd_cfg:
+                    next_out["response_variants"] = new_upd_cfg["response_variants"]
+                if "follow_up" in new_upd_cfg:
+                    next_out["follow_up"] = new_upd_cfg["follow_up"]
+        action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
+            outcome_name
+        ] = next_out
     actions = {f"slot-fill__{action_name}": action}
     # create clarifications and single slot actions as necessary
     new_actions, new_ctx_vars = _create_clarifications_single_slots(
@@ -255,7 +262,7 @@ def _clarify_act(
     if single_slot:
         deny_updates[f"allow_single_slot_{entity}"] = {"value": True}
     clarify = {}
-    clarify["type"], clarify["subtype"] = "dialogue", "dialogue disambiguation"
+    clarify["type"] = "dialogue"
     clarify["message_variants"] = message_variants
     clarify["condition"] = {entity: {"known": "maybe"}}
     clarify["effect"] = {
@@ -325,7 +332,7 @@ def _single_slot(
         else [f"Please enter a valid value for {entity.replace('_', ' ')}."]
     )
     single_slot = {}
-    single_slot["type"], single_slot["subtype"] = "dialogue", "dialogue disambiguation"
+    single_slot["type"] = "dialogue"
     single_slot["message_variants"] = message_variants
     # condition: we can't know the entity and we have to have tried to extract it with
     # the original slot_fill action along with the other entities already
@@ -339,7 +346,7 @@ def _single_slot(
                 "outcomes": {
                     "fill-slot": {
                         "updates": fill_slot_updates,
-                        "intent": {entity: "found"},
+                        "intent": config_entity["single_slot_intent"],
                     }
                 },
             }
@@ -356,7 +363,7 @@ def _single_slot(
             "slot-unclear"
         ] = {
             "updates": slot_unclear_updates,
-            "intent": {entity: "maybe-found"},
+            "intent": config_entity["single_slot_intent"],
         }
     if "fallback_message_variants" in config_entity:
         single_slot["fallback_message_variants"] = config_entity[
