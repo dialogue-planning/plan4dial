@@ -89,7 +89,8 @@
                 "have a good night!",
                 "thx",
                 "ty"
-            ]
+            ],
+            "type": "regular"
         },
         "share_base": {
             "variables": [
@@ -99,7 +100,8 @@
                 "I want a pizza with a $base base",
                 "I would prefer a pizza with a $base base.",
                 "Do you have $base for a base?"
-            ]
+            ],
+            "type": "regular"
         },
         "share_size": {
             "variables": [
@@ -109,7 +111,8 @@
                 "I want a $size pizza.",
                 "I would prefer a $size pizza.",
                 "Can I get a $size pizza?"
-            ]
+            ],
+            "type": "regular"
         },
         "share_toppings": {
             "variables": [
@@ -120,7 +123,8 @@
                 "I would prefer a pizza with $toppings.",
                 "Do you have $toppings?",
                 "Can I get a pizza with $toppings?"
-            ]
+            ],
+            "type": "regular"
         },
         "share_drink": {
             "variables": [
@@ -130,7 +134,8 @@
                 "I want to drink $drink.",
                 "$drink with ice please!",
                 "Do you have $drink kind of drink?"
-            ]
+            ],
+            "type": "regular"
         },
         "share_side": {
             "variables": [
@@ -140,15 +145,18 @@
                 "I want to have $side on the side.",
                 "$side on the side please!",
                 "Do you have $side available as a side option?"
-            ]
+            ],
+            "type": "regular"
         },
         "fallback": {
             "variables": [],
-            "utterances": []
+            "utterances": [],
+            "type": "fallback"
         },
         "utter_ds": {
             "variables": [],
-            "utterances": []
+            "utterances": [],
+            "type": "regular"
         }
     },
     "actions": {
@@ -219,11 +227,13 @@
                         "I want a pizza with a $base base",
                         "I would prefer a pizza with a $base base.",
                         "Do you have $base for a base?"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -295,11 +305,13 @@
                         "I would prefer a pizza with $toppings.",
                         "Do you have $toppings?",
                         "Can I get a pizza with $toppings?"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -370,11 +382,13 @@
                         "I want a $size pizza.",
                         "I would prefer a $size pizza.",
                         "Can I get a $size pizza?"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -445,11 +459,13 @@
                         "I want to drink $drink.",
                         "$drink with ice please!",
                         "Do you have $drink kind of drink?"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -520,11 +536,13 @@
                         "I want to have $side on the side.",
                         "$side on the side please!",
                         "Do you have $side available as a side option?"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -591,7 +609,8 @@
                         "have a good night!",
                         "thx",
                         "ty"
-                    ]
+                    ],
+                    "type": "regular"
                 }
             }
         },
@@ -634,7 +653,8 @@
             "intents": {
                 "utter_ds": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "regular"
                 }
             }
         }

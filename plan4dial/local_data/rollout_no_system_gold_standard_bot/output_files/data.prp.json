@@ -6,7 +6,7 @@
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x24e0e00",
+                "state": "0x22e1e00",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -16,7 +16,7 @@
             "7": {
                 "expected_successor": "2",
                 "action": "dialogue_statement",
-                "state": "0x24eaa30",
+                "state": "0x22eba30",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -31,7 +31,7 @@
             "8": {
                 "expected_successor": "3",
                 "action": "dialogue_statement",
-                "state": "0x24edc30",
+                "state": "0x22eec30",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -46,7 +46,7 @@
             "11": {
                 "expected_successor": "6",
                 "action": "dialogue_statement",
-                "state": "0x24ec700",
+                "state": "0x22ed700",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -61,7 +61,7 @@
             "9": {
                 "expected_successor": "4",
                 "action": "dialogue_statement",
-                "state": "0x24ee550",
+                "state": "0x22ef550",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -76,7 +76,7 @@
             "10": {
                 "expected_successor": "5",
                 "action": "dialogue_statement",
-                "state": "0x24ebf50",
+                "state": "0x22ecf50",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -91,7 +91,7 @@
             "1": {
                 "expected_successor": "0",
                 "action": "complete",
-                "state": "0x24e75a0",
+                "state": "0x22e85a0",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -106,7 +106,7 @@
             "2": {
                 "expected_successor": "1",
                 "action": "get-toppings",
-                "state": "0x24e7170",
+                "state": "0x22e8170",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -125,7 +125,7 @@
             "3": {
                 "expected_successor": "2",
                 "action": "get-size",
-                "state": "0x24e6a80",
+                "state": "0x22e7a80",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -144,7 +144,7 @@
             "4": {
                 "expected_successor": "3",
                 "action": "get-side",
-                "state": "0x24ef360",
+                "state": "0x22f0360",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -163,7 +163,7 @@
             "5": {
                 "expected_successor": "4",
                 "action": "get-drink",
-                "state": "0x24ef890",
+                "state": "0x22f0890",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -182,7 +182,7 @@
             "6": {
                 "expected_successor": "5",
                 "action": "get-base",
-                "state": "0x24efa10",
+                "state": "0x22f0a10",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -282,10 +282,10 @@
             ]
         ],
         "states": {
-            "0x24e0e00": [
+            "0x22e1e00": [
                 "Atom goal()"
             ],
-            "0x24eaa30": [
+            "0x22eba30": [
                 "Atom know__base()",
                 "Atom know__drink()",
                 "Atom know__side()",
@@ -294,7 +294,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0x24edc30": [
+            "0x22eec30": [
                 "Atom know__base()",
                 "Atom know__drink()",
                 "Atom know__side()",
@@ -303,7 +303,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0x24ec700": [
+            "0x22ed700": [
                 "NegatedAtom know__base()",
                 "NegatedAtom know__drink()",
                 "NegatedAtom know__side()",
@@ -312,7 +312,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0x24ee550": [
+            "0x22ef550": [
                 "Atom know__base()",
                 "Atom know__drink()",
                 "NegatedAtom know__side()",
@@ -321,7 +321,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0x24ebf50": [
+            "0x22ecf50": [
                 "Atom know__base()",
                 "NegatedAtom know__drink()",
                 "NegatedAtom know__side()",
@@ -330,7 +330,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0x24e75a0": [
+            "0x22e85a0": [
                 "Atom know__base()",
                 "Atom know__drink()",
                 "Atom know__side()",
@@ -338,7 +338,7 @@
                 "Atom know__toppings()",
                 "NegatedAtom force-statement()"
             ],
-            "0x24e7170": [
+            "0x22e8170": [
                 "Atom know__base()",
                 "Atom know__drink()",
                 "Atom know__side()",
@@ -346,7 +346,7 @@
                 "NegatedAtom know__toppings()",
                 "NegatedAtom force-statement()"
             ],
-            "0x24e6a80": [
+            "0x22e7a80": [
                 "Atom know__base()",
                 "Atom know__drink()",
                 "Atom know__side()",
@@ -354,7 +354,7 @@
                 "NegatedAtom know__toppings()",
                 "NegatedAtom force-statement()"
             ],
-            "0x24ef360": [
+            "0x22f0360": [
                 "Atom know__base()",
                 "Atom know__drink()",
                 "NegatedAtom know__side()",
@@ -362,7 +362,7 @@
                 "NegatedAtom know__toppings()",
                 "NegatedAtom force-statement()"
             ],
-            "0x24ef890": [
+            "0x22f0890": [
                 "Atom know__base()",
                 "NegatedAtom know__drink()",
                 "NegatedAtom know__side()",
@@ -370,7 +370,7 @@
                 "NegatedAtom know__toppings()",
                 "NegatedAtom force-statement()"
             ],
-            "0x24efa10": [
+            "0x22f0a10": [
                 "NegatedAtom know__base()",
                 "NegatedAtom know__drink()",
                 "NegatedAtom know__side()",

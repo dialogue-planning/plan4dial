@@ -2,15 +2,15 @@
     "actions": {
         "get-have-allergy": {
             "condition": [
+                "(not (forcing__get-allergy))",
                 "(not (force-statement))",
-                "(not (know__have_allergy))",
-                "(not (forcing__get-allergy))"
+                "(not (know__have_allergy))"
             ],
             "effect": {
                 "get-have-allergy_DETDUP_set-allergy-EQ-indicate_allergy": [
-                    "(forcing__get-allergy)",
                     "(have_allergy)",
-                    "(know__have_allergy)"
+                    "(know__have_allergy)",
+                    "(forcing__get-allergy)"
                 ],
                 "get-have-allergy_DETDUP_set-allergy-EQ-indicate_no_allergy": [
                     "(not (have_allergy))",
@@ -36,8 +36,8 @@
                     "(know__food_restriction)"
                 ],
                 "get-allergy_DETDUP_set-allergy-EQ-fallback": [
-                    "(not (forcing__get-allergy))",
                     "(have-message)",
+                    "(not (forcing__get-allergy))",
                     "(force-statement)"
                 ]
             }
@@ -45,14 +45,14 @@
         "check-conflicts": {
             "condition": [
                 "(not (force-statement))",
+                "(know__have_allergy)",
+                "(know__cuisine)",
+                "(know__food_restriction)",
                 "(know__location)",
                 "(not (maybe-know__cuisine))",
                 "(not (know__conflict))",
-                "(have_allergy)",
                 "(not (forcing__get-allergy))",
-                "(know__have_allergy)",
-                "(know__cuisine)",
-                "(know__food_restriction)"
+                "(have_allergy)"
             ],
             "effect": {
                 "check-conflicts_DETDUP_check-conflicts-EQ-restriction-dessert": [
@@ -83,32 +83,32 @@
         },
         "reset-preferences": {
             "condition": [
-                "(not (force-statement))",
                 "(conflict)",
-                "(know__conflict)",
-                "(not (forcing__get-allergy))"
+                "(not (forcing__get-allergy))",
+                "(not (force-statement))",
+                "(know__conflict)"
             ],
             "effect": {
                 "reset-preferences_DETDUP_reset-EQ-reset-values": [
                     "(have-message)",
-                    "(not (maybe-know__cuisine))",
-                    "(not (know__cuisine))",
-                    "(not (know__conflict))",
                     "(force-statement)",
+                    "(not (maybe-know__cuisine))",
+                    "(not (know__have_allergy))",
+                    "(not (know__conflict))",
                     "(not (know__food_restriction))",
-                    "(not (know__have_allergy))"
+                    "(not (know__cuisine))"
                 ]
             }
         },
         "set-restaurant": {
             "condition": [
-                "(not (force-statement))",
-                "(not (maybe-know__cuisine))",
                 "(not (conflict))",
-                "(not (forcing__get-allergy))",
+                "(not (force-statement))",
+                "(know__conflict)",
                 "(know__cuisine)",
+                "(not (maybe-know__cuisine))",
                 "(not (know__restaurant))",
-                "(know__conflict)"
+                "(not (forcing__get-allergy))"
             ],
             "effect": {
                 "set-restaurant_DETDUP_assign_restaurant-EQ-set-mexican": [
@@ -130,8 +130,8 @@
                 "(not (force-statement))",
                 "(know__outing_type)",
                 "(not (maybe-know__outing_type))",
-                "(not (forcing__get-allergy))",
-                "(know__budget)"
+                "(know__budget)",
+                "(not (forcing__get-allergy))"
             ],
             "effect": {
                 "set-outing_DETDUP_assign_outing-EQ-set-club": [
@@ -151,10 +151,10 @@
         "complete": {
             "condition": [
                 "(not (force-statement))",
-                "(know__location)",
                 "(know__outing)",
-                "(know__restaurant)",
-                "(not (forcing__get-allergy))"
+                "(know__location)",
+                "(not (forcing__get-allergy))",
+                "(know__restaurant)"
             ],
             "effect": {
                 "complete_DETDUP_finish-EQ-finish": [
@@ -177,15 +177,15 @@
         },
         "slot-fill__get-location": {
             "condition": [
-                "(not (force-statement))",
+                "(not (know__location))",
                 "(not (forcing__get-allergy))",
-                "(not (know__location))"
+                "(not (force-statement))"
             ],
             "effect": {
                 "slot-fill__get-location_DETDUP_validate-slot-fill-EQ-location_found": [
                     "(have-message)",
-                    "(know__location)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(know__location)"
                 ],
                 "slot-fill__get-location_DETDUP_validate-slot-fill-EQ-fallback": [
                     "(have-message)",
@@ -195,21 +195,21 @@
         },
         "slot-fill__get-cuisine": {
             "condition": [
-                "(not (maybe-know__cuisine))",
-                "(not (know__cuisine))",
+                "(not (forcing__get-allergy))",
                 "(not (force-statement))",
-                "(not (forcing__get-allergy))"
+                "(not (know__cuisine))",
+                "(not (maybe-know__cuisine))"
             ],
             "effect": {
                 "slot-fill__get-cuisine_DETDUP_validate-slot-fill-EQ-cuisine_found": [
-                    "(not (maybe-know__cuisine))",
                     "(have-message)",
+                    "(know__cuisine)",
                     "(force-statement)",
-                    "(know__cuisine)"
+                    "(not (maybe-know__cuisine))"
                 ],
                 "slot-fill__get-cuisine_DETDUP_validate-slot-fill-EQ-cuisine_maybe-found": [
-                    "(not (know__cuisine))",
-                    "(maybe-know__cuisine)"
+                    "(maybe-know__cuisine)",
+                    "(not (know__cuisine))"
                 ],
                 "slot-fill__get-cuisine_DETDUP_validate-slot-fill-EQ-fallback": [
                     "(have-message)",
@@ -219,19 +219,19 @@
         },
         "clarify__cuisine": {
             "condition": [
-                "(not (force-statement))",
-                "(not (know__cuisine))",
                 "(maybe-know__cuisine)",
-                "(not (forcing__get-allergy))"
+                "(not (forcing__get-allergy))",
+                "(not (force-statement))",
+                "(not (know__cuisine))"
             ],
             "effect": {
                 "clarify__cuisine_DETDUP_validate-clarification-EQ-confirm": [
-                    "(not (maybe-know__cuisine))",
-                    "(know__cuisine)"
+                    "(know__cuisine)",
+                    "(not (maybe-know__cuisine))"
                 ],
                 "clarify__cuisine_DETDUP_validate-clarification-EQ-deny": [
-                    "(not (maybe-know__cuisine))",
-                    "(not (know__cuisine))"
+                    "(not (know__cuisine))",
+                    "(not (maybe-know__cuisine))"
                 ],
                 "clarify__cuisine_DETDUP_validate-clarification-EQ-fallback": [
                     "(have-message)",
@@ -241,11 +241,11 @@
         },
         "slot-fill__get_outing": {
             "condition": [
-                "(not (force-statement))",
-                "(not (maybe-know__outing_type))",
-                "(not (forcing__get-allergy))",
                 "(not (know__budget))",
-                "(not (know__outing_type))"
+                "(not (force-statement))",
+                "(not (know__outing_type))",
+                "(not (maybe-know__outing_type))",
+                "(not (forcing__get-allergy))"
             ],
             "effect": {
                 "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-budget_found-outing_type_found": [
@@ -254,27 +254,27 @@
                     "(not (maybe-know__outing_type))"
                 ],
                 "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-budget_found-outing_type_maybe-found": [
-                    "(know__budget)",
                     "(not (know__outing_type))",
+                    "(know__budget)",
                     "(maybe-know__outing_type)"
                 ],
                 "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-budget_found": [
                     "(know__budget)",
-                    "(have-message)",
                     "(allow_single_slot_outing_type)",
+                    "(have-message)",
                     "(force-statement)"
                 ],
                 "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-outing_type_found": [
-                    "(have-message)",
                     "(know__outing_type)",
+                    "(have-message)",
                     "(force-statement)",
                     "(not (maybe-know__outing_type))",
                     "(allow_single_slot_budget)"
                 ],
                 "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-outing_type_maybe-found": [
                     "(not (know__outing_type))",
-                    "(maybe-know__outing_type)",
-                    "(allow_single_slot_budget)"
+                    "(allow_single_slot_budget)",
+                    "(maybe-know__outing_type)"
                 ],
                 "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-fallback": [
                     "(have-message)",
@@ -285,16 +285,16 @@
         "single_slot__outing_type": {
             "condition": [
                 "(not (force-statement))",
+                "(not (know__outing_type))",
                 "(allow_single_slot_outing_type)",
                 "(not (maybe-know__outing_type))",
-                "(not (forcing__get-allergy))",
-                "(not (know__outing_type))"
+                "(not (forcing__get-allergy))"
             ],
             "effect": {
                 "single_slot__outing_type_DETDUP_validate-slot-fill-EQ-fill-slot": [
+                    "(not (allow_single_slot_outing_type))",
                     "(know__outing_type)",
-                    "(not (maybe-know__outing_type))",
-                    "(not (allow_single_slot_outing_type))"
+                    "(not (maybe-know__outing_type))"
                 ],
                 "single_slot__outing_type_DETDUP_validate-slot-fill-EQ-slot-unclear": [
                     "(not (know__outing_type))",
@@ -309,8 +309,8 @@
         "single_slot__budget": {
             "condition": [
                 "(not (force-statement))",
-                "(not (forcing__get-allergy))",
                 "(not (know__budget))",
+                "(not (forcing__get-allergy))",
                 "(allow_single_slot_budget)"
             ],
             "effect": {
@@ -326,10 +326,10 @@
         },
         "clarify__outing_type": {
             "condition": [
-                "(not (force-statement))",
                 "(not (know__outing_type))",
-                "(maybe-know__outing_type)",
-                "(not (forcing__get-allergy))"
+                "(not (forcing__get-allergy))",
+                "(not (force-statement))",
+                "(maybe-know__outing_type)"
             ],
             "effect": {
                 "clarify__outing_type_DETDUP_validate-clarification-EQ-confirm": [
@@ -338,8 +338,8 @@
                 ],
                 "clarify__outing_type_DETDUP_validate-clarification-EQ-deny": [
                     "(not (know__outing_type))",
-                    "(not (maybe-know__outing_type))",
-                    "(allow_single_slot_outing_type)"
+                    "(allow_single_slot_outing_type)",
+                    "(not (maybe-know__outing_type))"
                 ],
                 "clarify__outing_type_DETDUP_validate-clarification-EQ-fallback": [
                     "(have-message)",
@@ -349,25 +349,25 @@
         }
     },
     "initial_state": [
-        "(not (force-statement))",
-        "(not (know__location))",
-        "(not (maybe-know__cuisine))",
-        "(not (conflict))",
-        "(not (allow_single_slot_budget))",
-        "(not (have-message))",
-        "(not (allow_single_slot_outing_type))",
-        "(not (maybe-know__outing_type))",
-        "(not (know__food_restriction))",
         "(not (have_allergy))",
-        "(not (know__cuisine))",
-        "(not (goal))",
-        "(not (forcing__get-allergy))",
-        "(not (know__have_allergy))",
-        "(not (know__budget))",
-        "(not (know__outing))",
-        "(not (know__goal))",
-        "(not (know__outing_type))",
+        "(not (force-statement))",
+        "(not (maybe-know__cuisine))",
         "(not (know__conflict))",
-        "(not (know__restaurant))"
+        "(not (know__goal))",
+        "(not (know__cuisine))",
+        "(not (have-message))",
+        "(not (goal))",
+        "(not (know__outing_type))",
+        "(not (allow_single_slot_budget))",
+        "(not (know__budget))",
+        "(not (know__have_allergy))",
+        "(not (maybe-know__outing_type))",
+        "(not (allow_single_slot_outing_type))",
+        "(not (know__location))",
+        "(not (conflict))",
+        "(not (know__outing))",
+        "(not (know__food_restriction))",
+        "(not (know__restaurant))",
+        "(not (forcing__get-allergy))"
     ]
 }

@@ -2,8 +2,8 @@
     "actions": {
         "get-invited-talk": {
             "condition": [
-                "(not (force-statement))",
-                "(not (know__invited-talk))"
+                "(not (know__invited-talk))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-invited-talk_DETDUP_set-invited-talk-EQ-valid": [
@@ -32,8 +32,8 @@
         },
         "get-early-afternoon-session": {
             "condition": [
-                "(not (force-statement))",
-                "(not (know__early-afternoon-session))"
+                "(not (know__early-afternoon-session))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-early-afternoon-session_DETDUP_set-early-afternoon-session-EQ-valid": [
@@ -62,8 +62,8 @@
         },
         "get-evening-session": {
             "condition": [
-                "(not (know__evening-session))",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__evening-session))"
             ],
             "effect": {
                 "get-evening-session_DETDUP_set-evening-session-EQ-valid": [
@@ -77,11 +77,11 @@
         },
         "complete": {
             "condition": [
-                "(know__afternoon-session)",
-                "(know__early-afternoon-session)",
-                "(know__invited-talk)",
                 "(know__evening-session)",
+                "(know__early-afternoon-session)",
+                "(know__afternoon-session)",
                 "(know__morning-session)",
+                "(know__invited-talk)",
                 "(not (force-statement))"
             ],
             "effect": {
@@ -104,13 +104,13 @@
         }
     },
     "initial_state": [
-        "(not (goal))",
-        "(not (know__morning-session))",
         "(not (have-message))",
-        "(not (know__afternoon-session))",
-        "(not (know__invited-talk))",
-        "(not (know__evening-session))",
+        "(not (know__morning-session))",
+        "(not (know__early-afternoon-session))",
         "(not (force-statement))",
-        "(not (know__early-afternoon-session))"
+        "(not (know__evening-session))",
+        "(not (know__invited-talk))",
+        "(not (know__afternoon-session))",
+        "(not (goal))"
     ]
 }

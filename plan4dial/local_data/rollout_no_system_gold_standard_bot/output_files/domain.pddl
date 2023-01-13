@@ -17,8 +17,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__base))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         set-base
@@ -29,8 +29,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -51,8 +51,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -73,8 +73,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -95,8 +95,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -105,8 +105,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__side))
                 (not (force-statement))
+                (not (know__side))
             )
         :effect
             (labeled-oneof         set-side
@@ -117,8 +117,8 @@
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -127,10 +127,10 @@
         :parameters()
         :precondition
             (and
+                (know__toppings)
+                (know__side)
                 (know__size)
                 (not (force-statement))
-                (know__side)
-                (know__toppings)
                 (know__base)
                 (know__drink)
             )
@@ -147,15 +147,15 @@
         :parameters()
         :precondition
             (and
-                (have-message)
                 (force-statement)
+                (have-message)
             )
         :effect
             (labeled-oneof         reset
                 (outcome lock
                     (and
-                        (not (have-message))
                         (not (force-statement))
+                        (not (have-message))
                     )
                 )
             )

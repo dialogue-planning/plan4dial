@@ -6,7 +6,7 @@
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x28539c0",
+                "state": "0x1de99c0",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -16,7 +16,7 @@
             "1": {
                 "expected_successor": "0",
                 "action": "complete",
-                "state": "0x28595e0",
+                "state": "0x1def5e0",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -31,7 +31,7 @@
             "2": {
                 "expected_successor": "1",
                 "action": "get-morning",
-                "state": "0x2859030",
+                "state": "0x1def030",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -50,7 +50,7 @@
             "3": {
                 "expected_successor": "2",
                 "action": "get-invited",
-                "state": "0x285b170",
+                "state": "0x1df1170",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -69,7 +69,7 @@
             "4": {
                 "expected_successor": "3",
                 "action": "get-afternoon",
-                "state": "0x285b280",
+                "state": "0x1df1280",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -88,7 +88,7 @@
             "7": {
                 "expected_successor": "4",
                 "action": "dialogue_statement",
-                "state": "0x285fc40",
+                "state": "0x1df5c40",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -103,7 +103,7 @@
             "5": {
                 "expected_successor": "2",
                 "action": "dialogue_statement",
-                "state": "0x285cbc0",
+                "state": "0x1df2bc0",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -118,7 +118,7 @@
             "6": {
                 "expected_successor": "3",
                 "action": "dialogue_statement",
-                "state": "0x285d510",
+                "state": "0x1df3510",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -184,48 +184,48 @@
             ]
         ],
         "states": {
-            "0x28539c0": [
+            "0x1de99c0": [
                 "Atom goal()"
             ],
-            "0x28595e0": [
+            "0x1def5e0": [
                 "Atom know__afternoon-session()",
                 "Atom know__invited-talk()",
                 "Atom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0x2859030": [
+            "0x1def030": [
                 "Atom know__afternoon-session()",
                 "Atom know__invited-talk()",
                 "NegatedAtom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0x285b170": [
+            "0x1df1170": [
                 "Atom know__afternoon-session()",
                 "NegatedAtom know__invited-talk()",
                 "NegatedAtom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0x285b280": [
+            "0x1df1280": [
                 "NegatedAtom know__afternoon-session()",
                 "NegatedAtom know__invited-talk()",
                 "NegatedAtom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0x285fc40": [
+            "0x1df5c40": [
                 "NegatedAtom know__afternoon-session()",
                 "NegatedAtom know__invited-talk()",
                 "NegatedAtom know__morning-session()",
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0x285cbc0": [
+            "0x1df2bc0": [
                 "Atom know__afternoon-session()",
                 "Atom know__invited-talk()",
                 "NegatedAtom know__morning-session()",
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0x285d510": [
+            "0x1df3510": [
                 "Atom know__afternoon-session()",
                 "NegatedAtom know__invited-talk()",
                 "NegatedAtom know__morning-session()",

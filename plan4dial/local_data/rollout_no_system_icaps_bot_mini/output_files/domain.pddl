@@ -15,8 +15,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__invited-talk))
                 (not (force-statement))
+                (not (know__invited-talk))
             )
         :effect
             (labeled-oneof         set-invited-talk
@@ -59,8 +59,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__afternoon-session))
                 (not (force-statement))
+                (not (know__afternoon-session))
             )
         :effect
             (labeled-oneof         set-afternoon-session
@@ -81,9 +81,9 @@
         :parameters()
         :precondition
             (and
-                (know__morning-session)
                 (not (force-statement))
                 (know__invited-talk)
+                (know__morning-session)
                 (know__afternoon-session)
             )
         :effect
@@ -106,8 +106,8 @@
             (labeled-oneof         reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )
