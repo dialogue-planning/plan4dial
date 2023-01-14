@@ -304,23 +304,10 @@ Let's see what the intents for our ``day-planner`` bot look like:
             - I want to go to a $outing_type place.
             - What is the most $outing_type place in the city?
 
-**NOTE**: No intents can extract the exact same entities. Why?
-
-- At every step in the conversation, we need to be able to know what information we have and don't have.
-  Each intent's ``entities`` indicates what information is gained when that intent is successfully extracted.
-  As a result, an intent will not be chosen unless all the entities were extracted.
-
-- As you will later see, each intent is mapped to an action outcome.
-  That means that we decide what path to take next in the conversation depending on what the intent is.
-
-- Having two or more intents that extract the same entities causes ambiguity in two ways.
-  First, it will likely be harder to extract the "correct" intent because the duplicate intents will be too similar to each other.
-  Second, there is functionally no reason for multiple intents to accomplish the exact same goal but map to different outcomes.
-  If you want to handle things differently depending on the extracted *value* of the entities, that is a separate process handled in the actions (to be seen later).
-
-If this is a bit confusing, it may make more sense after reviewing the ``actions`` section below and coming back to this.
 
 **NOTE**: All ``utterances`` must include *exactly* all the entities listed under ``entities``; no more, no less.
+In practice, this does not mean that all entities will actually be extracted at runtime, but it needs to be indicated
+what the intent is actually trying to accomplish.
 
 3. Define the Actions
 .....................
