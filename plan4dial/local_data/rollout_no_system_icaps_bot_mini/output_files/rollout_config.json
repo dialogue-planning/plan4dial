@@ -10,8 +10,8 @@
                     "(know__invited-talk)"
                 ],
                 "get-invited_DETDUP_set-invited-talk-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -25,8 +25,8 @@
                     "(know__morning-session)"
                 ],
                 "get-morning_DETDUP_set-morning-session-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -40,15 +40,15 @@
                     "(know__afternoon-session)"
                 ],
                 "get-afternoon_DETDUP_set-afternoon-session-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "complete": {
             "condition": [
-                "(know__invited-talk)",
                 "(not (force-statement))",
+                "(know__invited-talk)",
                 "(know__morning-session)",
                 "(know__afternoon-session)"
             ],
@@ -60,8 +60,8 @@
         },
         "dialogue_statement": {
             "condition": [
-                "(force-statement)",
-                "(have-message)"
+                "(have-message)",
+                "(force-statement)"
             ],
             "effect": {
                 "dialogue_statement_DETDUP_reset-EQ-lock": [
@@ -72,11 +72,11 @@
         }
     },
     "initial_state": [
+        "(not (know__afternoon-session))",
         "(not (know__morning-session))",
-        "(not (have-message))",
+        "(not (force-statement))",
         "(not (goal))",
         "(not (know__invited-talk))",
-        "(not (know__afternoon-session))",
-        "(not (force-statement))"
+        "(not (have-message))"
     ]
 }

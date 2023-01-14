@@ -63,7 +63,8 @@
                 "have a good night!",
                 "thx",
                 "ty"
-            ]
+            ],
+            "type": "regular"
         },
         "share-invited": {
             "variables": [
@@ -74,7 +75,8 @@
                 "I want to see the invited talk on $invited-talk.",
                 "I am really interested in the talk on $invited-talk.",
                 "Can you schedule me in to watch the invited talk on $invited-talk?"
-            ]
+            ],
+            "type": "regular"
         },
         "share-morning": {
             "variables": [
@@ -85,7 +87,8 @@
                 "I want to see the session on $morning-session.",
                 "I am really interested in the session on $morning-session.",
                 "Can you schedule me in to watch the session on $morning-session?"
-            ]
+            ],
+            "type": "regular"
         },
         "share-afternoon": {
             "variables": [
@@ -96,15 +99,18 @@
                 "I want to see the session on $afternoon-session.",
                 "I am really interested in the session on $afternoon-session.",
                 "Can you schedule me in to watch the session on $afternoon-session?"
-            ]
+            ],
+            "type": "regular"
         },
         "fallback": {
             "variables": [],
-            "utterances": []
+            "utterances": [],
+            "type": "fallback"
         },
         "utter_ds": {
             "variables": [],
-            "utterances": []
+            "utterances": [],
+            "type": "regular"
         }
     },
     "actions": {
@@ -176,11 +182,13 @@
                         "I want to see the invited talk on $invited-talk.",
                         "I am really interested in the talk on $invited-talk.",
                         "Can you schedule me in to watch the invited talk on $invited-talk?"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -252,11 +260,13 @@
                         "I want to see the session on $morning-session.",
                         "I am really interested in the session on $morning-session.",
                         "Can you schedule me in to watch the session on $morning-session?"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -328,11 +338,13 @@
                         "I want to see the session on $afternoon-session.",
                         "I am really interested in the session on $afternoon-session.",
                         "Can you schedule me in to watch the session on $afternoon-session?"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -391,7 +403,8 @@
                         "have a good night!",
                         "thx",
                         "ty"
-                    ]
+                    ],
+                    "type": "regular"
                 }
             }
         },
@@ -434,7 +447,8 @@
             "intents": {
                 "utter_ds": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "regular"
                 }
             }
         }

@@ -6,7 +6,7 @@
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0xb83130",
+                "state": "0x267b130",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -16,7 +16,7 @@
             "7": {
                 "expected_successor": "2",
                 "action": "dialogue_statement",
-                "state": "0xb8ce60",
+                "state": "0x2684e60",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -31,7 +31,7 @@
             "8": {
                 "expected_successor": "3",
                 "action": "dialogue_statement",
-                "state": "0xb90060",
+                "state": "0x2688060",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -46,7 +46,7 @@
             "11": {
                 "expected_successor": "6",
                 "action": "dialogue_statement",
-                "state": "0xb8eb30",
+                "state": "0x2686b30",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -61,7 +61,7 @@
             "9": {
                 "expected_successor": "4",
                 "action": "dialogue_statement",
-                "state": "0xb90980",
+                "state": "0x2688980",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -76,7 +76,7 @@
             "10": {
                 "expected_successor": "5",
                 "action": "dialogue_statement",
-                "state": "0xb8e380",
+                "state": "0x2686380",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -91,7 +91,7 @@
             "1": {
                 "expected_successor": "0",
                 "action": "complete",
-                "state": "0xb899d0",
+                "state": "0x26819d0",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -106,7 +106,7 @@
             "2": {
                 "expected_successor": "1",
                 "action": "get-morning-session",
-                "state": "0xb89540",
+                "state": "0x2681540",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -125,7 +125,7 @@
             "3": {
                 "expected_successor": "2",
                 "action": "get-invited-talk",
-                "state": "0xb88e50",
+                "state": "0x2680e50",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -144,7 +144,7 @@
             "4": {
                 "expected_successor": "3",
                 "action": "get-evening-session",
-                "state": "0xb91790",
+                "state": "0x2689790",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -163,7 +163,7 @@
             "5": {
                 "expected_successor": "4",
                 "action": "get-early-afternoon-session",
-                "state": "0xb91cc0",
+                "state": "0x2689cc0",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -182,7 +182,7 @@
             "6": {
                 "expected_successor": "5",
                 "action": "get-afternoon-session",
-                "state": "0xb91e40",
+                "state": "0x2689e40",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -282,10 +282,10 @@
             ]
         ],
         "states": {
-            "0xb83130": [
+            "0x267b130": [
                 "Atom goal()"
             ],
-            "0xb8ce60": [
+            "0x2684e60": [
                 "Atom know__afternoon-session()",
                 "Atom know__early-afternoon-session()",
                 "Atom know__evening-session()",
@@ -294,7 +294,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0xb90060": [
+            "0x2688060": [
                 "Atom know__afternoon-session()",
                 "Atom know__early-afternoon-session()",
                 "Atom know__evening-session()",
@@ -303,7 +303,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0xb8eb30": [
+            "0x2686b30": [
                 "NegatedAtom know__afternoon-session()",
                 "NegatedAtom know__early-afternoon-session()",
                 "NegatedAtom know__evening-session()",
@@ -312,7 +312,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0xb90980": [
+            "0x2688980": [
                 "Atom know__afternoon-session()",
                 "Atom know__early-afternoon-session()",
                 "NegatedAtom know__evening-session()",
@@ -321,7 +321,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0xb8e380": [
+            "0x2686380": [
                 "Atom know__afternoon-session()",
                 "NegatedAtom know__early-afternoon-session()",
                 "NegatedAtom know__evening-session()",
@@ -330,7 +330,7 @@
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0xb899d0": [
+            "0x26819d0": [
                 "Atom know__afternoon-session()",
                 "Atom know__early-afternoon-session()",
                 "Atom know__evening-session()",
@@ -338,7 +338,7 @@
                 "Atom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0xb89540": [
+            "0x2681540": [
                 "Atom know__afternoon-session()",
                 "Atom know__early-afternoon-session()",
                 "Atom know__evening-session()",
@@ -346,7 +346,7 @@
                 "NegatedAtom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0xb88e50": [
+            "0x2680e50": [
                 "Atom know__afternoon-session()",
                 "Atom know__early-afternoon-session()",
                 "Atom know__evening-session()",
@@ -354,7 +354,7 @@
                 "NegatedAtom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0xb91790": [
+            "0x2689790": [
                 "Atom know__afternoon-session()",
                 "Atom know__early-afternoon-session()",
                 "NegatedAtom know__evening-session()",
@@ -362,7 +362,7 @@
                 "NegatedAtom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0xb91cc0": [
+            "0x2689cc0": [
                 "Atom know__afternoon-session()",
                 "NegatedAtom know__early-afternoon-session()",
                 "NegatedAtom know__evening-session()",
@@ -370,7 +370,7 @@
                 "NegatedAtom know__morning-session()",
                 "NegatedAtom force-statement()"
             ],
-            "0xb91e40": [
+            "0x2689e40": [
                 "NegatedAtom know__afternoon-session()",
                 "NegatedAtom know__early-afternoon-session()",
                 "NegatedAtom know__evening-session()",

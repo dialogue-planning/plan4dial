@@ -604,6 +604,7 @@ def _convert_intents(loaded_yaml: Dict) -> None:
                 [f"${var}" for var in intent_cfg["variables"]]
             )
         cur_intent["utterances"] = intent_cfg["utterances"]
+        cur_intent["type"] = "fallback" if intent == "fallback" else "regular"
         processed[intent] = cur_intent
     loaded_yaml["intents"] = processed
 

@@ -80,7 +80,7 @@
             "type": "enum",
             "config": [
                 "Guac Grill",
-                "Alfredo's Pizza Caf\u00c3\u00a9",
+                "Alfredo's Pizza Caf\u00e9",
                 "Mandarin",
                 "Geneva Crepes"
             ],
@@ -142,7 +142,8 @@
                 "mhm",
                 "confirm",
                 "yes please"
-            ]
+            ],
+            "type": "regular"
         },
         "deny": {
             "variables": [],
@@ -155,7 +156,8 @@
                 "nah",
                 "no thanks",
                 "no thank you"
-            ]
+            ],
+            "type": "regular"
         },
         "share_location": {
             "variables": [
@@ -165,7 +167,8 @@
                 "I live in $location.",
                 "I am located in $location.",
                 "Can you help me find things to do in $location?"
-            ]
+            ],
+            "type": "regular"
         },
         "share_cuisine": {
             "variables": [
@@ -175,7 +178,8 @@
                 "I want to eat $cuisine.",
                 "Do you have restaurants of type $cuisine?",
                 "Are there any $cuisine restaurants in the area?"
-            ]
+            ],
+            "type": "regular"
         },
         "share_allergies": {
             "variables": [
@@ -185,7 +189,8 @@
                 "I have to eat $food_restriction.",
                 "I can only eat foods that are $food_restriction.",
                 "I am allergic to any foods that are not $food_restriction."
-            ]
+            ],
+            "type": "regular"
         },
         "share_all_outing_preferences": {
             "variables": [
@@ -196,7 +201,8 @@
                 "I have a $budget budget and I would prefer a $outing_type atmosphere today.",
                 "I am operating within a $budget budget and I want to go to a $outing_type place.",
                 "I can do activities with a $budget budget and I want to find the most $outing_type place in the city."
-            ]
+            ],
+            "type": "regular"
         },
         "share_budget": {
             "variables": [
@@ -206,7 +212,8 @@
                 "I have a $budget budget.",
                 "I am operating within a $budget budget.",
                 "I can do activities with a $budget budget."
-            ]
+            ],
+            "type": "regular"
         },
         "share_outing_type": {
             "variables": [
@@ -216,15 +223,18 @@
                 "I would prefer a $outing_type atmosphere today.",
                 "I want to go to a $outing_type place.",
                 "What is the most $outing_type place in the city?"
-            ]
+            ],
+            "type": "regular"
         },
         "fallback": {
             "variables": [],
-            "utterances": []
+            "utterances": [],
+            "type": "fallback"
         },
         "utter_ds": {
             "variables": [],
-            "utterances": []
+            "utterances": [],
+            "type": "regular"
         }
     },
     "actions": {
@@ -328,7 +338,8 @@
                         "mhm",
                         "confirm",
                         "yes please"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "deny": {
                     "variables": [],
@@ -341,11 +352,13 @@
                         "nah",
                         "no thanks",
                         "no thank you"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -428,11 +441,13 @@
                         "I have to eat $food_restriction.",
                         "I can only eat foods that are $food_restriction.",
                         "I am allergic to any foods that are not $food_restriction."
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -744,7 +759,7 @@
                     {
                         "updates": {
                             "restaurant": {
-                                "value": "Alfredo's Pizza Caf\u00c3\u00a9",
+                                "value": "Alfredo's Pizza Caf\u00e9",
                                 "variable": "restaurant",
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -1014,13 +1029,13 @@
             "intents": {
                 "utter_ds": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "regular"
                 }
             }
         },
         "slot-fill__get-location": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "Where are you located?"
             ],
@@ -1068,9 +1083,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "location": "found"
-                        },
+                        "intent": "share_location",
                         "response_variants": [
                             "Tailoring your results to what's available in $location..."
                         ],
@@ -1099,15 +1112,26 @@
                 ]
             },
             "intents": {
+                "share_location": {
+                    "variables": [
+                        "$location"
+                    ],
+                    "utterances": [
+                        "I live in $location.",
+                        "I am located in $location.",
+                        "Can you help me find things to do in $location?"
+                    ],
+                    "type": "regular"
+                },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
         "slot-fill__get-cuisine": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area."
             ],
@@ -1155,9 +1179,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "cuisine": "found"
-                        },
+                        "intent": "share_cuisine",
                         "response_variants": [
                             "Cuisine preference has been logged."
                         ],
@@ -1175,9 +1197,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "cuisine": "maybe-found"
-                        },
+                        "intent": "share_cuisine",
                         "name": "slot-fill__get-cuisine_DETDUP_validate-slot-fill-EQ-cuisine_maybe-found",
                         "assignments": {
                             "$cuisine": "maybe-found"
@@ -1203,15 +1223,26 @@
                 ]
             },
             "intents": {
+                "share_cuisine": {
+                    "variables": [
+                        "$cuisine"
+                    ],
+                    "utterances": [
+                        "I want to eat $cuisine.",
+                        "Do you have restaurants of type $cuisine?",
+                        "Are there any $cuisine restaurants in the area?"
+                    ],
+                    "type": "regular"
+                },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
         "clarify__cuisine": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "I didn't quite get your cuisine preference. Do you want to eat $cuisine?"
             ],
@@ -1297,7 +1328,8 @@
                         "mhm",
                         "confirm",
                         "yes please"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "deny": {
                     "variables": [],
@@ -1310,17 +1342,18 @@
                         "nah",
                         "no thanks",
                         "no thank you"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
         "slot-fill__get_outing": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)"
             ],
@@ -1372,10 +1405,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "budget": "found",
-                            "outing_type": "found"
-                        },
+                        "intent": "share_all_outing_preferences",
                         "name": "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-budget_found-outing_type_found",
                         "assignments": {
                             "$budget": "found",
@@ -1397,10 +1427,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "budget": "found",
-                            "outing_type": "maybe-found"
-                        },
+                        "intent": "share_all_outing_preferences",
                         "name": "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-budget_found-outing_type_maybe-found",
                         "assignments": {
                             "$budget": "found",
@@ -1431,9 +1458,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "budget": "found"
-                        },
+                        "intent": "share_all_outing_preferences",
                         "response_variants": [
                             "Ok, I'll take that into account."
                         ],
@@ -1466,9 +1491,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "outing_type": "found"
-                        },
+                        "intent": "share_all_outing_preferences",
                         "response_variants": [
                             "Great choice!"
                         ],
@@ -1491,9 +1514,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "outing_type": "maybe-found"
-                        },
+                        "intent": "share_all_outing_preferences",
                         "name": "slot-fill__get_outing_DETDUP_validate-slot-fill-EQ-outing_type_maybe-found",
                         "assignments": {
                             "$outing_type": "maybe-found"
@@ -1519,15 +1540,27 @@
                 ]
             },
             "intents": {
+                "share_all_outing_preferences": {
+                    "variables": [
+                        "$budget",
+                        "$outing_type"
+                    ],
+                    "utterances": [
+                        "I have a $budget budget and I would prefer a $outing_type atmosphere today.",
+                        "I am operating within a $budget budget and I want to go to a $outing_type place.",
+                        "I can do activities with a $budget budget and I want to find the most $outing_type place in the city."
+                    ],
+                    "type": "regular"
+                },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
         "single_slot__outing_type": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc."
             ],
@@ -1567,9 +1600,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "outing_type": "found"
-                        },
+                        "intent": "share_outing_type",
                         "name": "single_slot__outing_type_DETDUP_validate-slot-fill-EQ-fill-slot",
                         "assignments": {
                             "$outing_type": "found"
@@ -1584,9 +1615,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "outing_type": "maybe-found"
-                        },
+                        "intent": "share_outing_type",
                         "name": "single_slot__outing_type_DETDUP_validate-slot-fill-EQ-slot-unclear",
                         "assignments": {
                             "$outing_type": "maybe-found"
@@ -1615,15 +1644,26 @@
                 "Sorry, that isn't a valid outing type."
             ],
             "intents": {
+                "share_outing_type": {
+                    "variables": [
+                        "$outing_type"
+                    ],
+                    "utterances": [
+                        "I would prefer a $outing_type atmosphere today.",
+                        "I want to go to a $outing_type place.",
+                        "What is the most $outing_type place in the city?"
+                    ],
+                    "type": "regular"
+                },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
         "single_slot__budget": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "What is your budget preference? Please select either high or low."
             ],
@@ -1663,9 +1703,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": {
-                            "budget": "found"
-                        },
+                        "intent": "share_budget",
                         "name": "single_slot__budget_DETDUP_validate-slot-fill-EQ-fill-slot",
                         "assignments": {
                             "$budget": "found"
@@ -1694,15 +1732,26 @@
                 "Sorry, that isn't a valid budget option. Please select either high or low."
             ],
             "intents": {
+                "share_budget": {
+                    "variables": [
+                        "$budget"
+                    ],
+                    "utterances": [
+                        "I have a $budget budget.",
+                        "I am operating within a $budget budget.",
+                        "I can do activities with a $budget budget."
+                    ],
+                    "type": "regular"
+                },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
         "clarify__outing_type": {
             "type": "dialogue",
-            "subtype": "dialogue disambiguation",
             "message_variants": [
                 "Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?"
             ],
@@ -1793,7 +1842,8 @@
                         "mhm",
                         "confirm",
                         "yes please"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "deny": {
                     "variables": [],
@@ -1806,11 +1856,13 @@
                         "nah",
                         "no thanks",
                         "no thank you"
-                    ]
+                    ],
+                    "type": "regular"
                 },
                 "fallback": {
                     "variables": [],
-                    "utterances": []
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         }

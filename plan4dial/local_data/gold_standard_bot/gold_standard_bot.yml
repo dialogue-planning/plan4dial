@@ -168,6 +168,7 @@ actions:
     subtype: slot_fill
     parameters:
       action_name: get-location
+      intent: share_location
       entities:
         - location
       message_variants:
@@ -187,6 +188,7 @@ actions:
       action_name: get-cuisine
       entities:
         - cuisine
+      intent: share_cuisine
       message_variants:
         - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
       fallback_message_variants:
@@ -402,6 +404,7 @@ actions:
       entities:
         - budget
         - outing_type
+      intent: share_all_outing_preferences
       message_variants:
         - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
       fallback_message_variants:
@@ -412,11 +415,13 @@ actions:
             - Sorry, that isn't a valid budget option. Please select either high or low.
           single_slot_message_variants:
             - What is your budget preference? Please select either high or low.
+          single_slot_intent: share_budget
         outing_type:
           fallback_message_variants:
             - Sorry, that isn't a valid outing type.
           single_slot_message_variants:
             - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
+          single_slot_intent: share_outing_type
           clarify_message_variants:
             - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?
       additional_updates:
