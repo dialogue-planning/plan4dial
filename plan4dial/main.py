@@ -22,7 +22,7 @@ def generate_files(
 ):
     """
     Responsible for generating the files that will be sent to HOVOR
-    (`contingent-plan-executor`) for executor.
+    (`contingent-plan-executor`) for execution.
 
     Args:
         yaml_filename (str): The path to the filled out YAML configuration.
