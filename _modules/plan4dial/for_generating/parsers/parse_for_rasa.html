@@ -11,9 +11,6 @@
   <![endif]-->
   
         <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
         <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -84,7 +81,7 @@
 <div class="viewcode-block" id="_create_intent_example"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.parse_for_rasa.html#plan4dial.for_generating.parsers.parse_for_rasa._create_intent_example">[docs]</a><span class="k">def</span> <span class="nf">_create_intent_example</span><span class="p">(</span>
     <span class="n">extracted_value</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">entity</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">true_value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Create an intent example according to the Rasa NLU format. Also accounts for</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create an intent example according to the Rasa NLU format. Also accounts for</span>
 <span class="sd">    synonyms/variations if specified, while mapping back to the &quot;true&quot; value that we</span>
 <span class="sd">    want to set to.</span>
 
@@ -104,7 +101,7 @@
 
 
 <div class="viewcode-block" id="make_nlu_file"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.parse_for_rasa.html#plan4dial.for_generating.parsers.parse_for_rasa.make_nlu_file">[docs]</a><span class="k">def</span> <span class="nf">make_nlu_file</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Generates the NLU configuration that Rasa requires to extract intents and</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates the NLU configuration that Rasa requires to extract intents and</span>
 <span class="sd">    entities.</span>
 
 <span class="sd">    Args:</span>
