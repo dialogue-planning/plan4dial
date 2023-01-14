@@ -51,7 +51,7 @@ def slot_fill(
         config_entities (Dict): Holds configurations that specify what the bot should
             do in certain situations regarding each entity. The keys are each entity
             and the values are the configuration for each entity. Defaults to None as
-            this is not always necessary. The 4 configuration options for each entity 
+            this is not always necessary. The 4 configuration options for each entity
             are:
 
                 | **clarify_message_variants** *(List[str])*: The message variants that

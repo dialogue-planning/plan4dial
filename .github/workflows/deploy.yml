@@ -10,7 +10,7 @@ jobs:
     - name: Install Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9.12'
+        python-version: '3.7.4'
     - name: Install requirements
       run: sudo -H pip install -r docs/requirements.txt
     - name: Build HTML
