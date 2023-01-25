@@ -484,42 +484,45 @@ Next, let's take a look at the actions that actually extract information from th
 
 .. code-block:: yaml
 
-    get_outing:
-      type: custom
-      subtype: slot_fill
-      parameters:
-        action_name: get_outing
-        entities:
-          - budget
-          - outing_type
-        message_variants:
-          - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
-        fallback_message_variants:
-          - Sorry, that isn't a valid outing preference.
-        config_entities:
-          budget:
-            fallback_message_variants:
-              - Sorry, that isn't a valid budget option. Please select either high or low.
-            single_slot_message_variants:
-              - What is your budget preference? Please select either high or low.
-          outing_type:
-            fallback_message_variants:
-              - Sorry, that isn't a valid outing type.
-            single_slot_message_variants:
-              - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
-            clarify_message_variants:
-              - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?
-        additional_updates:
-          - outcome:
-              budget:
-                known: true
-            response_variants:
-              - Ok, I'll take that into account.
-          - outcome:
-              outing_type:
-                known: true
-            response_variants:
-              - Great choice!
+  get_outing:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get_outing
+      entities:
+        - budget
+        - outing_type
+      intent: share_all_outing_preferences
+      message_variants:
+        - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
+      fallback_message_variants:
+        - Sorry, that isn't a valid outing preference.
+      config_entities:
+        budget:
+          fallback_message_variants:
+            - Sorry, that isn't a valid budget option. Please select either high or low.
+          single_slot_message_variants:
+            - What is your budget preference? Please select either high or low.
+          single_slot_intent: share_budget
+        outing_type:
+          fallback_message_variants:
+            - Sorry, that isn't a valid outing type.
+          single_slot_message_variants:
+            - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
+          single_slot_intent: share_outing_type
+          clarify_message_variants:
+            - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?
+      additional_updates:
+        - outcome:
+            budget:
+              known: true
+          response_variants:
+            - Ok, I'll take that into account.
+        - outcome:
+            outing_type:
+              known: true
+          response_variants:
+            - Great choice!
 
 We can see that this action is configured quite differently than the rest -
 this is because it is a :ref:`custom action <action_types>`.
@@ -536,93 +539,95 @@ The values for location, cuisine, and food restrictions are extracted with the s
 
 .. code-block:: yaml
 
-    get-location:
-      type: custom
-      subtype: slot_fill
-      parameters:
-        action_name: get-location
-        entities:
-          - location
-        message_variants:
-          - Where are you located?
-        fallback_message_variants:
-          - Sorry, that isn't a valid location.
-        additional_updates:
-          - outcome:
-              location:
-                known: true
-            response_variants:
-              - Tailoring your results to what's available in $location...
-    get-cuisine:
-      type: custom
-      subtype: slot_fill
-      parameters:
-        action_name: get-cuisine
-        entities:
-          - cuisine
-        message_variants:
-          - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
-        fallback_message_variants:
-          - Sorry, that isn't a valid cuisine. 
-        config_entities:
-          cuisine:
-            fallback_message_variants:
-              - Sorry, that still isn't a valid cuisine.
-            clarify_message_variants:
-              - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
-        additional_updates:
-          - outcome:
-              cuisine:
-                known: true
-            response_variants:
-              - Cuisine preference has been logged.
-    get-allergy:
-        type: dialogue
-        message_variants:
-          - What type of allergy do you have? (I currently account for dairy and gluten allergies).
-        fallback_message_variants:
-          - Sorry, I don't recognize that type of allergy.
-        condition:
-          have_allergy:
-            known: true
-            value: true
-        effect:
-          set-allergy:
-            oneof:
-              outcomes:
-                update_allergy:
-                  updates:
-                    food_restriction:
-                      value: $food_restriction
-                      known: true
-                  intent: share_allergies
+  get-location:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-location
+      intent: share_location
+      entities:
+        - location
+      message_variants:
+        - Where are you located?
+      fallback_message_variants:
+        - Sorry, that isn't a valid location.
+      additional_updates:
+        - outcome:
+            location:
+              known: true
+          response_variants:
+            - Tailoring your results to what's available in $location...
+  get-cuisine:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-cuisine
+      entities:
+        - cuisine
+      intent: share_cuisine
+      message_variants:
+        - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+      fallback_message_variants:
+        - Sorry, that isn't a valid cuisine. 
+      config_entities:
+        cuisine:
+          fallback_message_variants:
+            - Sorry, that still isn't a valid cuisine.
+          clarify_message_variants:
+            - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
+      additional_updates:
+        - outcome:
+            cuisine:
+              known: true
+          response_variants:
+            - Cuisine preference has been logged.
+  get-allergy:
+    type: dialogue
+    message_variants:
+      - What type of allergy do you have? (I currently account for dairy and gluten allergies).
+    fallback_message_variants:
+      - Sorry, I don't recognize that type of allergy.
+    condition:
+      have_allergy:
+        known: true
+        value: true
+    effect:
+      set-allergy:
+        oneof:
+          outcomes:
+            update_allergy:
+              updates:
+                food_restriction:
+                  value: $food_restriction
+                  known: true
+              intent: share_allergies
 
 Next, let's take a look at a simple :ref:`system action <action_types>` our bot will use.
 
 .. code-block:: yaml
 
-    reset-preferences:
-      type: system
-      condition:
-        conflict:
-          known: true
-          value: true
-      effect:
-        reset:
-          oneof:
-            outcomes:
-              reset-values:
-                updates:
-                  have_allergy:
-                    known: false
-                  food_restriction:
-                    known: false
-                  cuisine:
-                    known: false
-                  conflict:
-                    known: false 
-                response_variants:
-                  - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+  reset-preferences:
+    type: system
+    condition:
+      conflict:
+        known: true
+        value: true
+    effect:
+      reset:
+        oneof:
+          outcomes:
+            reset-values:
+              updates:
+                have_allergy:
+                  known: false
+                food_restriction:
+                  known: false
+                cuisine:
+                  known: false
+                conflict:
+                  known: false 
+              response_variants:
+                - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
 
 We can see that a :ref:`system action <action_types>` is only concerned with changing the values of some context variables given that a given state is true.
 

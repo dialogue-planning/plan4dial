@@ -186,11 +186,7 @@ def slot_fill(
 
             if additional_updates:
                 # convert the current outcome into a frozenset to be compared
-                key = frozenset(
-                    {
-                        entity: certainty for entity, certainty in refined_combo.items()
-                    }.items()
-                )
+                key = frozenset(refined_combo.items())
             # check if this frozenset is included in the dict of outcomes with
             # additional updates; if so, add the appropriate updates
             if key in cfg_updates:

@@ -681,7 +681,7 @@ def _convert_actions(loaded_yaml: Dict) -> None:
         if intents:
             processed[act]["intents"] = {}
             for intent in intents:
-                # don't consider null or frozenset intents
+                # don't consider null intents
                 if type(intent) == str:
                     if intent in loaded_yaml["intents"]:
                         processed[act]["intents"][intent] = loaded_yaml["intents"][
