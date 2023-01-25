@@ -396,12 +396,12 @@
         <span class="c1"># fallback is not occurring</span>
         <span class="k">if</span> <span class="n">act</span> <span class="o">!=</span> <span class="s2">&quot;dialogue_statement&quot;</span><span class="p">:</span>
             <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;condition&quot;</span><span class="p">][</span><span class="s2">&quot;force-statement&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
-            <span class="c1"># check if either fallbacks are disabled or we have a system action</span>
+            <span class="c1"># check if either fallbacks are disabled or we have a dialogue action</span>
             <span class="c1"># (fallbacks are only needed for dialogue actions)</span>
             <span class="n">fallback</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="ow">not</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;disable-fallback&quot;</span><span class="p">]</span>
                 <span class="k">if</span> <span class="s2">&quot;disable-fallback&quot;</span> <span class="ow">in</span> <span class="n">act_config</span>
-                <span class="k">else</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;system&quot;</span>
+                <span class="k">else</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;dialogue&quot;</span>
             <span class="p">)</span>
             <span class="c1"># if this action has fallbacks enabled, and we haven&#39;t specified custom</span>
             <span class="c1"># fallback message variants, add these as default</span>
