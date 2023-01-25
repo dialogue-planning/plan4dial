@@ -329,12 +329,12 @@ def _add_fallbacks(loaded_yaml: Dict) -> None:
         # fallback is not occurring
         if act != "dialogue_statement":
             processed[act]["condition"]["force-statement"] = {"value": False}
-            # check if either fallbacks are disabled or we have a system action
+            # check if either fallbacks are disabled or we have a dialogue action
             # (fallbacks are only needed for dialogue actions)
             fallback = (
                 not act_config["disable-fallback"]
                 if "disable-fallback" in act_config
-                else act_config["type"] != "system"
+                else act_config["type"] == "dialogue"
             )
             # if this action has fallbacks enabled, and we haven't specified custom
             # fallback message variants, add these as default
