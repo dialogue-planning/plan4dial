@@ -530,6 +530,7 @@ This is because we know that if the user has no allergies, we will never come ac
 <span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">budget</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">outing_type</span>
+<span class="w">    </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_all_outing_preferences</span>
 <span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you&#39;re looking for (i.e. fun, relaxing, etc.)</span>
 <span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span>
@@ -540,11 +541,13 @@ This is because we know that if the user has no allergies, we will never come ac
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that isn&#39;t a valid budget option. Please select either high or low.</span>
 <span class="w">        </span><span class="nt">single_slot_message_variants</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is your budget preference? Please select either high or low.</span>
+<span class="w">        </span><span class="nt">single_slot_intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_budget</span>
 <span class="w">      </span><span class="nt">outing_type</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">fallback_message_variants</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that isn&#39;t a valid outing type.</span>
 <span class="w">        </span><span class="nt">single_slot_message_variants</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.</span>
+<span class="w">        </span><span class="nt">single_slot_intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_outing_type</span>
 <span class="w">        </span><span class="nt">clarify_message_variants</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, I wasn&#39;t quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?</span>
 <span class="w">    </span><span class="nt">additional_updates</span><span class="p">:</span>
@@ -574,6 +577,7 @@ of <code class="docutils literal notranslate"><span class="pre">get_outing</span
 <span class="w">  </span><span class="nt">subtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slot_fill</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">action_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-location</span>
+<span class="w">    </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_location</span>
 <span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span>
 <span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span>
@@ -593,6 +597,7 @@ of <code class="docutils literal notranslate"><span class="pre">get_outing</span
 <span class="w">    </span><span class="nt">action_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-cuisine</span>
 <span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cuisine</span>
+<span class="w">    </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_cuisine</span>
 <span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.</span>
 <span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span>
@@ -610,25 +615,25 @@ of <code class="docutils literal notranslate"><span class="pre">get_outing</span
 <span class="w">        </span><span class="nt">response_variants</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cuisine preference has been logged.</span>
 <span class="nt">get-allergy</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dialogue</span>
-<span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What type of allergy do you have? (I currently account for dairy and gluten allergies).</span>
-<span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, I don&#39;t recognize that type of allergy.</span>
-<span class="w">    </span><span class="nt">condition</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">have_allergy</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">        </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">    </span><span class="nt">effect</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">set-allergy</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">oneof</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">outcomes</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">update_allergy</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">updates</span><span class="p">:</span>
-<span class="w">                </span><span class="nt">food_restriction</span><span class="p">:</span>
-<span class="w">                  </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$food_restriction</span>
-<span class="w">                  </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">              </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_allergies</span>
+<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dialogue</span>
+<span class="w">  </span><span class="nt">message_variants</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What type of allergy do you have? (I currently account for dairy and gluten allergies).</span>
+<span class="w">  </span><span class="nt">fallback_message_variants</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, I don&#39;t recognize that type of allergy.</span>
+<span class="w">  </span><span class="nt">condition</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">have_allergy</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">  </span><span class="nt">effect</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">set-allergy</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">oneof</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">outcomes</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">update_allergy</span><span class="p">:</span>
+<span class="w">            </span><span class="nt">updates</span><span class="p">:</span>
+<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span>
+<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$food_restriction</span>
+<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">            </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_allergies</span>
 </pre></div>
 </div>
 <p>Next, let’s take a look at a simple <a class="reference internal" href="#action-types"><span class="std std-ref">system action</span></a> our bot will use.</p>

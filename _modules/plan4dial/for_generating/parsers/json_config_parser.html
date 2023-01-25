@@ -748,7 +748,7 @@
         <span class="k">if</span> <span class="n">intents</span><span class="p">:</span>
             <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;intents&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">intent</span> <span class="ow">in</span> <span class="n">intents</span><span class="p">:</span>
-                <span class="c1"># don&#39;t consider null or frozenset intents</span>
+                <span class="c1"># don&#39;t consider null intents</span>
                 <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">intent</span><span class="p">)</span> <span class="o">==</span> <span class="nb">str</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">intent</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">]:</span>
                         <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="n">intent</span><span class="p">]</span> <span class="o">=</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span>

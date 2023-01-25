@@ -253,11 +253,7 @@
 
             <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
                 <span class="c1"># convert the current outcome into a frozenset to be compared</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
-                    <span class="p">{</span>
-                        <span class="n">entity</span><span class="p">:</span> <span class="n">certainty</span> <span class="k">for</span> <span class="n">entity</span><span class="p">,</span> <span class="n">certainty</span> <span class="ow">in</span> <span class="n">refined_combo</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                    <span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                <span class="p">)</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">refined_combo</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
             <span class="c1"># check if this frozenset is included in the dict of outcomes with</span>
             <span class="c1"># additional updates; if so, add the appropriate updates</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cfg_updates</span><span class="p">:</span>
