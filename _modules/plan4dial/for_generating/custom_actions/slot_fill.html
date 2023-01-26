@@ -87,6 +87,7 @@
     <span class="n">intent</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">config_entities</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fallback_message_variants</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">additional_conditions</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom action provided by default that allows bot designers to specify entity</span>
@@ -159,6 +160,9 @@
 <span class="sd">                    actions where ONLY *test1* is extracted, and not when *test1*,</span>
 <span class="sd">                    *test2* and *test3* are extracted, for example. This is done to</span>
 <span class="sd">                    reduce ambiguity. Defaults to None.</span>
+<span class="sd">        additional_conditions (Dict, optional): Additional conditions necessary before</span>
+<span class="sd">            executing the :py:func:`slot_fill</span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action.</span>
 
 <span class="sd">    See the tutorial for an example of a</span>
 <span class="sd">    :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
@@ -229,6 +233,8 @@
     <span class="n">action</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">entities</span><span class="p">:</span>
         <span class="n">action</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;didnt-find&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">additional_conditions</span><span class="p">:</span>
+        <span class="n">action</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">additional_conditions</span><span class="p">)</span>
     <span class="n">action</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{}}}}</span>
     <span class="c1"># iterate through all the possible entity combinations</span>
     <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="n">entity_combos</span><span class="p">:</span>
