@@ -20,6 +20,7 @@ def slot_fill(
     intent: str,
     config_entities: Dict = None,
     fallback_message_variants: List[str] = None,
+    additional_conditions: Dict = None,
     additional_updates: Dict = None,
 ) -> None:
     """Custom action provided by default that allows bot designers to specify entity
@@ -92,6 +93,9 @@ def slot_fill(
                     actions where ONLY *test1* is extracted, and not when *test1*,
                     *test2* and *test3* are extracted, for example. This is done to
                     reduce ambiguity. Defaults to None.
+        additional_conditions (Dict, optional): Additional conditions necessary before
+            executing the :py:func:`slot_fill
+            <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>` action.
 
     See the tutorial for an example of a
     :py:func:`slot_fill <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`
@@ -162,6 +166,8 @@ def slot_fill(
     action["condition"] = {}
     for entity in entities:
         action["condition"].update(map_assignment_update(entity, "didnt-find"))
+    if additional_conditions:
+        action["condition"].update(additional_conditions)
     action["effect"] = {"validate-slot-fill": {"oneof": {"outcomes": {}}}}
     # iterate through all the possible entity combinations
     for combo in entity_combos:
