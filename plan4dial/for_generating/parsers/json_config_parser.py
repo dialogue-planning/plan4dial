@@ -5,7 +5,7 @@ Authors:
 - Rebecca De Venezia
 """
 
-from typing import Union, Dict
+from typing import Union, Dict, List
 from copy import deepcopy
 from inspect import getmembers, isfunction
 from nnf import Or, And, Var, config
@@ -553,6 +553,21 @@ def _add_value_setters(loaded_yaml: Dict) -> None:
     )
 
 
+def _get_config_options(cfg: Union[Dict, List]) -> Union[Dict, List]:
+    """Given an enum entity configuration, returns the possible options,
+    not including variations.
+
+    Args:
+        cfg (Union[Dict, List]): The enum entity configuration.
+
+    Returns:
+        Union[Dict, List]: The possible options.
+    """
+    if type(cfg["options"]) == dict:
+        return list(cfg["options"].keys())
+    return cfg["options"]
+
+
 def _convert_ctx_var(loaded_yaml: Dict) -> None:
     """Converts the context variables from how they were formatted in the YAML to the
     JSON configuration that Hovor requires.
@@ -568,19 +583,17 @@ def _convert_ctx_var(loaded_yaml: Dict) -> None:
         json_ctx_var["type"] = cfg["type"]
         if cfg["type"] == "enum":
             # don't include variations in the config
-            if type(cfg["options"]) == dict:
-                json_ctx_var["config"] = list(cfg["options"].keys())
-            else:
-                json_ctx_var["config"] = cfg["options"]
+            json_ctx_var["config"] = _get_config_options(cfg)
         # for flags/fflags, the config is the initial setting
         elif cfg["type"] == "flag" or cfg["type"] == "fflag":
             json_ctx_var["config"] = cfg["init"]
-        else:
-            # add other information to the config as necessary
+        elif cfg["type"] == "json":
+            # add information to the config as necessary
+            json_ctx_var["config"] = {}
+            if "options" in cfg:
+                json_ctx_var["config"]["options"] = _get_config_options(cfg)
             if "extraction" in cfg:
-                json_ctx_var["config"] = {"extraction": cfg["extraction"]}
-            else:
-                json_ctx_var["config"] = "null"
+                json_ctx_var["config"]["extraction"] = cfg["extraction"]
         if "known" in cfg:
             json_ctx_var["known"] = cfg["known"]
         processed[ctx_var] = json_ctx_var
