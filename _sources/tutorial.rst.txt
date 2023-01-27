@@ -113,7 +113,8 @@ These are the only **four** types that we can define in the YAML. They are defin
 | enum       | Can only be set to the values set under the ``options`` list.      |
 +------------+--------------------------------------------------------------------+
 | json       | Used if you want to use an alternate extraction method,            |
-|            | i.e. Spacy GPE.                                                    |
+|            | i.e. Spacy GPE. Optionally can add an ``options`` list like an     |
+|            | enum.                                                              |
 |            |                                                                    |
 |            | **NOTE**: Currently, only Spacy is compatible with this            |
 |            | option.                                                            |
@@ -121,6 +122,8 @@ These are the only **four** types that we can define in the YAML. They are defin
 
 So, "location" is of type ``json`` because we want to use `Spacy GPE <https://spacy.io/usage/spacy-101#annotations-ner>`_ for location extraction. (In the case of location, it makes the most sense to use a model finely tuned to detect location, instead of Rasa, which is trained only on the examples you provide).
 You can see that under ``extraction``, we specified both the method ``spacy`` and the configuration for NER (named entity recognition), in this case `gpe` for location.
+Note that if we were to specify cities under "options", only those extracted location would be viable.
+However, since we are leaving it out, any city the user enters is valid.
 
 *cuisine* is of type ``enum`` because we only want it to have 4 valid values: *Mexican*, *Italian*, *Chinese*, and *dessert*. *food_restriction* is of type ``enum`` for the same reason.
 

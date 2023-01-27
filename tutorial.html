@@ -184,7 +184,8 @@ Let’s examine the context variables for location, cuisine, and food restrictio
 </tr>
 <tr class="row-odd"><td><p>json</p></td>
 <td><p>Used if you want to use an alternate extraction method,
-i.e. Spacy GPE.</p>
+i.e. Spacy GPE. Optionally can add an <code class="docutils literal notranslate"><span class="pre">options</span></code> list like an
+enum.</p>
 <p><strong>NOTE</strong>: Currently, only Spacy is compatible with this
 option.</p>
 </td>
@@ -192,7 +193,9 @@ option.</p>
 </tbody>
 </table>
 <p>So, “location” is of type <code class="docutils literal notranslate"><span class="pre">json</span></code> because we want to use <a class="reference external" href="https://spacy.io/usage/spacy-101#annotations-ner">Spacy GPE</a> for location extraction. (In the case of location, it makes the most sense to use a model finely tuned to detect location, instead of Rasa, which is trained only on the examples you provide).
-You can see that under <code class="docutils literal notranslate"><span class="pre">extraction</span></code>, we specified both the method <code class="docutils literal notranslate"><span class="pre">spacy</span></code> and the configuration for NER (named entity recognition), in this case <cite>gpe</cite> for location.</p>
+You can see that under <code class="docutils literal notranslate"><span class="pre">extraction</span></code>, we specified both the method <code class="docutils literal notranslate"><span class="pre">spacy</span></code> and the configuration for NER (named entity recognition), in this case <cite>gpe</cite> for location.
+Note that if we were to specify cities under “options”, only those extracted location would be viable.
+However, since we are leaving it out, any city the user enters is valid.</p>
 <p><em>cuisine</em> is of type <code class="docutils literal notranslate"><span class="pre">enum</span></code> because we only want it to have 4 valid values: <em>Mexican</em>, <em>Italian</em>, <em>Chinese</em>, and <em>dessert</em>. <em>food_restriction</em> is of type <code class="docutils literal notranslate"><span class="pre">enum</span></code> for the same reason.</p>
 <p><em>have_allergy</em>, which determines if the user has an allergy (in which case we need to get their <em>food_restriction</em>), is of type <code class="docutils literal notranslate"><span class="pre">flag</span></code>. That is, they either do or don’t have an allergy. For this variable, you can also see that it has an <code class="docutils literal notranslate"><span class="pre">init</span></code> option. This is only available to <code class="docutils literal notranslate"><span class="pre">flag</span></code> or <code class="docutils literal notranslate"><span class="pre">fflag</span></code> type variables, and it allows you to set an initial value for the variable and change the initial state of the conversation. In this case, we default the variable to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <p id="known">Each variable also has a <code class="docutils literal notranslate"><span class="pre">known</span></code> option which determines the knowledge we have about the variable.
