@@ -76,13 +76,13 @@ def generate_files(
             fixed_model_name="nlu_model",
         )
 
-    print(f'Using rbp from path: {rbp_path}')
-    print(f'with domain string path: {domain_str}')
-    print(f'with problem string path: {problem_str}')
+    print(f"Using rbp from path: {rbp_path}")
+    print(f"with domain string path: {domain_str}")
+    print(f"with problem string path: {problem_str}")
 
     # generate PDDL files; convert policy.out to a prp.json file; wait until complete
     subprocess.run([rbp_path, domain_str, problem_str, "--output-format", "3"])
-    print('Ran the subprocess to generate pddl files.')
+    print("Ran the subprocess to generate pddl files.")
     try:
         with open("policy.out") as file:
             plan_data = {"plan": json.load(file)}
