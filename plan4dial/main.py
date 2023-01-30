@@ -17,9 +17,7 @@ from for_generating.parsers.pddl_for_rollout import rollout_config
 from rasa.model_training import train_nlu
 
 
-def generate_files(
-    yaml_filename: str, output_folder: str, rbp_path: str, train: bool = True
-):
+def generate_files(yaml_filename: str, output_folder: str, rbp_path: str):
     """
     Responsible for generating the files that will be sent to HOVOR
     (`contingent-plan-executor`) for execution.
@@ -61,20 +59,19 @@ def generate_files(
         writer.write(problem)
 
     # train rasa NLU model
-    if train:
-        writer = open(f"{output_folder}/nlu.yml", "w")
-        # parse for rasa. need to use the original YAML because some of the NLU
-        # information is lost in the JSON configuration.
-        yaml.dump(
-            make_nlu_file(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader)),
-            writer,
-        )
-        train_nlu(
-            config="./plan4dial/for_generating/nlu_config.yml",
-            nlu_data=f"{output_folder}/nlu.yml",
-            output=f"{output_folder}",
-            fixed_model_name="nlu_model",
-        )
+    writer = open(f"{output_folder}/nlu.yml", "w")
+    # parse for rasa. need to use the original YAML because some of the NLU
+    # information is lost in the JSON configuration.
+    yaml.dump(
+        make_nlu_file(yaml.load(open(yaml_filename, "r"), Loader=yaml.FullLoader)),
+        writer,
+    )
+    train_nlu(
+        config="./plan4dial/for_generating/nlu_config.yml",
+        nlu_data=f"{output_folder}/nlu.yml",
+        output=f"{output_folder}",
+        fixed_model_name="nlu_model",
+    )
 
     print(f"Using rbp from path: {rbp_path}")
     print(f"with domain string path: {domain_str}")
@@ -110,6 +107,5 @@ if __name__ == "__main__":
         f"{dirname}/{bot_name}.yml",
         f"{dirname}/output_files",
         "/root/rbp.sif",
-        True,
     )
     print("Completed")
