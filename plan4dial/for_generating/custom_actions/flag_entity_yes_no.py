@@ -9,8 +9,30 @@ def flag_entity_yes_no(
     confirm_intent: str = "confirm",
     deny_intent: str = "deny",
     additional_conditions: Dict = None,
-    additional_updates: Dict = None
+    additional_updates: Dict = None,
 ):
+    """Custom dialoigue action that updates the value of a flag/bool entity based on
+    the user's response to a yes/no question.
+
+    Args:
+        loaded_yaml (Dict): The loaded YAML configuration.
+        action_name (str): The name of this instance of the custom action.
+        message_variants (List[str]): Possible messages the bot will utter upon
+            execution of this action.
+        entity (str): The flag entity to be set.
+        confirm_intent (str, optional): The intent that indicates the user is saying
+            "yes". Defaults to "confirm".
+        deny_intent (str, optional): The intent that indicates the user is saying
+            "no". Defaults to "deny".
+        additional_conditions (Dict, optional): Additional conditions necessary before
+            executing the :py:func:`flag_entity_yes_no
+            <plan4dial.for_generating.custom_actions.flag_entity_yes_no.
+            flag_entity_yes_no>` action. Defaults to None.
+        additional_updates (Dict, optional): Additional updates to occur at either
+            outcome. Specify "confirm_outcome" as the key when you want to add
+            additional updates when the user confirms and "deny_outcome" for the
+            opposite. Defaults to None.
+    """
     # instantiate the action
     action = {}
     action["type"] = "dialogue"
@@ -36,7 +58,7 @@ def flag_entity_yes_no(
                     "deny_outcome": {
                         "updates": deny_outcome_upd,
                         "intent": deny_intent,
-                    }
+                    },
                 }
             }
         }

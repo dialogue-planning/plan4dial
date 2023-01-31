@@ -14,6 +14,24 @@
                 "init": false
             }
         },
+        "phone-number": {
+            "type": "json",
+            "config": {
+                "options": [
+                    1234567890,
+                    2345678901,
+                    3453452794
+                ],
+                "extraction": {
+                    "method": "regex",
+                    "pattern": "\\d{10}"
+                }
+            },
+            "known": {
+                "type": "fflag",
+                "init": false
+            }
+        },
         "cuisine": {
             "type": "enum",
             "config": [
@@ -156,6 +174,17 @@
                 "nah",
                 "no thanks",
                 "no thank you"
+            ],
+            "type": "regular"
+        },
+        "share_phone_number": {
+            "variables": [
+                "$phone-number"
+            ],
+            "utterances": [
+                "My phone number is $phone-number.",
+                "My number is $phone-number.",
+                "$phone-number"
             ],
             "type": "regular"
         },
@@ -944,6 +973,10 @@
             "type": "dialogue",
             "condition": [
                 [
+                    "phone-number",
+                    "Known"
+                ],
+                [
                     "location",
                     "Known"
                 ],
@@ -1120,6 +1153,215 @@
                         "I live in $location.",
                         "I am located in $location.",
                         "Can you help me find things to do in $location?"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__get-phone-number": {
+            "type": "dialogue",
+            "message_variants": [
+                "What is your phone number? I can use it to make reservations."
+            ],
+            "fallback_message_variants": [
+                "Sorry, that isn't a valid number."
+            ],
+            "condition": [
+                [
+                    "phone-number",
+                    null
+                ],
+                [
+                    "phone-number",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__get-allergy",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "validate-slot-fill",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "phone-number": {
+                                "value": "$phone-number",
+                                "variable": "phone-number",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_phone_number",
+                        "name": "slot-fill__get-phone-number_DETDUP_validate-slot-fill-EQ-phone-number_found",
+                        "assignments": {
+                            "$phone-number": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "phone-number": {
+                                "value": "$phone-number",
+                                "variable": "phone-number",
+                                "certainty": "Uncertain",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_phone_number",
+                        "name": "slot-fill__get-phone-number_DETDUP_validate-slot-fill-EQ-phone-number_maybe-found",
+                        "assignments": {
+                            "$phone-number": "maybe-found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-phone-number_DETDUP_validate-slot-fill-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_phone_number": {
+                    "variables": [
+                        "$phone-number"
+                    ],
+                    "utterances": [
+                        "My phone number is $phone-number.",
+                        "My number is $phone-number.",
+                        "$phone-number"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "variables": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "clarify__phone-number": {
+            "type": "dialogue",
+            "message_variants": [
+                "I'm unsure about your phone number, is it $phone-number?"
+            ],
+            "condition": [
+                [
+                    "phone-number",
+                    "Uncertain"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__get-allergy",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "validate-clarification",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "phone-number": {
+                                "value": "$phone-number",
+                                "variable": "phone-number",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "clarify__phone-number_DETDUP_validate-clarification-EQ-confirm",
+                        "assignments": {
+                            "$phone-number": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "phone-number": {
+                                "value": null,
+                                "variable": "phone-number",
+                                "certainty": "Unknown",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "clarify__phone-number_DETDUP_validate-clarification-EQ-deny",
+                        "assignments": {
+                            "$phone-number": "didnt-find"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "clarify__phone-number_DETDUP_validate-clarification-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "variables": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "variables": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
                     ],
                     "type": "regular"
                 },

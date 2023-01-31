@@ -259,10 +259,10 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
     """
     # set up the action, intent, and fluents needed for default fallback/unclear user
     # input
-    loaded_yaml["intents"]["fallback"] = {"utterances": [], "variables": []}
+    loaded_yaml["intents"]["fallback"] = {"utterances": [], "entities": []}
     loaded_yaml["intents"]["utter_ds"] = {
         "utterances": [],
-        "variables": [],
+        "entities": [],
     }
     loaded_yaml["actions"]["dialogue_statement"] = _configure_dialogue_statement()
     loaded_yaml["context_variables"]["have-message"] = {
@@ -610,12 +610,10 @@ def _convert_intents(loaded_yaml: Dict) -> None:
     processed = deepcopy(loaded_yaml["intents"])
     for intent, intent_cfg in loaded_yaml["intents"].items():
         cur_intent = {}
-        cur_intent["variables"] = []
+        cur_intent["entities"] = []
         # add the $ identifier to all variables
-        if "variables" in intent_cfg:
-            cur_intent["variables"].extend(
-                [f"${var}" for var in intent_cfg["variables"]]
-            )
+        if "entities" in intent_cfg:
+            cur_intent["entities"].extend([f"${var}" for var in intent_cfg["entities"]])
         cur_intent["utterances"] = intent_cfg["utterances"]
         cur_intent["type"] = "fallback" if intent == "fallback" else "regular"
         processed[intent] = cur_intent

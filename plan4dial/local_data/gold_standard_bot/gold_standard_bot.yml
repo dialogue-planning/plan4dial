@@ -10,6 +10,19 @@ context_variables:
     known:
       type: flag
       init: false
+  # user's phone number
+  phone_number:
+    type: json
+    extraction: 
+      method: regex
+      pattern: \d{10}
+    known:
+      type: fflag
+      init: false
+    options:
+      - 1234567890
+      - 2345678901
+      - 3453452794
   # user's preferred cuisine; must map to one of the 4 options
   cuisine:
     type: enum
@@ -119,29 +132,36 @@ intents:
       - nah
       - no thanks
       - no thank you
+  share_phone_number:
+    entities:
+      - phone_number
+    utterances:
+      - My phone number is $phone_number.
+      - My number is $phone_number.
+      - $phone_number 
   share_location:
-    variables:
+    entities:
       - location
     utterances:
       - I live in $location.
       - I am located in $location.
       - Can you help me find things to do in $location?
   share_cuisine:
-    variables:
+    entities:
       - cuisine
     utterances:
       - I want to eat $cuisine.
       - Do you have restaurants of type $cuisine?
       - Are there any $cuisine restaurants in the area?
   share_allergies:
-    variables:
+    entities:
       - food_restriction
     utterances:
       - I have to eat $food_restriction.
       - I can only eat foods that are $food_restriction.
       - I am allergic to any foods that are not $food_restriction.
   share_all_outing_preferences:
-    variables:
+    entities:
       - budget
       - outing_type
     utterances:
@@ -149,14 +169,14 @@ intents:
       - I am operating within a $budget budget and I want to go to a $outing_type place.
       - I can do activities with a $budget budget and I want to find the most $outing_type place in the city.
   share_budget:
-    variables:
+    entities:
       - budget
     utterances:
       - I have a $budget budget.
       - I am operating within a $budget budget.
       - I can do activities with a $budget budget.
   share_outing_type:
-    variables:
+    entities:
       - outing_type
     utterances:
       - I would prefer a $outing_type atmosphere today.
@@ -181,6 +201,22 @@ actions:
               known: true
           response_variants:
             - Tailoring your results to what's available in $location...
+  get-phone_number:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-phone_number
+      entities:
+        - phone_number
+      intent: share_phone_number
+      message_variants:
+        - What is your phone number? I can use it to make reservations.
+      fallback_message_variants:
+        - Sorry, that isn't a valid number.
+      config_entities:
+        phone_number:
+          clarify_message_variants:
+            - I'm unsure about your phone number, is it $phone_number?
   get-cuisine:
     type: custom
     subtype: slot_fill
@@ -195,8 +231,6 @@ actions:
         - Sorry, that isn't a valid cuisine. 
       config_entities:
         cuisine:
-          fallback_message_variants:
-            - Sorry, that still isn't a valid cuisine.
           clarify_message_variants:
             - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
       additional_updates:
@@ -491,6 +525,8 @@ actions:
     disable-fallback: true
     type: dialogue
     condition:
+      phone_number:
+        known: true
       location:
         known: true
       restaurant:

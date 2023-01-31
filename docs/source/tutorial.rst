@@ -51,10 +51,11 @@ They are ``context variables``, ``intents``, and ``actions``. We will examine ea
 Context variables are variables that your bot will store throughout the course of the conversation to keep track of the context gathered so far.
 Without context variables, the bot would not be able to store information from one line of dialogue to the next.
 
-One of the most common use cases of context variables is to store information gathered from the user. However, they can also be used internally to keep track of states in the conversation, the most common example being an indication of when the "goal" is reached.
+One of the most common use cases of context variables is to store information gathered from the user. 
+However, they can also be used internally to keep track of states in the conversation, the most common example being an indication of when the "goal" is reached.
 
-In this case, we know we want to keep track of the user's preferences, which include options for location, cuisine, allergy/food restrictions, budget, and outing type. 
-Let's examine the context variables for location, cuisine, and food restrictions first.
+In this case, we know we want to keep track of the user's information and preferences, which include their location, phone number, cuisine, allergy/food restrictions, budget, and outing type. 
+Let's examine the context variables for location, phone number, cuisine, and food restrictions first.
 
 .. code-block:: yaml
 
@@ -68,6 +69,19 @@ Let's examine the context variables for location, cuisine, and food restrictions
           known:
             type: flag
             init: false
+        # user's phone number
+        phone_number:
+          type: json
+          extraction: 
+            method: regex
+            pattern: \d{10}
+          known:
+            type: fflag
+            init: false
+          options:
+            - 1234567890
+            - 2345678901
+            - 3453452794
         # user's preferred cuisine; must map to one of the 4 options
         cuisine:
           type: enum
@@ -112,18 +126,22 @@ These are the only **four** types that we can define in the YAML. They are defin
 +------------+--------------------------------------------------------------------+
 | enum       | Can only be set to the values set under the ``options`` list.      |
 +------------+--------------------------------------------------------------------+
-| json       | Used if you want to use an alternate extraction method,            |
-|            | i.e. Spacy GPE. Optionally can add an ``options`` list like an     |
-|            | enum.                                                              |
+| json       | Used if you want to use an alternate extraction method.            |
 |            |                                                                    |
-|            | **NOTE**: Currently, only Spacy is compatible with this            |
-|            | option.                                                            |
+|            | **NOTE**: Currently, only Spacy and regexes are compatible with    |
+|            | this option. For Spacy, you can optionally add an ``options`` list |
+|            | which will force that only the listed options are valid            |
+|            | extractions. For regex, the ``options`` list is necessary so Rasa  |
+|            | can capture training examples properly.                            |
 +------------+--------------------------------------------------------------------+
 
 So, "location" is of type ``json`` because we want to use `Spacy GPE <https://spacy.io/usage/spacy-101#annotations-ner>`_ for location extraction. (In the case of location, it makes the most sense to use a model finely tuned to detect location, instead of Rasa, which is trained only on the examples you provide).
 You can see that under ``extraction``, we specified both the method ``spacy`` and the configuration for NER (named entity recognition), in this case `gpe` for location.
 Note that if we were to specify cities under "options", only those extracted location would be viable.
 However, since we are leaving it out, any city the user enters is valid.
+
+We can see that the context variable for "phone_number" is configured similarly, although this one uses a simple ``regex``, where the pattern is specified under ``pattern``.
+Note that we still supply a few ``options`` for Rasa's training process.
 
 *cuisine* is of type ``enum`` because we only want it to have 4 valid values: *Mexican*, *Italian*, *Chinese*, and *dessert*. *food_restriction* is of type ``enum`` for the same reason.
 
@@ -215,7 +233,8 @@ While I've only given a few examples for simplicity, it is extremely important t
 There is an exception to this rule, though. In the case of *outing*, although the variable is of ``type`` ``enum``, the variable value will be set internally based on the user's preferences instead of through directly analyzing the user's input. 
 Since this will be completely in the control of the bot designer and not reliant on the NLU, no variations need to be provided there.
 
-Also, a ``flag`` *goal* variable is mandatory for every bot as it determines when the conversation ends (more on this later). 
+Also, a ``flag`` *goal* variable is mandatory for every bot as it determines when the conversation ends.
+When you want the outcome of an action to end the conversation, you should set **goal** to **true**.
 
 You're all set to define context variables for your bot! Let's move on to the next step: intents.
 
@@ -263,6 +282,13 @@ Let's see what the intents for our ``day-planner`` bot look like:
             - nah
             - no thanks
             - no thank you
+        share_phone_number:
+          entities:
+            - phone_number
+          utterances:
+            - My phone number is $phone_number.
+            - My number is $phone_number.
+            - $phone_number 
         share_location:
           entities:
             - location
@@ -538,7 +564,7 @@ i.e. budget is ``known`` and outing_type is ``maybe`` ``known``, vice versa, etc
 If you go to the source code of the function, you'll see that the parameters of the custom action are provided under ``parameters``
 of ``get_outing``. A full explanation of what each parameter is can be seen in the documentation for :py:func:`slot_fill <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`.
 
-The values for location, cuisine, and food restrictions are extracted with the same custom action:
+The values for location and cuisine are extracted with the same custom action:
 
 .. code-block:: yaml
 
@@ -574,8 +600,6 @@ The values for location, cuisine, and food restrictions are extracted with the s
         - Sorry, that isn't a valid cuisine. 
       config_entities:
         cuisine:
-          fallback_message_variants:
-            - Sorry, that still isn't a valid cuisine.
           clarify_message_variants:
             - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
       additional_updates:
@@ -584,26 +608,6 @@ The values for location, cuisine, and food restrictions are extracted with the s
               known: true
           response_variants:
             - Cuisine preference has been logged.
-  get-allergy:
-    type: dialogue
-    message_variants:
-      - What type of allergy do you have? (I currently account for dairy and gluten allergies).
-    fallback_message_variants:
-      - Sorry, I don't recognize that type of allergy.
-    condition:
-      have_allergy:
-        known: true
-        value: true
-    effect:
-      set-allergy:
-        oneof:
-          outcomes:
-            update_allergy:
-              updates:
-                food_restriction:
-                  value: $food_restriction
-                  known: true
-              intent: share_allergies
 
 Next, let's take a look at a simple :ref:`system action <action_types>` our bot will use.
 
@@ -738,7 +742,7 @@ In this case, that means setting the value to ``conflict`` depending on what com
 **NOTE**: This specification will become shorter and cleaner with the closing of `#4 <https://github.com/QuMuLab/plan4dial/issues/4>`_. 
 
 **And that's all the action types!** Now you have every piece of the puzzle you need to specify your bot.
-There are a few actions we didn't cover, but they are all more examples of the above.
+There are a few actions we didn't cover, but they are all more examples of the above. 
 
 You can see the full YAML file at ``plan4dial/plan4dial/local_data/gold_standard_bot/gold_standard_bot.yml``. 
 

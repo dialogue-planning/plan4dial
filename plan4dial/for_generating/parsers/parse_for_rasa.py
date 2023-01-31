@@ -50,8 +50,8 @@ def make_nlu_file(loaded_yaml: Dict) -> Dict:
         examples = []
         variations = {}
         # if this intent has variables, iterate through them
-        if "variables" in intent_cfg:
-            variables = intent_cfg["variables"]
+        if "entities" in intent_cfg:
+            variables = intent_cfg["entities"]
             # for each variable, access the context variable
             for variable in variables:
                 ctx_var = loaded_yaml["context_variables"][variable]
@@ -88,11 +88,15 @@ def make_nlu_file(loaded_yaml: Dict) -> Dict:
                         _create_intent_example(f"${variable}", variable)
                     )
                 # add extraction pattern if necessary
-                elif "extraction" in ctx_var:
-                    if ctx_var["extraction"] == "regex":
+                if "extraction" in ctx_var:
+                    if ctx_var["extraction"]["method"] == "regex":
                         nlu["nlu"].append(
-                            {"regex": variable, "examples": "- " + ctx_var["pattern"]}
+                            {
+                                "regex": variable,
+                                "examples": "- " + ctx_var["extraction"]["pattern"],
+                            }
                         )
+
             # get the product of all the variations in this intent. this is so we can
             # generate examples of this intent with every combination of variations for
             # each entity.

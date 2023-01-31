@@ -29,6 +29,27 @@ nlu:
 
     - no thank you'
   intent: deny
+- examples: '- \d{10}'
+  regex: phone-number
+- examples: '- My phone number is [1234567890]{"entity": "phone-number", "value":
+    "1234567890"}.
+
+    - My number is [1234567890]{"entity": "phone-number", "value": "1234567890"}.
+
+    - [1234567890]{"entity": "phone-number", "value": "1234567890"}
+
+    - My phone number is [2345678901]{"entity": "phone-number", "value": "2345678901"}.
+
+    - My number is [2345678901]{"entity": "phone-number", "value": "2345678901"}.
+
+    - [2345678901]{"entity": "phone-number", "value": "2345678901"}
+
+    - My phone number is [3453452794]{"entity": "phone-number", "value": "3453452794"}.
+
+    - My number is [3453452794]{"entity": "phone-number", "value": "3453452794"}.
+
+    - [3453452794]{"entity": "phone-number", "value": "3453452794"}'
+  intent: share_phone_number
 - examples: '- I live in [$location]{"entity": "location", "value": "$location"}.
 
     - I am located in [$location]{"entity": "location", "value": "$location"}.

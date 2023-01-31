@@ -44,16 +44,18 @@ def slot_fill(
     Args:
         loaded_yaml (Dict): The loaded YAML configuration.
         action_name (str): The name of this instance of the custom action.
-        message_variants (List[str]): Possible messages the bot will utter
-            upon execution of this action.
+        message_variants (List[str]): Possible messages the bot will utter upon
+            execution of this action.
         entities (List[str]): The entities to be extracted or have their "slots
             filled."
         intent (str): The name of the intent that will extract all the entities.
         config_entities (Dict): Holds configurations that specify what the bot should
             do in certain situations regarding each entity. The keys are each entity
             and the values are the configuration for each entity. Defaults to None as
-            this is not always necessary. The 4 configuration options for each entity
-            are:
+            this is not always necessary (again note that :py:func:`single_slot
+            <plan4dial.for_generating.custom_actions.slot_fill._single_slot>`
+            only occurs if there are > 1 entities here). The 4 configuration options
+            for each entity are:
 
                 | **clarify_message_variants** *(List[str])*: The message variants that
                     will be used for the clarify action for this entity. Only necessary
@@ -61,8 +63,7 @@ def slot_fill(
                 | **single_slot_message_variants** *(List[str])*: Custom message
                     variants to utter for :py:func:`single_slot
                     <plan4dial.for_generating.custom_actions.slot_fill._single_slot>`
-                    extractions of the given entity. Only necessary to specify if there
-                    are > 1 entities.
+                    extractions of the given entity.
                 | **single_slot_intent** *(str)*: If :py:func:`single_slot
                     <plan4dial.for_generating.custom_actions.slot_fill._single_slot>`
                     extraction is being used, this indicates the intent to detect for
@@ -96,6 +97,7 @@ def slot_fill(
         additional_conditions (Dict, optional): Additional conditions necessary before
             executing the :py:func:`slot_fill
             <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>` action.
+            Defaults to None.
 
     See the tutorial for an example of a
     :py:func:`slot_fill <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`
@@ -193,16 +195,16 @@ def slot_fill(
             if additional_updates:
                 # convert the current outcome into a frozenset to be compared
                 key = frozenset(refined_combo.items())
-            # check if this frozenset is included in the dict of outcomes with
-            # additional updates; if so, add the appropriate updates
-            if key in cfg_updates:
-                new_upd_cfg = cfg_updates[key]
-                if "updates" in new_upd_cfg:
-                    next_out["updates"].update(new_upd_cfg["updates"])
-                if "response_variants" in new_upd_cfg:
-                    next_out["response_variants"] = new_upd_cfg["response_variants"]
-                if "follow_up" in new_upd_cfg:
-                    next_out["follow_up"] = new_upd_cfg["follow_up"]
+                # check if this frozenset is included in the dict of outcomes with
+                # additional updates; if so, add the appropriate updates
+                if key in cfg_updates:
+                    new_upd_cfg = cfg_updates[key]
+                    if "updates" in new_upd_cfg:
+                        next_out["updates"].update(new_upd_cfg["updates"])
+                    if "response_variants" in new_upd_cfg:
+                        next_out["response_variants"] = new_upd_cfg["response_variants"]
+                    if "follow_up" in new_upd_cfg:
+                        next_out["follow_up"] = new_upd_cfg["follow_up"]
         action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
             outcome_name
         ] = next_out
