@@ -122,9 +122,10 @@ They are <code class="docutils literal notranslate"><span class="pre">context</s
 <h4>1. Define the Context Variables<a class="headerlink" href="#define-the-context-variables" title="Permalink to this heading"></a></h4>
 <p>Context variables are variables that your bot will store throughout the course of the conversation to keep track of the context gathered so far.
 Without context variables, the bot would not be able to store information from one line of dialogue to the next.</p>
-<p>One of the most common use cases of context variables is to store information gathered from the user. However, they can also be used internally to keep track of states in the conversation, the most common example being an indication of when the “goal” is reached.</p>
-<p>In this case, we know we want to keep track of the user’s preferences, which include options for location, cuisine, allergy/food restrictions, budget, and outing type.
-Let’s examine the context variables for location, cuisine, and food restrictions first.</p>
+<p>One of the most common use cases of context variables is to store information gathered from the user.
+However, they can also be used internally to keep track of states in the conversation, the most common example being an indication of when the “goal” is reached.</p>
+<p>In this case, we know we want to keep track of the user’s information and preferences, which include their location, phone number, cuisine, allergy/food restrictions, budget, and outing type.
+Let’s examine the context variables for location, phone number, cuisine, and food restrictions first.</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">context_variables</span><span class="p">:</span>
 <span class="w">  </span><span class="c1"># user&#39;s location</span>
 <span class="w">  </span><span class="nt">location</span><span class="p">:</span>
@@ -135,6 +136,19 @@ Let’s examine the context variables for location, cuisine, and food restrictio
 <span class="w">    </span><span class="nt">known</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span>
 <span class="w">      </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="c1"># user&#39;s phone number</span>
+<span class="w">  </span><span class="nt">phone_number</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span>
+<span class="w">    </span><span class="nt">extraction</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">regex</span>
+<span class="w">      </span><span class="nt">pattern</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">\d{10}</span>
+<span class="w">    </span><span class="nt">known</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span>
+<span class="w">      </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1234567890</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2345678901</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3453452794</span>
 <span class="w">  </span><span class="c1"># user&#39;s preferred cuisine; must map to one of the 4 options</span>
 <span class="w">  </span><span class="nt">cuisine</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">enum</span>
@@ -183,11 +197,12 @@ Let’s examine the context variables for location, cuisine, and food restrictio
 <td><p>Can only be set to the values set under the <code class="docutils literal notranslate"><span class="pre">options</span></code> list.</p></td>
 </tr>
 <tr class="row-odd"><td><p>json</p></td>
-<td><p>Used if you want to use an alternate extraction method,
-i.e. Spacy GPE. Optionally can add an <code class="docutils literal notranslate"><span class="pre">options</span></code> list like an
-enum.</p>
-<p><strong>NOTE</strong>: Currently, only Spacy is compatible with this
-option.</p>
+<td><p>Used if you want to use an alternate extraction method.</p>
+<p><strong>NOTE</strong>: Currently, only Spacy and regexes are compatible with
+this option. For Spacy, you can optionally add an <code class="docutils literal notranslate"><span class="pre">options</span></code> list
+which will force that only the listed options are valid
+extractions. For regex, the <code class="docutils literal notranslate"><span class="pre">options</span></code> list is necessary so Rasa
+can capture training examples properly.</p>
 </td>
 </tr>
 </tbody>
@@ -196,6 +211,8 @@ option.</p>
 You can see that under <code class="docutils literal notranslate"><span class="pre">extraction</span></code>, we specified both the method <code class="docutils literal notranslate"><span class="pre">spacy</span></code> and the configuration for NER (named entity recognition), in this case <cite>gpe</cite> for location.
 Note that if we were to specify cities under “options”, only those extracted location would be viable.
 However, since we are leaving it out, any city the user enters is valid.</p>
+<p>We can see that the context variable for “phone_number” is configured similarly, although this one uses a simple <code class="docutils literal notranslate"><span class="pre">regex</span></code>, where the pattern is specified under <code class="docutils literal notranslate"><span class="pre">pattern</span></code>.
+Note that we still supply a few <code class="docutils literal notranslate"><span class="pre">options</span></code> for Rasa’s training process.</p>
 <p><em>cuisine</em> is of type <code class="docutils literal notranslate"><span class="pre">enum</span></code> because we only want it to have 4 valid values: <em>Mexican</em>, <em>Italian</em>, <em>Chinese</em>, and <em>dessert</em>. <em>food_restriction</em> is of type <code class="docutils literal notranslate"><span class="pre">enum</span></code> for the same reason.</p>
 <p><em>have_allergy</em>, which determines if the user has an allergy (in which case we need to get their <em>food_restriction</em>), is of type <code class="docutils literal notranslate"><span class="pre">flag</span></code>. That is, they either do or don’t have an allergy. For this variable, you can also see that it has an <code class="docutils literal notranslate"><span class="pre">init</span></code> option. This is only available to <code class="docutils literal notranslate"><span class="pre">flag</span></code> or <code class="docutils literal notranslate"><span class="pre">fflag</span></code> type variables, and it allows you to set an initial value for the variable and change the initial state of the conversation. In this case, we default the variable to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <p id="known">Each variable also has a <code class="docutils literal notranslate"><span class="pre">known</span></code> option which determines the knowledge we have about the variable.
@@ -276,7 +293,8 @@ These indicate that if the user utters any of the variations, the bot will <stro
 While I’ve only given a few examples for simplicity, it is extremely important to supply lots of training examples to make your model more robust.
 There is an exception to this rule, though. In the case of <em>outing</em>, although the variable is of <code class="docutils literal notranslate"><span class="pre">type</span></code> <code class="docutils literal notranslate"><span class="pre">enum</span></code>, the variable value will be set internally based on the user’s preferences instead of through directly analyzing the user’s input.
 Since this will be completely in the control of the bot designer and not reliant on the NLU, no variations need to be provided there.</p>
-<p>Also, a <code class="docutils literal notranslate"><span class="pre">flag</span></code> <em>goal</em> variable is mandatory for every bot as it determines when the conversation ends (more on this later).</p>
+<p>Also, a <code class="docutils literal notranslate"><span class="pre">flag</span></code> <em>goal</em> variable is mandatory for every bot as it determines when the conversation ends.
+When you want the outcome of an action to end the conversation, you should set <strong>goal</strong> to <strong>true</strong>.</p>
 <p>You’re all set to define context variables for your bot! Let’s move on to the next step: intents.</p>
 </section>
 <section id="define-the-intents">
@@ -314,6 +332,13 @@ Within the intent, each entity must be preceded with a <code class="docutils lit
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">nah</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no thanks</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no thank you</span>
+<span class="w">  </span><span class="nt">share_phone_number</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">phone_number</span>
+<span class="w">    </span><span class="nt">utterances</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My phone number is $phone_number.</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My number is $phone_number.</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$phone_number</span>
 <span class="w">  </span><span class="nt">share_location</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span>
@@ -574,7 +599,7 @@ This template allows you to extract any number of entities, and even accounts fo
 i.e. budget is <code class="docutils literal notranslate"><span class="pre">known</span></code> and outing_type is <code class="docutils literal notranslate"><span class="pre">maybe</span></code> <code class="docutils literal notranslate"><span class="pre">known</span></code>, vice versa, etc.</p>
 <p>If you go to the source code of the function, you’ll see that the parameters of the custom action are provided under <code class="docutils literal notranslate"><span class="pre">parameters</span></code>
 of <code class="docutils literal notranslate"><span class="pre">get_outing</span></code>. A full explanation of what each parameter is can be seen in the documentation for <a class="reference internal" href="generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>.</p>
-<p>The values for location, cuisine, and food restrictions are extracted with the same custom action:</p>
+<p>The values for location and cuisine are extracted with the same custom action:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">get-location</span><span class="p">:</span>
 <span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">custom</span>
 <span class="w">  </span><span class="nt">subtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slot_fill</span>
@@ -607,8 +632,6 @@ of <code class="docutils literal notranslate"><span class="pre">get_outing</span
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that isn&#39;t a valid cuisine.</span>
 <span class="w">    </span><span class="nt">config_entities</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">cuisine</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">fallback_message_variants</span><span class="p">:</span>
-<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, that still isn&#39;t a valid cuisine.</span>
 <span class="w">        </span><span class="nt">clarify_message_variants</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">I didn&#39;t quite get your cuisine preference. Do you want to eat $cuisine?</span>
 <span class="w">    </span><span class="nt">additional_updates</span><span class="p">:</span>
@@ -617,26 +640,6 @@ of <code class="docutils literal notranslate"><span class="pre">get_outing</span
 <span class="w">            </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
 <span class="w">        </span><span class="nt">response_variants</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Cuisine preference has been logged.</span>
-<span class="nt">get-allergy</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">dialogue</span>
-<span class="w">  </span><span class="nt">message_variants</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What type of allergy do you have? (I currently account for dairy and gluten allergies).</span>
-<span class="w">  </span><span class="nt">fallback_message_variants</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Sorry, I don&#39;t recognize that type of allergy.</span>
-<span class="w">  </span><span class="nt">condition</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">have_allergy</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">      </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">  </span><span class="nt">effect</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">set-allergy</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">oneof</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">outcomes</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">update_allergy</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">updates</span><span class="p">:</span>
-<span class="w">              </span><span class="nt">food_restriction</span><span class="p">:</span>
-<span class="w">                </span><span class="nt">value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">$food_restriction</span>
-<span class="w">                </span><span class="nt">known</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
-<span class="w">            </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_allergies</span>
 </pre></div>
 </div>
 <p>Next, let’s take a look at a simple <a class="reference internal" href="#action-types"><span class="std std-ref">system action</span></a> our bot will use.</p>

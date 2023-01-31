@@ -210,16 +210,17 @@ missing information (only used when there are &gt; 1 entities specified).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p></li>
 <li><p><strong>action_name</strong> (<em>str</em>) – The name of this instance of the custom action.</p></li>
-<li><p><strong>message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Possible messages the bot will utter
-upon execution of this action.</p></li>
+<li><p><strong>message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Possible messages the bot will utter upon
+execution of this action.</p></li>
 <li><p><strong>entities</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The entities to be extracted or have their “slots
 filled.”</p></li>
 <li><p><strong>intent</strong> (<em>str</em>) – The name of the intent that will extract all the entities.</p></li>
 <li><p><strong>config_entities</strong> (<em>Dict</em>) – <p>Holds configurations that specify what the bot should
 do in certain situations regarding each entity. The keys are each entity
 and the values are the configuration for each entity. Defaults to None as
-this is not always necessary. The 4 configuration options for each entity
-are:</p>
+this is not always necessary (again note that <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>
+only occurs if there are &gt; 1 entities here). The 4 configuration options
+for each entity are:</p>
 <blockquote>
 <div><div class="line-block">
 <div class="line"><strong>clarify_message_variants</strong> <em>(List[str])</em>: The message variants that
@@ -227,8 +228,7 @@ will be used for the clarify action for this entity. Only necessary
 if the <cite>known</cite> <cite>type</cite> of this entity is of type <cite>fflag</cite>.</div>
 <div class="line"><strong>single_slot_message_variants</strong> <em>(List[str])</em>: Custom message
 variants to utter for <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>
-extractions of the given entity. Only necessary to specify if there
-are &gt; 1 entities.</div>
+extractions of the given entity.</div>
 <div class="line"><strong>single_slot_intent</strong> <em>(str)</em>: If <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>
 extraction is being used, this indicates the intent to detect for
 that extraction (the intent that extracts this singular entity).</div>
@@ -263,7 +263,8 @@ reduce ambiguity. Defaults to None.</div>
 </div></blockquote>
 </p></li>
 <li><p><strong>additional_conditions</strong> (<em>Dict</em><em>, </em><em>optional</em>) – Additional conditions necessary before
-executing the <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action.</p></li>
+executing the <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action.
+Defaults to None.</p></li>
 </ul>
 </dd>
 </dl>

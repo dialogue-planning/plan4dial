@@ -111,16 +111,18 @@
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
 <span class="sd">        action_name (str): The name of this instance of the custom action.</span>
-<span class="sd">        message_variants (List[str]): Possible messages the bot will utter</span>
-<span class="sd">            upon execution of this action.</span>
+<span class="sd">        message_variants (List[str]): Possible messages the bot will utter upon</span>
+<span class="sd">            execution of this action.</span>
 <span class="sd">        entities (List[str]): The entities to be extracted or have their &quot;slots</span>
 <span class="sd">            filled.&quot;</span>
 <span class="sd">        intent (str): The name of the intent that will extract all the entities.</span>
 <span class="sd">        config_entities (Dict): Holds configurations that specify what the bot should</span>
 <span class="sd">            do in certain situations regarding each entity. The keys are each entity</span>
 <span class="sd">            and the values are the configuration for each entity. Defaults to None as</span>
-<span class="sd">            this is not always necessary. The 4 configuration options for each entity</span>
-<span class="sd">            are:</span>
+<span class="sd">            this is not always necessary (again note that :py:func:`single_slot</span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`</span>
+<span class="sd">            only occurs if there are &gt; 1 entities here). The 4 configuration options</span>
+<span class="sd">            for each entity are:</span>
 
 <span class="sd">                | **clarify_message_variants** *(List[str])*: The message variants that</span>
 <span class="sd">                    will be used for the clarify action for this entity. Only necessary</span>
@@ -128,8 +130,7 @@
 <span class="sd">                | **single_slot_message_variants** *(List[str])*: Custom message</span>
 <span class="sd">                    variants to utter for :py:func:`single_slot</span>
 <span class="sd">                    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`</span>
-<span class="sd">                    extractions of the given entity. Only necessary to specify if there</span>
-<span class="sd">                    are &gt; 1 entities.</span>
+<span class="sd">                    extractions of the given entity.</span>
 <span class="sd">                | **single_slot_intent** *(str)*: If :py:func:`single_slot</span>
 <span class="sd">                    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`</span>
 <span class="sd">                    extraction is being used, this indicates the intent to detect for</span>
@@ -163,6 +164,7 @@
 <span class="sd">        additional_conditions (Dict, optional): Additional conditions necessary before</span>
 <span class="sd">            executing the :py:func:`slot_fill</span>
 <span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action.</span>
+<span class="sd">            Defaults to None.</span>
 
 <span class="sd">    See the tutorial for an example of a</span>
 <span class="sd">    :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
@@ -260,16 +262,16 @@
             <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
                 <span class="c1"># convert the current outcome into a frozenset to be compared</span>
                 <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">refined_combo</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-            <span class="c1"># check if this frozenset is included in the dict of outcomes with</span>
-            <span class="c1"># additional updates; if so, add the appropriate updates</span>
-            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cfg_updates</span><span class="p">:</span>
-                <span class="n">new_upd_cfg</span> <span class="o">=</span> <span class="n">cfg_updates</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
-                    <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">])</span>
-                <span class="k">if</span> <span class="s2">&quot;response_variants&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
-                    <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span>
-                <span class="k">if</span> <span class="s2">&quot;follow_up&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
-                    <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span>
+                <span class="c1"># check if this frozenset is included in the dict of outcomes with</span>
+                <span class="c1"># additional updates; if so, add the appropriate updates</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cfg_updates</span><span class="p">:</span>
+                    <span class="n">new_upd_cfg</span> <span class="o">=</span> <span class="n">cfg_updates</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
+                        <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">])</span>
+                    <span class="k">if</span> <span class="s2">&quot;response_variants&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
+                        <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span>
+                    <span class="k">if</span> <span class="s2">&quot;follow_up&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
+                        <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span>
         <span class="n">action</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">][</span><span class="s2">&quot;oneof&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
             <span class="n">outcome_name</span>
         <span class="p">]</span> <span class="o">=</span> <span class="n">next_out</span>

@@ -117,8 +117,8 @@
         <span class="n">examples</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">variations</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># if this intent has variables, iterate through them</span>
-        <span class="k">if</span> <span class="s2">&quot;variables&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
-            <span class="n">variables</span> <span class="o">=</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;variables&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="s2">&quot;entities&quot;</span> <span class="ow">in</span> <span class="n">intent_cfg</span><span class="p">:</span>
+            <span class="n">variables</span> <span class="o">=</span> <span class="n">intent_cfg</span><span class="p">[</span><span class="s2">&quot;entities&quot;</span><span class="p">]</span>
             <span class="c1"># for each variable, access the context variable</span>
             <span class="k">for</span> <span class="n">variable</span> <span class="ow">in</span> <span class="n">variables</span><span class="p">:</span>
                 <span class="n">ctx_var</span> <span class="o">=</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">][</span><span class="n">variable</span><span class="p">]</span>
@@ -155,11 +155,15 @@
                         <span class="n">_create_intent_example</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;$</span><span class="si">{</span><span class="n">variable</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">variable</span><span class="p">)</span>
                     <span class="p">)</span>
                 <span class="c1"># add extraction pattern if necessary</span>
-                <span class="k">elif</span> <span class="s2">&quot;extraction&quot;</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">:</span>
-                    <span class="k">if</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;extraction&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;regex&quot;</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s2">&quot;extraction&quot;</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;extraction&quot;</span><span class="p">][</span><span class="s2">&quot;method&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;regex&quot;</span><span class="p">:</span>
                         <span class="n">nlu</span><span class="p">[</span><span class="s2">&quot;nlu&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                            <span class="p">{</span><span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="n">variable</span><span class="p">,</span> <span class="s2">&quot;examples&quot;</span><span class="p">:</span> <span class="s2">&quot;- &quot;</span> <span class="o">+</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;pattern&quot;</span><span class="p">]}</span>
+                            <span class="p">{</span>
+                                <span class="s2">&quot;regex&quot;</span><span class="p">:</span> <span class="n">variable</span><span class="p">,</span>
+                                <span class="s2">&quot;examples&quot;</span><span class="p">:</span> <span class="s2">&quot;- &quot;</span> <span class="o">+</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;extraction&quot;</span><span class="p">][</span><span class="s2">&quot;pattern&quot;</span><span class="p">],</span>
+                            <span class="p">}</span>
                         <span class="p">)</span>
+
             <span class="c1"># get the product of all the variations in this intent. this is so we can</span>
             <span class="c1"># generate examples of this intent with every combination of variations for</span>
             <span class="c1"># each entity.</span>

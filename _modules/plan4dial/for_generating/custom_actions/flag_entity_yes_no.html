@@ -76,8 +76,30 @@
     <span class="n">confirm_intent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;confirm&quot;</span><span class="p">,</span>
     <span class="n">deny_intent</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;deny&quot;</span><span class="p">,</span>
     <span class="n">additional_conditions</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom dialoigue action that updates the value of a flag/bool entity based on</span>
+<span class="sd">    the user&#39;s response to a yes/no question.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">        action_name (str): The name of this instance of the custom action.</span>
+<span class="sd">        message_variants (List[str]): Possible messages the bot will utter upon</span>
+<span class="sd">            execution of this action.</span>
+<span class="sd">        entity (str): The flag entity to be set.</span>
+<span class="sd">        confirm_intent (str, optional): The intent that indicates the user is saying</span>
+<span class="sd">            &quot;yes&quot;. Defaults to &quot;confirm&quot;.</span>
+<span class="sd">        deny_intent (str, optional): The intent that indicates the user is saying</span>
+<span class="sd">            &quot;no&quot;. Defaults to &quot;deny&quot;.</span>
+<span class="sd">        additional_conditions (Dict, optional): Additional conditions necessary before</span>
+<span class="sd">            executing the :py:func:`flag_entity_yes_no</span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.flag_entity_yes_no.</span>
+<span class="sd">            flag_entity_yes_no&gt;` action. Defaults to None.</span>
+<span class="sd">        additional_updates (Dict, optional): Additional updates to occur at either</span>
+<span class="sd">            outcome. Specify &quot;confirm_outcome&quot; as the key when you want to add</span>
+<span class="sd">            additional updates when the user confirms and &quot;deny_outcome&quot; for the</span>
+<span class="sd">            opposite. Defaults to None.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># instantiate the action</span>
     <span class="n">action</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">action</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span>
@@ -103,7 +125,7 @@
                     <span class="s2">&quot;deny_outcome&quot;</span><span class="p">:</span> <span class="p">{</span>
                         <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">deny_outcome_upd</span><span class="p">,</span>
                         <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">deny_intent</span><span class="p">,</span>
-                    <span class="p">}</span>
+                    <span class="p">},</span>
                 <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
