@@ -14,7 +14,7 @@
                 "init": false
             }
         },
-        "phone-number": {
+        "phone_number": {
             "type": "json",
             "config": {
                 "options": [
@@ -151,7 +151,7 @@
     },
     "intents": {
         "confirm": {
-            "variables": [],
+            "entities": [],
             "utterances": [
                 "yes",
                 "yeah",
@@ -164,7 +164,7 @@
             "type": "regular"
         },
         "deny": {
-            "variables": [],
+            "entities": [],
             "utterances": [
                 "no",
                 "not at all",
@@ -178,18 +178,18 @@
             "type": "regular"
         },
         "share_phone_number": {
-            "variables": [
-                "$phone-number"
+            "entities": [
+                "$phone_number"
             ],
             "utterances": [
-                "My phone number is $phone-number.",
-                "My number is $phone-number.",
-                "$phone-number"
+                "My phone number is $phone_number.",
+                "My number is $phone_number.",
+                "$phone_number"
             ],
             "type": "regular"
         },
         "share_location": {
-            "variables": [
+            "entities": [
                 "$location"
             ],
             "utterances": [
@@ -200,7 +200,7 @@
             "type": "regular"
         },
         "share_cuisine": {
-            "variables": [
+            "entities": [
                 "$cuisine"
             ],
             "utterances": [
@@ -211,7 +211,7 @@
             "type": "regular"
         },
         "share_allergies": {
-            "variables": [
+            "entities": [
                 "$food_restriction"
             ],
             "utterances": [
@@ -222,7 +222,7 @@
             "type": "regular"
         },
         "share_all_outing_preferences": {
-            "variables": [
+            "entities": [
                 "$budget",
                 "$outing_type"
             ],
@@ -234,7 +234,7 @@
             "type": "regular"
         },
         "share_budget": {
-            "variables": [
+            "entities": [
                 "$budget"
             ],
             "utterances": [
@@ -245,7 +245,7 @@
             "type": "regular"
         },
         "share_outing_type": {
-            "variables": [
+            "entities": [
                 "$outing_type"
             ],
             "utterances": [
@@ -256,12 +256,12 @@
             "type": "regular"
         },
         "fallback": {
-            "variables": [],
+            "entities": [],
             "utterances": [],
             "type": "fallback"
         },
         "utter_ds": {
-            "variables": [],
+            "entities": [],
             "utterances": [],
             "type": "regular"
         }
@@ -358,7 +358,7 @@
             ],
             "intents": {
                 "confirm": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "yes",
                         "yeah",
@@ -371,7 +371,7 @@
                     "type": "regular"
                 },
                 "deny": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "no",
                         "not at all",
@@ -385,7 +385,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -463,7 +463,7 @@
             },
             "intents": {
                 "share_allergies": {
-                    "variables": [
+                    "entities": [
                         "$food_restriction"
                     ],
                     "utterances": [
@@ -474,7 +474,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -973,7 +973,7 @@
             "type": "dialogue",
             "condition": [
                 [
-                    "phone-number",
+                    "phone_number",
                     "Known"
                 ],
                 [
@@ -1061,7 +1061,7 @@
             "message_variants": [],
             "intents": {
                 "utter_ds": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "regular"
                 }
@@ -1146,7 +1146,7 @@
             },
             "intents": {
                 "share_location": {
-                    "variables": [
+                    "entities": [
                         "$location"
                     ],
                     "utterances": [
@@ -1157,13 +1157,13 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
             }
         },
-        "slot-fill__get-phone-number": {
+        "slot-fill__get-phone_number": {
             "type": "dialogue",
             "message_variants": [
                 "What is your phone number? I can use it to make reservations."
@@ -1173,11 +1173,11 @@
             ],
             "condition": [
                 [
-                    "phone-number",
+                    "phone_number",
                     null
                 ],
                 [
-                    "phone-number",
+                    "phone_number",
                     "Unknown"
                 ],
                 [
@@ -1195,32 +1195,32 @@
                 "outcomes": [
                     {
                         "updates": {
-                            "phone-number": {
-                                "value": "$phone-number",
-                                "variable": "phone-number",
+                            "phone_number": {
+                                "value": "$phone_number",
+                                "variable": "phone_number",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "share_phone_number",
-                        "name": "slot-fill__get-phone-number_DETDUP_validate-slot-fill-EQ-phone-number_found",
+                        "name": "slot-fill__get-phone_number_DETDUP_validate-slot-fill-EQ-phone_number_found",
                         "assignments": {
-                            "$phone-number": "found"
+                            "$phone_number": "found"
                         }
                     },
                     {
                         "updates": {
-                            "phone-number": {
-                                "value": "$phone-number",
-                                "variable": "phone-number",
+                            "phone_number": {
+                                "value": "$phone_number",
+                                "variable": "phone_number",
                                 "certainty": "Uncertain",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "share_phone_number",
-                        "name": "slot-fill__get-phone-number_DETDUP_validate-slot-fill-EQ-phone-number_maybe-found",
+                        "name": "slot-fill__get-phone_number_DETDUP_validate-slot-fill-EQ-phone_number_maybe-found",
                         "assignments": {
-                            "$phone-number": "maybe-found"
+                            "$phone_number": "maybe-found"
                         }
                     },
                     {
@@ -1237,38 +1237,38 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "slot-fill__get-phone-number_DETDUP_validate-slot-fill-EQ-fallback",
+                        "name": "slot-fill__get-phone_number_DETDUP_validate-slot-fill-EQ-fallback",
                         "assignments": {}
                     }
                 ]
             },
             "intents": {
                 "share_phone_number": {
-                    "variables": [
-                        "$phone-number"
+                    "entities": [
+                        "$phone_number"
                     ],
                     "utterances": [
-                        "My phone number is $phone-number.",
-                        "My number is $phone-number.",
-                        "$phone-number"
+                        "My phone number is $phone_number.",
+                        "My number is $phone_number.",
+                        "$phone_number"
                     ],
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
             }
         },
-        "clarify__phone-number": {
+        "clarify__phone_number": {
             "type": "dialogue",
             "message_variants": [
-                "I'm unsure about your phone number, is it $phone-number?"
+                "I'm unsure about your phone number, is it $phone_number?"
             ],
             "condition": [
                 [
-                    "phone-number",
+                    "phone_number",
                     "Uncertain"
                 ],
                 [
@@ -1286,32 +1286,32 @@
                 "outcomes": [
                     {
                         "updates": {
-                            "phone-number": {
-                                "value": "$phone-number",
-                                "variable": "phone-number",
+                            "phone_number": {
+                                "value": "$phone_number",
+                                "variable": "phone_number",
                                 "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
-                        "name": "clarify__phone-number_DETDUP_validate-clarification-EQ-confirm",
+                        "name": "clarify__phone_number_DETDUP_validate-clarification-EQ-confirm",
                         "assignments": {
-                            "$phone-number": "found"
+                            "$phone_number": "found"
                         }
                     },
                     {
                         "updates": {
-                            "phone-number": {
+                            "phone_number": {
                                 "value": null,
-                                "variable": "phone-number",
+                                "variable": "phone_number",
                                 "certainty": "Unknown",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "deny",
-                        "name": "clarify__phone-number_DETDUP_validate-clarification-EQ-deny",
+                        "name": "clarify__phone_number_DETDUP_validate-clarification-EQ-deny",
                         "assignments": {
-                            "$phone-number": "didnt-find"
+                            "$phone_number": "didnt-find"
                         }
                     },
                     {
@@ -1328,7 +1328,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "clarify__phone-number_DETDUP_validate-clarification-EQ-fallback",
+                        "name": "clarify__phone_number_DETDUP_validate-clarification-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -1339,7 +1339,7 @@
             ],
             "intents": {
                 "confirm": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "yes",
                         "yeah",
@@ -1352,7 +1352,7 @@
                     "type": "regular"
                 },
                 "deny": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "no",
                         "not at all",
@@ -1366,7 +1366,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -1466,7 +1466,7 @@
             },
             "intents": {
                 "share_cuisine": {
-                    "variables": [
+                    "entities": [
                         "$cuisine"
                     ],
                     "utterances": [
@@ -1477,7 +1477,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -1561,7 +1561,7 @@
             ],
             "intents": {
                 "confirm": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "yes",
                         "yeah",
@@ -1574,7 +1574,7 @@
                     "type": "regular"
                 },
                 "deny": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "no",
                         "not at all",
@@ -1588,7 +1588,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -1783,7 +1783,7 @@
             },
             "intents": {
                 "share_all_outing_preferences": {
-                    "variables": [
+                    "entities": [
                         "$budget",
                         "$outing_type"
                     ],
@@ -1795,7 +1795,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -1887,7 +1887,7 @@
             ],
             "intents": {
                 "share_outing_type": {
-                    "variables": [
+                    "entities": [
                         "$outing_type"
                     ],
                     "utterances": [
@@ -1898,7 +1898,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -1975,7 +1975,7 @@
             ],
             "intents": {
                 "share_budget": {
-                    "variables": [
+                    "entities": [
                         "$budget"
                     ],
                     "utterances": [
@@ -1986,7 +1986,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -2075,7 +2075,7 @@
             ],
             "intents": {
                 "confirm": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "yes",
                         "yeah",
@@ -2088,7 +2088,7 @@
                     "type": "regular"
                 },
                 "deny": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "no",
                         "not at all",
@@ -2102,7 +2102,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
