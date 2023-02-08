@@ -646,7 +646,9 @@ def _convert_actions(loaded_yaml: Dict) -> None:
         # convert effects
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             converted_eff = deepcopy(eff_config)
-            converted_eff["global-outcome-name"] = eff
+            # prevent effect name overlapping (can be an issue in hovor, even across
+            # actions)
+            converted_eff["global-outcome-name"] = f"{act}__{eff}"
             intents = []
             for option in eff_config:
                 converted_eff["type"] = option
@@ -654,7 +656,7 @@ def _convert_actions(loaded_yaml: Dict) -> None:
                 for out, out_config in eff_config[option]["outcomes"].items():
                     next_outcome = deepcopy(out_config)
                     # reformat name
-                    next_outcome["name"] = f"{act}_DETDUP_{eff}-EQ-{out}"
+                    next_outcome["name"] = f"{act}_DETDUP_{act}__{eff}-EQ-{out}"
                     # use blank intent if no intent was specified
                     if "intent" not in out_config:
                         next_outcome["intent"] = None
