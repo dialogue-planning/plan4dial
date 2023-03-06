@@ -47,7 +47,7 @@ def make_nlu_file(loaded_yaml: Dict) -> Dict:
     nlu = {"nlu": []}
     # iterate through all intents
     for intent, intent_cfg in intents.items():
-        examples = []
+        examples = set()
         variations = {}
         # if this intent has variables, iterate through them
         if "entities" in intent_cfg:
@@ -110,7 +110,7 @@ def make_nlu_file(loaded_yaml: Dict) -> Dict:
                         utterance = utterance.replace(
                             f"${variables[i]}", str(variation[i])
                         )
-                    examples.append(utterance)
+                    examples.add(utterance)
             nlu["nlu"].append(
                 {"intent": intent, "examples": "- " + "\n- ".join(examples)}
             )

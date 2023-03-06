@@ -8,8 +8,15 @@ context_variables:
       method: spacy
       config_method: gpe
     known:
-      type: flag
+      type: fflag
       init: false
+    options:
+      Toronto:
+        variations:
+          - downtown
+      Kingston:
+        variations:
+          - k-town
   # user's phone number
   phone_number:
     type: json
@@ -19,7 +26,7 @@ context_variables:
     known:
       type: fflag
       init: false
-    options:
+    examples:
       - 1234567890
       - 2345678901
       - 3453452794
@@ -188,13 +195,17 @@ actions:
     subtype: slot_fill
     parameters:
       action_name: get-location
-      intent: share_location
+      overall_intent: share_location
       entities:
         - location
       message_variants:
         - Where are you located?
       fallback_message_variants:
         - Sorry, that isn't a valid location.
+      config_entities:
+        location:
+          clarify_message_variants:
+            - I wasn't sure about your location. Do you live in $location?
       additional_updates:
         - outcome:
             location:
@@ -208,7 +219,7 @@ actions:
       action_name: get-phone_number
       entities:
         - phone_number
-      intent: share_phone_number
+      overall_intent: share_phone_number
       message_variants:
         - What is your phone number? I can use it to make reservations.
       fallback_message_variants:
@@ -224,7 +235,7 @@ actions:
       action_name: get-cuisine
       entities:
         - cuisine
-      intent: share_cuisine
+      overall_intent: share_cuisine
       message_variants:
         - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
       fallback_message_variants:
@@ -438,7 +449,7 @@ actions:
       entities:
         - budget
         - outing_type
-      intent: share_all_outing_preferences
+      overall_intent: share_all_outing_preferences
       message_variants:
         - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
       fallback_message_variants:

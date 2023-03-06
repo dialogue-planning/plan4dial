@@ -17,7 +17,7 @@ def slot_fill(
     action_name: str,
     message_variants: List[str],
     entities: List[str],
-    intent: str,
+    overall_intent: str,
     config_entities: Dict = None,
     fallback_message_variants: List[str] = None,
     additional_conditions: Dict = None,
@@ -48,7 +48,7 @@ def slot_fill(
             execution of this action.
         entities (List[str]): The entities to be extracted or have their "slots
             filled."
-        intent (str): The name of the intent that will extract all the entities.
+        overall_intent (str): The name of the intent that will extract all the entities.
         config_entities (Dict): Holds configurations that specify what the bot should
             do in certain situations regarding each entity. The keys are each entity
             and the values are the configuration for each entity. Defaults to None as
@@ -68,6 +68,8 @@ def slot_fill(
                     <plan4dial.for_generating.custom_actions.slot_fill._single_slot>`
                     extraction is being used, this indicates the intent to detect for
                     that extraction (the intent that extracts this singular entity).
+                    Can also be detected in initial extraction if only one of multiple
+                    entities are found.
                 | **fallback_message_variants** *(List[str])*: Custom fallback messages
                     to utter if the bot tries to extract this entity by itself with a
                     :py:func:`single_slot
@@ -179,11 +181,17 @@ def slot_fill(
             for entity, certainty in combo
             if certainty != "didnt-find"
         }
-        # only consider outcomes in which we find at elast something
+        # only consider outcomes in which we find at least something
         if refined_combo:
             next_out = {"updates": {}}
-            # store the intent based on the refined combo
-            next_out["intent"] = intent
+            # store the intent based on the refined combo.
+            # if we are only extracting one entity of multiple, use the intent for
+            # just that entity; otherwise use the "overarching" intent
+            next_out["intent"] = (
+                config_entities[list(refined_combo.keys())[0]]["single_slot_intent"]
+                if len(refined_combo) == 1 and len(entities) > 1
+                else overall_intent
+            )
             outcome_name = "".join(
                 f"{entity}_{certainty}-" for entity, certainty in refined_combo.items()
             )[:-1]
