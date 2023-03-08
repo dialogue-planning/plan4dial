@@ -139,8 +139,15 @@ Let’s examine the context variables for location, phone number, cuisine, and f
 <span class="w">      </span><span class="nt">method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">spacy</span>
 <span class="w">      </span><span class="nt">config_method</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gpe</span>
 <span class="w">    </span><span class="nt">known</span><span class="p">:</span>
-<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">flag</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span>
 <span class="w">      </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">Toronto</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">variations</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">downtown</span>
+<span class="w">      </span><span class="nt">Kingston</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">variations</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k-town</span>
 <span class="w">  </span><span class="c1"># user&#39;s phone number</span>
 <span class="w">  </span><span class="nt">phone_number</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">json</span>
@@ -150,7 +157,7 @@ Let’s examine the context variables for location, phone number, cuisine, and f
 <span class="w">    </span><span class="nt">known</span><span class="p">:</span>
 <span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">fflag</span>
 <span class="w">      </span><span class="nt">init</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-<span class="w">    </span><span class="nt">options</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">examples</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1234567890</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2345678901</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3453452794</span>
@@ -206,7 +213,7 @@ Let’s examine the context variables for location, phone number, cuisine, and f
 <p><strong>NOTE</strong>: Currently, only Spacy and regexes are compatible with
 this option. For Spacy, you can optionally add an <code class="docutils literal notranslate"><span class="pre">options</span></code> list
 which will force that only the listed options are valid
-extractions. For regex, the <code class="docutils literal notranslate"><span class="pre">options</span></code> list is necessary so Rasa
+extractions. For regex, the <code class="docutils literal notranslate"><span class="pre">examples</span></code> list is necessary so Rasa
 can capture training examples properly.</p>
 </td>
 </tr>
@@ -214,10 +221,10 @@ can capture training examples properly.</p>
 </table>
 <p>So, “location” is of type <code class="docutils literal notranslate"><span class="pre">json</span></code> because we want to use <a class="reference external" href="https://spacy.io/usage/spacy-101#annotations-ner">Spacy GPE</a> for location extraction. (In the case of location, it makes the most sense to use a model finely tuned to detect location, instead of Rasa, which is trained only on the examples you provide).
 You can see that under <code class="docutils literal notranslate"><span class="pre">extraction</span></code>, we specified both the method <code class="docutils literal notranslate"><span class="pre">spacy</span></code> and the configuration for NER (named entity recognition), in this case <cite>gpe</cite> for location.
-Note that if we were to specify cities under “options”, only those extracted location would be viable.
-However, since we are leaving it out, any city the user enters is valid.</p>
+Note that since we specified cities under “options”, only those extracted location would be viable.
+However, if we left those out, any city the user entered would be valid.</p>
 <p>We can see that the context variable for “phone_number” is configured similarly, although this one uses a simple <code class="docutils literal notranslate"><span class="pre">regex</span></code>, where the pattern is specified under <code class="docutils literal notranslate"><span class="pre">pattern</span></code>.
-Note that we still supply a few <code class="docutils literal notranslate"><span class="pre">options</span></code> for Rasa’s training process.</p>
+Note that we still supply a few <code class="docutils literal notranslate"><span class="pre">examples</span></code> for Rasa’s training process.</p>
 <p><em>cuisine</em> is of type <code class="docutils literal notranslate"><span class="pre">enum</span></code> because we only want it to have 4 valid values: <em>Mexican</em>, <em>Italian</em>, <em>Chinese</em>, and <em>dessert</em>. <em>food_restriction</em> is of type <code class="docutils literal notranslate"><span class="pre">enum</span></code> for the same reason.</p>
 <p><em>have_allergy</em>, which determines if the user has an allergy (in which case we need to get their <em>food_restriction</em>), is of type <code class="docutils literal notranslate"><span class="pre">flag</span></code>. That is, they either do or don’t have an allergy. For this variable, you can also see that it has an <code class="docutils literal notranslate"><span class="pre">init</span></code> option. This is only available to <code class="docutils literal notranslate"><span class="pre">flag</span></code> or <code class="docutils literal notranslate"><span class="pre">fflag</span></code> type variables, and it allows you to set an initial value for the variable and change the initial state of the conversation. In this case, we default the variable to <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
 <p id="known">Each variable also has a <code class="docutils literal notranslate"><span class="pre">known</span></code> option which determines the knowledge we have about the variable.
@@ -563,7 +570,7 @@ This is because we know that if the user has no allergies, we will never come ac
 <span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">budget</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">outing_type</span>
-<span class="w">    </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_all_outing_preferences</span>
+<span class="w">    </span><span class="nt">overall_intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_all_outing_preferences</span>
 <span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you&#39;re looking for (i.e. fun, relaxing, etc.)</span>
 <span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span>
@@ -610,7 +617,7 @@ of <code class="docutils literal notranslate"><span class="pre">get_outing</span
 <span class="w">  </span><span class="nt">subtype</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">slot_fill</span>
 <span class="w">  </span><span class="nt">parameters</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">action_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-location</span>
-<span class="w">    </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_location</span>
+<span class="w">    </span><span class="nt">overall_intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_location</span>
 <span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">location</span>
 <span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span>
@@ -630,7 +637,7 @@ of <code class="docutils literal notranslate"><span class="pre">get_outing</span
 <span class="w">    </span><span class="nt">action_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">get-cuisine</span>
 <span class="w">    </span><span class="nt">entities</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cuisine</span>
-<span class="w">    </span><span class="nt">intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_cuisine</span>
+<span class="w">    </span><span class="nt">overall_intent</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">share_cuisine</span>
 <span class="w">    </span><span class="nt">message_variants</span><span class="p">:</span>
 <span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.</span>
 <span class="w">    </span><span class="nt">fallback_message_variants</span><span class="p">:</span>

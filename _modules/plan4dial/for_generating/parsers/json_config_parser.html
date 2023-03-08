@@ -625,21 +625,6 @@
     <span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="_get_config_options"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._get_config_options">[docs]</a><span class="k">def</span> <span class="nf">_get_config_options</span><span class="p">(</span><span class="n">cfg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given an enum entity configuration, returns the possible options,</span>
-<span class="sd">    not including variations.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        cfg (Union[Dict, List]): The enum entity configuration.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        Union[Dict, List]: The possible options.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span></div>
-
-
 <div class="viewcode-block" id="_convert_ctx_var"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._convert_ctx_var">[docs]</a><span class="k">def</span> <span class="nf">_convert_ctx_var</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts the context variables from how they were formatted in the YAML to the</span>
 <span class="sd">    JSON configuration that Hovor requires.</span>
@@ -655,7 +640,7 @@
         <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;enum&quot;</span><span class="p">:</span>
             <span class="c1"># don&#39;t include variations in the config</span>
-            <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_get_config_options</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+            <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span>
         <span class="c1"># for flags/fflags, the config is the initial setting</span>
         <span class="k">elif</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;flag&quot;</span> <span class="ow">or</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;fflag&quot;</span><span class="p">:</span>
             <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;init&quot;</span><span class="p">]</span>
@@ -663,7 +648,7 @@
             <span class="c1"># add information to the config as necessary</span>
             <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">if</span> <span class="s2">&quot;options&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
-                <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">][</span><span class="s2">&quot;options&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_get_config_options</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+                <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">][</span><span class="s2">&quot;options&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span>
             <span class="k">if</span> <span class="s2">&quot;extraction&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
                 <span class="n">json_ctx_var</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">][</span><span class="s2">&quot;extraction&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;extraction&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>

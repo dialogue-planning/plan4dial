@@ -67,8 +67,15 @@ Let's examine the context variables for location, phone number, cuisine, and foo
             method: spacy
             config_method: gpe
           known:
-            type: flag
+            type: fflag
             init: false
+          options:
+            Toronto:
+              variations:
+                - downtown
+            Kingston:
+              variations:
+                - k-town
         # user's phone number
         phone_number:
           type: json
@@ -78,7 +85,7 @@ Let's examine the context variables for location, phone number, cuisine, and foo
           known:
             type: fflag
             init: false
-          options:
+          examples:
             - 1234567890
             - 2345678901
             - 3453452794
@@ -131,17 +138,17 @@ These are the only **four** types that we can define in the YAML. They are defin
 |            | **NOTE**: Currently, only Spacy and regexes are compatible with    |
 |            | this option. For Spacy, you can optionally add an ``options`` list |
 |            | which will force that only the listed options are valid            |
-|            | extractions. For regex, the ``options`` list is necessary so Rasa  |
+|            | extractions. For regex, the ``examples`` list is necessary so Rasa |
 |            | can capture training examples properly.                            |
 +------------+--------------------------------------------------------------------+
 
 So, "location" is of type ``json`` because we want to use `Spacy GPE <https://spacy.io/usage/spacy-101#annotations-ner>`_ for location extraction. (In the case of location, it makes the most sense to use a model finely tuned to detect location, instead of Rasa, which is trained only on the examples you provide).
 You can see that under ``extraction``, we specified both the method ``spacy`` and the configuration for NER (named entity recognition), in this case `gpe` for location.
-Note that if we were to specify cities under "options", only those extracted location would be viable.
-However, since we are leaving it out, any city the user enters is valid.
+Note that since we specified cities under "options", only those extracted location would be viable.
+However, if we left those out, any city the user entered would be valid.
 
 We can see that the context variable for "phone_number" is configured similarly, although this one uses a simple ``regex``, where the pattern is specified under ``pattern``.
-Note that we still supply a few ``options`` for Rasa's training process.
+Note that we still supply a few ``examples`` for Rasa's training process.
 
 *cuisine* is of type ``enum`` because we only want it to have 4 valid values: *Mexican*, *Italian*, *Chinese*, and *dessert*. *food_restriction* is of type ``enum`` for the same reason.
 
@@ -521,7 +528,7 @@ Next, let's take a look at the actions that actually extract information from th
       entities:
         - budget
         - outing_type
-      intent: share_all_outing_preferences
+      overall_intent: share_all_outing_preferences
       message_variants:
         - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
       fallback_message_variants:
@@ -573,7 +580,7 @@ The values for location and cuisine are extracted with the same custom action:
     subtype: slot_fill
     parameters:
       action_name: get-location
-      intent: share_location
+      overall_intent: share_location
       entities:
         - location
       message_variants:
@@ -593,7 +600,7 @@ The values for location and cuisine are extracted with the same custom action:
       action_name: get-cuisine
       entities:
         - cuisine
-      intent: share_cuisine
+      overall_intent: share_cuisine
       message_variants:
         - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
       fallback_message_variants:
