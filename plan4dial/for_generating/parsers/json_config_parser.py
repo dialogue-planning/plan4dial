@@ -5,7 +5,7 @@ Authors:
 - Rebecca De Venezia
 """
 
-from typing import Union, Dict, List
+from typing import Union, Dict
 from copy import deepcopy
 from inspect import getmembers, isfunction
 from nnf import Or, And, Var, config
