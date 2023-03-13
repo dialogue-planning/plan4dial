@@ -98,6 +98,7 @@
     <span class="k">if</span> <span class="s2">&quot;follow_up&quot;</span> <span class="ow">in</span> <span class="n">add_upd</span><span class="p">:</span>
         <span class="n">org_out</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_upd</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span></div>
 
+
 <div class="viewcode-block" id="slot_fill"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill">[docs]</a><span class="k">def</span> <span class="nf">slot_fill</span><span class="p">(</span>
     <span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
     <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -333,7 +334,10 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Dict: The `clarify` action configuration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">confirm_cfg</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">),</span> <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;confirm&quot;</span><span class="p">}</span>
+    <span class="n">confirm_cfg</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;confirm&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
     <span class="c1"># consider additional updates if the entity is extracted</span>
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">({</span><span class="n">entity</span><span class="p">:</span> <span class="s2">&quot;found&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
@@ -397,14 +401,13 @@
 <span class="sd">        configuration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fill_slot</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;updates&quot;</span><span class="p">:</span> 
-               <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">),</span>
-                <span class="c1"># if we successfully extract the entity, we should reset this flag. while it might</span>
-                <span class="c1"># not seem important, if all the entities are reset to null at some point, then we</span>
-                <span class="c1"># need to ensure that the original action runs first to re-extract all the entities</span>
-                <span class="c1"># and not any of the `single_slot` actions.</span>
-               <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-        <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">config_entity</span><span class="p">[</span><span class="s2">&quot;single_slot_intent&quot;</span><span class="p">]</span>
+        <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">),</span>
+        <span class="c1"># if we successfully extract the entity, we should reset this flag. while it</span>
+        <span class="c1"># might not seem important, if all the entities are reset to null at some</span>
+        <span class="c1"># point, then we need to ensure that the original action runs first to</span>
+        <span class="c1"># re-extract all the entities and not any of the `single_slot` actions.</span>
+        <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+        <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">config_entity</span><span class="p">[</span><span class="s2">&quot;single_slot_intent&quot;</span><span class="p">],</span>
     <span class="p">}</span>
     <span class="c1"># add additional updates if they exist</span>
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
@@ -429,9 +432,7 @@
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;fill-slot&quot;</span><span class="p">:</span> <span class="n">fill_slot</span>
-                <span class="p">},</span>
+                <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;fill-slot&quot;</span><span class="p">:</span> <span class="n">fill_slot</span><span class="p">},</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
