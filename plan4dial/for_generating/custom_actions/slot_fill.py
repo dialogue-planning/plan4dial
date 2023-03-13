@@ -26,6 +26,7 @@ def _make_additional_updates(org_out: Dict, add_upd: Dict) -> None:
     if "follow_up" in add_upd:
         org_out["follow_up"] = add_upd["follow_up"]
 
+
 def slot_fill(
     loaded_yaml: Dict,
     action_name: str,
@@ -261,7 +262,10 @@ def _clarify_act(
     Returns:
         Dict: The `clarify` action configuration.
     """
-    confirm_cfg = {"updates": map_assignment_update(entity, "found"), "intent": "confirm"}
+    confirm_cfg = {
+        "updates": map_assignment_update(entity, "found"),
+        "intent": "confirm",
+    }
     # consider additional updates if the entity is extracted
     if additional_updates:
         key = frozenset({entity: "found"}.items())
@@ -325,14 +329,13 @@ def _single_slot(
         configuration.
     """
     fill_slot = {
-        "updates": 
-               map_assignment_update(entity, "found"),
-                # if we successfully extract the entity, we should reset this flag. while it might
-                # not seem important, if all the entities are reset to null at some point, then we
-                # need to ensure that the original action runs first to re-extract all the entities
-                # and not any of the `single_slot` actions.
-               f"allow_single_slot_{entity}": {"value": False},
-        "intent": config_entity["single_slot_intent"]
+        "updates": map_assignment_update(entity, "found"),
+        # if we successfully extract the entity, we should reset this flag. while it
+        # might not seem important, if all the entities are reset to null at some
+        # point, then we need to ensure that the original action runs first to
+        # re-extract all the entities and not any of the `single_slot` actions.
+        f"allow_single_slot_{entity}": {"value": False},
+        "intent": config_entity["single_slot_intent"],
     }
     # add additional updates if they exist
     if additional_updates:
@@ -357,9 +360,7 @@ def _single_slot(
     single_slot["effect"] = {
         "validate-slot-fill": {
             "oneof": {
-                "outcomes": {
-                    "fill-slot": fill_slot
-                },
+                "outcomes": {"fill-slot": fill_slot},
             }
         }
     }
