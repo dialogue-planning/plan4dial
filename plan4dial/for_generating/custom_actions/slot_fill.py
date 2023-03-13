@@ -12,6 +12,20 @@ from .utils import map_assignment_update
 from ..parsers.json_config_parser import configure_assignments
 
 
+def _make_additional_updates(org_out: Dict, add_upd: Dict) -> None:
+    """Update an outcome by the additional updates provided by the suer.
+
+    Args:
+        org_out (Dict): The original outcome.
+        add_upd (Dict): The additional updates to be added to the outcome.
+    """
+    if "updates" in add_upd:
+        org_out["updates"].update(add_upd["updates"])
+    if "response_variants" in add_upd:
+        org_out["response_variants"] = add_upd["response_variants"]
+    if "follow_up" in add_upd:
+        org_out["follow_up"] = add_upd["follow_up"]
+
 def slot_fill(
     loaded_yaml: Dict,
     action_name: str,
@@ -105,6 +119,7 @@ def slot_fill(
     :py:func:`slot_fill <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`
     action.
     """
+    updates_filtered = {}
     if additional_updates:
         # iterate through all additional updates
         for i in range(len(additional_updates)):
@@ -115,8 +130,6 @@ def slot_fill(
                 additional_updates[i]["outcome"][var] = configure_assignments(
                     additional_updates[i]["outcome"][var]["known"]
                 )
-        cfg_updates = {}
-        for setting in additional_updates:
             # we don't want to consider when entities are NOT found because 1) it's a
             # lot more ambiguous and 2) when extracting entities, we only have
             # knowledge of what we DID extract and not what we DIDN'T. (yes, we could
@@ -126,21 +139,16 @@ def slot_fill(
 
             # frozenset is an easy way to see at a glance the assignment setting of
             # each (known/maybe known) context variable
-            key = frozenset(
+            out = frozenset(
                 {
                     entity: certainty
-                    for entity, certainty in setting["outcome"].items()
+                    for entity, certainty in additional_updates[i]["outcome"].items()
                     if certainty != "didnt-find"
                 }.items()
             )
-            # add the appropriate updates
-            cfg_updates[key] = {}
-            if "also_update" in setting:
-                cfg_updates[key]["updates"] = setting["also_update"]
-            if "response_variants" in setting:
-                cfg_updates[key]["response_variants"] = setting["response_variants"]
-            if "follow_up" in setting:
-                cfg_updates[key]["follow_up"] = setting["follow_up"]
+            # don't need outcome so remove it
+            del additional_updates[i]["outcome"]
+            updates_filtered[out] = additional_updates[i]
     entity_combos = []
     # create the cross-product of found, maybe-found, and didnt-find with the entities
     # given
@@ -205,14 +213,8 @@ def slot_fill(
                 key = frozenset(refined_combo.items())
                 # check if this frozenset is included in the dict of outcomes with
                 # additional updates; if so, add the appropriate updates
-                if key in cfg_updates:
-                    new_upd_cfg = cfg_updates[key]
-                    if "updates" in new_upd_cfg:
-                        next_out["updates"].update(new_upd_cfg["updates"])
-                    if "response_variants" in new_upd_cfg:
-                        next_out["response_variants"] = new_upd_cfg["response_variants"]
-                    if "follow_up" in new_upd_cfg:
-                        next_out["follow_up"] = new_upd_cfg["follow_up"]
+                if key in updates_filtered:
+                    _make_additional_updates(next_out, updates_filtered[key])
         action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
             outcome_name
         ] = next_out
@@ -224,7 +226,7 @@ def slot_fill(
         entities,
         config_entities,
         loaded_yaml["context_variables"],
-        additional_updates,
+        updates_filtered,
     )
     # update the loaded YAML with the new actions
     actions.update(new_actions)
@@ -259,12 +261,12 @@ def _clarify_act(
     Returns:
         Dict: The `clarify` action configuration.
     """
-    confirm_updates = map_assignment_update(entity, "found")
+    confirm_cfg = {"updates": map_assignment_update(entity, "found"), "intent": "confirm"}
     # consider additional updates if the entity is extracted
     if additional_updates:
         key = frozenset({entity: "found"}.items())
         if key in additional_updates:
-            confirm_updates.update(additional_updates[key])
+            _make_additional_updates(confirm_cfg, additional_updates[key])
     deny_updates = map_assignment_update(entity, "didnt-find")
     # if we were originally trying to extract multiple entities and we weren't able to
     # clarify one of them, we will have to move on to extracting the entity with a
@@ -281,10 +283,7 @@ def _clarify_act(
         "validate-clarification": {
             "oneof": {
                 "outcomes": {
-                    "confirm": {
-                        "updates": confirm_updates,
-                        "intent": "confirm",
-                    },
+                    "confirm": confirm_cfg,
                     "deny": {
                         "updates": deny_updates,
                         "intent": "deny",
@@ -325,18 +324,21 @@ def _single_slot(
         <plan4dial.for_generating.custom_actions.slot_fill._single_slot>` action
         configuration.
     """
-    fill_slot_updates = map_assignment_update(entity, "found")
-
-    # if we successfully extract the entity, we should reset this flag. while it might
-    # not seem important, if all the entities are reset to null at some point, then we
-    # need to ensure that the original action runs first to re-extract all the entities
-    # and not any of the `single_slot` actions.
-    fill_slot_updates[f"allow_single_slot_{entity}"] = {"value": False}
+    fill_slot = {
+        "updates": 
+               map_assignment_update(entity, "found"),
+                # if we successfully extract the entity, we should reset this flag. while it might
+                # not seem important, if all the entities are reset to null at some point, then we
+                # need to ensure that the original action runs first to re-extract all the entities
+                # and not any of the `single_slot` actions.
+               f"allow_single_slot_{entity}": {"value": False},
+        "intent": config_entity["single_slot_intent"]
+    }
     # add additional updates if they exist
     if additional_updates:
         key = frozenset({entity: "found"}.items())
         if key in additional_updates:
-            fill_slot_updates.update(additional_updates[key])
+            _make_additional_updates(fill_slot, additional_updates[key])
     # add message variants if they exist
     message_variants = (
         config_entity["single_slot_message_variants"]
@@ -356,10 +358,7 @@ def _single_slot(
         "validate-slot-fill": {
             "oneof": {
                 "outcomes": {
-                    "fill-slot": {
-                        "updates": fill_slot_updates,
-                        "intent": config_entity["single_slot_intent"],
-                    }
+                    "fill-slot": fill_slot
                 },
             }
         }
