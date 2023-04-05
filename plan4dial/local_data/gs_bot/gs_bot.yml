@@ -1,0 +1,548 @@
+---
+name: day-planner
+context_variables:
+  # user's location
+  location:
+    type: json
+    extraction:
+      method: spacy
+      config_method: gpe
+    known:
+      type: flag
+      init: false
+  # user's phone number
+  phone_number:
+    type: json
+    extraction: 
+      method: regex
+      pattern: \d{10}
+    known:
+      type: fflag
+      init: false
+    options:
+      - 1234567890
+      - 2345678901
+      - 3453452794
+  # user's preferred cuisine; must map to one of the 4 options
+  cuisine:
+    type: enum
+    known:
+      type: fflag
+      init: false
+    options:
+      - Mexican
+      - Italian
+      - Chinese
+      - dessert
+  # indicates if the user has an allergy
+  have_allergy:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  # food restrictions/allergies that the bot can take into account
+  food_restriction:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - dairy-free
+      - gluten-free
+  # possible budget options
+  budget:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - low
+      - high
+  # user's outing preferences
+  outing_type:
+    type: enum
+    known:
+      type: fflag
+      init: false 
+    options:
+      high-energy:
+        variations:
+          - fun
+          - exciting
+          - social
+      low-energy:
+        variations:
+          - chill
+          - relaxing
+          - laid-back
+  # activated if there is a conflict between the user's cuisine preference and food restrictions
+  conflict:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  # possible restaurant options
+  restaurant:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Guac Grill
+      - Alfredo's Pizza Café
+      - Mandarin
+      - Geneva Crepes
+  # possible outing options
+  outing:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Stages
+      - Stauffer Library
+      - Broadway Theater
+      - Smith's Golfing Club
+  # ends the conversation if true
+  goal:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  share_phone_number:
+    entities:
+      - phone_number
+    utterances:
+      - My phone number is $phone_number.
+      - My number is $phone_number.
+      - $phone_number 
+  share_location:
+    entities:
+      - location
+    utterances:
+      - I live in $location.
+      - I am located in $location.
+      - Can you help me find things to do in $location?
+  share_cuisine:
+    entities:
+      - cuisine
+    utterances:
+      - I want to eat $cuisine.
+      - Do you have restaurants of type $cuisine?
+      - Are there any $cuisine restaurants in the area?
+  share_allergies:
+    entities:
+      - food_restriction
+    utterances:
+      - I have to eat $food_restriction.
+      - I can only eat foods that are $food_restriction.
+      - I am allergic to any foods that are not $food_restriction.
+  share_all_outing_preferences:
+    entities:
+      - budget
+      - outing_type
+    utterances:
+      - I have a $budget budget and I would prefer a $outing_type atmosphere today.
+      - I am operating within a $budget budget and I want to go to a $outing_type place.
+      - I can do activities with a $budget budget and I want to find the most $outing_type place in the city.
+  share_budget:
+    entities:
+      - budget
+    utterances:
+      - I have a $budget budget.
+      - I am operating within a $budget budget.
+      - I can do activities with a $budget budget.
+  share_outing_type:
+    entities:
+      - outing_type
+    utterances:
+      - I would prefer a $outing_type atmosphere today.
+      - I want to go to a $outing_type place.
+      - What is the most $outing_type place in the city?
+actions:
+  get-location:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-location
+      intent: share_location
+      entities:
+        - location
+      message_variants:
+        - Where are you located?
+      fallback_message_variants:
+        - Sorry, that isn't a valid location.
+      additional_updates:
+        - outcome:
+            location:
+              known: true
+          response_variants:
+            - Tailoring your results to what's available in $location...
+  get-phone_number:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-phone_number
+      entities:
+        - phone_number
+      intent: share_phone_number
+      message_variants:
+        - What is your phone number? I can use it to make reservations.
+      fallback_message_variants:
+        - Sorry, that isn't a valid number.
+      config_entities:
+        phone_number:
+          clarify_message_variants:
+            - I'm unsure about your phone number, is it $phone_number?
+  get-cuisine:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-cuisine
+      entities:
+        - cuisine
+      intent: share_cuisine
+      message_variants:
+        - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+      fallback_message_variants:
+        - Sorry, that isn't a valid cuisine. 
+      config_entities:
+        cuisine:
+          clarify_message_variants:
+            - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
+      additional_updates:
+        - outcome:
+            cuisine:
+              known: true
+          response_variants:
+            - Cuisine preference has been logged.
+  get-have-allergy:
+    type: dialogue
+    message_variants:
+      - Do you have any allergies? (Y/N)
+    condition:
+      have_allergy:
+        known: false 
+    effect:
+      set-allergy:
+        oneof:
+          outcomes:
+            indicate_allergy:
+              updates:
+                have_allergy:
+                  value: true
+                  known: true
+              intent: confirm
+              follow_up: get-allergy
+            indicate_no_allergy:
+              updates:
+                have_allergy:
+                  known: true
+                  value: false
+                conflict:
+                  known: true
+                  value: false
+              intent: deny
+  get-allergy:
+    type: dialogue
+    message_variants:
+      - What type of allergy do you have? (I currently account for dairy and gluten allergies).
+    fallback_message_variants:
+      - Sorry, I don't recognize that type of allergy.
+    condition:
+      have_allergy:
+        known: true
+        value: true
+    effect:
+      set-allergy:
+        oneof:
+          outcomes:
+            update_allergy:
+              updates:
+                food_restriction:
+                  value: $food_restriction
+                  known: true
+              intent: share_allergies
+  check-conflicts:
+    type: system
+    subtype: Context dependent determination
+    condition:
+      location:
+        known: true
+      have_allergy:
+        known: true
+        value: true
+      food_restriction:
+        known: true
+      cuisine:
+        known: true
+      conflict:
+        known: false
+    effect:
+      check-conflicts:
+        oneof:
+          outcomes:
+            restriction-dessert:
+              updates:
+                conflict:
+                  known: true
+                  value: true
+              context:
+                cuisine:
+                  value: dessert
+                food_restriction:
+                  value: dairy-free
+            restriction-mexican:
+              updates:
+                conflict:
+                  known: true
+                  value: true
+              context:
+                cuisine:
+                  value: Mexican
+                food_restriction:
+                  value: gluten-free
+            no-restriction-1:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+              context:
+                cuisine:
+                  value: Italian
+            no-restriction-2:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+              context:
+                cuisine:
+                  value: Chinese
+            no-restriction-3:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+              context:
+                cuisine:
+                  value: dessert
+                food_restriction:
+                  value: gluten-free               
+            no-restriction-4:
+              updates:
+                conflict:
+                  known: true
+                  value: false
+              context:
+                cuisine:
+                  value: Mexican
+                food_restriction:
+                  value: dairy-free
+  reset-preferences:
+    type: system
+    condition:
+      conflict:
+        known: true
+        value: true
+    effect:
+      reset:
+        oneof:
+          outcomes:
+            reset-values:
+              updates:
+                have_allergy:
+                  known: false
+                food_restriction:
+                  known: false
+                cuisine:
+                  known: false
+                conflict:
+                  known: false 
+              response_variants:
+                - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+  set-restaurant:
+    type: system
+    subtype: Context dependent determination
+    condition:
+      cuisine:
+        known: true
+      conflict:
+        known: true
+        value: false
+      restaurant:
+        known: false
+    effect:
+      assign_restaurant:
+        oneof:
+          outcomes:
+            set-mexican:
+              updates:
+                restaurant:
+                  value: Guac Grill
+                  known: true
+              context:
+                cuisine:
+                  value: Mexican
+            set-italian:
+              updates:
+                restaurant:
+                  value: Alfredo's Pizza Café  
+                  known: true
+              context:
+                cuisine:
+                  value: Italian
+            set-chinese:
+              updates:
+                restaurant:
+                  value: Mandarin
+                  known: true
+              context:
+                cuisine:
+                  value: Chinese
+            set-dessert:
+              updates:
+                restaurant:
+                  value: Geneva Crepes
+                  known: true
+              context:
+                cuisine:
+                  value: dessert
+  get_outing:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get_outing
+      entities:
+        - budget
+        - outing_type
+      intent: share_all_outing_preferences
+      message_variants:
+        - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
+      fallback_message_variants:
+        - Sorry, that isn't a valid outing preference.
+      config_entities:
+        budget:
+          fallback_message_variants:
+            - Sorry, that isn't a valid budget option. Please select either high or low.
+          single_slot_message_variants:
+            - What is your budget preference? Please select either high or low.
+          single_slot_intent: share_budget
+        outing_type:
+          fallback_message_variants:
+            - Sorry, that isn't a valid outing type.
+          single_slot_message_variants:
+            - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
+          single_slot_intent: share_outing_type
+          clarify_message_variants:
+            - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?
+      additional_updates:
+        - outcome:
+            budget:
+              known: true
+          response_variants:
+            - Ok, I'll take that into account.
+        - outcome:
+            outing_type:
+              known: true
+          response_variants:
+            - Great choice!
+  set-outing:
+    type: system
+    subtype: Context dependent determination
+    condition:
+      budget:
+        known: true
+      outing_type:
+        known: true
+    effect:
+      assign_outing:
+        oneof:
+          outcomes:
+            set-club:
+              updates:
+                outing:
+                  value: Stages
+                  known: true
+              context:
+                budget:
+                  value: low
+                outing_type:
+                  value: high-energy
+            set-library:
+              updates:
+                outing:
+                  value: Stauffer Library
+                  known: true
+              context:
+                budget:
+                  value: low
+                outing_type:
+                  value: low-energy
+            set-theater:
+              updates:
+                outing:
+                  value: Broadway Theater
+                  known: true
+              context:
+                budget:
+                  value: high
+                outing_type:
+                  value: low-energy
+            set-golf:
+              updates:
+                outing:
+                  value: Smith's Golfing Club
+                  known: true
+              context:
+                budget:
+                  value: high
+                outing_type:
+                  value: high-energy
+  complete:
+    disable-fallback: true
+    type: dialogue
+    condition:
+      phone_number:
+        known: true
+      location:
+        known: true
+      restaurant:
+        known: true
+      outing:
+        known: true
+    message_variants:
+      - Booked a reservation at $restaurant as well as a spot at $outing in $location.
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            finish:
+              updates:
+                goal:
+                  value: true
+                  known: true
+              intent:
+...
