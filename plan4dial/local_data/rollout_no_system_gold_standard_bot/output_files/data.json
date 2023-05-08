@@ -3,13 +3,34 @@
     "context_variables": {
         "base": {
             "type": "enum",
-            "config": [
-                "tomato sauce",
-                "alfredo sauce",
-                "barbecue sauce",
-                "pesto",
-                "ranch"
-            ],
+            "config": {
+                "tomato sauce": {
+                    "variations": [
+                        "tomatoe sauce"
+                    ]
+                },
+                "alfredo sauce": {
+                    "variations": [
+                        "white sauce",
+                        "cream sauce"
+                    ]
+                },
+                "barbecue sauce": {
+                    "variations": [
+                        "bbq sauce"
+                    ]
+                },
+                "pesto": {
+                    "variations": [
+                        "green pesto"
+                    ]
+                },
+                "ranch": {
+                    "variations": [
+                        "caesar sauce"
+                    ]
+                }
+            },
             "known": {
                 "type": "flag",
                 "init": false
@@ -29,14 +50,48 @@
         },
         "toppings": {
             "type": "enum",
-            "config": [
-                "pepperoni",
-                "mushrooms",
-                "hawaiian",
-                "olives",
-                "tomatoes",
-                "peppers"
-            ],
+            "config": {
+                "pepperoni": {
+                    "variations": [
+                        "peperoni",
+                        "meat",
+                        "sausage"
+                    ]
+                },
+                "mushrooms": {
+                    "variations": [
+                        "vegetable",
+                        "veggie",
+                        "musroom",
+                        "shroom"
+                    ]
+                },
+                "hawaiian": {
+                    "variations": [
+                        "pineapple",
+                        "ham and pineapple",
+                        "sweet"
+                    ]
+                },
+                "olives": {
+                    "variations": [
+                        "green olives",
+                        "black olives"
+                    ]
+                },
+                "tomatoes": {
+                    "variations": [
+                        "tomatos"
+                    ]
+                },
+                "peppers": {
+                    "variations": [
+                        "bell peppers",
+                        "green peppers",
+                        "red peppers"
+                    ]
+                }
+            },
             "known": {
                 "type": "flag",
                 "init": false
@@ -44,10 +99,23 @@
         },
         "drink": {
             "type": "enum",
-            "config": [
-                "coke",
-                "coffee"
-            ],
+            "config": {
+                "coke": {
+                    "variations": [
+                        "coke",
+                        "coca cola",
+                        "soda",
+                        "pop"
+                    ]
+                },
+                "coffee": {
+                    "variations": [
+                        "caffeine",
+                        "decaf",
+                        "espresso"
+                    ]
+                }
+            },
             "known": {
                 "type": "flag",
                 "init": false
@@ -55,10 +123,24 @@
         },
         "side": {
             "type": "enum",
-            "config": [
-                "fries",
-                "salad"
-            ],
+            "config": {
+                "fries": {
+                    "variations": [
+                        "french fries",
+                        "potato wedges",
+                        "crisps",
+                        "chips"
+                    ]
+                },
+                "salad": {
+                    "variations": [
+                        "healthy side",
+                        "lettuce and tomatoes",
+                        "greek salad",
+                        "caesar salad"
+                    ]
+                }
+            },
             "known": {
                 "type": "flag",
                 "init": false
@@ -79,7 +161,7 @@
     },
     "intents": {
         "thank": {
-            "variables": [],
+            "entities": [],
             "utterances": [
                 "Thank you!",
                 "Thanks!",
@@ -93,9 +175,7 @@
             "type": "regular"
         },
         "share_base": {
-            "variables": [
-                "$base"
-            ],
+            "entities": [],
             "utterances": [
                 "I want a pizza with a $base base",
                 "I would prefer a pizza with a $base base.",
@@ -104,9 +184,7 @@
             "type": "regular"
         },
         "share_size": {
-            "variables": [
-                "$size"
-            ],
+            "entities": [],
             "utterances": [
                 "I want a $size pizza.",
                 "I would prefer a $size pizza.",
@@ -115,9 +193,7 @@
             "type": "regular"
         },
         "share_toppings": {
-            "variables": [
-                "$toppings"
-            ],
+            "entities": [],
             "utterances": [
                 "I want a pizza with $toppings",
                 "I would prefer a pizza with $toppings.",
@@ -127,9 +203,7 @@
             "type": "regular"
         },
         "share_drink": {
-            "variables": [
-                "$drink"
-            ],
+            "entities": [],
             "utterances": [
                 "I want to drink $drink.",
                 "$drink with ice please!",
@@ -138,9 +212,7 @@
             "type": "regular"
         },
         "share_side": {
-            "variables": [
-                "$side"
-            ],
+            "entities": [],
             "utterances": [
                 "I want to have $side on the side.",
                 "$side on the side please!",
@@ -149,12 +221,12 @@
             "type": "regular"
         },
         "fallback": {
-            "variables": [],
+            "entities": [],
             "utterances": [],
             "type": "fallback"
         },
         "utter_ds": {
-            "variables": [],
+            "entities": [],
             "utterances": [],
             "type": "regular"
         }
@@ -177,7 +249,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "set-base",
+                "global-outcome-name": "get-base__set-base",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -190,7 +262,7 @@
                             }
                         },
                         "intent": "share_base",
-                        "name": "get-base_DETDUP_set-base-EQ-valid",
+                        "name": "get-base_DETDUP_get-base__set-base-EQ-valid",
                         "assignments": {
                             "$base": "found"
                         }
@@ -209,7 +281,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-base_DETDUP_set-base-EQ-fallback",
+                        "name": "get-base_DETDUP_get-base__set-base-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -220,9 +292,7 @@
             ],
             "intents": {
                 "share_base": {
-                    "variables": [
-                        "$base"
-                    ],
+                    "entities": [],
                     "utterances": [
                         "I want a pizza with a $base base",
                         "I would prefer a pizza with a $base base.",
@@ -231,7 +301,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -254,7 +324,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "set-toppings",
+                "global-outcome-name": "get-toppings__set-toppings",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -267,7 +337,7 @@
                             }
                         },
                         "intent": "share_toppings",
-                        "name": "get-toppings_DETDUP_set-toppings-EQ-valid",
+                        "name": "get-toppings_DETDUP_get-toppings__set-toppings-EQ-valid",
                         "assignments": {
                             "$toppings": "found"
                         }
@@ -286,7 +356,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-toppings_DETDUP_set-toppings-EQ-fallback",
+                        "name": "get-toppings_DETDUP_get-toppings__set-toppings-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -297,9 +367,7 @@
             ],
             "intents": {
                 "share_toppings": {
-                    "variables": [
-                        "$toppings"
-                    ],
+                    "entities": [],
                     "utterances": [
                         "I want a pizza with $toppings",
                         "I would prefer a pizza with $toppings.",
@@ -309,7 +377,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -332,7 +400,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "set-size",
+                "global-outcome-name": "get-size__set-size",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -345,7 +413,7 @@
                             }
                         },
                         "intent": "share_size",
-                        "name": "get-size_DETDUP_set-size-EQ-valid",
+                        "name": "get-size_DETDUP_get-size__set-size-EQ-valid",
                         "assignments": {
                             "$size": "found"
                         }
@@ -364,7 +432,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-size_DETDUP_set-size-EQ-fallback",
+                        "name": "get-size_DETDUP_get-size__set-size-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -375,9 +443,7 @@
             ],
             "intents": {
                 "share_size": {
-                    "variables": [
-                        "$size"
-                    ],
+                    "entities": [],
                     "utterances": [
                         "I want a $size pizza.",
                         "I would prefer a $size pizza.",
@@ -386,7 +452,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -409,7 +475,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "set-drink",
+                "global-outcome-name": "get-drink__set-drink",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -422,7 +488,7 @@
                             }
                         },
                         "intent": "share_drink",
-                        "name": "get-drink_DETDUP_set-drink-EQ-valid",
+                        "name": "get-drink_DETDUP_get-drink__set-drink-EQ-valid",
                         "assignments": {
                             "$drink": "found"
                         }
@@ -441,7 +507,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-drink_DETDUP_set-drink-EQ-fallback",
+                        "name": "get-drink_DETDUP_get-drink__set-drink-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -452,9 +518,7 @@
             ],
             "intents": {
                 "share_drink": {
-                    "variables": [
-                        "$drink"
-                    ],
+                    "entities": [],
                     "utterances": [
                         "I want to drink $drink.",
                         "$drink with ice please!",
@@ -463,7 +527,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -486,7 +550,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "set-side",
+                "global-outcome-name": "get-side__set-side",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -499,7 +563,7 @@
                             }
                         },
                         "intent": "share_side",
-                        "name": "get-side_DETDUP_set-side-EQ-valid",
+                        "name": "get-side_DETDUP_get-side__set-side-EQ-valid",
                         "assignments": {
                             "$side": "found"
                         }
@@ -518,7 +582,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-side_DETDUP_set-side-EQ-fallback",
+                        "name": "get-side_DETDUP_get-side__set-side-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -529,9 +593,7 @@
             ],
             "intents": {
                 "share_side": {
-                    "variables": [
-                        "$side"
-                    ],
+                    "entities": [],
                     "utterances": [
                         "I want to have $side on the side.",
                         "$side on the side please!",
@@ -540,7 +602,7 @@
                     "type": "regular"
                 },
                 "fallback": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "fallback"
                 }
@@ -580,7 +642,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "goal",
+                "global-outcome-name": "complete__goal",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -592,14 +654,14 @@
                             }
                         },
                         "intent": "thank",
-                        "name": "complete_DETDUP_goal-EQ-valid",
+                        "name": "complete_DETDUP_complete__goal-EQ-valid",
                         "assignments": {}
                     }
                 ]
             },
             "intents": {
                 "thank": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [
                         "Thank you!",
                         "Thanks!",
@@ -627,7 +689,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "reset",
+                "global-outcome-name": "dialogue_statement__reset",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -644,7 +706,7 @@
                             }
                         },
                         "intent": "utter_ds",
-                        "name": "dialogue_statement_DETDUP_reset-EQ-lock",
+                        "name": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
                         "assignments": {}
                     }
                 ]
@@ -652,7 +714,7 @@
             "message_variants": [],
             "intents": {
                 "utter_ds": {
-                    "variables": [],
+                    "entities": [],
                     "utterances": [],
                     "type": "regular"
                 }

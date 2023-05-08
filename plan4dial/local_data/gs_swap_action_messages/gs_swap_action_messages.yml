@@ -189,7 +189,7 @@ actions:
     subtype: slot_fill
     parameters:
       action_name: get-location
-      intent: share_location
+      overall_intent: share_location
       entities:
         - location
       message_variants:
@@ -209,7 +209,7 @@ actions:
       action_name: get-phone_number
       entities:
         - phone_number
-      intent: share_phone_number
+      overall_intent: share_phone_number
       message_variants:
         - Where are you located?
       fallback_message_variants:
@@ -226,7 +226,7 @@ actions:
       action_name: get-cuisine
       entities:
         - cuisine
-      intent: share_cuisine
+      overall_intent: share_cuisine
       message_variants:
         - Do you have any allergies? (Y/N)
       fallback_message_variants:
@@ -442,7 +442,7 @@ actions:
       entities:
         - budget
         - outing_type
-      intent: share_all_outing_preferences
+      overall_intent: share_all_outing_preferences
       message_variants:
         - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
       fallback_message_variants:
