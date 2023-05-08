@@ -21,7 +21,7 @@
                 (not (force-statement))
             )
         :effect
-            (labeled-oneof         set-base
+            (labeled-oneof         get-base__set-base
                 (outcome valid
                     (and
                         (know__base)
@@ -43,7 +43,7 @@
                 (not (force-statement))
             )
         :effect
-            (labeled-oneof         set-toppings
+            (labeled-oneof         get-toppings__set-toppings
                 (outcome valid
                     (and
                         (know__toppings)
@@ -65,7 +65,7 @@
                 (not (force-statement))
             )
         :effect
-            (labeled-oneof         set-size
+            (labeled-oneof         get-size__set-size
                 (outcome valid
                     (and
                         (know__size)
@@ -87,7 +87,7 @@
                 (not (force-statement))
             )
         :effect
-            (labeled-oneof         set-drink
+            (labeled-oneof         get-drink__set-drink
                 (outcome valid
                     (and
                         (know__drink)
@@ -105,11 +105,11 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__side))
+                (not (force-statement))
             )
         :effect
-            (labeled-oneof         set-side
+            (labeled-oneof         get-side__set-side
                 (outcome valid
                     (and
                         (know__side)
@@ -127,15 +127,15 @@
         :parameters()
         :precondition
             (and
-                (know__toppings)
-                (know__side)
-                (know__size)
-                (not (force-statement))
                 (know__base)
+                (know__size)
+                (know__toppings)
+                (not (force-statement))
                 (know__drink)
+                (know__side)
             )
         :effect
-            (labeled-oneof         goal
+            (labeled-oneof         complete__goal
                 (outcome valid
                     (and
                         (goal)
@@ -151,11 +151,11 @@
                 (have-message)
             )
         :effect
-            (labeled-oneof         reset
+            (labeled-oneof         dialogue_statement__reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )
