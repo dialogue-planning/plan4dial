@@ -39,8 +39,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__toppings))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         get-toppings__set-toppings
@@ -61,8 +61,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__size))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         get-size__set-size
@@ -83,8 +83,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__drink))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof         get-drink__set-drink
@@ -127,12 +127,12 @@
         :parameters()
         :precondition
             (and
+                (know__side)
+                (know__size)
+                (know__toppings)
                 (know__drink)
                 (not (force-statement))
-                (know__toppings)
                 (know__base)
-                (know__size)
-                (know__side)
             )
         :effect
             (labeled-oneof         complete__goal
@@ -154,8 +154,8 @@
             (labeled-oneof         dialogue_statement__reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )
