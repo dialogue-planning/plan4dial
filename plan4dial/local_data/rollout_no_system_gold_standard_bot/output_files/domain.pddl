@@ -29,8 +29,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -39,8 +39,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__toppings))
                 (not (force-statement))
+                (not (know__toppings))
             )
         :effect
             (labeled-oneof         get-toppings__set-toppings
@@ -51,8 +51,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -61,8 +61,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__size))
                 (not (force-statement))
+                (not (know__size))
             )
         :effect
             (labeled-oneof         get-size__set-size
@@ -73,8 +73,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -83,8 +83,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__drink))
                 (not (force-statement))
+                (not (know__drink))
             )
         :effect
             (labeled-oneof         get-drink__set-drink
@@ -95,8 +95,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -105,8 +105,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__side))
                 (not (force-statement))
+                (not (know__side))
             )
         :effect
             (labeled-oneof         get-side__set-side
@@ -117,8 +117,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -127,11 +127,11 @@
         :parameters()
         :precondition
             (and
+                (know__drink)
+                (not (force-statement))
+                (know__toppings)
                 (know__base)
                 (know__size)
-                (know__toppings)
-                (not (force-statement))
-                (know__drink)
                 (know__side)
             )
         :effect
@@ -147,15 +147,15 @@
         :parameters()
         :precondition
             (and
-                (force-statement)
                 (have-message)
+                (force-statement)
             )
         :effect
             (labeled-oneof         dialogue_statement__reset
                 (outcome lock
                     (and
-                        (not (have-message))
                         (not (force-statement))
+                        (not (have-message))
                     )
                 )
             )

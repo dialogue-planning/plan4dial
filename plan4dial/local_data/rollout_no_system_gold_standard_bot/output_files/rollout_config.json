@@ -6,57 +6,57 @@
                 "(not (force-statement))"
             ],
             "effect": {
-                "get-base_DETDUP_set-base-EQ-valid": [
+                "get-base_DETDUP_get-base__set-base-EQ-valid": [
                     "(know__base)"
                 ],
-                "get-base_DETDUP_set-base-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                "get-base_DETDUP_get-base__set-base-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "get-toppings": {
             "condition": [
-                "(not (know__toppings))",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__toppings))"
             ],
             "effect": {
-                "get-toppings_DETDUP_set-toppings-EQ-valid": [
+                "get-toppings_DETDUP_get-toppings__set-toppings-EQ-valid": [
                     "(know__toppings)"
                 ],
-                "get-toppings_DETDUP_set-toppings-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                "get-toppings_DETDUP_get-toppings__set-toppings-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "get-size": {
             "condition": [
-                "(not (know__size))",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__size))"
             ],
             "effect": {
-                "get-size_DETDUP_set-size-EQ-valid": [
+                "get-size_DETDUP_get-size__set-size-EQ-valid": [
                     "(know__size)"
                 ],
-                "get-size_DETDUP_set-size-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                "get-size_DETDUP_get-size__set-size-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "get-drink": {
             "condition": [
-                "(not (know__drink))",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(not (know__drink))"
             ],
             "effect": {
-                "get-drink_DETDUP_set-drink-EQ-valid": [
+                "get-drink_DETDUP_get-drink__set-drink-EQ-valid": [
                     "(know__drink)"
                 ],
-                "get-drink_DETDUP_set-drink-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                "get-drink_DETDUP_get-drink__set-drink-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -66,37 +66,37 @@
                 "(not (know__side))"
             ],
             "effect": {
-                "get-side_DETDUP_set-side-EQ-valid": [
+                "get-side_DETDUP_get-side__set-side-EQ-valid": [
                     "(know__side)"
                 ],
-                "get-side_DETDUP_set-side-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                "get-side_DETDUP_get-side__set-side-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "complete": {
             "condition": [
-                "(know__toppings)",
-                "(know__side)",
-                "(know__size)",
+                "(know__drink)",
                 "(not (force-statement))",
+                "(know__toppings)",
                 "(know__base)",
-                "(know__drink)"
+                "(know__size)",
+                "(know__side)"
             ],
             "effect": {
-                "complete_DETDUP_goal-EQ-valid": [
+                "complete_DETDUP_complete__goal-EQ-valid": [
                     "(goal)"
                 ]
             }
         },
         "dialogue_statement": {
             "condition": [
-                "(force-statement)",
-                "(have-message)"
+                "(have-message)",
+                "(force-statement)"
             ],
             "effect": {
-                "dialogue_statement_DETDUP_reset-EQ-lock": [
+                "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
                     "(not (force-statement))",
                     "(not (have-message))"
                 ]
@@ -104,13 +104,13 @@
         }
     },
     "initial_state": [
-        "(not (know__size))",
-        "(not (know__drink))",
-        "(not (know__toppings))",
-        "(not (have-message))",
-        "(not (goal))",
-        "(not (force-statement))",
         "(not (know__base))",
+        "(not (force-statement))",
+        "(not (goal))",
+        "(not (know__drink))",
+        "(not (have-message))",
+        "(not (know__size))",
+        "(not (know__toppings))",
         "(not (know__side))"
     ]
 }
