@@ -358,9 +358,7 @@
                 (outcome phone_number_maybe-found
                     (and (not (know__phone_number))(maybe-know__phone_number))
                 )
-                (outcome fallback
-                    (and (force-statement))
-                )
+                (outcome fallback (and (force-statement)))
             )
     )
     (:action clarify__phone_number
