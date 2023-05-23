@@ -345,10 +345,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__phone_number))
-                (not (force-statement))
-                (not (forcing__get-allergy))
-                (not (maybe-know__phone_number))
+                (not (know__phone_number)) (not (maybe-know__phone_number))
+                (not (force-statement)) (not (forcing__get-allergy))
             )
         :effect
             (labeled-oneof slot-fill__get-phone_number__validate-slot-fill
