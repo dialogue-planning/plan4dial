@@ -351,24 +351,15 @@
                 (not (maybe-know__phone_number))
             )
         :effect
-            (labeled-oneof         slot-fill__get-phone_number__validate-slot-fill
+            (labeled-oneof slot-fill__get-phone_number__validate-slot-fill
                 (outcome phone_number_found
-                    (and
-                        (know__phone_number)
-                        (not (maybe-know__phone_number))
-                    )
+                    (and (know__phone_number) (not (maybe-know__phone_number)))
                 )
                 (outcome phone_number_maybe-found
-                    (and
-                        (not (know__phone_number))
-                        (maybe-know__phone_number)
-                    )
+                    (and (not (know__phone_number))(maybe-know__phone_number))
                 )
                 (outcome fallback
-                    (and
-                        (force-statement)
-                        (have-message)
-                    )
+                    (and (force-statement))
                 )
             )
     )
