@@ -88,7 +88,6 @@ def generate_files(yaml_filename: str, output_folder: str, rbp_path: str):
     with open(f"{output_folder}/data.prp.json", "w") as file:
         json.dump(plan_data, file, indent=4)
     # delete extra output files
-    os.remove("./policy.out")
     os.remove("./output.sas")
     # generate configuration for rollout
     rollout_data = rollout_config(converted_json)
