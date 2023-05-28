@@ -117,21 +117,21 @@ intents:
       - thx
       - ty
   share_base:
-    variables: 
+    entities: 
       - base 
     utterances:
       - I want a pizza with a $base base
       - I would prefer a pizza with a $base base. 
       - Do you have $base for a base?
   share_size:
-    variables: 
+    entities: 
       - size 
     utterances:
       - I want a $size pizza.
       - I would prefer a $size pizza. 
       - Can I get a $size pizza?
   share_toppings:
-    variables: 
+    entities: 
       - toppings 
     utterances:
       - I want a pizza with $toppings
@@ -139,14 +139,14 @@ intents:
       - Do you have $toppings?
       - Can I get a pizza with $toppings?
   share_drink:
-    variables: 
+    entities: 
       - drink 
     utterances:
       - I want to drink $drink.
       - $drink with ice please!
       - Do you have $drink kind of drink?
   share_side:
-    variables: 
+    entities: 
       - side 
     utterances:
       - I want to have $side on the side.

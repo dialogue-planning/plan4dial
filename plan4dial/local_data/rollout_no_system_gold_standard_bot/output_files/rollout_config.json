@@ -17,8 +17,8 @@
         },
         "get-toppings": {
             "condition": [
-                "(not (force-statement))",
-                "(not (know__toppings))"
+                "(not (know__toppings))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-toppings_DETDUP_get-toppings__set-toppings-EQ-valid": [
@@ -32,8 +32,8 @@
         },
         "get-size": {
             "condition": [
-                "(not (force-statement))",
-                "(not (know__size))"
+                "(not (know__size))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-size_DETDUP_get-size__set-size-EQ-valid": [
@@ -47,8 +47,8 @@
         },
         "get-drink": {
             "condition": [
-                "(not (force-statement))",
-                "(not (know__drink))"
+                "(not (know__drink))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "get-drink_DETDUP_get-drink__set-drink-EQ-valid": [
@@ -77,12 +77,12 @@
         },
         "complete": {
             "condition": [
+                "(know__side)",
+                "(know__size)",
+                "(know__toppings)",
                 "(know__drink)",
                 "(not (force-statement))",
-                "(know__toppings)",
-                "(know__base)",
-                "(know__size)",
-                "(know__side)"
+                "(know__base)"
             ],
             "effect": {
                 "complete_DETDUP_complete__goal-EQ-valid": [
@@ -97,20 +97,20 @@
             ],
             "effect": {
                 "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
-                    "(not (force-statement))",
-                    "(not (have-message))"
+                    "(not (have-message))",
+                    "(not (force-statement))"
                 ]
             }
         }
     },
     "initial_state": [
         "(not (know__base))",
-        "(not (force-statement))",
-        "(not (goal))",
-        "(not (know__drink))",
         "(not (have-message))",
-        "(not (know__size))",
+        "(not (goal))",
         "(not (know__toppings))",
+        "(not (know__drink))",
+        "(not (force-statement))",
+        "(not (know__size))",
         "(not (know__side))"
     ]
 }
