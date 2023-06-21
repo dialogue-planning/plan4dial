@@ -1,5 +1,5 @@
 {
-    "name": "bank bot",
+    "name": "bank-bot",
     "context_variables": {
         "task": {
             "type": "enum",
