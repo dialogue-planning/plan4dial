@@ -1,5 +1,25 @@
 {
     "actions": {
+        "confirm-transfer": {
+            "condition": [
+                "(know__funds)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete-transfer": [
+                    "(goal)",
+                    "(have-message)",
+                    "(know__funds)",
+                    "(not (know__account2))",
+                    "(force-statement)",
+                    "(not (know__account1))"
+                ],
+                "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
+                ]
+            }
+        },
         "dialogue_statement": {
             "condition": [
                 "(have-message)",
@@ -14,30 +34,142 @@
         },
         "slot-fill__get-task": {
             "condition": [
-                "(not (force-statement))",
-                "(not (know__task))"
+                "(not (know__task))",
+                "(not (force-statement))"
             ],
             "effect": {
                 "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-task_found": [
-                    "(know__task)",
-                    "(know__goal)",
-                    "(goal)"
+                    "(know__task)"
                 ],
                 "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-fallback": [
                     "(have-message)",
                     "(force-statement)"
                 ]
             }
+        },
+        "slot-fill__get-transfer-settings": {
+            "condition": [
+                "(not (know__funds))",
+                "(not (know__account2))",
+                "(not (force-statement))",
+                "(task-value-transfer_funds_between_accounts)",
+                "(not (know__account1))",
+                "(know__task)"
+            ],
+            "effect": {
+                "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account1_found-account2_found-funds_found": [
+                    "(know__funds)",
+                    "(know__account1)",
+                    "(know__account2)"
+                ],
+                "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account1_found-account2_found": [
+                    "(know__account1)",
+                    "(allow_single_slot_funds)",
+                    "(know__account2)"
+                ],
+                "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account1_found-funds_found": [
+                    "(allow_single_slot_account2)",
+                    "(know__funds)",
+                    "(know__account1)"
+                ],
+                "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account1_found": [
+                    "(allow_single_slot_account2)",
+                    "(know__account1)",
+                    "(allow_single_slot_funds)"
+                ],
+                "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account2_found-funds_found": [
+                    "(allow_single_slot_account1)",
+                    "(know__funds)",
+                    "(know__account2)"
+                ],
+                "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account2_found": [
+                    "(allow_single_slot_account1)",
+                    "(allow_single_slot_funds)",
+                    "(know__account2)"
+                ],
+                "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-funds_found": [
+                    "(allow_single_slot_account2)",
+                    "(allow_single_slot_account1)",
+                    "(know__funds)"
+                ],
+                "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
+                ]
+            }
+        },
+        "single_slot__funds": {
+            "condition": [
+                "(not (know__funds))",
+                "(allow_single_slot_funds)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "single_slot__funds_DETDUP_single_slot__funds__validate-slot-fill-EQ-fill-slot": [
+                    "(know__funds)"
+                ],
+                "single_slot__funds_DETDUP_single_slot__funds__validate-slot-fill-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
+                ]
+            }
+        },
+        "single_slot__account2": {
+            "condition": [
+                "(allow_single_slot_account2)",
+                "(not (know__account2))",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "single_slot__account2_DETDUP_single_slot__account2__validate-slot-fill-EQ-fill-slot": [
+                    "(know__account2)"
+                ],
+                "single_slot__account2_DETDUP_single_slot__account2__validate-slot-fill-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
+                ]
+            }
+        },
+        "single_slot__account1": {
+            "condition": [
+                "(not (know__account1))",
+                "(allow_single_slot_account1)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "single_slot__account1_DETDUP_single_slot__account1__validate-slot-fill-EQ-fill-slot": [
+                    "(know__account1)"
+                ],
+                "single_slot__account1_DETDUP_single_slot__account1__validate-slot-fill-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
+                ]
+            }
+        },
+        "set-task": {
+            "condition": [
+                "(not (task-value-transfer_funds_between_accounts))",
+                "(know__task)"
+            ],
+            "effect": {
+                "set-task_DETDUP_set-task__set-valid-value-EQ-transfer_funds_between_accounts": [
+                    "(task-value-transfer_funds_between_accounts)"
+                ]
+            }
         }
     },
     "initial_state": [
         "(not (know__funds))",
-        "(not (know__goal))",
-        "(not (force-statement))",
-        "(not (have-message))",
-        "(not (goal))",
-        "(not (know__task))",
+        "(not (allow_single_slot_funds))",
+        "(not (allow_single_slot_account1))",
         "(not (know__account2))",
-        "(not (know__account1))"
+        "(not (know__task))",
+        "(not (allow_single_slot_account2))",
+        "(not (task-value-transfer_funds_between_accounts))",
+        "(not (force-statement))",
+        "(not (know__goal))",
+        "(not (know__account1))",
+        "(not (goal))",
+        "(not (have-message))"
     ]
 }
