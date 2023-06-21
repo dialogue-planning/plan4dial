@@ -1,0 +1,216 @@
+---
+name: bank bot
+context_variables:
+  task:
+    outing_type:
+    type: enum
+    known:
+      type: flag
+      init: false 
+    options:
+      transfer funds between accounts:
+        variations:
+          - transfer funds
+          - move money over
+          - transfer between accounts
+          - transfer money over to another account
+      e-transfer:
+        variations:
+          - transfer to another person
+          - transfer money to another person
+          - send money to someone
+          - give money to someone else
+          - send money to another person
+          - give money to another person
+          - transfer money to Mark
+          - transfer funds to Beth
+          - send money to Sam
+          - give money to Tiana
+      request money:
+        variations:
+          - request money from someone
+          - request money from this person
+          - request funds from Bob
+      pay bills:
+        variations:
+          - pay my bills
+          - pay my credit card bill
+          - pay off my student loans
+          - pay my monthly utility bill
+      cancel card:
+        variations:
+          - cancel my credit card
+          - cancel my debit card
+          - remove card from my account
+  account1:
+    outing_type:
+    type: enum
+    known:
+      type: flag
+      init: false 
+    options:
+      - chequing
+      - savings
+      - retirement fund
+      - college fund
+  account2:
+    outing_type:
+    type: enum
+    known:
+      type: flag
+      init: false 
+    options:
+      - chequing
+      - savings
+      - retirement fund
+      - college fund
+  funds:
+    type: json
+    extraction: 
+      method: regex
+      pattern: \d
+    known:
+      type: flag
+      init: false
+  goal:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - that's it
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+  share_task:
+    entities:
+      - task
+    utterances:
+      - I want to $task.
+      - I just want to $task today.
+      - Can you help me $task?
+  share_transfer_settings:
+    entities:
+      - account1
+      - account2
+    utterances:
+      - I want to transfer funds from $account1 to $account2.
+      - Can I transfer money from $account1 to $account2?
+      - I want to send money to $account2 from $account1.
+      - I want to send funds to $account2 from $account1.
+  share_transfer_funds:
+    entities:
+      - funds
+    utterances:
+      - I want to transfer $funds.
+      - I want to send $funds
+      - $funds
+
+actions:
+  get-task:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-task
+      overall_intent: share_task
+      entities:
+        - task
+      message_variants:
+        - What would you like to do next? Your options are`:`\ntransfer funds between accounts\ne-transfer\nrequest money\npay bills\ncancel card
+      fallback_message_variants:
+        - Sorry, that isn't a valid banking option.
+      additional_updates:
+        - outcome:
+            task:
+              known: true
+          updates:
+            goal:
+              value: true
+              known: true
+  # get-transfer-settings:
+  #   type: custom
+  #   subtype: slot_fill
+  #   parameters:
+  #     action_name: get-transfer-settings
+  #     overall_intent: share_transfer_settings
+  #     entities:
+  #       - account1
+  #       - account2
+  #     message_variants:
+  #       - Which accounts do you want to transfer funds between?
+  #       - Which accounts do you want to send money to and from?
+  #       - Please enter the accounts you want to transfer money between.
+  #     fallback_message_variants:
+  #       - Sorry, that isn't a valid transfer option.
+  #     config_entities:
+  #       account1:
+  #         fallback_message_variants:
+  #           - Sorry, that isn't a valid account type.
+  #         single_slot_message_variants:
+  #           - What account type do you want to transfer from?
+  #         single_slot_intent: share_transfer_settings
+  #       account2:
+  #         fallback_message_variants:
+  #           - Sorry, that isn't a valid account type.
+  #         single_slot_message_variants:
+  #           - What account do you want to want to transfer to?
+  #         single_slot_intent: share_transfer_settings
+  #     additional_conditions:
+  #       task:
+  #         known: true
+  #         value: transfer funds between accounts
+  # get-transfer-funds:
+  #   type: custom
+  #   subtype: slot_fill
+  #   parameters:
+  #     action_name: get-transfer-funds
+  #     overall_intent: share_transfer_funds
+  #     entities:
+  #       - funds
+  #     message_variants:
+  #       - How much money do you want to transfer?
+  #       - How much funds do you want to transfer between accounts?
+  #     fallback_message_variants:
+  #       - Sorry, that isn't a valid transfer option.
+  #   additional_conditions:
+  #     account1:
+  #       known: true
+  #     account2:
+  #       known: true
+  # transfer-funds:
+  #   type: system
+  #   condition:
+  #     funds:
+  #       known: true
+  #   effect:
+  #     set-allergy:
+  #       oneof:
+  #         outcomes:
+  #           complete-transfer:
+  #             updates:
+  #               account1:
+  #                 known: false
+  #               account2:
+  #                 known: false
+  #               goal:
+  #                 known: true
+  #                 value: true
+  #             response_variants:
+  #               - Transferring funds from $account1 to $account2...
+...

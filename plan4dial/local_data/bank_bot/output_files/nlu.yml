@@ -1,0 +1,448 @@
+nlu:
+- examples: '- yes
+
+    - yeah
+
+    - that''s it
+
+    - Y
+
+    - mhm
+
+    - confirm
+
+    - yes please'
+  intent: confirm
+- examples: '- no
+
+    - not at all
+
+    - that''s not what i meant
+
+    - absolutely not
+
+    - i don''t want that
+
+    - nah
+
+    - no thanks
+
+    - no thank you'
+  intent: deny
+- examples: '- Can you help me [move money over]{"entity": "task", "value": "transfer
+    funds between accounts"}?
+
+    - I want to [give money to someone else]{"entity": "task", "value": "e-transfer"}.
+
+    - I want to [transfer money to Mark]{"entity": "task", "value": "e-transfer"}.
+
+    - I just want to [transfer money to another person]{"entity": "task", "value":
+    "e-transfer"} today.
+
+    - I want to [transfer funds]{"entity": "task", "value": "transfer funds between
+    accounts"}.
+
+    - I want to [cancel my credit card]{"entity": "task", "value": "cancel card"}.
+
+    - I just want to [pay my monthly utility bill]{"entity": "task", "value": "pay
+    bills"} today.
+
+    - I just want to [pay my credit card bill]{"entity": "task", "value": "pay bills"}
+    today.
+
+    - I just want to [cancel my debit card]{"entity": "task", "value": "cancel card"}
+    today.
+
+    - Can you help me [transfer funds]{"entity": "task", "value": "transfer funds
+    between accounts"}?
+
+    - I want to [give money to Tiana]{"entity": "task", "value": "e-transfer"}.
+
+    - I just want to [request money]{"entity": "task", "value": "request money"} today.
+
+    - I just want to [request funds from Bob]{"entity": "task", "value": "request
+    money"} today.
+
+    - I just want to [send money to Sam]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - I want to [send money to Sam]{"entity": "task", "value": "e-transfer"}.
+
+    - I want to [remove card from my account]{"entity": "task", "value": "cancel card"}.
+
+    - Can you help me [pay off my student loans]{"entity": "task", "value": "pay bills"}?
+
+    - Can you help me [transfer funds to Beth]{"entity": "task", "value": "e-transfer"}?
+
+    - I just want to [move money over]{"entity": "task", "value": "transfer funds
+    between accounts"} today.
+
+    - I just want to [transfer funds to Beth]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - I want to [transfer money to another person]{"entity": "task", "value": "e-transfer"}.
+
+    - I want to [request funds from Bob]{"entity": "task", "value": "request money"}.
+
+    - Can you help me [request money from this person]{"entity": "task", "value":
+    "request money"}?
+
+    - Can you help me [send money to Sam]{"entity": "task", "value": "e-transfer"}?
+
+    - I want to [cancel my debit card]{"entity": "task", "value": "cancel card"}.
+
+    - I just want to [request money from this person]{"entity": "task", "value": "request
+    money"} today.
+
+    - Can you help me [give money to Tiana]{"entity": "task", "value": "e-transfer"}?
+
+    - Can you help me [pay bills]{"entity": "task", "value": "pay bills"}?
+
+    - I want to [give money to another person]{"entity": "task", "value": "e-transfer"}.
+
+    - I want to [request money from someone]{"entity": "task", "value": "request money"}.
+
+    - Can you help me [transfer money to Mark]{"entity": "task", "value": "e-transfer"}?
+
+    - I want to [transfer funds to Beth]{"entity": "task", "value": "e-transfer"}.
+
+    - I want to [send money to another person]{"entity": "task", "value": "e-transfer"}.
+
+    - I want to [pay my bills]{"entity": "task", "value": "pay bills"}.
+
+    - I want to [pay my credit card bill]{"entity": "task", "value": "pay bills"}.
+
+    - I just want to [pay bills]{"entity": "task", "value": "pay bills"} today.
+
+    - Can you help me [e-transfer]{"entity": "task", "value": "e-transfer"}?
+
+    - Can you help me [remove card from my account]{"entity": "task", "value": "cancel
+    card"}?
+
+    - I want to [request money from this person]{"entity": "task", "value": "request
+    money"}.
+
+    - I just want to [transfer between accounts]{"entity": "task", "value": "transfer
+    funds between accounts"} today.
+
+    - I want to [pay off my student loans]{"entity": "task", "value": "pay bills"}.
+
+    - Can you help me [transfer between accounts]{"entity": "task", "value": "transfer
+    funds between accounts"}?
+
+    - Can you help me [cancel my credit card]{"entity": "task", "value": "cancel card"}?
+
+    - I just want to [pay my bills]{"entity": "task", "value": "pay bills"} today.
+
+    - I just want to [cancel card]{"entity": "task", "value": "cancel card"} today.
+
+    - I just want to [send money to another person]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - Can you help me [give money to someone else]{"entity": "task", "value": "e-transfer"}?
+
+    - Can you help me [pay my bills]{"entity": "task", "value": "pay bills"}?
+
+    - Can you help me [send money to someone]{"entity": "task", "value": "e-transfer"}?
+
+    - I want to [pay my monthly utility bill]{"entity": "task", "value": "pay bills"}.
+
+    - I just want to [give money to Tiana]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - I want to [transfer between accounts]{"entity": "task", "value": "transfer funds
+    between accounts"}.
+
+    - I want to [pay bills]{"entity": "task", "value": "pay bills"}.
+
+    - I want to [transfer money over to another account]{"entity": "task", "value":
+    "transfer funds between accounts"}.
+
+    - I want to [request money]{"entity": "task", "value": "request money"}.
+
+    - I just want to [pay off my student loans]{"entity": "task", "value": "pay bills"}
+    today.
+
+    - Can you help me [pay my monthly utility bill]{"entity": "task", "value": "pay
+    bills"}?
+
+    - I want to [transfer funds between accounts]{"entity": "task", "value": "transfer
+    funds between accounts"}.
+
+    - Can you help me [cancel card]{"entity": "task", "value": "cancel card"}?
+
+    - Can you help me [send money to another person]{"entity": "task", "value": "e-transfer"}?
+
+    - I just want to [send money to someone]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - I just want to [give money to someone else]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - I just want to [e-transfer]{"entity": "task", "value": "e-transfer"} today.
+
+    - Can you help me [transfer funds between accounts]{"entity": "task", "value":
+    "transfer funds between accounts"}?
+
+    - I just want to [give money to another person]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - Can you help me [transfer to another person]{"entity": "task", "value": "e-transfer"}?
+
+    - I just want to [transfer funds between accounts]{"entity": "task", "value":
+    "transfer funds between accounts"} today.
+
+    - Can you help me [transfer money to another person]{"entity": "task", "value":
+    "e-transfer"}?
+
+    - I just want to [request money from someone]{"entity": "task", "value": "request
+    money"} today.
+
+    - Can you help me [cancel my debit card]{"entity": "task", "value": "cancel card"}?
+
+    - I just want to [remove card from my account]{"entity": "task", "value": "cancel
+    card"} today.
+
+    - Can you help me [request money from someone]{"entity": "task", "value": "request
+    money"}?
+
+    - I want to [cancel card]{"entity": "task", "value": "cancel card"}.
+
+    - Can you help me [pay my credit card bill]{"entity": "task", "value": "pay bills"}?
+
+    - I just want to [transfer money over to another account]{"entity": "task", "value":
+    "transfer funds between accounts"} today.
+
+    - I want to [send money to someone]{"entity": "task", "value": "e-transfer"}.
+
+    - Can you help me [request funds from Bob]{"entity": "task", "value": "request
+    money"}?
+
+    - I want to [e-transfer]{"entity": "task", "value": "e-transfer"}.
+
+    - Can you help me [transfer money over to another account]{"entity": "task", "value":
+    "transfer funds between accounts"}?
+
+    - I just want to [transfer to another person]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - Can you help me [request money]{"entity": "task", "value": "request money"}?
+
+    - I want to [transfer to another person]{"entity": "task", "value": "e-transfer"}.
+
+    - I want to [move money over]{"entity": "task", "value": "transfer funds between
+    accounts"}.
+
+    - Can you help me [give money to another person]{"entity": "task", "value": "e-transfer"}?
+
+    - I just want to [transfer funds]{"entity": "task", "value": "transfer funds between
+    accounts"} today.
+
+    - I just want to [transfer money to Mark]{"entity": "task", "value": "e-transfer"}
+    today.
+
+    - I just want to [cancel my credit card]{"entity": "task", "value": "cancel card"}
+    today.'
+  intent: share_task
+- examples: '- I want to send funds to [chequing]{"entity": "account2", "value": "chequing"}
+    from [chequing]{"entity": "account1", "value": "chequing"}.
+
+    - Can I transfer money from [college fund]{"entity": "account1", "value": "college
+    fund"} to [retirement fund]{"entity": "account2", "value": "retirement fund"}?
+
+    - I want to transfer funds from [savings]{"entity": "account1", "value": "savings"}
+    to [savings]{"entity": "account2", "value": "savings"}.
+
+    - I want to send money to [savings]{"entity": "account2", "value": "savings"}
+    from [college fund]{"entity": "account1", "value": "college fund"}.
+
+    - I want to send funds to [college fund]{"entity": "account2", "value": "college
+    fund"} from [savings]{"entity": "account1", "value": "savings"}.
+
+    - I want to send funds to [savings]{"entity": "account2", "value": "savings"}
+    from [chequing]{"entity": "account1", "value": "chequing"}.
+
+    - I want to send money to [savings]{"entity": "account2", "value": "savings"}
+    from [savings]{"entity": "account1", "value": "savings"}.
+
+    - I want to transfer funds from [savings]{"entity": "account1", "value": "savings"}
+    to [retirement fund]{"entity": "account2", "value": "retirement fund"}.
+
+    - I want to send money to [college fund]{"entity": "account2", "value": "college
+    fund"} from [chequing]{"entity": "account1", "value": "chequing"}.
+
+    - I want to send funds to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} from [retirement fund]{"entity": "account1", "value": "retirement fund"}.
+
+    - I want to send funds to [savings]{"entity": "account2", "value": "savings"}
+    from [savings]{"entity": "account1", "value": "savings"}.
+
+    - I want to transfer funds from [college fund]{"entity": "account1", "value":
+    "college fund"} to [savings]{"entity": "account2", "value": "savings"}.
+
+    - Can I transfer money from [savings]{"entity": "account1", "value": "savings"}
+    to [chequing]{"entity": "account2", "value": "chequing"}?
+
+    - I want to send money to [chequing]{"entity": "account2", "value": "chequing"}
+    from [chequing]{"entity": "account1", "value": "chequing"}.
+
+    - I want to transfer funds from [chequing]{"entity": "account1", "value": "chequing"}
+    to [savings]{"entity": "account2", "value": "savings"}.
+
+    - I want to send money to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} from [retirement fund]{"entity": "account1", "value": "retirement fund"}.
+
+    - I want to send money to [chequing]{"entity": "account2", "value": "chequing"}
+    from [savings]{"entity": "account1", "value": "savings"}.
+
+    - I want to send funds to [savings]{"entity": "account2", "value": "savings"}
+    from [retirement fund]{"entity": "account1", "value": "retirement fund"}.
+
+    - Can I transfer money from [chequing]{"entity": "account1", "value": "chequing"}
+    to [savings]{"entity": "account2", "value": "savings"}?
+
+    - I want to transfer funds from [chequing]{"entity": "account1", "value": "chequing"}
+    to [college fund]{"entity": "account2", "value": "college fund"}.
+
+    - Can I transfer money from [savings]{"entity": "account1", "value": "savings"}
+    to [retirement fund]{"entity": "account2", "value": "retirement fund"}?
+
+    - I want to transfer funds from [savings]{"entity": "account1", "value": "savings"}
+    to [chequing]{"entity": "account2", "value": "chequing"}.
+
+    - I want to send funds to [chequing]{"entity": "account2", "value": "chequing"}
+    from [college fund]{"entity": "account1", "value": "college fund"}.
+
+    - Can I transfer money from [savings]{"entity": "account1", "value": "savings"}
+    to [savings]{"entity": "account2", "value": "savings"}?
+
+    - I want to send money to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} from [chequing]{"entity": "account1", "value": "chequing"}.
+
+    - I want to send funds to [college fund]{"entity": "account2", "value": "college
+    fund"} from [chequing]{"entity": "account1", "value": "chequing"}.
+
+    - Can I transfer money from [chequing]{"entity": "account1", "value": "chequing"}
+    to [chequing]{"entity": "account2", "value": "chequing"}?
+
+    - I want to send money to [chequing]{"entity": "account2", "value": "chequing"}
+    from [college fund]{"entity": "account1", "value": "college fund"}.
+
+    - I want to send funds to [savings]{"entity": "account2", "value": "savings"}
+    from [college fund]{"entity": "account1", "value": "college fund"}.
+
+    - I want to transfer funds from [college fund]{"entity": "account1", "value":
+    "college fund"} to [college fund]{"entity": "account2", "value": "college fund"}.
+
+    - Can I transfer money from [college fund]{"entity": "account1", "value": "college
+    fund"} to [college fund]{"entity": "account2", "value": "college fund"}?
+
+    - I want to send money to [college fund]{"entity": "account2", "value": "college
+    fund"} from [college fund]{"entity": "account1", "value": "college fund"}.
+
+    - Can I transfer money from [chequing]{"entity": "account1", "value": "chequing"}
+    to [retirement fund]{"entity": "account2", "value": "retirement fund"}?
+
+    - I want to transfer funds from [chequing]{"entity": "account1", "value": "chequing"}
+    to [chequing]{"entity": "account2", "value": "chequing"}.
+
+    - I want to send funds to [chequing]{"entity": "account2", "value": "chequing"}
+    from [retirement fund]{"entity": "account1", "value": "retirement fund"}.
+
+    - Can I transfer money from [college fund]{"entity": "account1", "value": "college
+    fund"} to [chequing]{"entity": "account2", "value": "chequing"}?
+
+    - I want to send funds to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} from [chequing]{"entity": "account1", "value": "chequing"}.
+
+    - I want to send money to [college fund]{"entity": "account2", "value": "college
+    fund"} from [retirement fund]{"entity": "account1", "value": "retirement fund"}.
+
+    - I want to transfer funds from [college fund]{"entity": "account1", "value":
+    "college fund"} to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"}.
+
+    - I want to send funds to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} from [college fund]{"entity": "account1", "value": "college fund"}.
+
+    - I want to transfer funds from [college fund]{"entity": "account1", "value":
+    "college fund"} to [chequing]{"entity": "account2", "value": "chequing"}.
+
+    - I want to transfer funds from [savings]{"entity": "account1", "value": "savings"}
+    to [college fund]{"entity": "account2", "value": "college fund"}.
+
+    - I want to send money to [college fund]{"entity": "account2", "value": "college
+    fund"} from [savings]{"entity": "account1", "value": "savings"}.
+
+    - Can I transfer money from [retirement fund]{"entity": "account1", "value": "retirement
+    fund"} to [retirement fund]{"entity": "account2", "value": "retirement fund"}?
+
+    - Can I transfer money from [savings]{"entity": "account1", "value": "savings"}
+    to [college fund]{"entity": "account2", "value": "college fund"}?
+
+    - I want to transfer funds from [retirement fund]{"entity": "account1", "value":
+    "retirement fund"} to [savings]{"entity": "account2", "value": "savings"}.
+
+    - Can I transfer money from [college fund]{"entity": "account1", "value": "college
+    fund"} to [savings]{"entity": "account2", "value": "savings"}?
+
+    - Can I transfer money from [chequing]{"entity": "account1", "value": "chequing"}
+    to [college fund]{"entity": "account2", "value": "college fund"}?
+
+    - Can I transfer money from [retirement fund]{"entity": "account1", "value": "retirement
+    fund"} to [chequing]{"entity": "account2", "value": "chequing"}?
+
+    - I want to send money to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} from [college fund]{"entity": "account1", "value": "college fund"}.
+
+    - I want to send money to [chequing]{"entity": "account2", "value": "chequing"}
+    from [retirement fund]{"entity": "account1", "value": "retirement fund"}.
+
+    - I want to transfer funds from [retirement fund]{"entity": "account1", "value":
+    "retirement fund"} to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"}.
+
+    - I want to send money to [savings]{"entity": "account2", "value": "savings"}
+    from [retirement fund]{"entity": "account1", "value": "retirement fund"}.
+
+    - Can I transfer money from [retirement fund]{"entity": "account1", "value": "retirement
+    fund"} to [savings]{"entity": "account2", "value": "savings"}?
+
+    - I want to transfer funds from [retirement fund]{"entity": "account1", "value":
+    "retirement fund"} to [college fund]{"entity": "account2", "value": "college fund"}.
+
+    - I want to send money to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} from [savings]{"entity": "account1", "value": "savings"}.
+
+    - I want to send funds to [chequing]{"entity": "account2", "value": "chequing"}
+    from [savings]{"entity": "account1", "value": "savings"}.
+
+    - Can I transfer money from [retirement fund]{"entity": "account1", "value": "retirement
+    fund"} to [college fund]{"entity": "account2", "value": "college fund"}?
+
+    - I want to send funds to [college fund]{"entity": "account2", "value": "college
+    fund"} from [college fund]{"entity": "account1", "value": "college fund"}.
+
+    - I want to send funds to [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} from [savings]{"entity": "account1", "value": "savings"}.
+
+    - I want to send funds to [college fund]{"entity": "account2", "value": "college
+    fund"} from [retirement fund]{"entity": "account1", "value": "retirement fund"}.
+
+    - I want to transfer funds from [retirement fund]{"entity": "account1", "value":
+    "retirement fund"} to [chequing]{"entity": "account2", "value": "chequing"}.
+
+    - I want to send money to [savings]{"entity": "account2", "value": "savings"}
+    from [chequing]{"entity": "account1", "value": "chequing"}.
+
+    - I want to transfer funds from [chequing]{"entity": "account1", "value": "chequing"}
+    to [retirement fund]{"entity": "account2", "value": "retirement fund"}.'
+  intent: share_transfer_settings
+- examples: '- \d'
+  regex: funds
+- examples: '- I want to transfer [$funds]{"entity": "funds", "value": "$funds"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"}
+
+    - [$funds]{"entity": "funds", "value": "$funds"}'
+  intent: share_transfer_funds

@@ -1,0 +1,319 @@
+{
+    "name": "bank bot",
+    "context_variables": {
+        "task": {
+            "type": "enum",
+            "config": {
+                "transfer funds between accounts": {
+                    "variations": [
+                        "transfer funds",
+                        "move money over",
+                        "transfer between accounts",
+                        "transfer money over to another account"
+                    ]
+                },
+                "e-transfer": {
+                    "variations": [
+                        "transfer to another person",
+                        "transfer money to another person",
+                        "send money to someone",
+                        "give money to someone else",
+                        "send money to another person",
+                        "give money to another person",
+                        "transfer money to Mark",
+                        "transfer funds to Beth",
+                        "send money to Sam",
+                        "give money to Tiana"
+                    ]
+                },
+                "request money": {
+                    "variations": [
+                        "request money from someone",
+                        "request money from this person",
+                        "request funds from Bob"
+                    ]
+                },
+                "pay bills": {
+                    "variations": [
+                        "pay my bills",
+                        "pay my credit card bill",
+                        "pay off my student loans",
+                        "pay my monthly utility bill"
+                    ]
+                },
+                "cancel card": {
+                    "variations": [
+                        "cancel my credit card",
+                        "cancel my debit card",
+                        "remove card from my account"
+                    ]
+                }
+            },
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "account1": {
+            "type": "enum",
+            "config": [
+                "chequing",
+                "savings",
+                "retirement fund",
+                "college fund"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "account2": {
+            "type": "enum",
+            "config": [
+                "chequing",
+                "savings",
+                "retirement fund",
+                "college fund"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "funds": {
+            "type": "json",
+            "config": {
+                "extraction": {
+                    "method": "regex",
+                    "pattern": "\\d"
+                }
+            },
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "goal": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "confirm": {
+            "entities": [],
+            "utterances": [
+                "yes",
+                "yeah",
+                "that's it",
+                "Y",
+                "mhm",
+                "confirm",
+                "yes please"
+            ],
+            "type": "regular"
+        },
+        "deny": {
+            "entities": [],
+            "utterances": [
+                "no",
+                "not at all",
+                "that's not what i meant",
+                "absolutely not",
+                "i don't want that",
+                "nah",
+                "no thanks",
+                "no thank you"
+            ],
+            "type": "regular"
+        },
+        "share_task": {
+            "entities": [
+                "$task"
+            ],
+            "utterances": [
+                "I want to $task.",
+                "I just want to $task today.",
+                "Can you help me $task?"
+            ],
+            "type": "regular"
+        },
+        "share_transfer_settings": {
+            "entities": [
+                "$account1",
+                "$account2"
+            ],
+            "utterances": [
+                "I want to transfer funds from $account1 to $account2.",
+                "Can I transfer money from $account1 to $account2?",
+                "I want to send money to $account2 from $account1.",
+                "I want to send funds to $account2 from $account1."
+            ],
+            "type": "regular"
+        },
+        "share_transfer_funds": {
+            "entities": [
+                "$funds"
+            ],
+            "utterances": [
+                "I want to transfer $funds.",
+                "I want to send $funds",
+                "$funds"
+            ],
+            "type": "regular"
+        },
+        "fallback": {
+            "entities": [],
+            "utterances": [],
+            "type": "fallback"
+        },
+        "utter_ds": {
+            "entities": [],
+            "utterances": [],
+            "type": "regular"
+        }
+    },
+    "actions": {
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "dialogue_statement__reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_ds",
+                        "name": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "intents": {
+                "utter_ds": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                }
+            }
+        },
+        "slot-fill__get-task": {
+            "type": "dialogue",
+            "message_variants": [
+                "What would you like to do next? Your options are`:`\\ntransfer funds between accounts\\ne-transfer\\nrequest money\\npay bills\\ncancel card"
+            ],
+            "fallback_message_variants": [
+                "Sorry, that isn't a valid banking option."
+            ],
+            "condition": [
+                [
+                    "task",
+                    null
+                ],
+                [
+                    "task",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get-task__validate-slot-fill",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "task": {
+                                "value": "$task",
+                                "variable": "task",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_task",
+                        "name": "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-task_found",
+                        "assignments": {
+                            "$task": "found",
+                            "$goal": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_task": {
+                    "entities": [
+                        "$task"
+                    ],
+                    "utterances": [
+                        "I want to $task.",
+                        "I just want to $task today.",
+                        "Can you help me $task?"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        }
+    }
+}

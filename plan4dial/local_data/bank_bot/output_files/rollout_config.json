@@ -1,0 +1,43 @@
+{
+    "actions": {
+        "dialogue_statement": {
+            "condition": [
+                "(have-message)",
+                "(force-statement)"
+            ],
+            "effect": {
+                "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
+                    "(not (force-statement))",
+                    "(not (have-message))"
+                ]
+            }
+        },
+        "slot-fill__get-task": {
+            "condition": [
+                "(not (force-statement))",
+                "(not (know__task))"
+            ],
+            "effect": {
+                "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-task_found": [
+                    "(goal)",
+                    "(know__goal)",
+                    "(know__task)"
+                ],
+                "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
+                ]
+            }
+        }
+    },
+    "initial_state": [
+        "(not (know__account2))",
+        "(not (know__goal))",
+        "(not (have-message))",
+        "(not (know__funds))",
+        "(not (know__account1))",
+        "(not (force-statement))",
+        "(not (goal))",
+        "(not (know__task))"
+    ]
+}

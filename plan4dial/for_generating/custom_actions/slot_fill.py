@@ -102,8 +102,7 @@ def slot_fill(
             extraction happens AT ANY POINT. Indicate the extraction that happens in
             the outcome by specifying the `known` status of the entities you desire.
             You can not only use this to add arbitrary context variable updates under
-            `also_update` but also other outcome-specific attributes such as
-            `response_variants`.
+            `updates` but also specify `response_variants` and `follow_up`.
 
                 | **NOTE**: Will only match to outcomes that match the given
                     specification exactly. For example, if you specify an additional
