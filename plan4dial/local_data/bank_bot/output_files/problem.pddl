@@ -1,6 +1,6 @@
 (define
-    (problem bank bot-problem)
-             (:domain bank bot)
+    (problem bank-bot-problem)
+             (:domain bank-bot)
     (:objects )
     (:init
     )

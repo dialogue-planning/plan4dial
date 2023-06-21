@@ -19,9 +19,9 @@
             ],
             "effect": {
                 "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-task_found": [
-                    "(goal)",
+                    "(know__task)",
                     "(know__goal)",
-                    "(know__task)"
+                    "(goal)"
                 ],
                 "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-fallback": [
                     "(have-message)",
@@ -31,13 +31,13 @@
         }
     },
     "initial_state": [
-        "(not (know__account2))",
-        "(not (know__goal))",
-        "(not (have-message))",
         "(not (know__funds))",
-        "(not (know__account1))",
+        "(not (know__goal))",
         "(not (force-statement))",
+        "(not (have-message))",
         "(not (goal))",
-        "(not (know__task))"
+        "(not (know__task))",
+        "(not (know__account2))",
+        "(not (know__account1))"
     ]
 }

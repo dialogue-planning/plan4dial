@@ -1,5 +1,5 @@
 (define
-    (domain bank bot)
+    (domain bank-bot)
     (:requirements         :strips :typing)
     (:types )
     (:constants )
@@ -41,9 +41,9 @@
             (labeled-oneof         slot-fill__get-task__validate-slot-fill
                 (outcome task_found
                     (and
-                        (goal)
-                        (know__goal)
                         (know__task)
+                        (know__goal)
+                        (goal)
                     )
                 )
                 (outcome fallback
