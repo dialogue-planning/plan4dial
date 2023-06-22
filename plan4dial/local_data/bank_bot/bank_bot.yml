@@ -68,7 +68,7 @@ context_variables:
     type: json
     extraction: 
       method: regex
-      pattern: \d
+      pattern: ^[1-9]\d*$
     known:
       type: flag
       init: false
@@ -109,32 +109,12 @@ intents:
     entities:
       - account1
       - account2
-    utterances:
-      - I want to transfer funds from $account1 to $account2.
-      - Can I transfer money from $account1 to $account2?
-      - I want to send money to $account2 from $account1.
-      - I want to send funds to $account2 from $account1.
-  share_transfer_funds:
-    entities:
       - funds
     utterances:
-      - I want to transfer $funds.
-      - I want to send $funds
-      - $funds
-  share_acc_1:
-    entities:
-      - account1
-    utterances:
-      - Please transfer from $account1.
-      - I want to send from $account1.
-      - $account1
-  share_acc_2:
-    entities:
-      - account2
-    utterances:
-      - Please transfer from $account2.
-      - I want to send from $account2.
-      - $account2
+      - I want to transfer $funds from $account1 to $account2.
+      - Can I transfer $funds from $account1 to $account2?
+      - I want to send $funds to $account2 from $account1.
+      - I want to send $funds to $account2 from $account1.
 actions:
   get-task:
     type: custom
@@ -149,47 +129,49 @@ actions:
       fallback_message_variants:
         - Sorry, that isn't a valid banking option.
   get-transfer-settings:
-    type: custom
-    subtype: slot_fill
-    parameters:
-      action_name: get-transfer-settings
-      overall_intent: share_transfer_settings
-      entities:
-        - account1
-        - account2
-        - funds
-      message_variants:
-        - Which accounts do you want to transfer funds between, and how much?
-        - Which accounts do you want to send money to and from, and how much?
-        - Please enter the accounts you want to transfer money between and the amount of money you wish to send.
-      fallback_message_variants:
-        - Sorry, that isn't a valid transfer option.
-      config_entities:
-        account1:
-          fallback_message_variants:
-            - Sorry, that isn't a valid account type.
-          single_slot_message_variants:
-            - What account type do you want to transfer from?
-          single_slot_intent: share_acc_1
-        account2:
-          fallback_message_variants:
-            - Sorry, that isn't a valid account type.
-          single_slot_message_variants:
-            - What account do you want to want to transfer to?
-          single_slot_intent: share_acc_2
-        funds:
-          fallback_message_variants:
-            - Sorry, that isn't a valid amount of money.
-          single_slot_message_variants:
-            - How much money do you want to transfer?
-          single_slot_intent: share_funds
-      additional_conditions:
-        task:
-          known: true
-          value: transfer funds between accounts
+    type: dialogue
+    message_variants:
+      - Which accounts do you want to transfer funds between, and how much?
+      - Which accounts do you want to send money to and from, and how much?
+      - Please enter the accounts you want to transfer money between and the amount of money you wish to send.
+    fallback_message_variants:
+      - Sorry, that isn't a valid transfer option.    
+    condition:
+      account1:
+        known: false
+      account2:
+        known: false
+      funds:
+        known: false
+      task:
+        known: true
+        value: transfer funds between accounts
+    effect:
+      validate:
+        oneof:
+          outcomes:
+            complete-transfer:
+              updates:
+                account1:
+                  known: true
+                  value: $account1
+                account2:
+                  known: true
+                  value: $account2
+                funds:
+                  known: true
+                  value: $funds
+              intent: share_transfer_settings
   confirm-transfer:
     type: dialogue
+    disable-fallback: true
+    message_variants:
+      - Transferring $funds from $account1 to $account2...
     condition:
+      account1:
+        known: true
+      account2:
+        known: true
       funds:
         known: true
     effect:
@@ -203,9 +185,8 @@ actions:
                 account2:
                   known: false
                 funds:
-                  known: true
+                  known: false
                 goal:
                   value: true
-              response_variants:
-                - Transferring funds from $account1 to $account2...
+              intent:
 ...

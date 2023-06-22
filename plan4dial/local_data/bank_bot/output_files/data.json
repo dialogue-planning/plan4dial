@@ -49,7 +49,7 @@
             "config": {
                 "extraction": {
                     "method": "regex",
-                    "pattern": "\\d"
+                    "pattern": "^[1-9]\\d*$"
                 }
             },
             "known": {
@@ -70,18 +70,6 @@
             "config": false
         },
         "force-statement": {
-            "type": "flag",
-            "config": false
-        },
-        "allow_single_slot_funds": {
-            "type": "flag",
-            "config": false
-        },
-        "allow_single_slot_account2": {
-            "type": "flag",
-            "config": false
-        },
-        "allow_single_slot_account1": {
             "type": "flag",
             "config": false
         },
@@ -132,46 +120,14 @@
         "share_transfer_settings": {
             "entities": [
                 "$account1",
-                "$account2"
-            ],
-            "utterances": [
-                "I want to transfer funds from $account1 to $account2.",
-                "Can I transfer money from $account1 to $account2?",
-                "I want to send money to $account2 from $account1.",
-                "I want to send funds to $account2 from $account1."
-            ],
-            "type": "regular"
-        },
-        "share_transfer_funds": {
-            "entities": [
+                "$account2",
                 "$funds"
             ],
             "utterances": [
-                "I want to transfer $funds.",
-                "I want to send $funds",
-                "$funds"
-            ],
-            "type": "regular"
-        },
-        "share_acc_1": {
-            "entities": [
-                "$account1"
-            ],
-            "utterances": [
-                "Please transfer from $account1.",
-                "I want to send from $account1.",
-                "$account1"
-            ],
-            "type": "regular"
-        },
-        "share_acc_2": {
-            "entities": [
-                "$account2"
-            ],
-            "utterances": [
-                "Please transfer from $account2.",
-                "I want to send from $account2.",
-                "$account2"
+                "I want to transfer $funds from $account1 to $account2.",
+                "Can I transfer $funds from $account1 to $account2?",
+                "I want to send $funds to $account2 from $account1.",
+                "I want to send $funds to $account2 from $account1."
             ],
             "type": "regular"
         },
@@ -187,9 +143,131 @@
         }
     },
     "actions": {
+        "get-transfer-settings": {
+            "type": "dialogue",
+            "message_variants": [
+                "Which accounts do you want to transfer funds between, and how much?",
+                "Which accounts do you want to send money to and from, and how much?",
+                "Please enter the accounts you want to transfer money between and the amount of money you wish to send."
+            ],
+            "fallback_message_variants": [
+                "Sorry, that isn't a valid transfer option."
+            ],
+            "condition": [
+                [
+                    "account1",
+                    "Unknown"
+                ],
+                [
+                    "account2",
+                    "Unknown"
+                ],
+                [
+                    "funds",
+                    "Unknown"
+                ],
+                [
+                    "task",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "task-value-transfer_funds_between_accounts",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-transfer-settings__validate",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "account1": {
+                                "value": "$account1",
+                                "variable": "account1",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "account2": {
+                                "value": "$account2",
+                                "variable": "account2",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "funds": {
+                                "value": "$funds",
+                                "variable": "funds",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_transfer_settings",
+                        "name": "get-transfer-settings_DETDUP_get-transfer-settings__validate-EQ-complete-transfer",
+                        "assignments": {
+                            "$account1": "found",
+                            "$account2": "found",
+                            "$funds": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-transfer-settings_DETDUP_get-transfer-settings__validate-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_transfer_settings": {
+                    "entities": [
+                        "$account1",
+                        "$account2",
+                        "$funds"
+                    ],
+                    "utterances": [
+                        "I want to transfer $funds from $account1 to $account2.",
+                        "Can I transfer $funds from $account1 to $account2?",
+                        "I want to send $funds to $account2 from $account1.",
+                        "I want to send $funds to $account2 from $account1."
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
         "confirm-transfer": {
             "type": "dialogue",
+            "disable-fallback": true,
+            "message_variants": [
+                "Transferring $funds from $account1 to $account2..."
+            ],
             "condition": [
+                [
+                    "account1",
+                    "Known"
+                ],
+                [
+                    "account2",
+                    "Known"
+                ],
                 [
                     "funds",
                     "Known"
@@ -219,7 +297,7 @@
                             },
                             "funds": {
                                 "variable": "funds",
-                                "certainty": "Known",
+                                "certainty": "Unknown",
                                 "value": null,
                                 "interpretation": "json"
                             },
@@ -227,59 +305,19 @@
                                 "value": true,
                                 "variable": "goal",
                                 "interpretation": "json"
-                            },
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
                             }
                         },
-                        "response_variants": [
-                            "Transferring funds from $account1 to $account2..."
-                        ],
-                        "name": "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete-transfer",
                         "intent": null,
+                        "name": "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete-transfer",
                         "assignments": {
                             "$account1": "didnt-find",
                             "$account2": "didnt-find",
-                            "$funds": "found"
+                            "$funds": "didnt-find"
                         }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
             },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
-            "intents": {
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
-                }
-            }
+            "intents": {}
         },
         "dialogue_statement": {
             "type": "dialogue",
@@ -394,540 +432,6 @@
                         "I want to $task.",
                         "I just want to $task today.",
                         "Can you help me $task?"
-                    ],
-                    "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
-                }
-            }
-        },
-        "slot-fill__get-transfer-settings": {
-            "type": "dialogue",
-            "message_variants": [
-                "Which accounts do you want to transfer funds between, and how much?",
-                "Which accounts do you want to send money to and from, and how much?",
-                "Please enter the accounts you want to transfer money between and the amount of money you wish to send."
-            ],
-            "fallback_message_variants": [
-                "Sorry, that isn't a valid transfer option."
-            ],
-            "condition": [
-                [
-                    "account1",
-                    null
-                ],
-                [
-                    "account1",
-                    "Unknown"
-                ],
-                [
-                    "account2",
-                    null
-                ],
-                [
-                    "account2",
-                    "Unknown"
-                ],
-                [
-                    "funds",
-                    null
-                ],
-                [
-                    "funds",
-                    "Unknown"
-                ],
-                [
-                    "task",
-                    "Known"
-                ],
-                [
-                    "force-statement",
-                    false
-                ],
-                [
-                    "task-value-transfer_funds_between_accounts",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "slot-fill__get-transfer-settings__validate-slot-fill",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "account1": {
-                                "value": "$account1",
-                                "variable": "account1",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "account2": {
-                                "value": "$account2",
-                                "variable": "account2",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "funds": {
-                                "value": "$funds",
-                                "variable": "funds",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_transfer_settings",
-                        "name": "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account1_found-account2_found-funds_found",
-                        "assignments": {
-                            "$account1": "found",
-                            "$account2": "found",
-                            "$funds": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "account1": {
-                                "value": "$account1",
-                                "variable": "account1",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "account2": {
-                                "value": "$account2",
-                                "variable": "account2",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_funds": {
-                                "value": true,
-                                "variable": "allow_single_slot_funds",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_transfer_settings",
-                        "name": "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account1_found-account2_found",
-                        "assignments": {
-                            "$account1": "found",
-                            "$account2": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "account1": {
-                                "value": "$account1",
-                                "variable": "account1",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "funds": {
-                                "value": "$funds",
-                                "variable": "funds",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_account2": {
-                                "value": true,
-                                "variable": "allow_single_slot_account2",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_transfer_settings",
-                        "name": "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account1_found-funds_found",
-                        "assignments": {
-                            "$account1": "found",
-                            "$funds": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "account1": {
-                                "value": "$account1",
-                                "variable": "account1",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_account2": {
-                                "value": true,
-                                "variable": "allow_single_slot_account2",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_funds": {
-                                "value": true,
-                                "variable": "allow_single_slot_funds",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_acc_1",
-                        "name": "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account1_found",
-                        "assignments": {
-                            "$account1": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "account2": {
-                                "value": "$account2",
-                                "variable": "account2",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "funds": {
-                                "value": "$funds",
-                                "variable": "funds",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_account1": {
-                                "value": true,
-                                "variable": "allow_single_slot_account1",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_transfer_settings",
-                        "name": "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account2_found-funds_found",
-                        "assignments": {
-                            "$account2": "found",
-                            "$funds": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "account2": {
-                                "value": "$account2",
-                                "variable": "account2",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_account1": {
-                                "value": true,
-                                "variable": "allow_single_slot_account1",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_funds": {
-                                "value": true,
-                                "variable": "allow_single_slot_funds",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_acc_2",
-                        "name": "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-account2_found",
-                        "assignments": {
-                            "$account2": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "funds": {
-                                "value": "$funds",
-                                "variable": "funds",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_account1": {
-                                "value": true,
-                                "variable": "allow_single_slot_account1",
-                                "interpretation": "json"
-                            },
-                            "allow_single_slot_account2": {
-                                "value": true,
-                                "variable": "allow_single_slot_account2",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_funds",
-                        "name": "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-funds_found",
-                        "assignments": {
-                            "$funds": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "slot-fill__get-transfer-settings_DETDUP_slot-fill__get-transfer-settings__validate-slot-fill-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "intents": {
-                "share_transfer_settings": {
-                    "entities": [
-                        "$account1",
-                        "$account2"
-                    ],
-                    "utterances": [
-                        "I want to transfer funds from $account1 to $account2.",
-                        "Can I transfer money from $account1 to $account2?",
-                        "I want to send money to $account2 from $account1.",
-                        "I want to send funds to $account2 from $account1."
-                    ],
-                    "type": "regular"
-                },
-                "share_acc_1": {
-                    "entities": [
-                        "$account1"
-                    ],
-                    "utterances": [
-                        "Please transfer from $account1.",
-                        "I want to send from $account1.",
-                        "$account1"
-                    ],
-                    "type": "regular"
-                },
-                "share_acc_2": {
-                    "entities": [
-                        "$account2"
-                    ],
-                    "utterances": [
-                        "Please transfer from $account2.",
-                        "I want to send from $account2.",
-                        "$account2"
-                    ],
-                    "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
-                }
-            }
-        },
-        "single_slot__funds": {
-            "type": "dialogue",
-            "message_variants": [
-                "How much money do you want to transfer?"
-            ],
-            "condition": [
-                [
-                    "funds",
-                    "Unknown"
-                ],
-                [
-                    "allow_single_slot_funds",
-                    true
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "single_slot__funds__validate-slot-fill",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "funds": {
-                                "value": "$funds",
-                                "variable": "funds",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "allow_single_slot_funds": {
-                            "value": false
-                        },
-                        "intent": "share_funds",
-                        "name": "single_slot__funds_DETDUP_single_slot__funds__validate-slot-fill-EQ-fill-slot",
-                        "assignments": {
-                            "$funds": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "single_slot__funds_DETDUP_single_slot__funds__validate-slot-fill-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, that isn't a valid amount of money."
-            ],
-            "intents": {
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
-                }
-            }
-        },
-        "single_slot__account2": {
-            "type": "dialogue",
-            "message_variants": [
-                "What account do you want to want to transfer to?"
-            ],
-            "condition": [
-                [
-                    "account2",
-                    "Unknown"
-                ],
-                [
-                    "allow_single_slot_account2",
-                    true
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "single_slot__account2__validate-slot-fill",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "account2": {
-                                "value": "$account2",
-                                "variable": "account2",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "allow_single_slot_account2": {
-                            "value": false
-                        },
-                        "intent": "share_acc_2",
-                        "name": "single_slot__account2_DETDUP_single_slot__account2__validate-slot-fill-EQ-fill-slot",
-                        "assignments": {
-                            "$account2": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "single_slot__account2_DETDUP_single_slot__account2__validate-slot-fill-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, that isn't a valid account type."
-            ],
-            "intents": {
-                "share_acc_2": {
-                    "entities": [
-                        "$account2"
-                    ],
-                    "utterances": [
-                        "Please transfer from $account2.",
-                        "I want to send from $account2.",
-                        "$account2"
-                    ],
-                    "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
-                }
-            }
-        },
-        "single_slot__account1": {
-            "type": "dialogue",
-            "message_variants": [
-                "What account type do you want to transfer from?"
-            ],
-            "condition": [
-                [
-                    "account1",
-                    "Unknown"
-                ],
-                [
-                    "allow_single_slot_account1",
-                    true
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "single_slot__account1__validate-slot-fill",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "account1": {
-                                "value": "$account1",
-                                "variable": "account1",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "allow_single_slot_account1": {
-                            "value": false
-                        },
-                        "intent": "share_acc_1",
-                        "name": "single_slot__account1_DETDUP_single_slot__account1__validate-slot-fill-EQ-fill-slot",
-                        "assignments": {
-                            "$account1": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "single_slot__account1_DETDUP_single_slot__account1__validate-slot-fill-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, that isn't a valid account type."
-            ],
-            "intents": {
-                "share_acc_1": {
-                    "entities": [
-                        "$account1"
-                    ],
-                    "utterances": [
-                        "Please transfer from $account1.",
-                        "I want to send from $account1.",
-                        "$account1"
                     ],
                     "type": "regular"
                 },
