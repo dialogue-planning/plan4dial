@@ -1,20 +1,19 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Welcome to Plan4Dial’s documentation! &mdash; Plan4Dial 1.0.0 documentation</title>
+  <title>Plan4Dial &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -28,11 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> Plan4Dial
+
+          
+          
+          <a href="#" class="icon icon-home">
+            Plan4Dial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -58,8 +61,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>Welcome to Plan4Dial’s documentation!</li>
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Plan4Dial</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -69,14 +72,33 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="welcome-to-plan4dial-s-documentation">
-<h1>Welcome to Plan4Dial’s documentation!<a class="headerlink" href="#welcome-to-plan4dial-s-documentation" title="Permalink to this heading"></a></h1>
-<p id="why">Why Plan4Dial?</p>
+  <section id="plan4dial">
+<h1>Plan4Dial<a class="headerlink" href="#plan4dial" title="Permalink to this heading"></a></h1>
+<section id="why-use-plan4dial">
+<span id="why"></span><h2>Why Use Plan4Dial?<a class="headerlink" href="#why-use-plan4dial" title="Permalink to this heading"></a></h2>
+<p>Dialogue planning uses automated planning to generate dialogue graphs, which eliminates the need to painstakingly craft these graphs by hand and creates robust and maintainable agents.
+<strong>Plan4Dial is the first open and readily available modern framework for dialogue planning development.</strong></p>
+<p>With just one user-specified YAML file as input, Plan4Dial offers:</p>
+<ul class="simple">
+<li><p>Direct translation to PDDL, eliminating the need to tediously handwrite PDDL</p></li>
+<li><p>Full specification + training of an NLU model through <a class="reference external" href="https://rasa.com/docs/rasa/nlu-only/">Rasa’s NLU-only interface</a>, along with <a class="reference external" href="https://rasa.com/docs/rasa/components/">custom pipeline components</a></p></li>
+<li><p>The ability to specify how individual entities are extracted <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/blob/5cb3cc7493ab691b06fbb9f80c99de039b8ebb40/plan4dial/local_data/gold_standard_bot/gold_standard_bot.yml#L7">(example here)</a></p></li>
+<li><p>Support for <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/for_generating/custom_actions">custom action templates</a></p></li>
+<li><p>The ability to run and deploy agents through our extension of <a class="reference external" href="https://github.com/dialogue-planning/contingent-plan-executor">IBM’s Hovor</a> and our embeddable web UI, <a class="reference external" href="https://github.com/dialogue-planning/widget">WIDGET</a></p></li>
+<li><p>Support for <a class="reference external" href="https://github.com/dialogue-planning/contingent-plan-executor/tree/main/contingent_plan_executor/hovor/outcome_determiners">custom outcome determiners</a> (created in Hovor)</p></li>
+</ul>
+<p>The declarative nature of Plan4Dial allows you to get a chatbot running quickly and throw in new actions and variables at any point in development.</p>
+</section>
+<section id="framework-flow">
+<h2>Framework Flow<a class="headerlink" href="#framework-flow" title="Permalink to this heading"></a></h2>
+<img alt="_images/flow.png" src="_images/flow.png" />
+<p>Here we detail the design flow of our approach.</p>
+<p>First, the developer writes a YAML file <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot/gold_standard_bot.yml">(example YAML file here)</a> which contains a declarative description of their agent.
+The file is then passed to Plan4Dial, which <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/main.py">converts the file to raw PDDL and attempts to generate a plan</a>.
+The valid plan, if found, is then passed to Hovor to <a class="reference external" href="https://github.com/dialogue-planning/contingent-plan-executor/blob/main/README.md">execute the conversation</a>, either through the CLI or through <a class="reference external" href="https://github.com/dialogue-planning/widget">WIDGET</a> (which calls the endpoints defined in Hovor).</p>
+<p>See the <a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">Tutorial</span></a> for an in-depth explanation on how to specify the YAML file.</p>
+<p>🤖 Time to get chatting! 🤖</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/plan4dial.html#module-plan4dial" title="plan4dial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plan4dial</span></code></a></p></td>
 <td><p></p></td>
@@ -86,7 +108,8 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="tutorial.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#requirements-local-install">Requirements - Local Install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorial.html#requirements-docker">Requirements - Docker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tutorial.html#usage-steps">Usage Steps</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="tutorial.html#create-a-yaml-config-file-that-defines-your-bot">Create a YAML config file that defines your bot.</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="tutorial.html#define-the-context-variables">1. Define the Context Variables</a></li>
@@ -101,6 +124,7 @@
 </li>
 </ul>
 </div>
+</section>
 </section>
 
 

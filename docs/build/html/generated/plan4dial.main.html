@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title>
@@ -11,17 +11,14 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Tutorial" href="../tutorial.html" />
-    <link rel="prev" title="plan4dial.for_generating.parsers.pddl_parser" href="plan4dial.for_generating.parsers.pddl_parser.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -29,28 +26,26 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Plan4Dial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Plan4Dial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="plan4dial.html">plan4dial</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="plan4dial.for_generating.html">plan4dial.for_generating</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">plan4dial.main</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#plan4dial.main.generate_files"><code class="docutils literal notranslate"><span class="pre">generate_files()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="plan4dial.html">plan4dial</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../landing.html">For ICAPS Demo Viewers</a></li>
 </ul>
 
         </div>
@@ -66,9 +61,8 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="plan4dial.html">plan4dial</a> &raquo;</li>
-      <li>plan4dial.main</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">plan4dial.main</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/plan4dial.main.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -86,35 +80,32 @@ Authors:
 - Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_files</span></code></a>(yaml_filename, output_folder, ...)</p></td>
-<td><p>Responsible for generating the files that will be sent to HOVOR (<cite>contingent-plan-executor</cite>) for executor.</p></td>
+<td><p>Responsible for generating the files that will be sent to HOVOR (<cite>contingent-plan-executor</cite>) for execution.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.main.generate_files">
-<span class="sig-name descname"><span class="pre">generate_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbp_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.main.generate_files" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">generate_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbp_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.main.generate_files" title="Permalink to this definition"></a></dt>
 <dd><p>Responsible for generating the files that will be sent to HOVOR
-(<cite>contingent-plan-executor</cite>) for executor.</p>
+(<cite>contingent-plan-executor</cite>) for execution.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>yaml_filename</strong> (<em>str</em>) – The path to the filled out YAML configuration.</p></li>
 <li><p><strong>output_folder</strong> (<em>str</em>) – Output folder where the files will be stored.</p></li>
-<li><p><strong>rbp_path</strong> (<em>str</em>) – Path to the <a class="reference external" href="https://github.com/QuMuLab/rbp">rbp</a> directory so
-the planner can be run.</p></li>
+<li><p><strong>rbp_path</strong> (<em>str</em>) – Path to the <a class="reference external" href="https://github.com/QuMuLab/rbp">rbp</a> directory
+so the planner can be run. This can be a path directly to the
+executable .sif file.</p></li>
 <li><p><strong>train</strong> (<em>bool</em><em>, </em><em>optional</em>) – Determines if training is required. It is best to set
 to False if you made changes to the YAML that require some new output
 files, but the NLU model is not affected (no changes in the Rasa NLU YAML
 configuration). Defaults to True.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>(</strong><strong>Exception</strong><strong>)</strong> – Raised if the planner was not able to find a valid plan. Happens
     if the YAML configuration (and by proxy, the PDDL) is invalid in some way
     (i.e. missing actions, can’t get out of a loop, etc.)</p>
@@ -127,10 +118,7 @@ configuration). Defaults to True.</p></li>
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="plan4dial.for_generating.parsers.pddl_parser.html" class="btn btn-neutral float-left" title="plan4dial.for_generating.parsers.pddl_parser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

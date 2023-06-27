@@ -1,13 +1,30 @@
+.. _tutorial:
+
 Tutorial
-=========
- 
-Requirements
-------------
+========
+
+Requirements - Local Install
+----------------------------
 **Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.**  
+**Note: If Rasa is giving you issues running, check the latest releases. It may be your version of Python.**.  
 
 | For ease of use and reducing the chance of import or versioning errors, it is recommended that you use a virtual environment such as ``venv``.
 | Run ``pip install -r requirements.txt`` to install the necessary libraries before using.  
 | Run ``python -m spacy download en_core_web_md`` to download the appropriate Spacy model. This is used for NLU along with Rasa.
+
+Requirements - Docker
+---------------------
+
+| To ensure development works identically accross systems, Docker should be used to run Plan4Dial.  
+| Inside the repository, follow these steps to run with Docker:
+| Retrieve a copy of the rbp.sif executable from Christian Muise (christian.muise@queensu.ca) and place this in the cloned repository.
+| Build the docker image from Dockerfile: ``docker build -t plan4dial:latest .``
+| Run a bash session inside a new docker container: ``docker run -it --name plan4dial --rm --volume $(pwd)/plan4dial:/root/app/plan4dial --net=host --privileged plan4dial:latest sh``
+| Run the command in the bash session: ``python plan4dial/main.py gold_standard_bot``
+| Now you should see output files were created and successful output in the bash session in the container. You can copy these output files out from the filesystem outside the container, as the /plan4dial subdirectory is mounted.
+
+Note: You can make changes to python files inside subfolder /plan4dial without rebuilding the docker container as it is mounted as as simple volume. 
+
 
 Usage Steps
 --------------
@@ -17,7 +34,7 @@ Create a YAML config file that defines your bot.
 
 Let's go through an example. Suppose we want to create a chatbot that helps you decide what to do on your day off. This will be a fairly simple bot that picks a restaurant and outing location based on the user's preferences.   
 
-(For later reference, the full YAML file as well as the output files can be found `here <https://github.com/QuMuLab/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot>`_).  
+(For later reference, the full YAML file as well as the output files can be found `here <https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot>`_).  
 
 First, create a YAML file and pick a name for the domain:
 
@@ -36,10 +53,11 @@ They are ``context variables``, ``intents``, and ``actions``. We will examine ea
 Context variables are variables that your bot will store throughout the course of the conversation to keep track of the context gathered so far.
 Without context variables, the bot would not be able to store information from one line of dialogue to the next.
 
-One of the most common use cases of context variables is to store information gathered from the user. However, they can also be used internally to keep track of states in the conversation, the most common example being an indication of when the "goal" is reached.
+One of the most common use cases of context variables is to store information gathered from the user. 
+However, they can also be used internally to keep track of states in the conversation, the most common example being an indication of when the "goal" is reached.
 
-In this case, we know we want to keep track of the user's preferences, which include options for location, cuisine, allergy/food restrictions, budget, and outing type. 
-Let's examine the context variables for location, cuisine, and food restrictions first.
+In this case, we know we want to keep track of the user's information and preferences, which include their location, phone number, cuisine, allergy/food restrictions, budget, and outing type. 
+Let's examine the context variables for location, phone number, cuisine, and food restrictions first.
 
 .. code-block:: yaml
 
@@ -53,6 +71,26 @@ Let's examine the context variables for location, cuisine, and food restrictions
           known:
             type: fflag
             init: false
+          options:
+            Toronto:
+              variations:
+                - downtown
+            Kingston:
+              variations:
+                - k-town
+        # user's phone number
+        phone_number:
+          type: json
+          extraction: 
+            method: regex
+            pattern: \d{10}
+          known:
+            type: fflag
+            init: false
+          examples:
+            - 1234567890
+            - 2345678901
+            - 3453452794
         # user's preferred cuisine; must map to one of the 4 options
         cuisine:
           type: enum
@@ -97,15 +135,22 @@ These are the only **four** types that we can define in the YAML. They are defin
 +------------+--------------------------------------------------------------------+
 | enum       | Can only be set to the values set under the ``options`` list.      |
 +------------+--------------------------------------------------------------------+
-| json       | Used if you want to use an alternate extraction method,            |
-|            | i.e. Spacy GPE.                                                    |
+| json       | Used if you want to use an alternate extraction method.            |
 |            |                                                                    |
-|            | **NOTE**: Currently, only Spacy is compatible with this            |
-|            | option.                                                            |
+|            | **NOTE**: Currently, only Spacy and regexes are compatible with    |
+|            | this option. For Spacy, you can optionally add an ``options`` list |
+|            | which will force that only the listed options are valid            |
+|            | extractions. For regex, the ``examples`` list is necessary so Rasa |
+|            | can capture training examples properly.                            |
 +------------+--------------------------------------------------------------------+
 
 So, "location" is of type ``json`` because we want to use `Spacy GPE <https://spacy.io/usage/spacy-101#annotations-ner>`_ for location extraction. (In the case of location, it makes the most sense to use a model finely tuned to detect location, instead of Rasa, which is trained only on the examples you provide).
 You can see that under ``extraction``, we specified both the method ``spacy`` and the configuration for NER (named entity recognition), in this case `gpe` for location.
+Note that since we specified cities under "options", only those extracted location would be viable.
+However, if we left those out, any city the user entered would be valid.
+
+We can see that the context variable for "phone_number" is configured similarly, although this one uses a simple ``regex``, where the pattern is specified under ``pattern``.
+Note that we still supply a few ``examples`` for Rasa's training process.
 
 *cuisine* is of type ``enum`` because we only want it to have 4 valid values: *Mexican*, *Italian*, *Chinese*, and *dessert*. *food_restriction* is of type ``enum`` for the same reason.
 
@@ -113,9 +158,13 @@ You can see that under ``extraction``, we specified both the method ``spacy`` an
 
 .. _known:
 
-Each variable also has a ``known`` option which determines the knowledge we have about the variable. The ``known`` ``type`` can only be set to either ``flag`` or ``fflag``, and functions in the same way. This parameter is extermely important as conversation navigation is often predicated on what context we know, maybe know, or don't know so far.
+Each variable also has a ``known`` option which determines the knowledge we have about the variable.
+The ``known`` ``type`` can only be set to either ``flag`` or ``fflag``, and functions in the same way.
+This parameter is extermely important as conversation navigation is often predicated on what context we know, maybe know, or don't know so far.
 
-In most cases, the ``known``'s ``init`` setting is set to ``false``, but the ``type`` setting depends on what makes the most sense for the variable. Often in the case of ``enum`` type variables like *cuisine*, it makes the most sense to allow for a little variance in user input. They may something that somewhat resembles one of the available options, and it is helpful to store their answer, classify it as "maybe known", and clarify the user's intention.
+In most cases, the ``known``'s ``init`` setting is set to ``false``, but the ``type`` setting depends on what makes the most sense for the variable.
+Often in the case of ``enum`` type variables like *cuisine*, it makes the most sense to allow for a little variance in user input.
+They may something that somewhat resembles one of the available options, and it is helpful to store their answer, classify it as "maybe known", and clarify the user's intention.
 For simpler variables like *have_allergy*, a ``known`` ``type`` setting of ``flag`` should suffice.  
 
 With this in mind, let's add the rest of the context variables.
@@ -193,7 +242,8 @@ While I've only given a few examples for simplicity, it is extremely important t
 There is an exception to this rule, though. In the case of *outing*, although the variable is of ``type`` ``enum``, the variable value will be set internally based on the user's preferences instead of through directly analyzing the user's input. 
 Since this will be completely in the control of the bot designer and not reliant on the NLU, no variations need to be provided there.
 
-Also, a ``flag`` *goal* variable is mandatory for every bot as it determines when the conversation ends (more on this later). 
+Also, a ``flag`` *goal* variable is mandatory for every bot as it determines when the conversation ends.
+When you want the outcome of an action to end the conversation, you should set **goal** to **true**.
 
 You're all set to define context variables for your bot! Let's move on to the next step: intents.
 
@@ -204,7 +254,7 @@ The next step is to define the intents.
 Intents are characterizations of what the user is trying to say. For example, if the user says "yes", then their intent is to "confirm" the bot's statement.
 Intents are parsed/analyzed using Rasa NLU.
 They are important as we need to be able to map arbitrary user input to tangible results that determines where to go next in the conversation.
-**NOTE**: We do not use Rasa for anything other than off-the-shelf NLU (more information can be found :ref:`here <why>`).
+**NOTE**: We do not use Rasa for anything other than off-the-shelf NLU, to reduce dependency on the system.
 
 An intent is made up these parts:
 
@@ -241,6 +291,13 @@ Let's see what the intents for our ``day-planner`` bot look like:
             - nah
             - no thanks
             - no thank you
+        share_phone_number:
+          entities:
+            - phone_number
+          utterances:
+            - My phone number is $phone_number.
+            - My number is $phone_number.
+            - $phone_number 
         share_location:
           entities:
             - location
@@ -285,23 +342,10 @@ Let's see what the intents for our ``day-planner`` bot look like:
             - I want to go to a $outing_type place.
             - What is the most $outing_type place in the city?
 
-**NOTE**: No intents can extract the exact same entities. Why?
-
-- At every step in the conversation, we need to be able to know what information we have and don't have.
-  Each intent's ``entities`` indicates what information is gained when that intent is successfully extracted.
-  As a result, an intent will not be chosen unless all the entities were extracted.
-
-- As you will later see, each intent is mapped to an action outcome.
-  That means that we decide what path to take next in the conversation depending on what the intent is.
-
-- Having two or more intents that extract the same entities causes ambiguity in two ways.
-  First, it will likely be harder to extract the "correct" intent because the duplicate intents will be too similar to each other.
-  Second, there is functionally no reason for multiple intents to accomplish the exact same goal but map to different outcomes.
-  If you want to handle things differently depending on the extracted *value* of the entities, that is a separate process handled in the actions (to be seen later).
-
-If this is a bit confusing, it may make more sense after reviewing the ``actions`` section below and coming back to this.
 
 **NOTE**: All ``utterances`` must include *exactly* all the entities listed under ``entities``; no more, no less.
+In practice, this does not mean that all entities will actually be extracted at runtime, but it needs to be indicated
+what the intent is actually trying to accomplish.
 
 3. Define the Actions
 .....................
@@ -478,42 +522,45 @@ Next, let's take a look at the actions that actually extract information from th
 
 .. code-block:: yaml
 
-    get_outing:
-      type: custom
-      subtype: slot_fill
-      parameters:
-        action_name: get_outing
-        entities:
-          - budget
-          - outing_type
-        message_variants:
-          - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
-        fallback_message_variants:
-          - Sorry, that isn't a valid outing preference.
-        config_entities:
-          budget:
-            fallback_message_variants:
-              - Sorry, that isn't a valid budget option. Please select either high or low.
-            single_slot_message_variants:
-              - What is your budget preference? Please select either high or low.
-          outing_type:
-            fallback_message_variants:
-              - Sorry, that isn't a valid outing type.
-            single_slot_message_variants:
-              - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
-            clarify_message_variants:
-              - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?
-        additional_updates:
-          - outcome:
-              budget:
-                known: true
-            response_variants:
-              - Ok, I'll take that into account.
-          - outcome:
-              outing_type:
-                known: true
-            response_variants:
-              - Great choice!
+  get_outing:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get_outing
+      entities:
+        - budget
+        - outing_type
+      overall_intent: share_all_outing_preferences
+      message_variants:
+        - What kind of outing would you like to go to? Please specify both your budget (high or low) and the type of atmosphere you're looking for (i.e. fun, relaxing, etc.)
+      fallback_message_variants:
+        - Sorry, that isn't a valid outing preference.
+      config_entities:
+        budget:
+          fallback_message_variants:
+            - Sorry, that isn't a valid budget option. Please select either high or low.
+          single_slot_message_variants:
+            - What is your budget preference? Please select either high or low.
+          single_slot_intent: share_budget
+        outing_type:
+          fallback_message_variants:
+            - Sorry, that isn't a valid outing type.
+          single_slot_message_variants:
+            - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
+          single_slot_intent: share_outing_type
+          clarify_message_variants:
+            - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?
+      additional_updates:
+        - outcome:
+            budget:
+              known: true
+          response_variants:
+            - Ok, I'll take that into account.
+        - outcome:
+            outing_type:
+              known: true
+          response_variants:
+            - Great choice!
 
 We can see that this action is configured quite differently than the rest -
 this is because it is a :ref:`custom action <action_types>`.
@@ -526,101 +573,77 @@ i.e. budget is ``known`` and outing_type is ``maybe`` ``known``, vice versa, etc
 If you go to the source code of the function, you'll see that the parameters of the custom action are provided under ``parameters``
 of ``get_outing``. A full explanation of what each parameter is can be seen in the documentation for :py:func:`slot_fill <plan4dial.for_generating.custom_actions.slot_fill.slot_fill>`.
 
-The values for location, cuisine, and food restrictions are extracted with the same custom action:
+The values for location and cuisine are extracted with the same custom action:
 
 .. code-block:: yaml
 
-    get-location:
-      type: custom
-      subtype: slot_fill
-      parameters:
-        action_name: get-location
-        entities:
-          - location
-        message_variants:
-          - Where are you located?
-        fallback_message_variants:
-          - Sorry, that isn't a valid location.
-        config_entities:
-          location:
-            clarify_message_variants:
-              - I didn't quite get your location. Are you located in $location?
-        additional_updates:
-          - outcome:
-              location:
-                known: true
-            response_variants:
-              - Tailoring your results to what's available in $location...
-    get-cuisine:
-      type: custom
-      subtype: slot_fill
-      parameters:
-        action_name: get-cuisine
-        entities:
-          - cuisine
-        message_variants:
-          - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
-        fallback_message_variants:
-          - Sorry, that isn't a valid cuisine. 
-        config_entities:
-          cuisine:
-            fallback_message_variants:
-              - Sorry, that still isn't a valid cuisine.
-            clarify_message_variants:
-              - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
-        additional_updates:
-          - outcome:
-              cuisine:
-                known: true
-            response_variants:
-              - Cuisine preference has been logged.
-    get-allergy:
-        type: dialogue
-        message_variants:
-          - What type of allergy do you have? (I currently account for dairy and gluten allergies).
-        fallback_message_variants:
-          - Sorry, I don't recognize that type of allergy.
-        condition:
-          have_allergy:
-            known: true
-            value: true
-        effect:
-          set-allergy:
-            oneof:
-              outcomes:
-                update_allergy:
-                  updates:
-                    food_restriction:
-                      value: $food_restriction
-                      known: true
-                  intent: share_allergies
+  get-location:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-location
+      overall_intent: share_location
+      entities:
+        - location
+      message_variants:
+        - Where are you located?
+      fallback_message_variants:
+        - Sorry, that isn't a valid location.
+      additional_updates:
+        - outcome:
+            location:
+              known: true
+          response_variants:
+            - Tailoring your results to what's available in $location...
+  get-cuisine:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-cuisine
+      entities:
+        - cuisine
+      overall_intent: share_cuisine
+      message_variants:
+        - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+      fallback_message_variants:
+        - Sorry, that isn't a valid cuisine. 
+      config_entities:
+        cuisine:
+          clarify_message_variants:
+            - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
+      additional_updates:
+        - outcome:
+            cuisine:
+              known: true
+          response_variants:
+            - Cuisine preference has been logged.
 
 Next, let's take a look at a simple :ref:`system action <action_types>` our bot will use.
 
 .. code-block:: yaml
 
-    reset-preferences:
-      type: system
-      condition:
-        conflict:
-          known: true
-          value: true
-      effect:
-        reset:
-          oneof:
-            outcomes:
-              reset-values:
-                updates:
-                  have_allergy:
-                    known: false
-                  food_restriction:
-                    known: false
-                  cuisine:
-                    known: false
-                  conflict:
-                    known: false 
-                response_variants:
-                  - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
+  reset-preferences:
+    type: system
+    condition:
+      conflict:
+        known: true
+        value: true
+    effect:
+      reset:
+        oneof:
+          outcomes:
+            reset-values:
+              updates:
+                have_allergy:
+                  known: false
+                food_restriction:
+                  known: false
+                cuisine:
+                  known: false
+                conflict:
+                  known: false 
+              response_variants:
+                - Sorry, but there are no restaurants that match your allergy and cuisine preferences. Try entering a different set of preferences.
 
 We can see that a :ref:`system action <action_types>` is only concerned with changing the values of some context variables given that a given state is true.
 
@@ -725,11 +748,16 @@ When this type of action is executed, the outcome determiner will run through ea
 
 In this case, that means setting the value to ``conflict`` depending on what combination of input the user entered previously.
 
-**NOTE**: This specification will become shorter and cleaner with the closing of `#4 <https://github.com/QuMuLab/plan4dial/issues/4>`_. 
+**NOTE**: This specification will become shorter and cleaner with the closing of `#4 <https://github.com/dialogue-planning/plan4dial/issues/4>`_. 
 
-**And that's all the action types! Now you have every piece of the puzzle you need to specify your bot**.
+**And that's all the action types!** Now you have every piece of the puzzle you need to specify your bot.
+There are a few actions we didn't cover, but they are all more examples of the above. 
 
 Generate the files needed to test the bot with HOVOR.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Navigate to :py:func:`slot_fill <plan4dial.main.generate_files>`
+Once you are satisfied with your specification, call :py:func:`generate_files <plan4dial.main.generate_files>`.
+
+Then, clone `our extension of IBM's Hovor <https://github.com/dialogue-planning/contingent-plan-executor/tree/main>`_.
+
+See the Hovor README for a rundown on the different ways to run and deploy your chatbot.

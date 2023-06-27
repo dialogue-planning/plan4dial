@@ -10,10 +10,9 @@
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/doctools.js"></script>
         <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> Plan4Dial
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Plan4Dial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -56,9 +59,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      <li>plan4dial.for_generating.parsers.pddl_parser</li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">plan4dial.for_generating.parsers.pddl_parser</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -84,7 +87,7 @@
 
 
 <div class="viewcode-block" id="_get_is_fflag"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._get_is_fflag">[docs]</a><span class="k">def</span> <span class="nf">_get_is_fflag</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Determines if the provided variable has a &quot;known&quot; setting of type fflag.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Determines if the provided variable has a &quot;known&quot; setting of type fflag.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
@@ -103,7 +106,7 @@
 <div class="viewcode-block" id="_return_flag_value_fluent"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._return_flag_value_fluent">[docs]</a><span class="k">def</span> <span class="nf">_return_flag_value_fluent</span><span class="p">(</span>
     <span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">value</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Returns the fluent version of a flag or fflag context variable depending on the</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the fluent version of a flag or fflag context variable depending on the</span>
 <span class="sd">    setting supplied.</span>
 
 <span class="sd">    Args:</span>
@@ -123,7 +126,7 @@
 
 
 <div class="viewcode-block" id="_return_certainty_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._return_certainty_fluents">[docs]</a><span class="k">def</span> <span class="nf">_return_certainty_fluents</span><span class="p">(</span><span class="n">v_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span> <span class="n">certainty</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Returns the fluent version of the certainty setting of a context variable</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Returns the fluent version of the certainty setting of a context variable</span>
 <span class="sd">    depending on the setting supplied.</span>
 
 <span class="sd">    Args:</span>
@@ -155,7 +158,7 @@
             <span class="k">if</span> <span class="n">is_fflag</span>
             <span class="k">else</span> <span class="p">([</span><span class="sa">f</span><span class="s2">&quot;(know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">known</span> <span class="k">else</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;(not (know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">))&quot;</span><span class="p">])</span>
         <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
+    <span class="k">elif</span> <span class="n">is_fflag</span><span class="p">:</span>
         <span class="c1"># &quot;maybe&quot;/&quot;Uncertain&quot; option chosen</span>
         <span class="k">return</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;(not (know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">))&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;(maybe-know__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">]</span></div>
 
@@ -167,7 +170,7 @@
     <span class="n">and_wrap</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">outer_brackets</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and &quot;and&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts a list of fluents to PDDL. Adds tabs, outer brackets, names and &quot;and&quot;</span>
 <span class="sd">    wraps as appropriate.</span>
 
 <span class="sd">    Args:</span>
@@ -212,9 +215,9 @@
     <span class="k">if</span> <span class="n">name_wrap</span><span class="p">:</span>
         <span class="n">fluents</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name_wrap</span><span class="si">}{</span><span class="n">fluents</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="n">fluents</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="n">tabs</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">fluents</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="n">tabs</span><span class="si">}</span><span class="s2">)&quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tabs</span><span class="si">}</span><span class="s2">(</span><span class="si">{</span><span class="n">fluents</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tabs</span><span class="si">}</span><span class="s2">)&quot;</span>
             <span class="k">if</span> <span class="n">outer_brackets</span>
-            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="n">tabs</span><span class="si">}{</span><span class="n">fluents</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">tabs</span><span class="si">}{</span><span class="n">fluents</span><span class="si">}</span><span class="s2">&quot;</span>
         <span class="p">)</span>
     <span class="k">return</span> <span class="n">fluents</span></div>
 
@@ -222,7 +225,7 @@
 <div class="viewcode-block" id="get_precond_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser.get_precond_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_precond_fluents</span><span class="p">(</span>
     <span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">conditions</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bool</span><span class="p">]]</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Convert an action precondition to PDDL fluents.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert an action precondition to PDDL fluents.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
@@ -251,7 +254,7 @@
 
 
 <div class="viewcode-block" id="get_update_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser.get_update_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_update_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">updates</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Converts the update configuration of an action outcome to PDDL fluents.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts the update configuration of an action outcome to PDDL fluents.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
@@ -286,7 +289,7 @@
 
 
 <div class="viewcode-block" id="_action_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._action_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">_action_to_pddl</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">act</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">act_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Converts an action from the YAML configuration to PDDL.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts an action from the YAML configuration to PDDL.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
@@ -296,7 +299,7 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        str: The converted action.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">act_param</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:action </span><span class="si">{</span><span class="n">act</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">2</span><span class="si">}</span><span class="s2">:parameters()&quot;</span>
+    <span class="n">act_param</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:action </span><span class="si">{</span><span class="n">act</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">:parameters()&quot;</span>
 
     <span class="c1"># convert the preconditions</span>
     <span class="n">precond</span> <span class="o">=</span> <span class="n">_fluents_to_pddl</span><span class="p">(</span>
@@ -307,7 +310,7 @@
         <span class="n">outer_brackets</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="c1"># convert the effects</span>
-    <span class="n">effects</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">2</span><span class="si">}</span><span class="s2">:effect</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">3</span><span class="si">}</span><span class="s2">(labeled-oneof </span><span class="se">\</span>
+    <span class="n">effects</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">:effect</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">(labeled-oneof </span><span class="se">\</span>
 <span class="s2">        </span><span class="si">{</span><span class="n">act_config</span><span class="p">[</span><span class="s1">&#39;effect&#39;</span><span class="p">][</span><span class="s1">&#39;global-outcome-name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="c1"># iterate through all the outcomes</span>
     <span class="k">for</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]:</span>
@@ -324,12 +327,12 @@
                 <span class="n">name_wrap</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;outcome </span><span class="si">{</span><span class="n">out_config</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-EQ-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
                 <span class="n">and_wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
-    <span class="n">effects</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span> <span class="o">*</span> <span class="mi">3</span><span class="si">}</span><span class="s2">)&quot;</span>
+    <span class="n">effects</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">)&quot;</span>
     <span class="k">return</span> <span class="n">act_param</span> <span class="o">+</span> <span class="n">precond</span> <span class="o">+</span> <span class="n">effects</span> <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">)&quot;</span></div>
 
 
 <div class="viewcode-block" id="_actions_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._actions_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">_actions_to_pddl</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Converts actions from the YAML to PDDL format.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts actions from the YAML to PDDL format.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
@@ -346,7 +349,7 @@
 
 
 <div class="viewcode-block" id="get_init_fluents"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser.get_init_fluents">[docs]</a><span class="k">def</span> <span class="nf">get_init_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">Set</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
-    <span class="sd">&quot;&quot;&quot;Convert the initial state of context variables to a PDDL initial state.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Convert the initial state of context variables to a PDDL initial state.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
@@ -393,7 +396,7 @@
 
 
 <div class="viewcode-block" id="_parse_predicates"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser._parse_predicates">[docs]</a><span class="k">def</span> <span class="nf">_parse_predicates</span><span class="p">(</span><span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Converts the context variables to PDDL predicates.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts the context variables to PDDL predicates.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        context_variables (Dict): The configuration of all context variables.</span>
@@ -418,7 +421,7 @@
 
 
 <div class="viewcode-block" id="parse_to_pddl"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.pddl_parser.html#plan4dial.for_generating.parsers.pddl_parser.parse_to_pddl">[docs]</a><span class="k">def</span> <span class="nf">parse_to_pddl</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Converts the loaded YAML file to a PDDL specification.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Converts the loaded YAML file to a PDDL specification.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>

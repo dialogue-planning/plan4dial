@@ -10,10 +10,9 @@
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/doctools.js"></script>
         <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
@@ -26,11 +25,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../../../index.html" class="icon icon-home"> Plan4Dial
+
+          
+          
+          <a href="../../../../index.html" class="icon icon-home">
+            Plan4Dial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -56,9 +59,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../../../index.html">Module code</a> &raquo;</li>
-      <li>plan4dial.for_generating.custom_actions.slot_fill</li>
+      <li><a href="../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">plan4dial.for_generating.custom_actions.slot_fill</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -82,16 +85,33 @@
 <span class="kn">from</span> <span class="nn">..parsers.json_config_parser</span> <span class="kn">import</span> <span class="n">configure_assignments</span>
 
 
+<div class="viewcode-block" id="_make_additional_updates"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill._make_additional_updates">[docs]</a><span class="k">def</span> <span class="nf">_make_additional_updates</span><span class="p">(</span><span class="n">org_out</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">add_upd</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update an outcome by the additional updates provided by the suer.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        org_out (Dict): The original outcome.</span>
+<span class="sd">        add_upd (Dict): The additional updates to be added to the outcome.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">add_upd</span><span class="p">:</span>
+        <span class="n">org_out</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">add_upd</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="s2">&quot;response_variants&quot;</span> <span class="ow">in</span> <span class="n">add_upd</span><span class="p">:</span>
+        <span class="n">org_out</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_upd</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s2">&quot;follow_up&quot;</span> <span class="ow">in</span> <span class="n">add_upd</span><span class="p">:</span>
+        <span class="n">org_out</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_upd</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span></div>
+
+
 <div class="viewcode-block" id="slot_fill"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill">[docs]</a><span class="k">def</span> <span class="nf">slot_fill</span><span class="p">(</span>
     <span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
     <span class="n">action_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">message_variants</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
     <span class="n">entities</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">overall_intent</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">config_entities</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">fallback_message_variants</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">additional_conditions</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Custom action provided by default that allows bot designers to specify entity</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom action provided by default that allows bot designers to specify entity</span>
 <span class="sd">    slot fills with ease.</span>
 
 <span class="sd">    Handles actions that can be clarified, as well as those that can&#39;t, or a mix of</span>
@@ -112,14 +132,18 @@
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
 <span class="sd">        action_name (str): The name of this instance of the custom action.</span>
-<span class="sd">        message_variants (List[str]): Possible messages the bot will utter</span>
-<span class="sd">            upon execution of this action.</span>
+<span class="sd">        message_variants (List[str]): Possible messages the bot will utter upon</span>
+<span class="sd">            execution of this action.</span>
 <span class="sd">        entities (List[str]): The entities to be extracted or have their &quot;slots</span>
 <span class="sd">            filled.&quot;</span>
+<span class="sd">        overall_intent (str): The name of the intent that will extract all the entities.</span>
 <span class="sd">        config_entities (Dict): Holds configurations that specify what the bot should</span>
 <span class="sd">            do in certain situations regarding each entity. The keys are each entity</span>
 <span class="sd">            and the values are the configuration for each entity. Defaults to None as</span>
-<span class="sd">            this is not always necessary. The 3 configuration options are:</span>
+<span class="sd">            this is not always necessary (again note that :py:func:`single_slot</span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`</span>
+<span class="sd">            only occurs if there are &gt; 1 entities here). The 4 configuration options</span>
+<span class="sd">            for each entity are:</span>
 
 <span class="sd">                | **clarify_message_variants** *(List[str])*: The message variants that</span>
 <span class="sd">                    will be used for the clarify action for this entity. Only necessary</span>
@@ -127,8 +151,13 @@
 <span class="sd">                | **single_slot_message_variants** *(List[str])*: Custom message</span>
 <span class="sd">                    variants to utter for :py:func:`single_slot</span>
 <span class="sd">                    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`</span>
-<span class="sd">                    extractions of the given entity. Only necessary to specify if there</span>
-<span class="sd">                    are &gt; 1 entities.</span>
+<span class="sd">                    extractions of the given entity.</span>
+<span class="sd">                | **single_slot_intent** *(str)*: If :py:func:`single_slot</span>
+<span class="sd">                    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;`</span>
+<span class="sd">                    extraction is being used, this indicates the intent to detect for</span>
+<span class="sd">                    that extraction (the intent that extracts this singular entity).</span>
+<span class="sd">                    Can also be detected in initial extraction if only one of multiple</span>
+<span class="sd">                    entities are found.</span>
 <span class="sd">                | **fallback_message_variants** *(List[str])*: Custom fallback messages</span>
 <span class="sd">                    to utter if the bot tries to extract this entity by itself with a</span>
 <span class="sd">                    :py:func:`single_slot</span>
@@ -146,8 +175,7 @@
 <span class="sd">            extraction happens AT ANY POINT. Indicate the extraction that happens in</span>
 <span class="sd">            the outcome by specifying the `known` status of the entities you desire.</span>
 <span class="sd">            You can not only use this to add arbitrary context variable updates under</span>
-<span class="sd">            `also_update` but also other outcome-specific attributes such as</span>
-<span class="sd">            `response_variants`.</span>
+<span class="sd">            `updates` but also specify `response_variants` and `follow_up`.</span>
 
 <span class="sd">                | **NOTE**: Will only match to outcomes that match the given</span>
 <span class="sd">                    specification exactly. For example, if you specify an additional</span>
@@ -155,11 +183,16 @@
 <span class="sd">                    actions where ONLY *test1* is extracted, and not when *test1*,</span>
 <span class="sd">                    *test2* and *test3* are extracted, for example. This is done to</span>
 <span class="sd">                    reduce ambiguity. Defaults to None.</span>
+<span class="sd">        additional_conditions (Dict, optional): Additional conditions necessary before</span>
+<span class="sd">            executing the :py:func:`slot_fill</span>
+<span class="sd">            &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action.</span>
+<span class="sd">            Defaults to None.</span>
 
 <span class="sd">    See the tutorial for an example of a</span>
 <span class="sd">    :py:func:`slot_fill &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;`</span>
 <span class="sd">    action.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">updates_filtered</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="c1"># iterate through all additional updates</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">additional_updates</span><span class="p">)):</span>
@@ -170,8 +203,6 @@
                 <span class="n">additional_updates</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;outcome&quot;</span><span class="p">][</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">configure_assignments</span><span class="p">(</span>
                     <span class="n">additional_updates</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;outcome&quot;</span><span class="p">][</span><span class="n">var</span><span class="p">][</span><span class="s2">&quot;known&quot;</span><span class="p">]</span>
                 <span class="p">)</span>
-        <span class="n">cfg_updates</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">setting</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">:</span>
             <span class="c1"># we don&#39;t want to consider when entities are NOT found because 1) it&#39;s a</span>
             <span class="c1"># lot more ambiguous and 2) when extracting entities, we only have</span>
             <span class="c1"># knowledge of what we DID extract and not what we DIDN&#39;T. (yes, we could</span>
@@ -181,21 +212,16 @@
 
             <span class="c1"># frozenset is an easy way to see at a glance the assignment setting of</span>
             <span class="c1"># each (known/maybe known) context variable</span>
-            <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
                 <span class="p">{</span>
                     <span class="n">entity</span><span class="p">:</span> <span class="n">certainty</span>
-                    <span class="k">for</span> <span class="n">entity</span><span class="p">,</span> <span class="n">certainty</span> <span class="ow">in</span> <span class="n">setting</span><span class="p">[</span><span class="s2">&quot;outcome&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">entity</span><span class="p">,</span> <span class="n">certainty</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;outcome&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
                     <span class="k">if</span> <span class="n">certainty</span> <span class="o">!=</span> <span class="s2">&quot;didnt-find&quot;</span>
                 <span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">)</span>
-            <span class="c1"># add the appropriate updates</span>
-            <span class="n">cfg_updates</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">if</span> <span class="s2">&quot;also_update&quot;</span> <span class="ow">in</span> <span class="n">setting</span><span class="p">:</span>
-                <span class="n">cfg_updates</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">setting</span><span class="p">[</span><span class="s2">&quot;also_update&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="s2">&quot;response_variants&quot;</span> <span class="ow">in</span> <span class="n">setting</span><span class="p">:</span>
-                <span class="n">cfg_updates</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">setting</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="s2">&quot;follow_up&quot;</span> <span class="ow">in</span> <span class="n">setting</span><span class="p">:</span>
-                <span class="n">cfg_updates</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">setting</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span>
+            <span class="c1"># don&#39;t need outcome so remove it</span>
+            <span class="k">del</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;outcome&quot;</span><span class="p">]</span>
+            <span class="n">updates_filtered</span><span class="p">[</span><span class="n">out</span><span class="p">]</span> <span class="o">=</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     <span class="n">entity_combos</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="c1"># create the cross-product of found, maybe-found, and didnt-find with the entities</span>
     <span class="c1"># given</span>
@@ -217,7 +243,7 @@
     <span class="n">entity_combos</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="n">entity_combos</span><span class="p">)</span>
     <span class="c1"># instantiate the action</span>
     <span class="n">action</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">action</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">action</span><span class="p">[</span><span class="s2">&quot;subtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span><span class="p">,</span> <span class="s2">&quot;dialogue disambiguation&quot;</span>
+    <span class="n">action</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span>
     <span class="n">action</span><span class="p">[</span><span class="s2">&quot;message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message_variants</span>
     <span class="k">if</span> <span class="n">fallback_message_variants</span><span class="p">:</span>
         <span class="n">action</span><span class="p">[</span><span class="s2">&quot;fallback_message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">fallback_message_variants</span>
@@ -225,6 +251,8 @@
     <span class="n">action</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">entities</span><span class="p">:</span>
         <span class="n">action</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;didnt-find&quot;</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">additional_conditions</span><span class="p">:</span>
+        <span class="n">action</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">additional_conditions</span><span class="p">)</span>
     <span class="n">action</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{}}}}</span>
     <span class="c1"># iterate through all the possible entity combinations</span>
     <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="n">entity_combos</span><span class="p">:</span>
@@ -234,11 +262,17 @@
             <span class="k">for</span> <span class="n">entity</span><span class="p">,</span> <span class="n">certainty</span> <span class="ow">in</span> <span class="n">combo</span>
             <span class="k">if</span> <span class="n">certainty</span> <span class="o">!=</span> <span class="s2">&quot;didnt-find&quot;</span>
         <span class="p">}</span>
-        <span class="c1"># only consider outcomes in which we find at elast something</span>
+        <span class="c1"># only consider outcomes in which we find at least something</span>
         <span class="k">if</span> <span class="n">refined_combo</span><span class="p">:</span>
             <span class="n">next_out</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="p">{}}</span>
-            <span class="c1"># store the intent based on the refined combo</span>
-            <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;intent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">refined_combo</span>
+            <span class="c1"># store the intent based on the refined combo.</span>
+            <span class="c1"># if we are only extracting one entity of multiple, use the intent for</span>
+            <span class="c1"># just that entity; otherwise use the &quot;overarching&quot; intent</span>
+            <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;intent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">config_entities</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">refined_combo</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]][</span><span class="s2">&quot;single_slot_intent&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">refined_combo</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">entities</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+                <span class="k">else</span> <span class="n">overall_intent</span>
+            <span class="p">)</span>
             <span class="n">outcome_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">certainty</span><span class="si">}</span><span class="s2">-&quot;</span> <span class="k">for</span> <span class="n">entity</span><span class="p">,</span> <span class="n">certainty</span> <span class="ow">in</span> <span class="n">refined_combo</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -249,24 +283,14 @@
 
             <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
                 <span class="c1"># convert the current outcome into a frozenset to be compared</span>
-                <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span>
-                    <span class="p">{</span>
-                        <span class="n">entity</span><span class="p">:</span> <span class="n">certainty</span> <span class="k">for</span> <span class="n">entity</span><span class="p">,</span> <span class="n">certainty</span> <span class="ow">in</span> <span class="n">refined_combo</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                    <span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
-                <span class="p">)</span>
+                <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">(</span><span class="n">refined_combo</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
                 <span class="c1"># check if this frozenset is included in the dict of outcomes with</span>
                 <span class="c1"># additional updates; if so, add the appropriate updates</span>
-                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">cfg_updates</span><span class="p">:</span>
-                    <span class="n">new_upd_cfg</span> <span class="o">=</span> <span class="n">cfg_updates</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
-                        <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">])</span>
-                    <span class="k">if</span> <span class="s2">&quot;response_variants&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
-                        <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span>
-                    <span class="k">if</span> <span class="s2">&quot;follow_up&quot;</span> <span class="ow">in</span> <span class="n">new_upd_cfg</span><span class="p">:</span>
-                        <span class="n">next_out</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_upd_cfg</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span>
-            <span class="n">action</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">][</span><span class="s2">&quot;oneof&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
-                <span class="n">outcome_name</span>
-            <span class="p">]</span> <span class="o">=</span> <span class="n">next_out</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">updates_filtered</span><span class="p">:</span>
+                    <span class="n">_make_additional_updates</span><span class="p">(</span><span class="n">next_out</span><span class="p">,</span> <span class="n">updates_filtered</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+        <span class="n">action</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">][</span><span class="s2">&quot;oneof&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
+            <span class="n">outcome_name</span>
+        <span class="p">]</span> <span class="o">=</span> <span class="n">next_out</span>
     <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;slot-fill__</span><span class="si">{</span><span class="n">action_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">action</span><span class="p">}</span>
     <span class="c1"># create clarifications and single slot actions as necessary</span>
     <span class="n">new_actions</span><span class="p">,</span> <span class="n">new_ctx_vars</span> <span class="o">=</span> <span class="n">_create_clarifications_single_slots</span><span class="p">(</span>
@@ -275,7 +299,7 @@
         <span class="n">entities</span><span class="p">,</span>
         <span class="n">config_entities</span><span class="p">,</span>
         <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;context_variables&quot;</span><span class="p">],</span>
-        <span class="n">additional_updates</span><span class="p">,</span>
+        <span class="n">updates_filtered</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="c1"># update the loaded YAML with the new actions</span>
     <span class="n">actions</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">new_actions</span><span class="p">)</span>
@@ -289,7 +313,7 @@
     <span class="n">single_slot</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Generates a `clarify` action for an entity.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a `clarify` action for an entity.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        entity (str): The entity to generate the action for.</span>
@@ -310,12 +334,15 @@
 <span class="sd">    Returns:</span>
 <span class="sd">        Dict: The `clarify` action configuration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">confirm_updates</span> <span class="o">=</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">)</span>
+    <span class="n">confirm_cfg</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;confirm&quot;</span><span class="p">,</span>
+    <span class="p">}</span>
     <span class="c1"># consider additional updates if the entity is extracted</span>
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">({</span><span class="n">entity</span><span class="p">:</span> <span class="s2">&quot;found&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">:</span>
-            <span class="n">confirm_updates</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">_make_additional_updates</span><span class="p">(</span><span class="n">confirm_cfg</span><span class="p">,</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
     <span class="n">deny_updates</span> <span class="o">=</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;didnt-find&quot;</span><span class="p">)</span>
     <span class="c1"># if we were originally trying to extract multiple entities and we weren&#39;t able to</span>
     <span class="c1"># clarify one of them, we will have to move on to extracting the entity with a</span>
@@ -325,17 +352,14 @@
     <span class="k">if</span> <span class="n">single_slot</span><span class="p">:</span>
         <span class="n">deny_updates</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
     <span class="n">clarify</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">clarify</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">clarify</span><span class="p">[</span><span class="s2">&quot;subtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span><span class="p">,</span> <span class="s2">&quot;dialogue disambiguation&quot;</span>
+    <span class="n">clarify</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span>
     <span class="n">clarify</span><span class="p">[</span><span class="s2">&quot;message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message_variants</span>
     <span class="n">clarify</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="n">entity</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="s2">&quot;maybe&quot;</span><span class="p">}}</span>
     <span class="n">clarify</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;validate-clarification&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span>
                 <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;confirm&quot;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">confirm_updates</span><span class="p">,</span>
-                        <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;confirm&quot;</span><span class="p">,</span>
-                    <span class="p">},</span>
+                    <span class="s2">&quot;confirm&quot;</span><span class="p">:</span> <span class="n">confirm_cfg</span><span class="p">,</span>
                     <span class="s2">&quot;deny&quot;</span><span class="p">:</span> <span class="p">{</span>
                         <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">deny_updates</span><span class="p">,</span>
                         <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;deny&quot;</span><span class="p">,</span>
@@ -353,7 +377,7 @@
     <span class="n">known_is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="sd">&quot;&quot;&quot;Generates a &#39;single slot&#39; action for the entity provided. These are only</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a &#39;single slot&#39; action for the entity provided. These are only</span>
 <span class="sd">    necessary when multiple entities were specified, to handle the case where the bot</span>
 <span class="sd">    is able to only extract some on its first go and `clarify` actions as well as</span>
 <span class="sd">    actions that extract an entity on its own (:py:func:`single_slot</span>
@@ -376,26 +400,28 @@
 <span class="sd">        &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;` action</span>
 <span class="sd">        configuration.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fill_slot_updates</span> <span class="o">=</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">)</span>
-
-    <span class="c1"># if we successfully extract the entity, we should reset this flag. while it might</span>
-    <span class="c1"># not seem important, if all the entities are reset to null at some point, then we</span>
-    <span class="c1"># need to ensure that the original action runs first to re-extract all the entities</span>
-    <span class="c1"># and not any of the `single_slot` actions.</span>
-    <span class="n">fill_slot_updates</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+    <span class="n">fill_slot</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;found&quot;</span><span class="p">),</span>
+        <span class="c1"># if we successfully extract the entity, we should reset this flag. while it</span>
+        <span class="c1"># might not seem important, if all the entities are reset to null at some</span>
+        <span class="c1"># point, then we need to ensure that the original action runs first to</span>
+        <span class="c1"># re-extract all the entities and not any of the `single_slot` actions.</span>
+        <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+        <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">config_entity</span><span class="p">[</span><span class="s2">&quot;single_slot_intent&quot;</span><span class="p">],</span>
+    <span class="p">}</span>
     <span class="c1"># add additional updates if they exist</span>
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">({</span><span class="n">entity</span><span class="p">:</span> <span class="s2">&quot;found&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">:</span>
-            <span class="n">fill_slot_updates</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">_make_additional_updates</span><span class="p">(</span><span class="n">fill_slot</span><span class="p">,</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
     <span class="c1"># add message variants if they exist</span>
     <span class="n">message_variants</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">config_entity</span><span class="p">[</span><span class="s2">&quot;single_slot_message_variants&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="s2">&quot;single_slot_message_variants&quot;</span> <span class="ow">in</span> <span class="n">config_entity</span>
-        <span class="k">else</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Please enter a valid value for </span><span class="si">{</span><span class="n">entity</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">]</span>
+        <span class="k">else</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Please enter a valid value for </span><span class="si">{</span><span class="n">entity</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">]</span>
     <span class="p">)</span>
     <span class="n">single_slot</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">],</span> <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;subtype&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span><span class="p">,</span> <span class="s2">&quot;dialogue disambiguation&quot;</span>
+    <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span>
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message_variants</span>
     <span class="c1"># condition: we can&#39;t know the entity and we have to have tried to extract it with</span>
     <span class="c1"># the original slot_fill action along with the other entities already</span>
@@ -406,12 +432,7 @@
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;fill-slot&quot;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">fill_slot_updates</span><span class="p">,</span>
-                        <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">entity</span><span class="p">:</span> <span class="s2">&quot;found&quot;</span><span class="p">},</span>
-                    <span class="p">}</span>
-                <span class="p">},</span>
+                <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;fill-slot&quot;</span><span class="p">:</span> <span class="n">fill_slot</span><span class="p">},</span>
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
@@ -426,7 +447,7 @@
             <span class="s2">&quot;slot-unclear&quot;</span>
         <span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
             <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="n">slot_unclear_updates</span><span class="p">,</span>
-            <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">entity</span><span class="p">:</span> <span class="s2">&quot;maybe-found&quot;</span><span class="p">},</span>
+            <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">config_entity</span><span class="p">[</span><span class="s2">&quot;single_slot_intent&quot;</span><span class="p">],</span>
         <span class="p">}</span>
     <span class="k">if</span> <span class="s2">&quot;fallback_message_variants&quot;</span> <span class="ow">in</span> <span class="n">config_entity</span><span class="p">:</span>
         <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;fallback_message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_entity</span><span class="p">[</span>
@@ -443,7 +464,7 @@
     <span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
-    <span class="sd">&quot;&quot;&quot;Used by the :py:func:`slot_fill</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Used by the :py:func:`slot_fill</span>
 <span class="sd">    &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action to generate</span>
 <span class="sd">    `clarify` and :py:func:`single_slot</span>
 <span class="sd">    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;` actions where</span>

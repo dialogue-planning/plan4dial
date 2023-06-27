@@ -1,0 +1,18 @@
+For ICAPS Demo Viewers
+======================
+
+ 
+Framework Flow
+---------------
+.. image:: figs/flow.png
+
+Here we detail the design flow of our approach, with links at each step:
+
+The developer writes a `YAML file <https://github.com/QuMuLab/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot/gold_standard_bot.yml>`_ which contains a declarative description of their agent. 
+The file is then passed to Plan4Dial, which converts the file to raw PDDL and attempts to generate a plan. 
+Note that Plan4Dial prevents the need to write raw PDDL, which becomes complex for many action types. 
+The valid plan, if found, is then passed to our extension of Hovor to execute the conversation, either through the CLI or in our embeddable web UI.
+
+Tutorial
+--------
+Read a more in-depth tutorial :ref:`here <tutorial>`.

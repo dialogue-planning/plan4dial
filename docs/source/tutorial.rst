@@ -1,10 +1,12 @@
+.. _tutorial:
+
 Tutorial
-=========
- 
+========
+
 Requirements - Local Install
 ----------------------------
 **Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.**  
-**Note: Please use a version of Python < 3.10 because of issues with Rasa compatibility**.  
+**Note: If Rasa is giving you issues running, check the latest releases. It may be your version of Python.**.  
 
 | For ease of use and reducing the chance of import or versioning errors, it is recommended that you use a virtual environment such as ``venv``.
 | Run ``pip install -r requirements.txt`` to install the necessary libraries before using.  
@@ -32,7 +34,7 @@ Create a YAML config file that defines your bot.
 
 Let's go through an example. Suppose we want to create a chatbot that helps you decide what to do on your day off. This will be a fairly simple bot that picks a restaurant and outing location based on the user's preferences.   
 
-(For later reference, the full YAML file as well as the output files can be found `here <https://github.com/QuMuLab/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot>`_).  
+(For later reference, the full YAML file as well as the output files can be found `here <https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot>`_).  
 
 First, create a YAML file and pick a name for the domain:
 
@@ -252,7 +254,7 @@ The next step is to define the intents.
 Intents are characterizations of what the user is trying to say. For example, if the user says "yes", then their intent is to "confirm" the bot's statement.
 Intents are parsed/analyzed using Rasa NLU.
 They are important as we need to be able to map arbitrary user input to tangible results that determines where to go next in the conversation.
-**NOTE**: We do not use Rasa for anything other than off-the-shelf NLU (more information can be found :ref:`here <why>`).
+**NOTE**: We do not use Rasa for anything other than off-the-shelf NLU, to reduce dependency on the system.
 
 An intent is made up these parts:
 
@@ -746,18 +748,16 @@ When this type of action is executed, the outcome determiner will run through ea
 
 In this case, that means setting the value to ``conflict`` depending on what combination of input the user entered previously.
 
-**NOTE**: This specification will become shorter and cleaner with the closing of `#4 <https://github.com/QuMuLab/plan4dial/issues/4>`_. 
+**NOTE**: This specification will become shorter and cleaner with the closing of `#4 <https://github.com/dialogue-planning/plan4dial/issues/4>`_. 
 
 **And that's all the action types!** Now you have every piece of the puzzle you need to specify your bot.
 There are a few actions we didn't cover, but they are all more examples of the above. 
 
-You can see the full YAML file at ``plan4dial/plan4dial/local_data/gold_standard_bot/gold_standard_bot.yml``. 
-
 Generate the files needed to test the bot with HOVOR.
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-Call :py:func:`generate_files <plan4dial.main.generate_files>`.
+Once you are satisfied with your specification, call :py:func:`generate_files <plan4dial.main.generate_files>`.
 
-Then, clone HOVOR from `this branch <https://github.com/QuMuLab/contingent-plan-executor/tree/create_bot_integrate_rollout>`_.
+Then, clone `our extension of IBM's Hovor <https://github.com/dialogue-planning/contingent-plan-executor/tree/main>`_.
 
-In the repo you just cloned, navigate to ``local_main.py`` and run ``run_local_conversation`` with your output files directory as the parameter.
+See the Hovor README for a rundown on the different ways to run and deploy your chatbot.

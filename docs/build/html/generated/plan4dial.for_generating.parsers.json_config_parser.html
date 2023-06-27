@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>plan4dial.for_generating.parsers.json_config_parser &mdash; Plan4Dial 1.0.0 documentation</title>
@@ -11,10 +11,9 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -29,11 +28,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../index.html" class="icon icon-home"> Plan4Dial
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Plan4Dial
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -52,7 +55,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="plan4dial.main.html">plan4dial.main</a></li>
 </ul>
 </li>
 </ul>
@@ -73,11 +75,11 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="plan4dial.html">plan4dial</a> &raquo;</li>
-          <li><a href="plan4dial.for_generating.html">plan4dial.for_generating</a> &raquo;</li>
-          <li><a href="plan4dial.for_generating.parsers.html">plan4dial.for_generating.parsers</a> &raquo;</li>
-      <li>plan4dial.for_generating.parsers.json_config_parser</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="plan4dial.html">plan4dial</a></li>
+          <li class="breadcrumb-item"><a href="plan4dial.for_generating.html">plan4dial.for_generating</a></li>
+          <li class="breadcrumb-item"><a href="plan4dial.for_generating.parsers.html">plan4dial.for_generating.parsers</a></li>
+      <li class="breadcrumb-item active">plan4dial.for_generating.parsers.json_config_parser</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/plan4dial.for_generating.parsers.json_config_parser.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -95,10 +97,6 @@ to the JSON configuration required by Hovor.</p>
 - Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.for_generating.parsers.json_config_parser.configure_assignments" title="plan4dial.for_generating.parsers.json_config_parser.configure_assignments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">configure_assignments</span></code></a>(known)</p></td>
 <td><p>Converts the parameter <cite>known</cite> (which is either True, False, or &quot;maybe&quot;) to the equivalent Hovor assignment (&quot;found&quot;, &quot;didnt-find&quot;, and &quot;maybe-found&quot; respectively).</p></td>
@@ -114,7 +112,7 @@ to the JSON configuration required by Hovor.</p>
 <dd><p>Ensure that non-fallback options can only run if a fallback did not just occur.
 Add fallback outcomes to actions as necessary.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -134,7 +132,7 @@ configuration for robust follow_up functionality (as well as more description of
 the issue) is detailed in <a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/5">#5</a>,
 but this bare-bones specification can be safely used in the meantime.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -147,10 +145,10 @@ but this bare-bones specification can be safely used in the meantime.</p>
 context variable. Resets the precondition of these actions to rely on the flag
 values that represent the true value of the context variable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>AssertionError</strong> – Raised if the user tried to specify an invalid value for a
     context variable in a precondition.</p>
 </dd>
@@ -163,7 +161,7 @@ values that represent the true value of the context variable.</p>
 <dd><p>Sets up the default intents, action, and context variables needed to handle
 fallbacks.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -171,18 +169,18 @@ fallbacks.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_certainty">
-<span class="sig-name descname"><span class="pre">_configure_certainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_certainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_certainty" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_configure_certainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_certainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_certainty" title="Permalink to this definition"></a></dt>
 <dd><p>Converts the parameter <cite>known</cite> (which is either True, False, or “maybe”) to the
 equivalent Hovor certainty (“Known”, “Unknown”, and “Uncertain” respectively). Used
 for preconditions.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>known</strong> (<em>bool</em><em> or </em><em>str</em>) – The “known” status of a context variable in the YAML.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The Hovor certainty equivalent to the “known” parameter provided.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -201,10 +199,10 @@ which case <cite>dialogue_statement</cite> updates its <cite>message_variants</c
 actions (<cite>dialogue</cite> type actions with a single outcome) do not take user input into
 account and simply execute the single outcome.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>The full configuration for the <cite>dialogue_statement</cite> action.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Dict</p>
 </dd>
 </dl>
@@ -238,7 +236,7 @@ check the value of the context variable.</p>
 <p>Obviously, the flag values can be set when the context variable becomes known, and
 reset when the context variable becomes unknown.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p></li>
 <li><p><strong>ctx_var</strong> (<em>str</em>) – The context variable referenced in value-dependent preconditions.</p></li>
@@ -253,7 +251,7 @@ reset when the context variable becomes unknown.</p>
 <dd><p>Converts the actions from how they were formatted in the YAML to the JSON
 configuration that Hovor requires.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -265,7 +263,7 @@ configuration that Hovor requires.</p>
 <dd><p>Converts the context variables from how they were formatted in the YAML to the
 JSON configuration that Hovor requires.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -277,7 +275,7 @@ JSON configuration that Hovor requires.</p>
 <dd><p>Converts the intents from how they were formatted in the YAML to the JSON
 configuration that Hovor requires.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -292,13 +290,13 @@ based on arbritrary logical formulas.</p>
 <p><strong>NOTE</strong>: Will not be in use until issue
 <a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/4">#4</a> is resolved.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>condition</strong> (<em>Dict</em>) – An action condition from the YAML.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The DNF formula that the action condition was converted to.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>nnf.And</p>
 </dd>
 </dl>
@@ -306,17 +304,17 @@ based on arbritrary logical formulas.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._convert_to_formula">
-<span class="sig-name descname"><span class="pre">_convert_to_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">And</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Or</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_to_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_to_formula" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_convert_to_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">And</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Or</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_to_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_to_formula" title="Permalink to this definition"></a></dt>
 <dd><p>Converts an action condition from the YAML to a list of terms for an NNF
 formula.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>condition</strong> (<em>Dict</em>) – An action condition from the YAML.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An NNF formula.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Union[nnf.And, nnf.Or]</p>
 </dd>
 </dl>
@@ -331,7 +329,7 @@ up into separate actions.</p>
 <p><strong>NOTE</strong>: ARBITRARY FORMULAS ARE NOT YET HANDLED (see
 <a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/4">#4</a>). Should not be deployed yet.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -346,7 +344,7 @@ splitting them up into separate conditions.</p>
 <a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/3">#3</a> and
 <a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/4">#4</a>). Should not be deployed yet.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -367,7 +365,7 @@ the first parameter.</p>
 function as the <cite>subtype</cite>. Parameters to the function should go in a <em>parameters</em>
 dictionary.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
 </dl>
@@ -375,18 +373,18 @@ dictionary.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser.configure_assignments">
-<span class="sig-name descname"><span class="pre">configure_assignments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#configure_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser.configure_assignments" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">configure_assignments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#configure_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser.configure_assignments" title="Permalink to this definition"></a></dt>
 <dd><p>Converts the parameter <cite>known</cite> (which is either True, False, or “maybe”) to the
 equivalent Hovor assignment (“found”, “didnt-find”, and “maybe-found”
 respectively). Used for outcomes.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>known</strong> (<em>bool</em><em> or </em><em>str</em>) – The “known” status of a context variable in the YAML.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The Hovor assignment equivalent to the “known” parameter provided.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -399,13 +397,13 @@ respectively). Used for outcomes.</p>
 First preprocesses the YAML, adding clarification actions, follow-up actions, etc.,
 then finally converts everything into Hovor format.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The JSON configuration required by Hovor.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict</p>
 </dd>
 </dl>
