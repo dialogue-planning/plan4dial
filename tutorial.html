@@ -87,11 +87,11 @@
            <div itemprop="articleBody">
              
   <section id="tutorial">
-<h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
+<span id="id1"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
 <section id="requirements-local-install">
 <h2>Requirements - Local Install<a class="headerlink" href="#requirements-local-install" title="Permalink to this heading"></a></h2>
 <p><strong>Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.</strong>
-<strong>Note: Please use a version of Python &lt; 3.10 because of issues with Rasa compatibility</strong>.</p>
+<strong>Note: If Rasa is giving you issues running, check the latest releases. It may be your version of Python.</strong>.</p>
 <div class="line-block">
 <div class="line">For ease of use and reducing the chance of import or versioning errors, it is recommended that you use a virtual environment such as <code class="docutils literal notranslate"><span class="pre">venv</span></code>.</div>
 <div class="line">Run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install the necessary libraries before using.</div>
@@ -116,7 +116,7 @@
 <section id="create-a-yaml-config-file-that-defines-your-bot">
 <h3>Create a YAML config file that defines your bot.<a class="headerlink" href="#create-a-yaml-config-file-that-defines-your-bot" title="Permalink to this heading"></a></h3>
 <p>Let’s go through an example. Suppose we want to create a chatbot that helps you decide what to do on your day off. This will be a fairly simple bot that picks a restaurant and outing location based on the user’s preferences.</p>
-<p>(For later reference, the full YAML file as well as the output files can be found <a class="reference external" href="https://github.com/QuMuLab/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot">here</a>).</p>
+<p>(For later reference, the full YAML file as well as the output files can be found <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot">here</a>).</p>
 <p>First, create a YAML file and pick a name for the domain:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">day-planner</span>
@@ -316,7 +316,7 @@ When you want the outcome of an action to end the conversation, you should set <
 Intents are characterizations of what the user is trying to say. For example, if the user says “yes”, then their intent is to “confirm” the bot’s statement.
 Intents are parsed/analyzed using Rasa NLU.
 They are important as we need to be able to map arbitrary user input to tangible results that determines where to go next in the conversation.
-<strong>NOTE</strong>: We do not use Rasa for anything other than off-the-shelf NLU (more information can be found <a class="reference internal" href="index.html#why"><span class="std std-ref">here</span></a>).</p>
+<strong>NOTE</strong>: We do not use Rasa for anything other than off-the-shelf NLU, to reduce dependency on the system.</p>
 <p>An intent is made up these parts:</p>
 <p>1. <strong>utterances</strong>: Examples of utterances that constitute that intent.
 Similar to context variable <code class="docutils literal notranslate"><span class="pre">variations</span></code>, it is best to supply as many of these as you can, as these will be passed off to Rasa as training examples.
@@ -773,17 +773,16 @@ But without any input from the user (which is only taken in <a class="reference 
 how will the outcome be chosen? The answer lies in the <code class="docutils literal notranslate"><span class="pre">context</span></code> provided in each outcome.</p>
 <p>When this type of action is executed, the outcome determiner will run through each outcome and select the one whose <code class="docutils literal notranslate"><span class="pre">context</span></code> setting is a <em>subset of the current state of the world</em>.</p>
 <p>In this case, that means setting the value to <code class="docutils literal notranslate"><span class="pre">conflict</span></code> depending on what combination of input the user entered previously.</p>
-<p><strong>NOTE</strong>: This specification will become shorter and cleaner with the closing of <a class="reference external" href="https://github.com/QuMuLab/plan4dial/issues/4">#4</a>.</p>
+<p><strong>NOTE</strong>: This specification will become shorter and cleaner with the closing of <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/issues/4">#4</a>.</p>
 <p><strong>And that’s all the action types!</strong> Now you have every piece of the puzzle you need to specify your bot.
 There are a few actions we didn’t cover, but they are all more examples of the above.</p>
-<p>You can see the full YAML file at <code class="docutils literal notranslate"><span class="pre">plan4dial/plan4dial/local_data/gold_standard_bot/gold_standard_bot.yml</span></code>.</p>
 </section>
 </section>
 <section id="generate-the-files-needed-to-test-the-bot-with-hovor">
 <h3>Generate the files needed to test the bot with HOVOR.<a class="headerlink" href="#generate-the-files-needed-to-test-the-bot-with-hovor" title="Permalink to this heading"></a></h3>
-<p>Call <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_files</span></code>.</p>
-<p>Then, clone HOVOR from <a class="reference external" href="https://github.com/QuMuLab/contingent-plan-executor/tree/create_bot_integrate_rollout">this branch</a>.</p>
-<p>In the repo you just cloned, navigate to <code class="docutils literal notranslate"><span class="pre">local_main.py</span></code> and run <code class="docutils literal notranslate"><span class="pre">run_local_conversation</span></code> with your output files directory as the parameter.</p>
+<p>Once you are satisfied with your specification, call <code class="xref py py-func docutils literal notranslate"><span class="pre">generate_files</span></code>.</p>
+<p>Then, clone <a class="reference external" href="https://github.com/dialogue-planning/contingent-plan-executor/tree/main">our extension of IBM’s Hovor</a>.</p>
+<p>See the Hovor README for a rundown on the different ways to run and deploy your chatbot.</p>
 </section>
 </section>
 </section>
