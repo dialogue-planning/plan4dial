@@ -1,3 +1,4 @@
+certifi>=2021.10.8
 requests<3.0,>=2.23
 pytz<2023.0,>=2019.1
 pydantic<1.10.3
