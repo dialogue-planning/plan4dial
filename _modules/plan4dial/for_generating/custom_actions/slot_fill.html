@@ -3,18 +3,16 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>plan4dial.for_generating.custom_actions.slot_fill &mdash; Plan4Dial 1.0.0 documentation</title>
-      <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <title>plan4dial.for_generating.custom_actions.slot_fill &mdash; Plan4Dial 1.0.0 documentation</title><link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
+  <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
         <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -40,9 +38,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../generated/plan4dial.html">plan4dial</a></li>
-</ul>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../tutorial.html">Tutorial</a></li>
 </ul>
 
@@ -86,7 +81,7 @@
 
 
 <div class="viewcode-block" id="_make_additional_updates"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill._make_additional_updates">[docs]</a><span class="k">def</span> <span class="nf">_make_additional_updates</span><span class="p">(</span><span class="n">org_out</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">add_upd</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update an outcome by the additional updates provided by the suer.</span>
+    <span class="sd">&quot;&quot;&quot;Update an outcome by the additional updates provided by the suer.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        org_out (Dict): The original outcome.</span>
@@ -111,7 +106,7 @@
     <span class="n">additional_conditions</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Custom action provided by default that allows bot designers to specify entity</span>
+    <span class="sd">&quot;&quot;&quot;Custom action provided by default that allows bot designers to specify entity</span>
 <span class="sd">    slot fills with ease.</span>
 
 <span class="sd">    Handles actions that can be clarified, as well as those that can&#39;t, or a mix of</span>
@@ -274,7 +269,7 @@
                 <span class="k">else</span> <span class="n">overall_intent</span>
             <span class="p">)</span>
             <span class="n">outcome_name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">certainty</span><span class="si">}</span><span class="s2">-&quot;</span> <span class="k">for</span> <span class="n">entity</span><span class="p">,</span> <span class="n">certainty</span> <span class="ow">in</span> <span class="n">refined_combo</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{entity}</span><span class="s2">_</span><span class="si">{certainty}</span><span class="s2">-&quot;</span> <span class="k">for</span> <span class="n">entity</span><span class="p">,</span> <span class="n">certainty</span> <span class="ow">in</span> <span class="n">refined_combo</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
             <span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
             <span class="c1"># add the updates based on what&#39;s in this refined combo (again, ignoring</span>
             <span class="c1"># what we didn&#39;t find)</span>
@@ -291,7 +286,7 @@
         <span class="n">action</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">][</span><span class="s2">&quot;oneof&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
             <span class="n">outcome_name</span>
         <span class="p">]</span> <span class="o">=</span> <span class="n">next_out</span>
-    <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;slot-fill__</span><span class="si">{</span><span class="n">action_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">action</span><span class="p">}</span>
+    <span class="n">actions</span> <span class="o">=</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;slot-fill__</span><span class="si">{action_name}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">action</span><span class="p">}</span>
     <span class="c1"># create clarifications and single slot actions as necessary</span>
     <span class="n">new_actions</span><span class="p">,</span> <span class="n">new_ctx_vars</span> <span class="o">=</span> <span class="n">_create_clarifications_single_slots</span><span class="p">(</span>
         <span class="n">action_name</span><span class="p">,</span>
@@ -313,7 +308,7 @@
     <span class="n">single_slot</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a `clarify` action for an entity.</span>
+    <span class="sd">&quot;&quot;&quot;Generates a `clarify` action for an entity.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        entity (str): The entity to generate the action for.</span>
@@ -350,7 +345,7 @@
     <span class="c1"># that it doesn&#39;t run before the initial action (that tries to extract all</span>
     <span class="c1"># entities).</span>
     <span class="k">if</span> <span class="n">single_slot</span><span class="p">:</span>
-        <span class="n">deny_updates</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+        <span class="n">deny_updates</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{entity}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
     <span class="n">clarify</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">clarify</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span>
     <span class="n">clarify</span><span class="p">[</span><span class="s2">&quot;message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">message_variants</span>
@@ -368,7 +363,7 @@
             <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}</span>
-    <span class="k">return</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;clarify__</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">clarify</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;clarify__</span><span class="si">{entity}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">clarify</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="_single_slot"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill._single_slot">[docs]</a><span class="k">def</span> <span class="nf">_single_slot</span><span class="p">(</span>
@@ -377,7 +372,7 @@
     <span class="n">known_is_fflag</span><span class="p">:</span> <span class="nb">bool</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a &#39;single slot&#39; action for the entity provided. These are only</span>
+    <span class="sd">&quot;&quot;&quot;Generates a &#39;single slot&#39; action for the entity provided. These are only</span>
 <span class="sd">    necessary when multiple entities were specified, to handle the case where the bot</span>
 <span class="sd">    is able to only extract some on its first go and `clarify` actions as well as</span>
 <span class="sd">    actions that extract an entity on its own (:py:func:`single_slot</span>
@@ -406,7 +401,7 @@
         <span class="c1"># might not seem important, if all the entities are reset to null at some</span>
         <span class="c1"># point, then we need to ensure that the original action runs first to</span>
         <span class="c1"># re-extract all the entities and not any of the `single_slot` actions.</span>
-        <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
+        <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{entity}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
         <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">config_entity</span><span class="p">[</span><span class="s2">&quot;single_slot_intent&quot;</span><span class="p">],</span>
     <span class="p">}</span>
     <span class="c1"># add additional updates if they exist</span>
@@ -418,7 +413,7 @@
     <span class="n">message_variants</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">config_entity</span><span class="p">[</span><span class="s2">&quot;single_slot_message_variants&quot;</span><span class="p">]</span>
         <span class="k">if</span> <span class="s2">&quot;single_slot_message_variants&quot;</span> <span class="ow">in</span> <span class="n">config_entity</span>
-        <span class="k">else</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Please enter a valid value for </span><span class="si">{</span><span class="n">entity</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">]</span>
+        <span class="k">else</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Please enter a valid value for {entity.replace(&#39;_&#39;, &#39; &#39;)}.&quot;</span><span class="p">]</span>
     <span class="p">)</span>
     <span class="n">single_slot</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;dialogue&quot;</span>
@@ -427,7 +422,7 @@
     <span class="c1"># the original slot_fill action along with the other entities already</span>
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="n">entity</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">},</span>
-        <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+        <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{entity}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
     <span class="p">}</span>
     <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -453,7 +448,7 @@
         <span class="n">single_slot</span><span class="p">[</span><span class="s2">&quot;fallback_message_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config_entity</span><span class="p">[</span>
             <span class="s2">&quot;fallback_message_variants&quot;</span>
         <span class="p">]</span>
-    <span class="k">return</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;single_slot__</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">single_slot</span><span class="p">}</span></div>
+    <span class="k">return</span> <span class="p">{</span><span class="sa">f</span><span class="s2">&quot;single_slot__</span><span class="si">{entity}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="n">single_slot</span><span class="p">}</span></div>
 
 
 <div class="viewcode-block" id="_create_clarifications_single_slots"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill._create_clarifications_single_slots">[docs]</a><span class="k">def</span> <span class="nf">_create_clarifications_single_slots</span><span class="p">(</span>
@@ -464,7 +459,7 @@
     <span class="n">context_variables</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span>
     <span class="n">additional_updates</span><span class="p">:</span> <span class="n">Dict</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">Dict</span><span class="p">,</span> <span class="n">Dict</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Used by the :py:func:`slot_fill</span>
+    <span class="sd">&quot;&quot;&quot;Used by the :py:func:`slot_fill</span>
 <span class="sd">    &lt;plan4dial.for_generating.custom_actions.slot_fill.slot_fill&gt;` action to generate</span>
 <span class="sd">    `clarify` and :py:func:`single_slot</span>
 <span class="sd">    &lt;plan4dial.for_generating.custom_actions.slot_fill._single_slot&gt;` actions where</span>
@@ -500,13 +495,13 @@
                     <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
                         <span class="k">for</span> <span class="n">entity</span> <span class="ow">in</span> <span class="n">entities</span><span class="p">:</span>
                             <span class="k">if</span> <span class="n">entity</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]:</span>
-                                <span class="n">new_ctx_vars</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                <span class="n">new_ctx_vars</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{entity}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
                                     <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;flag&quot;</span><span class="p">,</span>
                                     <span class="s2">&quot;init&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
                                 <span class="p">}</span>
                                 <span class="n">original_act_config</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
                                     <span class="n">out</span>
-                                <span class="p">][</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                <span class="p">][</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span><span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{entity}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
                                     <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span>
                                 <span class="p">}</span>
                                 <span class="n">new_actions</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
@@ -529,7 +524,7 @@
                 <span class="n">_clarify_act</span><span class="p">(</span>
                     <span class="n">entity</span><span class="p">,</span>
                     <span class="n">config_entities</span><span class="p">[</span><span class="n">entity</span><span class="p">][</span><span class="s2">&quot;clarify_message_variants&quot;</span><span class="p">],</span>
-                    <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{</span><span class="n">entity</span><span class="si">}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">new_ctx_vars</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">&quot;allow_single_slot_</span><span class="si">{entity}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">new_ctx_vars</span><span class="p">,</span>
                     <span class="n">additional_updates</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="p">)</span>

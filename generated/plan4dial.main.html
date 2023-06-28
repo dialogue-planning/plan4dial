@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title>
-      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
+  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/language_data.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" /> 
@@ -41,9 +38,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul>
-<li class="toctree-l1"><a class="reference internal" href="plan4dial.html">plan4dial</a></li>
-</ul>
-<ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
 </ul>
 
@@ -71,9 +65,52 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="plan4dial-main">
-<h1>plan4dial.main<a class="headerlink" href="#plan4dial-main" title="Permalink to this heading"></a></h1>
-</section>
+  <div class="section" id="module-plan4dial.main">
+<span id="plan4dial-main"></span><h1>plan4dial.main<a class="headerlink" href="#module-plan4dial.main" title="Permalink to this headline"></a></h1>
+<p>Main file responsible for generating the files that will be sent to HOVOR
+(<cite>contingent-plan-executor</cite>) for executor.
+Authors:
+- Rebecca De Venezia</p>
+<p class="rubric">Functions</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_files</span></code></a>(yaml_filename, output_folder, …)</p></td>
+<td><p>Responsible for generating the files that will be sent to HOVOR (<cite>contingent-plan-executor</cite>) for execution.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="plan4dial.main.generate_files">
+<code class="sig-name descname">generate_files</code><span class="sig-paren">(</span><em class="sig-param">yaml_filename: str</em>, <em class="sig-param">output_folder: str</em>, <em class="sig-param">rbp_path: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plan4dial.main.generate_files" title="Permalink to this definition"></a></dt>
+<dd><p>Responsible for generating the files that will be sent to HOVOR
+(<cite>contingent-plan-executor</cite>) for execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>yaml_filename</strong> (<em>str</em>) – The path to the filled out YAML configuration.</p></li>
+<li><p><strong>output_folder</strong> (<em>str</em>) – Output folder where the files will be stored.</p></li>
+<li><p><strong>rbp_path</strong> (<em>str</em>) – Path to the <a class="reference external" href="https://github.com/QuMuLab/rbp">rbp</a> directory
+so the planner can be run. This can be a path directly to the
+executable .sif file.</p></li>
+<li><p><strong>train</strong> (<em>bool</em><em>, </em><em>optional</em>) – Determines if training is required. It is best to set
+to False if you made changes to the YAML that require some new output
+files, but the NLU model is not affected (no changes in the Rasa NLU YAML
+configuration). Defaults to True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>(</strong><strong>Exception</strong><strong>)</strong> – Raised if the planner was not able to find a valid plan. Happens
+    if the YAML configuration (and by proxy, the PDDL) is invalid in some way
+    (i.e. missing actions, can’t get out of a loop, etc.)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 
 
            </div>
