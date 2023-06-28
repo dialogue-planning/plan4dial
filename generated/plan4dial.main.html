@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -77,7 +78,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-plan4dial.main">
+  <section id="module-plan4dial.main">
 <span id="plan4dial-main"></span><h1>plan4dial.main<a class="headerlink" href="#module-plan4dial.main" title="Permalink to this heading"></a></h1>
 <p>Main file responsible for generating the files that will be sent to HOVOR
 (<cite>contingent-plan-executor</cite>) for executor.
@@ -85,10 +86,6 @@ Authors:
 - Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_files</span></code></a>(yaml_filename, output_folder, ...)</p></td>
 <td><p>Responsible for generating the files that will be sent to HOVOR (<cite>contingent-plan-executor</cite>) for execution.</p></td>
@@ -101,7 +98,7 @@ Authors:
 <dd><p>Responsible for generating the files that will be sent to HOVOR
 (<cite>contingent-plan-executor</cite>) for execution.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>yaml_filename</strong> (<em>str</em>) – The path to the filled out YAML configuration.</p></li>
 <li><p><strong>output_folder</strong> (<em>str</em>) – Output folder where the files will be stored.</p></li>
@@ -114,7 +111,7 @@ files, but the NLU model is not affected (no changes in the Rasa NLU YAML
 configuration). Defaults to True.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>(</strong><strong>Exception</strong><strong>)</strong> – Raised if the planner was not able to find a valid plan. Happens
     if the YAML configuration (and by proxy, the PDDL) is invalid in some way
     (i.e. missing actions, can’t get out of a loop, etc.)</p>
@@ -122,7 +119,7 @@ configuration). Defaults to True.</p></li>
 </dl>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

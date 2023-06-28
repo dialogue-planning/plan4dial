@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>plan4dial.for_generating.custom_actions.slot_fill &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -88,7 +89,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-plan4dial.for_generating.custom_actions.slot_fill">
+  <section id="module-plan4dial.for_generating.custom_actions.slot_fill">
 <span id="plan4dial-for-generating-custom-actions-slot-fill"></span><h1>plan4dial.for_generating.custom_actions.slot_fill<a class="headerlink" href="#module-plan4dial.for_generating.custom_actions.slot_fill" title="Permalink to this heading"></a></h1>
 <p>Contains all the functions for the
 <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a>
@@ -97,10 +98,6 @@ custom action that is provided to bot designers by default.</p>
 - Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slot_fill</span></code></a>(loaded_yaml, action_name, ...[, ...])</p></td>
 <td><p>Custom action provided by default that allows bot designers to specify entity slot fills with ease.</p></td>
@@ -112,7 +109,7 @@ custom action that is provided to bot designers by default.</p>
 <span class="sig-name descname"><span class="pre">_clarify_act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">message_variants</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">single_slot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">additional_updates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/custom_actions/slot_fill.html#_clarify_act"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.custom_actions.slot_fill._clarify_act" title="Permalink to this definition"></a></dt>
 <dd><p>Generates a <cite>clarify</cite> action for an entity.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>entity</strong> (<em>str</em>) – The entity to generate the action for.</p></li>
 <li><p><strong>message_variants</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – The message variants for the clarification
@@ -128,10 +125,10 @@ will only consider those where just this entity is extracted. Defaults to
 None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The <cite>clarify</cite> action configuration.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict</p>
 </dd>
 </dl>
@@ -144,7 +141,7 @@ None.</p></li>
 <cite>clarify</cite> and <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a> actions where
 necessary.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>original_act_name</strong> (<em>str</em>) – The action name given to the original
 <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill.slot_fill" title="plan4dial.for_generating.custom_actions.slot_fill.slot_fill"><code class="xref py py-func docutils literal notranslate"><span class="pre">slot_fill</span></code></a> action.</p></li>
@@ -158,10 +155,10 @@ information.</p></li>
 <li><p><strong>additional_updates</strong> (<em>Dict</em><em>, </em><em>optional</em>) – Any additional updates. Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The new actions and context variables to be added.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Tuple[Dict, Dict]</p>
 </dd>
 </dl>
@@ -172,7 +169,7 @@ information.</p></li>
 <span class="sig-name descname"><span class="pre">_make_additional_updates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">org_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_upd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/custom_actions/slot_fill.html#_make_additional_updates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.custom_actions.slot_fill._make_additional_updates" title="Permalink to this definition"></a></dt>
 <dd><p>Update an outcome by the additional updates provided by the suer.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>org_out</strong> (<em>Dict</em>) – The original outcome.</p></li>
 <li><p><strong>add_upd</strong> (<em>Dict</em>) – The additional updates to be added to the outcome.</p></li>
@@ -190,7 +187,7 @@ is able to only extract some on its first go and <cite>clarify</cite> actions as
 actions that extract an entity on its own (<a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a>) need to take
 care of the rest.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>entity</strong> (<em>str</em>) – The entity to generate the action for.</p></li>
 <li><p><strong>config_entity</strong> (<em>Dict</em>) – The <cite>config_entities</cite> configuration for this entity.
@@ -203,11 +200,11 @@ will only consider those where just this entity is extracted, or maybe
 extracted. Defaults to None.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The <a class="reference internal" href="#plan4dial.for_generating.custom_actions.slot_fill._single_slot" title="plan4dial.for_generating.custom_actions.slot_fill._single_slot"><code class="xref py py-func docutils literal notranslate"><span class="pre">single_slot</span></code></a> action
 configuration.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict</p>
 </dd>
 </dl>
@@ -230,7 +227,7 @@ missing information (only used when there are &gt; 1 entities specified).</p>
 <p>Additional outcomes can also be specified for certain outcomes, i.e. when entity
 <em>pizza</em> is extracted, respond with the given <cite>response_variants</cite>.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p></li>
 <li><p><strong>action_name</strong> (<em>str</em>) – The name of this instance of the custom action.</p></li>
@@ -298,7 +295,7 @@ Defaults to None.</p></li>
 action.</p>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

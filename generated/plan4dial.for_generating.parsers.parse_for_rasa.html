@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>plan4dial.for_generating.parsers.parse_for_rasa &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -89,7 +90,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="module-plan4dial.for_generating.parsers.parse_for_rasa">
+  <section id="module-plan4dial.for_generating.parsers.parse_for_rasa">
 <span id="plan4dial-for-generating-parsers-parse-for-rasa"></span><h1>plan4dial.for_generating.parsers.parse_for_rasa<a class="headerlink" href="#module-plan4dial.for_generating.parsers.parse_for_rasa" title="Permalink to this heading"></a></h1>
 <p>This module contains all the functions necessary to generate a NLU file that Rasa
 can use to extract intents and entities.</p>
@@ -99,10 +100,6 @@ can use to extract intents and entities.</p>
 - Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.for_generating.parsers.parse_for_rasa.make_nlu_file" title="plan4dial.for_generating.parsers.parse_for_rasa.make_nlu_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_nlu_file</span></code></a>(loaded_yaml)</p></td>
 <td><p>Generates the NLU configuration that Rasa requires to extract intents and entities.</p></td>
@@ -116,7 +113,7 @@ can use to extract intents and entities.</p>
 synonyms/variations if specified, while mapping back to the “true” value that we
 want to set to.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>extracted_value</strong> (<em>str</em>) – The value that was extracted.</p></li>
 <li><p><strong>entity</strong> (<em>str</em>) – The entity we are trying to extract.</p></li>
@@ -125,10 +122,10 @@ that we want to set the extraction to. Defaults to None, in which case we
 know that the true value was what was extracted.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The intent example.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -140,19 +137,19 @@ know that the true value was what was extracted.</p></li>
 <dd><p>Generates the NLU configuration that Rasa requires to extract intents and
 entities.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>The NLU configuration for Rasa.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Dict</p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
+</section>
 
 
            </div>

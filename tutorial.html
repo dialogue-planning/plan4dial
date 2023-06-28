@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tutorial &mdash; Plan4Dial 1.0.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -85,9 +86,9 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="section" id="tutorial">
+  <section id="tutorial">
 <span id="id1"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
-<div class="section" id="requirements-local-install">
+<section id="requirements-local-install">
 <h2>Requirements - Local Install<a class="headerlink" href="#requirements-local-install" title="Permalink to this heading"></a></h2>
 <p><strong>Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.</strong>
 <strong>Note: If Rasa is giving you issues running, check the latest releases. It may be your version of Python.</strong>.</p>
@@ -96,8 +97,8 @@
 <div class="line">Run <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code> to install the necessary libraries before using.</div>
 <div class="line">Run <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">spacy</span> <span class="pre">download</span> <span class="pre">en_core_web_md</span></code> to download the appropriate Spacy model. This is used for NLU along with Rasa.</div>
 </div>
-</div>
-<div class="section" id="requirements-docker">
+</section>
+<section id="requirements-docker">
 <h2>Requirements - Docker<a class="headerlink" href="#requirements-docker" title="Permalink to this heading"></a></h2>
 <div class="line-block">
 <div class="line">To ensure development works identically accross systems, Docker should be used to run Plan4Dial.</div>
@@ -109,10 +110,10 @@
 <div class="line">Now you should see output files were created and successful output in the bash session in the container. You can copy these output files out from the filesystem outside the container, as the /plan4dial subdirectory is mounted.</div>
 </div>
 <p>Note: You can make changes to python files inside subfolder /plan4dial without rebuilding the docker container as it is mounted as as simple volume.</p>
-</div>
-<div class="section" id="usage-steps">
+</section>
+<section id="usage-steps">
 <h2>Usage Steps<a class="headerlink" href="#usage-steps" title="Permalink to this heading"></a></h2>
-<div class="section" id="create-a-yaml-config-file-that-defines-your-bot">
+<section id="create-a-yaml-config-file-that-defines-your-bot">
 <h3>Create a YAML config file that defines your bot.<a class="headerlink" href="#create-a-yaml-config-file-that-defines-your-bot" title="Permalink to this heading"></a></h3>
 <p>Let’s go through an example. Suppose we want to create a chatbot that helps you decide what to do on your day off. This will be a fairly simple bot that picks a restaurant and outing location based on the user’s preferences.</p>
 <p>(For later reference, the full YAML file as well as the output files can be found <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot">here</a>).</p>
@@ -123,7 +124,7 @@
 </div>
 <p>There are three main parts to the YAML file you will need to define.
 They are <code class="docutils literal notranslate"><span class="pre">context</span> <span class="pre">variables</span></code>, <code class="docutils literal notranslate"><span class="pre">intents</span></code>, and <code class="docutils literal notranslate"><span class="pre">actions</span></code>. We will examine each of these in turn.</p>
-<div class="section" id="define-the-context-variables">
+<section id="define-the-context-variables">
 <h4>1. Define the Context Variables<a class="headerlink" href="#define-the-context-variables" title="Permalink to this heading"></a></h4>
 <p>Context variables are variables that your bot will store throughout the course of the conversation to keep track of the context gathered so far.
 Without context variables, the bot would not be able to store information from one line of dialogue to the next.</p>
@@ -193,10 +194,6 @@ Let’s examine the context variables for location, phone number, cuisine, and f
 <p>We can see that each context variable has been assigned a type: <code class="docutils literal notranslate"><span class="pre">json</span></code>, <code class="docutils literal notranslate"><span class="pre">enum</span></code>, and <code class="docutils literal notranslate"><span class="pre">flag</span></code> respectively. We can also see that another type, <code class="docutils literal notranslate"><span class="pre">fflag</span></code>, exists under the <code class="docutils literal notranslate"><span class="pre">known</span></code> section of <em>cuisine</em> (more on this later).</p>
 <p>These are the only <strong>four</strong> types that we can define in the YAML. They are defined as follows:</p>
 <table class="docutils align-default" id="variable-types">
-<colgroup>
-<col style="width: 15%" />
-<col style="width: 85%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>type</p></th>
 <th class="head"><p>definition</p></th>
@@ -312,8 +309,8 @@ Since this will be completely in the control of the bot designer and not reliant
 <p>Also, a <code class="docutils literal notranslate"><span class="pre">flag</span></code> <em>goal</em> variable is mandatory for every bot as it determines when the conversation ends.
 When you want the outcome of an action to end the conversation, you should set <strong>goal</strong> to <strong>true</strong>.</p>
 <p>You’re all set to define context variables for your bot! Let’s move on to the next step: intents.</p>
-</div>
-<div class="section" id="define-the-intents">
+</section>
+<section id="define-the-intents">
 <h4>2. Define the Intents<a class="headerlink" href="#define-the-intents" title="Permalink to this heading"></a></h4>
 <p>The next step is to define the intents.
 Intents are characterizations of what the user is trying to say. For example, if the user says “yes”, then their intent is to “confirm” the bot’s statement.
@@ -403,8 +400,8 @@ Within the intent, each entity must be preceded with a <code class="docutils lit
 <p><strong>NOTE</strong>: All <code class="docutils literal notranslate"><span class="pre">utterances</span></code> must include <em>exactly</em> all the entities listed under <code class="docutils literal notranslate"><span class="pre">entities</span></code>; no more, no less.
 In practice, this does not mean that all entities will actually be extracted at runtime, but it needs to be indicated
 what the intent is actually trying to accomplish.</p>
-</div>
-<div class="section" id="define-the-actions">
+</section>
+<section id="define-the-actions">
 <h4>3. Define the Actions<a class="headerlink" href="#define-the-actions" title="Permalink to this heading"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">actions</span></code> are the core of dialogue agent design as they specify what your agent can do and when.
 We use a <strong>declarative</strong> specification powered by automated planning that allows you to treat actions as separate pieces of a puzzle.
@@ -415,10 +412,6 @@ Only actions whose <code class="docutils literal notranslate"><span class="pre">
 User utterances are only handled by deciphering <code class="docutils literal notranslate"><span class="pre">intents</span></code> as described above.</p>
 <p>There are <strong>four</strong> types of actions:</p>
 <table class="docutils align-default" id="action-types">
-<colgroup>
-<col style="width: 15%" />
-<col style="width: 85%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>type</p></th>
 <th class="head"><p>definition</p></th>
@@ -519,10 +512,6 @@ As the names suggest, only one of the outcomes will be executed depending on the
 <p>There are <strong>four</strong> different parameters that outcomes can take.
 Outcomes can use multiple and need at least one.</p>
 <table class="docutils align-default">
-<colgroup>
-<col style="width: 23%" />
-<col style="width: 77%" />
-</colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>parameters</p></th>
 <th class="head"><p>definition</p></th>
@@ -787,16 +776,16 @@ how will the outcome be chosen? The answer lies in the <code class="docutils lit
 <p><strong>NOTE</strong>: This specification will become shorter and cleaner with the closing of <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/issues/4">#4</a>.</p>
 <p><strong>And that’s all the action types!</strong> Now you have every piece of the puzzle you need to specify your bot.
 There are a few actions we didn’t cover, but they are all more examples of the above.</p>
-</div>
-</div>
-<div class="section" id="generate-the-files-needed-to-test-the-bot-with-hovor">
+</section>
+</section>
+<section id="generate-the-files-needed-to-test-the-bot-with-hovor">
 <h3>Generate the files needed to test the bot with HOVOR.<a class="headerlink" href="#generate-the-files-needed-to-test-the-bot-with-hovor" title="Permalink to this heading"></a></h3>
 <p>Once you are satisfied with your specification, call <a class="reference internal" href="generated/plan4dial.main.html#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_files</span></code></a>.</p>
 <p>Then, clone <a class="reference external" href="https://github.com/dialogue-planning/contingent-plan-executor/tree/main">our extension of IBM’s Hovor</a>.</p>
 <p>See the Hovor README for a rundown on the different ways to run and deploy your chatbot.</p>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
            </div>
