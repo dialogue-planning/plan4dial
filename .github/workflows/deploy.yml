@@ -11,8 +11,6 @@ jobs:
       uses: actions/setup-python@v4
       with:
         python-version: '3.9.5'
-    - name: Update pip
-      run: sudo -H python -m pip install --upgrade pip
     - name: Install requirements
       run: sudo -H pip install -r docs/requirements.txt
     - name: Build HTML
