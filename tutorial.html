@@ -3,20 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial &mdash; Plan4Dial 1.0.0 documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <title>Tutorial &mdash; Plan4Dial 1.0.0 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Plan4Dial" href="index.html" /> 
+    <link rel="prev" title="plan4dial.main" href="generated/plan4dial.main.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -38,7 +40,10 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="generated/plan4dial.html">plan4dial</a></li>
+</ul>
+<ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#requirements-local-install">Requirements - Local Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#requirements-docker">Requirements - Docker</a></li>
@@ -81,9 +86,9 @@
            <div itemprop="articleBody">
              
   <div class="section" id="tutorial">
-<span id="id1"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this heading"></a></h1>
 <div class="section" id="requirements-local-install">
-<h2>Requirements - Local Install<a class="headerlink" href="#requirements-local-install" title="Permalink to this headline"></a></h2>
+<h2>Requirements - Local Install<a class="headerlink" href="#requirements-local-install" title="Permalink to this heading"></a></h2>
 <p><strong>Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.</strong>
 <strong>Note: If Rasa is giving you issues running, check the latest releases. It may be your version of Python.</strong>.</p>
 <div class="line-block">
@@ -93,7 +98,7 @@
 </div>
 </div>
 <div class="section" id="requirements-docker">
-<h2>Requirements - Docker<a class="headerlink" href="#requirements-docker" title="Permalink to this headline"></a></h2>
+<h2>Requirements - Docker<a class="headerlink" href="#requirements-docker" title="Permalink to this heading"></a></h2>
 <div class="line-block">
 <div class="line">To ensure development works identically accross systems, Docker should be used to run Plan4Dial.</div>
 <div class="line">Inside the repository, follow these steps to run with Docker:</div>
@@ -106,9 +111,9 @@
 <p>Note: You can make changes to python files inside subfolder /plan4dial without rebuilding the docker container as it is mounted as as simple volume.</p>
 </div>
 <div class="section" id="usage-steps">
-<h2>Usage Steps<a class="headerlink" href="#usage-steps" title="Permalink to this headline"></a></h2>
+<h2>Usage Steps<a class="headerlink" href="#usage-steps" title="Permalink to this heading"></a></h2>
 <div class="section" id="create-a-yaml-config-file-that-defines-your-bot">
-<h3>Create a YAML config file that defines your bot.<a class="headerlink" href="#create-a-yaml-config-file-that-defines-your-bot" title="Permalink to this headline"></a></h3>
+<h3>Create a YAML config file that defines your bot.<a class="headerlink" href="#create-a-yaml-config-file-that-defines-your-bot" title="Permalink to this heading"></a></h3>
 <p>Let’s go through an example. Suppose we want to create a chatbot that helps you decide what to do on your day off. This will be a fairly simple bot that picks a restaurant and outing location based on the user’s preferences.</p>
 <p>(For later reference, the full YAML file as well as the output files can be found <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot">here</a>).</p>
 <p>First, create a YAML file and pick a name for the domain:</p>
@@ -119,7 +124,7 @@
 <p>There are three main parts to the YAML file you will need to define.
 They are <code class="docutils literal notranslate"><span class="pre">context</span> <span class="pre">variables</span></code>, <code class="docutils literal notranslate"><span class="pre">intents</span></code>, and <code class="docutils literal notranslate"><span class="pre">actions</span></code>. We will examine each of these in turn.</p>
 <div class="section" id="define-the-context-variables">
-<h4>1. Define the Context Variables<a class="headerlink" href="#define-the-context-variables" title="Permalink to this headline"></a></h4>
+<h4>1. Define the Context Variables<a class="headerlink" href="#define-the-context-variables" title="Permalink to this heading"></a></h4>
 <p>Context variables are variables that your bot will store throughout the course of the conversation to keep track of the context gathered so far.
 Without context variables, the bot would not be able to store information from one line of dialogue to the next.</p>
 <p>One of the most common use cases of context variables is to store information gathered from the user.
@@ -309,7 +314,7 @@ When you want the outcome of an action to end the conversation, you should set <
 <p>You’re all set to define context variables for your bot! Let’s move on to the next step: intents.</p>
 </div>
 <div class="section" id="define-the-intents">
-<h4>2. Define the Intents<a class="headerlink" href="#define-the-intents" title="Permalink to this headline"></a></h4>
+<h4>2. Define the Intents<a class="headerlink" href="#define-the-intents" title="Permalink to this heading"></a></h4>
 <p>The next step is to define the intents.
 Intents are characterizations of what the user is trying to say. For example, if the user says “yes”, then their intent is to “confirm” the bot’s statement.
 Intents are parsed/analyzed using Rasa NLU.
@@ -400,7 +405,7 @@ In practice, this does not mean that all entities will actually be extracted at 
 what the intent is actually trying to accomplish.</p>
 </div>
 <div class="section" id="define-the-actions">
-<h4>3. Define the Actions<a class="headerlink" href="#define-the-actions" title="Permalink to this headline"></a></h4>
+<h4>3. Define the Actions<a class="headerlink" href="#define-the-actions" title="Permalink to this heading"></a></h4>
 <p><code class="docutils literal notranslate"><span class="pre">actions</span></code> are the core of dialogue agent design as they specify what your agent can do and when.
 We use a <strong>declarative</strong> specification powered by automated planning that allows you to treat actions as separate pieces of a puzzle.
 You won’t have to draw out complex dialogue trees that you will have to completely dismantle if you decide late in the game that you want to add a new action near the top.
@@ -785,7 +790,7 @@ There are a few actions we didn’t cover, but they are all more examples of the
 </div>
 </div>
 <div class="section" id="generate-the-files-needed-to-test-the-bot-with-hovor">
-<h3>Generate the files needed to test the bot with HOVOR.<a class="headerlink" href="#generate-the-files-needed-to-test-the-bot-with-hovor" title="Permalink to this headline"></a></h3>
+<h3>Generate the files needed to test the bot with HOVOR.<a class="headerlink" href="#generate-the-files-needed-to-test-the-bot-with-hovor" title="Permalink to this heading"></a></h3>
 <p>Once you are satisfied with your specification, call <a class="reference internal" href="generated/plan4dial.main.html#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-func docutils literal notranslate"><span class="pre">generate_files</span></code></a>.</p>
 <p>Then, clone <a class="reference external" href="https://github.com/dialogue-planning/contingent-plan-executor/tree/main">our extension of IBM’s Hovor</a>.</p>
 <p>See the Hovor README for a rundown on the different ways to run and deploy your chatbot.</p>
@@ -797,7 +802,7 @@ There are a few actions we didn’t cover, but they are all more examples of the
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Plan4Dial" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="generated/plan4dial.main.html" class="btn btn-neutral float-left" title="plan4dial.main" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>

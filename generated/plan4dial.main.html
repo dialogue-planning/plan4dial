@@ -3,19 +3,23 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title><link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <title>plan4dial.main &mdash; Plan4Dial 1.0.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/language_data.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial" href="../tutorial.html" />
+    <link rel="prev" title="plan4dial.for_generating.parsers.pddl_parser" href="plan4dial.for_generating.parsers.pddl_parser.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -37,7 +41,14 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="plan4dial.html">plan4dial</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="plan4dial.for_generating.html">plan4dial.for_generating</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">plan4dial.main</a></li>
+</ul>
+</li>
+</ul>
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../tutorial.html">Tutorial</a></li>
 </ul>
 
@@ -55,6 +66,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="plan4dial.html">plan4dial</a></li>
       <li class="breadcrumb-item active">plan4dial.main</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/generated/plan4dial.main.rst.txt" rel="nofollow"> View page source</a>
@@ -66,26 +78,26 @@
            <div itemprop="articleBody">
              
   <div class="section" id="module-plan4dial.main">
-<span id="plan4dial-main"></span><h1>plan4dial.main<a class="headerlink" href="#module-plan4dial.main" title="Permalink to this headline"></a></h1>
+<span id="plan4dial-main"></span><h1>plan4dial.main<a class="headerlink" href="#module-plan4dial.main" title="Permalink to this heading"></a></h1>
 <p>Main file responsible for generating the files that will be sent to HOVOR
 (<cite>contingent-plan-executor</cite>) for executor.
 Authors:
 - Rebecca De Venezia</p>
 <p class="rubric">Functions</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_files</span></code></a>(yaml_filename, output_folder, …)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.main.generate_files" title="plan4dial.main.generate_files"><code class="xref py py-obj docutils literal notranslate"><span class="pre">generate_files</span></code></a>(yaml_filename, output_folder, ...)</p></td>
 <td><p>Responsible for generating the files that will be sent to HOVOR (<cite>contingent-plan-executor</cite>) for execution.</p></td>
 </tr>
 </tbody>
 </table>
-<dl class="function">
-<dt id="plan4dial.main.generate_files">
-<code class="sig-name descname">generate_files</code><span class="sig-paren">(</span><em class="sig-param">yaml_filename: str</em>, <em class="sig-param">output_folder: str</em>, <em class="sig-param">rbp_path: str</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#plan4dial.main.generate_files" title="Permalink to this definition"></a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.main.generate_files">
+<span class="sig-name descname"><span class="pre">generate_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_filename</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_folder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rbp_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/plan4dial/main.html#generate_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.main.generate_files" title="Permalink to this definition"></a></dt>
 <dd><p>Responsible for generating the files that will be sent to HOVOR
 (<cite>contingent-plan-executor</cite>) for execution.</p>
 <dl class="field-list simple">
@@ -115,7 +127,10 @@ configuration). Defaults to True.</p></li>
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="plan4dial.for_generating.parsers.pddl_parser.html" class="btn btn-neutral float-left" title="plan4dial.for_generating.parsers.pddl_parser" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tutorial.html" class="btn btn-neutral float-right" title="Tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
