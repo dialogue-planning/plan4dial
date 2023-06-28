@@ -1,5 +1,5 @@
 pyyaml<6.0,>=5.3.1
-MarkupSafe>=2.1.1
+markupsafe>=2.1.1
 certifi>=2021.10.8
 requests<3.0,>2.23
 pytz<2023.0,>=2019.1
