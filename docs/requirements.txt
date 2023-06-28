@@ -1,7 +1,7 @@
 packaging==20.0
 pyyaml
 protobuf<3.20,>=3.9.2
-sphinx<7,>=1.6
+sphinx==5.1.1
 sphinx_rtd_theme
 nnf
 spacy
