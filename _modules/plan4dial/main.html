@@ -10,11 +10,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
         <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
         <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -44,6 +44,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../landing.html">For ICAPS Demo Viewers</a></li>
 </ul>
 
         </div>
@@ -91,7 +92,7 @@
 
 
 <div class="viewcode-block" id="generate_files"><a class="viewcode-back" href="../../generated/plan4dial.main.html#plan4dial.main.generate_files">[docs]</a><span class="k">def</span> <span class="nf">generate_files</span><span class="p">(</span><span class="n">yaml_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rbp_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Responsible for generating the files that will be sent to HOVOR</span>
 <span class="sd">    (`contingent-plan-executor`) for execution.</span>
 
@@ -118,13 +119,13 @@
     <span class="n">converted_json</span> <span class="o">=</span> <span class="n">convert_yaml</span><span class="p">(</span>
         <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">yaml_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{output_folder}</span><span class="s2">/data.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/data.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
         <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">converted_json</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span>
     <span class="c1"># convert to PDDL</span>
     <span class="n">domain</span><span class="p">,</span> <span class="n">problem</span> <span class="o">=</span> <span class="n">parse_to_pddl</span><span class="p">(</span><span class="n">converted_json</span><span class="p">)</span>
     <span class="n">domain_str</span><span class="p">,</span> <span class="n">problem_str</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{output_folder}</span><span class="s2">/domain.pddl&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{output_folder}</span><span class="s2">/problem.pddl&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/domain.pddl&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/problem.pddl&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">domain_str</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
         <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
@@ -132,7 +133,7 @@
         <span class="n">writer</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">problem</span><span class="p">)</span>
 
     <span class="c1"># train rasa NLU model</span>
-    <span class="n">writer</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{output_folder}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="n">writer</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
     <span class="c1"># parse for rasa. need to use the original YAML because some of the NLU</span>
     <span class="c1"># information is lost in the JSON configuration.</span>
     <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span>
@@ -141,14 +142,14 @@
     <span class="p">)</span>
     <span class="n">train_nlu</span><span class="p">(</span>
         <span class="n">config</span><span class="o">=</span><span class="s2">&quot;./plan4dial/for_generating/nlu_config.yml&quot;</span><span class="p">,</span>
-        <span class="n">nlu_data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{output_folder}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span>
-        <span class="n">output</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{output_folder}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">nlu_data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span>
+        <span class="n">output</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
         <span class="n">fixed_model_name</span><span class="o">=</span><span class="s2">&quot;nlu_model&quot;</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using rbp from path: </span><span class="si">{rbp_path}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;with domain string path: </span><span class="si">{domain_str}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;with problem string path: </span><span class="si">{problem_str}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using rbp from path: </span><span class="si">{</span><span class="n">rbp_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;with domain string path: </span><span class="si">{</span><span class="n">domain_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;with problem string path: </span><span class="si">{</span><span class="n">problem_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
     <span class="c1"># generate PDDL files; convert policy.out to a prp.json file; wait until complete</span>
     <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">([</span><span class="n">rbp_path</span><span class="p">,</span> <span class="n">domain_str</span><span class="p">,</span> <span class="n">problem_str</span><span class="p">,</span> <span class="s2">&quot;--output-format&quot;</span><span class="p">,</span> <span class="s2">&quot;3&quot;</span><span class="p">])</span>
@@ -158,13 +159,13 @@
             <span class="n">plan_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;plan&quot;</span><span class="p">:</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)}</span>
     <span class="k">except</span> <span class="ne">FileNotFoundError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;PDDL is invalid.&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">err</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{output_folder}</span><span class="s2">/data.prp.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/data.prp.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">plan_data</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
     <span class="c1"># delete extra output files</span>
     <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&quot;./output.sas&quot;</span><span class="p">)</span>
     <span class="c1"># generate configuration for rollout</span>
     <span class="n">rollout_data</span> <span class="o">=</span> <span class="n">rollout_config</span><span class="p">(</span><span class="n">converted_json</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{output_folder}</span><span class="s2">/rollout_config.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/rollout_config.json&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">rollout_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div>
 
 
@@ -174,10 +175,10 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">bot_name</span> <span class="o">=</span> <span class="s2">&quot;gold_standard_bot&quot;</span>
     <span class="c1"># we can hardcode the path as it will stay the same in docker container</span>
-    <span class="n">dirname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/root/app/plan4dial/local_data/</span><span class="si">{bot_name}</span><span class="s2">&quot;</span>
+    <span class="n">dirname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/root/app/plan4dial/local_data/</span><span class="si">{</span><span class="n">bot_name</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">generate_files</span><span class="p">(</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{dirname}</span><span class="s2">/</span><span class="si">{bot_name}</span><span class="s2">.yml&quot;</span><span class="p">,</span>
-        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{dirname}</span><span class="s2">/output_files&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">bot_name</span><span class="si">}</span><span class="s2">.yml&quot;</span><span class="p">,</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s2">/output_files&quot;</span><span class="p">,</span>
         <span class="s2">&quot;/root/rbp.sif&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Completed&quot;</span><span class="p">)</span>
