@@ -19,7 +19,7 @@ context_variables:
       type: flag
       init: false
     options:
-      - invited talk:
+      - invited talk
       - whole session
   attending-workshop-tut:
     type: flag
