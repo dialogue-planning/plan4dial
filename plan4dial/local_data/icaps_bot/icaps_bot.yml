@@ -107,7 +107,7 @@ actions:
     parameters:
       action_name: ask-july-8
       message_variants:
-        - Would you like to attend on July 8?
+        - Hello! I'm here to help you schedule which ICAPS sessions you would like to attend. Let's get started! Would you like to attend on July 8?
       entity: attending-8
       additional_updates:
         deny_outcome:
@@ -125,12 +125,15 @@ actions:
     parameters:
       action_name: ask-dc
       message_variants:
-        - Would you like to attend the Doctoral Consortium?
+        - Are you interested in attending the Doctoral Consortium?
       entity: attending-dc
       additional_conditions:
         attending-8:
           value: true
       additional_updates:
+        confirm_outcome:
+          response_variants:
+            - Good call, there's going to be some awesome presentations there!
         deny_outcome:
           updates:
             dc-interest:
