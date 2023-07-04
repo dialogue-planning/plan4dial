@@ -1,12 +1,12 @@
 {
 
-  "init": "23",
+  "init": "24",
   "goal": "0",
   "nodes" : {
     "0": {
       "expected_successor": false,
       "action": "---",
-      "state": "0xadc250",
+      "state": "0x24a45a0",
       "distance": 0,
       "is_relevant": 1,
       "is_goal": 1,
@@ -18,7 +18,7 @@
     "1": {
       "expected_successor": "0",
       "action": "complete",
-      "state": "0xae5500",
+      "state": "0x24aa880",
       "distance": 1,
       "is_relevant": 0,
       "is_goal": 0,
@@ -33,7 +33,7 @@
     "2": {
       "expected_successor": "1",
       "action": "slot-fill__ask-monday-evening",
-      "state": "0xae5ef0",
+      "state": "0x24ab270",
       "distance": 2,
       "is_relevant": 0,
       "is_goal": 0,
@@ -52,7 +52,7 @@
     "3": {
       "expected_successor": "2",
       "action": "dialogue_statement",
-      "state": "0xae5a10",
+      "state": "0x24aad90",
       "distance": 3,
       "is_relevant": 0,
       "is_goal": 0,
@@ -64,29 +64,10 @@
         }
        ]
     },
-    "14": {
-      "expected_successor": "13",
-      "action": "slot-fill__ask-workshop-pref",
-      "state": "0xae9c00",
-      "distance": 3,
-      "is_relevant": 0,
-      "is_goal": 0,
-      "is_sc": 1,
-      "successors": [
-        {
-            "outcome_label": "slot-fill__ask-workshop-pref_DETDUP_slot-fill__ask-workshop-pref__validate-slot-fill-EQ-fallback",
-            "successor_id": "15"
-        },
-        {
-            "outcome_label": "slot-fill__ask-workshop-pref_DETDUP_slot-fill__ask-workshop-pref__validate-slot-fill-EQ-workshop-pref_found",
-            "successor_id": "13"
-        }
-       ]
-    },
     "7": {
       "expected_successor": "3",
       "action": "slot-fill__ask-workshop-pref",
-      "state": "0xaea170",
+      "state": "0x24af550",
       "distance": 4,
       "is_relevant": 0,
       "is_goal": 0,
@@ -102,10 +83,25 @@
         }
        ]
     },
+    "8": {
+      "expected_successor": "7",
+      "action": "dialogue_statement",
+      "state": "0x24af780",
+      "distance": 5,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "7"
+        }
+       ]
+    },
     "9": {
       "expected_successor": "8",
       "action": "slot-fill__ask-monday-evening",
-      "state": "0xaeaf30",
+      "state": "0x24ae7a0",
       "distance": 6,
       "is_relevant": 0,
       "is_goal": 0,
@@ -121,25 +117,10 @@
         }
        ]
     },
-    "15": {
-      "expected_successor": "14",
-      "action": "dialogue_statement",
-      "state": "0xaecf30",
-      "distance": 4,
-      "is_relevant": 0,
-      "is_goal": 0,
-      "is_sc": 1,
-      "successors": [
-        {
-            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "14"
-        }
-       ]
-    },
     "13": {
       "expected_successor": "1",
       "action": "dialogue_statement",
-      "state": "0xae9be0",
+      "state": "0x24af2c0",
       "distance": 2,
       "is_relevant": 0,
       "is_goal": 0,
@@ -151,25 +132,29 @@
         }
        ]
     },
-    "8": {
-      "expected_successor": "7",
-      "action": "dialogue_statement",
-      "state": "0xaea410",
-      "distance": 5,
+    "14": {
+      "expected_successor": "13",
+      "action": "slot-fill__ask-workshop-pref",
+      "state": "0x24b23f0",
+      "distance": 3,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "7"
+            "outcome_label": "slot-fill__ask-workshop-pref_DETDUP_slot-fill__ask-workshop-pref__validate-slot-fill-EQ-fallback",
+            "successor_id": "15"
+        },
+        {
+            "outcome_label": "slot-fill__ask-workshop-pref_DETDUP_slot-fill__ask-workshop-pref__validate-slot-fill-EQ-workshop-pref_found",
+            "successor_id": "13"
         }
        ]
     },
     "10": {
       "expected_successor": "3",
       "action": "slot-fill__ask-workshop-tut",
-      "state": "0xaec7e0",
+      "state": "0x24b1be0",
       "distance": 4,
       "is_relevant": 0,
       "is_goal": 0,
@@ -192,7 +177,7 @@
     "11": {
       "expected_successor": "10",
       "action": "dialogue_statement",
-      "state": "0xaecb70",
+      "state": "0x24b1f70",
       "distance": 5,
       "is_relevant": 0,
       "is_goal": 0,
@@ -204,10 +189,25 @@
         }
        ]
     },
+    "15": {
+      "expected_successor": "14",
+      "action": "dialogue_statement",
+      "state": "0x24b3db0",
+      "distance": 4,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "14"
+        }
+       ]
+    },
     "21": {
       "expected_successor": "11",
       "action": "slot-fill__ask-dc-pref",
-      "state": "0xaf0740",
+      "state": "0x24b6d30",
       "distance": 6,
       "is_relevant": 0,
       "is_goal": 0,
@@ -219,14 +219,29 @@
         },
         {
             "outcome_label": "slot-fill__ask-dc-pref_DETDUP_slot-fill__ask-dc-pref__validate-slot-fill-EQ-fallback",
-            "successor_id": "26"
+            "successor_id": "22"
         }
        ]
     },
     "22": {
+      "expected_successor": "21",
+      "action": "dialogue_statement",
+      "state": "0x24b59c0",
+      "distance": 7,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "21"
+        }
+       ]
+    },
+    "23": {
       "expected_successor": "10",
       "action": "slot-fill__ask-dc",
-      "state": "0xaf0e10",
+      "state": "0x24b7540",
       "distance": 5,
       "is_relevant": 0,
       "is_goal": 0,
@@ -234,7 +249,7 @@
       "successors": [
         {
             "outcome_label": "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-confirm_outcome",
-            "successor_id": "21"
+            "successor_id": "22"
         },
         {
             "outcome_label": "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-deny_outcome",
@@ -242,14 +257,14 @@
         },
         {
             "outcome_label": "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-fallback",
-            "successor_id": "25"
+            "successor_id": "26"
         }
        ]
     },
-    "23": {
+    "24": {
       "expected_successor": "11",
       "action": "slot-fill__ask-july-8",
-      "state": "0xaf0f20",
+      "state": "0x24b77d0",
       "distance": 6,
       "is_relevant": 0,
       "is_goal": 0,
@@ -257,7 +272,7 @@
       "successors": [
         {
             "outcome_label": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-confirm_outcome",
-            "successor_id": "22"
+            "successor_id": "23"
         },
         {
             "outcome_label": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-deny_outcome",
@@ -265,15 +280,30 @@
         },
         {
             "outcome_label": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-fallback",
+            "successor_id": "25"
+        }
+       ]
+    },
+    "25": {
+      "expected_successor": "24",
+      "action": "dialogue_statement",
+      "state": "0x24b7980",
+      "distance": 7,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
             "successor_id": "24"
         }
        ]
     },
-    "24": {
+    "26": {
       "expected_successor": "23",
       "action": "dialogue_statement",
-      "state": "0xaf1010",
-      "distance": 7,
+      "state": "0x24b7b90",
+      "distance": 6,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
@@ -283,36 +313,6 @@
             "successor_id": "23"
         }
        ]
-    },
-    "25": {
-      "expected_successor": "22",
-      "action": "dialogue_statement",
-      "state": "0xaf1220",
-      "distance": 6,
-      "is_relevant": 0,
-      "is_goal": 0,
-      "is_sc": 1,
-      "successors": [
-        {
-            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "22"
-        }
-       ]
-    },
-    "26": {
-      "expected_successor": "21",
-      "action": "dialogue_statement",
-      "state": "0xaf17e0",
-      "distance": 7,
-      "is_relevant": 0,
-      "is_goal": 0,
-      "is_sc": 1,
-      "successors": [
-        {
-            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "21"
-        }
-       ]
     }
   },
   "edges" : [
@@ -320,64 +320,56 @@
       ["2", ">", "1"],
       ["2", ">", "3"],
       ["3", ">", "2"],
-      ["14", ">", "15"],
-      ["14", ">", "13"],
       ["7", ">", "8"],
       ["7", ">", "3"],
+      ["8", ">", "7"],
       ["9", ">", "14"],
       ["9", ">", "8"],
-      ["15", ">", "14"],
       ["13", ">", "1"],
-      ["8", ">", "7"],
+      ["14", ">", "15"],
+      ["14", ">", "13"],
       ["10", ">", "9"],
       ["10", ">", "3"],
       ["10", ">", "11"],
       ["11", ">", "10"],
+      ["15", ">", "14"],
       ["21", ">", "11"],
-      ["21", ">", "26"],
+      ["21", ">", "22"],
       ["22", ">", "21"],
-      ["22", ">", "10"],
-      ["22", ">", "25"],
       ["23", ">", "22"],
-      ["23", ">", "11"],
-      ["23", ">", "24"],
+      ["23", ">", "10"],
+      ["23", ">", "26"],
       ["24", ">", "23"],
-      ["25", ">", "22"],
-      ["26", ">", "21"]
+      ["24", ">", "11"],
+      ["24", ">", "25"],
+      ["25", ">", "24"],
+      ["26", ">", "23"]
   ],
   "states" : {
-    "0xadc250": [
+    "0x24a45a0": [
       "Atom goal()"
     ],
-    "0xae5500": [
+    "0x24aa880": [
       "Atom know__attending-rec()",
       "NegatedAtom forcing__slot-fill__ask-monday-evening()",
       "Atom know__workshop-pref()",
       "NegatedAtom force-statement()",
       "Atom know__dc-interest()"
     ],
-    "0xae5ef0": [
+    "0x24ab270": [
       "NegatedAtom know__attending-rec()",
       "Atom know__workshop-pref()",
       "NegatedAtom force-statement()",
       "Atom know__dc-interest()"
     ],
-    "0xae5a10": [
+    "0x24aad90": [
       "NegatedAtom know__attending-rec()",
       "Atom know__workshop-pref()",
       "Atom force-statement()",
       "Atom know__dc-interest()",
       "Atom have-message()"
     ],
-    "0xae9c00": [
-      "Atom know__attending-rec()",
-      "NegatedAtom forcing__slot-fill__ask-monday-evening()",
-      "Atom attending-workshop-tut()",
-      "NegatedAtom know__workshop-pref()",
-      "NegatedAtom force-statement()",
-      "Atom know__dc-interest()"
-    ],
-    "0xaea170": [
+    "0x24af550": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom forcing__slot-fill__ask-monday-evening()",
       "Atom attending-workshop-tut()",
@@ -385,31 +377,7 @@
       "NegatedAtom force-statement()",
       "Atom know__dc-interest()"
     ],
-    "0xaeaf30": [
-      "NegatedAtom know__attending-rec()",
-      "Atom attending-workshop-tut()",
-      "NegatedAtom know__workshop-pref()",
-      "NegatedAtom force-statement()",
-      "Atom know__dc-interest()"
-    ],
-    "0xaecf30": [
-      "Atom know__attending-rec()",
-      "NegatedAtom forcing__slot-fill__ask-monday-evening()",
-      "Atom attending-workshop-tut()",
-      "NegatedAtom know__workshop-pref()",
-      "Atom force-statement()",
-      "Atom know__dc-interest()",
-      "Atom have-message()"
-    ],
-    "0xae9be0": [
-      "Atom know__attending-rec()",
-      "NegatedAtom forcing__slot-fill__ask-monday-evening()",
-      "Atom know__workshop-pref()",
-      "Atom force-statement()",
-      "Atom know__dc-interest()",
-      "Atom have-message()"
-    ],
-    "0xaea410": [
+    "0x24af780": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom forcing__slot-fill__ask-monday-evening()",
       "Atom attending-workshop-tut()",
@@ -418,7 +386,30 @@
       "Atom know__dc-interest()",
       "Atom have-message()"
     ],
-    "0xaec7e0": [
+    "0x24ae7a0": [
+      "NegatedAtom know__attending-rec()",
+      "Atom attending-workshop-tut()",
+      "NegatedAtom know__workshop-pref()",
+      "NegatedAtom force-statement()",
+      "Atom know__dc-interest()"
+    ],
+    "0x24af2c0": [
+      "Atom know__attending-rec()",
+      "NegatedAtom forcing__slot-fill__ask-monday-evening()",
+      "Atom know__workshop-pref()",
+      "Atom force-statement()",
+      "Atom know__dc-interest()",
+      "Atom have-message()"
+    ],
+    "0x24b23f0": [
+      "Atom know__attending-rec()",
+      "NegatedAtom forcing__slot-fill__ask-monday-evening()",
+      "Atom attending-workshop-tut()",
+      "NegatedAtom know__workshop-pref()",
+      "NegatedAtom force-statement()",
+      "Atom know__dc-interest()"
+    ],
+    "0x24b1be0": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom know__attending-workshop-tut()",
       "NegatedAtom forcing__slot-fill__ask-monday-evening()",
@@ -426,7 +417,7 @@
       "NegatedAtom force-statement()",
       "Atom know__dc-interest()"
     ],
-    "0xaecb70": [
+    "0x24b1f70": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom know__attending-workshop-tut()",
       "NegatedAtom forcing__slot-fill__ask-monday-evening()",
@@ -435,7 +426,16 @@
       "Atom know__dc-interest()",
       "Atom have-message()"
     ],
-    "0xaf0740": [
+    "0x24b3db0": [
+      "Atom know__attending-rec()",
+      "NegatedAtom forcing__slot-fill__ask-monday-evening()",
+      "Atom attending-workshop-tut()",
+      "NegatedAtom know__workshop-pref()",
+      "Atom force-statement()",
+      "Atom know__dc-interest()",
+      "Atom have-message()"
+    ],
+    "0x24b6d30": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom know__attending-workshop-tut()",
       "NegatedAtom forcing__slot-fill__ask-monday-evening()",
@@ -444,7 +444,17 @@
       "NegatedAtom force-statement()",
       "NegatedAtom know__dc-interest()"
     ],
-    "0xaf0e10": [
+    "0x24b59c0": [
+      "NegatedAtom know__attending-rec()",
+      "NegatedAtom know__attending-workshop-tut()",
+      "NegatedAtom forcing__slot-fill__ask-monday-evening()",
+      "NegatedAtom know__workshop-pref()",
+      "Atom attending-dc()",
+      "Atom force-statement()",
+      "NegatedAtom know__dc-interest()",
+      "Atom have-message()"
+    ],
+    "0x24b7540": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom know__attending-workshop-tut()",
       "NegatedAtom forcing__slot-fill__ask-monday-evening()",
@@ -454,7 +464,7 @@
       "NegatedAtom force-statement()",
       "NegatedAtom know__dc-interest()"
     ],
-    "0xaf0f20": [
+    "0x24b77d0": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom know__attending-8()",
       "NegatedAtom know__attending-workshop-tut()",
@@ -464,7 +474,7 @@
       "NegatedAtom force-statement()",
       "NegatedAtom know__dc-interest()"
     ],
-    "0xaf1010": [
+    "0x24b7980": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom know__attending-8()",
       "NegatedAtom know__attending-workshop-tut()",
@@ -475,23 +485,13 @@
       "NegatedAtom know__dc-interest()",
       "Atom have-message()"
     ],
-    "0xaf1220": [
+    "0x24b7b90": [
       "NegatedAtom know__attending-rec()",
       "NegatedAtom know__attending-workshop-tut()",
       "NegatedAtom forcing__slot-fill__ask-monday-evening()",
       "Atom attending-8()",
       "NegatedAtom know__workshop-pref()",
       "NegatedAtom know__attending-dc()",
-      "Atom force-statement()",
-      "NegatedAtom know__dc-interest()",
-      "Atom have-message()"
-    ],
-    "0xaf17e0": [
-      "NegatedAtom know__attending-rec()",
-      "NegatedAtom know__attending-workshop-tut()",
-      "NegatedAtom forcing__slot-fill__ask-monday-evening()",
-      "NegatedAtom know__workshop-pref()",
-      "Atom attending-dc()",
       "Atom force-statement()",
       "NegatedAtom know__dc-interest()",
       "Atom have-message()"

@@ -259,7 +259,7 @@
         "slot-fill__ask-july-8": {
             "type": "dialogue",
             "message_variants": [
-                "Would you like to attend on July 8?"
+                "Hello! I'm here to help you schedule which ICAPS sessions you would like to attend. Let's get started! Would you like to attend on July 8?"
             ],
             "condition": [
                 [
@@ -396,7 +396,7 @@
         "slot-fill__ask-dc": {
             "type": "dialogue",
             "message_variants": [
-                "Would you like to attend the Doctoral Consortium?"
+                "Are you interested in attending the Doctoral Consortium?"
             ],
             "condition": [
                 [
@@ -427,9 +427,22 @@
                                 "variable": "attending-dc",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
+                        "response_variants": [
+                            "Good call, there's going to be some awesome presentations there!"
+                        ],
                         "name": "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-confirm_outcome",
                         "assignments": {
                             "$attending-dc": "found"
