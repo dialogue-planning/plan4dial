@@ -47,13 +47,12 @@ context_variables:
       type: flag
       init: false
     options:
-      relax:
+      relaxing:
         variations:
-          - relaxing
-          - chill
-          - rest up
-          - prepare for the next day
-      attend the opening reception:
+          - chilling
+          - resting up
+          - preparing for the next day
+      attending the opening reception:
         variations:
           - attending the reception
           - going to the reception
@@ -228,4 +227,5 @@ actions:
                 goal:
                   value:
                     true
+              intent:
 ...

@@ -1,0 +1,23 @@
+---
+name: icaps-intro-planner
+context_variables:
+  attending-8:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  attending-dc:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  dc-interest:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - invited talk
+      - whole session

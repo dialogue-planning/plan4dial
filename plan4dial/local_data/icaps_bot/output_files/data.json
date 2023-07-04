@@ -60,15 +60,14 @@
         "attending-rec": {
             "type": "enum",
             "config": {
-                "relax": {
+                "relaxing": {
                     "variations": [
-                        "relaxing",
-                        "chill",
-                        "rest up",
-                        "prepare for the next day"
+                        "chilling",
+                        "resting up",
+                        "preparing for the next day"
                     ]
                 },
-                "attend the opening reception": {
+                "attending the opening reception": {
                     "variations": [
                         "attending the reception",
                         "going to the reception",
@@ -215,12 +214,13 @@
                                 "interpretation": "json"
                             }
                         },
-                        "name": "complete_DETDUP_complete__complete-EQ-complete",
                         "intent": null,
+                        "name": "complete_DETDUP_complete__complete-EQ-complete",
                         "assignments": {}
                     }
                 ]
-            }
+            },
+            "intents": {}
         },
         "dialogue_statement": {
             "type": "dialogue",
