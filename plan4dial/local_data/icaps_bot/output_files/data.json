@@ -20,18 +20,10 @@
         "dc-interest": {
             "type": "enum",
             "config": [
-                "invited talk",
                 {
-                    "whole session": {
-                        "variations": [
-                            "entire session",
-                            "all of DC",
-                            "the whole doctorial consortium",
-                            "the whole day",
-                            "the entire dc!"
-                        ]
-                    }
-                }
+                    "invited talk": null
+                },
+                "whole session"
             ],
             "known": {
                 "type": "flag",

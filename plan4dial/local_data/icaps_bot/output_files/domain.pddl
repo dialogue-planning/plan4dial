@@ -22,10 +22,10 @@
         :parameters()
         :precondition
             (and
-                (know__dc-interest)
                 (not (force-statement))
-                (not (forcing__slot-fill__ask-monday-evening))
+                (know__dc-interest)
                 (know__workshop-pref)
+                (not (forcing__slot-fill__ask-monday-evening))
                 (know__attending-rec)
             )
         :effect
@@ -58,9 +58,9 @@
         :parameters()
         :precondition
             (and
-                (not (know__attending-8))
                 (not (forcing__slot-fill__ask-monday-evening))
                 (not (force-statement))
+                (not (know__attending-8))
             )
         :effect
             (labeled-oneof         slot-fill__ask-july-8__get-response
@@ -72,13 +72,13 @@
                 )
                 (outcome deny_outcome
                     (and
-                        (have-message)
+                        (know__attending-dc)
                         (know__dc-interest)
                         (know__attending-8)
+                        (not (attending-dc))
+                        (have-message)
                         (force-statement)
                         (not (attending-8))
-                        (know__attending-dc)
-                        (not (attending-dc))
                     )
                 )
                 (outcome fallback
@@ -93,24 +93,24 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (not (know__attending-dc))
                 (not (forcing__slot-fill__ask-monday-evening))
+                (not (force-statement))
                 (attending-8)
+                (not (know__attending-dc))
             )
         :effect
             (labeled-oneof         slot-fill__ask-dc__get-response
                 (outcome confirm_outcome
                     (and
-                        (know__attending-dc)
                         (attending-dc)
+                        (know__attending-dc)
                     )
                 )
                 (outcome deny_outcome
                     (and
-                        (know__dc-interest)
                         (know__attending-dc)
                         (not (attending-dc))
+                        (know__dc-interest)
                     )
                 )
                 (outcome fallback
@@ -125,18 +125,18 @@
         :parameters()
         :precondition
             (and
-                (not (know__dc-interest))
+                (attending-dc)
                 (not (forcing__slot-fill__ask-monday-evening))
                 (not (force-statement))
-                (attending-dc)
+                (not (know__dc-interest))
             )
         :effect
             (labeled-oneof         slot-fill__ask-dc-pref__validate-slot-fill
                 (outcome dc-interest_found
                     (and
-                        (know__dc-interest)
-                        (have-message)
                         (force-statement)
+                        (have-message)
+                        (know__dc-interest)
                     )
                 )
                 (outcome fallback
@@ -151,9 +151,9 @@
         :parameters()
         :precondition
             (and
-                (not (know__attending-workshop-tut))
                 (not (forcing__slot-fill__ask-monday-evening))
                 (not (force-statement))
+                (not (know__attending-workshop-tut))
             )
         :effect
             (labeled-oneof         slot-fill__ask-workshop-tut__get-response
@@ -166,11 +166,11 @@
                 )
                 (outcome deny_outcome
                     (and
+                        (know__attending-workshop-tut)
+                        (know__workshop-pref)
+                        (have-message)
                         (force-statement)
                         (not (attending-workshop-tut))
-                        (know__attending-workshop-tut)
-                        (have-message)
-                        (know__workshop-pref)
                     )
                 )
                 (outcome fallback
@@ -185,17 +185,17 @@
         :parameters()
         :precondition
             (and
-                (attending-workshop-tut)
                 (not (forcing__slot-fill__ask-monday-evening))
-                (not (know__workshop-pref))
                 (not (force-statement))
+                (attending-workshop-tut)
+                (not (know__workshop-pref))
             )
         :effect
             (labeled-oneof         slot-fill__ask-workshop-pref__validate-slot-fill
                 (outcome workshop-pref_found
                     (and
-                        (have-message)
                         (know__workshop-pref)
+                        (have-message)
                         (force-statement)
                     )
                 )
@@ -211,8 +211,8 @@
         :parameters()
         :precondition
             (and
-                (not (know__attending-rec))
                 (not (force-statement))
+                (not (know__attending-rec))
             )
         :effect
             (labeled-oneof         slot-fill__ask-monday-evening__validate-slot-fill
@@ -224,9 +224,9 @@
                 )
                 (outcome fallback
                     (and
+                        (not (forcing__slot-fill__ask-monday-evening))
                         (have-message)
                         (force-statement)
-                        (not (forcing__slot-fill__ask-monday-evening))
                     )
                 )
             )

@@ -19,14 +19,8 @@ context_variables:
       type: flag
       init: false
     options:
-      - invited talk
-      - whole session:
-          variations:
-            - entire session
-            - all of DC
-            - the whole doctorial consortium
-            - the whole day
-            - the entire dc!
+      - invited talk:
+      - whole session
   attending-workshop-tut:
     type: flag
     init: false
