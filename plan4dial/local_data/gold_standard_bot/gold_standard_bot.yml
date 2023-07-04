@@ -124,7 +124,6 @@ intents:
     utterances:
       - "yes"
       - yeah
-      - that's it
       - "Y"
       - mhm
       - confirm

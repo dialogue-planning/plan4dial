@@ -1,0 +1,94 @@
+{
+    "actions": {
+        "complete": {
+            "condition": [
+                "(know__attending-8)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "complete_DETDUP_complete__complete-EQ-complete": [
+                    "(goal)"
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "condition": [
+                "(force-statement)",
+                "(have-message)"
+            ],
+            "effect": {
+                "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
+                    "(not (have-message))",
+                    "(not (force-statement))"
+                ]
+            }
+        },
+        "slot-fill__ask-july-8": {
+            "condition": [
+                "(not (force-statement))",
+                "(not (know__attending-8))"
+            ],
+            "effect": {
+                "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-confirm_outcome": [
+                    "(attending-8)",
+                    "(know__attending-8)"
+                ],
+                "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-deny_outcome": [
+                    "(not (attending-8))",
+                    "(know__attending-8)"
+                ],
+                "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "slot-fill__ask-dc": {
+            "condition": [
+                "(not (know__attending-dc))",
+                "(attending-8)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-confirm_outcome": [
+                    "(attending-dc)",
+                    "(know__attending-dc)"
+                ],
+                "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-deny_outcome": [
+                    "(not (attending-dc))",
+                    "(know__attending-dc)"
+                ],
+                "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "slot-fill__ask-dc-pref": {
+            "condition": [
+                "(not (know__dc-interest))",
+                "(attending-dc)",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "slot-fill__ask-dc-pref_DETDUP_slot-fill__ask-dc-pref__validate-slot-fill-EQ-dc-interest_found": [
+                    "(know__dc-interest)"
+                ],
+                "slot-fill__ask-dc-pref_DETDUP_slot-fill__ask-dc-pref__validate-slot-fill-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        }
+    },
+    "initial_state": [
+        "(not (know__dc-interest))",
+        "(not (goal))",
+        "(not (attending-dc))",
+        "(not (know__attending-8))",
+        "(not (force-statement))",
+        "(not (attending-8))",
+        "(not (know__attending-dc))",
+        "(not (have-message))"
+    ]
+}

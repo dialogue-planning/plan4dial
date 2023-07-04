@@ -1,0 +1,462 @@
+{
+    "name": "icaps-planner",
+    "context_variables": {
+        "attending-8": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "attending-dc": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "dc-interest": {
+            "type": "enum",
+            "config": [
+                "invited talk",
+                {
+                    "whole session": {
+                        "variations": [
+                            "entire session",
+                            "all of DC",
+                            "the whole doctorial consortium",
+                            "the whole day",
+                            "the entire dc!"
+                        ]
+                    }
+                }
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "goal": {
+            "type": "flag",
+            "config": false
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "confirm": {
+            "entities": [],
+            "utterances": [
+                "yes",
+                "yeah",
+                "Y",
+                "mhm",
+                "confirm",
+                "yes please"
+            ],
+            "type": "regular"
+        },
+        "deny": {
+            "entities": [],
+            "utterances": [
+                "no",
+                "not at all",
+                "that's not what i meant",
+                "absolutely not",
+                "i don't want that",
+                "nah",
+                "no thanks",
+                "no thank you"
+            ],
+            "type": "regular"
+        },
+        "fallback": {
+            "entities": [],
+            "utterances": [],
+            "type": "fallback"
+        },
+        "utter_ds": {
+            "entities": [],
+            "utterances": [],
+            "type": "regular"
+        }
+    },
+    "actions": {
+        "complete": {
+            "type": "dialogue",
+            "disable-fallback": true,
+            "message_variants": [
+                "Thanks!"
+            ],
+            "condition": [
+                [
+                    "attending-8",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "complete__complete",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "complete_DETDUP_complete__complete-EQ-complete",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "dialogue_statement__reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_ds",
+                        "name": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "intents": {
+                "utter_ds": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                }
+            }
+        },
+        "slot-fill__ask-july-8": {
+            "type": "dialogue",
+            "message_variants": [
+                "Would you like to attend on July 8?"
+            ],
+            "condition": [
+                [
+                    "attending-8",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__ask-july-8__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "attending-8": {
+                                "value": true,
+                                "variable": "attending-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$attending-8": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "attending-8": {
+                                "value": false,
+                                "variable": "attending-8",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$attending-8": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__ask-dc": {
+            "type": "dialogue",
+            "message_variants": [
+                "Would you like to attend the Doctoral Consortium?"
+            ],
+            "condition": [
+                [
+                    "attending-dc",
+                    "Unknown"
+                ],
+                [
+                    "attending-8",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__ask-dc__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "attending-dc": {
+                                "value": true,
+                                "variable": "attending-dc",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$attending-dc": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "attending-dc": {
+                                "value": false,
+                                "variable": "attending-dc",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$attending-dc": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__ask-dc-pref": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you attending just the invited talk or the whole session?"
+            ],
+            "condition": [
+                [
+                    "dc-interest",
+                    null
+                ],
+                [
+                    "dc-interest",
+                    "Unknown"
+                ],
+                [
+                    "attending-dc",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__ask-dc-pref__validate-slot-fill",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "dc-interest": {
+                                "value": "$dc-interest",
+                                "variable": "dc-interest",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share-dc-pref",
+                        "name": "slot-fill__ask-dc-pref_DETDUP_slot-fill__ask-dc-pref__validate-slot-fill-EQ-dc-interest_found",
+                        "assignments": {
+                            "$dc-interest": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__ask-dc-pref_DETDUP_slot-fill__ask-dc-pref__validate-slot-fill-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        }
+    }
+}

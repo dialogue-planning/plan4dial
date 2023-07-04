@@ -1,0 +1,116 @@
+{
+    "plan": {
+        "init": "2",
+        "goal": "0",
+        "nodes": {
+            "0": {
+                "expected_successor": false,
+                "action": "---",
+                "state": "0x149a6b0",
+                "distance": 0,
+                "is_relevant": 1,
+                "is_goal": 1,
+                "is_sc": 1,
+                "successors": []
+            },
+            "1": {
+                "expected_successor": "0",
+                "action": "complete",
+                "state": "0x149d3a0",
+                "distance": 1,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "complete_DETDUP_complete__complete-EQ-complete",
+                        "successor_id": "0"
+                    }
+                ]
+            },
+            "2": {
+                "expected_successor": "1",
+                "action": "slot-fill__ask-july-8",
+                "state": "0x149c710",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-confirm_outcome",
+                        "successor_id": "1"
+                    },
+                    {
+                        "outcome_label": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-deny_outcome",
+                        "successor_id": "1"
+                    },
+                    {
+                        "outcome_label": "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-fallback",
+                        "successor_id": "3"
+                    }
+                ]
+            },
+            "3": {
+                "expected_successor": "2",
+                "action": "dialogue_statement",
+                "state": "0x149fa40",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "2"
+                    }
+                ]
+            }
+        },
+        "edges": [
+            [
+                "1",
+                ">",
+                "0"
+            ],
+            [
+                "2",
+                ">",
+                "1"
+            ],
+            [
+                "2",
+                ">",
+                "1"
+            ],
+            [
+                "2",
+                ">",
+                "3"
+            ],
+            [
+                "3",
+                ">",
+                "2"
+            ]
+        ],
+        "states": {
+            "0x149a6b0": [
+                "Atom goal()"
+            ],
+            "0x149d3a0": [
+                "Atom know__attending-8()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x149c710": [
+                "NegatedAtom know__attending-8()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x149fa40": [
+                "NegatedAtom know__attending-8()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ]
+        }
+    }
+}

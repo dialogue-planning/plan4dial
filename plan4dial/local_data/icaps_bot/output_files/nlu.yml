@@ -1,0 +1,29 @@
+nlu:
+- examples: '- yes
+
+    - yeah
+
+    - Y
+
+    - mhm
+
+    - confirm
+
+    - yes please'
+  intent: confirm
+- examples: '- no
+
+    - not at all
+
+    - that''s not what i meant
+
+    - absolutely not
+
+    - i don''t want that
+
+    - nah
+
+    - no thanks
+
+    - no thank you'
+  intent: deny

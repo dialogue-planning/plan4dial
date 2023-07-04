@@ -1,0 +1,104 @@
+---
+name: icaps-planner
+context_variables:
+  attending-8:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  attending-dc:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  dc-interest:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - invited talk
+      - whole session:
+          variations:
+            - entire session
+            - all of DC
+            - the whole doctorial consortium
+            - the whole day
+            - the entire dc!
+  goal:
+    type: flag
+    init: false
+
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+
+actions:
+  ask-july-8:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: ask-july-8
+      message_variants:
+        - Would you like to attend on July 8?
+      entity: attending-8
+  ask-dc:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: ask-dc
+      message_variants:
+        - Would you like to attend the Doctoral Consortium?
+      entity: attending-dc
+      additional_conditions:
+        attending-8:
+          value: true
+  ask-dc-pref:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: ask-dc-pref
+      message_variants:
+        - Are you attending just the invited talk or the whole session?
+      entities:
+        - dc-interest
+      overall_intent: share-dc-pref
+      additional_conditions:
+        attending-dc:
+          value: true
+  complete:
+    type: dialogue
+    disable-fallback: true
+    message_variants:
+      - Thanks!
+    condition:
+      attending-8:
+        known: true
+    effect:
+      complete:
+        oneof:
+          outcomes:
+            complete:
+              updates:
+                goal:
+                  value:
+                    true
+...
