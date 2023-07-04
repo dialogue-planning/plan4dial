@@ -754,7 +754,7 @@
         "slot-fill__ask-workshop-pref": {
             "type": "dialogue",
             "message_variants": [
-                "Some workshops overlap with one another. Which workshop are you more interested in`:` HAXP or PAIR?"
+                "Some workshops overlap with one another. Which workshop are you more interested in, HAXP or PAIR?"
             ],
             "condition": [
                 [

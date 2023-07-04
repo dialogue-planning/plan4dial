@@ -177,7 +177,7 @@ actions:
     parameters:
       action_name: ask-workshop-pref
       message_variants:
-        - Some workshops overlap with one another. Which workshop are you more interested in`:` HAXP or PAIR?
+        - Some workshops overlap with one another. Which workshop are you more interested in, HAXP or PAIR?
       entities:
         - workshop-pref
       overall_intent: share-workshop-pref

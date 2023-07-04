@@ -22,9 +22,9 @@
         :parameters()
         :precondition
             (and
+                (know__attending-rec)
                 (know__workshop-pref)
                 (not (forcing__slot-fill__ask-monday-evening))
-                (know__attending-rec)
                 (know__dc-interest)
                 (not (force-statement))
             )
@@ -41,8 +41,8 @@
         :parameters()
         :precondition
             (and
-                (force-statement)
                 (have-message)
+                (force-statement)
             )
         :effect
             (labeled-oneof         dialogue_statement__reset
@@ -59,32 +59,32 @@
         :precondition
             (and
                 (not (force-statement))
-                (not (know__attending-8))
                 (not (forcing__slot-fill__ask-monday-evening))
+                (not (know__attending-8))
             )
         :effect
             (labeled-oneof         slot-fill__ask-july-8__get-response
                 (outcome confirm_outcome
                     (and
-                        (attending-8)
                         (know__attending-8)
+                        (attending-8)
                     )
                 )
                 (outcome deny_outcome
                     (and
-                        (know__attending-dc)
-                        (force-statement)
                         (not (attending-dc))
-                        (not (attending-8))
                         (know__attending-8)
-                        (know__dc-interest)
+                        (know__attending-dc)
                         (have-message)
+                        (know__dc-interest)
+                        (not (attending-8))
+                        (force-statement)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -93,30 +93,30 @@
         :parameters()
         :precondition
             (and
-                (attending-8)
                 (not (force-statement))
-                (not (know__attending-dc))
                 (not (forcing__slot-fill__ask-monday-evening))
+                (not (know__attending-dc))
+                (attending-8)
             )
         :effect
             (labeled-oneof         slot-fill__ask-dc__get-response
                 (outcome confirm_outcome
                     (and
-                        (know__attending-dc)
                         (attending-dc)
+                        (know__attending-dc)
                     )
                 )
                 (outcome deny_outcome
                     (and
-                        (know__attending-dc)
                         (know__dc-interest)
                         (not (attending-dc))
+                        (know__attending-dc)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -134,15 +134,15 @@
             (labeled-oneof         slot-fill__ask-dc-pref__validate-slot-fill
                 (outcome dc-interest_found
                     (and
+                        (have-message)
                         (force-statement)
                         (know__dc-interest)
-                        (have-message)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -151,9 +151,9 @@
         :parameters()
         :precondition
             (and
+                (not (know__attending-workshop-tut))
                 (not (forcing__slot-fill__ask-monday-evening))
                 (not (force-statement))
-                (not (know__attending-workshop-tut))
             )
         :effect
             (labeled-oneof         slot-fill__ask-workshop-tut__get-response
@@ -166,17 +166,17 @@
                 )
                 (outcome deny_outcome
                     (and
-                        (force-statement)
-                        (know__workshop-pref)
-                        (not (attending-workshop-tut))
                         (know__attending-workshop-tut)
+                        (know__workshop-pref)
                         (have-message)
+                        (not (attending-workshop-tut))
+                        (force-statement)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -185,24 +185,24 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__workshop-pref))
-                (attending-workshop-tut)
+                (not (force-statement))
                 (not (forcing__slot-fill__ask-monday-evening))
+                (attending-workshop-tut)
             )
         :effect
             (labeled-oneof         slot-fill__ask-workshop-pref__validate-slot-fill
                 (outcome workshop-pref_found
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                         (know__workshop-pref)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -224,9 +224,9 @@
                 )
                 (outcome fallback
                     (and
+                        (have-message)
                         (force-statement)
                         (not (forcing__slot-fill__ask-monday-evening))
-                        (have-message)
                     )
                 )
             )

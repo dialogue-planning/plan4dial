@@ -2,9 +2,9 @@
     "actions": {
         "complete": {
             "condition": [
+                "(know__attending-rec)",
                 "(know__workshop-pref)",
                 "(not (forcing__slot-fill__ask-monday-evening))",
-                "(know__attending-rec)",
                 "(know__dc-interest)",
                 "(not (force-statement))"
             ],
@@ -16,8 +16,8 @@
         },
         "dialogue_statement": {
             "condition": [
-                "(force-statement)",
-                "(have-message)"
+                "(have-message)",
+                "(force-statement)"
             ],
             "effect": {
                 "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
@@ -29,49 +29,49 @@
         "slot-fill__ask-july-8": {
             "condition": [
                 "(not (force-statement))",
-                "(not (know__attending-8))",
-                "(not (forcing__slot-fill__ask-monday-evening))"
+                "(not (forcing__slot-fill__ask-monday-evening))",
+                "(not (know__attending-8))"
             ],
             "effect": {
                 "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-confirm_outcome": [
-                    "(attending-8)",
-                    "(know__attending-8)"
+                    "(know__attending-8)",
+                    "(attending-8)"
                 ],
                 "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-deny_outcome": [
-                    "(know__attending-dc)",
-                    "(force-statement)",
                     "(not (attending-dc))",
-                    "(not (attending-8))",
                     "(know__attending-8)",
+                    "(know__attending-dc)",
+                    "(have-message)",
                     "(know__dc-interest)",
-                    "(have-message)"
+                    "(not (attending-8))",
+                    "(force-statement)"
                 ],
                 "slot-fill__ask-july-8_DETDUP_slot-fill__ask-july-8__get-response-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "slot-fill__ask-dc": {
             "condition": [
-                "(attending-8)",
                 "(not (force-statement))",
+                "(not (forcing__slot-fill__ask-monday-evening))",
                 "(not (know__attending-dc))",
-                "(not (forcing__slot-fill__ask-monday-evening))"
+                "(attending-8)"
             ],
             "effect": {
                 "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-confirm_outcome": [
-                    "(know__attending-dc)",
-                    "(attending-dc)"
+                    "(attending-dc)",
+                    "(know__attending-dc)"
                 ],
                 "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-deny_outcome": [
-                    "(know__attending-dc)",
                     "(know__dc-interest)",
-                    "(not (attending-dc))"
+                    "(not (attending-dc))",
+                    "(know__attending-dc)"
                 ],
                 "slot-fill__ask-dc_DETDUP_slot-fill__ask-dc__get-response-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -84,21 +84,21 @@
             ],
             "effect": {
                 "slot-fill__ask-dc-pref_DETDUP_slot-fill__ask-dc-pref__validate-slot-fill-EQ-dc-interest_found": [
+                    "(have-message)",
                     "(force-statement)",
-                    "(know__dc-interest)",
-                    "(have-message)"
+                    "(know__dc-interest)"
                 ],
                 "slot-fill__ask-dc-pref_DETDUP_slot-fill__ask-dc-pref__validate-slot-fill-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "slot-fill__ask-workshop-tut": {
             "condition": [
+                "(not (know__attending-workshop-tut))",
                 "(not (forcing__slot-fill__ask-monday-evening))",
-                "(not (force-statement))",
-                "(not (know__attending-workshop-tut))"
+                "(not (force-statement))"
             ],
             "effect": {
                 "slot-fill__ask-workshop-tut_DETDUP_slot-fill__ask-workshop-tut__get-response-EQ-confirm_outcome": [
@@ -107,34 +107,34 @@
                     "(attending-workshop-tut)"
                 ],
                 "slot-fill__ask-workshop-tut_DETDUP_slot-fill__ask-workshop-tut__get-response-EQ-deny_outcome": [
-                    "(force-statement)",
-                    "(know__workshop-pref)",
-                    "(not (attending-workshop-tut))",
                     "(know__attending-workshop-tut)",
-                    "(have-message)"
+                    "(know__workshop-pref)",
+                    "(have-message)",
+                    "(not (attending-workshop-tut))",
+                    "(force-statement)"
                 ],
                 "slot-fill__ask-workshop-tut_DETDUP_slot-fill__ask-workshop-tut__get-response-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "slot-fill__ask-workshop-pref": {
             "condition": [
-                "(not (force-statement))",
                 "(not (know__workshop-pref))",
-                "(attending-workshop-tut)",
-                "(not (forcing__slot-fill__ask-monday-evening))"
+                "(not (force-statement))",
+                "(not (forcing__slot-fill__ask-monday-evening))",
+                "(attending-workshop-tut)"
             ],
             "effect": {
                 "slot-fill__ask-workshop-pref_DETDUP_slot-fill__ask-workshop-pref__validate-slot-fill-EQ-workshop-pref_found": [
-                    "(force-statement)",
                     "(have-message)",
+                    "(force-statement)",
                     "(know__workshop-pref)"
                 ],
                 "slot-fill__ask-workshop-pref_DETDUP_slot-fill__ask-workshop-pref__validate-slot-fill-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -149,9 +149,9 @@
                     "(not (forcing__slot-fill__ask-monday-evening))"
                 ],
                 "slot-fill__ask-monday-evening_DETDUP_slot-fill__ask-monday-evening__validate-slot-fill-EQ-fallback": [
+                    "(have-message)",
                     "(force-statement)",
-                    "(not (forcing__slot-fill__ask-monday-evening))",
-                    "(have-message)"
+                    "(not (forcing__slot-fill__ask-monday-evening))"
                 ]
             }
         }
@@ -159,16 +159,16 @@
     "initial_state": [
         "(not (goal))",
         "(not (attending-dc))",
-        "(not (have-message))",
-        "(not (attending-8))",
-        "(not (know__attending-rec))",
-        "(not (know__attending-dc))",
-        "(not (attending-workshop-tut))",
         "(not (forcing__slot-fill__ask-monday-evening))",
-        "(not (know__workshop-pref))",
-        "(not (know__attending-8))",
         "(not (know__dc-interest))",
+        "(not (know__attending-workshop-tut))",
+        "(not (have-message))",
         "(not (force-statement))",
-        "(not (know__attending-workshop-tut))"
+        "(not (know__attending-dc))",
+        "(not (attending-8))",
+        "(not (know__attending-8))",
+        "(not (know__workshop-pref))",
+        "(not (attending-workshop-tut))",
+        "(not (know__attending-rec))"
     ]
 }
