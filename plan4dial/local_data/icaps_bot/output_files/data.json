@@ -566,7 +566,7 @@
                         },
                         "intent": "share-dc-pref",
                         "response_variants": [
-                            "Thanks, I'll schedule you in for the the $dc-interest."
+                            "Thanks, I'll schedule you in for the $dc-interest."
                         ],
                         "name": "slot-fill__ask-dc-pref_DETDUP_slot-fill__ask-dc-pref__validate-slot-fill-EQ-dc-interest_found",
                         "assignments": {

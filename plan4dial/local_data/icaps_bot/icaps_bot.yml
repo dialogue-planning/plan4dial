@@ -153,7 +153,7 @@ actions:
             dc-interest:
               known: true
           response_variants:
-            - Thanks, I'll schedule you in for the the $dc-interest.
+            - Thanks, I'll schedule you in for the $dc-interest.
   ask-workshop-tut:
     type: custom
     subtype: flag_entity_yes_no
