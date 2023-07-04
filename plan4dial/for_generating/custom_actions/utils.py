@@ -21,3 +21,17 @@ def map_assignment_update(entity: str, assignment: str) -> Dict:
         "maybe-found": {entity: {"value": f"${entity}", "known": "maybe"}},
         "didnt-find": {entity: {"value": None, "known": False}},
     }[assignment]
+
+def make_additional_updates(org_out: Dict, add_upd: Dict) -> None:
+    """Update an outcome by the additional updates provided by the suer.
+
+    Args:
+        org_out (Dict): The original outcome.
+        add_upd (Dict): The additional updates to be added to the outcome.
+    """
+    if "updates" in add_upd:
+        org_out["updates"].update(add_upd["updates"])
+    if "response_variants" in add_upd:
+        org_out["response_variants"] = add_upd["response_variants"]
+    if "follow_up" in add_upd:
+        org_out["follow_up"] = add_upd["follow_up"]

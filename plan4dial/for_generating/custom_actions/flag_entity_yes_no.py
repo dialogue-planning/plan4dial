@@ -1,3 +1,4 @@
+from .utils import make_additional_updates
 from typing import List, Dict
 
 
@@ -40,25 +41,28 @@ def flag_entity_yes_no(
     action["condition"] = {entity: {"known": False}}
     if additional_conditions:
         action["condition"].update(additional_conditions)
-    confirm_outcome_upd = {entity: {"known": True, "value": True}}
-    deny_outcome_upd = {entity: {"known": True, "value": False}}
+    confirm_outcome_upd = {
+                            "updates": {entity: {"known": True, "value": True}},
+                            "intent": confirm_intent,
+                          }
+                          
+    
+    deny_outcome_upd = {
+                        "updates": {entity: {"known": True, "value": False}},
+                        "intent": deny_intent,
+                       }
+
     if additional_updates:
         if "confirm_outcome" in additional_updates:
-            confirm_outcome_upd.update(additional_updates["confirm_outcome"])
+            make_additional_updates(confirm_outcome_upd, additional_updates["confirm_outcome"])
         if "deny_outcome" in additional_updates:
-            deny_outcome_upd.update(additional_updates["deny_outcome"])
+            make_additional_updates(deny_outcome_upd, additional_updates["deny_outcome"])
     action["effect"] = {
         "get-response": {
             "oneof": {
                 "outcomes": {
-                    "confirm_outcome": {
-                        "updates": confirm_outcome_upd,
-                        "intent": confirm_intent,
-                    },
-                    "deny_outcome": {
-                        "updates": deny_outcome_upd,
-                        "intent": deny_intent,
-                    },
+                    "confirm_outcome": confirm_outcome_upd,
+                    "deny_outcome": deny_outcome_upd
                 }
             }
         }

@@ -1,6 +1,6 @@
 (define
-    (problem icaps-planner-problem)
-             (:domain icaps-planner)
+    (problem icaps-intro-planner-problem)
+             (:domain icaps-intro-planner)
     (:objects )
     (:init
     )

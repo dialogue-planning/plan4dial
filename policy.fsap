@@ -1,0 +1,9 @@
+
+If holds: var0:0 var2:1 var3:1 var9:1 var12:1
+Forbid: slot-fill__ask-workshop-tut
+
+If holds: var0:0 var3:0 var9:0 var11:0 var12:1
+Forbid: dialogue_statement
+
+If holds: var0:0 var2:1 var3:1 var9:1 var12:1
+Forbid: slot-fill__ask-workshop-tut

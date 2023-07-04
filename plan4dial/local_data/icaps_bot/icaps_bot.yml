@@ -1,5 +1,5 @@
 ---
-name: icaps-planner
+name: icaps-intro-planner
 context_variables:
   attending-8:
     type: flag
@@ -27,6 +27,40 @@ context_variables:
             - the whole doctorial consortium
             - the whole day
             - the entire dc!
+  attending-workshop-tut:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  workshop-pref:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - HAXP
+      - PAIR
+  attending-rec:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      relax:
+        variations:
+          - relaxing
+          - chill
+          - rest up
+          - prepare for the next day
+      attend the opening reception:
+        variations:
+          - attending the reception
+          - going to the reception
+          - hang out at the reception
+          - network at the reception
+          - spend the evening at the opening reception
+          - see the welcome reception
   goal:
     type: flag
     init: false
@@ -50,7 +84,29 @@ intents:
       - nah
       - no thanks
       - no thank you
-
+  share-dc-pref:
+    entities:
+      - dc-interest
+    utterances:
+      - I want to see the $dc-interest.
+      - I am going to $dc-interest.
+      - I just want to attend the $dc-interest.
+  share-workshop-pref:
+    entities:
+      - workshop-pref
+    utterances:
+      - I am more interested in $workshop-pref.
+      - I would definitely rather attend the $workshop-pref workshop. 
+      - The $workshop-pref workshop seems more relevant to me.
+      - Please schedule me for the $workshop-pref workshop.
+  share-mon-ev-pref:
+    entities:
+      - attending-rec
+    utterances:
+      - On Monday, I would definitely rather spend my evening $attending-rec.
+      - It would be a long day, I would rather $attending-rec.
+      - It would be really important for me to $attending-rec that evening.
+      - Can I $attending-rec that evening?
 actions:
   ask-july-8:
     type: custom
@@ -60,6 +116,16 @@ actions:
       message_variants:
         - Would you like to attend on July 8?
       entity: attending-8
+      additional_updates:
+        deny_outcome:
+          updates:
+            attending-dc:
+              known: true
+              value: false
+            dc-interest:
+              known: true
+          response_variants:
+            - Ok, I won't ask you about scheduling for the Doctoral Consortium.
   ask-dc:
     type: custom
     subtype: flag_entity_yes_no
@@ -71,6 +137,11 @@ actions:
       additional_conditions:
         attending-8:
           value: true
+      additional_updates:
+        deny_outcome:
+          updates:
+            dc-interest:
+              known: true
   ask-dc-pref:
     type: custom
     subtype: slot_fill
@@ -84,13 +155,69 @@ actions:
       additional_conditions:
         attending-dc:
           value: true
+      additional_updates:
+        - outcome:
+            dc-interest:
+              known: true
+          response_variants:
+            - Thanks, I'll schedule you in for the the $dc-interest.
+  ask-workshop-tut:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: ask-workshop-tut
+      message_variants:
+        - Would you like to attend workshops and tutorials?
+      entity: attending-workshop-tut
+      additional_updates:
+        confirm_outcome:
+          follow_up: slot-fill__ask-monday-evening
+        deny_outcome:
+          updates:
+            workshop-pref:
+              known: true
+          response_variants:
+            - Ok, I won't ask you about your preferences for workshops and tutorials.
+  ask-workshop-pref:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: ask-workshop-pref
+      message_variants:
+        - Some workshops overlap with one another. Which workshop are you more interested in`:` HAXP or PAIR?
+      entities:
+        - workshop-pref
+      overall_intent: share-workshop-pref
+      additional_conditions:
+        attending-workshop-tut:
+          value: true
+      additional_updates:
+        - outcome:
+            workshop-pref:
+              known: true
+          response_variants:
+            - Great choice! I'll grab you a seat at $workshop-pref.
+  ask-monday-evening:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: ask-monday-evening
+      message_variants:
+        - Would you like to relax Monday evening to rest up for the main conference or attend the opening reception?
+      entities:
+        - attending-rec
+      overall_intent: share-mon-ev-pref
   complete:
     type: dialogue
     disable-fallback: true
     message_variants:
-      - Thanks!
+      - Thank you! Your schedule has been determined and emailed to you.
     condition:
-      attending-8:
+      dc-interest:
+        known: true
+      workshop-pref:
+        known: true
+      attending-rec:
         known: true
     effect:
       complete:

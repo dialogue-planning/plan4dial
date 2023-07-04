@@ -8,23 +8,8 @@ Authors:
 
 from typing import List, Dict, Tuple
 import itertools
-from .utils import map_assignment_update
+from .utils import map_assignment_update, make_additional_updates
 from ..parsers.json_config_parser import configure_assignments
-
-
-def _make_additional_updates(org_out: Dict, add_upd: Dict) -> None:
-    """Update an outcome by the additional updates provided by the suer.
-
-    Args:
-        org_out (Dict): The original outcome.
-        add_upd (Dict): The additional updates to be added to the outcome.
-    """
-    if "updates" in add_upd:
-        org_out["updates"].update(add_upd["updates"])
-    if "response_variants" in add_upd:
-        org_out["response_variants"] = add_upd["response_variants"]
-    if "follow_up" in add_upd:
-        org_out["follow_up"] = add_upd["follow_up"]
 
 
 def slot_fill(
@@ -214,7 +199,7 @@ def slot_fill(
                 # check if this frozenset is included in the dict of outcomes with
                 # additional updates; if so, add the appropriate updates
                 if key in updates_filtered:
-                    _make_additional_updates(next_out, updates_filtered[key])
+                    make_additional_updates(next_out, updates_filtered[key])
         action["effect"]["validate-slot-fill"]["oneof"]["outcomes"][
             outcome_name
         ] = next_out
@@ -269,7 +254,7 @@ def _clarify_act(
     if additional_updates:
         key = frozenset({entity: "found"}.items())
         if key in additional_updates:
-            _make_additional_updates(confirm_cfg, additional_updates[key])
+            make_additional_updates(confirm_cfg, additional_updates[key])
     deny_updates = map_assignment_update(entity, "didnt-find")
     # if we were originally trying to extract multiple entities and we weren't able to
     # clarify one of them, we will have to move on to extracting the entity with a
@@ -340,7 +325,7 @@ def _single_slot(
     if additional_updates:
         key = frozenset({entity: "found"}.items())
         if key in additional_updates:
-            _make_additional_updates(fill_slot, additional_updates[key])
+            make_additional_updates(fill_slot, additional_updates[key])
     # add message variants if they exist
     message_variants = (
         config_entity["single_slot_message_variants"]
