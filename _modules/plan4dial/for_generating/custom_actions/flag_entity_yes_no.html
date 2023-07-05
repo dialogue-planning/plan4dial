@@ -118,8 +118,6 @@
                             <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">entity</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
                             <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">confirm_intent</span><span class="p">,</span>
                           <span class="p">}</span>
-                          
-    
     <span class="n">deny_outcome_upd</span> <span class="o">=</span> <span class="p">{</span>
                         <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">entity</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}},</span>
                         <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="n">deny_intent</span><span class="p">,</span>
@@ -127,9 +125,11 @@
 
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="k">if</span> <span class="s2">&quot;confirm_outcome&quot;</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">:</span>
-            <span class="n">make_additional_updates</span><span class="p">(</span><span class="n">confirm_outcome_upd</span><span class="p">,</span> <span class="n">additional_updates</span><span class="p">[</span><span class="s2">&quot;confirm_outcome&quot;</span><span class="p">])</span>
+            <span class="n">make_additional_updates</span><span class="p">(</span><span class="n">confirm_outcome_upd</span><span class="p">,</span> 
+                                    <span class="n">additional_updates</span><span class="p">[</span><span class="s2">&quot;confirm_outcome&quot;</span><span class="p">])</span>
         <span class="k">if</span> <span class="s2">&quot;deny_outcome&quot;</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">:</span>
-            <span class="n">make_additional_updates</span><span class="p">(</span><span class="n">deny_outcome_upd</span><span class="p">,</span> <span class="n">additional_updates</span><span class="p">[</span><span class="s2">&quot;deny_outcome&quot;</span><span class="p">])</span>
+            <span class="n">make_additional_updates</span><span class="p">(</span><span class="n">deny_outcome_upd</span><span class="p">,</span> 
+                                    <span class="n">additional_updates</span><span class="p">[</span><span class="s2">&quot;deny_outcome&quot;</span><span class="p">])</span>
     <span class="n">action</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;get-response&quot;</span><span class="p">:</span> <span class="p">{</span>
             <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span>
