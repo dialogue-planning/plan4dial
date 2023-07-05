@@ -4,4 +4,4 @@ sphinx_rtd_theme
 sphinxcontrib-video
 nnf
 spacy
-rasa
+rasa==3.6.1a1

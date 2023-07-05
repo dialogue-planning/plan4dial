@@ -11,11 +11,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -55,6 +55,7 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="plan4dial.main.html">plan4dial.main</a></li>
 </ul>
 </li>
 </ul>
@@ -169,7 +170,7 @@ fallbacks.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_certainty">
-<span class="sig-name descname"><span class="pre">_configure_certainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_certainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_certainty" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_configure_certainty</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_certainty"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_certainty" title="Permalink to this definition"></a></dt>
 <dd><p>Converts the parameter <cite>known</cite> (which is either True, False, or “maybe”) to the
 equivalent Hovor certainty (“Known”, “Unknown”, and “Uncertain” respectively). Used
 for preconditions.</p>
@@ -304,7 +305,7 @@ based on arbritrary logical formulas.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._convert_to_formula">
-<span class="sig-name descname"><span class="pre">_convert_to_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">And</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Or</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_to_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_to_formula" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">_convert_to_formula</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">condition</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">And</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Or</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_convert_to_formula"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._convert_to_formula" title="Permalink to this definition"></a></dt>
 <dd><p>Converts an action condition from the YAML to a list of terms for an NNF
 formula.</p>
 <dl class="field-list simple">
@@ -373,7 +374,7 @@ dictionary.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser.configure_assignments">
-<span class="sig-name descname"><span class="pre">configure_assignments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#configure_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser.configure_assignments" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">configure_assignments</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">known</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#configure_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser.configure_assignments" title="Permalink to this definition"></a></dt>
 <dd><p>Converts the parameter <cite>known</cite> (which is either True, False, or “maybe”) to the
 equivalent Hovor assignment (“found”, “didnt-find”, and “maybe-found”
 respectively). Used for outcomes.</p>

@@ -13,6 +13,7 @@ plan4dial.for\_generating.custom\_actions.utils
 
    .. autosummary::
    
+      make_additional_updates
       map_assignment_update
    
    

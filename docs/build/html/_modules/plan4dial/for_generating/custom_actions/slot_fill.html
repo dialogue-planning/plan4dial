@@ -10,11 +10,11 @@
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -81,23 +81,8 @@
 
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
 <span class="kn">import</span> <span class="nn">itertools</span>
-<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">map_assignment_update</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">map_assignment_update</span><span class="p">,</span> <span class="n">make_additional_updates</span>
 <span class="kn">from</span> <span class="nn">..parsers.json_config_parser</span> <span class="kn">import</span> <span class="n">configure_assignments</span>
-
-
-<div class="viewcode-block" id="_make_additional_updates"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill._make_additional_updates">[docs]</a><span class="k">def</span> <span class="nf">_make_additional_updates</span><span class="p">(</span><span class="n">org_out</span><span class="p">:</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">add_upd</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Update an outcome by the additional updates provided by the suer.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        org_out (Dict): The original outcome.</span>
-<span class="sd">        add_upd (Dict): The additional updates to be added to the outcome.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">add_upd</span><span class="p">:</span>
-        <span class="n">org_out</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">add_upd</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">])</span>
-    <span class="k">if</span> <span class="s2">&quot;response_variants&quot;</span> <span class="ow">in</span> <span class="n">add_upd</span><span class="p">:</span>
-        <span class="n">org_out</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_upd</span><span class="p">[</span><span class="s2">&quot;response_variants&quot;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="s2">&quot;follow_up&quot;</span> <span class="ow">in</span> <span class="n">add_upd</span><span class="p">:</span>
-        <span class="n">org_out</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">add_upd</span><span class="p">[</span><span class="s2">&quot;follow_up&quot;</span><span class="p">]</span></div>
 
 
 <div class="viewcode-block" id="slot_fill"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.custom_actions.slot_fill.html#plan4dial.for_generating.custom_actions.slot_fill.slot_fill">[docs]</a><span class="k">def</span> <span class="nf">slot_fill</span><span class="p">(</span>
@@ -287,7 +272,7 @@
                 <span class="c1"># check if this frozenset is included in the dict of outcomes with</span>
                 <span class="c1"># additional updates; if so, add the appropriate updates</span>
                 <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">updates_filtered</span><span class="p">:</span>
-                    <span class="n">_make_additional_updates</span><span class="p">(</span><span class="n">next_out</span><span class="p">,</span> <span class="n">updates_filtered</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+                    <span class="n">make_additional_updates</span><span class="p">(</span><span class="n">next_out</span><span class="p">,</span> <span class="n">updates_filtered</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
         <span class="n">action</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;validate-slot-fill&quot;</span><span class="p">][</span><span class="s2">&quot;oneof&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">][</span>
             <span class="n">outcome_name</span>
         <span class="p">]</span> <span class="o">=</span> <span class="n">next_out</span>
@@ -342,7 +327,7 @@
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">({</span><span class="n">entity</span><span class="p">:</span> <span class="s2">&quot;found&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">:</span>
-            <span class="n">_make_additional_updates</span><span class="p">(</span><span class="n">confirm_cfg</span><span class="p">,</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">make_additional_updates</span><span class="p">(</span><span class="n">confirm_cfg</span><span class="p">,</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
     <span class="n">deny_updates</span> <span class="o">=</span> <span class="n">map_assignment_update</span><span class="p">(</span><span class="n">entity</span><span class="p">,</span> <span class="s2">&quot;didnt-find&quot;</span><span class="p">)</span>
     <span class="c1"># if we were originally trying to extract multiple entities and we weren&#39;t able to</span>
     <span class="c1"># clarify one of them, we will have to move on to extracting the entity with a</span>
@@ -413,7 +398,7 @@
     <span class="k">if</span> <span class="n">additional_updates</span><span class="p">:</span>
         <span class="n">key</span> <span class="o">=</span> <span class="nb">frozenset</span><span class="p">({</span><span class="n">entity</span><span class="p">:</span> <span class="s2">&quot;found&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
         <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">additional_updates</span><span class="p">:</span>
-            <span class="n">_make_additional_updates</span><span class="p">(</span><span class="n">fill_slot</span><span class="p">,</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
+            <span class="n">make_additional_updates</span><span class="p">(</span><span class="n">fill_slot</span><span class="p">,</span> <span class="n">additional_updates</span><span class="p">[</span><span class="n">key</span><span class="p">])</span>
     <span class="c1"># add message variants if they exist</span>
     <span class="n">message_variants</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">config_entity</span><span class="p">[</span><span class="s2">&quot;single_slot_message_variants&quot;</span><span class="p">]</span>

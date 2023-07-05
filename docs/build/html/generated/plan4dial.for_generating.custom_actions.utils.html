@@ -11,11 +11,11 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../_static/jquery.js"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -54,6 +54,7 @@
 <li class="toctree-l3"><a class="reference internal" href="plan4dial.for_generating.parsers.html">plan4dial.for_generating.parsers</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="plan4dial.main.html">plan4dial.main</a></li>
 </ul>
 </li>
 </ul>
@@ -96,11 +97,28 @@
 <p class="rubric">Functions</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.for_generating.custom_actions.utils.map_assignment_update" title="plan4dial.for_generating.custom_actions.utils.map_assignment_update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_assignment_update</span></code></a>(entity, assignment)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#plan4dial.for_generating.custom_actions.utils.make_additional_updates" title="plan4dial.for_generating.custom_actions.utils.make_additional_updates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_additional_updates</span></code></a>(org_out, add_upd)</p></td>
+<td><p>Update an outcome by the additional updates provided by the suer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#plan4dial.for_generating.custom_actions.utils.map_assignment_update" title="plan4dial.for_generating.custom_actions.utils.map_assignment_update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">map_assignment_update</span></code></a>(entity, assignment)</p></td>
 <td><p>Given an entity and its assignment, returns the corresponding update.</p></td>
 </tr>
 </tbody>
 </table>
+<dl class="py function">
+<dt class="sig sig-object py" id="plan4dial.for_generating.custom_actions.utils.make_additional_updates">
+<span class="sig-name descname"><span class="pre">make_additional_updates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">org_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_upd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/custom_actions/utils.html#make_additional_updates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.custom_actions.utils.make_additional_updates" title="Permalink to this definition"></a></dt>
+<dd><p>Update an outcome by the additional updates provided by the suer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>org_out</strong> (<em>Dict</em>) – The original outcome.</p></li>
+<li><p><strong>add_upd</strong> (<em>Dict</em>) – The additional updates to be added to the outcome.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="plan4dial.for_generating.custom_actions.utils.map_assignment_update">
 <span class="sig-name descname"><span class="pre">map_assignment_update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assignment</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/custom_actions/utils.html#map_assignment_update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.custom_actions.utils.map_assignment_update" title="Permalink to this definition"></a></dt>
