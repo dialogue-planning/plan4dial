@@ -22,6 +22,7 @@ def map_assignment_update(entity: str, assignment: str) -> Dict:
         "didnt-find": {entity: {"value": None, "known": False}},
     }[assignment]
 
+
 def make_additional_updates(org_out: Dict, add_upd: Dict) -> None:
     """Update an outcome by the additional updates provided by the suer.
 

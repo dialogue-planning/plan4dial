@@ -52,10 +52,10 @@ def flag_entity_yes_no(
 
     if additional_updates:
         if "confirm_outcome" in additional_updates:
-            make_additional_updates(confirm_outcome_upd, 
+            make_additional_updates(confirm_outcome_upd,
                                     additional_updates["confirm_outcome"])
         if "deny_outcome" in additional_updates:
-            make_additional_updates(deny_outcome_upd, 
+            make_additional_updates(deny_outcome_upd,
                                     additional_updates["deny_outcome"])
     action["effect"] = {
         "get-response": {
