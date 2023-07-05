@@ -41,7 +41,7 @@ extensions = [
     "sphinx.ext.napoleon",  # allows for Google/numpy style docstrings
     "sphinx.ext.viewcode",  # adds link to the source code in the docs
     "sphinx_rtd_theme",  # read the docs theme
-    "sphinxcontrib.video", # for embedding videos
+    "sphinxcontrib.video",  # for embedding videos
 ]
 
 templates_path = ["_templates"]
