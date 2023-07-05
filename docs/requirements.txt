@@ -1,6 +1,7 @@
 pyyaml
 sphinx>3.0.0
 sphinx_rtd_theme
+sphinxcontrib-video
 nnf
 spacy
 rasa
