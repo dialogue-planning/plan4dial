@@ -10,11 +10,11 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -44,7 +44,6 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../landing.html">For ICAPS Demo Viewers</a></li>
 </ul>
 
         </div>
@@ -88,7 +87,7 @@
 <span class="kn">from</span> <span class="nn">for_generating.parsers.pddl_parser</span> <span class="kn">import</span> <span class="n">parse_to_pddl</span>
 <span class="kn">from</span> <span class="nn">for_generating.parsers.parse_for_rasa</span> <span class="kn">import</span> <span class="n">make_nlu_file</span>
 <span class="kn">from</span> <span class="nn">for_generating.parsers.pddl_for_rollout</span> <span class="kn">import</span> <span class="n">rollout_config</span>
-<span class="kn">from</span> <span class="nn">rasa.model_training</span> <span class="kn">import</span> <span class="n">train_nlu</span>
+<span class="c1"># from rasa.model_training import train_nlu</span>
 
 
 <div class="viewcode-block" id="generate_files"><a class="viewcode-back" href="../../generated/plan4dial.main.html#plan4dial.main.generate_files">[docs]</a><span class="k">def</span> <span class="nf">generate_files</span><span class="p">(</span><span class="n">yaml_filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">rbp_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
@@ -140,12 +139,12 @@
         <span class="n">make_nlu_file</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">yaml_filename</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">FullLoader</span><span class="p">)),</span>
         <span class="n">writer</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">train_nlu</span><span class="p">(</span>
-        <span class="n">config</span><span class="o">=</span><span class="s2">&quot;./plan4dial/for_generating/nlu_config.yml&quot;</span><span class="p">,</span>
-        <span class="n">nlu_data</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">/nlu.yml&quot;</span><span class="p">,</span>
-        <span class="n">output</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_folder</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">fixed_model_name</span><span class="o">=</span><span class="s2">&quot;nlu_model&quot;</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="c1"># train_nlu(</span>
+    <span class="c1">#     config=&quot;./plan4dial/for_generating/nlu_config.yml&quot;,</span>
+    <span class="c1">#     nlu_data=f&quot;{output_folder}/nlu.yml&quot;,</span>
+    <span class="c1">#     output=f&quot;{output_folder}&quot;,</span>
+    <span class="c1">#     fixed_model_name=&quot;nlu_model&quot;,</span>
+    <span class="c1"># )</span>
 
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Using rbp from path: </span><span class="si">{</span><span class="n">rbp_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;with domain string path: </span><span class="si">{</span><span class="n">domain_str</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -173,13 +172,13 @@
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
         <span class="n">bot_name</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">bot_name</span> <span class="o">=</span> <span class="s2">&quot;gold_standard_bot&quot;</span>
+        <span class="n">bot_name</span> <span class="o">=</span> <span class="s2">&quot;icaps_bot&quot;</span>
     <span class="c1"># we can hardcode the path as it will stay the same in docker container</span>
-    <span class="n">dirname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;/root/app/plan4dial/local_data/</span><span class="si">{</span><span class="n">bot_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">dirname</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;./plan4dial/local_data/</span><span class="si">{</span><span class="n">bot_name</span><span class="si">}</span><span class="s2">&quot;</span>
     <span class="n">generate_files</span><span class="p">(</span>
         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">bot_name</span><span class="si">}</span><span class="s2">.yml&quot;</span><span class="p">,</span>
         <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dirname</span><span class="si">}</span><span class="s2">/output_files&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;/root/rbp.sif&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;/root/rbp/prp&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Completed&quot;</span><span class="p">)</span>
 </pre></div>
