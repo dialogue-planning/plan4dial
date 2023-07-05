@@ -45,8 +45,6 @@ def flag_entity_yes_no(
                             "updates": {entity: {"known": True, "value": True}},
                             "intent": confirm_intent,
                           }
-                          
-    
     deny_outcome_upd = {
                         "updates": {entity: {"known": True, "value": False}},
                         "intent": deny_intent,
@@ -54,9 +52,11 @@ def flag_entity_yes_no(
 
     if additional_updates:
         if "confirm_outcome" in additional_updates:
-            make_additional_updates(confirm_outcome_upd, additional_updates["confirm_outcome"])
+            make_additional_updates(confirm_outcome_upd, 
+                                    additional_updates["confirm_outcome"])
         if "deny_outcome" in additional_updates:
-            make_additional_updates(deny_outcome_upd, additional_updates["deny_outcome"])
+            make_additional_updates(deny_outcome_upd, 
+                                    additional_updates["deny_outcome"])
     action["effect"] = {
         "get-response": {
             "oneof": {
