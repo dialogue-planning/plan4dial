@@ -74,8 +74,8 @@
              
   <section id="plan4dial">
 <h1>Plan4Dial<a class="headerlink" href="#plan4dial" title="Permalink to this heading"></a></h1>
-<section id="why-use-plan4dial">
-<span id="why"></span><h2>Why Use Plan4Dial?<a class="headerlink" href="#why-use-plan4dial" title="Permalink to this heading"></a></h2>
+<span class="target" id="why"></span><section id="why-use-plan4dial">
+<h2>Why Use Plan4Dial?<a class="headerlink" href="#why-use-plan4dial" title="Permalink to this heading"></a></h2>
 <p>Dialogue planning uses automated planning to generate dialogue graphs, which eliminates the need to painstakingly craft these graphs by hand and creates robust and maintainable agents.
 <strong>Plan4Dial is the first open and readily available modern framework for dialogue planning development.</strong></p>
 <p>With just one user-specified YAML file as input, Plan4Dial offers:</p>
@@ -94,11 +94,16 @@
 <img alt="_images/flow.png" src="_images/flow.png" />
 <p>Here we detail the design flow of our approach.</p>
 <p>First, the developer writes a YAML file <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/local_data/gold_standard_bot/gold_standard_bot.yml">(example YAML file here)</a> which contains a declarative description of their agent.</p>
-<video controls="True" preload="auto"><source src="figs/vid_1.mp4" type="video/mp4"></video><p>The file is then passed to Plan4Dial, which <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/main.py">converts the file to raw PDDL and attempts to generate a plan</a>.</p>
-<video controls="True" preload="auto"><source src="figs/vid_2.mp4" type="video/mp4"></video><p>The valid plan, if found, is then passed to Hovor to <a class="reference external" href="https://github.com/dialogue-planning/contingent-plan-executor/blob/main/README.md">execute the conversation</a>.
+<video autoplay="True" loop="True" muted="True" preload="auto" width="1280"><source src="_static/vid_1.mp4" type="video/mp4"></video><p><br />
+The file is then passed to Plan4Dial, which <a class="reference external" href="https://github.com/dialogue-planning/plan4dial/tree/main/plan4dial/main.py">converts the file to raw PDDL and attempts to generate a plan</a>.
+It also generates the rest of the files that is needed for the agent to execute, such as the trained NLU model.</p>
+<video autoplay="True" loop="True" muted="True" preload="auto" width="1280"><source src="_static/vid_2.mp4" type="video/mp4"></video><p><br />
+The valid plan, if found, is then passed to Hovor to <a class="reference external" href="https://github.com/dialogue-planning/contingent-plan-executor/blob/main/README.md">execute the conversation</a>.
 By running the app, we can communicate with the agent through API endpoints.</p>
-<video controls="True" preload="auto"><source src="figs/vid_3.mp4" type="video/mp4"></video><p>Finally, you can make a call to <a class="reference external" href="https://github.com/dialogue-planning/widget">WIDGET</a> with this HTML block to embed your agent in your own site!</p>
-<video controls="True" preload="auto"><source src="figs/vid_4.mp4" type="video/mp4"></video><p>See the <a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">Tutorial</span></a> for an in-depth explanation on how to specify the YAML file.</p>
+<video autoplay="True" loop="True" muted="True" preload="auto" width="1280"><source src="_static/vid_3.mp4" type="video/mp4"></video><p><br />
+Finally, you can make a call to <a class="reference external" href="https://github.com/dialogue-planning/widget">WIDGET</a> with this HTML block to embed your agent in your own site!</p>
+<video autoplay="True" loop="True" muted="True" preload="auto" width="1280"><source src="_static/vid_4.mp4" type="video/mp4"></video><p><br />
+See the <a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">Tutorial</span></a> for an in-depth explanation on how to specify the YAML file.</p>
 <p>🤖 Time to get chatting! 🤖</p>
 <table class="autosummary longtable docutils align-default">
 <tbody>
