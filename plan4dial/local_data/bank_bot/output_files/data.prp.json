@@ -1,140 +1,90 @@
 {
     "plan": {
-        "init": "4",
+        "init": "5",
         "goal": "0",
         "nodes": {
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x1a16e90",
+                "state": "0x2113270",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
                 "is_sc": 1,
                 "successors": []
             },
-            "1": {
-                "expected_successor": "0",
-                "action": "confirm-transfer",
-                "state": "0x1a1e4f0",
-                "distance": 1,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete-transfer",
-                        "successor_id": "0"
-                    }
-                ]
-            },
-            "2": {
-                "expected_successor": "1",
-                "action": "get-transfer-settings",
-                "state": "0x1a1cb80",
-                "distance": 2,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "get-transfer-settings_DETDUP_get-transfer-settings__validate-EQ-complete-transfer",
-                        "successor_id": "1"
-                    },
-                    {
-                        "outcome_label": "get-transfer-settings_DETDUP_get-transfer-settings__validate-EQ-fallback",
-                        "successor_id": "5"
-                    }
-                ]
-            },
             "3": {
-                "expected_successor": "2",
-                "action": "set-task",
-                "state": "0x1a1cb60",
+                "expected_successor": "6",
+                "action": "confirm-transfer",
+                "state": "0x2117c90",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "set-task_DETDUP_set-task__set-valid-value-EQ-transfer_funds_between_accounts",
-                        "successor_id": "2"
+                        "outcome_label": "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete",
+                        "successor_id": "6"
                     }
                 ]
             },
             "4": {
                 "expected_successor": "3",
-                "action": "slot-fill__get-task",
-                "state": "0x1a1f060",
+                "action": "set-task",
+                "state": "0x2115440",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-fallback",
-                        "successor_id": "6"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-task_found",
+                        "outcome_label": "set-task_DETDUP_set-task__set-valid-value-EQ-transfer_funds_between_accounts",
                         "successor_id": "3"
                     }
                 ]
             },
             "5": {
-                "expected_successor": "2",
-                "action": "dialogue_statement",
-                "state": "0x1a24590",
-                "distance": 3,
+                "expected_successor": "0",
+                "action": "get-task",
+                "state": "0x2118470",
+                "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "2"
+                        "outcome_label": "get-task_DETDUP_get-task__start-task-EQ-fallback",
+                        "successor_id": "6"
+                    },
+                    {
+                        "outcome_label": "get-task_DETDUP_get-task__start-task-EQ-success",
+                        "successor_id": "0"
+                    },
+                    {
+                        "outcome_label": "get-task_DETDUP_get-task__start-task-EQ-want-transfer",
+                        "successor_id": "4"
                     }
                 ]
             },
             "6": {
-                "expected_successor": "4",
+                "expected_successor": "5",
                 "action": "dialogue_statement",
-                "state": "0x1a24ed0",
-                "distance": 5,
+                "state": "0x2118820",
+                "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
                         "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "4"
+                        "successor_id": "5"
                     }
                 ]
             }
         },
         "edges": [
             [
-                "1",
-                ">",
-                "0"
-            ],
-            [
-                "2",
-                ">",
-                "1"
-            ],
-            [
-                "2",
-                ">",
-                "5"
-            ],
-            [
                 "3",
-                ">",
-                "2"
-            ],
-            [
-                "4",
                 ">",
                 "6"
             ],
@@ -146,65 +96,48 @@
             [
                 "5",
                 ">",
-                "2"
+                "6"
+            ],
+            [
+                "5",
+                ">",
+                "0"
+            ],
+            [
+                "5",
+                ">",
+                "4"
             ],
             [
                 "6",
                 ">",
-                "4"
+                "5"
             ]
         ],
         "states": {
-            "0x1a16e90": [
+            "0x2113270": [
                 "Atom goal()"
             ],
-            "0x1a1e4f0": [
-                "NegatedAtom force-statement()",
-                "Atom know__account1()",
-                "Atom know__account2()",
-                "Atom know__funds()"
-            ],
-            "0x1a1cb80": [
+            "0x2117c90": [
                 "Atom know__task()",
                 "Atom task-value-transfer_funds_between_accounts()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom know__account1()",
-                "NegatedAtom know__account2()",
-                "NegatedAtom know__funds()"
+                "NegatedAtom force-statement()"
             ],
-            "0x1a1cb60": [
+            "0x2115440": [
                 "Atom know__task()",
                 "NegatedAtom task-value-transfer_funds_between_accounts()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom know__account1()",
-                "NegatedAtom know__account2()",
-                "NegatedAtom know__funds()"
+                "NegatedAtom force-statement()"
             ],
-            "0x1a1f060": [
+            "0x2118470": [
                 "NegatedAtom know__task()",
                 "NegatedAtom task-value-transfer_funds_between_accounts()",
-                "NegatedAtom force-statement()",
-                "NegatedAtom know__account1()",
-                "NegatedAtom know__account2()",
-                "NegatedAtom know__funds()"
+                "NegatedAtom force-statement()"
             ],
-            "0x1a24590": [
-                "Atom know__task()",
-                "Atom task-value-transfer_funds_between_accounts()",
-                "Atom force-statement()",
-                "Atom have-message()",
-                "NegatedAtom know__account1()",
-                "NegatedAtom know__account2()",
-                "NegatedAtom know__funds()"
-            ],
-            "0x1a24ed0": [
+            "0x2118820": [
                 "NegatedAtom know__task()",
                 "NegatedAtom task-value-transfer_funds_between_accounts()",
                 "Atom force-statement()",
-                "Atom have-message()",
-                "NegatedAtom know__account1()",
-                "NegatedAtom know__account2()",
-                "NegatedAtom know__funds()"
+                "Atom have-message()"
             ]
         }
     }

@@ -1,73 +1,60 @@
 {
     "actions": {
-        "get-transfer-settings": {
+        "get-task": {
             "condition": [
-                "(not (know__funds))",
-                "(not (know__account1))",
-                "(task-value-transfer_funds_between_accounts)",
-                "(know__task)",
                 "(not (force-statement))",
-                "(not (know__account2))"
+                "(not (know__task))"
             ],
             "effect": {
-                "get-transfer-settings_DETDUP_get-transfer-settings__validate-EQ-complete-transfer": [
+                "get-task_DETDUP_get-task__start-task-EQ-want-transfer": [
+                    "(know__funds)",
+                    "(know__task)",
                     "(know__account1)",
-                    "(know__account2)",
-                    "(know__funds)"
+                    "(know__account2)"
                 ],
-                "get-transfer-settings_DETDUP_get-transfer-settings__validate-EQ-fallback": [
-                    "(have-message)",
-                    "(force-statement)"
+                "get-task_DETDUP_get-task__start-task-EQ-success": [
+                    "(goal)"
+                ],
+                "get-task_DETDUP_get-task__start-task-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
                 ]
             }
         },
         "confirm-transfer": {
             "condition": [
-                "(know__account1)",
-                "(know__account2)",
                 "(not (force-statement))",
-                "(know__funds)"
+                "(know__task)",
+                "(task-value-transfer_funds_between_accounts)"
             ],
             "effect": {
-                "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete-transfer": [
-                    "(goal)",
-                    "(not (know__funds))",
+                "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete": [
                     "(not (know__account1))",
+                    "(not (know__funds))",
+                    "(have-message)",
+                    "(not (know__task))",
+                    "(force-statement)",
+                    "(not (task-value-transfer_funds_between_accounts))",
                     "(not (know__account2))"
                 ]
             }
         },
         "dialogue_statement": {
             "condition": [
-                "(have-message)",
-                "(force-statement)"
+                "(force-statement)",
+                "(have-message)"
             ],
             "effect": {
                 "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
-                    "(not (force-statement))",
-                    "(not (have-message))"
-                ]
-            }
-        },
-        "slot-fill__get-task": {
-            "condition": [
-                "(not (know__task))",
-                "(not (force-statement))"
-            ],
-            "effect": {
-                "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-task_found": [
-                    "(know__task)"
-                ],
-                "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-fallback": [
-                    "(have-message)",
-                    "(force-statement)"
+                    "(not (have-message))",
+                    "(not (force-statement))"
                 ]
             }
         },
         "set-task": {
             "condition": [
-                "(know__task)",
-                "(not (task-value-transfer_funds_between_accounts))"
+                "(not (task-value-transfer_funds_between_accounts))",
+                "(know__task)"
             ],
             "effect": {
                 "set-task_DETDUP_set-task__set-valid-value-EQ-transfer_funds_between_accounts": [
@@ -77,14 +64,14 @@
         }
     },
     "initial_state": [
-        "(not (force-statement))",
+        "(not (know__account1))",
         "(not (know__funds))",
         "(not (know__goal))",
-        "(not (know__task))",
-        "(not (know__account1))",
-        "(not (task-value-transfer_funds_between_accounts))",
+        "(not (force-statement))",
         "(not (goal))",
+        "(not (know__task))",
         "(not (have-message))",
+        "(not (task-value-transfer_funds_between_accounts))",
         "(not (know__account2))"
     ]
 }

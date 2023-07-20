@@ -237,8 +237,8 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
         outer_brackets=False,
     )
     # convert the effects
-    effects = f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof \
-        {act_config['effect']['global-outcome-name']}"
+    effects = f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof " + \
+        act_config['effect']['global-outcome-name']
     # iterate through all the outcomes
     for out_config in act_config["effect"]["outcomes"]:
         if "updates" in out_config:

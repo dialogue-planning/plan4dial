@@ -29,60 +29,123 @@ nlu:
 
     - no thank you'
   intent: deny
-- examples: '- I just want to [transfer funds between accounts]{"entity": "task",
-    "value": "transfer funds between accounts"} today.
-
-    - Can you help me [move money over]{"entity": "task", "value": "transfer funds
-    between accounts"}?
-
-    - I want to [move money over]{"entity": "task", "value": "transfer funds between
-    accounts"}.
-
-    - I just want to [move money over]{"entity": "task", "value": "transfer funds
-    between accounts"} today.
-
-    - I want to [transfer between accounts]{"entity": "task", "value": "transfer funds
-    between accounts"}.
-
-    - I want to [transfer funds]{"entity": "task", "value": "transfer funds between
-    accounts"}.
-
-    - I just want to [transfer between accounts]{"entity": "task", "value": "transfer
-    funds between accounts"} today.
-
-    - Can you help me [transfer between accounts]{"entity": "task", "value": "transfer
-    funds between accounts"}?
-
-    - I just want to [transfer funds]{"entity": "task", "value": "transfer funds between
-    accounts"} today.
-
-    - I want to [transfer money over to another account]{"entity": "task", "value":
-    "transfer funds between accounts"}.
-
-    - Can you help me [transfer money over to another account]{"entity": "task", "value":
-    "transfer funds between accounts"}?
-
-    - I want to [transfer funds between accounts]{"entity": "task", "value": "transfer
-    funds between accounts"}.
-
-    - Can you help me [transfer funds between accounts]{"entity": "task", "value":
-    "transfer funds between accounts"}?
-
-    - I just want to [transfer money over to another account]{"entity": "task", "value":
-    "transfer funds between accounts"} today.
-
-    - Can you help me [transfer funds]{"entity": "task", "value": "transfer funds
-    between accounts"}?'
-  intent: share_task
-- examples: '- ^[1-9]\d*$'
+- examples: '- ^(5000|[1-9][0-9]?)$'
   regex: funds
 - examples: '- Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from
-    [college fund]{"entity": "account1", "value": "college fund"} to [savings]{"entity":
-    "account2", "value": "savings"}?
+    [savings]{"entity": "account1", "value": "savings"} to [college fund]{"entity":
+    "account2", "value": "college fund"}?
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
+    fund]{"entity": "account1", "value": "retirement fund"} to [college fund]{"entity":
+    "account2", "value": "college fund"}?
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
+    "account2", "value": "college fund"} from [retirement fund]{"entity": "account1",
+    "value": "retirement fund"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
+    "account2", "value": "college fund"} from [college fund]{"entity": "account1",
+    "value": "college fund"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
+    "account2", "value": "college fund"} from [savings]{"entity": "account1", "value":
+    "savings"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
+    "account2", "value": "college fund"} from [chequing]{"entity": "account1", "value":
+    "chequing"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [savings]{"entity":
+    "account2", "value": "savings"} from [college fund]{"entity": "account1", "value":
+    "college fund"}.
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [college fund]{"entity": "account2", "value":
+    "college fund"}.
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
+    "account1", "value": "chequing"} to [chequing]{"entity": "account2", "value":
+    "chequing"}?
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [chequing]{"entity": "account2", "value": "chequing"}.
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
+    fund]{"entity": "account1", "value": "retirement fund"} to [retirement fund]{"entity":
+    "account2", "value": "retirement fund"}?
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
+    fund]{"entity": "account1", "value": "college fund"} to [college fund]{"entity":
+    "account2", "value": "college fund"}.
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
+    "account1", "value": "chequing"} to [savings]{"entity": "account2", "value": "savings"}?
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [savings]{"entity":
+    "account2", "value": "savings"} from [savings]{"entity": "account1", "value":
+    "savings"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
+    fund]{"entity": "account2", "value": "retirement fund"} from [chequing]{"entity":
+    "account1", "value": "chequing"}.
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
+    fund]{"entity": "account1", "value": "retirement fund"} to [chequing]{"entity":
+    "account2", "value": "chequing"}?
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
+    fund]{"entity": "account1", "value": "college fund"} to [retirement fund]{"entity":
+    "account2", "value": "retirement fund"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [chequing]{"entity":
+    "account2", "value": "chequing"} from [college fund]{"entity": "account1", "value":
+    "college fund"}.
 
     - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
-    fund]{"entity": "account1", "value": "retirement fund"} to [retirement fund]{"entity":
-    "account2", "value": "retirement fund"}.
+    fund]{"entity": "account1", "value": "retirement fund"} to [college fund]{"entity":
+    "account2", "value": "college fund"}.
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
+    fund]{"entity": "account1", "value": "college fund"} to [savings]{"entity": "account2",
+    "value": "savings"}.
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [chequing]{"entity": "account2", "value": "chequing"}?
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [chequing]{"entity":
+    "account2", "value": "chequing"} from [chequing]{"entity": "account1", "value":
+    "chequing"}.
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
+    "account1", "value": "chequing"} to [savings]{"entity": "account2", "value": "savings"}.
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [retirement fund]{"entity": "account2", "value":
+    "retirement fund"}.
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
+    fund]{"entity": "account1", "value": "retirement fund"} to [savings]{"entity":
+    "account2", "value": "savings"}?
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
+    fund]{"entity": "account1", "value": "college fund"} to [savings]{"entity": "account2",
+    "value": "savings"}?
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
+    "account1", "value": "chequing"} to [college fund]{"entity": "account2", "value":
+    "college fund"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
+    fund]{"entity": "account2", "value": "retirement fund"} from [retirement fund]{"entity":
+    "account1", "value": "retirement fund"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [savings]{"entity":
+    "account2", "value": "savings"} from [retirement fund]{"entity": "account1", "value":
+    "retirement fund"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [chequing]{"entity":
+    "account2", "value": "chequing"} from [retirement fund]{"entity": "account1",
+    "value": "retirement fund"}.
 
     - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [savings]{"entity":
     "account2", "value": "savings"} from [chequing]{"entity": "account1", "value":
@@ -92,173 +155,89 @@ nlu:
     "account1", "value": "chequing"} to [chequing]{"entity": "account2", "value":
     "chequing"}.
 
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
-    "account2", "value": "college fund"} from [chequing]{"entity": "account1", "value":
-    "chequing"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [chequing]{"entity": "account2", "value": "chequing"}?
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
-    "account1", "value": "chequing"} to [college fund]{"entity": "account2", "value":
-    "college fund"}.
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
-    fund]{"entity": "account1", "value": "retirement fund"} to [savings]{"entity":
-    "account2", "value": "savings"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
-    fund]{"entity": "account1", "value": "college fund"} to [retirement fund]{"entity":
-    "account2", "value": "retirement fund"}?
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [college fund]{"entity": "account2", "value":
-    "college fund"}.
-
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
-    "account2", "value": "college fund"} from [retirement fund]{"entity": "account1",
-    "value": "retirement fund"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
-    fund]{"entity": "account1", "value": "retirement fund"} to [college fund]{"entity":
-    "account2", "value": "college fund"}?
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
+    fund]{"entity": "account2", "value": "retirement fund"} from [savings]{"entity":
+    "account1", "value": "savings"}.
 
     - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
     "account1", "value": "chequing"} to [college fund]{"entity": "account2", "value":
     "college fund"}?
 
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
-    "account1", "value": "chequing"} to [savings]{"entity": "account2", "value": "savings"}?
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
-    fund]{"entity": "account1", "value": "college fund"} to [retirement fund]{"entity":
-    "account2", "value": "retirement fund"}.
-
     - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
-    fund]{"entity": "account2", "value": "retirement fund"} from [chequing]{"entity":
-    "account1", "value": "chequing"}.
-
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
-    "account2", "value": "college fund"} from [savings]{"entity": "account1", "value":
-    "savings"}.
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [chequing]{"entity": "account2", "value": "chequing"}.
+    fund]{"entity": "account2", "value": "retirement fund"} from [college fund]{"entity":
+    "account1", "value": "college fund"}.
 
     - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
-    fund]{"entity": "account1", "value": "retirement fund"} to [college fund]{"entity":
-    "account2", "value": "college fund"}.
+    fund]{"entity": "account1", "value": "retirement fund"} to [retirement fund]{"entity":
+    "account2", "value": "retirement fund"}.
 
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [savings]{"entity":
-    "account2", "value": "savings"} from [retirement fund]{"entity": "account1", "value":
-    "retirement fund"}.
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
+    fund]{"entity": "account1", "value": "college fund"} to [retirement fund]{"entity":
+    "account2", "value": "retirement fund"}?
 
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
-    fund]{"entity": "account2", "value": "retirement fund"} from [retirement fund]{"entity":
-    "account1", "value": "retirement fund"}.
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
+    fund]{"entity": "account1", "value": "college fund"} to [college fund]{"entity":
+    "account2", "value": "college fund"}?
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
+    fund]{"entity": "account1", "value": "retirement fund"} to [savings]{"entity":
+    "account2", "value": "savings"}.
 
     - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
     fund]{"entity": "account1", "value": "retirement fund"} to [chequing]{"entity":
     "account2", "value": "chequing"}.
 
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [chequing]{"entity":
-    "account2", "value": "chequing"} from [college fund]{"entity": "account1", "value":
-    "college fund"}.
-
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
-    fund]{"entity": "account2", "value": "retirement fund"} from [college fund]{"entity":
-    "account1", "value": "college fund"}.
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
-    "account1", "value": "chequing"} to [retirement fund]{"entity": "account2", "value":
-    "retirement fund"}.
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [retirement fund]{"entity": "account2", "value":
+    "retirement fund"}?
 
     - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
     fund]{"entity": "account1", "value": "college fund"} to [chequing]{"entity": "account2",
     "value": "chequing"}?
 
     - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [college fund]{"entity": "account2", "value":
-    "college fund"}?
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
-    "account1", "value": "chequing"} to [retirement fund]{"entity": "account2", "value":
-    "retirement fund"}?
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
-    fund]{"entity": "account1", "value": "retirement fund"} to [savings]{"entity":
-    "account2", "value": "savings"}?
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
     "account1", "value": "savings"} to [savings]{"entity": "account2", "value": "savings"}?
 
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
-    "account2", "value": "college fund"} from [college fund]{"entity": "account1",
-    "value": "college fund"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
-    fund]{"entity": "account1", "value": "college fund"} to [college fund]{"entity":
-    "account2", "value": "college fund"}?
-
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
-    fund]{"entity": "account2", "value": "retirement fund"} from [savings]{"entity":
-    "account1", "value": "savings"}.
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
-    fund]{"entity": "account1", "value": "college fund"} to [savings]{"entity": "account2",
-    "value": "savings"}.
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [savings]{"entity": "account2", "value": "savings"}.
 
     - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [chequing]{"entity":
     "account2", "value": "chequing"} from [savings]{"entity": "account1", "value":
     "savings"}.
 
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [chequing]{"entity":
-    "account2", "value": "chequing"} from [retirement fund]{"entity": "account1",
-    "value": "retirement fund"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [retirement fund]{"entity": "account2", "value":
-    "retirement fund"}?
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
+    "account1", "value": "chequing"} to [retirement fund]{"entity": "account2", "value":
+    "retirement fund"}.
 
     - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
     fund]{"entity": "account1", "value": "college fund"} to [chequing]{"entity": "account2",
     "value": "chequing"}.
 
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
-    "account1", "value": "chequing"} to [savings]{"entity": "account2", "value": "savings"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
-    fund]{"entity": "account1", "value": "retirement fund"} to [retirement fund]{"entity":
-    "account2", "value": "retirement fund"}?
-
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [savings]{"entity":
-    "account2", "value": "savings"} from [savings]{"entity": "account1", "value":
-    "savings"}.
-
     - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
-    "account1", "value": "chequing"} to [chequing]{"entity": "account2", "value":
-    "chequing"}?
-
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [savings]{"entity":
-    "account2", "value": "savings"} from [college fund]{"entity": "account1", "value":
-    "college fund"}.
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [college
-    fund]{"entity": "account1", "value": "college fund"} to [college fund]{"entity":
-    "account2", "value": "college fund"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [retirement
-    fund]{"entity": "account1", "value": "retirement fund"} to [chequing]{"entity":
-    "account2", "value": "chequing"}?
-
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [chequing]{"entity":
-    "account2", "value": "chequing"} from [chequing]{"entity": "account1", "value":
-    "chequing"}.
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [savings]{"entity": "account2", "value": "savings"}.
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [retirement fund]{"entity": "account2", "value":
-    "retirement fund"}.'
+    "account1", "value": "chequing"} to [retirement fund]{"entity": "account2", "value":
+    "retirement fund"}?'
   intent: share_transfer_settings
+- examples: '- I''m all done.
+
+    - I don''t want to do anything else.
+
+    - I don''t want to do anything else today.
+
+    - I''m finished
+
+    - i''m all done here
+
+    - i don''t have anything else i want to do
+
+    - exit
+
+    - done
+
+    - I''ve done everything i want to do
+
+    - I''m good to go, thanks
+
+    - i''m good
+
+    - bye'
+  intent: share_done

@@ -68,7 +68,7 @@ context_variables:
     type: json
     extraction: 
       method: regex
-      pattern: ^[1-9]\d*$
+      pattern: ^(5000|[1-9][0-9]?)$
     known:
       type: flag
       init: false
@@ -98,13 +98,6 @@ intents:
       - nah
       - no thanks
       - no thank you
-  share_task:
-    entities:
-      - task
-    utterances:
-      - I want to $task.
-      - I just want to $task today.
-      - Can you help me $task?
   share_transfer_settings:
     entities:
       - account1
@@ -115,43 +108,40 @@ intents:
       - Can I transfer $funds from $account1 to $account2?
       - I want to send $funds to $account2 from $account1.
       - I want to send $funds to $account2 from $account1.
+  share_done:
+    utterances:
+      - I'm all done.
+      - I don't want to do anything else.
+      - I don't want to do anything else today.
+      - I'm finished
+      - i'm all done here
+      - i don't have anything else i want to do
+      - exit
+      - done
+      - I've done everything i want to do
+      - I'm good to go, thanks
+      - i'm good
+      - bye
+
 actions:
   get-task:
-    type: custom
-    subtype: slot_fill
-    parameters:
-      action_name: get-task
-      overall_intent: share_task
-      entities:
-        - task
-      message_variants:
-        - What would you like to do next? Your options are`:`\ntransfer funds between accounts\ne-transfer\nrequest money\npay bills\ncancel card
-      fallback_message_variants:
-        - Sorry, that isn't a valid banking option.
-  get-transfer-settings:
     type: dialogue
     message_variants:
-      - Which accounts do you want to transfer funds between, and how much?
-      - Which accounts do you want to send money to and from, and how much?
-      - Please enter the accounts you want to transfer money between and the amount of money you wish to send.
+      - What would you like to do next? Your options are`:`\ntransfer funds between accounts\ne-transfer\nrequest money\npay bills\ncancel card
     fallback_message_variants:
-      - Sorry, that isn't a valid transfer option.    
+      - Sorry, that isn't a valid banking option.
     condition:
-      account1:
-        known: false
-      account2:
-        known: false
-      funds:
-        known: false
       task:
-        known: true
-        value: transfer funds between accounts
+        known: false
     effect:
-      validate:
+      start-task:
         oneof:
           outcomes:
-            complete-transfer:
+            want-transfer:
               updates:
+                task:
+                  known: true
+                  value: transfer funds between accounts
                 account1:
                   known: true
                   value: $account1
@@ -162,23 +152,23 @@ actions:
                   known: true
                   value: $funds
               intent: share_transfer_settings
+            success:
+              updates:
+                goal:
+                  value: true
+              intent: share_done
+
   confirm-transfer:
-    type: dialogue
-    disable-fallback: true
-    message_variants:
-      - Transferring $funds from $account1 to $account2...
+    type: system
     condition:
-      account1:
+      task:
         known: true
-      account2:
-        known: true
-      funds:
-        known: true
+        value: transfer funds between accounts
     effect:
       set-allergy:
         oneof:
           outcomes:
-            complete-transfer:
+            complete:
               updates:
                 account1:
                   known: false
@@ -186,7 +176,8 @@ actions:
                   known: false
                 funds:
                   known: false
-                goal:
-                  value: true
-              intent:
+                task:
+                  known: false
+              response_variants:
+                - Transferring $funds from $account1 to $account2...
 ...

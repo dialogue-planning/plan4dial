@@ -1,6 +1,6 @@
 pyyaml
 tensorflow==2.12.*
-rasa==3.6.1a1
+rasa==3.6.2
 spacy
 nnf
 pre-commit

@@ -14,30 +14,32 @@
         (force-statement)
         (task-value-transfer_funds_between_accounts)
     )
-    (:action get-transfer-settings
+    (:action get-task
         :parameters()
         :precondition
             (and
-                (not (know__funds))
-                (not (know__account1))
-                (task-value-transfer_funds_between_accounts)
-                (know__task)
                 (not (force-statement))
-                (not (know__account2))
+                (not (know__task))
             )
         :effect
-            (labeled-oneof         get-transfer-settings__validate
-                (outcome complete-transfer
+            (labeled-oneof get-task__start-task
+                (outcome want-transfer
                     (and
+                        (know__funds)
+                        (know__task)
                         (know__account1)
                         (know__account2)
-                        (know__funds)
+                    )
+                )
+                (outcome success
+                    (and
+                        (goal)
                     )
                 )
                 (outcome fallback
                     (and
-                        (have-message)
                         (force-statement)
+                        (have-message)
                     )
                 )
             )
@@ -46,18 +48,20 @@
         :parameters()
         :precondition
             (and
-                (know__account1)
-                (know__account2)
                 (not (force-statement))
-                (know__funds)
+                (know__task)
+                (task-value-transfer_funds_between_accounts)
             )
         :effect
-            (labeled-oneof         confirm-transfer__set-allergy
-                (outcome complete-transfer
+            (labeled-oneof confirm-transfer__set-allergy
+                (outcome complete
                     (and
-                        (goal)
-                        (not (know__funds))
                         (not (know__account1))
+                        (not (know__funds))
+                        (have-message)
+                        (not (know__task))
+                        (force-statement)
+                        (not (task-value-transfer_funds_between_accounts))
                         (not (know__account2))
                     )
                 )
@@ -67,37 +71,15 @@
         :parameters()
         :precondition
             (and
-                (have-message)
                 (force-statement)
+                (have-message)
             )
         :effect
-            (labeled-oneof         dialogue_statement__reset
+            (labeled-oneof dialogue_statement__reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
-                    )
-                )
-            )
-    )
-    (:action slot-fill__get-task
-        :parameters()
-        :precondition
-            (and
-                (not (know__task))
-                (not (force-statement))
-            )
-        :effect
-            (labeled-oneof         slot-fill__get-task__validate-slot-fill
-                (outcome task_found
-                    (and
-                        (know__task)
-                    )
-                )
-                (outcome fallback
-                    (and
-                        (have-message)
-                        (force-statement)
+                        (not (force-statement))
                     )
                 )
             )
@@ -106,11 +88,11 @@
         :parameters()
         :precondition
             (and
-                (know__task)
                 (not (task-value-transfer_funds_between_accounts))
+                (know__task)
             )
         :effect
-            (labeled-oneof         set-task__set-valid-value
+            (labeled-oneof set-task__set-valid-value
                 (outcome transfer_funds_between_accounts
                     (and
                         (task-value-transfer_funds_between_accounts)

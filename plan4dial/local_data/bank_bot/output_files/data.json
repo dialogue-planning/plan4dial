@@ -49,7 +49,7 @@
             "config": {
                 "extraction": {
                     "method": "regex",
-                    "pattern": "^[1-9]\\d*$"
+                    "pattern": "^(5000|[1-9][0-9]?)$"
                 }
             },
             "known": {
@@ -106,17 +106,6 @@
             ],
             "type": "regular"
         },
-        "share_task": {
-            "entities": [
-                "$task"
-            ],
-            "utterances": [
-                "I want to $task.",
-                "I just want to $task today.",
-                "Can you help me $task?"
-            ],
-            "type": "regular"
-        },
         "share_transfer_settings": {
             "entities": [
                 "$account1",
@@ -128,6 +117,24 @@
                 "Can I transfer $funds from $account1 to $account2?",
                 "I want to send $funds to $account2 from $account1.",
                 "I want to send $funds to $account2 from $account1."
+            ],
+            "type": "regular"
+        },
+        "share_done": {
+            "entities": [],
+            "utterances": [
+                "I'm all done.",
+                "I don't want to do anything else.",
+                "I don't want to do anything else today.",
+                "I'm finished",
+                "i'm all done here",
+                "i don't have anything else i want to do",
+                "exit",
+                "done",
+                "I've done everything i want to do",
+                "I'm good to go, thanks",
+                "i'm good",
+                "bye"
             ],
             "type": "regular"
         },
@@ -143,48 +150,36 @@
         }
     },
     "actions": {
-        "get-transfer-settings": {
+        "get-task": {
             "type": "dialogue",
             "message_variants": [
-                "Which accounts do you want to transfer funds between, and how much?",
-                "Which accounts do you want to send money to and from, and how much?",
-                "Please enter the accounts you want to transfer money between and the amount of money you wish to send."
+                "What would you like to do next? Your options are`:`\\ntransfer funds between accounts\\ne-transfer\\nrequest money\\npay bills\\ncancel card"
             ],
             "fallback_message_variants": [
-                "Sorry, that isn't a valid transfer option."
+                "Sorry, that isn't a valid banking option."
             ],
             "condition": [
                 [
-                    "account1",
-                    "Unknown"
-                ],
-                [
-                    "account2",
-                    "Unknown"
-                ],
-                [
-                    "funds",
-                    "Unknown"
-                ],
-                [
                     "task",
-                    "Known"
+                    "Unknown"
                 ],
                 [
                     "force-statement",
                     false
-                ],
-                [
-                    "task-value-transfer_funds_between_accounts",
-                    true
                 ]
             ],
             "effect": {
-                "global-outcome-name": "get-transfer-settings__validate",
+                "global-outcome-name": "get-task__start-task",
                 "type": "oneof",
                 "outcomes": [
                     {
                         "updates": {
+                            "task": {
+                                "value": "transfer funds between accounts",
+                                "variable": "task",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
                             "account1": {
                                 "value": "$account1",
                                 "variable": "account1",
@@ -205,12 +200,25 @@
                             }
                         },
                         "intent": "share_transfer_settings",
-                        "name": "get-transfer-settings_DETDUP_get-transfer-settings__validate-EQ-complete-transfer",
+                        "name": "get-task_DETDUP_get-task__start-task-EQ-want-transfer",
                         "assignments": {
+                            "$task": "found",
                             "$account1": "found",
                             "$account2": "found",
                             "$funds": "found"
                         }
+                    },
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_done",
+                        "name": "get-task_DETDUP_get-task__start-task-EQ-success",
+                        "assignments": {}
                     },
                     {
                         "updates": {
@@ -226,7 +234,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-transfer-settings_DETDUP_get-transfer-settings__validate-EQ-fallback",
+                        "name": "get-task_DETDUP_get-task__start-task-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -246,6 +254,24 @@
                     ],
                     "type": "regular"
                 },
+                "share_done": {
+                    "entities": [],
+                    "utterances": [
+                        "I'm all done.",
+                        "I don't want to do anything else.",
+                        "I don't want to do anything else today.",
+                        "I'm finished",
+                        "i'm all done here",
+                        "i don't have anything else i want to do",
+                        "exit",
+                        "done",
+                        "I've done everything i want to do",
+                        "I'm good to go, thanks",
+                        "i'm good",
+                        "bye"
+                    ],
+                    "type": "regular"
+                },
                 "fallback": {
                     "entities": [],
                     "utterances": [],
@@ -254,27 +280,19 @@
             }
         },
         "confirm-transfer": {
-            "type": "dialogue",
-            "disable-fallback": true,
-            "message_variants": [
-                "Transferring $funds from $account1 to $account2..."
-            ],
+            "type": "system",
             "condition": [
                 [
-                    "account1",
-                    "Known"
-                ],
-                [
-                    "account2",
-                    "Known"
-                ],
-                [
-                    "funds",
+                    "task",
                     "Known"
                 ],
                 [
                     "force-statement",
                     false
+                ],
+                [
+                    "task-value-transfer_funds_between_accounts",
+                    true
                 ]
             ],
             "effect": {
@@ -301,23 +319,42 @@
                                 "value": null,
                                 "interpretation": "json"
                             },
-                            "goal": {
+                            "task": {
+                                "variable": "task",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "have-message": {
                                 "value": true,
-                                "variable": "goal",
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
                                 "interpretation": "json"
                             }
                         },
+                        "response_variants": [
+                            "Transferring $funds from $account1 to $account2..."
+                        ],
+                        "name": "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete",
                         "intent": null,
-                        "name": "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete-transfer",
                         "assignments": {
                             "$account1": "didnt-find",
                             "$account2": "didnt-find",
-                            "$funds": "didnt-find"
+                            "$funds": "didnt-find",
+                            "$task": "didnt-find"
                         }
                     }
                 ]
-            },
-            "intents": {}
+            }
         },
         "dialogue_statement": {
             "type": "dialogue",
@@ -360,85 +397,6 @@
                     "entities": [],
                     "utterances": [],
                     "type": "regular"
-                }
-            }
-        },
-        "slot-fill__get-task": {
-            "type": "dialogue",
-            "message_variants": [
-                "What would you like to do next? Your options are`:`\\ntransfer funds between accounts\\ne-transfer\\nrequest money\\npay bills\\ncancel card"
-            ],
-            "fallback_message_variants": [
-                "Sorry, that isn't a valid banking option."
-            ],
-            "condition": [
-                [
-                    "task",
-                    null
-                ],
-                [
-                    "task",
-                    "Unknown"
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "slot-fill__get-task__validate-slot-fill",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "task": {
-                                "value": "$task",
-                                "variable": "task",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "share_task",
-                        "name": "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-task_found",
-                        "assignments": {
-                            "$task": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "slot-fill__get-task_DETDUP_slot-fill__get-task__validate-slot-fill-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "intents": {
-                "share_task": {
-                    "entities": [
-                        "$task"
-                    ],
-                    "utterances": [
-                        "I want to $task.",
-                        "I just want to $task today.",
-                        "Can you help me $task?"
-                    ],
-                    "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
                 }
             }
         },
