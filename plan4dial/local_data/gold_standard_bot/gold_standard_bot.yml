@@ -112,6 +112,10 @@ context_variables:
       - Stauffer Library
       - Broadway Theater
       - Smith's Golfing Club
+  # informed the user of the selection
+  informed:
+    type: flag
+    init: false
   # ends the conversation if true
   goal:
     type: flag
@@ -119,6 +123,7 @@ context_variables:
     known:
       type: flag
       init: false
+ 
 intents:
   confirm:
     utterances:
@@ -404,6 +409,8 @@ actions:
         value: false
       restaurant:
         known: false
+      outing:
+        known: true
     effect:
       assign_restaurant:
         oneof:
@@ -487,6 +494,8 @@ actions:
         known: true
       outing_type:
         known: true
+      outing:
+        known: false
     effect:
       assign_outing:
         oneof:
@@ -531,9 +540,8 @@ actions:
                   value: high
                 outing_type:
                   value: high-energy
-  complete:
-    disable-fallback: true
-    type: dialogue
+  inform:
+    type: system
     condition:
       phone_number:
         known: true
@@ -543,8 +551,23 @@ actions:
         known: true
       outing:
         known: true
-    message_variants:
-      - Booked a reservation at $restaurant as well as a spot at $outing in $location.
+      informed:
+        value: false
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            finish:
+              updates:
+                informed:
+                  value: true
+              response_variants:
+                - Booked a reservation at $restaurant as well as a spot at $outing in $location.
+  complete:
+    type: system
+    condition:
+      informed:
+        value: true
     effect:
       finish:
         oneof:
@@ -553,6 +576,4 @@ actions:
               updates:
                 goal:
                   value: true
-                  known: true
-              intent:
 ...

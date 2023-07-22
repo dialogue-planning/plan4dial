@@ -139,6 +139,10 @@
                 "init": false
             }
         },
+        "informed": {
+            "type": "flag",
+            "config": false
+        },
         "goal": {
             "type": "flag",
             "config": false,
@@ -174,7 +178,6 @@
             "utterances": [
                 "yes",
                 "yeah",
-                "that's it",
                 "Y",
                 "mhm",
                 "confirm",
@@ -381,7 +384,6 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
@@ -772,6 +774,10 @@
                     "Unknown"
                 ],
                 [
+                    "outing",
+                    "Known"
+                ],
+                [
                     "force-statement",
                     false
                 ],
@@ -878,6 +884,10 @@
                 [
                     "outing_type",
                     "Known"
+                ],
+                [
+                    "outing",
+                    "Unknown"
                 ],
                 [
                     "force-statement",
@@ -987,9 +997,8 @@
                 ]
             }
         },
-        "complete": {
-            "disable-fallback": true,
-            "type": "dialogue",
+        "inform": {
+            "type": "system",
             "condition": [
                 [
                     "phone_number",
@@ -1008,6 +1017,10 @@
                     "Known"
                 ],
                 [
+                    "informed",
+                    false
+                ],
+                [
                     "force-statement",
                     false
                 ],
@@ -1016,8 +1029,57 @@
                     false
                 ]
             ],
-            "message_variants": [
-                "Booked a reservation at $restaurant as well as a spot at $outing in $location."
+            "effect": {
+                "global-outcome-name": "inform__finish",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "informed": {
+                                "value": true,
+                                "variable": "informed",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Booked a reservation at $restaurant as well as a spot at $outing in $location."
+                        ],
+                        "name": "inform_DETDUP_inform__finish-EQ-finish",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "complete": {
+            "type": "system",
+            "condition": [
+                [
+                    "informed",
+                    true
+                ],
+                [
+                    "goal",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__get-allergy",
+                    false
+                ]
             ],
             "effect": {
                 "global-outcome-name": "complete__finish",
@@ -1028,19 +1090,15 @@
                             "goal": {
                                 "value": true,
                                 "variable": "goal",
-                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
-                        "intent": null,
                         "name": "complete_DETDUP_complete__finish-EQ-finish",
-                        "assignments": {
-                            "$goal": "found"
-                        }
+                        "intent": null,
+                        "assignments": {}
                     }
                 ]
-            },
-            "intents": {}
+            }
         },
         "dialogue_statement": {
             "type": "dialogue",
@@ -1292,7 +1350,6 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
@@ -1501,7 +1558,6 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
@@ -1736,7 +1792,6 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
@@ -2307,7 +2362,6 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
