@@ -5,13 +5,6 @@ Generates a chatbot given a simple YAML configuration using automated planning f
 ## Documentation
 https://dialogue-planning.github.io/plan4dial/
 
-## Requirements - Local Install
-**Note: Currently, Plan4Dial only supports Linux/WSL due to the restrictions on the RBP planner.**  
-**To avoid potential tensorflow configuration errors (and to allow for GPU support) install tensorflow using their [tutorial](https://www.tensorflow.org/install/pip). If you do so, run the following steps within the created `conda` environment. Otherwise, we still recommend using a virtual environment like `conda` or `venv`.**
-
-1. Run `pip install -r requirements.txt` to install the necessary libraries before using.  
-2. Run `python -m spacy download en_core_web_md` to download the appropriate Spacy model. Along with Rasa, this is used for NLU.  
-
 ## Requirements - Docker
 To ensure development works identically accross systems, Docker should be used to run Plan4Dial.
 Inside the repository, follow these steps to run with Docker:
