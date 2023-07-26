@@ -227,7 +227,7 @@ Used to force a <cite>dialogue_statement</cite> action.</p>
 <dt class="sig sig-object py" id="plan4dial.for_generating.parsers.json_config_parser._configure_message_actions">
 <span class="sig-name descname"><span class="pre">_configure_message_actions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loaded_yaml</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="../_modules/plan4dial/for_generating/parsers/json_config_parser.html#_configure_message_actions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#plan4dial.for_generating.parsers.json_config_parser._configure_message_actions" title="Permalink to this definition"></a></dt>
 <dd><p>Adds a blank “utter_msg” intent to message actions (dialogue actions with a
-single outcome).</p>
+single outcome and no specified intent) and make them disable fallbacks by default.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>loaded_yaml</strong> (<em>Dict</em>) – The loaded YAML configuration.</p>

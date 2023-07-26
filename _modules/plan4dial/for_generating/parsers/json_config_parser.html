@@ -349,7 +349,7 @@
 
 <div class="viewcode-block" id="_configure_message_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._configure_message_actions">[docs]</a><span class="k">def</span> <span class="nf">_configure_message_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a blank &quot;utter_msg&quot; intent to message actions (dialogue actions with a</span>
-<span class="sd">    single outcome).</span>
+<span class="sd">    single outcome and no specified intent) and make them disable fallbacks by default.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
@@ -360,7 +360,9 @@
                 <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
                         <span class="k">for</span> <span class="n">out_cfg</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
-                            <span class="n">out_cfg</span><span class="p">[</span><span class="s2">&quot;intent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;utter_msg&quot;</span></div>
+                            <span class="k">if</span> <span class="s2">&quot;intent&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">out_cfg</span><span class="p">:</span>
+                                <span class="n">out_cfg</span><span class="p">[</span><span class="s2">&quot;intent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;utter_msg&quot;</span>
+                                <span class="n">act_cfg</span><span class="p">[</span><span class="s2">&quot;disable-fallback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 
 <div class="viewcode-block" id="_instantiate_custom_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._instantiate_custom_actions">[docs]</a><span class="k">def</span> <span class="nf">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
