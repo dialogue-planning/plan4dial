@@ -10,11 +10,11 @@
     <script src="../../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../../../_static/jquery.js"></script>
-        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
-        <script src="../../../../_static/doctools.js"></script>
-        <script src="../../../../_static/sphinx_highlight.js"></script>
+        <script src="../../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js?v=af2ce170"></script>
+        <script src="../../../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../../../_static/sphinx_highlight.js?v=4825356b"></script>
     <script src="../../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../../genindex.html" />
     <link rel="search" title="Search" href="../../../../search.html" /> 
@@ -112,7 +112,7 @@
 <span class="sd">    which case `dialogue_statement` updates its `message_variants` to the appropriate</span>
 <span class="sd">    `response_variants`.</span>
 
-<span class="sd">    Note that the intent *utter_ds* is a blank intent because `message`</span>
+<span class="sd">    Note that the intent *utter_msg* is a blank intent because `message`</span>
 <span class="sd">    actions (`dialogue` type actions with a single outcome) do not take user input into</span>
 <span class="sd">    account and simply execute the single outcome.</span>
 
@@ -135,7 +135,6 @@
                                     <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
                                 <span class="p">},</span>
                             <span class="p">},</span>
-                            <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;utter_ds&quot;</span><span class="p">,</span>
                         <span class="p">}</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
@@ -333,7 +332,7 @@
     <span class="c1"># set up the action, intent, and fluents needed for default fallback/unclear user</span>
     <span class="c1"># input</span>
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;fallback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">[]}</span>
-    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;utter_ds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;utter_msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">}</span>
@@ -346,6 +345,22 @@
         <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;flag&quot;</span><span class="p">,</span>
         <span class="s2">&quot;init&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="_configure_message_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._configure_message_actions">[docs]</a><span class="k">def</span> <span class="nf">_configure_message_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds a blank &quot;utter_msg&quot; intent to message actions (dialogue actions with a</span>
+<span class="sd">    single outcome).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        loaded_yaml (Dict): The loaded YAML configuration.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">act</span><span class="p">,</span> <span class="n">act_cfg</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">act_cfg</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;dialogue&quot;</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">eff_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="k">for</span> <span class="n">out_cfg</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                            <span class="n">out_cfg</span><span class="p">[</span><span class="s2">&quot;intent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;utter_msg&quot;</span></div>
 
 
 <div class="viewcode-block" id="_instantiate_custom_actions"><a class="viewcode-back" href="../../../../generated/plan4dial.for_generating.parsers.json_config_parser.html#plan4dial.for_generating.parsers.json_config_parser._instantiate_custom_actions">[docs]</a><span class="k">def</span> <span class="nf">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">:</span> <span class="n">Dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -773,6 +788,7 @@
 <span class="sd">        Dict: The JSON configuration required by Hovor.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_base_fallback_setup</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
+    <span class="n">_configure_message_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
     <span class="n">_instantiate_custom_actions</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
     <span class="n">_add_fallbacks</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
     <span class="n">_add_follow_ups_and_responses</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
