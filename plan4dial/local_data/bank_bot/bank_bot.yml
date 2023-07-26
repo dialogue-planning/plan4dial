@@ -1,12 +1,15 @@
 ---
 name: bank-bot
 context_variables:
+  select-account:
+    type: flag
+    init: false
   task:
     outing_type:
     type: enum
     known:
       type: flag
-      init: false 
+      init: false
     options:
       transfer funds between accounts:
         variations:
@@ -14,34 +17,49 @@ context_variables:
           - move money over
           - transfer between accounts
           - transfer money over to another account
-      # e-transfer:
-      #   variations:
-      #     - transfer to another person
-      #     - transfer money to another person
-      #     - send money to someone
-      #     - give money to someone else
-      #     - send money to another person
-      #     - give money to another person
-      #     - transfer money to Mark
-      #     - transfer funds to Beth
-      #     - send money to Sam
-      #     - give money to Tiana
-      # request money:
-      #   variations:
-      #     - request money from someone
-      #     - request money from this person
-      #     - request funds from Bob
-      # pay bills:
-      #   variations:
-      #     - pay my bills
-      #     - pay my credit card bill
-      #     - pay off my student loans
-      #     - pay my monthly utility bill
-      # cancel card:
-      #   variations:
-      #     - cancel my credit card
-      #     - cancel my debit card
-      #     - remove card from my account
+      e-transfer:
+        variations:
+          - transfer to another person
+          - transfer money to another person
+          - send money to someone
+          - give money to someone else
+          - send money to another person
+          - give money to another person
+          - transfer money to Mark
+          - transfer funds to Beth
+          - send money to Sam
+          - give money to Tiana
+      request money:
+        variations:
+          - request money from someone
+          - request money from this person
+          - request funds from Bob
+      pay bills:
+        variations:
+          - pay my bills
+          - pay my credit card bill
+          - pay off my student loans
+          - pay my monthly utility bill
+      cancel account:
+        variations:
+          - cancel one of my accounts
+          - remove one of my accounts
+          - cancel an account
+  tried-transfer:
+    type: flag
+    init: false
+  tried-e-transfer:
+    type: flag
+    init: false
+  tried-request-money:
+    type: flag
+    init: false
+  tried-pay-bills:
+    type: flag
+    init: false
+  tried-cancel:
+    type: flag
+    init: false
   account1:
     outing_type:
     type: enum
@@ -72,6 +90,30 @@ context_variables:
     known:
       type: flag
       init: false
+  contact:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - Bob
+      - Mark
+      - Sandra
+      - Nancy
+  bill:
+    type: enum
+    known:
+      type: flag
+      init: false
+    options:
+      - credit card
+      - utility
+      - mortgage
+      - car
+      - lights
+      - electricity
+      - gas
+      - internet
   goal:
     type: flag
     init: false
@@ -98,6 +140,16 @@ intents:
       - nah
       - no thanks
       - no thank you
+  share_account:
+    entities:
+      - account1
+    utterances:
+      - I want to use $account1 for this.
+      - Please select $account1.
+      - $account1
+      - Use $account1
+      - use $account for this task
+      - I need to use $account1
   share_transfer_settings:
     entities:
       - account1
@@ -108,6 +160,38 @@ intents:
       - Can I transfer $funds from $account1 to $account2?
       - I want to send $funds to $account2 from $account1.
       - I want to send $funds to $account2 from $account1.
+  share_e_transfer:
+    entities:
+      - contact
+      - funds
+    utterances:
+      - I want to transfer $funds to $contact.
+      - Can I transfer $funds to $contact?
+      - $contact is expecting $funds from me.
+      - Please send through $funds to $contact.
+  share_request:
+    entities:
+      - contact
+      - funds
+    utterances:
+      - $contact owes me $funds.
+      - I need to request that $contact pays me $funds. 
+      - Please send a request for $contact to send me $funds.
+      - Please ask for $funds from $contact.
+  share_bill:
+    entities:
+      - bill
+    utterances:
+      - I want to pay off my $bill bill.
+      - I want to pay off my $bill payment.
+      - Please pay my $bill payment.
+  share_cancel:
+    entities:
+      - account2
+    utterances:
+      - I want to cancel my $account2 account.
+      - Please cancel my $account2 account.
+      - I no longer want to use my $account2 account, please delete it.
   share_done:
     utterances:
       - I'm all done.
@@ -124,15 +208,33 @@ intents:
       - bye
 
 actions:
-  get-task:
+  select-account:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: select-account
+      overall_intent: share_account
+      entities:
+        - account1
+      message_variants:
+        - Which account would you like to use?
+      fallback_message_variants:
+        - Sorry, that isn't a valid account.
+      additional_updates:
+        - outcome:
+            account1:
+              known: true
+          updates:
+            select-account:
+              value: false
+
+  offer-transfer:
     type: dialogue
     message_variants:
-      - What would you like to do next? Your options are`:`\ntransfer funds between accounts\ne-transfer\nrequest money\npay bills\ncancel card
-    fallback_message_variants:
-      - Sorry, that isn't a valid banking option.
+      - Would you like to transfer any money today?
     condition:
-      task:
-        known: false
+      tried-transfer:
+        value: false
     effect:
       start-task:
         oneof:
@@ -140,8 +242,30 @@ actions:
             want-transfer:
               updates:
                 task:
-                  known: true
                   value: transfer funds between accounts
+                tried-transfer:
+                  value: true
+              intent: confirm
+            dont-want:
+              updates:
+                tried-transfer:
+                  value: true
+              intent: deny
+              response_variants:
+                - Ok, no problem!
+  get-transfer-options:
+    type: dialogue
+    message_variants:
+      - Ok, how much money do you want to send and between which accounts?
+    condition:
+      task:
+        value: transfer funds between accounts
+    effect:
+      get-options:
+        oneof:
+          outcomes:
+            get-valid-options:
+              updates:
                 account1:
                   known: true
                   value: $account1
@@ -152,20 +276,21 @@ actions:
                   known: true
                   value: $funds
               intent: share_transfer_settings
-            success:
-              updates:
-                goal:
-                  value: true
-              intent: share_done
-
   confirm-transfer:
-    type: system
+    type: dialogue
+    message_variants:
+      - Transferring $funds from $account1 to $account2..
     condition:
       task:
-        known: true
         value: transfer funds between accounts
+      account1:
+        known: true
+      account2:
+        known: true
+      funds:
+        known: true
     effect:
-      set-allergy:
+      transfer:
         oneof:
           outcomes:
             complete:
@@ -178,6 +303,307 @@ actions:
                   known: false
                 task:
                   known: false
+
+  offer-e-transfer:
+    type: dialogue
+    message_variants:
+      - Would you like to e-transfer any money to your contacts?
+    condition:
+      tried-e-transfer:
+        value: false
+    effect:
+      start-task:
+        oneof:
+          outcomes:
+            want-transfer:
+              updates:
+                task:
+                  value: e-transfer
+                tried-e-transfer:
+                  value: true
+              intent: confirm
+            dont-want:
+              updates:
+                tried-e-transfer:
+                  value: true
+              intent: deny
               response_variants:
-                - Transferring $funds from $account1 to $account2...
+                - No problem! No e-transfers will be sent.
+  get-transfer-options:
+    type: dialogue
+    message_variants:
+      - Ok, how much money do you want to send and to who?
+    condition:
+      task:
+        value: e-transfer
+    effect:
+      get-options:
+        oneof:
+          outcomes:
+            get-valid-e-transfer:
+              update:
+                funds:
+                  known: true
+                  value: $funds
+                contact:
+                  known: true
+                  value: $contact
+                select-account:
+                  value: true
+              intent: share_e_transfer
+  confirm-transfer:
+    type: dialogue
+    message_variants:
+      - Transferring $funds to $contact from $account1...
+    condition:
+      task:
+        value: e-transfer
+      funds:
+        known: true
+      contact:
+        known: true
+      account1:
+        known: true
+    effect:
+      reset:
+        oneof:
+          outcomes:
+            complete:
+              updates:
+                funds:
+                  known: false
+                contact:
+                  known: false
+                account1:
+                  known: false
+                task:
+                  known: false
+
+  offer-request:
+    type: dialogue
+    message_variants:
+      - Would you like to request money from a contact?
+    condition:
+      tried-request-money:
+        value: false
+    effect:
+      start-task:
+        oneof:
+          outcomes:
+            want-transfer:
+              updates:
+                task:
+                  value: request money
+                tried-request-money:
+                  value: true
+              intent: confirm
+            dont-want:
+              updates:
+                tried-request-money:
+                  value: true
+              intent: deny
+              response_variants:
+                - Ok! I won't request money from any of your contacts today.
+  get-request-options:
+    type: dialogue
+    message_variants:
+      - Which contact would you like to request money from?
+    condition:
+      task:
+        value: request money
+    effect:
+      get-options:
+        oneof:
+          outcomes:
+            get-valid-request:
+              update:
+                funds:
+                  known: true
+                  value: $funds
+                contact:
+                  known: true
+                  value: $contact
+              intent: share_request
+  confirm-request:
+    type: dialogue
+    message_variants:
+      - Ok, I'm requesting a transfer of $funds from $contact. I will let you know when the transfer goes through.
+    condition:
+      task:
+        value: request money
+      funds:
+        known: true
+      contact:
+        known: true
+    effect:
+      reset:
+        oneof:
+          outcomes:
+            complete:
+              updates:
+                funds:
+                  known: false
+                contact:
+                  known: false
+                task:
+                  known: false
+
+  offer-pay:
+    type: dialogue
+    message_variants:
+      - Would you like to pay off your outstanding bills today?
+    condition:
+      tried-pay-bills:
+        value: false
+    effect:
+      start-task:
+        oneof:
+          outcomes:
+            want-pay:
+              updates:
+                task:
+                  value: pay bills
+                tried-pay-bills:
+                  value: true
+              intent: confirm
+            dont-want:
+              updates:
+                tried-pay-bills:
+                  value: true
+              intent: deny
+              response_variants:
+                - Ok! I won't pay off your outstanding bills today.
+  get-payment:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-payment
+      overall_intent: share_bill
+      entities:
+        - bill
+      message_variants:
+        - Which bill would you like to pay off?
+      fallback_message_variants:
+        - Sorry, that isn't a valid bill.
+      additional_updates:
+        - outcome:
+            bill:
+              known: true
+          updates:
+            select-account:
+              value: true
+  confirm-bill-payment:
+    type: dialogue
+    message_variants:
+      - Ok, I'm paying your $bill bill from your $account1 account.
+    condition:
+      task:
+        value: pay bills
+      bill:
+        known: true
+    effect:
+      reset:
+        oneof:
+          outcomes:
+            complete:
+              updates:
+                bill:
+                  known: false
+                task:
+                  known: false
+
+  offer-cancel:
+    type: dialogue
+    message_variants:
+      - Would you like to cancel any of your existing accounts?
+    condition:
+      tried-cancel:
+        value: false
+    effect:
+      start-task:
+        oneof:
+          outcomes:
+            want-cancel:
+              updates:
+                task:
+                  value: cancel account
+                tried-cancel:
+                  value: true
+              intent: confirm
+            dont-want:
+              updates:
+                tried-cancel:
+                  value: true
+              intent: deny
+              response_variants:
+                - Ok! No accounts will be cancelled.
+  get-cancel:
+    type: custom
+    subtype: slot_fill
+    parameters:
+      action_name: get-cancel
+      overall_intent: share_cancel
+      entities:
+        - account2
+      message_variants:
+        - Which account would you like to cancel?
+      fallback_message_variants:
+        - Sorry, that isn't a valid account.
+      additional_updates:
+        - outcome:
+            account2:
+              known: true
+          updates:
+            select-account:
+              value: true
+          response_variants:
+            - Ok, I can do that. However, you have some balance remaining in the account you want to cancel. You need to transfer the remaining balance to one of your other accounts.
+  confirm-cancel:
+    type: dialogue
+    message_variants:
+      - Account $account2 was successfully cancelled, and the money was transferred to $account1.
+    condition:
+      task:
+        value: cancel account
+      account1:
+        known: true
+      account2:
+        known: true
+    effect:
+      reset:
+        oneof:
+          outcomes:
+            complete:
+              updates:
+                account1:
+                  known: false
+                account2:
+                  known: false
+                task:
+                  known: false
+
+  complete:
+    type: dialogue
+    message_variants:
+      - Completed all bank actions for today. Thank you!
+    condition:
+      tried-transfer:
+        value: true
+      tried-e-transfer:
+        value: true
+      tried-request-money:
+        value: true
+      tried-pay-bills:
+        value: true
+      tried-cancel:
+        value: true
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            done:
+              updates:
+                goal:
+                  value: true
+                
 ...

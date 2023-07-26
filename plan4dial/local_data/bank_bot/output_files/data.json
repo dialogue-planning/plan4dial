@@ -1,6 +1,10 @@
 {
     "name": "bank-bot",
     "context_variables": {
+        "select-account": {
+            "type": "flag",
+            "config": false
+        },
         "task": {
             "type": "enum",
             "config": {
@@ -11,12 +15,68 @@
                         "transfer between accounts",
                         "transfer money over to another account"
                     ]
+                },
+                "e-transfer": {
+                    "variations": [
+                        "transfer to another person",
+                        "transfer money to another person",
+                        "send money to someone",
+                        "give money to someone else",
+                        "send money to another person",
+                        "give money to another person",
+                        "transfer money to Mark",
+                        "transfer funds to Beth",
+                        "send money to Sam",
+                        "give money to Tiana"
+                    ]
+                },
+                "request money": {
+                    "variations": [
+                        "request money from someone",
+                        "request money from this person",
+                        "request funds from Bob"
+                    ]
+                },
+                "pay bills": {
+                    "variations": [
+                        "pay my bills",
+                        "pay my credit card bill",
+                        "pay off my student loans",
+                        "pay my monthly utility bill"
+                    ]
+                },
+                "cancel account": {
+                    "variations": [
+                        "cancel one of my accounts",
+                        "remove one of my accounts",
+                        "cancel an account"
+                    ]
                 }
             },
             "known": {
                 "type": "flag",
                 "init": false
             }
+        },
+        "tried-transfer": {
+            "type": "flag",
+            "config": false
+        },
+        "tried-e-transfer": {
+            "type": "flag",
+            "config": false
+        },
+        "tried-request-money": {
+            "type": "flag",
+            "config": false
+        },
+        "tried-pay-bills": {
+            "type": "flag",
+            "config": false
+        },
+        "tried-cancel": {
+            "type": "flag",
+            "config": false
         },
         "account1": {
             "type": "enum",
@@ -57,6 +117,36 @@
                 "init": false
             }
         },
+        "contact": {
+            "type": "enum",
+            "config": [
+                "Bob",
+                "Mark",
+                "Sandra",
+                "Nancy"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "bill": {
+            "type": "enum",
+            "config": [
+                "credit card",
+                "utility",
+                "mortgage",
+                "car",
+                "lights",
+                "electricity",
+                "gas",
+                "internet"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
         "goal": {
             "type": "flag",
             "config": false,
@@ -74,6 +164,22 @@
             "config": false
         },
         "task-value-transfer_funds_between_accounts": {
+            "type": "flag",
+            "config": false
+        },
+        "task-value-e-transfer": {
+            "type": "flag",
+            "config": false
+        },
+        "task-value-request_money": {
+            "type": "flag",
+            "config": false
+        },
+        "task-value-pay_bills": {
+            "type": "flag",
+            "config": false
+        },
+        "task-value-cancel_account": {
             "type": "flag",
             "config": false
         }
@@ -106,6 +212,20 @@
             ],
             "type": "regular"
         },
+        "share_account": {
+            "entities": [
+                "$account1"
+            ],
+            "utterances": [
+                "I want to use $account1 for this.",
+                "Please select $account1.",
+                "$account1",
+                "Use $account1",
+                "use $account for this task",
+                "I need to use $account1"
+            ],
+            "type": "regular"
+        },
         "share_transfer_settings": {
             "entities": [
                 "$account1",
@@ -117,6 +237,54 @@
                 "Can I transfer $funds from $account1 to $account2?",
                 "I want to send $funds to $account2 from $account1.",
                 "I want to send $funds to $account2 from $account1."
+            ],
+            "type": "regular"
+        },
+        "share_e_transfer": {
+            "entities": [
+                "$contact",
+                "$funds"
+            ],
+            "utterances": [
+                "I want to transfer $funds to $contact.",
+                "Can I transfer $funds to $contact?",
+                "$contact is expecting $funds from me.",
+                "Please send through $funds to $contact."
+            ],
+            "type": "regular"
+        },
+        "share_request": {
+            "entities": [
+                "$contact",
+                "$funds"
+            ],
+            "utterances": [
+                "$contact owes me $funds.",
+                "I need to request that $contact pays me $funds.",
+                "Please send a request for $contact to send me $funds.",
+                "Please ask for $funds from $contact."
+            ],
+            "type": "regular"
+        },
+        "share_bill": {
+            "entities": [
+                "$bill"
+            ],
+            "utterances": [
+                "I want to pay off my $bill bill.",
+                "I want to pay off my $bill payment.",
+                "Please pay my $bill payment."
+            ],
+            "type": "regular"
+        },
+        "share_cancel": {
+            "entities": [
+                "$account2"
+            ],
+            "utterances": [
+                "I want to cancel my $account2 account.",
+                "Please cancel my $account2 account.",
+                "I no longer want to use my $account2 account, please delete it."
             ],
             "type": "regular"
         },
@@ -143,25 +311,22 @@
             "utterances": [],
             "type": "fallback"
         },
-        "utter_ds": {
+        "utter_msg": {
             "entities": [],
             "utterances": [],
             "type": "regular"
         }
     },
     "actions": {
-        "get-task": {
+        "offer-transfer": {
             "type": "dialogue",
             "message_variants": [
-                "What would you like to do next? Your options are`:`\\ntransfer funds between accounts\\ne-transfer\\nrequest money\\npay bills\\ncancel card"
-            ],
-            "fallback_message_variants": [
-                "Sorry, that isn't a valid banking option."
+                "Would you like to transfer any money today?"
             ],
             "condition": [
                 [
-                    "task",
-                    "Unknown"
+                    "tried-transfer",
+                    false
                 ],
                 [
                     "force-statement",
@@ -169,7 +334,7 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "get-task__start-task",
+                "global-outcome-name": "offer-transfer__start-task",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -177,47 +342,41 @@
                             "task": {
                                 "value": "transfer funds between accounts",
                                 "variable": "task",
-                                "certainty": "Known",
                                 "interpretation": "json"
                             },
-                            "account1": {
-                                "value": "$account1",
-                                "variable": "account1",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "account2": {
-                                "value": "$account2",
-                                "variable": "account2",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "funds": {
-                                "value": "$funds",
-                                "variable": "funds",
-                                "certainty": "Known",
+                            "tried-transfer": {
+                                "value": true,
+                                "variable": "tried-transfer",
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "share_transfer_settings",
-                        "name": "get-task_DETDUP_get-task__start-task-EQ-want-transfer",
-                        "assignments": {
-                            "$task": "found",
-                            "$account1": "found",
-                            "$account2": "found",
-                            "$funds": "found"
-                        }
+                        "intent": "confirm",
+                        "name": "offer-transfer_DETDUP_offer-transfer__start-task-EQ-want-transfer",
+                        "assignments": {}
                     },
                     {
                         "updates": {
-                            "goal": {
+                            "tried-transfer": {
                                 "value": true,
-                                "variable": "goal",
+                                "variable": "tried-transfer",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "share_done",
-                        "name": "get-task_DETDUP_get-task__start-task-EQ-success",
+                        "intent": "deny",
+                        "response_variants": [
+                            "Ok, no problem!"
+                        ],
+                        "name": "offer-transfer_DETDUP_offer-transfer__start-task-EQ-dont-want",
                         "assignments": {}
                     },
                     {
@@ -234,41 +393,40 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "get-task_DETDUP_get-task__start-task-EQ-fallback",
+                        "name": "offer-transfer_DETDUP_offer-transfer__start-task-EQ-fallback",
                         "assignments": {}
                     }
                 ]
             },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
             "intents": {
-                "share_transfer_settings": {
-                    "entities": [
-                        "$account1",
-                        "$account2",
-                        "$funds"
-                    ],
+                "confirm": {
+                    "entities": [],
                     "utterances": [
-                        "I want to transfer $funds from $account1 to $account2.",
-                        "Can I transfer $funds from $account1 to $account2?",
-                        "I want to send $funds to $account2 from $account1.",
-                        "I want to send $funds to $account2 from $account1."
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
                     ],
                     "type": "regular"
                 },
-                "share_done": {
+                "deny": {
                     "entities": [],
                     "utterances": [
-                        "I'm all done.",
-                        "I don't want to do anything else.",
-                        "I don't want to do anything else today.",
-                        "I'm finished",
-                        "i'm all done here",
-                        "i don't have anything else i want to do",
-                        "exit",
-                        "done",
-                        "I've done everything i want to do",
-                        "I'm good to go, thanks",
-                        "i'm good",
-                        "bye"
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
                     ],
                     "type": "regular"
                 },
@@ -279,11 +437,95 @@
                 }
             }
         },
-        "confirm-transfer": {
-            "type": "system",
+        "get-transfer-options": {
+            "type": "dialogue",
+            "message_variants": [
+                "Ok, how much money do you want to send and to who?"
+            ],
             "condition": [
                 [
-                    "task",
+                    "force-statement",
+                    false
+                ],
+                [
+                    "task-value-e-transfer",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-transfer-options__get-options",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "update": {
+                            "funds": {
+                                "known": true,
+                                "value": "$funds"
+                            },
+                            "contact": {
+                                "known": true,
+                                "value": "$contact"
+                            },
+                            "select-account": {
+                                "value": true
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "get-transfer-options_DETDUP_get-transfer-options__get-options-EQ-get-valid-e-transfer",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-transfer-options_DETDUP_get-transfer-options__get-options-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "confirm-transfer": {
+            "type": "dialogue",
+            "message_variants": [
+                "Transferring $funds to $contact from $account1..."
+            ],
+            "condition": [
+                [
+                    "funds",
+                    "Known"
+                ],
+                [
+                    "contact",
+                    "Known"
+                ],
+                [
+                    "account1",
                     "Known"
                 ],
                 [
@@ -291,12 +533,905 @@
                     false
                 ],
                 [
-                    "task-value-transfer_funds_between_accounts",
+                    "task-value-e-transfer",
                     true
                 ]
             ],
             "effect": {
-                "global-outcome-name": "confirm-transfer__set-allergy",
+                "global-outcome-name": "confirm-transfer__reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "funds": {
+                                "variable": "funds",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "contact": {
+                                "variable": "contact",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "account1": {
+                                "variable": "account1",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "task": {
+                                "variable": "task",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "confirm-transfer_DETDUP_confirm-transfer__reset-EQ-complete",
+                        "assignments": {
+                            "$funds": "didnt-find",
+                            "$contact": "didnt-find",
+                            "$account1": "didnt-find",
+                            "$task": "didnt-find"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "confirm-transfer_DETDUP_confirm-transfer__reset-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "offer-e-transfer": {
+            "type": "dialogue",
+            "message_variants": [
+                "Would you like to e-transfer any money to your contacts?"
+            ],
+            "condition": [
+                [
+                    "tried-e-transfer",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "offer-e-transfer__start-task",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "task": {
+                                "value": "e-transfer",
+                                "variable": "task",
+                                "interpretation": "json"
+                            },
+                            "tried-e-transfer": {
+                                "value": true,
+                                "variable": "tried-e-transfer",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-want-transfer",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "tried-e-transfer": {
+                                "value": true,
+                                "variable": "tried-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "response_variants": [
+                            "No problem! No e-transfers will be sent."
+                        ],
+                        "name": "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-dont-want",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "offer-request": {
+            "type": "dialogue",
+            "message_variants": [
+                "Would you like to request money from a contact?"
+            ],
+            "condition": [
+                [
+                    "tried-request-money",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "offer-request__start-task",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "task": {
+                                "value": "request money",
+                                "variable": "task",
+                                "interpretation": "json"
+                            },
+                            "tried-request-money": {
+                                "value": true,
+                                "variable": "tried-request-money",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "offer-request_DETDUP_offer-request__start-task-EQ-want-transfer",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "tried-request-money": {
+                                "value": true,
+                                "variable": "tried-request-money",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "response_variants": [
+                            "Ok! I won't request money from any of your contacts today."
+                        ],
+                        "name": "offer-request_DETDUP_offer-request__start-task-EQ-dont-want",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "offer-request_DETDUP_offer-request__start-task-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "get-request-options": {
+            "type": "dialogue",
+            "message_variants": [
+                "Which contact would you like to request money from?"
+            ],
+            "condition": [
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "task-value-request_money",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-request-options__get-options",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "update": {
+                            "funds": {
+                                "known": true,
+                                "value": "$funds"
+                            },
+                            "contact": {
+                                "known": true,
+                                "value": "$contact"
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "get-request-options_DETDUP_get-request-options__get-options-EQ-get-valid-request",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-request-options_DETDUP_get-request-options__get-options-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "confirm-request": {
+            "type": "dialogue",
+            "message_variants": [
+                "Ok, I'm requesting a transfer of $funds from $contact. I will let you know when the transfer goes through."
+            ],
+            "condition": [
+                [
+                    "funds",
+                    "Known"
+                ],
+                [
+                    "contact",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "task-value-request_money",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "confirm-request__reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "funds": {
+                                "variable": "funds",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "contact": {
+                                "variable": "contact",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "task": {
+                                "variable": "task",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "confirm-request_DETDUP_confirm-request__reset-EQ-complete",
+                        "assignments": {
+                            "$funds": "didnt-find",
+                            "$contact": "didnt-find",
+                            "$task": "didnt-find"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "confirm-request_DETDUP_confirm-request__reset-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "offer-pay": {
+            "type": "dialogue",
+            "message_variants": [
+                "Would you like to pay off your outstanding bills today?"
+            ],
+            "condition": [
+                [
+                    "tried-pay-bills",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "offer-pay__start-task",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "task": {
+                                "value": "pay bills",
+                                "variable": "task",
+                                "interpretation": "json"
+                            },
+                            "tried-pay-bills": {
+                                "value": true,
+                                "variable": "tried-pay-bills",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "offer-pay_DETDUP_offer-pay__start-task-EQ-want-pay",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "tried-pay-bills": {
+                                "value": true,
+                                "variable": "tried-pay-bills",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "response_variants": [
+                            "Ok! I won't pay off your outstanding bills today."
+                        ],
+                        "name": "offer-pay_DETDUP_offer-pay__start-task-EQ-dont-want",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "offer-pay_DETDUP_offer-pay__start-task-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "confirm-bill-payment": {
+            "type": "dialogue",
+            "message_variants": [
+                "Ok, I'm paying your $bill bill from your $account1 account."
+            ],
+            "condition": [
+                [
+                    "bill",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "task-value-pay_bills",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "confirm-bill-payment__reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "bill": {
+                                "variable": "bill",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "task": {
+                                "variable": "task",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "confirm-bill-payment_DETDUP_confirm-bill-payment__reset-EQ-complete",
+                        "assignments": {
+                            "$bill": "didnt-find",
+                            "$task": "didnt-find"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "confirm-bill-payment_DETDUP_confirm-bill-payment__reset-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "offer-cancel": {
+            "type": "dialogue",
+            "message_variants": [
+                "Would you like to cancel any of your existing accounts?"
+            ],
+            "condition": [
+                [
+                    "tried-cancel",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "offer-cancel__start-task",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "task": {
+                                "value": "cancel account",
+                                "variable": "task",
+                                "interpretation": "json"
+                            },
+                            "tried-cancel": {
+                                "value": true,
+                                "variable": "tried-cancel",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "offer-cancel_DETDUP_offer-cancel__start-task-EQ-want-cancel",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "tried-cancel": {
+                                "value": true,
+                                "variable": "tried-cancel",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "response_variants": [
+                            "Ok! No accounts will be cancelled."
+                        ],
+                        "name": "offer-cancel_DETDUP_offer-cancel__start-task-EQ-dont-want",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "offer-cancel_DETDUP_offer-cancel__start-task-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "that's it",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "confirm-cancel": {
+            "type": "dialogue",
+            "message_variants": [
+                "Account $account2 was successfully cancelled, and the money was transferred to $account1."
+            ],
+            "condition": [
+                [
+                    "account1",
+                    "Known"
+                ],
+                [
+                    "account2",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "task-value-cancel_account",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "confirm-cancel__reset",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -313,18 +1448,48 @@
                                 "value": null,
                                 "interpretation": "json"
                             },
-                            "funds": {
-                                "variable": "funds",
-                                "certainty": "Unknown",
-                                "value": null,
-                                "interpretation": "json"
-                            },
                             "task": {
                                 "variable": "task",
                                 "certainty": "Unknown",
                                 "value": null,
                                 "interpretation": "json"
                             },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "confirm-cancel_DETDUP_confirm-cancel__reset-EQ-complete",
+                        "assignments": {
+                            "$account1": "didnt-find",
+                            "$account2": "didnt-find",
+                            "$task": "didnt-find"
+                        }
+                    },
+                    {
+                        "updates": {
                             "have-message": {
                                 "value": true,
                                 "variable": "have-message",
@@ -334,26 +1499,112 @@
                                 "value": true,
                                 "variable": "force-statement",
                                 "interpretation": "json"
-                            },
-                            "task-value-transfer_funds_between_accounts": {
-                                "value": false,
-                                "variable": "task-value-transfer_funds_between_accounts",
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "confirm-cancel_DETDUP_confirm-cancel__reset-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "complete": {
+            "type": "dialogue",
+            "message_variants": [
+                "Completed all bank actions for today. Thank you!"
+            ],
+            "condition": [
+                [
+                    "tried-transfer",
+                    true
+                ],
+                [
+                    "tried-e-transfer",
+                    true
+                ],
+                [
+                    "tried-request-money",
+                    true
+                ],
+                [
+                    "tried-pay-bills",
+                    true
+                ],
+                [
+                    "tried-cancel",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "complete__finish",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
                                 "interpretation": "json"
                             }
                         },
-                        "response_variants": [
-                            "Transferring $funds from $account1 to $account2..."
-                        ],
-                        "name": "confirm-transfer_DETDUP_confirm-transfer__set-allergy-EQ-complete",
-                        "intent": null,
-                        "assignments": {
-                            "$account1": "didnt-find",
-                            "$account2": "didnt-find",
-                            "$funds": "didnt-find",
-                            "$task": "didnt-find"
-                        }
+                        "intent": "utter_msg",
+                        "name": "complete_DETDUP_complete__finish-EQ-done",
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "complete_DETDUP_complete__finish-EQ-fallback",
+                        "assignments": {}
                     }
                 ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
             }
         },
         "dialogue_statement": {
@@ -385,7 +1636,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "utter_ds",
+                        "intent": "utter_msg",
                         "name": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
                         "assignments": {}
                     }
@@ -393,10 +1644,278 @@
             },
             "message_variants": [],
             "intents": {
-                "utter_ds": {
+                "utter_msg": {
                     "entities": [],
                     "utterances": [],
                     "type": "regular"
+                }
+            }
+        },
+        "slot-fill__select-account": {
+            "type": "dialogue",
+            "message_variants": [
+                "Which account would you like to use?"
+            ],
+            "fallback_message_variants": [
+                "Sorry, that isn't a valid account."
+            ],
+            "condition": [
+                [
+                    "account1",
+                    null
+                ],
+                [
+                    "account1",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__select-account__validate-slot-fill",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "account1": {
+                                "value": "$account1",
+                                "variable": "account1",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "select-account": {
+                                "value": false,
+                                "variable": "select-account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_account",
+                        "name": "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-account1_found",
+                        "assignments": {
+                            "$account1": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_account": {
+                    "entities": [
+                        "$account1"
+                    ],
+                    "utterances": [
+                        "I want to use $account1 for this.",
+                        "Please select $account1.",
+                        "$account1",
+                        "Use $account1",
+                        "use $account for this task",
+                        "I need to use $account1"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__get-payment": {
+            "type": "dialogue",
+            "message_variants": [
+                "Which bill would you like to pay off?"
+            ],
+            "fallback_message_variants": [
+                "Sorry, that isn't a valid bill."
+            ],
+            "condition": [
+                [
+                    "bill",
+                    null
+                ],
+                [
+                    "bill",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get-payment__validate-slot-fill",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "bill": {
+                                "value": "$bill",
+                                "variable": "bill",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "select-account": {
+                                "value": true,
+                                "variable": "select-account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_bill",
+                        "name": "slot-fill__get-payment_DETDUP_slot-fill__get-payment__validate-slot-fill-EQ-bill_found",
+                        "assignments": {
+                            "$bill": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-payment_DETDUP_slot-fill__get-payment__validate-slot-fill-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_bill": {
+                    "entities": [
+                        "$bill"
+                    ],
+                    "utterances": [
+                        "I want to pay off my $bill bill.",
+                        "I want to pay off my $bill payment.",
+                        "Please pay my $bill payment."
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__get-cancel": {
+            "type": "dialogue",
+            "message_variants": [
+                "Which account would you like to cancel?"
+            ],
+            "fallback_message_variants": [
+                "Sorry, that isn't a valid account."
+            ],
+            "condition": [
+                [
+                    "account2",
+                    null
+                ],
+                [
+                    "account2",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get-cancel__validate-slot-fill",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "account2": {
+                                "value": "$account2",
+                                "variable": "account2",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "select-account": {
+                                "value": true,
+                                "variable": "select-account",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_cancel",
+                        "response_variants": [
+                            "Ok, I can do that. However, you have some balance remaining in the account you want to cancel. You need to transfer the remaining balance to one of your other accounts."
+                        ],
+                        "name": "slot-fill__get-cancel_DETDUP_slot-fill__get-cancel__validate-slot-fill-EQ-account2_found",
+                        "assignments": {
+                            "$account2": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get-cancel_DETDUP_slot-fill__get-cancel__validate-slot-fill-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_cancel": {
+                    "entities": [
+                        "$account2"
+                    ],
+                    "utterances": [
+                        "I want to cancel my $account2 account.",
+                        "Please cancel my $account2 account.",
+                        "I no longer want to use my $account2 account, please delete it."
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
                 }
             }
         },
@@ -410,6 +1929,22 @@
                 ],
                 [
                     "task-value-transfer_funds_between_accounts",
+                    false
+                ],
+                [
+                    "task-value-e-transfer",
+                    false
+                ],
+                [
+                    "task-value-request_money",
+                    false
+                ],
+                [
+                    "task-value-pay_bills",
+                    false
+                ],
+                [
+                    "task-value-cancel_account",
                     false
                 ]
             ],
@@ -431,6 +1966,74 @@
                             }
                         },
                         "name": "set-task_DETDUP_set-task__set-valid-value-EQ-transfer_funds_between_accounts",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "task-value-e-transfer": {
+                                "value": true,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "task": {
+                                "value": "e-transfer"
+                            }
+                        },
+                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-e-transfer",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "task-value-request_money": {
+                                "value": true,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "task": {
+                                "value": "request money"
+                            }
+                        },
+                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-request_money",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "task-value-pay_bills": {
+                                "value": true,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "task": {
+                                "value": "pay bills"
+                            }
+                        },
+                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-pay_bills",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "task-value-cancel_account": {
+                                "value": true,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "task": {
+                                "value": "cancel account"
+                            }
+                        },
+                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-cancel_account",
                         "intent": null,
                         "assignments": {}
                     }
