@@ -107,7 +107,7 @@
             "utterances": [],
             "type": "fallback"
         },
-        "utter_ds": {
+        "utter_msg": {
             "variables": [],
             "utterances": [],
             "type": "regular"
@@ -437,7 +437,7 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "utter_ds",
+                        "intent": "utter_msg",
                         "name": "dialogue_statement_DETDUP_reset-EQ-lock",
                         "assignments": {}
                     }
@@ -445,7 +445,7 @@
             },
             "message_variants": [],
             "intents": {
-                "utter_ds": {
+                "utter_msg": {
                     "variables": [],
                     "utterances": [],
                     "type": "regular"

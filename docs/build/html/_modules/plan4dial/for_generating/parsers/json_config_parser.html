@@ -112,7 +112,7 @@
 <span class="sd">    which case `dialogue_statement` updates its `message_variants` to the appropriate</span>
 <span class="sd">    `response_variants`.</span>
 
-<span class="sd">    Note that the intent *utter_ds* is a blank intent because `message`</span>
+<span class="sd">    Note that the intent *utter_msg* is a blank intent because `message`</span>
 <span class="sd">    actions (`dialogue` type actions with a single outcome) do not take user input into</span>
 <span class="sd">    account and simply execute the single outcome.</span>
 
@@ -135,7 +135,7 @@
                                     <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
                                 <span class="p">},</span>
                             <span class="p">},</span>
-                            <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;utter_ds&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;intent&quot;</span><span class="p">:</span> <span class="s2">&quot;utter_msg&quot;</span><span class="p">,</span>
                         <span class="p">}</span>
                     <span class="p">}</span>
                 <span class="p">}</span>
@@ -333,7 +333,7 @@
     <span class="c1"># set up the action, intent, and fluents needed for default fallback/unclear user</span>
     <span class="c1"># input</span>
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;fallback&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">[]}</span>
-    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;utter_ds&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;intents&quot;</span><span class="p">][</span><span class="s2">&quot;utter_msg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s2">&quot;utterances&quot;</span><span class="p">:</span> <span class="p">[],</span>
         <span class="s2">&quot;entities&quot;</span><span class="p">:</span> <span class="p">[],</span>
     <span class="p">}</span>
