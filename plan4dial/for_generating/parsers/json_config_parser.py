@@ -276,7 +276,7 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
 
 def _configure_message_actions(loaded_yaml: Dict) -> None:
     """Adds a blank "utter_msg" intent to message actions (dialogue actions with a
-    single outcome).
+    single outcome and no specified intent) and make them disable fallbacks by default.
 
     Args:
         loaded_yaml (Dict): The loaded YAML configuration.
@@ -287,7 +287,9 @@ def _configure_message_actions(loaded_yaml: Dict) -> None:
                 for option in eff_config:
                     if len(eff_config[option]["outcomes"]) == 1:
                         for out_cfg in eff_config[option]["outcomes"].values():
-                            out_cfg["intent"] = "utter_msg"
+                            if "intent" not in out_cfg:
+                                out_cfg["intent"] = "utter_msg"
+                                act_cfg["disable-fallback"] = True
 
 
 def _instantiate_custom_actions(loaded_yaml: Dict) -> None:
