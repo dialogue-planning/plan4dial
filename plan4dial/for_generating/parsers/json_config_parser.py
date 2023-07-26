@@ -39,7 +39,7 @@ def _configure_dialogue_statement() -> Dict:
     which case `dialogue_statement` updates its `message_variants` to the appropriate
     `response_variants`.
 
-    Note that the intent *utter_ds* is a blank intent because `message`
+    Note that the intent *utter_msg* is a blank intent because `message`
     actions (`dialogue` type actions with a single outcome) do not take user input into
     account and simply execute the single outcome.
 
@@ -62,7 +62,6 @@ def _configure_dialogue_statement() -> Dict:
                                     "value": False,
                                 },
                             },
-                            "intent": "utter_ds",
                         }
                     }
                 }
@@ -260,7 +259,7 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
     # set up the action, intent, and fluents needed for default fallback/unclear user
     # input
     loaded_yaml["intents"]["fallback"] = {"utterances": [], "entities": []}
-    loaded_yaml["intents"]["utter_ds"] = {
+    loaded_yaml["intents"]["utter_msg"] = {
         "utterances": [],
         "entities": [],
     }
@@ -273,6 +272,22 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
         "type": "flag",
         "init": False,
     }
+
+
+def _configure_message_actions(loaded_yaml: Dict) -> None:
+    """Adds a blank "utter_msg" intent to message actions (dialogue actions with a
+    single outcome).
+
+    Args:
+        loaded_yaml (Dict): The loaded YAML configuration.
+    """
+    for act, act_cfg in loaded_yaml["actions"].items():
+        if act_cfg["type"] == "dialogue":
+            for eff_config in loaded_yaml["actions"][act]["effect"].values():
+                for option in eff_config:
+                    if len(eff_config[option]["outcomes"]) == 1:
+                        for out_cfg in eff_config[option]["outcomes"].values():
+                            out_cfg["intent"] = "utter_msg"
 
 
 def _instantiate_custom_actions(loaded_yaml: Dict) -> None:
@@ -700,6 +715,7 @@ def convert_yaml(loaded_yaml: Dict) -> Dict:
         Dict: The JSON configuration required by Hovor.
     """
     _base_fallback_setup(loaded_yaml)
+    _configure_message_actions(loaded_yaml)
     _instantiate_custom_actions(loaded_yaml)
     _add_fallbacks(loaded_yaml)
     _add_follow_ups_and_responses(loaded_yaml)
