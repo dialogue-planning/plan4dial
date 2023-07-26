@@ -227,6 +227,9 @@ actions:
           updates:
             select-account:
               value: false
+      additional_conditions:
+        select-account:
+          value: true
 
   offer-transfer:
     type: dialogue
@@ -235,6 +238,8 @@ actions:
     condition:
       tried-transfer:
         value: false
+      task:
+        known: false
     effect:
       start-task:
         oneof:
@@ -242,9 +247,8 @@ actions:
             want-transfer:
               updates:
                 task:
+                  known: true
                   value: transfer funds between accounts
-                tried-transfer:
-                  value: true
               intent: confirm
             dont-want:
               updates:
@@ -279,7 +283,7 @@ actions:
   confirm-transfer:
     type: dialogue
     message_variants:
-      - Transferring $funds from $account1 to $account2..
+      - Transferring $funds from $account1 to $account2...
     condition:
       task:
         value: transfer funds between accounts
@@ -303,6 +307,8 @@ actions:
                   known: false
                 task:
                   known: false
+                tried-transfer:
+                  value: true
 
   offer-e-transfer:
     type: dialogue
@@ -311,6 +317,8 @@ actions:
     condition:
       tried-e-transfer:
         value: false
+      task:
+        known: false
     effect:
       start-task:
         oneof:
@@ -318,9 +326,8 @@ actions:
             want-transfer:
               updates:
                 task:
+                  known: true
                   value: e-transfer
-                tried-e-transfer:
-                  value: true
               intent: confirm
             dont-want:
               updates:
@@ -329,7 +336,7 @@ actions:
               intent: deny
               response_variants:
                 - No problem! No e-transfers will be sent.
-  get-transfer-options:
+  get-e-transfer-options:
     type: dialogue
     message_variants:
       - Ok, how much money do you want to send and to who?
@@ -341,7 +348,7 @@ actions:
         oneof:
           outcomes:
             get-valid-e-transfer:
-              update:
+              updates:
                 funds:
                   known: true
                   value: $funds
@@ -351,7 +358,7 @@ actions:
                 select-account:
                   value: true
               intent: share_e_transfer
-  confirm-transfer:
+  confirm-e-transfer:
     type: dialogue
     message_variants:
       - Transferring $funds to $contact from $account1...
@@ -378,6 +385,8 @@ actions:
                   known: false
                 task:
                   known: false
+                tried-e-transfer:
+                  value: true
 
   offer-request:
     type: dialogue
@@ -386,6 +395,8 @@ actions:
     condition:
       tried-request-money:
         value: false
+      task:
+        known: false
     effect:
       start-task:
         oneof:
@@ -393,9 +404,8 @@ actions:
             want-transfer:
               updates:
                 task:
+                  known: true
                   value: request money
-                tried-request-money:
-                  value: true
               intent: confirm
             dont-want:
               updates:
@@ -407,7 +417,7 @@ actions:
   get-request-options:
     type: dialogue
     message_variants:
-      - Which contact would you like to request money from?
+      - Which contact would you like to request money from and how much?
     condition:
       task:
         value: request money
@@ -416,7 +426,7 @@ actions:
         oneof:
           outcomes:
             get-valid-request:
-              update:
+              updates:
                 funds:
                   known: true
                   value: $funds
@@ -447,6 +457,8 @@ actions:
                   known: false
                 task:
                   known: false
+                tried-request-money:
+                  value: true
 
   offer-pay:
     type: dialogue
@@ -455,6 +467,8 @@ actions:
     condition:
       tried-pay-bills:
         value: false
+      task:
+        known: false
     effect:
       start-task:
         oneof:
@@ -462,9 +476,8 @@ actions:
             want-pay:
               updates:
                 task:
+                  known: true
                   value: pay bills
-                tried-pay-bills:
-                  value: true
               intent: confirm
             dont-want:
               updates:
@@ -511,6 +524,8 @@ actions:
                   known: false
                 task:
                   known: false
+                tried-pay-bills:
+                  value: true
 
   offer-cancel:
     type: dialogue
@@ -519,6 +534,8 @@ actions:
     condition:
       tried-cancel:
         value: false
+      task:
+        known: false
     effect:
       start-task:
         oneof:
@@ -526,9 +543,8 @@ actions:
             want-cancel:
               updates:
                 task:
+                  known: true
                   value: cancel account
-                tried-cancel:
-                  value: true
               intent: confirm
             dont-want:
               updates:
@@ -581,6 +597,8 @@ actions:
                   known: false
                 task:
                   known: false
+                tried-cancel:
+                  value: true
 
   complete:
     type: dialogue

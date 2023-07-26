@@ -3,3 +3,4 @@
 .rasa
 __pycache__
 rbp.sif
+policy.*

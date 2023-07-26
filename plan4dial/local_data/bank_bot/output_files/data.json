@@ -329,6 +329,10 @@
                     false
                 ],
                 [
+                    "task",
+                    "Unknown"
+                ],
+                [
                     "force-statement",
                     false
                 ]
@@ -342,17 +346,15 @@
                             "task": {
                                 "value": "transfer funds between accounts",
                                 "variable": "task",
-                                "interpretation": "json"
-                            },
-                            "tried-transfer": {
-                                "value": true,
-                                "variable": "tried-transfer",
+                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "offer-transfer_DETDUP_offer-transfer__start-task-EQ-want-transfer",
-                        "assignments": {}
+                        "assignments": {
+                            "$task": "found"
+                        }
                     },
                     {
                         "updates": {
@@ -440,7 +442,7 @@
         "get-transfer-options": {
             "type": "dialogue",
             "message_variants": [
-                "Ok, how much money do you want to send and to who?"
+                "Ok, how much money do you want to send and between which accounts?"
             ],
             "condition": [
                 [
@@ -448,7 +450,7 @@
                     false
                 ],
                 [
-                    "task-value-e-transfer",
+                    "task-value-transfer_funds_between_accounts",
                     true
                 ]
             ],
@@ -457,22 +459,33 @@
                 "type": "oneof",
                 "outcomes": [
                     {
-                        "update": {
+                        "updates": {
+                            "account1": {
+                                "value": "$account1",
+                                "variable": "account1",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "account2": {
+                                "value": "$account2",
+                                "variable": "account2",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
                             "funds": {
-                                "known": true,
-                                "value": "$funds"
-                            },
-                            "contact": {
-                                "known": true,
-                                "value": "$contact"
-                            },
-                            "select-account": {
-                                "value": true
+                                "value": "$funds",
+                                "variable": "funds",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             }
                         },
-                        "intent": "utter_msg",
-                        "name": "get-transfer-options_DETDUP_get-transfer-options__get-options-EQ-get-valid-e-transfer",
-                        "assignments": {}
+                        "intent": "share_transfer_settings",
+                        "name": "get-transfer-options_DETDUP_get-transfer-options__get-options-EQ-get-valid-options",
+                        "assignments": {
+                            "$account1": "found",
+                            "$account2": "found",
+                            "$funds": "found"
+                        }
                     },
                     {
                         "updates": {
@@ -498,9 +511,18 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
-                "utter_msg": {
-                    "entities": [],
-                    "utterances": [],
+                "share_transfer_settings": {
+                    "entities": [
+                        "$account1",
+                        "$account2",
+                        "$funds"
+                    ],
+                    "utterances": [
+                        "I want to transfer $funds from $account1 to $account2.",
+                        "Can I transfer $funds from $account1 to $account2?",
+                        "I want to send $funds to $account2 from $account1.",
+                        "I want to send $funds to $account2 from $account1."
+                    ],
                     "type": "regular"
                 },
                 "fallback": {
@@ -513,19 +535,19 @@
         "confirm-transfer": {
             "type": "dialogue",
             "message_variants": [
-                "Transferring $funds to $contact from $account1..."
+                "Transferring $funds from $account1 to $account2..."
             ],
             "condition": [
                 [
-                    "funds",
-                    "Known"
-                ],
-                [
-                    "contact",
-                    "Known"
-                ],
-                [
                     "account1",
+                    "Known"
+                ],
+                [
+                    "account2",
+                    "Known"
+                ],
+                [
+                    "funds",
                     "Known"
                 ],
                 [
@@ -533,30 +555,30 @@
                     false
                 ],
                 [
-                    "task-value-e-transfer",
+                    "task-value-transfer_funds_between_accounts",
                     true
                 ]
             ],
             "effect": {
-                "global-outcome-name": "confirm-transfer__reset",
+                "global-outcome-name": "confirm-transfer__transfer",
                 "type": "oneof",
                 "outcomes": [
                     {
                         "updates": {
-                            "funds": {
-                                "variable": "funds",
-                                "certainty": "Unknown",
-                                "value": null,
-                                "interpretation": "json"
-                            },
-                            "contact": {
-                                "variable": "contact",
-                                "certainty": "Unknown",
-                                "value": null,
-                                "interpretation": "json"
-                            },
                             "account1": {
                                 "variable": "account1",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "account2": {
+                                "variable": "account2",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "funds": {
+                                "variable": "funds",
                                 "certainty": "Unknown",
                                 "value": null,
                                 "interpretation": "json"
@@ -565,6 +587,11 @@
                                 "variable": "task",
                                 "certainty": "Unknown",
                                 "value": null,
+                                "interpretation": "json"
+                            },
+                            "tried-transfer": {
+                                "value": true,
+                                "variable": "tried-transfer",
                                 "interpretation": "json"
                             },
                             "task-value-transfer_funds_between_accounts": {
@@ -594,47 +621,22 @@
                             }
                         },
                         "intent": "utter_msg",
-                        "name": "confirm-transfer_DETDUP_confirm-transfer__reset-EQ-complete",
+                        "name": "confirm-transfer_DETDUP_confirm-transfer__transfer-EQ-complete",
                         "assignments": {
-                            "$funds": "didnt-find",
-                            "$contact": "didnt-find",
                             "$account1": "didnt-find",
+                            "$account2": "didnt-find",
+                            "$funds": "didnt-find",
                             "$task": "didnt-find"
                         }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "confirm-transfer_DETDUP_confirm-transfer__reset-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
             },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
+            "disable-fallback": true,
             "intents": {
                 "utter_msg": {
                     "entities": [],
                     "utterances": [],
                     "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
                 }
             }
         },
@@ -647,6 +649,10 @@
                 [
                     "tried-e-transfer",
                     false
+                ],
+                [
+                    "task",
+                    "Unknown"
                 ],
                 [
                     "force-statement",
@@ -662,17 +668,15 @@
                             "task": {
                                 "value": "e-transfer",
                                 "variable": "task",
-                                "interpretation": "json"
-                            },
-                            "tried-e-transfer": {
-                                "value": true,
-                                "variable": "tried-e-transfer",
+                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-want-transfer",
-                        "assignments": {}
+                        "assignments": {
+                            "$task": "found"
+                        }
                     },
                     {
                         "updates": {
@@ -757,6 +761,204 @@
                 }
             }
         },
+        "get-e-transfer-options": {
+            "type": "dialogue",
+            "message_variants": [
+                "Ok, how much money do you want to send and to who?"
+            ],
+            "condition": [
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "task-value-e-transfer",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get-e-transfer-options__get-options",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "funds": {
+                                "value": "$funds",
+                                "variable": "funds",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "contact": {
+                                "value": "$contact",
+                                "variable": "contact",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "select-account": {
+                                "value": true,
+                                "variable": "select-account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_e_transfer",
+                        "name": "get-e-transfer-options_DETDUP_get-e-transfer-options__get-options-EQ-get-valid-e-transfer",
+                        "assignments": {
+                            "$funds": "found",
+                            "$contact": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get-e-transfer-options_DETDUP_get-e-transfer-options__get-options-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "share_e_transfer": {
+                    "entities": [
+                        "$contact",
+                        "$funds"
+                    ],
+                    "utterances": [
+                        "I want to transfer $funds to $contact.",
+                        "Can I transfer $funds to $contact?",
+                        "$contact is expecting $funds from me.",
+                        "Please send through $funds to $contact."
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "confirm-e-transfer": {
+            "type": "dialogue",
+            "message_variants": [
+                "Transferring $funds to $contact from $account1..."
+            ],
+            "condition": [
+                [
+                    "funds",
+                    "Known"
+                ],
+                [
+                    "contact",
+                    "Known"
+                ],
+                [
+                    "account1",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "task-value-e-transfer",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "confirm-e-transfer__reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "funds": {
+                                "variable": "funds",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "contact": {
+                                "variable": "contact",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "account1": {
+                                "variable": "account1",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "task": {
+                                "variable": "task",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "tried-e-transfer": {
+                                "value": true,
+                                "variable": "tried-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "confirm-e-transfer_DETDUP_confirm-e-transfer__reset-EQ-complete",
+                        "assignments": {
+                            "$funds": "didnt-find",
+                            "$contact": "didnt-find",
+                            "$account1": "didnt-find",
+                            "$task": "didnt-find"
+                        }
+                    }
+                ]
+            },
+            "disable-fallback": true,
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                }
+            }
+        },
         "offer-request": {
             "type": "dialogue",
             "message_variants": [
@@ -766,6 +968,10 @@
                 [
                     "tried-request-money",
                     false
+                ],
+                [
+                    "task",
+                    "Unknown"
                 ],
                 [
                     "force-statement",
@@ -781,17 +987,15 @@
                             "task": {
                                 "value": "request money",
                                 "variable": "task",
-                                "interpretation": "json"
-                            },
-                            "tried-request-money": {
-                                "value": true,
-                                "variable": "tried-request-money",
+                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "offer-request_DETDUP_offer-request__start-task-EQ-want-transfer",
-                        "assignments": {}
+                        "assignments": {
+                            "$task": "found"
+                        }
                     },
                     {
                         "updates": {
@@ -879,7 +1083,7 @@
         "get-request-options": {
             "type": "dialogue",
             "message_variants": [
-                "Which contact would you like to request money from?"
+                "Which contact would you like to request money from and how much?"
             ],
             "condition": [
                 [
@@ -896,19 +1100,26 @@
                 "type": "oneof",
                 "outcomes": [
                     {
-                        "update": {
+                        "updates": {
                             "funds": {
-                                "known": true,
-                                "value": "$funds"
+                                "value": "$funds",
+                                "variable": "funds",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             },
                             "contact": {
-                                "known": true,
-                                "value": "$contact"
+                                "value": "$contact",
+                                "variable": "contact",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             }
                         },
-                        "intent": "utter_msg",
+                        "intent": "share_request",
                         "name": "get-request-options_DETDUP_get-request-options__get-options-EQ-get-valid-request",
-                        "assignments": {}
+                        "assignments": {
+                            "$funds": "found",
+                            "$contact": "found"
+                        }
                     },
                     {
                         "updates": {
@@ -934,9 +1145,17 @@
                 "Sorry, I didn't quite get that."
             ],
             "intents": {
-                "utter_msg": {
-                    "entities": [],
-                    "utterances": [],
+                "share_request": {
+                    "entities": [
+                        "$contact",
+                        "$funds"
+                    ],
+                    "utterances": [
+                        "$contact owes me $funds.",
+                        "I need to request that $contact pays me $funds.",
+                        "Please send a request for $contact to send me $funds.",
+                        "Please ask for $funds from $contact."
+                    ],
                     "type": "regular"
                 },
                 "fallback": {
@@ -993,6 +1212,11 @@
                                 "value": null,
                                 "interpretation": "json"
                             },
+                            "tried-request-money": {
+                                "value": true,
+                                "variable": "tried-request-money",
+                                "interpretation": "json"
+                            },
                             "task-value-transfer_funds_between_accounts": {
                                 "value": false,
                                 "variable": "task-value-transfer_funds_between_accounts",
@@ -1026,40 +1250,15 @@
                             "$contact": "didnt-find",
                             "$task": "didnt-find"
                         }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "confirm-request_DETDUP_confirm-request__reset-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
             },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
+            "disable-fallback": true,
             "intents": {
                 "utter_msg": {
                     "entities": [],
                     "utterances": [],
                     "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
                 }
             }
         },
@@ -1072,6 +1271,10 @@
                 [
                     "tried-pay-bills",
                     false
+                ],
+                [
+                    "task",
+                    "Unknown"
                 ],
                 [
                     "force-statement",
@@ -1087,17 +1290,15 @@
                             "task": {
                                 "value": "pay bills",
                                 "variable": "task",
-                                "interpretation": "json"
-                            },
-                            "tried-pay-bills": {
-                                "value": true,
-                                "variable": "tried-pay-bills",
+                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "offer-pay_DETDUP_offer-pay__start-task-EQ-want-pay",
-                        "assignments": {}
+                        "assignments": {
+                            "$task": "found"
+                        }
                     },
                     {
                         "updates": {
@@ -1219,6 +1420,11 @@
                                 "value": null,
                                 "interpretation": "json"
                             },
+                            "tried-pay-bills": {
+                                "value": true,
+                                "variable": "tried-pay-bills",
+                                "interpretation": "json"
+                            },
                             "task-value-transfer_funds_between_accounts": {
                                 "value": false,
                                 "variable": "task-value-transfer_funds_between_accounts",
@@ -1251,40 +1457,15 @@
                             "$bill": "didnt-find",
                             "$task": "didnt-find"
                         }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "confirm-bill-payment_DETDUP_confirm-bill-payment__reset-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
             },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
+            "disable-fallback": true,
             "intents": {
                 "utter_msg": {
                     "entities": [],
                     "utterances": [],
                     "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
                 }
             }
         },
@@ -1297,6 +1478,10 @@
                 [
                     "tried-cancel",
                     false
+                ],
+                [
+                    "task",
+                    "Unknown"
                 ],
                 [
                     "force-statement",
@@ -1312,17 +1497,15 @@
                             "task": {
                                 "value": "cancel account",
                                 "variable": "task",
-                                "interpretation": "json"
-                            },
-                            "tried-cancel": {
-                                "value": true,
-                                "variable": "tried-cancel",
+                                "certainty": "Known",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "offer-cancel_DETDUP_offer-cancel__start-task-EQ-want-cancel",
-                        "assignments": {}
+                        "assignments": {
+                            "$task": "found"
+                        }
                     },
                     {
                         "updates": {
@@ -1454,6 +1637,11 @@
                                 "value": null,
                                 "interpretation": "json"
                             },
+                            "tried-cancel": {
+                                "value": true,
+                                "variable": "tried-cancel",
+                                "interpretation": "json"
+                            },
                             "task-value-transfer_funds_between_accounts": {
                                 "value": false,
                                 "variable": "task-value-transfer_funds_between_accounts",
@@ -1487,40 +1675,15 @@
                             "$account2": "didnt-find",
                             "$task": "didnt-find"
                         }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "confirm-cancel_DETDUP_confirm-cancel__reset-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
             },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
+            "disable-fallback": true,
             "intents": {
                 "utter_msg": {
                     "entities": [],
                     "utterances": [],
                     "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
                 }
             }
         },
@@ -1570,40 +1733,15 @@
                         "intent": "utter_msg",
                         "name": "complete_DETDUP_complete__finish-EQ-done",
                         "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "complete_DETDUP_complete__finish-EQ-fallback",
-                        "assignments": {}
                     }
                 ]
             },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
+            "disable-fallback": true,
             "intents": {
                 "utter_msg": {
                     "entities": [],
                     "utterances": [],
                     "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
                 }
             }
         },
@@ -1643,6 +1781,7 @@
                 ]
             },
             "message_variants": [],
+            "disable-fallback": true,
             "intents": {
                 "utter_msg": {
                     "entities": [],
@@ -1667,6 +1806,10 @@
                 [
                     "account1",
                     "Unknown"
+                ],
+                [
+                    "select-account",
+                    true
                 ],
                 [
                     "force-statement",
