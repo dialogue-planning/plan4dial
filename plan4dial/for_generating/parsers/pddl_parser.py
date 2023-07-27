@@ -362,8 +362,8 @@ def parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
         name_wrap=":predicates",
     )
     actions = _actions_to_pddl(loaded_yaml)
-    domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements \
-        :strips :typing)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
+    domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements " + \
+        f":strips)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB} \
         (:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = _fluents_to_pddl(

@@ -1,0 +1,1019 @@
+{
+    "name": "medical_bot",
+    "context_variables": {
+        "covid-exposure": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "have-symptoms": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "exposure-period-over-5": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "positive-30": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "positive-90": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "should-test": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "goal": {
+            "type": "flag",
+            "config": false
+        },
+        "have-message": {
+            "type": "flag",
+            "config": false
+        },
+        "force-statement": {
+            "type": "flag",
+            "config": false
+        }
+    },
+    "intents": {
+        "confirm": {
+            "entities": [],
+            "utterances": [
+                "yes",
+                "yeah",
+                "Y",
+                "mhm",
+                "confirm",
+                "yes please"
+            ],
+            "type": "regular"
+        },
+        "deny": {
+            "entities": [],
+            "utterances": [
+                "no",
+                "not at all",
+                "that's not what i meant",
+                "absolutely not",
+                "i don't want that",
+                "nah",
+                "no thanks",
+                "no thank you"
+            ],
+            "type": "regular"
+        },
+        "fallback": {
+            "entities": [],
+            "utterances": [],
+            "type": "fallback"
+        },
+        "utter_msg": {
+            "entities": [],
+            "utterances": [],
+            "type": "regular"
+        }
+    },
+    "actions": {
+        "determine_test": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "covid-exposure",
+                    "Known"
+                ],
+                [
+                    "have-symptoms",
+                    "Known"
+                ],
+                [
+                    "exposure-period-over-5",
+                    "Known"
+                ],
+                [
+                    "positive-90",
+                    "Known"
+                ],
+                [
+                    "positive-30",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "determine_test__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "should-test": {
+                                "value": true,
+                                "variable": "should-test",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Although you don't have symptoms, since it has been 5 days, you should test."
+                        ],
+                        "context": {
+                            "have-symptoms": {
+                                "value": false
+                            },
+                            "covid-exposure": {
+                                "value": true
+                            },
+                            "exposure-period-over-5": {
+                                "value": true
+                            }
+                        },
+                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-been-5",
+                        "intent": null,
+                        "assignments": {
+                            "$should-test": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "should-test": {
+                                "value": false,
+                                "variable": "should-test",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Since you have been exposed to COVID-19 but are not yet showing symptoms, wait a total of 5 days since your exposure to test."
+                        ],
+                        "context": {
+                            "have-symptoms": {
+                                "value": false
+                            },
+                            "exposure-period-over-5": {
+                                "value": false
+                            }
+                        },
+                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-less-5",
+                        "intent": null,
+                        "assignments": {
+                            "$should-test": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "should-test": {
+                                "value": true,
+                                "variable": "should-test",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR or antigen test."
+                        ],
+                        "context": {
+                            "have-symptoms": {
+                                "value": true
+                            },
+                            "positive-90": {
+                                "value": false
+                            }
+                        },
+                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-no-90",
+                        "intent": null,
+                        "assignments": {
+                            "$should-test": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "should-test": {
+                                "value": true,
+                                "variable": "should-test",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use an antigen test."
+                        ],
+                        "context": {
+                            "have-symptoms": {
+                                "value": true
+                            },
+                            "positive-30": {
+                                "value": true
+                            }
+                        },
+                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-30",
+                        "intent": null,
+                        "assignments": {
+                            "$should-test": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "should-test": {
+                                "value": false,
+                                "variable": "should-test",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Although you have had COVID-19 in the last 30 days or less, testing is not recommended."
+                        ],
+                        "context": {
+                            "have-symptoms": {
+                                "value": false
+                            },
+                            "positive-30": {
+                                "value": true
+                            }
+                        },
+                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-30",
+                        "intent": null,
+                        "assignments": {
+                            "$should-test": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "should-test": {
+                                "value": true,
+                                "variable": "should-test",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Since you have symptoms and have had COVID-19 in the last 90 days, you should use an antigen test."
+                        ],
+                        "context": {
+                            "have-symptoms": {
+                                "value": true
+                            },
+                            "positive-90": {
+                                "value": true
+                            }
+                        },
+                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-90",
+                        "intent": null,
+                        "assignments": {
+                            "$should-test": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "should-test": {
+                                "value": true,
+                                "variable": "should-test",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Although you have had COVID-19 in the last 90 days and don't have symptoms, you should still use an antigen test."
+                        ],
+                        "context": {
+                            "have-symptoms": {
+                                "value": false
+                            },
+                            "positive-90": {
+                                "value": true
+                            }
+                        },
+                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-90",
+                        "intent": null,
+                        "assignments": {
+                            "$should-test": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "complete": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "should-test",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "complete__finish",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "goal": {
+                                "value": true,
+                                "variable": "goal",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "complete_DETDUP_complete__finish-EQ-finish",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "type": "dialogue",
+            "condition": [
+                [
+                    "have-message",
+                    true
+                ],
+                [
+                    "force-statement",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "dialogue_statement__reset",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": false,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": false,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "message_variants": [],
+            "disable-fallback": true,
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                }
+            }
+        },
+        "slot-fill__get_covid_exposure": {
+            "type": "dialogue",
+            "message_variants": [
+                "Hi there, I'm sorry you are feeling unwell. I am here to help you navigate your sickness and put you on the road to recovery. First off, have you been exposed to COVID-19?"
+            ],
+            "condition": [
+                [
+                    "covid-exposure",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get_covid_exposure__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "covid-exposure": {
+                                "value": true,
+                                "variable": "covid-exposure",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$covid-exposure": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "covid-exposure": {
+                                "value": false,
+                                "variable": "covid-exposure",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$covid-exposure": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__get_have_symptoms": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you experiencing symptoms of any kind? (Answer yes or no)."
+            ],
+            "condition": [
+                [
+                    "have-symptoms",
+                    "Unknown"
+                ],
+                [
+                    "covid-exposure",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get_have_symptoms__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-symptoms": {
+                                "value": true,
+                                "variable": "have-symptoms",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$have-symptoms": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-symptoms": {
+                                "value": false,
+                                "variable": "have-symptoms",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$have-symptoms": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__get_exposure_period": {
+            "type": "dialogue",
+            "message_variants": [
+                "Has it been at least 5 days since you were exposed to COVID-19?"
+            ],
+            "condition": [
+                [
+                    "exposure-period-over-5",
+                    "Unknown"
+                ],
+                [
+                    "covid-exposure",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get_exposure_period__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "exposure-period-over-5": {
+                                "value": true,
+                                "variable": "exposure-period-over-5",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$exposure-period-over-5": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "exposure-period-over-5": {
+                                "value": false,
+                                "variable": "exposure-period-over-5",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$exposure-period-over-5": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__get_positive_30": {
+            "type": "dialogue",
+            "message_variants": [
+                "Have you tested positive for COVID-19 in the last 30 days?"
+            ],
+            "condition": [
+                [
+                    "positive-30",
+                    "Unknown"
+                ],
+                [
+                    "covid-exposure",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get_positive_30__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "positive-30": {
+                                "value": true,
+                                "variable": "positive-30",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$positive-30": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "positive-30": {
+                                "value": false,
+                                "variable": "positive-30",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$positive-30": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__get_positive_90": {
+            "type": "dialogue",
+            "message_variants": [
+                "What about in the last 90 days?"
+            ],
+            "condition": [
+                [
+                    "positive-90",
+                    "Unknown"
+                ],
+                [
+                    "positive-30",
+                    "Known"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get_positive_90__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "positive-90": {
+                                "value": true,
+                                "variable": "positive-90",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$positive-90": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "positive-90": {
+                                "value": false,
+                                "variable": "positive-90",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$positive-90": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "that's not what i meant",
+                        "absolutely not",
+                        "i don't want that",
+                        "nah",
+                        "no thanks",
+                        "no thank you"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        }
+    }
+}

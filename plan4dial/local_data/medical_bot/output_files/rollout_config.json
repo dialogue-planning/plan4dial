@@ -1,0 +1,202 @@
+{
+    "actions": {
+        "determine_test": {
+            "condition": [
+                "(know__positive-90)",
+                "(know__have-symptoms)",
+                "(know__covid-exposure)",
+                "(know__exposure-period-over-5)",
+                "(not (force-statement))",
+                "(know__positive-30)"
+            ],
+            "effect": {
+                "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-been-5": [
+                    "(force-statement)",
+                    "(have-message)",
+                    "(know__should-test)",
+                    "(should-test)"
+                ],
+                "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-less-5": [
+                    "(not (should-test))",
+                    "(force-statement)",
+                    "(have-message)",
+                    "(know__should-test)"
+                ],
+                "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-no-90": [
+                    "(force-statement)",
+                    "(have-message)",
+                    "(know__should-test)",
+                    "(should-test)"
+                ],
+                "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-30": [
+                    "(force-statement)",
+                    "(have-message)",
+                    "(know__should-test)",
+                    "(should-test)"
+                ],
+                "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-30": [
+                    "(not (should-test))",
+                    "(force-statement)",
+                    "(have-message)",
+                    "(know__should-test)"
+                ],
+                "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-90": [
+                    "(force-statement)",
+                    "(have-message)",
+                    "(know__should-test)",
+                    "(should-test)"
+                ],
+                "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-90": [
+                    "(force-statement)",
+                    "(have-message)",
+                    "(know__should-test)",
+                    "(should-test)"
+                ]
+            }
+        },
+        "complete": {
+            "condition": [
+                "(not (force-statement))",
+                "(know__should-test)"
+            ],
+            "effect": {
+                "complete_DETDUP_complete__finish-EQ-finish": [
+                    "(goal)"
+                ]
+            }
+        },
+        "dialogue_statement": {
+            "condition": [
+                "(force-statement)",
+                "(have-message)"
+            ],
+            "effect": {
+                "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
+                    "(not (have-message))",
+                    "(not (force-statement))"
+                ]
+            }
+        },
+        "slot-fill__get_covid_exposure": {
+            "condition": [
+                "(not (know__covid-exposure))",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-confirm_outcome": [
+                    "(know__covid-exposure)",
+                    "(covid-exposure)"
+                ],
+                "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-deny_outcome": [
+                    "(know__covid-exposure)",
+                    "(not (covid-exposure))"
+                ],
+                "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "slot-fill__get_have_symptoms": {
+            "condition": [
+                "(know__covid-exposure)",
+                "(not (know__have-symptoms))",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome": [
+                    "(know__have-symptoms)",
+                    "(have-symptoms)"
+                ],
+                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome": [
+                    "(know__have-symptoms)",
+                    "(not (have-symptoms))"
+                ],
+                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "slot-fill__get_exposure_period": {
+            "condition": [
+                "(know__covid-exposure)",
+                "(not (force-statement))",
+                "(not (know__exposure-period-over-5))"
+            ],
+            "effect": {
+                "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-confirm_outcome": [
+                    "(know__exposure-period-over-5)",
+                    "(exposure-period-over-5)"
+                ],
+                "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-deny_outcome": [
+                    "(know__exposure-period-over-5)",
+                    "(not (exposure-period-over-5))"
+                ],
+                "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "slot-fill__get_positive_30": {
+            "condition": [
+                "(know__covid-exposure)",
+                "(not (force-statement))",
+                "(not (know__positive-30))"
+            ],
+            "effect": {
+                "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-confirm_outcome": [
+                    "(positive-30)",
+                    "(know__positive-30)"
+                ],
+                "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-deny_outcome": [
+                    "(know__positive-30)",
+                    "(not (positive-30))"
+                ],
+                "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "slot-fill__get_positive_90": {
+            "condition": [
+                "(know__positive-30)",
+                "(not (force-statement))",
+                "(not (know__positive-90))"
+            ],
+            "effect": {
+                "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-confirm_outcome": [
+                    "(positive-90)",
+                    "(know__positive-90)"
+                ],
+                "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-deny_outcome": [
+                    "(know__positive-90)",
+                    "(not (positive-90))"
+                ],
+                "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        }
+    },
+    "initial_state": [
+        "(not (have-message))",
+        "(not (should-test))",
+        "(not (know__have-symptoms))",
+        "(not (know__exposure-period-over-5))",
+        "(not (know__covid-exposure))",
+        "(not (know__positive-30))",
+        "(not (goal))",
+        "(not (covid-exposure))",
+        "(not (positive-90))",
+        "(not (positive-30))",
+        "(not (know__should-test))",
+        "(not (exposure-period-over-5))",
+        "(not (force-statement))",
+        "(not (know__positive-90))",
+        "(not (have-symptoms))"
+    ]
+}

@@ -1,0 +1,240 @@
+---
+name: medical_bot
+context_variables:
+  covid-exposure:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  have-symptoms:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  exposure-period-over-5:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  positive-30:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  positive-90:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  should-test:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false
+  goal:
+    type: flag
+    init: false
+
+intents:
+  confirm:
+    utterances:
+      - "yes"
+      - yeah
+      - "Y"
+      - mhm
+      - confirm
+      - yes please
+  deny:
+    utterances:
+      - "no"
+      - not at all
+      - that's not what i meant
+      - absolutely not
+      - i don't want that
+      - nah
+      - no thanks
+      - no thank you
+
+actions:
+  get_covid_exposure:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get_covid_exposure
+      entity: covid-exposure
+      message_variants:
+        - Hi there, I'm sorry you are feeling unwell. I am here to help you navigate your sickness and put you on the road to recovery. First off, have you been exposed to COVID-19?
+  get_have_symptoms:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get_have_symptoms
+      entity: have-symptoms
+      message_variants:
+        - Are you experiencing symptoms of any kind? (Answer yes or no).
+      additional_conditions:
+        covid-exposure:
+          known: true
+  get_exposure_period:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get_exposure_period
+      entity: exposure-period-over-5
+      message_variants:
+        - Has it been at least 5 days since you were exposed to COVID-19?
+      additional_conditions:
+        covid-exposure:
+          known: true
+  get_positive_30:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get_positive_30
+      entity: positive-30
+      message_variants:
+        - Have you tested positive for COVID-19 in the last 30 days?
+      additional_conditions:
+        covid-exposure:
+          known: true
+      additional_updates:
+        confirm_outcome:
+          positive-90:
+            known: true
+            value: true
+  get_positive_90:
+    type: custom
+    subtype: flag_entity_yes_no
+    parameters:
+      action_name: get_positive_90
+      entity: positive-90
+      message_variants:
+        - What about in the last 90 days?
+      additional_conditions:
+        positive-30:
+          known: true
+  determine_test:
+    type: system
+    subtype: Context dependent determination
+    condition:
+      covid-exposure:
+        known: true
+      have-symptoms:
+        known: true
+      exposure-period-over-5:
+        known: true
+      positive-90:
+        known: true
+      positive-30:
+        known: true
+    effect:
+      check-test:
+        oneof:
+          outcomes:
+            no-symptom-exposed-been-5:
+              updates:
+                should-test:
+                  known: true
+                  value: true
+              response_variants:
+                - Although you don't have symptoms, since it has been 5 days, you should test.
+              context:
+                have-symptoms:
+                  value: false
+                covid-exposure:
+                  value: true
+                exposure-period-over-5:
+                  value: true
+            no-symptom-exposed-less-5:
+              updates:
+                should-test:
+                  known: true
+                  value: false
+              response_variants:
+                - Since you have been exposed to COVID-19 but are not yet showing symptoms, wait a total of 5 days since your exposure to test.
+              context:
+                have-symptoms:
+                  value: false
+                exposure-period-over-5:
+                  value: false
+            have-symptoms-no-90:
+              updates:
+                should-test:
+                  known: true
+                  value: true
+              response_variants:
+                - Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR or antigen test.
+              context:
+                have-symptoms:
+                  value: true
+                positive-90:
+                  value: false
+            have-symptoms-30:
+              updates:
+                should-test:
+                  known: true
+                  value: true
+              response_variants:
+                - Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use an antigen test.
+              context:
+                have-symptoms:
+                  value: true
+                positive-30:
+                  value: true
+            have-no-symptoms-30:
+              updates:
+                should-test:
+                  known: true
+                  value: false
+              response_variants:
+                - Although you have had COVID-19 in the last 30 days or less, testing is not recommended.
+              context:
+                have-symptoms:
+                  value: false
+                positive-30:
+                  value: true
+            have-symptoms-90:
+              updates:
+                should-test:
+                  known: true
+                  value: true
+              response_variants:
+                - Since you have symptoms and have had COVID-19 in the last 90 days, you should use an antigen test.
+              context:
+                have-symptoms:
+                  value: true
+                positive-90:
+                  value: true
+            have-no-symptoms-90:
+              updates:
+                should-test:
+                  known: true
+                  value: true
+              response_variants:
+                - Although you have had COVID-19 in the last 90 days and don't have symptoms, you should still use an antigen test.
+              context:
+                have-symptoms:
+                  value: false
+                positive-90:
+                  value: true
+  complete:
+    type: system
+    subtype: Context dependent determination
+    condition:
+      should-test:
+        known: true
+    effect:
+      finish:
+        oneof:
+          outcomes:
+            finish:
+              updates:
+                goal:
+                  value: true
+...
