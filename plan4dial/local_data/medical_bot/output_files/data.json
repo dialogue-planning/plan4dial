@@ -394,7 +394,6 @@
         },
         "complete": {
             "type": "system",
-            "subtype": "Context dependent determination",
             "condition": [
                 [
                     "should-test",

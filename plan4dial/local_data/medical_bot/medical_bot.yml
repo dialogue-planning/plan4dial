@@ -225,7 +225,6 @@ actions:
                   value: true
   complete:
     type: system
-    subtype: Context dependent determination
     condition:
       should-test:
         known: true
