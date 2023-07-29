@@ -1,6 +1,6 @@
 (define
     (domain bank-bot)
-    (:requirements         :strips :typing)
+    (:requirements :strips)
     (:types )
     (:constants )
     (:predicates
@@ -31,27 +31,32 @@
         :precondition
             (and
                 (not (force-statement))
-                (not (tried-transfer))
                 (not (know__task))
+                (not (tried-transfer))
             )
         :effect
             (labeled-oneof offer-transfer__start-task
                 (outcome want-transfer
                     (and
                         (know__task)
+                        (not (task-value-request_money))
+                        (not (task-value-e-transfer))
+                        (not (task-value-cancel_account))
+                        (task-value-transfer_funds_between_accounts)
+                        (not (task-value-pay_bills))
                     )
                 )
                 (outcome dont-want
                     (and
-                        (force-statement)
-                        (tried-transfer)
                         (have-message)
+                        (tried-transfer)
+                        (force-statement)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -74,8 +79,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -85,25 +90,25 @@
         :precondition
             (and
                 (task-value-transfer_funds_between_accounts)
-                (not (force-statement))
                 (know__account2)
-                (know__account1)
                 (know__funds)
+                (not (force-statement))
+                (know__account1)
             )
         :effect
             (labeled-oneof confirm-transfer__transfer
                 (outcome complete
                     (and
-                        (not (know__funds))
-                        (not (task-value-pay_bills))
+                        (not (know__task))
                         (not (know__account2))
+                        (not (task-value-transfer_funds_between_accounts))
                         (not (know__account1))
                         (not (task-value-e-transfer))
-                        (not (task-value-cancel_account))
-                        (tried-transfer)
-                        (not (know__task))
                         (not (task-value-request_money))
-                        (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-cancel_account))
+                        (not (know__funds))
+                        (not (task-value-pay_bills))
+                        (tried-transfer)
                     )
                 )
             )
@@ -113,27 +118,32 @@
         :precondition
             (and
                 (not (force-statement))
-                (not (know__task))
                 (not (tried-e-transfer))
+                (not (know__task))
             )
         :effect
             (labeled-oneof offer-e-transfer__start-task
                 (outcome want-transfer
                     (and
                         (know__task)
+                        (task-value-e-transfer)
+                        (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-request_money))
+                        (not (task-value-cancel_account))
+                        (not (task-value-pay_bills))
                     )
                 )
                 (outcome dont-want
                     (and
+                        (have-message)
                         (tried-e-transfer)
                         (force-statement)
-                        (have-message)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -149,15 +159,15 @@
             (labeled-oneof get-e-transfer-options__get-options
                 (outcome get-valid-e-transfer
                     (and
-                        (know__contact)
                         (select-account)
+                        (know__contact)
                         (know__funds)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -166,26 +176,26 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (know__contact)
                 (task-value-e-transfer)
-                (know__account1)
+                (know__contact)
                 (know__funds)
+                (not (force-statement))
+                (know__account1)
             )
         :effect
             (labeled-oneof confirm-e-transfer__reset
                 (outcome complete
                     (and
-                        (not (know__contact))
-                        (not (know__funds))
-                        (not (task-value-pay_bills))
                         (tried-e-transfer)
+                        (not (know__task))
+                        (not (know__contact))
+                        (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-request_money))
                         (not (know__account1))
                         (not (task-value-e-transfer))
                         (not (task-value-cancel_account))
-                        (not (know__task))
-                        (not (task-value-request_money))
-                        (not (task-value-transfer_funds_between_accounts))
+                        (not (know__funds))
+                        (not (task-value-pay_bills))
                     )
                 )
             )
@@ -195,27 +205,32 @@
         :precondition
             (and
                 (not (force-statement))
-                (not (know__task))
                 (not (tried-request-money))
+                (not (know__task))
             )
         :effect
             (labeled-oneof offer-request__start-task
                 (outcome want-transfer
                     (and
                         (know__task)
+                        (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-e-transfer))
+                        (not (task-value-cancel_account))
+                        (not (task-value-pay_bills))
+                        (task-value-request_money)
                     )
                 )
                 (outcome dont-want
                     (and
+                        (have-message)
                         (force-statement)
                         (tried-request-money)
-                        (have-message)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -237,8 +252,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -248,23 +263,23 @@
         :precondition
             (and
                 (not (force-statement))
+                (task-value-request_money)
                 (know__contact)
                 (know__funds)
-                (task-value-request_money)
             )
         :effect
             (labeled-oneof confirm-request__reset
                 (outcome complete
                     (and
-                        (not (know__contact))
-                        (not (know__funds))
-                        (not (task-value-pay_bills))
-                        (not (task-value-e-transfer))
-                        (not (task-value-cancel_account))
                         (tried-request-money)
                         (not (know__task))
-                        (not (task-value-request_money))
+                        (not (know__contact))
                         (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-request_money))
+                        (not (task-value-e-transfer))
+                        (not (task-value-cancel_account))
+                        (not (know__funds))
+                        (not (task-value-pay_bills))
                     )
                 )
             )
@@ -274,27 +289,32 @@
         :precondition
             (and
                 (not (force-statement))
-                (not (tried-pay-bills))
                 (not (know__task))
+                (not (tried-pay-bills))
             )
         :effect
             (labeled-oneof offer-pay__start-task
                 (outcome want-pay
                     (and
                         (know__task)
+                        (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-request_money))
+                        (not (task-value-e-transfer))
+                        (not (task-value-cancel_account))
+                        (task-value-pay_bills)
                     )
                 )
                 (outcome dont-want
                     (and
-                        (force-statement)
                         (have-message)
                         (tried-pay-bills)
+                        (force-statement)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -311,14 +331,14 @@
             (labeled-oneof confirm-bill-payment__reset
                 (outcome complete
                     (and
-                        (not (task-value-pay_bills))
-                        (tried-pay-bills)
-                        (not (task-value-e-transfer))
-                        (not (task-value-cancel_account))
-                        (not (know__bill))
                         (not (know__task))
-                        (not (task-value-request_money))
                         (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-request_money))
+                        (not (task-value-e-transfer))
+                        (not (know__bill))
+                        (tried-pay-bills)
+                        (not (task-value-cancel_account))
+                        (not (task-value-pay_bills))
                     )
                 )
             )
@@ -327,8 +347,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (tried-cancel))
+                (not (force-statement))
                 (not (know__task))
             )
         :effect
@@ -336,19 +356,24 @@
                 (outcome want-cancel
                     (and
                         (know__task)
+                        (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-request_money))
+                        (not (task-value-e-transfer))
+                        (not (task-value-pay_bills))
+                        (task-value-cancel_account)
                     )
                 )
                 (outcome dont-want
                     (and
-                        (force-statement)
-                        (have-message)
                         (tried-cancel)
+                        (have-message)
+                        (force-statement)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -358,23 +383,23 @@
         :precondition
             (and
                 (not (force-statement))
-                (task-value-cancel_account)
                 (know__account1)
                 (know__account2)
+                (task-value-cancel_account)
             )
         :effect
             (labeled-oneof confirm-cancel__reset
                 (outcome complete
                     (and
-                        (tried-cancel)
-                        (not (task-value-pay_bills))
-                        (not (know__account2))
+                        (not (know__task))
+                        (not (task-value-transfer_funds_between_accounts))
+                        (not (task-value-request_money))
                         (not (know__account1))
                         (not (task-value-e-transfer))
                         (not (task-value-cancel_account))
-                        (not (know__task))
-                        (not (task-value-request_money))
-                        (not (task-value-transfer_funds_between_accounts))
+                        (tried-cancel)
+                        (not (task-value-pay_bills))
+                        (not (know__account2))
                     )
                 )
             )
@@ -383,12 +408,12 @@
         :parameters()
         :precondition
             (and
-                (tried-cancel)
-                (not (force-statement))
                 (tried-e-transfer)
-                (tried-pay-bills)
-                (tried-transfer)
+                (not (force-statement))
                 (tried-request-money)
+                (tried-pay-bills)
+                (tried-cancel)
+                (tried-transfer)
             )
         :effect
             (labeled-oneof complete__finish
@@ -403,15 +428,15 @@
         :parameters()
         :precondition
             (and
-                (force-statement)
                 (have-message)
+                (force-statement)
             )
         :effect
             (labeled-oneof dialogue_statement__reset
                 (outcome lock
                     (and
-                        (not (force-statement))
                         (not (have-message))
+                        (not (force-statement))
                     )
                 )
             )
@@ -421,21 +446,21 @@
         :precondition
             (and
                 (not (force-statement))
-                (select-account)
                 (not (know__account1))
+                (select-account)
             )
         :effect
             (labeled-oneof slot-fill__select-account__validate-slot-fill
                 (outcome account1_found
                     (and
-                        (not (select-account))
                         (know__account1)
+                        (not (select-account))
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -451,14 +476,14 @@
             (labeled-oneof slot-fill__get-payment__validate-slot-fill
                 (outcome bill_found
                     (and
-                        (know__bill)
                         (select-account)
+                        (know__bill)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -474,56 +499,16 @@
             (labeled-oneof slot-fill__get-cancel__validate-slot-fill
                 (outcome account2_found
                     (and
+                        (select-account)
+                        (know__account2)
                         (force-statement)
                         (have-message)
-                        (know__account2)
-                        (select-account)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
-                    )
-                )
-            )
-    )
-    (:action set-task
-        :parameters()
-        :precondition
-            (and
-                (not (task-value-pay_bills))
-                (not (task-value-e-transfer))
-                (know__task)
-                (not (task-value-cancel_account))
-                (not (task-value-request_money))
-                (not (task-value-transfer_funds_between_accounts))
-            )
-        :effect
-            (labeled-oneof set-task__set-valid-value
-                (outcome transfer_funds_between_accounts
-                    (and
-                        (task-value-transfer_funds_between_accounts)
-                    )
-                )
-                (outcome e-transfer
-                    (and
-                        (task-value-e-transfer)
-                    )
-                )
-                (outcome request_money
-                    (and
-                        (task-value-request_money)
-                    )
-                )
-                (outcome pay_bills
-                    (and
-                        (task-value-pay_bills)
-                    )
-                )
-                (outcome cancel_account
-                    (and
-                        (task-value-cancel_account)
+                        (force-statement)
                     )
                 )
             )

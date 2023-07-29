@@ -348,6 +348,31 @@
                                 "variable": "task",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": true,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
@@ -670,6 +695,31 @@
                                 "variable": "task",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": true,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
@@ -989,6 +1039,31 @@
                                 "variable": "task",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": true,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
@@ -1292,6 +1367,31 @@
                                 "variable": "task",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": true,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": false,
+                                "variable": "task-value-cancel_account",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
@@ -1498,6 +1598,31 @@
                                 "value": "cancel account",
                                 "variable": "task",
                                 "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "task-value-transfer_funds_between_accounts": {
+                                "value": false,
+                                "variable": "task-value-transfer_funds_between_accounts",
+                                "interpretation": "json"
+                            },
+                            "task-value-e-transfer": {
+                                "value": false,
+                                "variable": "task-value-e-transfer",
+                                "interpretation": "json"
+                            },
+                            "task-value-request_money": {
+                                "value": false,
+                                "variable": "task-value-request_money",
+                                "interpretation": "json"
+                            },
+                            "task-value-pay_bills": {
+                                "value": false,
+                                "variable": "task-value-pay_bills",
+                                "interpretation": "json"
+                            },
+                            "task-value-cancel_account": {
+                                "value": true,
+                                "variable": "task-value-cancel_account",
                                 "interpretation": "json"
                             }
                         },
@@ -2060,127 +2185,6 @@
                     "utterances": [],
                     "type": "fallback"
                 }
-            }
-        },
-        "set-task": {
-            "type": "system",
-            "subtype": "Context dependent determination",
-            "condition": [
-                [
-                    "task",
-                    "Known"
-                ],
-                [
-                    "task-value-transfer_funds_between_accounts",
-                    false
-                ],
-                [
-                    "task-value-e-transfer",
-                    false
-                ],
-                [
-                    "task-value-request_money",
-                    false
-                ],
-                [
-                    "task-value-pay_bills",
-                    false
-                ],
-                [
-                    "task-value-cancel_account",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "set-task__set-valid-value",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "task-value-transfer_funds_between_accounts": {
-                                "value": true,
-                                "variable": "task-value-transfer_funds_between_accounts",
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "task": {
-                                "value": "transfer funds between accounts"
-                            }
-                        },
-                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-transfer_funds_between_accounts",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "task-value-e-transfer": {
-                                "value": true,
-                                "variable": "task-value-e-transfer",
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "task": {
-                                "value": "e-transfer"
-                            }
-                        },
-                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-e-transfer",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "task-value-request_money": {
-                                "value": true,
-                                "variable": "task-value-request_money",
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "task": {
-                                "value": "request money"
-                            }
-                        },
-                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-request_money",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "task-value-pay_bills": {
-                                "value": true,
-                                "variable": "task-value-pay_bills",
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "task": {
-                                "value": "pay bills"
-                            }
-                        },
-                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-pay_bills",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "task-value-cancel_account": {
-                                "value": true,
-                                "variable": "task-value-cancel_account",
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "task": {
-                                "value": "cancel account"
-                            }
-                        },
-                        "name": "set-task_DETDUP_set-task__set-valid-value-EQ-cancel_account",
-                        "intent": null,
-                        "assignments": {}
-                    }
-                ]
             }
         }
     }

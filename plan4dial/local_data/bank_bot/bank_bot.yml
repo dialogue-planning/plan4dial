@@ -5,7 +5,6 @@ context_variables:
     type: flag
     init: false
   task:
-    outing_type:
     type: enum
     known:
       type: flag

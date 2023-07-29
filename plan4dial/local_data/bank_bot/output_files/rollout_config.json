@@ -3,21 +3,26 @@
         "offer-transfer": {
             "condition": [
                 "(not (force-statement))",
-                "(not (tried-transfer))",
-                "(not (know__task))"
+                "(not (know__task))",
+                "(not (tried-transfer))"
             ],
             "effect": {
                 "offer-transfer_DETDUP_offer-transfer__start-task-EQ-want-transfer": [
-                    "(know__task)"
+                    "(know__task)",
+                    "(not (task-value-request_money))",
+                    "(not (task-value-e-transfer))",
+                    "(not (task-value-cancel_account))",
+                    "(task-value-transfer_funds_between_accounts)",
+                    "(not (task-value-pay_bills))"
                 ],
                 "offer-transfer_DETDUP_offer-transfer__start-task-EQ-dont-want": [
-                    "(force-statement)",
+                    "(have-message)",
                     "(tried-transfer)",
-                    "(have-message)"
+                    "(force-statement)"
                 ],
                 "offer-transfer_DETDUP_offer-transfer__start-task-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -33,52 +38,57 @@
                     "(know__funds)"
                 ],
                 "get-transfer-options_DETDUP_get-transfer-options__get-options-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "confirm-transfer": {
             "condition": [
                 "(task-value-transfer_funds_between_accounts)",
-                "(not (force-statement))",
                 "(know__account2)",
-                "(know__account1)",
-                "(know__funds)"
+                "(know__funds)",
+                "(not (force-statement))",
+                "(know__account1)"
             ],
             "effect": {
                 "confirm-transfer_DETDUP_confirm-transfer__transfer-EQ-complete": [
-                    "(not (know__funds))",
-                    "(not (task-value-pay_bills))",
+                    "(not (know__task))",
                     "(not (know__account2))",
+                    "(not (task-value-transfer_funds_between_accounts))",
                     "(not (know__account1))",
                     "(not (task-value-e-transfer))",
-                    "(not (task-value-cancel_account))",
-                    "(tried-transfer)",
-                    "(not (know__task))",
                     "(not (task-value-request_money))",
-                    "(not (task-value-transfer_funds_between_accounts))"
+                    "(not (task-value-cancel_account))",
+                    "(not (know__funds))",
+                    "(not (task-value-pay_bills))",
+                    "(tried-transfer)"
                 ]
             }
         },
         "offer-e-transfer": {
             "condition": [
                 "(not (force-statement))",
-                "(not (know__task))",
-                "(not (tried-e-transfer))"
+                "(not (tried-e-transfer))",
+                "(not (know__task))"
             ],
             "effect": {
                 "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-want-transfer": [
-                    "(know__task)"
+                    "(know__task)",
+                    "(task-value-e-transfer)",
+                    "(not (task-value-transfer_funds_between_accounts))",
+                    "(not (task-value-request_money))",
+                    "(not (task-value-cancel_account))",
+                    "(not (task-value-pay_bills))"
                 ],
                 "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-dont-want": [
+                    "(have-message)",
                     "(tried-e-transfer)",
-                    "(force-statement)",
-                    "(have-message)"
+                    "(force-statement)"
                 ],
                 "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -89,57 +99,62 @@
             ],
             "effect": {
                 "get-e-transfer-options_DETDUP_get-e-transfer-options__get-options-EQ-get-valid-e-transfer": [
-                    "(know__contact)",
                     "(select-account)",
+                    "(know__contact)",
                     "(know__funds)"
                 ],
                 "get-e-transfer-options_DETDUP_get-e-transfer-options__get-options-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "confirm-e-transfer": {
             "condition": [
-                "(not (force-statement))",
-                "(know__contact)",
                 "(task-value-e-transfer)",
-                "(know__account1)",
-                "(know__funds)"
+                "(know__contact)",
+                "(know__funds)",
+                "(not (force-statement))",
+                "(know__account1)"
             ],
             "effect": {
                 "confirm-e-transfer_DETDUP_confirm-e-transfer__reset-EQ-complete": [
-                    "(not (know__contact))",
-                    "(not (know__funds))",
-                    "(not (task-value-pay_bills))",
                     "(tried-e-transfer)",
+                    "(not (know__task))",
+                    "(not (know__contact))",
+                    "(not (task-value-transfer_funds_between_accounts))",
+                    "(not (task-value-request_money))",
                     "(not (know__account1))",
                     "(not (task-value-e-transfer))",
                     "(not (task-value-cancel_account))",
-                    "(not (know__task))",
-                    "(not (task-value-request_money))",
-                    "(not (task-value-transfer_funds_between_accounts))"
+                    "(not (know__funds))",
+                    "(not (task-value-pay_bills))"
                 ]
             }
         },
         "offer-request": {
             "condition": [
                 "(not (force-statement))",
-                "(not (know__task))",
-                "(not (tried-request-money))"
+                "(not (tried-request-money))",
+                "(not (know__task))"
             ],
             "effect": {
                 "offer-request_DETDUP_offer-request__start-task-EQ-want-transfer": [
-                    "(know__task)"
+                    "(know__task)",
+                    "(not (task-value-transfer_funds_between_accounts))",
+                    "(not (task-value-e-transfer))",
+                    "(not (task-value-cancel_account))",
+                    "(not (task-value-pay_bills))",
+                    "(task-value-request_money)"
                 ],
                 "offer-request_DETDUP_offer-request__start-task-EQ-dont-want": [
+                    "(have-message)",
                     "(force-statement)",
-                    "(tried-request-money)",
-                    "(have-message)"
+                    "(tried-request-money)"
                 ],
                 "offer-request_DETDUP_offer-request__start-task-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -154,50 +169,55 @@
                     "(know__funds)"
                 ],
                 "get-request-options_DETDUP_get-request-options__get-options-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "confirm-request": {
             "condition": [
                 "(not (force-statement))",
+                "(task-value-request_money)",
                 "(know__contact)",
-                "(know__funds)",
-                "(task-value-request_money)"
+                "(know__funds)"
             ],
             "effect": {
                 "confirm-request_DETDUP_confirm-request__reset-EQ-complete": [
-                    "(not (know__contact))",
-                    "(not (know__funds))",
-                    "(not (task-value-pay_bills))",
-                    "(not (task-value-e-transfer))",
-                    "(not (task-value-cancel_account))",
                     "(tried-request-money)",
                     "(not (know__task))",
+                    "(not (know__contact))",
+                    "(not (task-value-transfer_funds_between_accounts))",
                     "(not (task-value-request_money))",
-                    "(not (task-value-transfer_funds_between_accounts))"
+                    "(not (task-value-e-transfer))",
+                    "(not (task-value-cancel_account))",
+                    "(not (know__funds))",
+                    "(not (task-value-pay_bills))"
                 ]
             }
         },
         "offer-pay": {
             "condition": [
                 "(not (force-statement))",
-                "(not (tried-pay-bills))",
-                "(not (know__task))"
+                "(not (know__task))",
+                "(not (tried-pay-bills))"
             ],
             "effect": {
                 "offer-pay_DETDUP_offer-pay__start-task-EQ-want-pay": [
-                    "(know__task)"
+                    "(know__task)",
+                    "(not (task-value-transfer_funds_between_accounts))",
+                    "(not (task-value-request_money))",
+                    "(not (task-value-e-transfer))",
+                    "(not (task-value-cancel_account))",
+                    "(task-value-pay_bills)"
                 ],
                 "offer-pay_DETDUP_offer-pay__start-task-EQ-dont-want": [
-                    "(force-statement)",
                     "(have-message)",
-                    "(tried-pay-bills)"
+                    "(tried-pay-bills)",
+                    "(force-statement)"
                 ],
                 "offer-pay_DETDUP_offer-pay__start-task-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -209,67 +229,72 @@
             ],
             "effect": {
                 "confirm-bill-payment_DETDUP_confirm-bill-payment__reset-EQ-complete": [
-                    "(not (task-value-pay_bills))",
-                    "(tried-pay-bills)",
-                    "(not (task-value-e-transfer))",
-                    "(not (task-value-cancel_account))",
-                    "(not (know__bill))",
                     "(not (know__task))",
+                    "(not (task-value-transfer_funds_between_accounts))",
                     "(not (task-value-request_money))",
-                    "(not (task-value-transfer_funds_between_accounts))"
+                    "(not (task-value-e-transfer))",
+                    "(not (know__bill))",
+                    "(tried-pay-bills)",
+                    "(not (task-value-cancel_account))",
+                    "(not (task-value-pay_bills))"
                 ]
             }
         },
         "offer-cancel": {
             "condition": [
-                "(not (force-statement))",
                 "(not (tried-cancel))",
+                "(not (force-statement))",
                 "(not (know__task))"
             ],
             "effect": {
                 "offer-cancel_DETDUP_offer-cancel__start-task-EQ-want-cancel": [
-                    "(know__task)"
+                    "(know__task)",
+                    "(not (task-value-transfer_funds_between_accounts))",
+                    "(not (task-value-request_money))",
+                    "(not (task-value-e-transfer))",
+                    "(not (task-value-pay_bills))",
+                    "(task-value-cancel_account)"
                 ],
                 "offer-cancel_DETDUP_offer-cancel__start-task-EQ-dont-want": [
-                    "(force-statement)",
+                    "(tried-cancel)",
                     "(have-message)",
-                    "(tried-cancel)"
+                    "(force-statement)"
                 ],
                 "offer-cancel_DETDUP_offer-cancel__start-task-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
         "confirm-cancel": {
             "condition": [
                 "(not (force-statement))",
-                "(task-value-cancel_account)",
                 "(know__account1)",
-                "(know__account2)"
+                "(know__account2)",
+                "(task-value-cancel_account)"
             ],
             "effect": {
                 "confirm-cancel_DETDUP_confirm-cancel__reset-EQ-complete": [
-                    "(tried-cancel)",
-                    "(not (task-value-pay_bills))",
-                    "(not (know__account2))",
+                    "(not (know__task))",
+                    "(not (task-value-transfer_funds_between_accounts))",
+                    "(not (task-value-request_money))",
                     "(not (know__account1))",
                     "(not (task-value-e-transfer))",
                     "(not (task-value-cancel_account))",
-                    "(not (know__task))",
-                    "(not (task-value-request_money))",
-                    "(not (task-value-transfer_funds_between_accounts))"
+                    "(tried-cancel)",
+                    "(not (task-value-pay_bills))",
+                    "(not (know__account2))"
                 ]
             }
         },
         "complete": {
             "condition": [
-                "(tried-cancel)",
-                "(not (force-statement))",
                 "(tried-e-transfer)",
+                "(not (force-statement))",
+                "(tried-request-money)",
                 "(tried-pay-bills)",
-                "(tried-transfer)",
-                "(tried-request-money)"
+                "(tried-cancel)",
+                "(tried-transfer)"
             ],
             "effect": {
                 "complete_DETDUP_complete__finish-EQ-done": [
@@ -279,30 +304,30 @@
         },
         "dialogue_statement": {
             "condition": [
-                "(force-statement)",
-                "(have-message)"
+                "(have-message)",
+                "(force-statement)"
             ],
             "effect": {
                 "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
-                    "(not (force-statement))",
-                    "(not (have-message))"
+                    "(not (have-message))",
+                    "(not (force-statement))"
                 ]
             }
         },
         "slot-fill__select-account": {
             "condition": [
                 "(not (force-statement))",
-                "(select-account)",
-                "(not (know__account1))"
+                "(not (know__account1))",
+                "(select-account)"
             ],
             "effect": {
                 "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-account1_found": [
-                    "(not (select-account))",
-                    "(know__account1)"
+                    "(know__account1)",
+                    "(not (select-account))"
                 ],
                 "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -313,12 +338,12 @@
             ],
             "effect": {
                 "slot-fill__get-payment_DETDUP_slot-fill__get-payment__validate-slot-fill-EQ-bill_found": [
-                    "(know__bill)",
-                    "(select-account)"
+                    "(select-account)",
+                    "(know__bill)"
                 ],
                 "slot-fill__get-payment_DETDUP_slot-fill__get-payment__validate-slot-fill-EQ-fallback": [
-                    "(force-statement)",
-                    "(have-message)"
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         },
@@ -329,66 +354,39 @@
             ],
             "effect": {
                 "slot-fill__get-cancel_DETDUP_slot-fill__get-cancel__validate-slot-fill-EQ-account2_found": [
-                    "(force-statement)",
-                    "(have-message)",
+                    "(select-account)",
                     "(know__account2)",
-                    "(select-account)"
-                ],
-                "slot-fill__get-cancel_DETDUP_slot-fill__get-cancel__validate-slot-fill-EQ-fallback": [
                     "(force-statement)",
                     "(have-message)"
-                ]
-            }
-        },
-        "set-task": {
-            "condition": [
-                "(not (task-value-pay_bills))",
-                "(not (task-value-e-transfer))",
-                "(know__task)",
-                "(not (task-value-cancel_account))",
-                "(not (task-value-request_money))",
-                "(not (task-value-transfer_funds_between_accounts))"
-            ],
-            "effect": {
-                "set-task_DETDUP_set-task__set-valid-value-EQ-transfer_funds_between_accounts": [
-                    "(task-value-transfer_funds_between_accounts)"
                 ],
-                "set-task_DETDUP_set-task__set-valid-value-EQ-e-transfer": [
-                    "(task-value-e-transfer)"
-                ],
-                "set-task_DETDUP_set-task__set-valid-value-EQ-request_money": [
-                    "(task-value-request_money)"
-                ],
-                "set-task_DETDUP_set-task__set-valid-value-EQ-pay_bills": [
-                    "(task-value-pay_bills)"
-                ],
-                "set-task_DETDUP_set-task__set-valid-value-EQ-cancel_account": [
-                    "(task-value-cancel_account)"
+                "slot-fill__get-cancel_DETDUP_slot-fill__get-cancel__validate-slot-fill-EQ-fallback": [
+                    "(have-message)",
+                    "(force-statement)"
                 ]
             }
         }
     },
     "initial_state": [
-        "(not (select-account))",
-        "(not (know__funds))",
-        "(not (task-value-pay_bills))",
-        "(not (task-value-e-transfer))",
-        "(not (task-value-cancel_account))",
-        "(not (know__task))",
-        "(not (have-message))",
-        "(not (tried-pay-bills))",
-        "(not (goal))",
         "(not (know__account1))",
-        "(not (task-value-request_money))",
-        "(not (task-value-transfer_funds_between_accounts))",
-        "(not (know__contact))",
-        "(not (know__account2))",
-        "(not (force-statement))",
-        "(not (tried-cancel))",
-        "(not (tried-transfer))",
+        "(not (task-value-cancel_account))",
+        "(not (have-message))",
         "(not (tried-request-money))",
-        "(not (know__goal))",
+        "(not (task-value-pay_bills))",
+        "(not (know__contact))",
+        "(not (goal))",
+        "(not (task-value-request_money))",
+        "(not (tried-e-transfer))",
         "(not (know__bill))",
-        "(not (tried-e-transfer))"
+        "(not (know__funds))",
+        "(not (tried-cancel))",
+        "(not (task-value-transfer_funds_between_accounts))",
+        "(not (force-statement))",
+        "(not (know__account2))",
+        "(not (select-account))",
+        "(not (know__task))",
+        "(not (task-value-e-transfer))",
+        "(not (tried-pay-bills))",
+        "(not (know__goal))",
+        "(not (tried-transfer))"
     ]
 }
