@@ -199,45 +199,21 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
             "type": "flag",
             "init": False,
         }
-    # create a function that sets the relevant "value flag" context variables to true
-    # if the given context variable is known using context dependent determination
-    processed[f"set-{ctx_var}"] = {
-        "type": "system",
-        "subtype": "Context dependent determination",
-        "condition": {
-            **{ctx_var: {"known": True}},
-            **{
-                f"{ctx_var}-value-{v.replace(' ', '_')}": {"value": False}
-                for v in var_options
-            },
-        },
-        "effect": {
-            "set-valid-value": {
-                "oneof": {
-                    "outcomes": {
-                        v.replace(" ", "_"): {
-                            "updates": {
-                                f"{ctx_var}-value-{v.replace(' ', '_')}": {
-                                    "value": True
-                                },
-                            },
-                            "context": {ctx_var: {"value": v}},
-                        }
-                        for v in var_options
-                    }
-                }
-            }
-        },
-    }
-    # whenever we lose knowledge of the context variable, reset all values
+
     for act in loaded_yaml["actions"]:
         for eff, eff_config in loaded_yaml["actions"][act]["effect"].items():
             for option in eff_config:
                 for out, out_config in eff_config[option]["outcomes"].items():
                     if "updates" in out_config:
                         for update_var, update_cfg in out_config["updates"].items():
-                            if ctx_var == update_var and "known" in update_cfg:
-                                if update_cfg["known"] is False:
+                            if ctx_var == update_var:
+                                # whenever we lose knowledge of the context variable, reset all values
+                                if (
+                                    "known" in update_cfg
+                                    and update_cfg["known"] is False
+                                ) or (
+                                    "value" in update_cfg and not update_cfg["value"]
+                                ):
                                     for v in var_options:
                                         processed[act]["effect"][eff][option][
                                             "outcomes"
@@ -246,6 +222,27 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
                                         ] = {
                                             "value": False
                                         }
+                                # and whenever we gain knowledge of the context variable, reset all values
+                                # and set the value we just learned
+                                else:
+                                    if "value" in update_cfg:
+                                        for v in var_options:
+                                            if v == update_cfg["value"]:
+                                                processed[act]["effect"][eff][option][
+                                                    "outcomes"
+                                                ][out]["updates"][
+                                                    f"{ctx_var}-value-{v.replace(' ', '_')}"
+                                                ] = {
+                                                    "value": True
+                                                }
+                                            else:
+                                                processed[act]["effect"][eff][option][
+                                                    "outcomes"
+                                                ][out]["updates"][
+                                                    f"{ctx_var}-value-{v.replace(' ', '_')}"
+                                                ] = {
+                                                    "value": False
+                                                }
     loaded_yaml["actions"] = processed
 
 
