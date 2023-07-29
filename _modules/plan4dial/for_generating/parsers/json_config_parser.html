@@ -272,45 +272,21 @@
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;flag&quot;</span><span class="p">,</span>
             <span class="s2">&quot;init&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
         <span class="p">}</span>
-    <span class="c1"># create a function that sets the relevant &quot;value flag&quot; context variables to true</span>
-    <span class="c1"># if the given context variable is known using context dependent determination</span>
-    <span class="n">processed</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;set-</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;system&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;subtype&quot;</span><span class="p">:</span> <span class="s2">&quot;Context dependent determination&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;condition&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="o">**</span><span class="p">{</span><span class="n">ctx_var</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;known&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}},</span>
-            <span class="o">**</span><span class="p">{</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
-                <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_options</span>
-            <span class="p">},</span>
-        <span class="p">},</span>
-        <span class="s2">&quot;effect&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;set-valid-value&quot;</span><span class="p">:</span> <span class="p">{</span>
-                <span class="s2">&quot;oneof&quot;</span><span class="p">:</span> <span class="p">{</span>
-                    <span class="s2">&quot;outcomes&quot;</span><span class="p">:</span> <span class="p">{</span>
-                        <span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">):</span> <span class="p">{</span>
-                            <span class="s2">&quot;updates&quot;</span><span class="p">:</span> <span class="p">{</span>
-                                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">:</span> <span class="p">{</span>
-                                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span>
-                                <span class="p">},</span>
-                            <span class="p">},</span>
-                            <span class="s2">&quot;context&quot;</span><span class="p">:</span> <span class="p">{</span><span class="n">ctx_var</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">v</span><span class="p">}},</span>
-                        <span class="p">}</span>
-                        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_options</span>
-                    <span class="p">}</span>
-                <span class="p">}</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
-    <span class="c1"># whenever we lose knowledge of the context variable, reset all values</span>
+
     <span class="k">for</span> <span class="n">act</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]:</span>
         <span class="k">for</span> <span class="n">eff</span><span class="p">,</span> <span class="n">eff_config</span> <span class="ow">in</span> <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">][</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">:</span>
                 <span class="k">for</span> <span class="n">out</span><span class="p">,</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">eff_config</span><span class="p">[</span><span class="n">option</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                     <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
                         <span class="k">for</span> <span class="n">update_var</span><span class="p">,</span> <span class="n">update_cfg</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-                            <span class="k">if</span> <span class="n">ctx_var</span> <span class="o">==</span> <span class="n">update_var</span> <span class="ow">and</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">update_cfg</span><span class="p">:</span>
-                                <span class="k">if</span> <span class="n">update_cfg</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                            <span class="k">if</span> <span class="n">ctx_var</span> <span class="o">==</span> <span class="n">update_var</span><span class="p">:</span>
+                                <span class="c1"># whenever we lose knowledge of the context variable, reset all values</span>
+                                <span class="k">if</span> <span class="p">(</span>
+                                    <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">update_cfg</span>
+                                    <span class="ow">and</span> <span class="n">update_cfg</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span>
+                                <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                                    <span class="s2">&quot;value&quot;</span> <span class="ow">in</span> <span class="n">update_cfg</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">update_cfg</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+                                <span class="p">):</span>
                                     <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_options</span><span class="p">:</span>
                                         <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span>
                                             <span class="s2">&quot;outcomes&quot;</span>
@@ -319,6 +295,27 @@
                                         <span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
                                             <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span>
                                         <span class="p">}</span>
+                                <span class="c1"># and whenever we gain knowledge of the context variable, reset all values</span>
+                                <span class="c1"># and set the value we just learned</span>
+                                <span class="k">else</span><span class="p">:</span>
+                                    <span class="k">if</span> <span class="s2">&quot;value&quot;</span> <span class="ow">in</span> <span class="n">update_cfg</span><span class="p">:</span>
+                                        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">var_options</span><span class="p">:</span>
+                                            <span class="k">if</span> <span class="n">v</span> <span class="o">==</span> <span class="n">update_cfg</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]:</span>
+                                                <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span>
+                                                    <span class="s2">&quot;outcomes&quot;</span>
+                                                <span class="p">][</span><span class="n">out</span><span class="p">][</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span>
+                                                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                                                <span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">True</span>
+                                                <span class="p">}</span>
+                                            <span class="k">else</span><span class="p">:</span>
+                                                <span class="n">processed</span><span class="p">[</span><span class="n">act</span><span class="p">][</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="n">eff</span><span class="p">][</span><span class="n">option</span><span class="p">][</span>
+                                                    <span class="s2">&quot;outcomes&quot;</span>
+                                                <span class="p">][</span><span class="n">out</span><span class="p">][</span><span class="s2">&quot;updates&quot;</span><span class="p">][</span>
+                                                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">ctx_var</span><span class="si">}</span><span class="s2">-value-</span><span class="si">{</span><span class="n">v</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;_&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+                                                <span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                                                    <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="kc">False</span>
+                                                <span class="p">}</span>
     <span class="n">loaded_yaml</span><span class="p">[</span><span class="s2">&quot;actions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">processed</span></div>
 
 
