@@ -1,63 +1,175 @@
 {
     "actions": {
-        "determine_test": {
+        "get_symptoms": {
             "condition": [
-                "(know__positive-90)",
-                "(know__have-symptoms)",
-                "(know__exposure-period-over-5)",
-                "(know__covid-exposure)",
-                "(know__positive-30)",
+                "(have-symptoms)",
                 "(not (force-statement))"
             ],
             "effect": {
-                "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-been-5": [
-                    "(should-test)",
-                    "(know__should-test)",
-                    "(have-message)",
-                    "(force-statement)"
+                "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-covid": [
+                    "(know__symptoms)",
+                    "(not (symptoms-value-rash))",
+                    "(symptoms-value-covid)",
+                    "(not (symptoms-value-teeth))"
                 ],
-                "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-less-5": [
-                    "(know__should-test)",
+                "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-rash": [
+                    "(know__symptoms)",
+                    "(symptoms-value-rash)",
+                    "(not (symptoms-value-teeth))",
+                    "(not (symptoms-value-covid))"
+                ],
+                "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-teeth": [
+                    "(know__symptoms)",
+                    "(not (symptoms-value-rash))",
+                    "(symptoms-value-teeth)",
+                    "(not (symptoms-value-covid))"
+                ],
+                "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "handle_no_issues": {
+            "condition": [
+                "(not (force-statement))",
+                "(not (covid-exposure))",
+                "(not (completed-diagnostic))",
+                "(not (have-symptoms))",
+                "(know__have-symptoms)",
+                "(know__covid-exposure)"
+            ],
+            "effect": {
+                "handle_no_issues_DETDUP_handle_no_issues__check-test-EQ-no-exposure-no-symptoms": [
+                    "(completed-diagnostic)"
+                ]
+            }
+        },
+        "need-covid-diagnostic-1": {
+            "condition": [
+                "(know__symptoms)",
+                "(not (know__non-covid-illness))",
+                "(not (force-statement))",
+                "(symptoms-value-covid)"
+            ],
+            "effect": {
+                "need-covid-diagnostic-1_DETDUP_need-covid-diagnostic-1__check-test-EQ-covid-symptoms": [
+                    "(not (non-covid-illness))",
+                    "(know__non-covid-illness)"
+                ]
+            }
+        },
+        "need-covid-diagnostic-2": {
+            "condition": [
+                "(not (know__non-covid-illness))",
+                "(not (force-statement))",
+                "(covid-exposure)"
+            ],
+            "effect": {
+                "need-covid-diagnostic-2_DETDUP_need-covid-diagnostic-2__check-test-EQ-covid-symptoms": [
+                    "(not (non-covid-illness))",
+                    "(know__non-covid-illness)"
+                ]
+            }
+        },
+        "determine-is-non-covid-illness": {
+            "condition": [
+                "(know__symptoms)",
+                "(not (know__non-covid-illness))",
+                "(not (force-statement))",
+                "(know__covid-exposure)"
+            ],
+            "effect": {
+                "determine-is-non-covid-illness_DETDUP_determine-is-non-covid-illness__check-test-EQ-rash": [
+                    "(non-covid-illness)",
+                    "(know__non-covid-illness)"
+                ],
+                "determine-is-non-covid-illness_DETDUP_determine-is-non-covid-illness__check-test-EQ-teeth": [
+                    "(non-covid-illness)",
+                    "(know__non-covid-illness)"
+                ]
+            }
+        },
+        "diagnose_regular_sickness": {
+            "condition": [
+                "(non-covid-illness)",
+                "(not (force-statement))",
+                "(know__over-week)",
+                "(not (completed-diagnostic))",
+                "(know__non-covid-illness)"
+            ],
+            "effect": {
+                "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-under": [
                     "(have-message)",
                     "(force-statement)",
-                    "(not (should-test))"
+                    "(completed-diagnostic)"
                 ],
-                "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-no-90": [
-                    "(should-test)",
-                    "(know__should-test)",
-                    "(have-message)",
-                    "(force-statement)"
-                ],
-                "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-30": [
-                    "(should-test)",
-                    "(know__should-test)",
-                    "(have-message)",
-                    "(force-statement)"
-                ],
-                "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-30": [
-                    "(know__should-test)",
+                "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-over": [
                     "(have-message)",
                     "(force-statement)",
-                    "(not (should-test))"
+                    "(completed-diagnostic)"
                 ],
-                "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-90": [
-                    "(should-test)",
-                    "(know__should-test)",
+                "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-teeth": [
                     "(have-message)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(completed-diagnostic)"
+                ]
+            }
+        },
+        "determine_covid_test": {
+            "condition": [
+                "(not (force-statement))",
+                "(know__symptoms)",
+                "(know__exposure-period-over-5)",
+                "(not (completed-diagnostic))",
+                "(know__positive-90)",
+                "(know__positive-30)",
+                "(know__non-covid-illness)",
+                "(not (non-covid-illness))",
+                "(know__covid-exposure)"
+            ],
+            "effect": {
+                "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-been-5": [
+                    "(have-message)",
+                    "(force-statement)",
+                    "(completed-diagnostic)"
                 ],
-                "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-90": [
-                    "(should-test)",
-                    "(know__should-test)",
+                "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-less-5": [
                     "(have-message)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(completed-diagnostic)"
+                ],
+                "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-no-90": [
+                    "(have-message)",
+                    "(force-statement)",
+                    "(completed-diagnostic)"
+                ],
+                "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-30": [
+                    "(have-message)",
+                    "(force-statement)",
+                    "(completed-diagnostic)"
+                ],
+                "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-30": [
+                    "(have-message)",
+                    "(force-statement)",
+                    "(completed-diagnostic)"
+                ],
+                "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-90": [
+                    "(have-message)",
+                    "(force-statement)",
+                    "(completed-diagnostic)"
+                ],
+                "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-90": [
+                    "(have-message)",
+                    "(force-statement)",
+                    "(completed-diagnostic)"
                 ]
             }
         },
         "complete": {
             "condition": [
-                "(know__should-test)",
-                "(not (force-statement))"
+                "(not (force-statement))",
+                "(completed-diagnostic)"
             ],
             "effect": {
                 "complete_DETDUP_complete__finish-EQ-finish": [
@@ -67,13 +179,60 @@
         },
         "dialogue_statement": {
             "condition": [
-                "(have-message)",
-                "(force-statement)"
+                "(force-statement)",
+                "(have-message)"
             ],
             "effect": {
                 "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock": [
                     "(not (have-message))",
                     "(not (force-statement))"
+                ]
+            }
+        },
+        "slot-fill__get_have_symptoms": {
+            "condition": [
+                "(not (know__have-symptoms))",
+                "(not (force-statement))"
+            ],
+            "effect": {
+                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome": [
+                    "(force-statement)",
+                    "(have-symptoms)",
+                    "(know__have-symptoms)",
+                    "(have-message)"
+                ],
+                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome": [
+                    "(not (symptoms-value-teeth))",
+                    "(know__symptoms)",
+                    "(not (symptoms-value-covid))",
+                    "(not (have-symptoms))",
+                    "(not (symptoms-value-rash))",
+                    "(know__have-symptoms)"
+                ],
+                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
+                ]
+            }
+        },
+        "slot-fill__get_sickness_period": {
+            "condition": [
+                "(have-symptoms)",
+                "(not (force-statement))",
+                "(not (know__over-week))"
+            ],
+            "effect": {
+                "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-confirm_outcome": [
+                    "(over-week)",
+                    "(know__over-week)"
+                ],
+                "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-deny_outcome": [
+                    "(not (over-week))",
+                    "(know__over-week)"
+                ],
+                "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-fallback": [
+                    "(force-statement)",
+                    "(have-message)"
                 ]
             }
         },
@@ -92,29 +251,8 @@
                     "(know__covid-exposure)"
                 ],
                 "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-fallback": [
-                    "(have-message)",
-                    "(force-statement)"
-                ]
-            }
-        },
-        "slot-fill__get_have_symptoms": {
-            "condition": [
-                "(not (force-statement))",
-                "(not (know__have-symptoms))",
-                "(know__covid-exposure)"
-            ],
-            "effect": {
-                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome": [
-                    "(know__have-symptoms)",
-                    "(have-symptoms)"
-                ],
-                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome": [
-                    "(know__have-symptoms)",
-                    "(not (have-symptoms))"
-                ],
-                "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback": [
-                    "(have-message)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(have-message)"
                 ]
             }
         },
@@ -122,20 +260,22 @@
             "condition": [
                 "(not (force-statement))",
                 "(not (know__exposure-period-over-5))",
+                "(know__non-covid-illness)",
+                "(not (non-covid-illness))",
                 "(know__covid-exposure)"
             ],
             "effect": {
                 "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-confirm_outcome": [
-                    "(exposure-period-over-5)",
-                    "(know__exposure-period-over-5)"
+                    "(know__exposure-period-over-5)",
+                    "(exposure-period-over-5)"
                 ],
                 "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-deny_outcome": [
-                    "(not (exposure-period-over-5))",
-                    "(know__exposure-period-over-5)"
+                    "(know__exposure-period-over-5)",
+                    "(not (exposure-period-over-5))"
                 ],
                 "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-fallback": [
-                    "(have-message)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(have-message)"
                 ]
             }
         },
@@ -143,28 +283,29 @@
             "condition": [
                 "(not (force-statement))",
                 "(not (know__positive-30))",
-                "(know__covid-exposure)"
+                "(not (non-covid-illness))",
+                "(know__non-covid-illness)"
             ],
             "effect": {
                 "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-confirm_outcome": [
-                    "(know__positive-30)",
-                    "(positive-30)"
+                    "(positive-30)",
+                    "(know__positive-30)"
                 ],
                 "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-deny_outcome": [
-                    "(know__positive-30)",
-                    "(not (positive-30))"
+                    "(not (positive-30))",
+                    "(know__positive-30)"
                 ],
                 "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-fallback": [
-                    "(have-message)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(have-message)"
                 ]
             }
         },
         "slot-fill__get_positive_90": {
             "condition": [
-                "(know__positive-30)",
+                "(not (force-statement))",
                 "(not (know__positive-90))",
-                "(not (force-statement))"
+                "(know__positive-30)"
             ],
             "effect": {
                 "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-confirm_outcome": [
@@ -176,27 +317,34 @@
                     "(know__positive-90)"
                 ],
                 "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-fallback": [
-                    "(have-message)",
-                    "(force-statement)"
+                    "(force-statement)",
+                    "(have-message)"
                 ]
             }
         }
     },
     "initial_state": [
-        "(not (know__should-test))",
-        "(not (know__positive-30))",
-        "(not (know__positive-90))",
-        "(not (know__exposure-period-over-5))",
-        "(not (exposure-period-over-5))",
-        "(not (goal))",
+        "(not (over-week))",
         "(not (know__have-symptoms))",
+        "(not (symptoms-value-covid))",
+        "(not (symptoms-value-teeth))",
+        "(not (know__symptoms))",
         "(not (positive-90))",
-        "(not (positive-30))",
-        "(not (have-symptoms))",
-        "(not (know__covid-exposure))",
-        "(not (have-message))",
-        "(not (force-statement))",
+        "(not (know__positive-90))",
         "(not (covid-exposure))",
-        "(not (should-test))"
+        "(not (know__exposure-period-over-5))",
+        "(not (know__positive-30))",
+        "(not (know__covid-exposure))",
+        "(not (exposure-period-over-5))",
+        "(not (have-symptoms))",
+        "(not (have-message))",
+        "(not (know__non-covid-illness))",
+        "(not (non-covid-illness))",
+        "(not (force-statement))",
+        "(not (completed-diagnostic))",
+        "(not (symptoms-value-rash))",
+        "(not (goal))",
+        "(not (positive-30))",
+        "(not (know__over-week))"
     ]
 }

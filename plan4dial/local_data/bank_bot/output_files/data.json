@@ -45,11 +45,11 @@
                         "pay my monthly utility bill"
                     ]
                 },
-                "cancel account": {
+                "create account": {
                     "variations": [
-                        "cancel one of my accounts",
+                        "create one of my accounts",
                         "remove one of my accounts",
-                        "cancel an account"
+                        "create an account"
                     ]
                 }
             },
@@ -74,7 +74,7 @@
             "type": "flag",
             "config": false
         },
-        "tried-cancel": {
+        "tried-create": {
             "type": "flag",
             "config": false
         },
@@ -82,9 +82,7 @@
             "type": "enum",
             "config": [
                 "chequing",
-                "savings",
-                "retirement fund",
-                "college fund"
+                "savings"
             ],
             "known": {
                 "type": "flag",
@@ -94,8 +92,6 @@
         "account2": {
             "type": "enum",
             "config": [
-                "chequing",
-                "savings",
                 "retirement fund",
                 "college fund"
             ],
@@ -179,7 +175,7 @@
             "type": "flag",
             "config": false
         },
-        "task-value-cancel_account": {
+        "task-value-create_account": {
             "type": "flag",
             "config": false
         }
@@ -190,11 +186,13 @@
             "utterances": [
                 "yes",
                 "yeah",
-                "that's it",
                 "Y",
                 "mhm",
                 "confirm",
-                "yes please"
+                "yes please",
+                "yup",
+                "uh huh",
+                "ya"
             ],
             "type": "regular"
         },
@@ -203,12 +201,12 @@
             "utterances": [
                 "no",
                 "not at all",
-                "that's not what i meant",
                 "absolutely not",
-                "i don't want that",
                 "nah",
                 "no thanks",
-                "no thank you"
+                "no thank you",
+                "nope",
+                "nuh uh"
             ],
             "type": "regular"
         },
@@ -221,7 +219,7 @@
                 "Please select $account1.",
                 "$account1",
                 "Use $account1",
-                "use $account for this task",
+                "use $account1 for this task",
                 "I need to use $account1"
             ],
             "type": "regular"
@@ -277,14 +275,15 @@
             ],
             "type": "regular"
         },
-        "share_cancel": {
+        "share_create": {
             "entities": [
                 "$account2"
             ],
             "utterances": [
-                "I want to cancel my $account2 account.",
-                "Please cancel my $account2 account.",
-                "I no longer want to use my $account2 account, please delete it."
+                "I want to create a $account2 account.",
+                "Please create a $account2 account.",
+                "I really need a $account2 account, please create one.",
+                "I want to create a $account2 account for my son."
             ],
             "type": "regular"
         },
@@ -369,9 +368,9 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
@@ -435,11 +434,13 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -448,12 +449,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
@@ -639,9 +640,9 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
@@ -716,9 +717,9 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
@@ -782,11 +783,13 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -795,12 +798,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
@@ -983,9 +986,9 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
@@ -1060,9 +1063,9 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
@@ -1126,11 +1129,13 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -1139,12 +1144,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
@@ -1312,9 +1317,9 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
@@ -1388,9 +1393,9 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
@@ -1454,11 +1459,13 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -1467,12 +1474,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
@@ -1489,6 +1496,10 @@
                 "Ok, I'm paying your $bill bill from your $account1 account."
             ],
             "condition": [
+                [
+                    "account1",
+                    "Known"
+                ],
                 [
                     "bill",
                     "Known"
@@ -1510,6 +1521,12 @@
                         "updates": {
                             "bill": {
                                 "variable": "bill",
+                                "certainty": "Unknown",
+                                "value": null,
+                                "interpretation": "json"
+                            },
+                            "account1": {
+                                "variable": "account1",
                                 "certainty": "Unknown",
                                 "value": null,
                                 "interpretation": "json"
@@ -1545,9 +1562,9 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
@@ -1555,6 +1572,7 @@
                         "name": "confirm-bill-payment_DETDUP_confirm-bill-payment__reset-EQ-complete",
                         "assignments": {
                             "$bill": "didnt-find",
+                            "$account1": "didnt-find",
                             "$task": "didnt-find"
                         }
                     }
@@ -1569,14 +1587,14 @@
                 }
             }
         },
-        "offer-cancel": {
+        "offer-new": {
             "type": "dialogue",
             "message_variants": [
-                "Would you like to cancel any of your existing accounts?"
+                "Would you like to create a new account?"
             ],
             "condition": [
                 [
-                    "tried-cancel",
+                    "tried-create",
                     false
                 ],
                 [
@@ -1589,13 +1607,13 @@
                 ]
             ],
             "effect": {
-                "global-outcome-name": "offer-cancel__start-task",
+                "global-outcome-name": "offer-new__start-task",
                 "type": "oneof",
                 "outcomes": [
                     {
                         "updates": {
                             "task": {
-                                "value": "cancel account",
+                                "value": "create account",
                                 "variable": "task",
                                 "certainty": "Known",
                                 "interpretation": "json"
@@ -1620,23 +1638,23 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": true,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
-                        "name": "offer-cancel_DETDUP_offer-cancel__start-task-EQ-want-cancel",
+                        "name": "offer-new_DETDUP_offer-new__start-task-EQ-want-create",
                         "assignments": {
                             "$task": "found"
                         }
                     },
                     {
                         "updates": {
-                            "tried-cancel": {
+                            "tried-create": {
                                 "value": true,
-                                "variable": "tried-cancel",
+                                "variable": "tried-create",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -1652,9 +1670,9 @@
                         },
                         "intent": "deny",
                         "response_variants": [
-                            "Ok! No accounts will be cancelled."
+                            "Ok! No accounts will be created."
                         ],
-                        "name": "offer-cancel_DETDUP_offer-cancel__start-task-EQ-dont-want",
+                        "name": "offer-new_DETDUP_offer-new__start-task-EQ-dont-want",
                         "assignments": {}
                     },
                     {
@@ -1671,7 +1689,7 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "offer-cancel_DETDUP_offer-cancel__start-task-EQ-fallback",
+                        "name": "offer-new_DETDUP_offer-new__start-task-EQ-fallback",
                         "assignments": {}
                     }
                 ]
@@ -1686,11 +1704,13 @@
                     "utterances": [
                         "yes",
                         "yeah",
-                        "that's it",
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -1699,12 +1719,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
@@ -1715,10 +1735,10 @@
                 }
             }
         },
-        "confirm-cancel": {
+        "confirm-create": {
             "type": "dialogue",
             "message_variants": [
-                "Account $account2 was successfully cancelled, and the money was transferred to $account1."
+                "Account $account2 was successfully created with starter funds transferred from $account1."
             ],
             "condition": [
                 [
@@ -1734,12 +1754,12 @@
                     false
                 ],
                 [
-                    "task-value-cancel_account",
+                    "task-value-create_account",
                     true
                 ]
             ],
             "effect": {
-                "global-outcome-name": "confirm-cancel__reset",
+                "global-outcome-name": "confirm-create__reset",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -1762,9 +1782,9 @@
                                 "value": null,
                                 "interpretation": "json"
                             },
-                            "tried-cancel": {
+                            "tried-create": {
                                 "value": true,
-                                "variable": "tried-cancel",
+                                "variable": "tried-create",
                                 "interpretation": "json"
                             },
                             "task-value-transfer_funds_between_accounts": {
@@ -1787,14 +1807,14 @@
                                 "variable": "task-value-pay_bills",
                                 "interpretation": "json"
                             },
-                            "task-value-cancel_account": {
+                            "task-value-create_account": {
                                 "value": false,
-                                "variable": "task-value-cancel_account",
+                                "variable": "task-value-create_account",
                                 "interpretation": "json"
                             }
                         },
                         "intent": "utter_msg",
-                        "name": "confirm-cancel_DETDUP_confirm-cancel__reset-EQ-complete",
+                        "name": "confirm-create_DETDUP_confirm-create__reset-EQ-complete",
                         "assignments": {
                             "$account1": "didnt-find",
                             "$account2": "didnt-find",
@@ -1835,7 +1855,7 @@
                     true
                 ],
                 [
-                    "tried-cancel",
+                    "tried-create",
                     true
                 ],
                 [
@@ -1994,7 +2014,7 @@
                         "Please select $account1.",
                         "$account1",
                         "Use $account1",
-                        "use $account for this task",
+                        "use $account1 for this task",
                         "I need to use $account1"
                     ],
                     "type": "regular"
@@ -2026,6 +2046,10 @@
                 [
                     "force-statement",
                     false
+                ],
+                [
+                    "task-value-pay_bills",
+                    true
                 ]
             ],
             "effect": {
@@ -2090,10 +2114,10 @@
                 }
             }
         },
-        "slot-fill__get-cancel": {
+        "slot-fill__get-create": {
             "type": "dialogue",
             "message_variants": [
-                "Which account would you like to cancel?"
+                "What account type would you like to create?"
             ],
             "fallback_message_variants": [
                 "Sorry, that isn't a valid account."
@@ -2110,10 +2134,14 @@
                 [
                     "force-statement",
                     false
+                ],
+                [
+                    "task-value-create_account",
+                    true
                 ]
             ],
             "effect": {
-                "global-outcome-name": "slot-fill__get-cancel__validate-slot-fill",
+                "global-outcome-name": "slot-fill__get-create__validate-slot-fill",
                 "type": "oneof",
                 "outcomes": [
                     {
@@ -2140,11 +2168,11 @@
                                 "interpretation": "json"
                             }
                         },
-                        "intent": "share_cancel",
+                        "intent": "share_create",
                         "response_variants": [
-                            "Ok, I can do that. However, you have some balance remaining in the account you want to cancel. You need to transfer the remaining balance to one of your other accounts."
+                            "Ok. Your new account was created, but you need to transfer some funds into this new account to open it. If you specify an account, I can transfer a small amount of funds from that to your new account."
                         ],
-                        "name": "slot-fill__get-cancel_DETDUP_slot-fill__get-cancel__validate-slot-fill-EQ-account2_found",
+                        "name": "slot-fill__get-create_DETDUP_slot-fill__get-create__validate-slot-fill-EQ-account2_found",
                         "assignments": {
                             "$account2": "found"
                         }
@@ -2163,20 +2191,21 @@
                             }
                         },
                         "intent": "fallback",
-                        "name": "slot-fill__get-cancel_DETDUP_slot-fill__get-cancel__validate-slot-fill-EQ-fallback",
+                        "name": "slot-fill__get-create_DETDUP_slot-fill__get-create__validate-slot-fill-EQ-fallback",
                         "assignments": {}
                     }
                 ]
             },
             "intents": {
-                "share_cancel": {
+                "share_create": {
                     "entities": [
                         "$account2"
                     ],
                     "utterances": [
-                        "I want to cancel my $account2 account.",
-                        "Please cancel my $account2 account.",
-                        "I no longer want to use my $account2 account, please delete it."
+                        "I want to create a $account2 account.",
+                        "Please create a $account2 account.",
+                        "I really need a $account2 account, please create one.",
+                        "I want to create a $account2 account for my son."
                     ],
                     "type": "regular"
                 },

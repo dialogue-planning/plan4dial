@@ -1,19 +1,61 @@
 {
 
-  "init": "8",
+  "init": "37",
   "goal": "0",
   "nodes" : {
+    "0": {
+      "expected_successor": false,
+      "action": "---",
+      "state": "0x1077840",
+      "distance": 0,
+      "is_relevant": 1,
+      "is_goal": 1,
+      "is_sc": 1,
+      "successors": [
+
+       ]
+    },
+    "12": {
+      "expected_successor": "1",
+      "action": "confirm-transfer",
+      "state": "0x10966b0",
+      "distance": 2,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "confirm-transfer_DETDUP_confirm-transfer__transfer-EQ-complete",
+            "successor_id": "1"
+        }
+       ]
+    },
+    "14": {
+      "expected_successor": "13",
+      "action": "dialogue_statement",
+      "state": "0x1090710",
+      "distance": 4,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "13"
+        }
+       ]
+    },
     "1": {
       "expected_successor": "0",
       "action": "complete",
-      "state": "0x241c970",
+      "state": "0x10825e0",
       "distance": 1,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "complete_DETDUP_complete__finish-EQ-finish",
+            "outcome_label": "complete_DETDUP_complete__finish-EQ-done",
             "successor_id": "0"
         }
        ]
@@ -21,7 +63,7 @@
     "2": {
       "expected_successor": "1",
       "action": "dialogue_statement",
-      "state": "0x241ac50",
+      "state": "0x1082980",
       "distance": 2,
       "is_relevant": 0,
       "is_goal": 0,
@@ -33,221 +75,177 @@
         }
        ]
     },
-    "3": {
-      "expected_successor": "2",
-      "action": "determine_test",
-      "state": "0x2424e40",
+    "13": {
+      "expected_successor": "12",
+      "action": "get-transfer-options",
+      "state": "0x108d9e0",
       "distance": 3,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-30",
+            "outcome_label": "get-transfer-options_DETDUP_get-transfer-options__get-options-EQ-fallback",
+            "successor_id": "14"
+        },
+        {
+            "outcome_label": "get-transfer-options_DETDUP_get-transfer-options__get-options-EQ-get-valid-options",
+            "successor_id": "12"
+        }
+       ]
+    },
+    "3": {
+      "expected_successor": "2",
+      "action": "offer-transfer",
+      "state": "0x10824e0",
+      "distance": 3,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "offer-transfer_DETDUP_offer-transfer__start-task-EQ-dont-want",
             "successor_id": "2"
         },
         {
-            "outcome_label": "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-90",
-            "successor_id": "2"
+            "outcome_label": "offer-transfer_DETDUP_offer-transfer__start-task-EQ-fallback",
+            "successor_id": "4"
         },
         {
-            "outcome_label": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-30",
-            "successor_id": "2"
-        },
-        {
-            "outcome_label": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-90",
-            "successor_id": "2"
-        },
-        {
-            "outcome_label": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-no-90",
-            "successor_id": "2"
-        },
-        {
-            "outcome_label": "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-been-5",
-            "successor_id": "2"
-        },
-        {
-            "outcome_label": "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-less-5",
-            "successor_id": "2"
+            "outcome_label": "offer-transfer_DETDUP_offer-transfer__start-task-EQ-want-transfer",
+            "successor_id": "13"
         }
        ]
     },
     "4": {
       "expected_successor": "3",
-      "action": "slot-fill__get_positive_90",
-      "state": "0x2424ed0",
+      "action": "dialogue_statement",
+      "state": "0x10830e0",
       "distance": 4,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-confirm_outcome",
-            "successor_id": "3"
-        },
-        {
-            "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-deny_outcome",
-            "successor_id": "3"
-        },
-        {
-            "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-fallback",
-            "successor_id": "9"
-        }
-       ]
-    },
-    "0": {
-      "expected_successor": false,
-      "action": "---",
-      "state": "0x2418200",
-      "distance": 0,
-      "is_relevant": 1,
-      "is_goal": 1,
-      "is_sc": 1,
-      "successors": [
-
-       ]
-    },
-    "9": {
-      "expected_successor": "4",
-      "action": "dialogue_statement",
-      "state": "0x2423820",
-      "distance": 5,
-      "is_relevant": 0,
-      "is_goal": 0,
-      "is_sc": 1,
-      "successors": [
-        {
             "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "4"
-        }
-       ]
-    },
-    "10": {
-      "expected_successor": "5",
-      "action": "dialogue_statement",
-      "state": "0x24245a0",
-      "distance": 6,
-      "is_relevant": 0,
-      "is_goal": 0,
-      "is_sc": 1,
-      "successors": [
-        {
-            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "5"
-        }
-       ]
-    },
-    "7": {
-      "expected_successor": "6",
-      "action": "slot-fill__get_exposure_period",
-      "state": "0x2425ae0",
-      "distance": 7,
-      "is_relevant": 0,
-      "is_goal": 0,
-      "is_sc": 1,
-      "successors": [
-        {
-            "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-confirm_outcome",
-            "successor_id": "6"
-        },
-        {
-            "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-deny_outcome",
-            "successor_id": "6"
-        },
-        {
-            "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-fallback",
-            "successor_id": "12"
-        }
-       ]
-    },
-    "8": {
-      "expected_successor": "7",
-      "action": "slot-fill__get_covid_exposure",
-      "state": "0x2425480",
-      "distance": 8,
-      "is_relevant": 0,
-      "is_goal": 0,
-      "is_sc": 1,
-      "successors": [
-        {
-            "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-confirm_outcome",
-            "successor_id": "7"
-        },
-        {
-            "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-deny_outcome",
-            "successor_id": "7"
-        },
-        {
-            "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-fallback",
-            "successor_id": "13"
+            "successor_id": "3"
         }
        ]
     },
     "5": {
       "expected_successor": "4",
-      "action": "slot-fill__get_positive_30",
-      "state": "0x2424f80",
+      "action": "offer-request",
+      "state": "0x10824c0",
       "distance": 5,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-confirm_outcome",
+            "outcome_label": "offer-request_DETDUP_offer-request__start-task-EQ-dont-want",
             "successor_id": "4"
         },
         {
-            "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-deny_outcome",
-            "successor_id": "4"
+            "outcome_label": "offer-request_DETDUP_offer-request__start-task-EQ-fallback",
+            "successor_id": "6"
         },
         {
-            "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-fallback",
-            "successor_id": "10"
+            "outcome_label": "offer-request_DETDUP_offer-request__start-task-EQ-want-transfer",
+            "successor_id": "16"
         }
        ]
     },
     "6": {
       "expected_successor": "5",
-      "action": "slot-fill__get_have_symptoms",
-      "state": "0x2425970",
+      "action": "dialogue_statement",
+      "state": "0x108f5d0",
       "distance": 6,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
-            "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome",
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
             "successor_id": "5"
-        },
-        {
-            "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome",
-            "successor_id": "5"
-        },
-        {
-            "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback",
-            "successor_id": "11"
         }
        ]
     },
-    "11": {
-      "expected_successor": "6",
+    "15": {
+      "expected_successor": "3",
+      "action": "confirm-request",
+      "state": "0x108dc70",
+      "distance": 4,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "confirm-request_DETDUP_confirm-request__reset-EQ-complete",
+            "successor_id": "3"
+        }
+       ]
+    },
+    "16": {
+      "expected_successor": "15",
+      "action": "get-request-options",
+      "state": "0x1090fc0",
+      "distance": 5,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "get-request-options_DETDUP_get-request-options__get-options-EQ-fallback",
+            "successor_id": "17"
+        },
+        {
+            "outcome_label": "get-request-options_DETDUP_get-request-options__get-options-EQ-get-valid-request",
+            "successor_id": "15"
+        }
+       ]
+    },
+    "17": {
+      "expected_successor": "16",
       "action": "dialogue_statement",
-      "state": "0x24292e0",
-      "distance": 7,
+      "state": "0x10918f0",
+      "distance": 6,
       "is_relevant": 0,
       "is_goal": 0,
       "is_sc": 1,
       "successors": [
         {
             "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "6"
+            "successor_id": "16"
         }
        ]
     },
-    "12": {
-      "expected_successor": "7",
+    "21": {
+      "expected_successor": "6",
+      "action": "offer-pay",
+      "state": "0x1095bb0",
+      "distance": 7,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "offer-pay_DETDUP_offer-pay__start-task-EQ-dont-want",
+            "successor_id": "6"
+        },
+        {
+            "outcome_label": "offer-pay_DETDUP_offer-pay__start-task-EQ-fallback",
+            "successor_id": "22"
+        },
+        {
+            "outcome_label": "offer-pay_DETDUP_offer-pay__start-task-EQ-want-pay",
+            "successor_id": "20"
+        }
+       ]
+    },
+    "22": {
+      "expected_successor": "21",
       "action": "dialogue_statement",
-      "state": "0x2427e00",
+      "state": "0x1095ce0",
       "distance": 8,
       "is_relevant": 0,
       "is_goal": 0,
@@ -255,14 +253,67 @@
       "successors": [
         {
             "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "7"
+            "successor_id": "21"
         }
        ]
     },
-    "13": {
-      "expected_successor": "8",
+    "23": {
+      "expected_successor": "22",
+      "action": "offer-e-transfer",
+      "state": "0x1095ca0",
+      "distance": 9,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-dont-want",
+            "successor_id": "22"
+        },
+        {
+            "outcome_label": "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-fallback",
+            "successor_id": "24"
+        },
+        {
+            "outcome_label": "offer-e-transfer_DETDUP_offer-e-transfer__start-task-EQ-want-transfer",
+            "successor_id": "30"
+        }
+       ]
+    },
+    "24": {
+      "expected_successor": "23",
       "action": "dialogue_statement",
-      "state": "0x24276f0",
+      "state": "0x1093400",
+      "distance": 10,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "23"
+        }
+       ]
+    },
+    "26": {
+      "expected_successor": "19",
+      "action": "dialogue_statement",
+      "state": "0x1093f10",
+      "distance": 8,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "19"
+        }
+       ]
+    },
+    "27": {
+      "expected_successor": "20",
+      "action": "dialogue_statement",
+      "state": "0x1098360",
       "distance": 9,
       "is_relevant": 0,
       "is_goal": 0,
@@ -270,145 +321,676 @@
       "successors": [
         {
             "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-            "successor_id": "8"
+            "successor_id": "20"
+        }
+       ]
+    },
+    "18": {
+      "expected_successor": "5",
+      "action": "confirm-bill-payment",
+      "state": "0x1092d00",
+      "distance": 6,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "confirm-bill-payment_DETDUP_confirm-bill-payment__reset-EQ-complete",
+            "successor_id": "5"
+        }
+       ]
+    },
+    "19": {
+      "expected_successor": "18",
+      "action": "slot-fill__select-account",
+      "state": "0x1091ec0",
+      "distance": 7,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-account1_found",
+            "successor_id": "18"
+        },
+        {
+            "outcome_label": "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-fallback",
+            "successor_id": "26"
+        }
+       ]
+    },
+    "20": {
+      "expected_successor": "19",
+      "action": "slot-fill__get-payment",
+      "state": "0x1091ea0",
+      "distance": 8,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "slot-fill__get-payment_DETDUP_slot-fill__get-payment__validate-slot-fill-EQ-bill_found",
+            "successor_id": "19"
+        },
+        {
+            "outcome_label": "slot-fill__get-payment_DETDUP_slot-fill__get-payment__validate-slot-fill-EQ-fallback",
+            "successor_id": "27"
+        }
+       ]
+    },
+    "28": {
+      "expected_successor": "21",
+      "action": "confirm-e-transfer",
+      "state": "0x108df90",
+      "distance": 8,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "confirm-e-transfer_DETDUP_confirm-e-transfer__reset-EQ-complete",
+            "successor_id": "21"
+        }
+       ]
+    },
+    "29": {
+      "expected_successor": "28",
+      "action": "slot-fill__select-account",
+      "state": "0x1098620",
+      "distance": 9,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-account1_found",
+            "successor_id": "28"
+        },
+        {
+            "outcome_label": "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-fallback",
+            "successor_id": "31"
+        }
+       ]
+    },
+    "30": {
+      "expected_successor": "29",
+      "action": "get-e-transfer-options",
+      "state": "0x1093b60",
+      "distance": 10,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "get-e-transfer-options_DETDUP_get-e-transfer-options__get-options-EQ-fallback",
+            "successor_id": "32"
+        },
+        {
+            "outcome_label": "get-e-transfer-options_DETDUP_get-e-transfer-options__get-options-EQ-get-valid-e-transfer",
+            "successor_id": "29"
+        }
+       ]
+    },
+    "31": {
+      "expected_successor": "29",
+      "action": "dialogue_statement",
+      "state": "0x109adf0",
+      "distance": 10,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "29"
+        }
+       ]
+    },
+    "32": {
+      "expected_successor": "30",
+      "action": "dialogue_statement",
+      "state": "0x109b2d0",
+      "distance": 11,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "30"
+        }
+       ]
+    },
+    "34": {
+      "expected_successor": "33",
+      "action": "slot-fill__select-account",
+      "state": "0x109c840",
+      "distance": 11,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-account1_found",
+            "successor_id": "33"
+        },
+        {
+            "outcome_label": "slot-fill__select-account_DETDUP_slot-fill__select-account__validate-slot-fill-EQ-fallback",
+            "successor_id": "35"
+        }
+       ]
+    },
+    "35": {
+      "expected_successor": "34",
+      "action": "dialogue_statement",
+      "state": "0x109c410",
+      "distance": 12,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "34"
+        }
+       ]
+    },
+    "36": {
+      "expected_successor": "35",
+      "action": "slot-fill__get-create",
+      "state": "0x109cb50",
+      "distance": 13,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "slot-fill__get-create_DETDUP_slot-fill__get-create__validate-slot-fill-EQ-account2_found",
+            "successor_id": "35"
+        },
+        {
+            "outcome_label": "slot-fill__get-create_DETDUP_slot-fill__get-create__validate-slot-fill-EQ-fallback",
+            "successor_id": "38"
+        }
+       ]
+    },
+    "37": {
+      "expected_successor": "24",
+      "action": "offer-new",
+      "state": "0x109d560",
+      "distance": 11,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "offer-new_DETDUP_offer-new__start-task-EQ-dont-want",
+            "successor_id": "24"
+        },
+        {
+            "outcome_label": "offer-new_DETDUP_offer-new__start-task-EQ-fallback",
+            "successor_id": "39"
+        },
+        {
+            "outcome_label": "offer-new_DETDUP_offer-new__start-task-EQ-want-create",
+            "successor_id": "36"
+        }
+       ]
+    },
+    "33": {
+      "expected_successor": "23",
+      "action": "confirm-create",
+      "state": "0x109a650",
+      "distance": 10,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "confirm-create_DETDUP_confirm-create__reset-EQ-complete",
+            "successor_id": "23"
+        }
+       ]
+    },
+    "38": {
+      "expected_successor": "36",
+      "action": "dialogue_statement",
+      "state": "0x109fdc0",
+      "distance": 14,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "36"
+        }
+       ]
+    },
+    "39": {
+      "expected_successor": "37",
+      "action": "dialogue_statement",
+      "state": "0x10a06c0",
+      "distance": 12,
+      "is_relevant": 0,
+      "is_goal": 0,
+      "is_sc": 1,
+      "successors": [
+        {
+            "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+            "successor_id": "37"
         }
        ]
     }
   },
   "edges" : [
+      ["12", ">", "1"],
+      ["14", ">", "13"],
       ["1", ">", "0"],
       ["2", ">", "1"],
+      ["13", ">", "14"],
+      ["13", ">", "12"],
       ["3", ">", "2"],
-      ["3", ">", "2"],
-      ["3", ">", "2"],
-      ["3", ">", "2"],
-      ["3", ">", "2"],
-      ["3", ">", "2"],
-      ["3", ">", "2"],
+      ["3", ">", "4"],
+      ["3", ">", "13"],
       ["4", ">", "3"],
-      ["4", ">", "3"],
-      ["4", ">", "9"],
-      ["9", ">", "4"],
-      ["10", ">", "5"],
-      ["7", ">", "6"],
-      ["7", ">", "6"],
-      ["7", ">", "12"],
-      ["8", ">", "7"],
-      ["8", ">", "7"],
-      ["8", ">", "13"],
       ["5", ">", "4"],
-      ["5", ">", "4"],
-      ["5", ">", "10"],
+      ["5", ">", "6"],
+      ["5", ">", "16"],
       ["6", ">", "5"],
-      ["6", ">", "5"],
-      ["6", ">", "11"],
-      ["11", ">", "6"],
-      ["12", ">", "7"],
-      ["13", ">", "8"]
+      ["15", ">", "3"],
+      ["16", ">", "17"],
+      ["16", ">", "15"],
+      ["17", ">", "16"],
+      ["21", ">", "6"],
+      ["21", ">", "22"],
+      ["21", ">", "20"],
+      ["22", ">", "21"],
+      ["23", ">", "22"],
+      ["23", ">", "24"],
+      ["23", ">", "30"],
+      ["24", ">", "23"],
+      ["26", ">", "19"],
+      ["27", ">", "20"],
+      ["18", ">", "5"],
+      ["19", ">", "18"],
+      ["19", ">", "26"],
+      ["20", ">", "19"],
+      ["20", ">", "27"],
+      ["28", ">", "21"],
+      ["29", ">", "28"],
+      ["29", ">", "31"],
+      ["30", ">", "32"],
+      ["30", ">", "29"],
+      ["31", ">", "29"],
+      ["32", ">", "30"],
+      ["34", ">", "33"],
+      ["34", ">", "35"],
+      ["35", ">", "34"],
+      ["36", ">", "35"],
+      ["36", ">", "38"],
+      ["37", ">", "24"],
+      ["37", ">", "39"],
+      ["37", ">", "36"],
+      ["33", ">", "23"],
+      ["38", ">", "36"],
+      ["39", ">", "37"]
   ],
   "states" : {
-    "0x241c970": [
-      "NegatedAtom force-statement()",
-      "Atom know__should-test()"
-    ],
-    "0x241ac50": [
-      "Atom force-statement()",
-      "Atom have-message()",
-      "Atom know__should-test()"
-    ],
-    "0x2424e40": [
-      "Atom know__covid-exposure()",
-      "Atom know__exposure-period-over-5()",
-      "Atom know__have-symptoms()",
-      "Atom know__positive-30()",
-      "Atom know__positive-90()",
-      "NegatedAtom force-statement()"
-    ],
-    "0x2424ed0": [
-      "Atom know__covid-exposure()",
-      "Atom know__exposure-period-over-5()",
-      "Atom know__have-symptoms()",
-      "Atom know__positive-30()",
-      "NegatedAtom know__positive-90()",
-      "NegatedAtom force-statement()"
-    ],
-    "0x2418200": [
+    "0x1077840": [
       "Atom goal()"
     ],
-    "0x2423820": [
-      "Atom know__covid-exposure()",
-      "Atom know__exposure-period-over-5()",
-      "Atom know__have-symptoms()",
-      "Atom know__positive-30()",
-      "NegatedAtom know__positive-90()",
+    "0x10966b0": [
+      "Atom tried-pay-bills()",
+      "Atom tried-request-money()",
+      "Atom tried-create()",
+      "Atom tried-e-transfer()",
+      "Atom know__account2()",
+      "Atom know__account1()",
+      "Atom know__funds()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-transfer_funds_between_accounts()"
+    ],
+    "0x1090710": [
+      "Atom tried-pay-bills()",
+      "Atom tried-request-money()",
+      "Atom tried-create()",
+      "Atom tried-e-transfer()",
+      "Atom force-statement()",
+      "Atom task-value-transfer_funds_between_accounts()",
+      "Atom have-message()"
+    ],
+    "0x10825e0": [
+      "Atom tried-pay-bills()",
+      "Atom tried-request-money()",
+      "Atom tried-create()",
+      "Atom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom force-statement()"
+    ],
+    "0x1082980": [
+      "Atom tried-pay-bills()",
+      "Atom tried-request-money()",
+      "Atom tried-create()",
+      "Atom tried-transfer()",
+      "Atom tried-e-transfer()",
       "Atom force-statement()",
       "Atom have-message()"
     ],
-    "0x24245a0": [
-      "Atom know__covid-exposure()",
-      "Atom know__exposure-period-over-5()",
-      "Atom know__have-symptoms()",
-      "NegatedAtom know__positive-30()",
-      "NegatedAtom know__positive-90()",
+    "0x108d9e0": [
+      "Atom tried-pay-bills()",
+      "Atom tried-request-money()",
+      "Atom tried-create()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-transfer_funds_between_accounts()"
+    ],
+    "0x10824e0": [
+      "Atom tried-pay-bills()",
+      "Atom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom know__task()",
+      "NegatedAtom force-statement()"
+    ],
+    "0x10830e0": [
+      "Atom tried-pay-bills()",
+      "Atom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom know__task()",
       "Atom force-statement()",
       "Atom have-message()"
     ],
-    "0x2425ae0": [
-      "Atom know__covid-exposure()",
-      "NegatedAtom know__exposure-period-over-5()",
-      "NegatedAtom know__have-symptoms()",
-      "NegatedAtom know__positive-30()",
-      "NegatedAtom know__positive-90()",
+    "0x10824c0": [
+      "Atom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom know__task()",
       "NegatedAtom force-statement()"
     ],
-    "0x2425480": [
-      "NegatedAtom know__covid-exposure()",
-      "NegatedAtom know__exposure-period-over-5()",
-      "NegatedAtom know__have-symptoms()",
-      "NegatedAtom know__positive-30()",
-      "NegatedAtom know__positive-90()",
-      "NegatedAtom force-statement()"
-    ],
-    "0x2424f80": [
-      "Atom know__covid-exposure()",
-      "Atom know__exposure-period-over-5()",
-      "Atom know__have-symptoms()",
-      "NegatedAtom know__positive-30()",
-      "NegatedAtom know__positive-90()",
-      "NegatedAtom force-statement()"
-    ],
-    "0x2425970": [
-      "Atom know__covid-exposure()",
-      "Atom know__exposure-period-over-5()",
-      "NegatedAtom know__have-symptoms()",
-      "NegatedAtom know__positive-30()",
-      "NegatedAtom know__positive-90()",
-      "NegatedAtom force-statement()"
-    ],
-    "0x24292e0": [
-      "Atom know__covid-exposure()",
-      "Atom know__exposure-period-over-5()",
-      "NegatedAtom know__have-symptoms()",
-      "NegatedAtom know__positive-30()",
-      "NegatedAtom know__positive-90()",
+    "0x108f5d0": [
+      "Atom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom know__task()",
       "Atom force-statement()",
       "Atom have-message()"
     ],
-    "0x2427e00": [
-      "Atom know__covid-exposure()",
-      "NegatedAtom know__exposure-period-over-5()",
-      "NegatedAtom know__have-symptoms()",
-      "NegatedAtom know__positive-30()",
-      "NegatedAtom know__positive-90()",
+    "0x108dc70": [
+      "Atom tried-pay-bills()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "Atom know__contact()",
+      "Atom know__funds()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-request_money()"
+    ],
+    "0x1090fc0": [
+      "Atom tried-pay-bills()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-request_money()"
+    ],
+    "0x10918f0": [
+      "Atom tried-pay-bills()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "Atom force-statement()",
+      "Atom task-value-request_money()",
+      "Atom have-message()"
+    ],
+    "0x1095bb0": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom know__task()",
+      "NegatedAtom force-statement()"
+    ],
+    "0x1095ce0": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom know__task()",
       "Atom force-statement()",
       "Atom have-message()"
     ],
-    "0x24276f0": [
-      "NegatedAtom know__covid-exposure()",
-      "NegatedAtom know__exposure-period-over-5()",
-      "NegatedAtom know__have-symptoms()",
-      "NegatedAtom know__positive-30()",
-      "NegatedAtom know__positive-90()",
+    "0x1095ca0": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom know__task()",
+      "NegatedAtom force-statement()"
+    ],
+    "0x1093400": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom know__task()",
+      "Atom force-statement()",
+      "Atom have-message()"
+    ],
+    "0x1093f10": [
+      "Atom know__bill()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "Atom select-account()",
+      "NegatedAtom know__account1()",
+      "Atom force-statement()",
+      "Atom task-value-pay_bills()",
+      "Atom have-message()"
+    ],
+    "0x1098360": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom know__account1()",
+      "Atom force-statement()",
+      "Atom task-value-pay_bills()",
+      "Atom have-message()"
+    ],
+    "0x1092d00": [
+      "Atom know__bill()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "Atom know__account1()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-pay_bills()"
+    ],
+    "0x1091ec0": [
+      "Atom know__bill()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "Atom select-account()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-pay_bills()"
+    ],
+    "0x1091ea0": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom tried-e-transfer()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-pay_bills()"
+    ],
+    "0x108df90": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom know__contact()",
+      "Atom know__account1()",
+      "Atom know__funds()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-e-transfer()"
+    ],
+    "0x1098620": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom select-account()",
+      "Atom know__contact()",
+      "NegatedAtom know__account1()",
+      "Atom know__funds()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-e-transfer()"
+    ],
+    "0x1093b60": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-e-transfer()"
+    ],
+    "0x109adf0": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "Atom select-account()",
+      "Atom know__contact()",
+      "NegatedAtom know__account1()",
+      "Atom know__funds()",
+      "Atom force-statement()",
+      "Atom task-value-e-transfer()",
+      "Atom have-message()"
+    ],
+    "0x109b2d0": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "Atom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom know__account1()",
+      "Atom force-statement()",
+      "Atom task-value-e-transfer()",
+      "Atom have-message()"
+    ],
+    "0x109c840": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "Atom select-account()",
+      "Atom know__account2()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-create_account()"
+    ],
+    "0x109c410": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "Atom select-account()",
+      "Atom know__account2()",
+      "NegatedAtom know__account1()",
+      "Atom force-statement()",
+      "Atom task-value-create_account()",
+      "Atom have-message()"
+    ],
+    "0x109cb50": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "NegatedAtom know__account2()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-create_account()"
+    ],
+    "0x109d560": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "NegatedAtom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "NegatedAtom know__account2()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom know__task()",
+      "NegatedAtom force-statement()"
+    ],
+    "0x109a650": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "Atom know__account2()",
+      "Atom know__account1()",
+      "NegatedAtom force-statement()",
+      "Atom task-value-create_account()"
+    ],
+    "0x109fdc0": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "NegatedAtom know__account2()",
+      "NegatedAtom know__account1()",
+      "Atom force-statement()",
+      "Atom task-value-create_account()",
+      "Atom have-message()"
+    ],
+    "0x10a06c0": [
+      "NegatedAtom know__bill()",
+      "NegatedAtom tried-pay-bills()",
+      "NegatedAtom tried-request-money()",
+      "NegatedAtom tried-create()",
+      "NegatedAtom tried-transfer()",
+      "NegatedAtom tried-e-transfer()",
+      "NegatedAtom know__account2()",
+      "NegatedAtom know__account1()",
+      "NegatedAtom know__task()",
       "Atom force-statement()",
       "Atom have-message()"
     ]

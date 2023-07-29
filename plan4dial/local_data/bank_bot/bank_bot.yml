@@ -39,11 +39,11 @@ context_variables:
           - pay my credit card bill
           - pay off my student loans
           - pay my monthly utility bill
-      cancel account:
+      create account:
         variations:
-          - cancel one of my accounts
+          - create one of my accounts
           - remove one of my accounts
-          - cancel an account
+          - create an account
   tried-transfer:
     type: flag
     init: false
@@ -56,7 +56,7 @@ context_variables:
   tried-pay-bills:
     type: flag
     init: false
-  tried-cancel:
+  tried-create:
     type: flag
     init: false
   account1:
@@ -68,8 +68,6 @@ context_variables:
     options:
       - chequing
       - savings
-      - retirement fund
-      - college fund
   account2:
     outing_type:
     type: enum
@@ -77,8 +75,6 @@ context_variables:
       type: flag
       init: false 
     options:
-      - chequing
-      - savings
       - retirement fund
       - college fund
   funds:
@@ -124,21 +120,23 @@ intents:
     utterances:
       - "yes"
       - yeah
-      - that's it
       - "Y"
       - mhm
       - confirm
       - yes please
+      - yup
+      - uh huh
+      - ya
   deny:
     utterances:
       - "no"
       - not at all
-      - that's not what i meant
       - absolutely not
-      - i don't want that
       - nah
       - no thanks
       - no thank you
+      - nope
+      - nuh uh
   share_account:
     entities:
       - account1
@@ -147,7 +145,7 @@ intents:
       - Please select $account1.
       - $account1
       - Use $account1
-      - use $account for this task
+      - use $account1 for this task
       - I need to use $account1
   share_transfer_settings:
     entities:
@@ -184,13 +182,14 @@ intents:
       - I want to pay off my $bill bill.
       - I want to pay off my $bill payment.
       - Please pay my $bill payment.
-  share_cancel:
+  share_create:
     entities:
       - account2
     utterances:
-      - I want to cancel my $account2 account.
-      - Please cancel my $account2 account.
-      - I no longer want to use my $account2 account, please delete it.
+      - I want to create a $account2 account.
+      - Please create a $account2 account.
+      - I really need a $account2 account, please create one.
+      - I want to create a $account2 account for my son.
   share_done:
     utterances:
       - I'm all done.
@@ -504,6 +503,9 @@ actions:
           updates:
             select-account:
               value: true
+      additional_conditions:
+        task:
+          value: pay bills
   confirm-bill-payment:
     type: dialogue
     message_variants:
@@ -511,6 +513,8 @@ actions:
     condition:
       task:
         value: pay bills
+      account1:
+        known: true
       bill:
         known: true
     effect:
@@ -521,17 +525,19 @@ actions:
               updates:
                 bill:
                   known: false
+                account1:
+                  known: false
                 task:
                   known: false
                 tried-pay-bills:
                   value: true
 
-  offer-cancel:
+  offer-new:
     type: dialogue
     message_variants:
-      - Would you like to cancel any of your existing accounts?
+      - Would you like to create a new account?
     condition:
-      tried-cancel:
+      tried-create:
         value: false
       task:
         known: false
@@ -539,29 +545,29 @@ actions:
       start-task:
         oneof:
           outcomes:
-            want-cancel:
+            want-create:
               updates:
                 task:
                   known: true
-                  value: cancel account
+                  value: create account
               intent: confirm
             dont-want:
               updates:
-                tried-cancel:
+                tried-create:
                   value: true
               intent: deny
               response_variants:
-                - Ok! No accounts will be cancelled.
-  get-cancel:
+                - Ok! No accounts will be created.
+  get-create:
     type: custom
     subtype: slot_fill
     parameters:
-      action_name: get-cancel
-      overall_intent: share_cancel
+      action_name: get-create
+      overall_intent: share_create
       entities:
         - account2
       message_variants:
-        - Which account would you like to cancel?
+        - What account type would you like to create?
       fallback_message_variants:
         - Sorry, that isn't a valid account.
       additional_updates:
@@ -572,14 +578,17 @@ actions:
             select-account:
               value: true
           response_variants:
-            - Ok, I can do that. However, you have some balance remaining in the account you want to cancel. You need to transfer the remaining balance to one of your other accounts.
-  confirm-cancel:
+            - Ok. Your new account was created, but you need to transfer some funds into this new account to open it. If you specify an account, I can transfer a small amount of funds from that to your new account. 
+      additional_conditions:
+        task:
+          value: create account
+  confirm-create:
     type: dialogue
     message_variants:
-      - Account $account2 was successfully cancelled, and the money was transferred to $account1.
+      - Account $account2 was successfully created with starter funds transferred from $account1.
     condition:
       task:
-        value: cancel account
+        value: create account
       account1:
         known: true
       account2:
@@ -596,7 +605,7 @@ actions:
                   known: false
                 task:
                   known: false
-                tried-cancel:
+                tried-create:
                   value: true
 
   complete:
@@ -612,7 +621,7 @@ actions:
         value: true
       tried-pay-bills:
         value: true
-      tried-cancel:
+      tried-create:
         value: true
     effect:
       finish:

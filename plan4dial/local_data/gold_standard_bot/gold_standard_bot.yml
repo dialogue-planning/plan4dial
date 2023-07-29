@@ -133,16 +133,19 @@ intents:
       - mhm
       - confirm
       - yes please
+      - yup
+      - uh huh
+      - ya
   deny:
     utterances:
       - "no"
       - not at all
-      - that's not what i meant
       - absolutely not
-      - i don't want that
       - nah
       - no thanks
       - no thank you
+      - nope
+      - nuh uh
   share_phone_number:
     entities:
       - phone_number

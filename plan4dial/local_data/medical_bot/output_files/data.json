@@ -1,7 +1,7 @@
 {
     "name": "medical_bot",
     "context_variables": {
-        "covid-exposure": {
+        "have-symptoms": {
             "type": "flag",
             "config": false,
             "known": {
@@ -9,7 +9,27 @@
                 "init": false
             }
         },
-        "have-symptoms": {
+        "symptoms": {
+            "type": "enum",
+            "config": [
+                "covid",
+                "rash",
+                "teeth"
+            ],
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "over-week": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "covid-exposure": {
             "type": "flag",
             "config": false,
             "known": {
@@ -41,13 +61,17 @@
                 "init": false
             }
         },
-        "should-test": {
+        "non-covid-illness": {
             "type": "flag",
             "config": false,
             "known": {
                 "type": "flag",
                 "init": false
             }
+        },
+        "completed-diagnostic": {
+            "type": "flag",
+            "config": false
         },
         "goal": {
             "type": "flag",
@@ -58,6 +82,18 @@
             "config": false
         },
         "force-statement": {
+            "type": "flag",
+            "config": false
+        },
+        "symptoms-value-covid": {
+            "type": "flag",
+            "config": false
+        },
+        "symptoms-value-rash": {
+            "type": "flag",
+            "config": false
+        },
+        "symptoms-value-teeth": {
             "type": "flag",
             "config": false
         }
@@ -71,7 +107,10 @@
                 "Y",
                 "mhm",
                 "confirm",
-                "yes please"
+                "yes please",
+                "yup",
+                "uh huh",
+                "ya"
             ],
             "type": "regular"
         },
@@ -80,12 +119,55 @@
             "utterances": [
                 "no",
                 "not at all",
-                "that's not what i meant",
                 "absolutely not",
-                "i don't want that",
                 "nah",
                 "no thanks",
-                "no thank you"
+                "no thank you",
+                "nope",
+                "nuh uh"
+            ],
+            "type": "regular"
+        },
+        "share_covid_symptoms": {
+            "entities": [],
+            "utterances": [
+                "I am experiencing covid symptoms.",
+                "I have a fever",
+                "I'm having chills",
+                "I am coughing",
+                "I am fatigued",
+                "My muscles ache",
+                "My head hurts",
+                "I can't taste or smell anymore",
+                "I have a sore throat",
+                "My nose is stuffy",
+                "I have an upset stomach"
+            ],
+            "type": "regular"
+        },
+        "share_rash_symptoms": {
+            "entities": [],
+            "utterances": [
+                "My skin is breaking out",
+                "My face is breaking out",
+                "My skin feels red and itchy",
+                "The skin on my face is swollen",
+                "My leg is red and blistering",
+                "My skin is sensitive",
+                "My skin is sensitive to the touch"
+            ],
+            "type": "regular"
+        },
+        "share_teeth_symptoms": {
+            "entities": [],
+            "utterances": [
+                "My teeth hurt",
+                "I have a toothache",
+                "It hurts when I drink cold liquids",
+                "My gums are too sensitive",
+                "My gums hurt when I drink",
+                "I think I have a cavity",
+                "It hurts to eat"
             ],
             "type": "regular"
         },
@@ -101,7 +183,327 @@
         }
     },
     "actions": {
-        "determine_test": {
+        "get_symptoms": {
+            "type": "dialogue",
+            "message_variants": [
+                "What symptoms are you feeling?"
+            ],
+            "fallback_message_variants": [
+                "Sorry, I don't recognize those symptoms."
+            ],
+            "condition": [
+                [
+                    "have-symptoms",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "get_symptoms__get-symptoms",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "symptoms": {
+                                "value": "covid",
+                                "variable": "symptoms",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-covid": {
+                                "value": true,
+                                "variable": "symptoms-value-covid",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-rash": {
+                                "value": false,
+                                "variable": "symptoms-value-rash",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-teeth": {
+                                "value": false,
+                                "variable": "symptoms-value-teeth",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_covid_symptoms",
+                        "name": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-covid",
+                        "assignments": {
+                            "$symptoms": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "symptoms": {
+                                "value": "rash",
+                                "variable": "symptoms",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-covid": {
+                                "value": false,
+                                "variable": "symptoms-value-covid",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-rash": {
+                                "value": true,
+                                "variable": "symptoms-value-rash",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-teeth": {
+                                "value": false,
+                                "variable": "symptoms-value-teeth",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_rash_symptoms",
+                        "name": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-rash",
+                        "assignments": {
+                            "$symptoms": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "symptoms": {
+                                "value": "teeth",
+                                "variable": "symptoms",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-covid": {
+                                "value": false,
+                                "variable": "symptoms-value-covid",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-rash": {
+                                "value": false,
+                                "variable": "symptoms-value-rash",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-teeth": {
+                                "value": true,
+                                "variable": "symptoms-value-teeth",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "share_teeth_symptoms",
+                        "name": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-teeth",
+                        "assignments": {
+                            "$symptoms": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "intents": {
+                "share_covid_symptoms": {
+                    "entities": [],
+                    "utterances": [
+                        "I am experiencing covid symptoms.",
+                        "I have a fever",
+                        "I'm having chills",
+                        "I am coughing",
+                        "I am fatigued",
+                        "My muscles ache",
+                        "My head hurts",
+                        "I can't taste or smell anymore",
+                        "I have a sore throat",
+                        "My nose is stuffy",
+                        "I have an upset stomach"
+                    ],
+                    "type": "regular"
+                },
+                "share_rash_symptoms": {
+                    "entities": [],
+                    "utterances": [
+                        "My skin is breaking out",
+                        "My face is breaking out",
+                        "My skin feels red and itchy",
+                        "The skin on my face is swollen",
+                        "My leg is red and blistering",
+                        "My skin is sensitive",
+                        "My skin is sensitive to the touch"
+                    ],
+                    "type": "regular"
+                },
+                "share_teeth_symptoms": {
+                    "entities": [],
+                    "utterances": [
+                        "My teeth hurt",
+                        "I have a toothache",
+                        "It hurts when I drink cold liquids",
+                        "My gums are too sensitive",
+                        "My gums hurt when I drink",
+                        "I think I have a cavity",
+                        "It hurts to eat"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "handle_no_issues": {
+            "type": "dialogue",
+            "message_variants": [
+                "Since you have no symptoms and have not been exposed to COVID-19, no further action is required."
+            ],
+            "condition": [
+                [
+                    "covid-exposure",
+                    "Known"
+                ],
+                [
+                    "covid-exposure",
+                    false
+                ],
+                [
+                    "have-symptoms",
+                    "Known"
+                ],
+                [
+                    "have-symptoms",
+                    false
+                ],
+                [
+                    "completed-diagnostic",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "handle_no_issues__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "completed-diagnostic": {
+                                "value": true,
+                                "variable": "completed-diagnostic",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "utter_msg",
+                        "name": "handle_no_issues_DETDUP_handle_no_issues__check-test-EQ-no-exposure-no-symptoms",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "disable-fallback": true,
+            "intents": {
+                "utter_msg": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "regular"
+                }
+            }
+        },
+        "need-covid-diagnostic-1": {
+            "type": "system",
+            "condition": [
+                [
+                    "symptoms",
+                    "Known"
+                ],
+                [
+                    "non-covid-illness",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "symptoms-value-covid",
+                    true
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "need-covid-diagnostic-1__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "non-covid-illness": {
+                                "value": false,
+                                "variable": "non-covid-illness",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "need-covid-diagnostic-1_DETDUP_need-covid-diagnostic-1__check-test-EQ-covid-symptoms",
+                        "intent": null,
+                        "assignments": {
+                            "$non-covid-illness": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "need-covid-diagnostic-2": {
+            "type": "system",
+            "condition": [
+                [
+                    "covid-exposure",
+                    true
+                ],
+                [
+                    "non-covid-illness",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "need-covid-diagnostic-2__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "non-covid-illness": {
+                                "value": false,
+                                "variable": "non-covid-illness",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "need-covid-diagnostic-2_DETDUP_need-covid-diagnostic-2__check-test-EQ-covid-symptoms",
+                        "intent": null,
+                        "assignments": {
+                            "$non-covid-illness": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "determine-is-non-covid-illness": {
             "type": "system",
             "subtype": "Context dependent determination",
             "condition": [
@@ -110,7 +512,217 @@
                     "Known"
                 ],
                 [
-                    "have-symptoms",
+                    "symptoms",
+                    "Known"
+                ],
+                [
+                    "non-covid-illness",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "determine-is-non-covid-illness__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "non-covid-illness": {
+                                "value": true,
+                                "variable": "non-covid-illness",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "symptoms": {
+                                "value": "rash"
+                            },
+                            "covid-exposure": {
+                                "value": false
+                            }
+                        },
+                        "name": "determine-is-non-covid-illness_DETDUP_determine-is-non-covid-illness__check-test-EQ-rash",
+                        "intent": null,
+                        "assignments": {
+                            "$non-covid-illness": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "non-covid-illness": {
+                                "value": true,
+                                "variable": "non-covid-illness",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "symptoms": {
+                                "value": "teeth"
+                            },
+                            "covid-exposure": {
+                                "value": false
+                            }
+                        },
+                        "name": "determine-is-non-covid-illness_DETDUP_determine-is-non-covid-illness__check-test-EQ-teeth",
+                        "intent": null,
+                        "assignments": {
+                            "$non-covid-illness": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "diagnose_regular_sickness": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "non-covid-illness",
+                    "Known"
+                ],
+                [
+                    "non-covid-illness",
+                    true
+                ],
+                [
+                    "over-week",
+                    "Known"
+                ],
+                [
+                    "completed-diagnostic",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "diagnose_regular_sickness__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "completed-diagnostic": {
+                                "value": true,
+                                "variable": "completed-diagnostic",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Ok. If you are having trouble breathing, your face is throat is tight, or your face is swelling up, call emergency. Use warm (not hot) water to clean the area (without scrubbing). If this was potentially the result of a product, stop using it immediately. Try a medicated lotion on the area."
+                        ],
+                        "context": {
+                            "symptoms": {
+                                "value": "rash"
+                            },
+                            "over-week": {
+                                "value": false
+                            }
+                        },
+                        "name": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-under",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "completed-diagnostic": {
+                                "value": true,
+                                "variable": "completed-diagnostic",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Contact your health care provider. Before you go, take mental note of when the rash began, what products you have been using recently/any possible insect bites, and what made it better/worse."
+                        ],
+                        "context": {
+                            "symptoms": {
+                                "value": "rash"
+                            },
+                            "over-week": {
+                                "value": true
+                            }
+                        },
+                        "name": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-over",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "completed-diagnostic": {
+                                "value": true,
+                                "variable": "completed-diagnostic",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Ok. I sent you an email detailing the nearest appointments of dentists in your area."
+                        ],
+                        "context": {
+                            "symptoms": {
+                                "value": "teeth"
+                            }
+                        },
+                        "name": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-teeth",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "determine_covid_test": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "non-covid-illness",
+                    "Known"
+                ],
+                [
+                    "non-covid-illness",
+                    false
+                ],
+                [
+                    "covid-exposure",
+                    "Known"
+                ],
+                [
+                    "symptoms",
                     "Known"
                 ],
                 [
@@ -126,20 +738,23 @@
                     "Known"
                 ],
                 [
+                    "completed-diagnostic",
+                    false
+                ],
+                [
                     "force-statement",
                     false
                 ]
             ],
             "effect": {
-                "global-outcome-name": "determine_test__check-test",
+                "global-outcome-name": "determine_covid_test__check-test",
                 "type": "oneof",
                 "outcomes": [
                     {
                         "updates": {
-                            "should-test": {
+                            "completed-diagnostic": {
                                 "value": true,
-                                "variable": "should-test",
-                                "certainty": "Known",
+                                "variable": "completed-diagnostic",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -167,18 +782,15 @@
                                 "value": true
                             }
                         },
-                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-been-5",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-been-5",
                         "intent": null,
-                        "assignments": {
-                            "$should-test": "found"
-                        }
+                        "assignments": {}
                     },
                     {
                         "updates": {
-                            "should-test": {
-                                "value": false,
-                                "variable": "should-test",
-                                "certainty": "Known",
+                            "completed-diagnostic": {
+                                "value": true,
+                                "variable": "completed-diagnostic",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -199,22 +811,22 @@
                             "have-symptoms": {
                                 "value": false
                             },
+                            "covid-exposure": {
+                                "value": true
+                            },
                             "exposure-period-over-5": {
                                 "value": false
                             }
                         },
-                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-no-symptom-exposed-less-5",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-less-5",
                         "intent": null,
-                        "assignments": {
-                            "$should-test": "found"
-                        }
+                        "assignments": {}
                     },
                     {
                         "updates": {
-                            "should-test": {
+                            "completed-diagnostic": {
                                 "value": true,
-                                "variable": "should-test",
-                                "certainty": "Known",
+                                "variable": "completed-diagnostic",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -232,25 +844,22 @@
                             "Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR or antigen test."
                         ],
                         "context": {
-                            "have-symptoms": {
-                                "value": true
+                            "symptoms": {
+                                "value": "covid"
                             },
                             "positive-90": {
                                 "value": false
                             }
                         },
-                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-no-90",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-no-90",
                         "intent": null,
-                        "assignments": {
-                            "$should-test": "found"
-                        }
+                        "assignments": {}
                     },
                     {
                         "updates": {
-                            "should-test": {
+                            "completed-diagnostic": {
                                 "value": true,
-                                "variable": "should-test",
-                                "certainty": "Known",
+                                "variable": "completed-diagnostic",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -268,25 +877,22 @@
                             "Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use an antigen test."
                         ],
                         "context": {
-                            "have-symptoms": {
-                                "value": true
+                            "symptoms": {
+                                "value": "covid"
                             },
                             "positive-30": {
                                 "value": true
                             }
                         },
-                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-30",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-30",
                         "intent": null,
-                        "assignments": {
-                            "$should-test": "found"
-                        }
+                        "assignments": {}
                     },
                     {
                         "updates": {
-                            "should-test": {
-                                "value": false,
-                                "variable": "should-test",
-                                "certainty": "Known",
+                            "completed-diagnostic": {
+                                "value": true,
+                                "variable": "completed-diagnostic",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -311,18 +917,15 @@
                                 "value": true
                             }
                         },
-                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-30",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-30",
                         "intent": null,
-                        "assignments": {
-                            "$should-test": "found"
-                        }
+                        "assignments": {}
                     },
                     {
                         "updates": {
-                            "should-test": {
+                            "completed-diagnostic": {
                                 "value": true,
-                                "variable": "should-test",
-                                "certainty": "Known",
+                                "variable": "completed-diagnostic",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -340,25 +943,22 @@
                             "Since you have symptoms and have had COVID-19 in the last 90 days, you should use an antigen test."
                         ],
                         "context": {
-                            "have-symptoms": {
-                                "value": true
+                            "symptoms": {
+                                "value": "covid"
                             },
                             "positive-90": {
                                 "value": true
                             }
                         },
-                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-symptoms-90",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-90",
                         "intent": null,
-                        "assignments": {
-                            "$should-test": "found"
-                        }
+                        "assignments": {}
                     },
                     {
                         "updates": {
-                            "should-test": {
+                            "completed-diagnostic": {
                                 "value": true,
-                                "variable": "should-test",
-                                "certainty": "Known",
+                                "variable": "completed-diagnostic",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -383,11 +983,9 @@
                                 "value": true
                             }
                         },
-                        "name": "determine_test_DETDUP_determine_test__check-test-EQ-have-no-symptoms-90",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-90",
                         "intent": null,
-                        "assignments": {
-                            "$should-test": "found"
-                        }
+                        "assignments": {}
                     }
                 ]
             }
@@ -396,8 +994,8 @@
             "type": "system",
             "condition": [
                 [
-                    "should-test",
-                    "Known"
+                    "completed-diagnostic",
+                    true
                 ],
                 [
                     "force-statement",
@@ -468,10 +1066,267 @@
                 }
             }
         },
+        "slot-fill__get_have_symptoms": {
+            "type": "dialogue",
+            "message_variants": [
+                "Are you experiencing symptoms of any kind? (Answer yes or no)."
+            ],
+            "condition": [
+                [
+                    "have-symptoms",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get_have_symptoms__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "have-symptoms": {
+                                "value": true,
+                                "variable": "have-symptoms",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "response_variants": [
+                            "I'm sorry to hear you are feeling unwell."
+                        ],
+                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$have-symptoms": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-symptoms": {
+                                "value": false,
+                                "variable": "have-symptoms",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "symptoms": {
+                                "value": null,
+                                "variable": "symptoms",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-covid": {
+                                "value": false,
+                                "variable": "symptoms-value-covid",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-rash": {
+                                "value": false,
+                                "variable": "symptoms-value-rash",
+                                "interpretation": "json"
+                            },
+                            "symptoms-value-teeth": {
+                                "value": false,
+                                "variable": "symptoms-value-teeth",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$have-symptoms": "found",
+                            "$symptoms": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "absolutely not",
+                        "nah",
+                        "no thanks",
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
+        "slot-fill__get_sickness_period": {
+            "type": "dialogue",
+            "message_variants": [
+                "Have you been experiencing symptoms for over a week?"
+            ],
+            "condition": [
+                [
+                    "over-week",
+                    "Unknown"
+                ],
+                [
+                    "have-symptoms",
+                    true
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "slot-fill__get_sickness_period__get-response",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "over-week": {
+                                "value": true,
+                                "variable": "over-week",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "confirm",
+                        "name": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-confirm_outcome",
+                        "assignments": {
+                            "$over-week": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "over-week": {
+                                "value": false,
+                                "variable": "over-week",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "deny",
+                        "name": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-deny_outcome",
+                        "assignments": {
+                            "$over-week": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "intent": "fallback",
+                        "name": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-fallback",
+                        "assignments": {}
+                    }
+                ]
+            },
+            "fallback_message_variants": [
+                "Sorry, I couldn't understand that input.",
+                "Sorry, I didn't quite get that."
+            ],
+            "intents": {
+                "confirm": {
+                    "entities": [],
+                    "utterances": [
+                        "yes",
+                        "yeah",
+                        "Y",
+                        "mhm",
+                        "confirm",
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
+                    ],
+                    "type": "regular"
+                },
+                "deny": {
+                    "entities": [],
+                    "utterances": [
+                        "no",
+                        "not at all",
+                        "absolutely not",
+                        "nah",
+                        "no thanks",
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
+                    ],
+                    "type": "regular"
+                },
+                "fallback": {
+                    "entities": [],
+                    "utterances": [],
+                    "type": "fallback"
+                }
+            }
+        },
         "slot-fill__get_covid_exposure": {
             "type": "dialogue",
             "message_variants": [
-                "Hi there, I'm sorry you are feeling unwell. I am here to help you navigate your sickness and put you on the road to recovery. First off, have you been exposed to COVID-19?"
+                "Have you been exposed to COVID-19?"
             ],
             "condition": [
                 [
@@ -549,7 +1404,10 @@
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -558,122 +1416,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
-                    ],
-                    "type": "regular"
-                },
-                "fallback": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "fallback"
-                }
-            }
-        },
-        "slot-fill__get_have_symptoms": {
-            "type": "dialogue",
-            "message_variants": [
-                "Are you experiencing symptoms of any kind? (Answer yes or no)."
-            ],
-            "condition": [
-                [
-                    "have-symptoms",
-                    "Unknown"
-                ],
-                [
-                    "covid-exposure",
-                    "Known"
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "slot-fill__get_have_symptoms__get-response",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "have-symptoms": {
-                                "value": true,
-                                "variable": "have-symptoms",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "confirm",
-                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome",
-                        "assignments": {
-                            "$have-symptoms": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-symptoms": {
-                                "value": false,
-                                "variable": "have-symptoms",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "deny",
-                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome",
-                        "assignments": {
-                            "$have-symptoms": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "fallback",
-                        "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "fallback_message_variants": [
-                "Sorry, I couldn't understand that input.",
-                "Sorry, I didn't quite get that."
-            ],
-            "intents": {
-                "confirm": {
-                    "entities": [],
-                    "utterances": [
-                        "yes",
-                        "yeah",
-                        "Y",
-                        "mhm",
-                        "confirm",
-                        "yes please"
-                    ],
-                    "type": "regular"
-                },
-                "deny": {
-                    "entities": [],
-                    "utterances": [
-                        "no",
-                        "not at all",
-                        "that's not what i meant",
-                        "absolutely not",
-                        "i don't want that",
-                        "nah",
-                        "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
@@ -697,6 +1445,14 @@
                 [
                     "covid-exposure",
                     "Known"
+                ],
+                [
+                    "non-covid-illness",
+                    "Known"
+                ],
+                [
+                    "non-covid-illness",
+                    false
                 ],
                 [
                     "force-statement",
@@ -769,7 +1525,10 @@
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -778,12 +1537,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
@@ -805,8 +1564,12 @@
                     "Unknown"
                 ],
                 [
-                    "covid-exposure",
+                    "non-covid-illness",
                     "Known"
+                ],
+                [
+                    "non-covid-illness",
+                    false
                 ],
                 [
                     "force-statement",
@@ -879,7 +1642,10 @@
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -888,12 +1654,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
@@ -989,7 +1755,10 @@
                         "Y",
                         "mhm",
                         "confirm",
-                        "yes please"
+                        "yes please",
+                        "yup",
+                        "uh huh",
+                        "ya"
                     ],
                     "type": "regular"
                 },
@@ -998,12 +1767,12 @@
                     "utterances": [
                         "no",
                         "not at all",
-                        "that's not what i meant",
                         "absolutely not",
-                        "i don't want that",
                         "nah",
                         "no thanks",
-                        "no thank you"
+                        "no thank you",
+                        "nope",
+                        "nuh uh"
                     ],
                     "type": "regular"
                 },
