@@ -1069,10 +1069,6 @@
                     true
                 ],
                 [
-                    "goal",
-                    false
-                ],
-                [
                     "force-statement",
                     false
                 ],
@@ -1136,6 +1132,7 @@
                 ]
             },
             "message_variants": [],
+            "disable-fallback": true,
             "intents": {
                 "utter_msg": {
                     "entities": [],
