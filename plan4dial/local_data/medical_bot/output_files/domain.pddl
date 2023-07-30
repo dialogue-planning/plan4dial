@@ -38,32 +38,32 @@
             (labeled-oneof get_symptoms__get-symptoms
                 (outcome share-covid
                     (and
+                        (not (symptoms-value-teeth))
+                        (symptoms-value-covid)
                         (know__symptoms)
                         (not (symptoms-value-rash))
-                        (symptoms-value-covid)
-                        (not (symptoms-value-teeth))
                     )
                 )
                 (outcome share-rash
                     (and
-                        (know__symptoms)
-                        (symptoms-value-rash)
                         (not (symptoms-value-teeth))
+                        (know__symptoms)
                         (not (symptoms-value-covid))
+                        (symptoms-value-rash)
                     )
                 )
                 (outcome share-teeth
                     (and
-                        (know__symptoms)
-                        (not (symptoms-value-rash))
                         (symptoms-value-teeth)
+                        (know__symptoms)
                         (not (symptoms-value-covid))
+                        (not (symptoms-value-rash))
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -72,12 +72,12 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (not (covid-exposure))
-                (not (completed-diagnostic))
                 (not (have-symptoms))
+                (not (force-statement))
                 (know__have-symptoms)
                 (know__covid-exposure)
+                (not (completed-diagnostic))
+                (not (covid-exposure))
             )
         :effect
             (labeled-oneof handle_no_issues__check-test
@@ -92,17 +92,17 @@
         :parameters()
         :precondition
             (and
-                (know__symptoms)
                 (not (know__non-covid-illness))
-                (not (force-statement))
                 (symptoms-value-covid)
+                (know__symptoms)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof need-covid-diagnostic-1__check-test
                 (outcome covid-symptoms
                     (and
-                        (not (non-covid-illness))
                         (know__non-covid-illness)
+                        (not (non-covid-illness))
                     )
                 )
             )
@@ -112,15 +112,15 @@
         :precondition
             (and
                 (not (know__non-covid-illness))
-                (not (force-statement))
                 (covid-exposure)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof need-covid-diagnostic-2__check-test
                 (outcome covid-symptoms
                     (and
-                        (not (non-covid-illness))
                         (know__non-covid-illness)
+                        (not (non-covid-illness))
                     )
                 )
             )
@@ -129,23 +129,23 @@
         :parameters()
         :precondition
             (and
-                (know__symptoms)
                 (not (know__non-covid-illness))
-                (not (force-statement))
                 (know__covid-exposure)
+                (know__symptoms)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof determine-is-non-covid-illness__check-test
                 (outcome rash
                     (and
-                        (non-covid-illness)
                         (know__non-covid-illness)
+                        (non-covid-illness)
                     )
                 )
                 (outcome teeth
                     (and
-                        (non-covid-illness)
                         (know__non-covid-illness)
+                        (non-covid-illness)
                     )
                 )
             )
@@ -154,33 +154,33 @@
         :parameters()
         :precondition
             (and
-                (non-covid-illness)
-                (not (force-statement))
                 (know__over-week)
-                (not (completed-diagnostic))
                 (know__non-covid-illness)
+                (not (force-statement))
+                (non-covid-illness)
+                (not (completed-diagnostic))
             )
         :effect
             (labeled-oneof diagnose_regular_sickness__check-test
                 (outcome rash-under
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
                 (outcome rash-over
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
                 (outcome teeth
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
             )
@@ -189,65 +189,65 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (know__symptoms)
-                (know__exposure-period-over-5)
-                (not (completed-diagnostic))
                 (know__positive-90)
-                (know__positive-30)
-                (know__non-covid-illness)
                 (not (non-covid-illness))
+                (know__non-covid-illness)
+                (know__symptoms)
+                (not (force-statement))
                 (know__covid-exposure)
+                (know__positive-30)
+                (not (completed-diagnostic))
+                (know__exposure-period-over-5)
             )
         :effect
             (labeled-oneof determine_covid_test__check-test
                 (outcome no-symptom-exposed-been-5
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
                 (outcome no-symptom-exposed-less-5
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
                 (outcome have-symptoms-no-90
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
                 (outcome have-symptoms-30
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
                 (outcome have-no-symptoms-30
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
                 (outcome have-symptoms-90
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
                 (outcome have-no-symptoms-90
                     (and
                         (have-message)
-                        (force-statement)
                         (completed-diagnostic)
+                        (force-statement)
                     )
                 )
             )
@@ -256,8 +256,8 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (completed-diagnostic)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof complete__finish
@@ -272,15 +272,15 @@
         :parameters()
         :precondition
             (and
-                (force-statement)
                 (have-message)
+                (force-statement)
             )
         :effect
             (labeled-oneof dialogue_statement__reset
                 (outcome lock
                     (and
-                        (not (have-message))
                         (not (force-statement))
+                        (not (have-message))
                     )
                 )
             )
@@ -289,33 +289,33 @@
         :parameters()
         :precondition
             (and
-                (not (know__have-symptoms))
                 (not (force-statement))
+                (not (know__have-symptoms))
             )
         :effect
             (labeled-oneof slot-fill__get_have_symptoms__get-response
                 (outcome confirm_outcome
                     (and
-                        (force-statement)
-                        (have-symptoms)
                         (know__have-symptoms)
                         (have-message)
+                        (have-symptoms)
+                        (force-statement)
                     )
                 )
                 (outcome deny_outcome
                     (and
-                        (not (symptoms-value-teeth))
-                        (know__symptoms)
                         (not (symptoms-value-covid))
                         (not (have-symptoms))
+                        (know__symptoms)
                         (not (symptoms-value-rash))
                         (know__have-symptoms)
+                        (not (symptoms-value-teeth))
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -324,9 +324,9 @@
         :parameters()
         :precondition
             (and
+                (not (know__over-week))
                 (have-symptoms)
                 (not (force-statement))
-                (not (know__over-week))
             )
         :effect
             (labeled-oneof slot-fill__get_sickness_period__get-response
@@ -344,8 +344,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -354,15 +354,15 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__covid-exposure))
+                (not (force-statement))
             )
         :effect
             (labeled-oneof slot-fill__get_covid_exposure__get-response
                 (outcome confirm_outcome
                     (and
-                        (covid-exposure)
                         (know__covid-exposure)
+                        (covid-exposure)
                     )
                 )
                 (outcome deny_outcome
@@ -373,8 +373,8 @@
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -383,10 +383,10 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (not (know__exposure-period-over-5))
-                (know__non-covid-illness)
                 (not (non-covid-illness))
+                (know__non-covid-illness)
+                (not (know__exposure-period-over-5))
+                (not (force-statement))
                 (know__covid-exposure)
             )
         :effect
@@ -399,14 +399,14 @@
                 )
                 (outcome deny_outcome
                     (and
-                        (know__exposure-period-over-5)
                         (not (exposure-period-over-5))
+                        (know__exposure-period-over-5)
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -415,10 +415,10 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
-                (not (know__positive-30))
-                (not (non-covid-illness))
                 (know__non-covid-illness)
+                (not (force-statement))
+                (not (non-covid-illness))
+                (not (know__positive-30))
             )
         :effect
             (labeled-oneof slot-fill__get_positive_30__get-response
@@ -430,14 +430,14 @@
                 )
                 (outcome deny_outcome
                     (and
-                        (not (positive-30))
                         (know__positive-30)
+                        (not (positive-30))
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )
@@ -446,28 +446,28 @@
         :parameters()
         :precondition
             (and
-                (not (force-statement))
                 (not (know__positive-90))
                 (know__positive-30)
+                (not (force-statement))
             )
         :effect
             (labeled-oneof slot-fill__get_positive_90__get-response
                 (outcome confirm_outcome
                     (and
-                        (positive-90)
                         (know__positive-90)
+                        (positive-90)
                     )
                 )
                 (outcome deny_outcome
                     (and
-                        (not (positive-90))
                         (know__positive-90)
+                        (not (positive-90))
                     )
                 )
                 (outcome fallback
                     (and
-                        (force-statement)
                         (have-message)
+                        (force-statement)
                     )
                 )
             )

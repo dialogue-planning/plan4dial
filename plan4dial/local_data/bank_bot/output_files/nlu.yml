@@ -33,99 +33,105 @@ nlu:
 
     - nuh uh'
   intent: deny
-- examples: '- Please select [savings]{"entity": "account1", "value": "savings"}.
-
-    - use [chequing]{"entity": "account1", "value": "chequing"} for this task
-
-    - I want to use [chequing]{"entity": "account1", "value": "chequing"} for this.
-
-    - [chequing]{"entity": "account1", "value": "chequing"}
+- examples: '- Use [chequing]{"entity": "account1", "value": "chequing"}
 
     - Please select [chequing]{"entity": "account1", "value": "chequing"}.
 
-    - I want to use [savings]{"entity": "account1", "value": "savings"} for this.
+    - use [savings]{"entity": "account1", "value": "savings"} for this task
+
+    - [chequing]{"entity": "account1", "value": "chequing"}
+
+    - use [chequing]{"entity": "account1", "value": "chequing"} for this task
 
     - Use [savings]{"entity": "account1", "value": "savings"}
 
-    - I need to use [chequing]{"entity": "account1", "value": "chequing"}
+    - I want to use [savings]{"entity": "account1", "value": "savings"} for this.
 
-    - [savings]{"entity": "account1", "value": "savings"}
+    - Please select [savings]{"entity": "account1", "value": "savings"}.
+
+    - I want to use [chequing]{"entity": "account1", "value": "chequing"} for this.
 
     - I need to use [savings]{"entity": "account1", "value": "savings"}
 
-    - use [savings]{"entity": "account1", "value": "savings"} for this task
+    - I need to use [chequing]{"entity": "account1", "value": "chequing"}
 
-    - Use [chequing]{"entity": "account1", "value": "chequing"}'
+    - [savings]{"entity": "account1", "value": "savings"}'
   intent: share_account
 - examples: '- ^(5000|[1-9][0-9]?)$'
   regex: funds
-- examples: '- Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from
-    [chequing]{"entity": "account1", "value": "chequing"} to [college fund]{"entity":
-    "account2", "value": "college fund"}?
-
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
-    fund]{"entity": "account2", "value": "retirement fund"} from [savings]{"entity":
-    "account1", "value": "savings"}.
+- examples: '- I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from
+    [savings]{"entity": "account1", "value": "savings"} to [retirement fund]{"entity":
+    "account2", "value": "retirement fund"}.
 
     - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
     "account1", "value": "chequing"} to [college fund]{"entity": "account2", "value":
     "college fund"}.
 
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
-    fund]{"entity": "account2", "value": "retirement fund"} from [chequing]{"entity":
-    "account1", "value": "chequing"}.
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [college fund]{"entity": "account2", "value":
+    "college fund"}?
 
     - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
     "account1", "value": "chequing"} to [retirement fund]{"entity": "account2", "value":
     "retirement fund"}.
 
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [retirement fund]{"entity": "account2", "value":
-    "retirement fund"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [college fund]{"entity": "account2", "value":
-    "college fund"}?
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [retirement fund]{"entity": "account2", "value":
-    "retirement fund"}?
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
-    "account1", "value": "savings"} to [college fund]{"entity": "account2", "value":
-    "college fund"}.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
-    "account1", "value": "chequing"} to [retirement fund]{"entity": "account2", "value":
-    "retirement fund"}?
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
+    "account2", "value": "college fund"} from [chequing]{"entity": "account1", "value":
+    "chequing"}.
 
     - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
     "account2", "value": "college fund"} from [savings]{"entity": "account1", "value":
     "savings"}.
 
-    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [college fund]{"entity":
-    "account2", "value": "college fund"} from [chequing]{"entity": "account1", "value":
-    "chequing"}.'
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
+    "account1", "value": "chequing"} to [college fund]{"entity": "account2", "value":
+    "college fund"}?
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
+    fund]{"entity": "account2", "value": "retirement fund"} from [savings]{"entity":
+    "account1", "value": "savings"}.
+
+    - I want to send [$funds]{"entity": "funds", "value": "$funds"} to [retirement
+    fund]{"entity": "account2", "value": "retirement fund"} from [chequing]{"entity":
+    "account1", "value": "chequing"}.
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [chequing]{"entity":
+    "account1", "value": "chequing"} to [retirement fund]{"entity": "account2", "value":
+    "retirement fund"}?
+
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [retirement fund]{"entity": "account2", "value":
+    "retirement fund"}?
+
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} from [savings]{"entity":
+    "account1", "value": "savings"} to [college fund]{"entity": "account2", "value":
+    "college fund"}.'
   intent: share_transfer_settings
 - examples: '- ^(5000|[1-9][0-9]?)$'
   regex: funds
-- examples: '- [Bob]{"entity": "contact", "value": "Bob"} is expecting [$funds]{"entity":
+- examples: '- Can I transfer [$funds]{"entity": "funds", "value": "$funds"} to [Mark]{"entity":
+    "contact", "value": "Mark"}?
+
+    - [Bob]{"entity": "contact", "value": "Bob"} is expecting [$funds]{"entity": "funds",
+    "value": "$funds"} from me.
+
+    - [Nancy]{"entity": "contact", "value": "Nancy"} is expecting [$funds]{"entity":
     "funds", "value": "$funds"} from me.
 
-    - Please send through [$funds]{"entity": "funds", "value": "$funds"} to [Sandra]{"entity":
-    "contact", "value": "Sandra"}.
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} to [Mark]{"entity":
+    "contact", "value": "Mark"}.
 
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} to [Sandra]{"entity":
-    "contact", "value": "Sandra"}?
-
-    - Please send through [$funds]{"entity": "funds", "value": "$funds"} to [Nancy]{"entity":
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} to [Nancy]{"entity":
     "contact", "value": "Nancy"}.
+
+    - [Sandra]{"entity": "contact", "value": "Sandra"} is expecting [$funds]{"entity":
+    "funds", "value": "$funds"} from me.
 
     - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} to [Bob]{"entity":
     "contact", "value": "Bob"}.
 
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} to [Mark]{"entity":
-    "contact", "value": "Mark"}?
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} to [Sandra]{"entity":
+    "contact", "value": "Sandra"}?
 
     - [Mark]{"entity": "contact", "value": "Mark"} is expecting [$funds]{"entity":
     "funds", "value": "$funds"} from me.
@@ -133,155 +139,149 @@ nlu:
     - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} to [Nancy]{"entity":
     "contact", "value": "Nancy"}?
 
-    - Please send through [$funds]{"entity": "funds", "value": "$funds"} to [Mark]{"entity":
-    "contact", "value": "Mark"}.
-
-    - [Sandra]{"entity": "contact", "value": "Sandra"} is expecting [$funds]{"entity":
-    "funds", "value": "$funds"} from me.
-
-    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} to [Bob]{"entity":
-    "contact", "value": "Bob"}?
-
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} to [Nancy]{"entity":
+    - Please send through [$funds]{"entity": "funds", "value": "$funds"} to [Nancy]{"entity":
     "contact", "value": "Nancy"}.
 
-    - [Nancy]{"entity": "contact", "value": "Nancy"} is expecting [$funds]{"entity":
-    "funds", "value": "$funds"} from me.
+    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} to [Sandra]{"entity":
+    "contact", "value": "Sandra"}.
 
     - Please send through [$funds]{"entity": "funds", "value": "$funds"} to [Bob]{"entity":
     "contact", "value": "Bob"}.
 
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} to [Mark]{"entity":
-    "contact", "value": "Mark"}.
+    - Please send through [$funds]{"entity": "funds", "value": "$funds"} to [Sandra]{"entity":
+    "contact", "value": "Sandra"}.
 
-    - I want to transfer [$funds]{"entity": "funds", "value": "$funds"} to [Sandra]{"entity":
-    "contact", "value": "Sandra"}.'
+    - Can I transfer [$funds]{"entity": "funds", "value": "$funds"} to [Bob]{"entity":
+    "contact", "value": "Bob"}?
+
+    - Please send through [$funds]{"entity": "funds", "value": "$funds"} to [Mark]{"entity":
+    "contact", "value": "Mark"}.'
   intent: share_e_transfer
 - examples: '- ^(5000|[1-9][0-9]?)$'
   regex: funds
-- examples: '- Please ask for [$funds]{"entity": "funds", "value": "$funds"} from
-    [Sandra]{"entity": "contact", "value": "Sandra"}.
+- examples: '- [Sandra]{"entity": "contact", "value": "Sandra"} owes me [$funds]{"entity":
+    "funds", "value": "$funds"}.
+
+    - Please send a request for [Mark]{"entity": "contact", "value": "Mark"} to send
+    me [$funds]{"entity": "funds", "value": "$funds"}.
+
+    - Please send a request for [Bob]{"entity": "contact", "value": "Bob"} to send
+    me [$funds]{"entity": "funds", "value": "$funds"}.
 
     - [Nancy]{"entity": "contact", "value": "Nancy"} owes me [$funds]{"entity": "funds",
     "value": "$funds"}.
 
-    - [Mark]{"entity": "contact", "value": "Mark"} owes me [$funds]{"entity": "funds",
-    "value": "$funds"}.
-
-    - I need to request that [Sandra]{"entity": "contact", "value": "Sandra"} pays
-    me [$funds]{"entity": "funds", "value": "$funds"}.
-
-    - I need to request that [Nancy]{"entity": "contact", "value": "Nancy"} pays me
-    [$funds]{"entity": "funds", "value": "$funds"}.
-
-    - I need to request that [Mark]{"entity": "contact", "value": "Mark"} pays me
-    [$funds]{"entity": "funds", "value": "$funds"}.
-
-    - Please ask for [$funds]{"entity": "funds", "value": "$funds"} from [Mark]{"entity":
-    "contact", "value": "Mark"}.
-
     - Please ask for [$funds]{"entity": "funds", "value": "$funds"} from [Bob]{"entity":
     "contact", "value": "Bob"}.
 
-    - Please ask for [$funds]{"entity": "funds", "value": "$funds"} from [Nancy]{"entity":
-    "contact", "value": "Nancy"}.
-
-    - Please send a request for [Mark]{"entity": "contact", "value": "Mark"} to send
+    - I need to request that [Sandra]{"entity": "contact", "value": "Sandra"} pays
     me [$funds]{"entity": "funds", "value": "$funds"}.
 
     - Please send a request for [Sandra]{"entity": "contact", "value": "Sandra"} to
     send me [$funds]{"entity": "funds", "value": "$funds"}.
 
-    - Please send a request for [Bob]{"entity": "contact", "value": "Bob"} to send
-    me [$funds]{"entity": "funds", "value": "$funds"}.
+    - Please ask for [$funds]{"entity": "funds", "value": "$funds"} from [Sandra]{"entity":
+    "contact", "value": "Sandra"}.
 
     - Please send a request for [Nancy]{"entity": "contact", "value": "Nancy"} to
     send me [$funds]{"entity": "funds", "value": "$funds"}.
 
+    - I need to request that [Bob]{"entity": "contact", "value": "Bob"} pays me [$funds]{"entity":
+    "funds", "value": "$funds"}.
+
+    - I need to request that [Nancy]{"entity": "contact", "value": "Nancy"} pays me
+    [$funds]{"entity": "funds", "value": "$funds"}.
+
     - [Bob]{"entity": "contact", "value": "Bob"} owes me [$funds]{"entity": "funds",
     "value": "$funds"}.
 
-    - [Sandra]{"entity": "contact", "value": "Sandra"} owes me [$funds]{"entity":
-    "funds", "value": "$funds"}.
+    - Please ask for [$funds]{"entity": "funds", "value": "$funds"} from [Nancy]{"entity":
+    "contact", "value": "Nancy"}.
 
-    - I need to request that [Bob]{"entity": "contact", "value": "Bob"} pays me [$funds]{"entity":
-    "funds", "value": "$funds"}.'
+    - Please ask for [$funds]{"entity": "funds", "value": "$funds"} from [Mark]{"entity":
+    "contact", "value": "Mark"}.
+
+    - [Mark]{"entity": "contact", "value": "Mark"} owes me [$funds]{"entity": "funds",
+    "value": "$funds"}.
+
+    - I need to request that [Mark]{"entity": "contact", "value": "Mark"} pays me
+    [$funds]{"entity": "funds", "value": "$funds"}.'
   intent: share_request
-- examples: '- I want to pay off my [gas]{"entity": "bill", "value": "gas"} payment.
-
-    - I want to pay off my [gas]{"entity": "bill", "value": "gas"} bill.
-
-    - I want to pay off my [lights]{"entity": "bill", "value": "lights"} bill.
-
-    - I want to pay off my [internet]{"entity": "bill", "value": "internet"} payment.
-
-    - I want to pay off my [mortgage]{"entity": "bill", "value": "mortgage"} payment.
+- examples: '- Please pay my [utility]{"entity": "bill", "value": "utility"} payment.
 
     - I want to pay off my [internet]{"entity": "bill", "value": "internet"} bill.
 
-    - Please pay my [mortgage]{"entity": "bill", "value": "mortgage"} payment.
-
-    - I want to pay off my [lights]{"entity": "bill", "value": "lights"} payment.
-
     - Please pay my [lights]{"entity": "bill", "value": "lights"} payment.
 
-    - Please pay my [credit card]{"entity": "bill", "value": "credit card"} payment.
+    - I want to pay off my [credit card]{"entity": "bill", "value": "credit card"}
+    payment.
 
-    - Please pay my [car]{"entity": "bill", "value": "car"} payment.
+    - I want to pay off my [gas]{"entity": "bill", "value": "gas"} bill.
 
     - I want to pay off my [electricity]{"entity": "bill", "value": "electricity"}
     payment.
+
+    - I want to pay off my [mortgage]{"entity": "bill", "value": "mortgage"} payment.
+
+    - I want to pay off my [internet]{"entity": "bill", "value": "internet"} payment.
+
+    - Please pay my [gas]{"entity": "bill", "value": "gas"} payment.
+
+    - Please pay my [credit card]{"entity": "bill", "value": "credit card"} payment.
+
+    - I want to pay off my [gas]{"entity": "bill", "value": "gas"} payment.
+
+    - Please pay my [electricity]{"entity": "bill", "value": "electricity"} payment.
+
+    - I want to pay off my [car]{"entity": "bill", "value": "car"} bill.
+
+    - Please pay my [internet]{"entity": "bill", "value": "internet"} payment.
 
     - I want to pay off my [utility]{"entity": "bill", "value": "utility"} payment.
 
     - I want to pay off my [electricity]{"entity": "bill", "value": "electricity"}
     bill.
 
-    - Please pay my [utility]{"entity": "bill", "value": "utility"} payment.
-
-    - Please pay my [gas]{"entity": "bill", "value": "gas"} payment.
-
-    - I want to pay off my [utility]{"entity": "bill", "value": "utility"} bill.
-
-    - I want to pay off my [mortgage]{"entity": "bill", "value": "mortgage"} bill.
-
-    - I want to pay off my [credit card]{"entity": "bill", "value": "credit card"}
-    payment.
-
-    - I want to pay off my [car]{"entity": "bill", "value": "car"} payment.
-
-    - Please pay my [electricity]{"entity": "bill", "value": "electricity"} payment.
-
-    - Please pay my [internet]{"entity": "bill", "value": "internet"} payment.
-
     - I want to pay off my [credit card]{"entity": "bill", "value": "credit card"}
     bill.
 
-    - I want to pay off my [car]{"entity": "bill", "value": "car"} bill.'
+    - I want to pay off my [lights]{"entity": "bill", "value": "lights"} payment.
+
+    - I want to pay off my [mortgage]{"entity": "bill", "value": "mortgage"} bill.
+
+    - I want to pay off my [car]{"entity": "bill", "value": "car"} payment.
+
+    - Please pay my [car]{"entity": "bill", "value": "car"} payment.
+
+    - Please pay my [mortgage]{"entity": "bill", "value": "mortgage"} payment.
+
+    - I want to pay off my [utility]{"entity": "bill", "value": "utility"} bill.
+
+    - I want to pay off my [lights]{"entity": "bill", "value": "lights"} bill.'
   intent: share_bill
-- examples: '- Please create a [retirement fund]{"entity": "account2", "value": "retirement
-    fund"} account.
-
-    - I really need a [college fund]{"entity": "account2", "value": "college fund"}
-    account, please create one.
-
-    - I want to create a [college fund]{"entity": "account2", "value": "college fund"}
-    account for my son.
-
-    - I want to create a [retirement fund]{"entity": "account2", "value": "retirement
+- examples: '- I want to create a [college fund]{"entity": "account2", "value": "college
     fund"} account for my son.
+
+    - Please create a [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} account.
 
     - Please create a [college fund]{"entity": "account2", "value": "college fund"}
     account.
 
+    - I really need a [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} account, please create one.
+
+    - I really need a [college fund]{"entity": "account2", "value": "college fund"}
+    account, please create one.
+
     - I want to create a [retirement fund]{"entity": "account2", "value": "retirement
-    fund"} account.
+    fund"} account for my son.
 
     - I want to create a [college fund]{"entity": "account2", "value": "college fund"}
     account.
 
-    - I really need a [retirement fund]{"entity": "account2", "value": "retirement
-    fund"} account, please create one.'
+    - I want to create a [retirement fund]{"entity": "account2", "value": "retirement
+    fund"} account.'
   intent: share_create
 - examples: '- I''m all done.
 

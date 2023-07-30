@@ -207,12 +207,15 @@ actions:
         - location
       message_variants:
         - Where are you located?
+        - Where do you live?
       fallback_message_variants:
         - Sorry, that isn't a valid location.
       config_entities:
         location:
           clarify_message_variants:
             - I wasn't sure about your location. Do you live in $location?
+            - Sorry, I didn't get that. Are you looking for outings suggestions for $location?
+            - I didn't quite get that-- did you mean $location?
       additional_updates:
         - outcome:
             location:
@@ -229,12 +232,14 @@ actions:
       overall_intent: share_phone_number
       message_variants:
         - What is your phone number? I can use it to make reservations.
+        - Ok-- I need your phone number in case reservations need to be made.
       fallback_message_variants:
         - Sorry, that isn't a valid number.
       config_entities:
         phone_number:
           clarify_message_variants:
             - I'm unsure about your phone number, is it $phone_number?
+            - I didn't quite get that, is your phone number $phone_number?
   get-cuisine:
     type: custom
     subtype: slot_fill
@@ -245,12 +250,15 @@ actions:
       overall_intent: share_cuisine
       message_variants:
         - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
+        - What type of food would you like to eat tonight? Mexican, Chinese, dessert, and Italian are your options.
+        - dessert, Chinese, Mexican, and Italian restaurants are around; which would you prefer?
       fallback_message_variants:
         - Sorry, that isn't a valid cuisine. 
       config_entities:
         cuisine:
           clarify_message_variants:
             - I didn't quite get your cuisine preference. Do you want to eat $cuisine?
+            - I didn't understand your preference. Did you mean $cuisine?
       additional_updates:
         - outcome:
             cuisine:
@@ -260,7 +268,9 @@ actions:
   get-have-allergy:
     type: dialogue
     message_variants:
-      - Do you have any allergies? (Y/N)
+      - Do you have any allergies?
+      - Do you have any food restrictions?
+      - Do you have any dietary restrictions I should know about?
     condition:
       have_allergy:
         known: false 
@@ -288,6 +298,7 @@ actions:
     type: dialogue
     message_variants:
       - What type of allergy do you have? (I currently account for dairy and gluten allergies).
+      - What food restriction do you have? (As of now, I only account for dairy and gluten allergies).
     fallback_message_variants:
       - Sorry, I don't recognize that type of allergy.
     condition:
@@ -466,15 +477,17 @@ actions:
       config_entities:
         budget:
           fallback_message_variants:
-            - Sorry, that isn't a valid budget option. Please select either high or low.
+            - Sorry, that isn't a valid budget option. Please specify either high or low.
           single_slot_message_variants:
-            - What is your budget preference? Please select either high or low.
+            - What is your budget preference? Please specify either high or low.
+            - What is your budget? (High and low are currently the only options).
           single_slot_intent: share_budget
         outing_type:
           fallback_message_variants:
             - Sorry, that isn't a valid outing type.
           single_slot_message_variants:
             - What is your preferred outing type? Use a descriptive adjective like fun, high-energy, relaxing, etc.
+            - What atmosphere are you looking for tonight? Use a descriptive adjective like low-key, exciting, social, etc.
           single_slot_intent: share_outing_type
           clarify_message_variants:
             - Sorry, I wasn't quite sure about your outing type preference. Did you want a(n) $outing_type atmosphere?

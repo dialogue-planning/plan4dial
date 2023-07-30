@@ -186,7 +186,9 @@
         "get_symptoms": {
             "type": "dialogue",
             "message_variants": [
-                "What symptoms are you feeling?"
+                "What symptoms are you feeling?",
+                "Please describe the symptoms you are experiencing.",
+                "What is it that you are feeling?"
             ],
             "fallback_message_variants": [
                 "Sorry, I don't recognize those symptoms."
@@ -769,7 +771,7 @@
                             }
                         },
                         "response_variants": [
-                            "Although you don't have symptoms, since it has been 5 days, you should test."
+                            "Although you don't have symptoms, since it has been 5 days, you should test. You can use either a PCR test or take antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
                             "have-symptoms": {
@@ -841,7 +843,7 @@
                             }
                         },
                         "response_variants": [
-                            "Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR or antigen test."
+                            "Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR test or take antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
                             "symptoms": {
@@ -874,7 +876,7 @@
                             }
                         },
                         "response_variants": [
-                            "Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use an antigen test."
+                            "Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
                             "symptoms": {
@@ -940,7 +942,7 @@
                             }
                         },
                         "response_variants": [
-                            "Since you have symptoms and have had COVID-19 in the last 90 days, you should use an antigen test."
+                            "Since you have symptoms and have had COVID-19 in the last 90 days, you should use antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
                             "symptoms": {
@@ -973,7 +975,7 @@
                             }
                         },
                         "response_variants": [
-                            "Although you have had COVID-19 in the last 90 days and don't have symptoms, you should still use an antigen test."
+                            "Although you have had COVID-19 in the last 90 days and don't have symptoms, you should still use antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
                             "have-symptoms": {
@@ -1069,7 +1071,8 @@
         "slot-fill__get_have_symptoms": {
             "type": "dialogue",
             "message_variants": [
-                "Are you experiencing symptoms of any kind? (Answer yes or no)."
+                "Are you experiencing symptoms of any kind? (Answer yes or no).",
+                "Are you feeling ill? (Please answer yes or no)."
             ],
             "condition": [
                 [
@@ -1106,7 +1109,7 @@
                         },
                         "intent": "confirm",
                         "response_variants": [
-                            "I'm sorry to hear you are feeling unwell."
+                            "I'm sorry to hear you are feeling unwell!"
                         ],
                         "name": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome",
                         "assignments": {
@@ -1213,7 +1216,9 @@
         "slot-fill__get_sickness_period": {
             "type": "dialogue",
             "message_variants": [
-                "Have you been experiencing symptoms for over a week?"
+                "Have you been experiencing symptoms for over a week?",
+                "Have you been feeling ill for more than a week?",
+                "Have you had these symptoms for over a week?"
             ],
             "condition": [
                 [
@@ -1326,7 +1331,9 @@
         "slot-fill__get_covid_exposure": {
             "type": "dialogue",
             "message_variants": [
-                "Have you been exposed to COVID-19?"
+                "Have you been exposed to COVID-19?",
+                "Have you been notified with a COVID-19 exposure?",
+                "Have you been in contact or close to someone with COVID-19?"
             ],
             "condition": [
                 [
@@ -1435,7 +1442,8 @@
         "slot-fill__get_exposure_period": {
             "type": "dialogue",
             "message_variants": [
-                "Has it been at least 5 days since you were exposed to COVID-19?"
+                "Has it been at least 5 days since you were exposed to COVID-19?",
+                "Has it been at least 5 days since your exposure?"
             ],
             "condition": [
                 [
@@ -1556,7 +1564,8 @@
         "slot-fill__get_positive_30": {
             "type": "dialogue",
             "message_variants": [
-                "Have you tested positive for COVID-19 in the last 30 days?"
+                "Have you tested positive for COVID-19 in the last 30 days?",
+                "Have you contracted COVID-19 in the last 30 days?"
             ],
             "condition": [
                 [
@@ -1673,7 +1682,8 @@
         "slot-fill__get_positive_90": {
             "type": "dialogue",
             "message_variants": [
-                "What about in the last 90 days?"
+                "What about in the last 90 days?",
+                "How about in the last 90 days?"
             ],
             "condition": [
                 [

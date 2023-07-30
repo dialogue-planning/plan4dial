@@ -216,6 +216,8 @@ actions:
         - account1
       message_variants:
         - Which account would you like to use?
+        - Which account would you like to select for this task?
+        - Please specify the account you want to select.
       fallback_message_variants:
         - Sorry, that isn't a valid account.
       additional_updates:
@@ -233,6 +235,8 @@ actions:
     type: dialogue
     message_variants:
       - Would you like to transfer any money today?
+      - Are you looking to perform any transfers today?
+      - Would you like to transfer funds between accounts now?
     condition:
       tried-transfer:
         value: false
@@ -259,6 +263,8 @@ actions:
     type: dialogue
     message_variants:
       - Ok, how much money do you want to send and between which accounts?
+      - Ok! Please specify the funds you which to transfer and the accounts to transfer between.
+      - Let's do it! How much do you wish to transfer and between which accounts?
     condition:
       task:
         value: transfer funds between accounts
@@ -282,6 +288,7 @@ actions:
     type: dialogue
     message_variants:
       - Transferring $funds from $account1 to $account2...
+      - $funds were transferred from $account1 to $account2.
     condition:
       task:
         value: transfer funds between accounts
@@ -312,6 +319,7 @@ actions:
     type: dialogue
     message_variants:
       - Would you like to e-transfer any money to your contacts?
+      - Would you like to send any funds to a contact today?
     condition:
       tried-e-transfer:
         value: false
@@ -337,7 +345,9 @@ actions:
   get-e-transfer-options:
     type: dialogue
     message_variants:
-      - Ok, how much money do you want to send and to who?
+      - Ok. How much money do you want to send and to who?
+      - Ok! How much would you like to send and to who?
+      - Alright, who would you like to send funds to and how much?
     condition:
       task:
         value: e-transfer
@@ -359,7 +369,8 @@ actions:
   confirm-e-transfer:
     type: dialogue
     message_variants:
-      - Transferring $funds to $contact from $account1...
+      - E-transferring $funds to $contact from $account1...
+      - Ok! I just e-transferred $funds to $contact from $account1.
     condition:
       task:
         value: e-transfer
@@ -390,6 +401,8 @@ actions:
     type: dialogue
     message_variants:
       - Would you like to request money from a contact?
+      - Are you expecting funds from any of your contacts?
+      - Would you like to request that one of your contacts sends money to you?
     condition:
       tried-request-money:
         value: false
@@ -416,6 +429,7 @@ actions:
     type: dialogue
     message_variants:
       - Which contact would you like to request money from and how much?
+      - How much money would you like to request and from who?
     condition:
       task:
         value: request money
@@ -436,6 +450,7 @@ actions:
     type: dialogue
     message_variants:
       - Ok, I'm requesting a transfer of $funds from $contact. I will let you know when the transfer goes through.
+      - $funds were requested from $contact. I'll notify you when the payment is received.
     condition:
       task:
         value: request money
@@ -462,6 +477,7 @@ actions:
     type: dialogue
     message_variants:
       - Would you like to pay off your outstanding bills today?
+      - You have a few outstanding bills. Would you like to pay them off now?
     condition:
       tried-pay-bills:
         value: false
@@ -510,6 +526,7 @@ actions:
     type: dialogue
     message_variants:
       - Ok, I'm paying your $bill bill from your $account1 account.
+      - Paying your $bill bill from your $account1 account...
     condition:
       task:
         value: pay bills
@@ -536,6 +553,7 @@ actions:
     type: dialogue
     message_variants:
       - Would you like to create a new account?
+      - I can also create a new account for you. Would you like to do that today?
     condition:
       tried-create:
         value: false
@@ -568,8 +586,9 @@ actions:
         - account2
       message_variants:
         - What account type would you like to create?
+        - What type of account would you like me to make for you?
       fallback_message_variants:
-        - Sorry, that isn't a valid account.
+        - Sorry, that isn't a valid account type.
       additional_updates:
         - outcome:
             account2:
@@ -585,7 +604,8 @@ actions:
   confirm-create:
     type: dialogue
     message_variants:
-      - Account $account2 was successfully created with starter funds transferred from $account1.
+      - A $account2 account was successfully created with starter funds transferred from $account1.
+      - Ok! I just created a $account2 account and transferred starter funds into it from $account1.
     condition:
       task:
         value: create account
@@ -612,6 +632,7 @@ actions:
     type: dialogue
     message_variants:
       - Completed all bank actions for today. Thank you!
+      - All done. Have a nice day!
     condition:
       tried-transfer:
         value: true

@@ -122,6 +122,7 @@ actions:
       entity: have-symptoms
       message_variants:
         - Are you experiencing symptoms of any kind? (Answer yes or no).
+        - Are you feeling ill? (Please answer yes or no).
       additional_updates:
         deny_outcome:
           updates:
@@ -130,11 +131,13 @@ actions:
               value: null
         confirm_outcome:
           response_variants:
-            - I'm sorry to hear you are feeling unwell.
+            - I'm sorry to hear you are feeling unwell!
   get_symptoms:
     type: dialogue
     message_variants:
       - What symptoms are you feeling?
+      - Please describe the symptoms you are experiencing.
+      - What is it that you are feeling?
     fallback_message_variants:
       - Sorry, I don't recognize those symptoms.
     condition:
@@ -191,6 +194,8 @@ actions:
       entity: over-week
       message_variants:
         - Have you been experiencing symptoms for over a week?
+        - Have you been feeling ill for more than a week?
+        - Have you had these symptoms for over a week?
       additional_conditions:
         have-symptoms:
           value: true
@@ -316,6 +321,8 @@ actions:
       entity: covid-exposure
       message_variants:
         - Have you been exposed to COVID-19?
+        - Have you been notified with a COVID-19 exposure?
+        - Have you been in contact or close to someone with COVID-19?
   get_exposure_period:
     type: custom
     subtype: flag_entity_yes_no
@@ -324,6 +331,7 @@ actions:
       entity: exposure-period-over-5
       message_variants:
         - Has it been at least 5 days since you were exposed to COVID-19?
+        - Has it been at least 5 days since your exposure?
       additional_conditions:
         covid-exposure:
           known: true
@@ -338,6 +346,7 @@ actions:
       entity: positive-30
       message_variants:
         - Have you tested positive for COVID-19 in the last 30 days?
+        - Have you contracted COVID-19 in the last 30 days?
       additional_conditions:
         non-covid-illness:
           known: true
@@ -355,6 +364,7 @@ actions:
       entity: positive-90
       message_variants:
         - What about in the last 90 days?
+        - How about in the last 90 days?
       additional_conditions:
         positive-30:
           known: true
@@ -386,7 +396,7 @@ actions:
                 completed-diagnostic:
                   value: true
               response_variants:
-                - Although you don't have symptoms, since it has been 5 days, you should test.
+                - Although you don't have symptoms, since it has been 5 days, you should test. You can use either a PCR test or take antigen tests according to the suggested testing guidelines.
               context:
                 have-symptoms:
                   value: false
@@ -412,7 +422,7 @@ actions:
                 completed-diagnostic:
                   value: true
               response_variants:
-                - Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR or antigen test.
+                - Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR test or take antigen tests according to the suggested testing guidelines.
               context:
                 symptoms:
                   value: covid
@@ -423,7 +433,7 @@ actions:
                 completed-diagnostic:
                   value: true
               response_variants:
-                - Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use an antigen test.
+                - Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use antigen tests according to the suggested testing guidelines.
               context:
                 symptoms:
                   value: covid
@@ -445,7 +455,7 @@ actions:
                 completed-diagnostic:
                   value: true
               response_variants:
-                - Since you have symptoms and have had COVID-19 in the last 90 days, you should use an antigen test.
+                - Since you have symptoms and have had COVID-19 in the last 90 days, you should use antigen tests according to the suggested testing guidelines.
               context:
                 symptoms:
                   value: covid
@@ -456,7 +466,7 @@ actions:
                 completed-diagnostic:
                   value: true
               response_variants:
-                - Although you have had COVID-19 in the last 90 days and don't have symptoms, you should still use an antigen test.
+                - Although you have had COVID-19 in the last 90 days and don't have symptoms, you should still use antigen tests according to the suggested testing guidelines.
               context:
                 have-symptoms:
                   value: false
