@@ -1,159 +1,91 @@
 {
     "plan": {
-        "init": "22",
+        "init": "34",
         "goal": "0",
         "nodes": {
-            "10": {
-                "expected_successor": "5",
-                "action": "dialogue_statement",
-                "state": "0x252efc0",
-                "distance": 6,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "5"
-                    }
-                ]
-            },
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0x251df00",
+                "state": "0x1423590",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
                 "is_sc": 1,
                 "successors": []
             },
-            "5": {
-                "expected_successor": "4",
-                "action": "get_symptoms",
-                "state": "0x2530f60",
-                "distance": 5,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-fallback",
-                        "successor_id": "10"
-                    },
-                    {
-                        "outcome_label": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-covid",
-                        "successor_id": "4"
-                    },
-                    {
-                        "outcome_label": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-rash",
-                        "successor_id": "4"
-                    },
-                    {
-                        "outcome_label": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-teeth",
-                        "successor_id": "4"
-                    }
-                ]
-            },
-            "2": {
-                "expected_successor": "1",
-                "action": "dialogue_statement",
-                "state": "0x25268b0",
-                "distance": 2,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "1"
-                    }
-                ]
-            },
             "3": {
                 "expected_successor": "2",
-                "action": "diagnose_regular_sickness",
-                "state": "0x2529550",
+                "action": "dialogue_statement",
+                "state": "0x1445b00",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-over",
-                        "successor_id": "2"
-                    },
-                    {
-                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-under",
-                        "successor_id": "2"
-                    },
-                    {
-                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-teeth",
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
                         "successor_id": "2"
                     }
                 ]
             },
             "4": {
                 "expected_successor": "3",
-                "action": "determine-is-non-covid-illness",
-                "state": "0x25296a0",
+                "action": "determine_covid_test",
+                "state": "0x1446370",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "determine-is-non-covid-illness_DETDUP_determine-is-non-covid-illness__check-test-EQ-rash",
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-30",
                         "successor_id": "3"
                     },
                     {
-                        "outcome_label": "determine-is-non-covid-illness_DETDUP_determine-is-non-covid-illness__check-test-EQ-teeth",
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-90",
+                        "successor_id": "3"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-30",
+                        "successor_id": "3"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-90",
+                        "successor_id": "3"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-no-90",
+                        "successor_id": "3"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-been-5",
+                        "successor_id": "3"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-less-5",
                         "successor_id": "3"
                     }
                 ]
             },
-            "6": {
-                "expected_successor": "5",
-                "action": "slot-fill__get_sickness_period",
-                "state": "0x2531370",
-                "distance": 6,
+            "2": {
+                "expected_successor": "1",
+                "action": "got-covid-diag",
+                "state": "0x143c840",
+                "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-confirm_outcome",
-                        "successor_id": "5"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-deny_outcome",
-                        "successor_id": "5"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-fallback",
-                        "successor_id": "7"
-                    }
-                ]
-            },
-            "7": {
-                "expected_successor": "6",
-                "action": "dialogue_statement",
-                "state": "0x2532610",
-                "distance": 7,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "6"
+                        "outcome_label": "got-covid-diag_DETDUP_got-covid-diag__check-test-EQ-complete",
+                        "successor_id": "1"
                     }
                 ]
             },
             "1": {
                 "expected_successor": "0",
                 "action": "complete",
-                "state": "0x2528cf0",
+                "state": "0x1444f40",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -165,33 +97,33 @@
                     }
                 ]
             },
-            "19": {
-                "expected_successor": "18",
-                "action": "slot-fill__get_exposure_period",
-                "state": "0x25395b0",
-                "distance": 6,
+            "14": {
+                "expected_successor": "4",
+                "action": "slot-fill__get_positive_90",
+                "state": "0x144bcf0",
+                "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-confirm_outcome",
-                        "successor_id": "18"
+                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-confirm_outcome",
+                        "successor_id": "4"
                     },
                     {
-                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-deny_outcome",
-                        "successor_id": "18"
+                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-deny_outcome",
+                        "successor_id": "4"
                     },
                     {
-                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-fallback",
-                        "successor_id": "27"
+                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-fallback",
+                        "successor_id": "24"
                     }
                 ]
             },
-            "18": {
-                "expected_successor": "17",
+            "15": {
+                "expected_successor": "4",
                 "action": "slot-fill__get_positive_30",
-                "state": "0x2533fe0",
+                "state": "0x144bf90",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -199,128 +131,45 @@
                 "successors": [
                     {
                         "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-confirm_outcome",
-                        "successor_id": "17"
+                        "successor_id": "4"
                     },
                     {
                         "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-deny_outcome",
-                        "successor_id": "17"
+                        "successor_id": "14"
                     },
                     {
                         "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-fallback",
-                        "successor_id": "26"
-                    }
-                ]
-            },
-            "20": {
-                "expected_successor": "19",
-                "action": "need-covid-diagnostic-2",
-                "state": "0x2534580",
-                "distance": 7,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "need-covid-diagnostic-2_DETDUP_need-covid-diagnostic-2__check-test-EQ-covid-symptoms",
-                        "successor_id": "19"
-                    }
-                ]
-            },
-            "21": {
-                "expected_successor": "7",
-                "action": "slot-fill__get_have_symptoms",
-                "state": "0x2535620",
-                "distance": 8,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome",
-                        "successor_id": "7"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome",
-                        "successor_id": "20"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback",
-                        "successor_id": "24"
-                    }
-                ]
-            },
-            "22": {
-                "expected_successor": "13",
-                "action": "slot-fill__get_covid_exposure",
-                "state": "0x2535810",
-                "distance": 9,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-confirm_outcome",
-                        "successor_id": "21"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-deny_outcome",
-                        "successor_id": "13"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-fallback",
                         "successor_id": "23"
                     }
                 ]
             },
+            "16": {
+                "expected_successor": "15",
+                "action": "slot-fill__get_exposure_period",
+                "state": "0x144aca0",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-confirm_outcome",
+                        "successor_id": "15"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-deny_outcome",
+                        "successor_id": "15"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-fallback",
+                        "successor_id": "25"
+                    }
+                ]
+            },
             "23": {
-                "expected_successor": "22",
+                "expected_successor": "15",
                 "action": "dialogue_statement",
-                "state": "0x2535a10",
-                "distance": 10,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "22"
-                    }
-                ]
-            },
-            "24": {
-                "expected_successor": "21",
-                "action": "dialogue_statement",
-                "state": "0x2535c60",
-                "distance": 9,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "21"
-                    }
-                ]
-            },
-            "25": {
-                "expected_successor": "17",
-                "action": "dialogue_statement",
-                "state": "0x2538080",
-                "distance": 5,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "17"
-                    }
-                ]
-            },
-            "26": {
-                "expected_successor": "18",
-                "action": "dialogue_statement",
-                "state": "0x2538e00",
+                "state": "0x144d250",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -328,14 +177,14 @@
                 "successors": [
                     {
                         "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "18"
+                        "successor_id": "15"
                     }
                 ]
             },
-            "27": {
-                "expected_successor": "19",
+            "25": {
+                "expected_successor": "16",
                 "action": "dialogue_statement",
-                "state": "0x253d740",
+                "state": "0x144fd40",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -343,29 +192,430 @@
                 "successors": [
                     {
                         "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "19"
+                        "successor_id": "16"
                     }
                 ]
             },
-            "12": {
+            "24": {
+                "expected_successor": "14",
+                "action": "dialogue_statement",
+                "state": "0x144d5b0",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "14"
+                    }
+                ]
+            },
+            "30": {
+                "expected_successor": "29",
+                "action": "slot-fill__get_sickness_period",
+                "state": "0x14577a0",
+                "distance": 8,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-confirm_outcome",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-deny_outcome",
+                        "successor_id": "29"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_sickness_period_DETDUP_slot-fill__get_sickness_period__get-response-EQ-fallback",
+                        "successor_id": "50"
+                    }
+                ]
+            },
+            "31": {
+                "expected_successor": "30",
+                "action": "get_symptoms",
+                "state": "0x1450e00",
+                "distance": 9,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-fallback",
+                        "successor_id": "32"
+                    },
+                    {
+                        "outcome_label": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-covid",
+                        "successor_id": "30"
+                    },
+                    {
+                        "outcome_label": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-rash",
+                        "successor_id": "30"
+                    },
+                    {
+                        "outcome_label": "get_symptoms_DETDUP_get_symptoms__get-symptoms-EQ-share-teeth",
+                        "successor_id": "30"
+                    }
+                ]
+            },
+            "32": {
+                "expected_successor": "31",
+                "action": "dialogue_statement",
+                "state": "0x1450ff0",
+                "distance": 10,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "31"
+                    }
+                ]
+            },
+            "33": {
+                "expected_successor": "32",
+                "action": "slot-fill__get_have_symptoms",
+                "state": "0x1451230",
+                "distance": 11,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome",
+                        "successor_id": "32"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome",
+                        "successor_id": "52"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback",
+                        "successor_id": "51"
+                    }
+                ]
+            },
+            "34": {
+                "expected_successor": "33",
+                "action": "slot-fill__get_covid_exposure",
+                "state": "0x1451470",
+                "distance": 12,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-confirm_outcome",
+                        "successor_id": "33"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-deny_outcome",
+                        "successor_id": "33"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_covid_exposure_DETDUP_slot-fill__get_covid_exposure__get-response-EQ-fallback",
+                        "successor_id": "54"
+                    }
+                ]
+            },
+            "35": {
                 "expected_successor": "1",
-                "action": "handle_no_issues",
-                "state": "0x253a410",
+                "action": "got-both-diags",
+                "state": "0x1451490",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "handle_no_issues_DETDUP_handle_no_issues__check-test-EQ-no-exposure-no-symptoms",
+                        "outcome_label": "got-both-diags_DETDUP_got-both-diags__check-test-EQ-complete",
                         "successor_id": "1"
                     }
                 ]
             },
-            "14": {
-                "expected_successor": "13",
+            "36": {
+                "expected_successor": "35",
                 "action": "dialogue_statement",
-                "state": "0x253a5d0",
+                "state": "0x1452ef0",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "35"
+                    }
+                ]
+            },
+            "37": {
+                "expected_successor": "36",
+                "action": "determine_covid_test",
+                "state": "0x1451db0",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-30",
+                        "successor_id": "36"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-90",
+                        "successor_id": "36"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-30",
+                        "successor_id": "36"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-90",
+                        "successor_id": "36"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-no-90",
+                        "successor_id": "36"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-been-5",
+                        "successor_id": "36"
+                    },
+                    {
+                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-less-5",
+                        "successor_id": "36"
+                    }
+                ]
+            },
+            "29": {
+                "expected_successor": "16",
+                "action": "progress_symptoms_cases",
+                "state": "0x14507a0",
+                "distance": 7,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-covid",
+                        "successor_id": "16"
+                    },
+                    {
+                        "outcome_label": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-rash-covid",
+                        "successor_id": "47"
+                    },
+                    {
+                        "outcome_label": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-rash-no-covid",
+                        "successor_id": "28"
+                    },
+                    {
+                        "outcome_label": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-teeth-covid",
+                        "successor_id": "47"
+                    },
+                    {
+                        "outcome_label": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-teeth-no-covid",
+                        "successor_id": "28"
+                    }
+                ]
+            },
+            "27": {
+                "expected_successor": "26",
+                "action": "dialogue_statement",
+                "state": "0x1457a40",
+                "distance": 3,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "26"
+                    }
+                ]
+            },
+            "26": {
+                "expected_successor": "1",
+                "action": "got-reg-diag",
+                "state": "0x144db50",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "got-reg-diag_DETDUP_got-reg-diag__check-test-EQ-complete",
+                        "successor_id": "1"
+                    }
+                ]
+            },
+            "28": {
+                "expected_successor": "27",
+                "action": "diagnose_regular_sickness",
+                "state": "0x1440e30",
+                "distance": 4,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-over",
+                        "successor_id": "27"
+                    },
+                    {
+                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-under",
+                        "successor_id": "27"
+                    },
+                    {
+                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-teeth",
+                        "successor_id": "27"
+                    }
+                ]
+            },
+            "44": {
+                "expected_successor": "37",
+                "action": "slot-fill__get_positive_30",
+                "state": "0x145aa00",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-confirm_outcome",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-deny_outcome",
+                        "successor_id": "43"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-fallback",
+                        "successor_id": "48"
+                    }
+                ]
+            },
+            "43": {
+                "expected_successor": "37",
+                "action": "slot-fill__get_positive_90",
+                "state": "0x145b510",
+                "distance": 5,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-confirm_outcome",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-deny_outcome",
+                        "successor_id": "37"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-fallback",
+                        "successor_id": "49"
+                    }
+                ]
+            },
+            "45": {
+                "expected_successor": "44",
+                "action": "slot-fill__get_exposure_period",
+                "state": "0x145b5f0",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-confirm_outcome",
+                        "successor_id": "44"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-deny_outcome",
+                        "successor_id": "44"
+                    },
+                    {
+                        "outcome_label": "slot-fill__get_exposure_period_DETDUP_slot-fill__get_exposure_period__get-response-EQ-fallback",
+                        "successor_id": "46"
+                    }
+                ]
+            },
+            "46": {
+                "expected_successor": "45",
+                "action": "dialogue_statement",
+                "state": "0x145b730",
+                "distance": 7,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "45"
+                    }
+                ]
+            },
+            "47": {
+                "expected_successor": "46",
+                "action": "diagnose_regular_sickness",
+                "state": "0x145b890",
+                "distance": 8,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-over",
+                        "successor_id": "46"
+                    },
+                    {
+                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-rash-under",
+                        "successor_id": "46"
+                    },
+                    {
+                        "outcome_label": "diagnose_regular_sickness_DETDUP_diagnose_regular_sickness__check-test-EQ-teeth",
+                        "successor_id": "46"
+                    }
+                ]
+            },
+            "48": {
+                "expected_successor": "44",
+                "action": "dialogue_statement",
+                "state": "0x145ba10",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "44"
+                    }
+                ]
+            },
+            "49": {
+                "expected_successor": "43",
+                "action": "dialogue_statement",
+                "state": "0x1453a30",
+                "distance": 6,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "43"
+                    }
+                ]
+            },
+            "50": {
+                "expected_successor": "30",
+                "action": "dialogue_statement",
+                "state": "0x145d880",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -373,121 +623,115 @@
                 "successors": [
                     {
                         "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
-                        "successor_id": "13"
+                        "successor_id": "30"
                     }
                 ]
             },
-            "13": {
-                "expected_successor": "7",
-                "action": "slot-fill__get_have_symptoms",
-                "state": "0x2530770",
+            "51": {
+                "expected_successor": "33",
+                "action": "dialogue_statement",
+                "state": "0x1460090",
+                "distance": 12,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "33"
+                    }
+                ]
+            },
+            "54": {
+                "expected_successor": "34",
+                "action": "dialogue_statement",
+                "state": "0x1468b70",
+                "distance": 13,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "34"
+                    }
+                ]
+            },
+            "52": {
+                "expected_successor": "25",
+                "action": "progress_no_symptoms_cases",
+                "state": "0x1467a20",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
                 "is_sc": 1,
                 "successors": [
                     {
-                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-confirm_outcome",
-                        "successor_id": "7"
+                        "outcome_label": "progress_no_symptoms_cases_DETDUP_progress_no_symptoms_cases__check-test-EQ-no-exposure-no-symptoms",
+                        "successor_id": "53"
                     },
                     {
-                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-deny_outcome",
-                        "successor_id": "12"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_have_symptoms_DETDUP_slot-fill__get_have_symptoms__get-response-EQ-fallback",
-                        "successor_id": "14"
-                    }
-                ]
-            },
-            "16": {
-                "expected_successor": "2",
-                "action": "determine_covid_test",
-                "state": "0x2530000",
-                "distance": 3,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-30",
-                        "successor_id": "2"
-                    },
-                    {
-                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-90",
-                        "successor_id": "2"
-                    },
-                    {
-                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-30",
-                        "successor_id": "2"
-                    },
-                    {
-                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-90",
-                        "successor_id": "2"
-                    },
-                    {
-                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-no-90",
-                        "successor_id": "2"
-                    },
-                    {
-                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-been-5",
-                        "successor_id": "2"
-                    },
-                    {
-                        "outcome_label": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-less-5",
-                        "successor_id": "2"
-                    }
-                ]
-            },
-            "17": {
-                "expected_successor": "16",
-                "action": "slot-fill__get_positive_90",
-                "state": "0x253d250",
-                "distance": 4,
-                "is_relevant": 0,
-                "is_goal": 0,
-                "is_sc": 1,
-                "successors": [
-                    {
-                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-confirm_outcome",
-                        "successor_id": "16"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-deny_outcome",
-                        "successor_id": "16"
-                    },
-                    {
-                        "outcome_label": "slot-fill__get_positive_90_DETDUP_slot-fill__get_positive_90__get-response-EQ-fallback",
+                        "outcome_label": "progress_no_symptoms_cases_DETDUP_progress_no_symptoms_cases__check-test-EQ-proceed",
                         "successor_id": "25"
+                    }
+                ]
+            },
+            "53": {
+                "expected_successor": "1",
+                "action": "dialogue_statement",
+                "state": "0x1468e40",
+                "distance": 2,
+                "is_relevant": 0,
+                "is_goal": 0,
+                "is_sc": 1,
+                "successors": [
+                    {
+                        "outcome_label": "dialogue_statement_DETDUP_dialogue_statement__reset-EQ-lock",
+                        "successor_id": "1"
                     }
                 ]
             }
         },
         "edges": [
             [
-                "10",
+                "3",
                 ">",
-                "5"
+                "2"
             ],
             [
-                "5",
+                "4",
                 ">",
-                "10"
+                "3"
             ],
             [
-                "5",
+                "4",
                 ">",
-                "4"
+                "3"
             ],
             [
-                "5",
+                "4",
                 ">",
-                "4"
+                "3"
             ],
             [
-                "5",
+                "4",
                 ">",
-                "4"
+                "3"
+            ],
+            [
+                "4",
+                ">",
+                "3"
+            ],
+            [
+                "4",
+                ">",
+                "3"
+            ],
+            [
+                "4",
+                ">",
+                "3"
             ],
             [
                 "2",
@@ -495,448 +739,835 @@
                 "1"
             ],
             [
-                "3",
-                ">",
-                "2"
-            ],
-            [
-                "3",
-                ">",
-                "2"
-            ],
-            [
-                "3",
-                ">",
-                "2"
-            ],
-            [
-                "4",
-                ">",
-                "3"
-            ],
-            [
-                "4",
-                ">",
-                "3"
-            ],
-            [
-                "6",
-                ">",
-                "5"
-            ],
-            [
-                "6",
-                ">",
-                "5"
-            ],
-            [
-                "6",
-                ">",
-                "7"
-            ],
-            [
-                "7",
-                ">",
-                "6"
-            ],
-            [
                 "1",
                 ">",
                 "0"
             ],
             [
-                "19",
+                "14",
                 ">",
-                "18"
-            ],
-            [
-                "19",
-                ">",
-                "18"
-            ],
-            [
-                "19",
-                ">",
-                "27"
-            ],
-            [
-                "18",
-                ">",
-                "17"
-            ],
-            [
-                "18",
-                ">",
-                "17"
-            ],
-            [
-                "18",
-                ">",
-                "26"
-            ],
-            [
-                "20",
-                ">",
-                "19"
-            ],
-            [
-                "21",
-                ">",
-                "7"
-            ],
-            [
-                "21",
-                ">",
-                "20"
-            ],
-            [
-                "21",
-                ">",
-                "24"
-            ],
-            [
-                "22",
-                ">",
-                "21"
-            ],
-            [
-                "22",
-                ">",
-                "13"
-            ],
-            [
-                "22",
-                ">",
-                "23"
-            ],
-            [
-                "23",
-                ">",
-                "22"
-            ],
-            [
-                "24",
-                ">",
-                "21"
-            ],
-            [
-                "25",
-                ">",
-                "17"
-            ],
-            [
-                "26",
-                ">",
-                "18"
-            ],
-            [
-                "27",
-                ">",
-                "19"
-            ],
-            [
-                "12",
-                ">",
-                "1"
+                "4"
             ],
             [
                 "14",
                 ">",
-                "13"
+                "4"
             ],
             [
-                "13",
+                "14",
                 ">",
-                "7"
+                "24"
             ],
             [
-                "13",
+                "15",
                 ">",
-                "12"
+                "4"
             ],
             [
-                "13",
+                "15",
                 ">",
                 "14"
             ],
             [
-                "16",
+                "15",
                 ">",
-                "2"
+                "23"
             ],
             [
                 "16",
                 ">",
-                "2"
+                "15"
             ],
             [
                 "16",
                 ">",
-                "2"
+                "15"
             ],
             [
                 "16",
-                ">",
-                "2"
-            ],
-            [
-                "16",
-                ">",
-                "2"
-            ],
-            [
-                "16",
-                ">",
-                "2"
-            ],
-            [
-                "16",
-                ">",
-                "2"
-            ],
-            [
-                "17",
-                ">",
-                "16"
-            ],
-            [
-                "17",
-                ">",
-                "16"
-            ],
-            [
-                "17",
                 ">",
                 "25"
+            ],
+            [
+                "23",
+                ">",
+                "15"
+            ],
+            [
+                "25",
+                ">",
+                "16"
+            ],
+            [
+                "24",
+                ">",
+                "14"
+            ],
+            [
+                "30",
+                ">",
+                "29"
+            ],
+            [
+                "30",
+                ">",
+                "29"
+            ],
+            [
+                "30",
+                ">",
+                "50"
+            ],
+            [
+                "31",
+                ">",
+                "32"
+            ],
+            [
+                "31",
+                ">",
+                "30"
+            ],
+            [
+                "31",
+                ">",
+                "30"
+            ],
+            [
+                "31",
+                ">",
+                "30"
+            ],
+            [
+                "32",
+                ">",
+                "31"
+            ],
+            [
+                "33",
+                ">",
+                "32"
+            ],
+            [
+                "33",
+                ">",
+                "52"
+            ],
+            [
+                "33",
+                ">",
+                "51"
+            ],
+            [
+                "34",
+                ">",
+                "33"
+            ],
+            [
+                "34",
+                ">",
+                "33"
+            ],
+            [
+                "34",
+                ">",
+                "54"
+            ],
+            [
+                "35",
+                ">",
+                "1"
+            ],
+            [
+                "36",
+                ">",
+                "35"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "37",
+                ">",
+                "36"
+            ],
+            [
+                "29",
+                ">",
+                "16"
+            ],
+            [
+                "29",
+                ">",
+                "47"
+            ],
+            [
+                "29",
+                ">",
+                "28"
+            ],
+            [
+                "29",
+                ">",
+                "47"
+            ],
+            [
+                "29",
+                ">",
+                "28"
+            ],
+            [
+                "27",
+                ">",
+                "26"
+            ],
+            [
+                "26",
+                ">",
+                "1"
+            ],
+            [
+                "28",
+                ">",
+                "27"
+            ],
+            [
+                "28",
+                ">",
+                "27"
+            ],
+            [
+                "28",
+                ">",
+                "27"
+            ],
+            [
+                "44",
+                ">",
+                "37"
+            ],
+            [
+                "44",
+                ">",
+                "43"
+            ],
+            [
+                "44",
+                ">",
+                "48"
+            ],
+            [
+                "43",
+                ">",
+                "37"
+            ],
+            [
+                "43",
+                ">",
+                "37"
+            ],
+            [
+                "43",
+                ">",
+                "49"
+            ],
+            [
+                "45",
+                ">",
+                "44"
+            ],
+            [
+                "45",
+                ">",
+                "44"
+            ],
+            [
+                "45",
+                ">",
+                "46"
+            ],
+            [
+                "46",
+                ">",
+                "45"
+            ],
+            [
+                "47",
+                ">",
+                "46"
+            ],
+            [
+                "47",
+                ">",
+                "46"
+            ],
+            [
+                "47",
+                ">",
+                "46"
+            ],
+            [
+                "48",
+                ">",
+                "44"
+            ],
+            [
+                "49",
+                ">",
+                "43"
+            ],
+            [
+                "50",
+                ">",
+                "30"
+            ],
+            [
+                "51",
+                ">",
+                "33"
+            ],
+            [
+                "54",
+                ">",
+                "34"
+            ],
+            [
+                "52",
+                ">",
+                "53"
+            ],
+            [
+                "52",
+                ">",
+                "25"
+            ],
+            [
+                "53",
+                ">",
+                "1"
             ]
         ],
         "states": {
-            "0x252efc0": [
-                "Atom know__covid-exposure()",
-                "Atom have-symptoms()",
-                "Atom know__over-week()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "Atom force-statement()",
-                "Atom have-message()"
-            ],
-            "0x251df00": [
+            "0x1423590": [
                 "Atom goal()"
             ],
-            "0x2530f60": [
-                "Atom know__covid-exposure()",
-                "Atom have-symptoms()",
-                "Atom know__over-week()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x25268b0": [
-                "Atom completed-diagnostic()",
+            "0x1445b00": [
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "Atom ran-covid-diag()",
                 "Atom force-statement()",
                 "Atom have-message()"
             ],
-            "0x2529550": [
-                "Atom know__over-week()",
-                "Atom know__non-covid-illness()",
-                "Atom non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x25296a0": [
+            "0x1446370": [
                 "Atom know__covid-exposure()",
-                "Atom know__over-week()",
-                "Atom know__symptoms()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x2531370": [
-                "Atom know__covid-exposure()",
-                "Atom have-symptoms()",
-                "NegatedAtom know__over-week()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x2532610": [
-                "Atom know__covid-exposure()",
-                "Atom have-symptoms()",
-                "NegatedAtom know__over-week()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "Atom force-statement()",
-                "Atom have-message()"
-            ],
-            "0x2528cf0": [
-                "Atom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x25395b0": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__positive-90()",
-                "Atom know__symptoms()",
-                "Atom know__non-covid-illness()",
-                "NegatedAtom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x2533fe0": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__positive-90()",
-                "Atom know__symptoms()",
-                "Atom know__non-covid-illness()",
-                "Atom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x2534580": [
-                "Atom know__covid-exposure()",
-                "Atom covid-exposure()",
-                "NegatedAtom know__positive-90()",
-                "Atom know__symptoms()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x2535620": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__have-symptoms()",
-                "Atom covid-exposure()",
-                "NegatedAtom know__over-week()",
-                "NegatedAtom know__positive-90()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x2535810": [
-                "NegatedAtom know__covid-exposure()",
-                "NegatedAtom know__have-symptoms()",
-                "NegatedAtom know__over-week()",
-                "NegatedAtom know__positive-90()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x2535a10": [
-                "NegatedAtom know__covid-exposure()",
-                "NegatedAtom know__have-symptoms()",
-                "NegatedAtom know__over-week()",
-                "NegatedAtom know__positive-90()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom completed-diagnostic()",
-                "Atom force-statement()",
-                "Atom have-message()"
-            ],
-            "0x2535c60": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__have-symptoms()",
-                "Atom covid-exposure()",
-                "NegatedAtom know__over-week()",
-                "NegatedAtom know__positive-90()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom completed-diagnostic()",
-                "Atom force-statement()",
-                "Atom have-message()"
-            ],
-            "0x2538080": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__positive-90()",
-                "Atom know__symptoms()",
-                "Atom know__non-covid-illness()",
-                "Atom know__exposure-period-over-5()",
                 "Atom know__positive-30()",
-                "NegatedAtom non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "Atom force-statement()",
-                "Atom have-message()"
-            ],
-            "0x2538e00": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__positive-90()",
-                "Atom know__symptoms()",
-                "Atom know__non-covid-illness()",
                 "Atom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "Atom force-statement()",
-                "Atom have-message()"
-            ],
-            "0x253d740": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__positive-90()",
-                "Atom know__symptoms()",
-                "Atom know__non-covid-illness()",
-                "NegatedAtom know__exposure-period-over-5()",
-                "NegatedAtom know__positive-30()",
-                "NegatedAtom non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "Atom force-statement()",
-                "Atom have-message()"
-            ],
-            "0x253a410": [
-                "Atom know__covid-exposure()",
-                "Atom know__have-symptoms()",
-                "NegatedAtom covid-exposure()",
-                "NegatedAtom have-symptoms()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x253a5d0": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__have-symptoms()",
-                "NegatedAtom covid-exposure()",
-                "NegatedAtom know__over-week()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "Atom force-statement()",
-                "Atom have-message()"
-            ],
-            "0x2530770": [
-                "Atom know__covid-exposure()",
-                "NegatedAtom know__have-symptoms()",
-                "NegatedAtom covid-exposure()",
-                "NegatedAtom know__over-week()",
-                "NegatedAtom know__non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
-                "NegatedAtom force-statement()"
-            ],
-            "0x2530000": [
-                "Atom know__covid-exposure()",
                 "Atom know__positive-90()",
                 "Atom know__symptoms()",
-                "Atom know__non-covid-illness()",
-                "Atom know__exposure-period-over-5()",
-                "Atom know__positive-30()",
-                "NegatedAtom non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
                 "NegatedAtom force-statement()"
             ],
-            "0x253d250": [
+            "0x143c840": [
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "Atom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1444f40": [
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom completed-diagnostics()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x144bcf0": [
                 "Atom know__covid-exposure()",
+                "Atom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "NegatedAtom positive-30()",
                 "NegatedAtom know__positive-90()",
                 "Atom know__symptoms()",
-                "Atom know__non-covid-illness()",
-                "Atom know__exposure-period-over-5()",
-                "Atom know__positive-30()",
-                "NegatedAtom non-covid-illness()",
-                "NegatedAtom completed-diagnostic()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
                 "NegatedAtom force-statement()"
+            ],
+            "0x144bf90": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x144aca0": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x144d250": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x144fd40": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x144d5b0": [
+                "Atom know__covid-exposure()",
+                "Atom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "NegatedAtom positive-30()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "NegatedAtom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x14577a0": [
+                "Atom know__covid-exposure()",
+                "Atom have-symptoms()",
+                "NegatedAtom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1450e00": [
+                "Atom know__covid-exposure()",
+                "Atom have-symptoms()",
+                "NegatedAtom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "NegatedAtom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1450ff0": [
+                "Atom know__covid-exposure()",
+                "Atom have-symptoms()",
+                "NegatedAtom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "NegatedAtom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1451230": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__have-symptoms()",
+                "NegatedAtom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "NegatedAtom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1451470": [
+                "NegatedAtom know__covid-exposure()",
+                "NegatedAtom know__have-symptoms()",
+                "NegatedAtom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "NegatedAtom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1451490": [
+                "Atom ran-reg-diag()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "Atom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1452ef0": [
+                "Atom ran-reg-diag()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "Atom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1451db0": [
+                "Atom know__covid-exposure()",
+                "Atom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "Atom ran-reg-diag()",
+                "Atom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x14507a0": [
+                "Atom know__covid-exposure()",
+                "Atom have-symptoms()",
+                "Atom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1457a40": [
+                "Atom ran-reg-diag()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "NegatedAtom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x144db50": [
+                "Atom ran-reg-diag()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "NegatedAtom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1440e30": [
+                "Atom know__over-week()",
+                "NegatedAtom ran-reg-diag()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "NegatedAtom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x145aa00": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "Atom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x145b510": [
+                "Atom know__covid-exposure()",
+                "Atom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "Atom ran-reg-diag()",
+                "NegatedAtom positive-30()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x145b5f0": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "Atom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x145b730": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "Atom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x145b890": [
+                "Atom know__covid-exposure()",
+                "Atom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x145ba10": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "Atom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1453a30": [
+                "Atom know__covid-exposure()",
+                "Atom know__positive-30()",
+                "Atom know__exposure-period-over-5()",
+                "Atom ran-reg-diag()",
+                "NegatedAtom positive-30()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom know__need-covid-diag()",
+                "Atom know__need-reg-diag()",
+                "Atom need-covid-diag()",
+                "Atom need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x145d880": [
+                "Atom know__covid-exposure()",
+                "Atom have-symptoms()",
+                "NegatedAtom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1460090": [
+                "Atom know__covid-exposure()",
+                "NegatedAtom know__have-symptoms()",
+                "NegatedAtom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "NegatedAtom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1468b70": [
+                "NegatedAtom know__covid-exposure()",
+                "NegatedAtom know__have-symptoms()",
+                "NegatedAtom know__over-week()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom ran-reg-diag()",
+                "NegatedAtom know__positive-90()",
+                "NegatedAtom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom know__need-reg-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "Atom force-statement()",
+                "Atom have-message()"
+            ],
+            "0x1467a20": [
+                "Atom know__covid-exposure()",
+                "Atom know__have-symptoms()",
+                "NegatedAtom have-symptoms()",
+                "NegatedAtom know__positive-30()",
+                "NegatedAtom know__exposure-period-over-5()",
+                "NegatedAtom know__positive-90()",
+                "Atom know__symptoms()",
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "NegatedAtom know__need-covid-diag()",
+                "NegatedAtom completed-diagnostics()",
+                "NegatedAtom ran-covid-diag()",
+                "NegatedAtom force-statement()"
+            ],
+            "0x1468e40": [
+                "NegatedAtom forcing__diagnose_regular_sickness()",
+                "Atom completed-diagnostics()",
+                "Atom force-statement()",
+                "Atom have-message()"
             ]
         }
     }

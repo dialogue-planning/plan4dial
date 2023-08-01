@@ -305,6 +305,8 @@ actions:
       have_allergy:
         known: true
         value: true
+      food_restriction:
+        known: false
     effect:
       set-allergy:
         oneof:
@@ -512,6 +514,9 @@ actions:
         known: true
       outing:
         known: false
+      conflict:
+        known: true
+        value: false
     effect:
       assign_outing:
         oneof:

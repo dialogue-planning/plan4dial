@@ -46,13 +46,28 @@ context_variables:
     known:
       type: flag
       init: false
-  non-covid-illness:
+  need-reg-diag:
     type: flag
     init: false
     known:
       type: flag
       init: false
-  completed-diagnostic:
+  need-covid-diag:
+    type: flag
+    init: false
+    known:
+      type: flag
+      init: false  
+  ran-reg-diag:
+    type: flag
+    init: false
+  ran-covid-diag:
+    type: flag
+    init: false
+  no-covid-symptoms:
+    type: flag
+    init: false
+  completed-diagnostics:
     type: flag
     init: false
   goal:
@@ -143,40 +158,48 @@ actions:
     condition:
       have-symptoms:
         value: true
+      symptoms:
+        known: false
     effect:
       get-symptoms:
         oneof:
           outcomes:
             share-covid:
               updates:
+                no-covid-symptoms:
+                  value: false
                 symptoms:
                   known: true
                   value: covid
               intent: share_covid_symptoms
             share-rash:
               updates:
+                no-covid-symptoms:
+                  value: true
                 symptoms:
                   known: true
                   value: rash
               intent: share_rash_symptoms
             share-teeth:
               updates:
+                no-covid-symptoms:
+                  value: true
                 symptoms:
                   known: true
                   value: teeth
               intent: share_teeth_symptoms
-  handle_no_issues:
-    type: dialogue
-    message_variants:
-      - Since you have no symptoms and have not been exposed to COVID-19, no further action is required.
+  progress_no_symptoms_cases:
+    type: system
+    subtype: Context dependent determination
     condition:
       covid-exposure:
         known: true
-        value: false
       have-symptoms:
         known: true
         value: false
-      completed-diagnostic:
+      need-covid-diag:
+        known: false
+      completed-diagnostics:
         value: false
     effect:
       check-test:
@@ -184,8 +207,28 @@ actions:
           outcomes:
             no-exposure-no-symptoms:
               updates:
-                completed-diagnostic:
+                completed-diagnostics:
                   value: true
+              response_variants:
+                - Since you have no symptoms and have not been exposed to COVID-19, no further action is required.
+              context:
+                covid-exposure:
+                  value: false
+            proceed:
+              updates:
+                no-covid-symptoms:
+                  value: true
+                need-covid-diag:
+                  known: true
+                  value: true 
+                need-reg-diag:
+                  known: true
+                  value: false
+              context:
+                covid-exposure:
+                  value: true
+              response_variants:
+                - Running diagnostics...
   get_sickness_period:
     type: custom
     subtype: flag_entity_yes_no
@@ -199,56 +242,69 @@ actions:
       additional_conditions:
         have-symptoms:
           value: true
-  need-covid-diagnostic-1:
-    type: system
-    condition:
-      symptoms:
-        known: true
-        value: covid
-      non-covid-illness:
-        known: false
-    effect:
-      check-test:
-        oneof:
-          outcomes:
-            covid-symptoms:
-              updates:
-                non-covid-illness:
-                  known: true
-                  value: false
-  need-covid-diagnostic-2:
-    type: system
-    condition:
-      covid-exposure:
-        value: true
-      non-covid-illness:
-        known: false
-    effect:
-      check-test:
-        oneof:
-          outcomes:
-            covid-symptoms:
-              updates:
-                non-covid-illness:
-                  known: true
-                  value: false
-  determine-is-non-covid-illness:
+  progress_symptoms_cases:
     type: system
     subtype: Context dependent determination
     condition:
-      covid-exposure:
-        known: true
+      have-symptoms:
+        value: true
       symptoms:
         known: true
-      non-covid-illness:
+      covid-exposure:
+        known: true
+      need-covid-diag:
+        known: false
+      need-reg-diag:
         known: false
     effect:
       check-test:
         oneof:
           outcomes:
-            rash:
+            covid:
               updates:
-                non-covid-illness:
+                need-covid-diag:
+                  known: true
+                  value: true
+                need-reg-diag:
+                  known: true
+                  value: false
+              context:
+                symptoms:
+                  value: covid
+            rash-covid:
+              updates:
+                need-reg-diag:
+                  known: true
+                  value: true
+                need-covid-diag:
+                  known: true
+                  value: true
+              follow_up: diagnose_regular_sickness
+              context:
+                symptoms:
+                  value: rash
+                covid-exposure:
+                  value: true
+            teeth-covid:
+              updates:
+                need-reg-diag:
+                  known: true
+                  value: true
+                need-covid-diag:
+                  known: true
+                  value: true
+              follow_up: diagnose_regular_sickness
+              context:
+                symptoms:
+                  value: teeth
+                covid-exposure:
+                  value: true
+            rash-no-covid:
+              updates:
+                need-covid-diag:
+                  known: true
+                  value: false
+                need-reg-diag:
                   known: true
                   value: true
               context:
@@ -256,9 +312,12 @@ actions:
                   value: rash
                 covid-exposure:
                   value: false
-            teeth:
+            teeth-no-covid:
               updates:
-                non-covid-illness:
+                need-covid-diag:
+                  known: true
+                  value: false
+                need-reg-diag:
                   known: true
                   value: true
               context:
@@ -270,12 +329,11 @@ actions:
     type: system
     subtype: Context dependent determination
     condition:
-      non-covid-illness:
-        known: true
+      need-reg-diag:
         value: true
       over-week:
         known: true
-      completed-diagnostic:
+      ran-reg-diag:
         value: false
     effect:
       check-test:
@@ -283,10 +341,10 @@ actions:
           outcomes:
             rash-under:
               updates:
-                completed-diagnostic:
+                ran-reg-diag:
                   value: true
               response_variants:
-                - Ok. If you are having trouble breathing, your face is throat is tight, or your face is swelling up, call emergency. Use warm (not hot) water to clean the area (without scrubbing). If this was potentially the result of a product, stop using it immediately. Try a medicated lotion on the area.
+                - Concerning your rash, if you are having trouble breathing, your face is throat is tight, or your face is swelling up, call emergency. Use warm (not hot) water to clean the area (without scrubbing). If this was potentially the result of a product, stop using it immediately. Try a medicated lotion on the area.
               context:
                 symptoms:
                   value: rash
@@ -294,10 +352,10 @@ actions:
                   value: false
             rash-over:
               updates:
-                completed-diagnostic:
+                ran-reg-diag:
                   value: true
               response_variants:
-                - Contact your health care provider. Before you go, take mental note of when the rash began, what products you have been using recently/any possible insect bites, and what made it better/worse.
+                - Concerning your rash, contact your health care provider. Before you go, take mental note of when the rash began, what products you have been using recently/any possible insect bites, and what made it better/worse.
               context:
                 symptoms:
                   value: rash
@@ -305,14 +363,13 @@ actions:
                   value: true
             teeth:
               updates:
-                completed-diagnostic:
+                ran-reg-diag:
                   value: true
               response_variants:
-                - Ok. I sent you an email detailing the nearest appointments of dentists in your area.
+                - To address your teeth, I sent you an email detailing the nearest appointments of dentists in your area.
               context:
                 symptoms:
                   value: teeth
-
   get_covid_exposure:
     type: custom
     subtype: flag_entity_yes_no
@@ -331,13 +388,12 @@ actions:
       entity: exposure-period-over-5
       message_variants:
         - Has it been at least 5 days since you were exposed to COVID-19?
-        - Has it been at least 5 days since your exposure?
+        - Has it been at least 5 days since your exposure to COVID-19?
       additional_conditions:
         covid-exposure:
           known: true
-        non-covid-illness:
-          known: true
-          value: false
+        need-covid-diag:
+          value: true
   get_positive_30:
     type: custom
     subtype: flag_entity_yes_no
@@ -348,14 +404,14 @@ actions:
         - Have you tested positive for COVID-19 in the last 30 days?
         - Have you contracted COVID-19 in the last 30 days?
       additional_conditions:
-        non-covid-illness:
-          known: true
-          value: false
+        need-covid-diag:
+          value: true
       additional_updates:
         confirm_outcome:
-          positive-90:
-            known: true
-            value: true
+          updates:
+            positive-90:
+              known: true
+              value: true
   get_positive_90:
     type: custom
     subtype: flag_entity_yes_no
@@ -368,13 +424,13 @@ actions:
       additional_conditions:
         positive-30:
           known: true
+          value: false
   determine_covid_test:
     type: system
     subtype: Context dependent determination
     condition:
-      non-covid-illness:
-        known: true
-        value: false
+      need-covid-diag:
+        value: true
       covid-exposure:
         known: true
       symptoms:
@@ -385,97 +441,175 @@ actions:
         known: true
       positive-30:
         known: true
-      completed-diagnostic:
+      ran-covid-diag:
+        value: false
+    effect:
+      check-test:
+        oneof:
+          outcomes:
+            have-no-symptoms-30:
+              updates:
+                ran-covid-diag:
+                  value: true
+              response_variants:
+                - Since you have had COVID-19 in the last 30 days or less, testing is not recommended as you have no covid symptoms.
+              context:
+                no-covid-symptoms:
+                  value: true
+                positive-30:
+                  value: true
+                exposure-period-over-5:
+                  value: true
+            have-symptoms-30:
+              updates:
+                ran-covid-diag:
+                  value: true
+              response_variants:
+                - Since you have covid symptoms and have had COVID-19 in the last 30 days or less, you should use antigen tests according to the suggested testing guidelines.
+              context:
+                symptoms:
+                  value: covid
+                positive-30:
+                  value: true
+            have-symptoms-no-90:
+              updates:
+                ran-covid-diag:
+                  value: true
+              response_variants:
+                - Since you have covid symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR test or take antigen tests according to the suggested testing guidelines.
+              context:
+                symptoms:
+                  value: covid
+                positive-90:
+                  value: false
+            have-symptoms-90:
+              updates:
+                ran-covid-diag:
+                  value: true
+              response_variants:
+                - Since you have covid symptoms and have had COVID-19 in the last 90 days, you should use antigen tests according to the suggested testing guidelines.
+              context:
+                symptoms:
+                  value: covid
+                positive-90:
+                  value: true
+                positive-30:
+                  value: false
+            have-no-symptoms-90:
+              updates:
+                ran-covid-diag:
+                  value: true
+              response_variants:
+                - Although you have had COVID-19 in the last 90 days and don't have covid symptoms, you should still use antigen tests according to the suggested testing guidelines.
+              context:
+                no-covid-symptoms:
+                  value: true
+                positive-90:
+                  value: true
+                positive-30:
+                  value: false
+                exposure-period-over-5:
+                  value: true
+            no-symptom-exposed-been-5:
+              updates:
+                ran-covid-diag:
+                  value: true
+              response_variants:
+                - Although you don't have covid symptoms and have not had COVID-19 in the last 90 days, since it has been 5 days, you should test. You can use either a PCR test or take antigen tests according to the suggested testing guidelines.
+              context:
+                no-covid-symptoms:
+                  value: true
+                covid-exposure:
+                  value: true
+                exposure-period-over-5:
+                  value: true
+                positive-30:
+                  value: false
+                positive-90:
+                  value: false
+            no-symptom-exposed-less-5:
+              updates:
+                ran-covid-diag:
+                  value: true
+              response_variants:
+                - Since you have been exposed to COVID-19 but are not yet showing covid symptoms, wait a total of 5 days since your exposure to test.
+              context:
+                no-covid-symptoms:
+                  value: true
+                covid-exposure:
+                  value: true
+                exposure-period-over-5:
+                  value: false
+  got-both-diags:
+    type: system
+    condition:
+      need-covid-diag:
+        known: true
+        value: true
+      need-reg-diag:
+        known: true
+        value: true
+      ran-covid-diag:
+        value: true
+      ran-reg-diag:
+        value: true
+      completed-diagnostics:
         value: false
     effect:
       check-test:
         oneof:
           outcomes:   
-            no-symptom-exposed-been-5:
+            complete:
               updates:
-                completed-diagnostic:
+                completed-diagnostics:
                   value: true
-              response_variants:
-                - Although you don't have symptoms, since it has been 5 days, you should test. You can use either a PCR test or take antigen tests according to the suggested testing guidelines.
-              context:
-                have-symptoms:
-                  value: false
-                covid-exposure:
-                  value: true
-                exposure-period-over-5:
-                  value: true
-            no-symptom-exposed-less-5:
+  got-covid-diag:
+    type: system
+    condition:
+      need-covid-diag:
+        known: true
+        value: true
+      need-reg-diag:
+        known: true
+        value: false
+      ran-covid-diag:
+        value: true
+      completed-diagnostics:
+        value: false
+    effect:
+      check-test:
+        oneof:
+          outcomes:   
+            complete:
               updates:
-                completed-diagnostic:
+                completed-diagnostics:
                   value: true
-              response_variants:
-                - Since you have been exposed to COVID-19 but are not yet showing symptoms, wait a total of 5 days since your exposure to test.
-              context:
-                have-symptoms:
-                  value: false
-                covid-exposure:
-                  value: true
-                exposure-period-over-5:
-                  value: false
-            have-symptoms-no-90:
+  got-reg-diag:
+    type: system
+    condition:
+      need-covid-diag:
+        known: true
+        value: false
+      need-reg-diag:
+        known: true
+        value: true
+      ran-reg-diag:
+        value: true
+      completed-diagnostics:
+        value: false
+    effect:
+      check-test:
+        oneof:
+          outcomes:   
+            complete:
               updates:
-                completed-diagnostic:
+                completed-diagnostics:
                   value: true
-              response_variants:
-                - Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR test or take antigen tests according to the suggested testing guidelines.
-              context:
-                symptoms:
-                  value: covid
-                positive-90:
-                  value: false
-            have-symptoms-30:
-              updates:
-                completed-diagnostic:
-                  value: true
-              response_variants:
-                - Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use antigen tests according to the suggested testing guidelines.
-              context:
-                symptoms:
-                  value: covid
-                positive-30:
-                  value: true
-            have-no-symptoms-30:
-              updates:
-                completed-diagnostic:
-                  value: true
-              response_variants:
-                - Although you have had COVID-19 in the last 30 days or less, testing is not recommended.
-              context:
-                have-symptoms:
-                  value: false
-                positive-30:
-                  value: true
-            have-symptoms-90:
-              updates:
-                completed-diagnostic:
-                  value: true
-              response_variants:
-                - Since you have symptoms and have had COVID-19 in the last 90 days, you should use antigen tests according to the suggested testing guidelines.
-              context:
-                symptoms:
-                  value: covid
-                positive-90:
-                  value: true
-            have-no-symptoms-90:
-              updates:
-                completed-diagnostic:
-                  value: true
-              response_variants:
-                - Although you have had COVID-19 in the last 90 days and don't have symptoms, you should still use antigen tests according to the suggested testing guidelines.
-              context:
-                have-symptoms:
-                  value: false
-                positive-90:
-                  value: true
+                
   complete:
     type: system
     condition:
-      completed-diagnostic:
+      completed-diagnostics:
         value: true
     effect:
       finish:

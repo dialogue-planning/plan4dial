@@ -439,6 +439,10 @@
                     true
                 ],
                 [
+                    "food_restriction",
+                    "Unknown"
+                ],
+                [
                     "force-statement",
                     false
                 ]
@@ -897,6 +901,14 @@
                 [
                     "outing",
                     "Unknown"
+                ],
+                [
+                    "conflict",
+                    "Known"
+                ],
+                [
+                    "conflict",
+                    false
                 ],
                 [
                     "force-statement",

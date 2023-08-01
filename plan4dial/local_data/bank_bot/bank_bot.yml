@@ -165,7 +165,7 @@ intents:
       - I want to transfer $funds to $contact.
       - Can I transfer $funds to $contact?
       - $contact is expecting $funds from me.
-      - Please send through $funds to $contact.
+      - Please send $funds to $contact.
   share_request:
     entities:
       - contact
@@ -173,8 +173,10 @@ intents:
     utterances:
       - $contact owes me $funds.
       - I need to request that $contact pays me $funds. 
-      - Please send a request for $contact to send me $funds.
-      - Please ask for $funds from $contact.
+      - Please request that $contact to send me $funds.
+      - Please ask my contact $contact to send the $funds they owe.
+      - $contact needs to send me $funds.
+      - I really need $contact to send the $funds they owe me.
   share_bill:
     entities:
       - bill
@@ -234,8 +236,8 @@ actions:
   offer-transfer:
     type: dialogue
     message_variants:
-      - Would you like to transfer any money today?
-      - Are you looking to perform any transfers today?
+      - Would you like to transfer any money between your existing accounts?
+      - Are you looking to perform any transfers beween your accounts today?
       - Would you like to transfer funds between accounts now?
     condition:
       tried-transfer:
@@ -287,8 +289,8 @@ actions:
   confirm-transfer:
     type: dialogue
     message_variants:
-      - Transferring $funds from $account1 to $account2...
-      - $funds were transferred from $account1 to $account2.
+      - Got it. I've completed the transfer of $funds from $account1 to $account2.
+      - Ok! I successfully transferred your requested amount of $funds from $account1 to $account2.
     condition:
       task:
         value: transfer funds between accounts
@@ -320,6 +322,7 @@ actions:
     message_variants:
       - Would you like to e-transfer any money to your contacts?
       - Would you like to send any funds to a contact today?
+      - Are any of your contacts expecting a payment from you today?
     condition:
       tried-e-transfer:
         value: false
@@ -449,8 +452,8 @@ actions:
   confirm-request:
     type: dialogue
     message_variants:
-      - Ok, I'm requesting a transfer of $funds from $contact. I will let you know when the transfer goes through.
-      - $funds were requested from $contact. I'll notify you when the payment is received.
+      - Ok, I'm requesting a payment of $funds from $contact. I will let you know when the transfer goes through.
+      - Ok, I asked $contact to send you $funds. I'll notify you when the payment is received.
     condition:
       task:
         value: request money

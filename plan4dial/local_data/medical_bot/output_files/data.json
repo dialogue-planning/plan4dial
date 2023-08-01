@@ -61,7 +61,7 @@
                 "init": false
             }
         },
-        "non-covid-illness": {
+        "need-reg-diag": {
             "type": "flag",
             "config": false,
             "known": {
@@ -69,7 +69,27 @@
                 "init": false
             }
         },
-        "completed-diagnostic": {
+        "need-covid-diag": {
+            "type": "flag",
+            "config": false,
+            "known": {
+                "type": "flag",
+                "init": false
+            }
+        },
+        "ran-reg-diag": {
+            "type": "flag",
+            "config": false
+        },
+        "ran-covid-diag": {
+            "type": "flag",
+            "config": false
+        },
+        "no-covid-symptoms": {
+            "type": "flag",
+            "config": false
+        },
+        "completed-diagnostics": {
             "type": "flag",
             "config": false
         },
@@ -85,15 +105,7 @@
             "type": "flag",
             "config": false
         },
-        "symptoms-value-covid": {
-            "type": "flag",
-            "config": false
-        },
-        "symptoms-value-rash": {
-            "type": "flag",
-            "config": false
-        },
-        "symptoms-value-teeth": {
+        "forcing__diagnose_regular_sickness": {
             "type": "flag",
             "config": false
         }
@@ -199,7 +211,15 @@
                     true
                 ],
                 [
+                    "symptoms",
+                    "Unknown"
+                ],
+                [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
                     false
                 ]
             ],
@@ -209,25 +229,15 @@
                 "outcomes": [
                     {
                         "updates": {
+                            "no-covid-symptoms": {
+                                "value": false,
+                                "variable": "no-covid-symptoms",
+                                "interpretation": "json"
+                            },
                             "symptoms": {
                                 "value": "covid",
                                 "variable": "symptoms",
                                 "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-covid": {
-                                "value": true,
-                                "variable": "symptoms-value-covid",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-rash": {
-                                "value": false,
-                                "variable": "symptoms-value-rash",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-teeth": {
-                                "value": false,
-                                "variable": "symptoms-value-teeth",
                                 "interpretation": "json"
                             }
                         },
@@ -239,25 +249,15 @@
                     },
                     {
                         "updates": {
+                            "no-covid-symptoms": {
+                                "value": true,
+                                "variable": "no-covid-symptoms",
+                                "interpretation": "json"
+                            },
                             "symptoms": {
                                 "value": "rash",
                                 "variable": "symptoms",
                                 "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-covid": {
-                                "value": false,
-                                "variable": "symptoms-value-covid",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-rash": {
-                                "value": true,
-                                "variable": "symptoms-value-rash",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-teeth": {
-                                "value": false,
-                                "variable": "symptoms-value-teeth",
                                 "interpretation": "json"
                             }
                         },
@@ -269,25 +269,15 @@
                     },
                     {
                         "updates": {
+                            "no-covid-symptoms": {
+                                "value": true,
+                                "variable": "no-covid-symptoms",
+                                "interpretation": "json"
+                            },
                             "symptoms": {
                                 "value": "teeth",
                                 "variable": "symptoms",
                                 "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-covid": {
-                                "value": false,
-                                "variable": "symptoms-value-covid",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-rash": {
-                                "value": false,
-                                "variable": "symptoms-value-rash",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-teeth": {
-                                "value": true,
-                                "variable": "symptoms-value-teeth",
                                 "interpretation": "json"
                             }
                         },
@@ -367,19 +357,13 @@
                 }
             }
         },
-        "handle_no_issues": {
-            "type": "dialogue",
-            "message_variants": [
-                "Since you have no symptoms and have not been exposed to COVID-19, no further action is required."
-            ],
+        "progress_no_symptoms_cases": {
+            "type": "system",
+            "subtype": "Context dependent determination",
             "condition": [
                 [
                     "covid-exposure",
                     "Known"
-                ],
-                [
-                    "covid-exposure",
-                    false
                 ],
                 [
                     "have-symptoms",
@@ -390,229 +374,31 @@
                     false
                 ],
                 [
-                    "completed-diagnostic",
-                    false
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "handle_no_issues__check-test",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "completed-diagnostic": {
-                                "value": true,
-                                "variable": "completed-diagnostic",
-                                "interpretation": "json"
-                            }
-                        },
-                        "intent": "utter_msg",
-                        "name": "handle_no_issues_DETDUP_handle_no_issues__check-test-EQ-no-exposure-no-symptoms",
-                        "assignments": {}
-                    }
-                ]
-            },
-            "disable-fallback": true,
-            "intents": {
-                "utter_msg": {
-                    "entities": [],
-                    "utterances": [],
-                    "type": "regular"
-                }
-            }
-        },
-        "need-covid-diagnostic-1": {
-            "type": "system",
-            "condition": [
-                [
-                    "symptoms",
-                    "Known"
-                ],
-                [
-                    "non-covid-illness",
+                    "need-covid-diag",
                     "Unknown"
                 ],
                 [
+                    "completed-diagnostics",
+                    false
+                ],
+                [
                     "force-statement",
                     false
                 ],
                 [
-                    "symptoms-value-covid",
-                    true
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "need-covid-diagnostic-1__check-test",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "non-covid-illness": {
-                                "value": false,
-                                "variable": "non-covid-illness",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "need-covid-diagnostic-1_DETDUP_need-covid-diagnostic-1__check-test-EQ-covid-symptoms",
-                        "intent": null,
-                        "assignments": {
-                            "$non-covid-illness": "found"
-                        }
-                    }
-                ]
-            }
-        },
-        "need-covid-diagnostic-2": {
-            "type": "system",
-            "condition": [
-                [
-                    "covid-exposure",
-                    true
-                ],
-                [
-                    "non-covid-illness",
-                    "Unknown"
-                ],
-                [
-                    "force-statement",
+                    "forcing__diagnose_regular_sickness",
                     false
                 ]
             ],
             "effect": {
-                "global-outcome-name": "need-covid-diagnostic-2__check-test",
+                "global-outcome-name": "progress_no_symptoms_cases__check-test",
                 "type": "oneof",
                 "outcomes": [
                     {
                         "updates": {
-                            "non-covid-illness": {
-                                "value": false,
-                                "variable": "non-covid-illness",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "name": "need-covid-diagnostic-2_DETDUP_need-covid-diagnostic-2__check-test-EQ-covid-symptoms",
-                        "intent": null,
-                        "assignments": {
-                            "$non-covid-illness": "found"
-                        }
-                    }
-                ]
-            }
-        },
-        "determine-is-non-covid-illness": {
-            "type": "system",
-            "subtype": "Context dependent determination",
-            "condition": [
-                [
-                    "covid-exposure",
-                    "Known"
-                ],
-                [
-                    "symptoms",
-                    "Known"
-                ],
-                [
-                    "non-covid-illness",
-                    "Unknown"
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "determine-is-non-covid-illness__check-test",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "non-covid-illness": {
+                            "completed-diagnostics": {
                                 "value": true,
-                                "variable": "non-covid-illness",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "symptoms": {
-                                "value": "rash"
-                            },
-                            "covid-exposure": {
-                                "value": false
-                            }
-                        },
-                        "name": "determine-is-non-covid-illness_DETDUP_determine-is-non-covid-illness__check-test-EQ-rash",
-                        "intent": null,
-                        "assignments": {
-                            "$non-covid-illness": "found"
-                        }
-                    },
-                    {
-                        "updates": {
-                            "non-covid-illness": {
-                                "value": true,
-                                "variable": "non-covid-illness",
-                                "certainty": "Known",
-                                "interpretation": "json"
-                            }
-                        },
-                        "context": {
-                            "symptoms": {
-                                "value": "teeth"
-                            },
-                            "covid-exposure": {
-                                "value": false
-                            }
-                        },
-                        "name": "determine-is-non-covid-illness_DETDUP_determine-is-non-covid-illness__check-test-EQ-teeth",
-                        "intent": null,
-                        "assignments": {
-                            "$non-covid-illness": "found"
-                        }
-                    }
-                ]
-            }
-        },
-        "diagnose_regular_sickness": {
-            "type": "system",
-            "subtype": "Context dependent determination",
-            "condition": [
-                [
-                    "non-covid-illness",
-                    "Known"
-                ],
-                [
-                    "non-covid-illness",
-                    true
-                ],
-                [
-                    "over-week",
-                    "Known"
-                ],
-                [
-                    "completed-diagnostic",
-                    false
-                ],
-                [
-                    "force-statement",
-                    false
-                ]
-            ],
-            "effect": {
-                "global-outcome-name": "diagnose_regular_sickness__check-test",
-                "type": "oneof",
-                "outcomes": [
-                    {
-                        "updates": {
-                            "completed-diagnostic": {
-                                "value": true,
-                                "variable": "completed-diagnostic",
+                                "variable": "completed-diagnostics",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -627,7 +413,314 @@
                             }
                         },
                         "response_variants": [
-                            "Ok. If you are having trouble breathing, your face is throat is tight, or your face is swelling up, call emergency. Use warm (not hot) water to clean the area (without scrubbing). If this was potentially the result of a product, stop using it immediately. Try a medicated lotion on the area."
+                            "Since you have no symptoms and have not been exposed to COVID-19, no further action is required."
+                        ],
+                        "context": {
+                            "covid-exposure": {
+                                "value": false
+                            }
+                        },
+                        "name": "progress_no_symptoms_cases_DETDUP_progress_no_symptoms_cases__check-test-EQ-no-exposure-no-symptoms",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "no-covid-symptoms": {
+                                "value": true,
+                                "variable": "no-covid-symptoms",
+                                "interpretation": "json"
+                            },
+                            "need-covid-diag": {
+                                "value": true,
+                                "variable": "need-covid-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "need-reg-diag": {
+                                "value": false,
+                                "variable": "need-reg-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "covid-exposure": {
+                                "value": true
+                            }
+                        },
+                        "response_variants": [
+                            "Running diagnostics..."
+                        ],
+                        "name": "progress_no_symptoms_cases_DETDUP_progress_no_symptoms_cases__check-test-EQ-proceed",
+                        "intent": null,
+                        "assignments": {
+                            "$need-covid-diag": "found",
+                            "$need-reg-diag": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "progress_symptoms_cases": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "have-symptoms",
+                    true
+                ],
+                [
+                    "symptoms",
+                    "Known"
+                ],
+                [
+                    "covid-exposure",
+                    "Known"
+                ],
+                [
+                    "need-covid-diag",
+                    "Unknown"
+                ],
+                [
+                    "need-reg-diag",
+                    "Unknown"
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "progress_symptoms_cases__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "need-covid-diag": {
+                                "value": true,
+                                "variable": "need-covid-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "need-reg-diag": {
+                                "value": false,
+                                "variable": "need-reg-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "symptoms": {
+                                "value": "covid"
+                            }
+                        },
+                        "name": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-covid",
+                        "intent": null,
+                        "assignments": {
+                            "$need-covid-diag": "found",
+                            "$need-reg-diag": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "need-reg-diag": {
+                                "value": true,
+                                "variable": "need-reg-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "need-covid-diag": {
+                                "value": true,
+                                "variable": "need-covid-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "forcing__diagnose_regular_sickness": {
+                                "value": true,
+                                "variable": "forcing__diagnose_regular_sickness",
+                                "interpretation": "json"
+                            }
+                        },
+                        "follow_up": "diagnose_regular_sickness",
+                        "context": {
+                            "symptoms": {
+                                "value": "rash"
+                            },
+                            "covid-exposure": {
+                                "value": true
+                            }
+                        },
+                        "name": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-rash-covid",
+                        "intent": null,
+                        "assignments": {
+                            "$need-reg-diag": "found",
+                            "$need-covid-diag": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "need-reg-diag": {
+                                "value": true,
+                                "variable": "need-reg-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "need-covid-diag": {
+                                "value": true,
+                                "variable": "need-covid-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "forcing__diagnose_regular_sickness": {
+                                "value": true,
+                                "variable": "forcing__diagnose_regular_sickness",
+                                "interpretation": "json"
+                            }
+                        },
+                        "follow_up": "diagnose_regular_sickness",
+                        "context": {
+                            "symptoms": {
+                                "value": "teeth"
+                            },
+                            "covid-exposure": {
+                                "value": true
+                            }
+                        },
+                        "name": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-teeth-covid",
+                        "intent": null,
+                        "assignments": {
+                            "$need-reg-diag": "found",
+                            "$need-covid-diag": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "need-covid-diag": {
+                                "value": false,
+                                "variable": "need-covid-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "need-reg-diag": {
+                                "value": true,
+                                "variable": "need-reg-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "symptoms": {
+                                "value": "rash"
+                            },
+                            "covid-exposure": {
+                                "value": false
+                            }
+                        },
+                        "name": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-rash-no-covid",
+                        "intent": null,
+                        "assignments": {
+                            "$need-covid-diag": "found",
+                            "$need-reg-diag": "found"
+                        }
+                    },
+                    {
+                        "updates": {
+                            "need-covid-diag": {
+                                "value": false,
+                                "variable": "need-covid-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            },
+                            "need-reg-diag": {
+                                "value": true,
+                                "variable": "need-reg-diag",
+                                "certainty": "Known",
+                                "interpretation": "json"
+                            }
+                        },
+                        "context": {
+                            "symptoms": {
+                                "value": "teeth"
+                            },
+                            "covid-exposure": {
+                                "value": false
+                            }
+                        },
+                        "name": "progress_symptoms_cases_DETDUP_progress_symptoms_cases__check-test-EQ-teeth-no-covid",
+                        "intent": null,
+                        "assignments": {
+                            "$need-covid-diag": "found",
+                            "$need-reg-diag": "found"
+                        }
+                    }
+                ]
+            }
+        },
+        "diagnose_regular_sickness": {
+            "type": "system",
+            "subtype": "Context dependent determination",
+            "condition": [
+                [
+                    "need-reg-diag",
+                    true
+                ],
+                [
+                    "over-week",
+                    "Known"
+                ],
+                [
+                    "ran-reg-diag",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "diagnose_regular_sickness__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "ran-reg-diag": {
+                                "value": true,
+                                "variable": "ran-reg-diag",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            },
+                            "forcing__diagnose_regular_sickness": {
+                                "value": false,
+                                "variable": "forcing__diagnose_regular_sickness",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Concerning your rash, if you are having trouble breathing, your face is throat is tight, or your face is swelling up, call emergency. Use warm (not hot) water to clean the area (without scrubbing). If this was potentially the result of a product, stop using it immediately. Try a medicated lotion on the area."
                         ],
                         "context": {
                             "symptoms": {
@@ -643,9 +736,9 @@
                     },
                     {
                         "updates": {
-                            "completed-diagnostic": {
+                            "ran-reg-diag": {
                                 "value": true,
-                                "variable": "completed-diagnostic",
+                                "variable": "ran-reg-diag",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -657,10 +750,15 @@
                                 "value": true,
                                 "variable": "force-statement",
                                 "interpretation": "json"
+                            },
+                            "forcing__diagnose_regular_sickness": {
+                                "value": false,
+                                "variable": "forcing__diagnose_regular_sickness",
+                                "interpretation": "json"
                             }
                         },
                         "response_variants": [
-                            "Contact your health care provider. Before you go, take mental note of when the rash began, what products you have been using recently/any possible insect bites, and what made it better/worse."
+                            "Concerning your rash, contact your health care provider. Before you go, take mental note of when the rash began, what products you have been using recently/any possible insect bites, and what made it better/worse."
                         ],
                         "context": {
                             "symptoms": {
@@ -676,9 +774,9 @@
                     },
                     {
                         "updates": {
-                            "completed-diagnostic": {
+                            "ran-reg-diag": {
                                 "value": true,
-                                "variable": "completed-diagnostic",
+                                "variable": "ran-reg-diag",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -690,10 +788,15 @@
                                 "value": true,
                                 "variable": "force-statement",
                                 "interpretation": "json"
+                            },
+                            "forcing__diagnose_regular_sickness": {
+                                "value": false,
+                                "variable": "forcing__diagnose_regular_sickness",
+                                "interpretation": "json"
                             }
                         },
                         "response_variants": [
-                            "Ok. I sent you an email detailing the nearest appointments of dentists in your area."
+                            "To address your teeth, I sent you an email detailing the nearest appointments of dentists in your area."
                         ],
                         "context": {
                             "symptoms": {
@@ -712,12 +815,8 @@
             "subtype": "Context dependent determination",
             "condition": [
                 [
-                    "non-covid-illness",
-                    "Known"
-                ],
-                [
-                    "non-covid-illness",
-                    false
+                    "need-covid-diag",
+                    true
                 ],
                 [
                     "covid-exposure",
@@ -740,11 +839,15 @@
                     "Known"
                 ],
                 [
-                    "completed-diagnostic",
+                    "ran-covid-diag",
                     false
                 ],
                 [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
                     false
                 ]
             ],
@@ -754,9 +857,9 @@
                 "outcomes": [
                     {
                         "updates": {
-                            "completed-diagnostic": {
+                            "ran-covid-diag": {
                                 "value": true,
-                                "variable": "completed-diagnostic",
+                                "variable": "ran-covid-diag",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -771,28 +874,28 @@
                             }
                         },
                         "response_variants": [
-                            "Although you don't have symptoms, since it has been 5 days, you should test. You can use either a PCR test or take antigen tests according to the suggested testing guidelines."
+                            "Since you have had COVID-19 in the last 30 days or less, testing is not recommended as you have no covid symptoms."
                         ],
                         "context": {
-                            "have-symptoms": {
-                                "value": false
+                            "no-covid-symptoms": {
+                                "value": true
                             },
-                            "covid-exposure": {
+                            "positive-30": {
                                 "value": true
                             },
                             "exposure-period-over-5": {
                                 "value": true
                             }
                         },
-                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-been-5",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-30",
                         "intent": null,
                         "assignments": {}
                     },
                     {
                         "updates": {
-                            "completed-diagnostic": {
+                            "ran-covid-diag": {
                                 "value": true,
-                                "variable": "completed-diagnostic",
+                                "variable": "ran-covid-diag",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -807,76 +910,7 @@
                             }
                         },
                         "response_variants": [
-                            "Since you have been exposed to COVID-19 but are not yet showing symptoms, wait a total of 5 days since your exposure to test."
-                        ],
-                        "context": {
-                            "have-symptoms": {
-                                "value": false
-                            },
-                            "covid-exposure": {
-                                "value": true
-                            },
-                            "exposure-period-over-5": {
-                                "value": false
-                            }
-                        },
-                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-less-5",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "completed-diagnostic": {
-                                "value": true,
-                                "variable": "completed-diagnostic",
-                                "interpretation": "json"
-                            },
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "response_variants": [
-                            "Since you have symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR test or take antigen tests according to the suggested testing guidelines."
-                        ],
-                        "context": {
-                            "symptoms": {
-                                "value": "covid"
-                            },
-                            "positive-90": {
-                                "value": false
-                            }
-                        },
-                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-no-90",
-                        "intent": null,
-                        "assignments": {}
-                    },
-                    {
-                        "updates": {
-                            "completed-diagnostic": {
-                                "value": true,
-                                "variable": "completed-diagnostic",
-                                "interpretation": "json"
-                            },
-                            "have-message": {
-                                "value": true,
-                                "variable": "have-message",
-                                "interpretation": "json"
-                            },
-                            "force-statement": {
-                                "value": true,
-                                "variable": "force-statement",
-                                "interpretation": "json"
-                            }
-                        },
-                        "response_variants": [
-                            "Since you have symptoms and have had COVID-19 in the last 30 days or less, you should use antigen tests according to the suggested testing guidelines."
+                            "Since you have covid symptoms and have had COVID-19 in the last 30 days or less, you should use antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
                             "symptoms": {
@@ -892,9 +926,9 @@
                     },
                     {
                         "updates": {
-                            "completed-diagnostic": {
+                            "ran-covid-diag": {
                                 "value": true,
-                                "variable": "completed-diagnostic",
+                                "variable": "ran-covid-diag",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -909,25 +943,25 @@
                             }
                         },
                         "response_variants": [
-                            "Although you have had COVID-19 in the last 30 days or less, testing is not recommended."
+                            "Since you have covid symptoms and have not had COVID-19 in the last 90 days, you should test immediately. You can use either a PCR test or take antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
-                            "have-symptoms": {
-                                "value": false
+                            "symptoms": {
+                                "value": "covid"
                             },
-                            "positive-30": {
-                                "value": true
+                            "positive-90": {
+                                "value": false
                             }
                         },
-                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-30",
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-no-90",
                         "intent": null,
                         "assignments": {}
                     },
                     {
                         "updates": {
-                            "completed-diagnostic": {
+                            "ran-covid-diag": {
                                 "value": true,
-                                "variable": "completed-diagnostic",
+                                "variable": "ran-covid-diag",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -942,7 +976,7 @@
                             }
                         },
                         "response_variants": [
-                            "Since you have symptoms and have had COVID-19 in the last 90 days, you should use antigen tests according to the suggested testing guidelines."
+                            "Since you have covid symptoms and have had COVID-19 in the last 90 days, you should use antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
                             "symptoms": {
@@ -950,6 +984,9 @@
                             },
                             "positive-90": {
                                 "value": true
+                            },
+                            "positive-30": {
+                                "value": false
                             }
                         },
                         "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-symptoms-90",
@@ -958,9 +995,9 @@
                     },
                     {
                         "updates": {
-                            "completed-diagnostic": {
+                            "ran-covid-diag": {
                                 "value": true,
-                                "variable": "completed-diagnostic",
+                                "variable": "ran-covid-diag",
                                 "interpretation": "json"
                             },
                             "have-message": {
@@ -975,17 +1012,270 @@
                             }
                         },
                         "response_variants": [
-                            "Although you have had COVID-19 in the last 90 days and don't have symptoms, you should still use antigen tests according to the suggested testing guidelines."
+                            "Although you have had COVID-19 in the last 90 days and don't have covid symptoms, you should still use antigen tests according to the suggested testing guidelines."
                         ],
                         "context": {
-                            "have-symptoms": {
-                                "value": false
+                            "no-covid-symptoms": {
+                                "value": true
                             },
                             "positive-90": {
+                                "value": true
+                            },
+                            "positive-30": {
+                                "value": false
+                            },
+                            "exposure-period-over-5": {
                                 "value": true
                             }
                         },
                         "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-have-no-symptoms-90",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "ran-covid-diag": {
+                                "value": true,
+                                "variable": "ran-covid-diag",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Although you don't have covid symptoms and have not had COVID-19 in the last 90 days, since it has been 5 days, you should test. You can use either a PCR test or take antigen tests according to the suggested testing guidelines."
+                        ],
+                        "context": {
+                            "no-covid-symptoms": {
+                                "value": true
+                            },
+                            "covid-exposure": {
+                                "value": true
+                            },
+                            "exposure-period-over-5": {
+                                "value": true
+                            },
+                            "positive-30": {
+                                "value": false
+                            },
+                            "positive-90": {
+                                "value": false
+                            }
+                        },
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-been-5",
+                        "intent": null,
+                        "assignments": {}
+                    },
+                    {
+                        "updates": {
+                            "ran-covid-diag": {
+                                "value": true,
+                                "variable": "ran-covid-diag",
+                                "interpretation": "json"
+                            },
+                            "have-message": {
+                                "value": true,
+                                "variable": "have-message",
+                                "interpretation": "json"
+                            },
+                            "force-statement": {
+                                "value": true,
+                                "variable": "force-statement",
+                                "interpretation": "json"
+                            }
+                        },
+                        "response_variants": [
+                            "Since you have been exposed to COVID-19 but are not yet showing covid symptoms, wait a total of 5 days since your exposure to test."
+                        ],
+                        "context": {
+                            "no-covid-symptoms": {
+                                "value": true
+                            },
+                            "covid-exposure": {
+                                "value": true
+                            },
+                            "exposure-period-over-5": {
+                                "value": false
+                            }
+                        },
+                        "name": "determine_covid_test_DETDUP_determine_covid_test__check-test-EQ-no-symptom-exposed-less-5",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "got-both-diags": {
+            "type": "system",
+            "condition": [
+                [
+                    "need-covid-diag",
+                    "Known"
+                ],
+                [
+                    "need-covid-diag",
+                    true
+                ],
+                [
+                    "need-reg-diag",
+                    "Known"
+                ],
+                [
+                    "need-reg-diag",
+                    true
+                ],
+                [
+                    "ran-covid-diag",
+                    true
+                ],
+                [
+                    "ran-reg-diag",
+                    true
+                ],
+                [
+                    "completed-diagnostics",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "got-both-diags__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "completed-diagnostics": {
+                                "value": true,
+                                "variable": "completed-diagnostics",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "got-both-diags_DETDUP_got-both-diags__check-test-EQ-complete",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "got-covid-diag": {
+            "type": "system",
+            "condition": [
+                [
+                    "need-covid-diag",
+                    "Known"
+                ],
+                [
+                    "need-covid-diag",
+                    true
+                ],
+                [
+                    "need-reg-diag",
+                    "Known"
+                ],
+                [
+                    "need-reg-diag",
+                    false
+                ],
+                [
+                    "ran-covid-diag",
+                    true
+                ],
+                [
+                    "completed-diagnostics",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "got-covid-diag__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "completed-diagnostics": {
+                                "value": true,
+                                "variable": "completed-diagnostics",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "got-covid-diag_DETDUP_got-covid-diag__check-test-EQ-complete",
+                        "intent": null,
+                        "assignments": {}
+                    }
+                ]
+            }
+        },
+        "got-reg-diag": {
+            "type": "system",
+            "condition": [
+                [
+                    "need-covid-diag",
+                    "Known"
+                ],
+                [
+                    "need-covid-diag",
+                    false
+                ],
+                [
+                    "need-reg-diag",
+                    "Known"
+                ],
+                [
+                    "need-reg-diag",
+                    true
+                ],
+                [
+                    "ran-reg-diag",
+                    true
+                ],
+                [
+                    "completed-diagnostics",
+                    false
+                ],
+                [
+                    "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
+                    false
+                ]
+            ],
+            "effect": {
+                "global-outcome-name": "got-reg-diag__check-test",
+                "type": "oneof",
+                "outcomes": [
+                    {
+                        "updates": {
+                            "completed-diagnostics": {
+                                "value": true,
+                                "variable": "completed-diagnostics",
+                                "interpretation": "json"
+                            }
+                        },
+                        "name": "got-reg-diag_DETDUP_got-reg-diag__check-test-EQ-complete",
                         "intent": null,
                         "assignments": {}
                     }
@@ -996,11 +1286,15 @@
             "type": "system",
             "condition": [
                 [
-                    "completed-diagnostic",
+                    "completed-diagnostics",
                     true
                 ],
                 [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
                     false
                 ]
             ],
@@ -1082,6 +1376,10 @@
                 [
                     "force-statement",
                     false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
+                    false
                 ]
             ],
             "effect": {
@@ -1128,21 +1426,6 @@
                                 "value": null,
                                 "variable": "symptoms",
                                 "certainty": "Known",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-covid": {
-                                "value": false,
-                                "variable": "symptoms-value-covid",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-rash": {
-                                "value": false,
-                                "variable": "symptoms-value-rash",
-                                "interpretation": "json"
-                            },
-                            "symptoms-value-teeth": {
-                                "value": false,
-                                "variable": "symptoms-value-teeth",
                                 "interpretation": "json"
                             }
                         },
@@ -1231,6 +1514,10 @@
                 ],
                 [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
                     false
                 ]
             ],
@@ -1343,6 +1630,10 @@
                 [
                     "force-statement",
                     false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
+                    false
                 ]
             ],
             "effect": {
@@ -1443,7 +1734,7 @@
             "type": "dialogue",
             "message_variants": [
                 "Has it been at least 5 days since you were exposed to COVID-19?",
-                "Has it been at least 5 days since your exposure?"
+                "Has it been at least 5 days since your exposure to COVID-19?"
             ],
             "condition": [
                 [
@@ -1455,15 +1746,15 @@
                     "Known"
                 ],
                 [
-                    "non-covid-illness",
-                    "Known"
-                ],
-                [
-                    "non-covid-illness",
-                    false
+                    "need-covid-diag",
+                    true
                 ],
                 [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
                     false
                 ]
             ],
@@ -1573,15 +1864,15 @@
                     "Unknown"
                 ],
                 [
-                    "non-covid-illness",
-                    "Known"
-                ],
-                [
-                    "non-covid-illness",
-                    false
+                    "need-covid-diag",
+                    true
                 ],
                 [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
                     false
                 ]
             ],
@@ -1596,12 +1887,19 @@
                                 "variable": "positive-30",
                                 "certainty": "Known",
                                 "interpretation": "json"
+                            },
+                            "positive-90": {
+                                "value": true,
+                                "variable": "positive-90",
+                                "certainty": "Known",
+                                "interpretation": "json"
                             }
                         },
                         "intent": "confirm",
                         "name": "slot-fill__get_positive_30_DETDUP_slot-fill__get_positive_30__get-response-EQ-confirm_outcome",
                         "assignments": {
-                            "$positive-30": "found"
+                            "$positive-30": "found",
+                            "$positive-90": "found"
                         }
                     },
                     {
@@ -1695,7 +1993,15 @@
                     "Known"
                 ],
                 [
+                    "positive-30",
+                    false
+                ],
+                [
                     "force-statement",
+                    false
+                ],
+                [
+                    "forcing__diagnose_regular_sickness",
                     false
                 ]
             ],
