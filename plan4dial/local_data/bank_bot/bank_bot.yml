@@ -171,12 +171,9 @@ intents:
       - contact
       - funds
     utterances:
-      - $contact owes me $funds.
       - I need to request that $contact pays me $funds. 
       - Please request that $contact to send me $funds.
-      - Please ask my contact $contact to send the $funds they owe.
-      - $contact needs to send me $funds.
-      - I really need $contact to send the $funds they owe me.
+      - Please request my contact $contact to send the $funds they owe.
   share_bill:
     entities:
       - bill
@@ -372,8 +369,8 @@ actions:
   confirm-e-transfer:
     type: dialogue
     message_variants:
-      - E-transferring $funds to $contact from $account1...
-      - Ok! I just e-transferred $funds to $contact from $account1.
+      - E-transferring $funds to $contact from $account1... All done!
+      - All done! I just e-transferred $funds to $contact from $account1.
     condition:
       task:
         value: e-transfer
@@ -404,7 +401,7 @@ actions:
     type: dialogue
     message_variants:
       - Would you like to request money from a contact?
-      - Are you expecting funds from any of your contacts?
+      - Are you waiting for funds from any of your contacts?
       - Would you like to request that one of your contacts sends money to you?
     condition:
       tried-request-money:

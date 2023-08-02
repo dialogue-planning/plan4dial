@@ -257,12 +257,9 @@
                 "$funds"
             ],
             "utterances": [
-                "$contact owes me $funds.",
                 "I need to request that $contact pays me $funds.",
                 "Please request that $contact to send me $funds.",
-                "Please ask my contact $contact to send the $funds they owe.",
-                "$contact needs to send me $funds.",
-                "I really need $contact to send the $funds they owe me."
+                "Please request my contact $contact to send the $funds they owe."
             ],
             "type": "regular"
         },
@@ -918,8 +915,8 @@
         "confirm-e-transfer": {
             "type": "dialogue",
             "message_variants": [
-                "E-transferring $funds to $contact from $account1...",
-                "Ok! I just e-transferred $funds to $contact from $account1."
+                "E-transferring $funds to $contact from $account1... All done!",
+                "All done! I just e-transferred $funds to $contact from $account1."
             ],
             "condition": [
                 [
@@ -1028,7 +1025,7 @@
             "type": "dialogue",
             "message_variants": [
                 "Would you like to request money from a contact?",
-                "Are you expecting funds from any of your contacts?",
+                "Are you waiting for funds from any of your contacts?",
                 "Would you like to request that one of your contacts sends money to you?"
             ],
             "condition": [
@@ -1246,12 +1243,9 @@
                         "$funds"
                     ],
                     "utterances": [
-                        "$contact owes me $funds.",
                         "I need to request that $contact pays me $funds.",
                         "Please request that $contact to send me $funds.",
-                        "Please ask my contact $contact to send the $funds they owe.",
-                        "$contact needs to send me $funds.",
-                        "I really need $contact to send the $funds they owe me."
+                        "Please request my contact $contact to send the $funds they owe."
                     ],
                     "type": "regular"
                 },
@@ -1948,7 +1942,9 @@
                     }
                 ]
             },
-            "message_variants": [],
+            "message_variants": [
+                ""
+            ],
             "disable-fallback": true,
             "intents": {
                 "utter_msg": {

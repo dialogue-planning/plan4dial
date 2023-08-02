@@ -67,7 +67,7 @@ def _configure_dialogue_statement() -> Dict:
                 }
             }
         },
-        "message_variants": [],
+        "message_variants": [""],
     }
 
 
@@ -207,7 +207,8 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
                     if "updates" in out_config:
                         for update_var, update_cfg in out_config["updates"].items():
                             if ctx_var == update_var:
-                                # whenever we lose knowledge of the context variable, reset all values
+                                # whenever we lose knowledge of the context var,
+                                # reset all values
                                 if (
                                     "known" in update_cfg
                                     and update_cfg["known"] is False
@@ -222,8 +223,8 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
                                         ] = {
                                             "value": False
                                         }
-                                # and whenever we gain knowledge of the context variable, reset all values
-                                # and set the value we just learned
+                                # and whenever we gain knowledge of the context var,
+                                # reset all values and set the value we just learned
                                 else:
                                     if "value" in update_cfg:
                                         for v in var_options:
@@ -231,7 +232,8 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
                                                 processed[act]["effect"][eff][option][
                                                     "outcomes"
                                                 ][out]["updates"][
-                                                    f"{ctx_var}-value-{v.replace(' ', '_')}"
+                                                    f"{ctx_var}-value-"
+                                                    + v.replace(" ", "_")
                                                 ] = {
                                                     "value": True
                                                 }
@@ -239,7 +241,8 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
                                                 processed[act]["effect"][eff][option][
                                                     "outcomes"
                                                 ][out]["updates"][
-                                                    f"{ctx_var}-value-{v.replace(' ', '_')}"
+                                                    f"{ctx_var}-value-"
+                                                    + {v.replace(" ", "_")}
                                                 ] = {
                                                     "value": False
                                                 }

@@ -1152,7 +1152,9 @@
                     }
                 ]
             },
-            "message_variants": [],
+            "message_variants": [
+                ""
+            ],
             "disable-fallback": true,
             "intents": {
                 "utter_msg": {
