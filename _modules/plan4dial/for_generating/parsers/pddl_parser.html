@@ -119,7 +119,7 @@
 <span class="sd">        str: The fluent version of a flag or fflag context variable depending on the</span>
 <span class="sd">        setting supplied.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;(not (</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">))&quot;</span>
     <span class="k">elif</span> <span class="n">is_fflag</span><span class="p">:</span>
         <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;(maybe__</span><span class="si">{</span><span class="n">v_name</span><span class="si">}</span><span class="s2">)&quot;</span></div>
@@ -147,7 +147,7 @@
     <span class="k">elif</span> <span class="n">certainty</span> <span class="o">==</span> <span class="s2">&quot;Uncertain&quot;</span><span class="p">:</span>
         <span class="n">known</span> <span class="o">=</span> <span class="s2">&quot;maybe&quot;</span>
 
-    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">bool</span><span class="p">:</span>
         <span class="c1"># only include &quot;maybe&quot;s if the known type is fflag</span>
         <span class="k">return</span> <span class="p">(</span>
             <span class="p">(</span>
@@ -242,7 +242,7 @@
         <span class="n">cond_key_fflag</span> <span class="o">=</span> <span class="n">_get_is_fflag</span><span class="p">(</span><span class="n">context_variables</span><span class="p">,</span> <span class="n">cond_key</span><span class="p">)</span>
         <span class="c1"># update precond depending on the type of condition value</span>
         <span class="k">if</span> <span class="n">cond_val</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cond_val</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">cond_val</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">bool</span><span class="p">:</span>
                 <span class="n">precond</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
                     <span class="n">_return_flag_value_fluent</span><span class="p">(</span><span class="n">cond_key</span><span class="p">,</span> <span class="n">cond_key_fflag</span><span class="p">,</span> <span class="n">cond_val</span><span class="p">)</span>
                 <span class="p">)</span>
@@ -310,8 +310,10 @@
         <span class="n">outer_brackets</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="c1"># convert the effects</span>
-    <span class="n">effects</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">:effect</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">(labeled-oneof &quot;</span> <span class="o">+</span> \
-        <span class="n">act_config</span><span class="p">[</span><span class="s1">&#39;effect&#39;</span><span class="p">][</span><span class="s1">&#39;global-outcome-name&#39;</span><span class="p">]</span>
+    <span class="n">effects</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">:effect</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="si">}</span><span class="s2">(labeled-oneof &quot;</span>
+        <span class="o">+</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;global-outcome-name&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
     <span class="c1"># iterate through all the outcomes</span>
     <span class="k">for</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
@@ -367,7 +369,7 @@
         <span class="c1"># if this variable has a known setting</span>
         <span class="k">if</span> <span class="s2">&quot;known&quot;</span> <span class="ow">in</span> <span class="n">var_config</span><span class="p">:</span>
             <span class="n">known_status</span> <span class="o">=</span> <span class="n">var_config</span><span class="p">[</span><span class="s2">&quot;known&quot;</span><span class="p">][</span><span class="s2">&quot;init&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known_status</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">known_status</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">bool</span><span class="p">:</span>
                 <span class="c1"># if known is True, add this to the partial satate</span>
                 <span class="k">if</span> <span class="n">known_status</span><span class="p">:</span>
                     <span class="n">init_true</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(know__</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
@@ -382,7 +384,7 @@
         <span class="c1"># similarly add the context variables that are flag/fflag types</span>
         <span class="k">if</span> <span class="n">var_config</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;flag&quot;</span><span class="p">,</span> <span class="s2">&quot;fflag&quot;</span><span class="p">]:</span>
             <span class="n">status</span> <span class="o">=</span> <span class="n">var_config</span><span class="p">[</span><span class="s2">&quot;config&quot;</span><span class="p">]</span>
-            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="o">==</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">status</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">bool</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">status</span><span class="p">:</span>
                     <span class="n">init_true</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(</span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -435,8 +437,10 @@
         <span class="n">name_wrap</span><span class="o">=</span><span class="s2">&quot;:predicates&quot;</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">actions</span> <span class="o">=</span> <span class="n">_actions_to_pddl</span><span class="p">(</span><span class="n">loaded_yaml</span><span class="p">)</span>
-    <span class="n">domain</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;(define</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(domain </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:requirements &quot;</span> <span class="o">+</span> \
-        <span class="sa">f</span><span class="s2">&quot;:strips)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:types )</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:constants )</span><span class="si">{</span><span class="n">predicates</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">actions</span><span class="si">}</span><span class="se">\n</span><span class="s2">)&quot;</span>
+    <span class="n">domain</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="sa">f</span><span class="s2">&quot;(define</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(domain </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:requirements &quot;</span>
+        <span class="o">+</span> <span class="sa">f</span><span class="s2">&quot;:strips)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:types )</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:constants )</span><span class="si">{</span><span class="n">predicates</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">actions</span><span class="si">}</span><span class="se">\n</span><span class="s2">)&quot;</span>
+    <span class="p">)</span>
     <span class="n">problem_def</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;(define</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(problem </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">-problem)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2"> </span><span class="se">\</span>
 <span class="s2">        (:domain </span><span class="si">{</span><span class="n">loaded_yaml</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:objects )&quot;</span>
     <span class="n">init</span> <span class="o">=</span> <span class="n">_fluents_to_pddl</span><span class="p">(</span>

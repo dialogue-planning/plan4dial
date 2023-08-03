@@ -143,7 +143,7 @@
                     <span class="p">]</span>
                     <span class="c1"># if the options have variations, make intent examples of the</span>
                     <span class="c1"># variations, using the original option as the true val</span>
-                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="nb">dict</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">])</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
                         <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">option_var</span> <span class="ow">in</span> <span class="n">ctx_var</span><span class="p">[</span><span class="s2">&quot;options&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
                             <span class="n">variations</span><span class="p">[</span><span class="n">variable</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
                                 <span class="n">_create_intent_example</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">variable</span><span class="p">,</span> <span class="n">true_value</span><span class="o">=</span><span class="n">option</span><span class="p">)</span>
