@@ -83,7 +83,7 @@ def configure_assignments(known: Union[bool, str]) -> str:
         str: The Hovor assignment equivalent to the "known" parameter provided.
     """
     return (
-        ("found" if known else "didnt-find") if type(known) == bool else "maybe-found"
+        ("found" if known else "didnt-find") if type(known) is bool else "maybe-found"
     )
 
 
@@ -98,7 +98,7 @@ def _configure_certainty(known: Union[bool, str]) -> str:
     Returns:
         str: The Hovor certainty equivalent to the "known" parameter provided.
     """
-    return ("Known" if known else "Unknown") if type(known) == bool else "Uncertain"
+    return ("Known" if known else "Unknown") if type(known) is bool else "Uncertain"
 
 
 @config(auto_simplify=True)
@@ -117,7 +117,7 @@ def _convert_to_formula(condition: Dict) -> Union[And, Or]:
     formula_terms = []
     # if we get passed a list, update formula_terms by the conversion of each element
     # in the list
-    if type(condition) == list:
+    if type(condition) is list:
         formula_terms.extend(
             [
                 formula
@@ -188,7 +188,7 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
     # possible values the context variable can be set to
     var_options = (
         list(ctx_var_cfg["options"].keys())
-        if type(ctx_var_cfg["options"]) == dict
+        if type(ctx_var_cfg["options"]) is dict
         else ctx_var_cfg["options"]
     )
     # create flag context variables that represent the given ctx_var being set to all
@@ -541,7 +541,7 @@ def _add_value_setters(loaded_yaml: Dict) -> None:
         for cond, cond_cfg in act_cfg["condition"].items():
             if "value" in cond_cfg:
                 option = cond_cfg["value"]
-                if type(option) == str:
+                if type(option) is str:
                     if option not in loaded_yaml["context_variables"][cond]["options"]:
                         raise AssertionError(
                             f'Cannot specify the value "{option}" for the context \
@@ -639,7 +639,7 @@ def _convert_actions(loaded_yaml: Dict) -> None:
                 if cond_config_key == "known":
                     json_config_cond.append(
                         ([cond, "Known"] if cond_config_val else [cond, "Unknown"])
-                        if type(cond_config_val) == bool
+                        if type(cond_config_val) is bool
                         else [cond, "Uncertain"]
                     )
                 elif cond_config_key == "value":
@@ -697,7 +697,7 @@ def _convert_actions(loaded_yaml: Dict) -> None:
             processed[act]["intents"] = {}
             for intent in intents:
                 # don't consider null intents
-                if type(intent) == str:
+                if type(intent) is str:
                     if intent in loaded_yaml["intents"]:
                         processed[act]["intents"][intent] = loaded_yaml["intents"][
                             intent

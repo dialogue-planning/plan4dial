@@ -70,7 +70,7 @@ def make_nlu_file(loaded_yaml: Dict) -> Dict:
                     ]
                     # if the options have variations, make intent examples of the
                     # variations, using the original option as the true val
-                    if type(ctx_var["options"]) == dict:
+                    if type(ctx_var["options"]) is dict:
                         for option, option_var in ctx_var["options"].items():
                             variations[variable].extend(
                                 _create_intent_example(v, variable, true_value=option)

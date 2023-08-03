@@ -46,7 +46,7 @@ def _return_flag_value_fluent(
         str: The fluent version of a flag or fflag context variable depending on the
         setting supplied.
     """
-    if type(value) == bool:
+    if type(value) is bool:
         return f"({v_name})" if value else f"(not ({v_name}))"
     elif is_fflag:
         return f"(maybe__{v_name})"
@@ -74,7 +74,7 @@ def _return_certainty_fluents(v_name: str, is_fflag: bool, certainty: str) -> Li
     elif certainty == "Uncertain":
         known = "maybe"
 
-    if type(known) == bool:
+    if type(known) is bool:
         # only include "maybe"s if the known type is fflag
         return (
             (
@@ -169,7 +169,7 @@ def get_precond_fluents(
         cond_key_fflag = _get_is_fflag(context_variables, cond_key)
         # update precond depending on the type of condition value
         if cond_val is not None:
-            if type(cond_val) == bool:
+            if type(cond_val) is bool:
                 precond.add(
                     _return_flag_value_fluent(cond_key, cond_key_fflag, cond_val)
                 )
@@ -237,8 +237,10 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
         outer_brackets=False,
     )
     # convert the effects
-    effects = f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof " + \
-        act_config['effect']['global-outcome-name']
+    effects = (
+        f"\n{TAB * 2}:effect\n{TAB * 3}(labeled-oneof "
+        + act_config["effect"]["global-outcome-name"]
+    )
     # iterate through all the outcomes
     for out_config in act_config["effect"]["outcomes"]:
         if "updates" in out_config:
@@ -294,7 +296,7 @@ def get_init_fluents(context_variables: Dict) -> Tuple[Set[str], Set[str]]:
         # if this variable has a known setting
         if "known" in var_config:
             known_status = var_config["known"]["init"]
-            if type(known_status) == bool:
+            if type(known_status) is bool:
                 # if known is True, add this to the partial satate
                 if known_status:
                     init_true.add(f"(know__{var})")
@@ -309,7 +311,7 @@ def get_init_fluents(context_variables: Dict) -> Tuple[Set[str], Set[str]]:
         # similarly add the context variables that are flag/fflag types
         if var_config["type"] in ["flag", "fflag"]:
             status = var_config["config"]
-            if type(status) == bool:
+            if type(status) is bool:
                 if status:
                     init_true.add(f"({var})")
                 else:
@@ -362,8 +364,10 @@ def parse_to_pddl(loaded_yaml: Dict) -> Tuple[str, str]:
         name_wrap=":predicates",
     )
     actions = _actions_to_pddl(loaded_yaml)
-    domain = f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements " + \
-        f":strips)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
+    domain = (
+        f"(define\n{TAB}(domain {loaded_yaml['name']})\n{TAB}(:requirements "
+        + f":strips)\n{TAB}(:types )\n{TAB}(:constants ){predicates}\n{actions}\n)"
+    )
     problem_def = f"(define\n{TAB}(problem {loaded_yaml['name']}-problem)\n{TAB} \
         (:domain {loaded_yaml['name']})\n{TAB}(:objects )"
     init = _fluents_to_pddl(
