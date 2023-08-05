@@ -1,0 +1,197 @@
+nlu:
+- examples: '- yes
+
+    - yeah
+
+    - Y
+
+    - mhm
+
+    - confirm
+
+    - yes please'
+  intent: confirm
+- examples: '- no
+
+    - not at all
+
+    - that''s not what i meant
+
+    - absolutely not
+
+    - i don''t want that
+
+    - nah
+
+    - no thanks
+
+    - no thank you'
+  intent: deny
+- examples: '- I am going to [invited talk]{"entity": "dc-interest", "value": "invited
+    talk"}.
+
+    - I just want to attend the [whole session]{"entity": "dc-interest", "value":
+    "whole session"}.
+
+    - I just want to attend the [invited talk]{"entity": "dc-interest", "value": "invited
+    talk"}.
+
+    - I want to see the [invited talk]{"entity": "dc-interest", "value": "invited
+    talk"}.
+
+    - I want to see the [whole session]{"entity": "dc-interest", "value": "whole session"}.
+
+    - I am going to [whole session]{"entity": "dc-interest", "value": "whole session"}.'
+  intent: share-dc-pref
+- examples: '- The [PAIR]{"entity": "workshop-pref", "value": "PAIR"} workshop seems
+    more relevant to me.
+
+    - Please schedule me for the [HAXP]{"entity": "workshop-pref", "value": "HAXP"}
+    workshop.
+
+    - I am more interested in [HAXP]{"entity": "workshop-pref", "value": "HAXP"}.
+
+    - I would definitely rather attend the [HAXP]{"entity": "workshop-pref", "value":
+    "HAXP"} workshop.
+
+    - I am more interested in [PAIR]{"entity": "workshop-pref", "value": "PAIR"}.
+
+    - Please schedule me for the [PAIR]{"entity": "workshop-pref", "value": "PAIR"}
+    workshop.
+
+    - The [HAXP]{"entity": "workshop-pref", "value": "HAXP"} workshop seems more relevant
+    to me.
+
+    - I would definitely rather attend the [PAIR]{"entity": "workshop-pref", "value":
+    "PAIR"} workshop.'
+  intent: share-workshop-pref
+- examples: '- It would be a long day, I would rather [going to the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - On Monday, I would definitely rather spend my evening [preparing for the next
+    day]{"entity": "attending-rec", "value": "relaxing"}.
+
+    - On Monday, I would definitely rather spend my evening [relaxing]{"entity": "attending-rec",
+    "value": "relaxing"}.
+
+    - Can I [preparing for the next day]{"entity": "attending-rec", "value": "relaxing"}
+    that evening?
+
+    - It would be a long day, I would rather [spend the evening at the opening reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - Can I [network at the reception]{"entity": "attending-rec", "value": "attending
+    the opening reception"} that evening?
+
+    - It would be a long day, I would rather [attending the opening reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - It would be a long day, I would rather [network at the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - It would be a long day, I would rather [relaxing]{"entity": "attending-rec",
+    "value": "relaxing"}.
+
+    - It would be really important for me to [spend the evening at the opening reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"} that evening.
+
+    - It would be really important for me to [chilling]{"entity": "attending-rec",
+    "value": "relaxing"} that evening.
+
+    - Can I [see the welcome reception]{"entity": "attending-rec", "value": "attending
+    the opening reception"} that evening?
+
+    - It would be a long day, I would rather [hang out at the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - On Monday, I would definitely rather spend my evening [network at the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - Can I [chilling]{"entity": "attending-rec", "value": "relaxing"} that evening?
+
+    - It would be really important for me to [going to the reception]{"entity": "attending-rec",
+    "value": "attending the opening reception"} that evening.
+
+    - On Monday, I would definitely rather spend my evening [chilling]{"entity": "attending-rec",
+    "value": "relaxing"}.
+
+    - It would be a long day, I would rather [see the welcome reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - It would be a long day, I would rather [chilling]{"entity": "attending-rec",
+    "value": "relaxing"}.
+
+    - Can I [going to the reception]{"entity": "attending-rec", "value": "attending
+    the opening reception"} that evening?
+
+    - Can I [hang out at the reception]{"entity": "attending-rec", "value": "attending
+    the opening reception"} that evening?
+
+    - It would be a long day, I would rather [resting up]{"entity": "attending-rec",
+    "value": "relaxing"}.
+
+    - On Monday, I would definitely rather spend my evening [spend the evening at
+    the opening reception]{"entity": "attending-rec", "value": "attending the opening
+    reception"}.
+
+    - On Monday, I would definitely rather spend my evening [attending the opening
+    reception]{"entity": "attending-rec", "value": "attending the opening reception"}.
+
+    - On Monday, I would definitely rather spend my evening [hang out at the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - On Monday, I would definitely rather spend my evening [resting up]{"entity":
+    "attending-rec", "value": "relaxing"}.
+
+    - It would be really important for me to [resting up]{"entity": "attending-rec",
+    "value": "relaxing"} that evening.
+
+    - Can I [attending the opening reception]{"entity": "attending-rec", "value":
+    "attending the opening reception"} that evening?
+
+    - On Monday, I would definitely rather spend my evening [attending the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - It would be a long day, I would rather [attending the reception]{"entity": "attending-rec",
+    "value": "attending the opening reception"}.
+
+    - Can I [attending the reception]{"entity": "attending-rec", "value": "attending
+    the opening reception"} that evening?
+
+    - On Monday, I would definitely rather spend my evening [see the welcome reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - It would be really important for me to [see the welcome reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"} that evening.
+
+    - Can I [resting up]{"entity": "attending-rec", "value": "relaxing"} that evening?
+
+    - It would be really important for me to [hang out at the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"} that evening.
+
+    - It would be really important for me to [attending the reception]{"entity": "attending-rec",
+    "value": "attending the opening reception"} that evening.
+
+    - On Monday, I would definitely rather spend my evening [going to the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"}.
+
+    - It would be really important for me to [attending the opening reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"} that evening.
+
+    - It would be really important for me to [preparing for the next day]{"entity":
+    "attending-rec", "value": "relaxing"} that evening.
+
+    - It would be really important for me to [relaxing]{"entity": "attending-rec",
+    "value": "relaxing"} that evening.
+
+    - Can I [spend the evening at the opening reception]{"entity": "attending-rec",
+    "value": "attending the opening reception"} that evening?
+
+    - Can I [relaxing]{"entity": "attending-rec", "value": "relaxing"} that evening?
+
+    - It would be a long day, I would rather [preparing for the next day]{"entity":
+    "attending-rec", "value": "relaxing"}.
+
+    - It would be really important for me to [network at the reception]{"entity":
+    "attending-rec", "value": "attending the opening reception"} that evening.'
+  intent: share-mon-ev-pref

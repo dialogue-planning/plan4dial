@@ -14,11 +14,10 @@ from importlib import import_module
 
 def _configure_force_message_true() -> Dict:
     """Returns:
-    Dict: Configuration where *have-message* and *force-statement* are set to True.
+    Dict: Configuration where *force-statement* is set to True.
     Used to force a `dialogue_statement` action.
     """
     return {
-        "have-message": {"value": True},
         "force-statement": {"value": True},
     }
 
@@ -55,9 +54,6 @@ def _configure_dialogue_statement() -> Dict:
                     "outcomes": {
                         "lock": {
                             "updates": {
-                                "have-message": {
-                                    "value": False,
-                                },
                                 "force-statement": {
                                     "value": False,
                                 },
@@ -242,7 +238,7 @@ def _configure_value_setter(loaded_yaml: Dict, ctx_var: str) -> None:
                                                     "outcomes"
                                                 ][out]["updates"][
                                                     f"{ctx_var}-value-"
-                                                    + {v.replace(" ", "_")}
+                                                    + v.replace(" ", "_")
                                                 ] = {
                                                     "value": False
                                                 }
@@ -264,10 +260,6 @@ def _base_fallback_setup(loaded_yaml: Dict) -> None:
         "entities": [],
     }
     loaded_yaml["actions"]["dialogue_statement"] = _configure_dialogue_statement()
-    loaded_yaml["context_variables"]["have-message"] = {
-        "type": "flag",
-        "init": False,
-    }
     loaded_yaml["context_variables"]["force-statement"] = {
         "type": "flag",
         "init": False,
