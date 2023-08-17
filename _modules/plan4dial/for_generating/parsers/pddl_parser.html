@@ -301,9 +301,10 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">act_param</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">TAB</span><span class="si">}</span><span class="s2">(:action </span><span class="si">{</span><span class="n">act</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">TAB</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="si">}</span><span class="s2">:parameters()&quot;</span>
 
+    <span class="n">pre_fluents</span> <span class="o">=</span> <span class="n">get_precond_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">,</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">])</span>
     <span class="c1"># convert the preconditions</span>
     <span class="n">precond</span> <span class="o">=</span> <span class="n">_fluents_to_pddl</span><span class="p">(</span>
-        <span class="n">fluents</span><span class="o">=</span><span class="n">get_precond_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">,</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;condition&quot;</span><span class="p">]),</span>
+        <span class="n">pre_fluents</span><span class="p">,</span>
         <span class="n">tabs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
         <span class="n">name_wrap</span><span class="o">=</span><span class="s2">&quot;:precondition&quot;</span><span class="p">,</span>
         <span class="n">and_wrap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -318,9 +319,12 @@
     <span class="k">for</span> <span class="n">out_config</span> <span class="ow">in</span> <span class="n">act_config</span><span class="p">[</span><span class="s2">&quot;effect&quot;</span><span class="p">][</span><span class="s2">&quot;outcomes&quot;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="s2">&quot;updates&quot;</span> <span class="ow">in</span> <span class="n">out_config</span><span class="p">:</span>
             <span class="c1"># for each outcome, get the update fluents</span>
-            <span class="n">update_fluents</span> <span class="o">=</span> <span class="n">get_update_fluents</span><span class="p">(</span>
-                <span class="n">context_variables</span><span class="p">,</span> <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">]</span>
+            <span class="n">update_fluents</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span>
+                <span class="n">get_update_fluents</span><span class="p">(</span><span class="n">context_variables</span><span class="p">,</span> <span class="n">out_config</span><span class="p">[</span><span class="s2">&quot;updates&quot;</span><span class="p">])</span>
             <span class="p">)</span>
+            <span class="c1"># we don&#39;t want to add fluents in the effect that are already</span>
+            <span class="c1"># in the precondition</span>
+            <span class="n">update_fluents</span> <span class="o">=</span> <span class="n">update_fluents</span><span class="o">.</span><span class="n">difference</span><span class="p">(</span><span class="n">pre_fluents</span><span class="p">)</span>
             <span class="c1"># add the outcome to the effect string</span>
             <span class="n">effects</span> <span class="o">+=</span> <span class="n">_fluents_to_pddl</span><span class="p">(</span>
                 <span class="n">fluents</span><span class="o">=</span><span class="n">update_fluents</span><span class="p">,</span>
