@@ -180,14 +180,23 @@ def slot_fill(
             # store the intent based on the refined combo.
             # if we are only extracting one entity of multiple, use the intent for
             # just that entity; otherwise use the "overarching" intent
-            next_out["intent"] = (
-                config_entities[list(refined_combo.keys())[0]]["single_slot_intent"]
-                if len(refined_combo) == 1 and len(entities) > 1
-                else overall_intent
-            )
             outcome_name = "".join(
                 f"{entity}_{certainty}-" for entity, certainty in refined_combo.items()
             )[:-1]
+            if len(refined_combo) == 1 and len(entities) > 1:
+                single_slot_int = config_entities[list(refined_combo.keys())[0]][
+                    "single_slot_intent"
+                ]
+                if list(refined_combo.values())[0] == "maybe-found":
+                    next_out["intent_cfg"] = f"{single_slot_int}__{outcome_name}"
+                next_out["intent"] = single_slot_int
+            else:
+                # make intent name more specific to avoid duplicate intent names
+                if list(refined_combo.values()) != [
+                    "found" for _ in range(len(entities))
+                ]:
+                    next_out["intent_cfg"] = f"{overall_intent}__{outcome_name}"
+                next_out["intent"] = overall_intent
             # add the updates based on what's in this refined combo (again, ignoring
             # what we didn't find)
             for entity, certainty in refined_combo.items():
@@ -360,6 +369,8 @@ def _single_slot(
         ] = {
             "updates": slot_unclear_updates,
             "intent": config_entity["single_slot_intent"],
+            "intent_cfg": f"{config_entity['single_slot_intent']}\
+__{entity}_maybe-found",
         }
     if "fallback_message_variants" in config_entity:
         single_slot["fallback_message_variants"] = config_entity[

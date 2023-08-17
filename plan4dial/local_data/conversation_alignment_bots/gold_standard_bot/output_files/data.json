@@ -1194,6 +1194,7 @@
                                 "interpretation": "json"
                             }
                         },
+                        "intent_cfg": "share_location__location_maybe-found",
                         "intent": "share_location",
                         "name": "slot-fill__get-location_DETDUP_slot-fill__get-location__validate-slot-fill-EQ-location_maybe-found",
                         "assignments": {
@@ -1406,6 +1407,7 @@
                                 "interpretation": "json"
                             }
                         },
+                        "intent_cfg": "share_phone_number__phone_number_maybe-found",
                         "intent": "share_phone_number",
                         "name": "slot-fill__get-phone_number_DETDUP_slot-fill__get-phone_number__validate-slot-fill-EQ-phone_number_maybe-found",
                         "assignments": {
@@ -1559,7 +1561,7 @@
             "message_variants": [
                 "What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.",
                 "What type of food would you like to eat tonight? Mexican, Chinese, dessert, and Italian are your options.",
-                "dessert, Chinese, Mexican, and Italian restaurants are around; which would you prefer?"
+                "Dessert, Chinese, Mexican, and Italian restaurants are around; which would you prefer?"
             ],
             "fallback_message_variants": [
                 "Sorry, that isn't a valid cuisine."
@@ -1618,6 +1620,7 @@
                                 "interpretation": "json"
                             }
                         },
+                        "intent_cfg": "share_cuisine__cuisine_maybe-found",
                         "intent": "share_cuisine",
                         "name": "slot-fill__get-cuisine_DETDUP_slot-fill__get-cuisine__validate-slot-fill-EQ-cuisine_maybe-found",
                         "assignments": {
@@ -1849,6 +1852,7 @@
                                 "interpretation": "json"
                             }
                         },
+                        "intent_cfg": "share_all_outing_preferences__budget_found-outing_type_maybe-found",
                         "intent": "share_all_outing_preferences",
                         "name": "slot-fill__get_outing_DETDUP_slot-fill__get_outing__validate-slot-fill-EQ-budget_found-outing_type_maybe-found",
                         "assignments": {
@@ -1926,6 +1930,7 @@
                                 "interpretation": "json"
                             }
                         },
+                        "intent_cfg": "share_outing_type__outing_type_maybe-found",
                         "intent": "share_outing_type",
                         "name": "slot-fill__get_outing_DETDUP_slot-fill__get_outing__validate-slot-fill-EQ-outing_type_maybe-found",
                         "assignments": {
@@ -2052,6 +2057,7 @@
                             }
                         },
                         "intent": "share_outing_type",
+                        "intent_cfg": "share_outing_type__outing_type_maybe-found",
                         "name": "single_slot__outing_type_DETDUP_single_slot__outing_type__validate-slot-fill-EQ-slot-unclear",
                         "assignments": {
                             "$outing_type": "maybe-found"

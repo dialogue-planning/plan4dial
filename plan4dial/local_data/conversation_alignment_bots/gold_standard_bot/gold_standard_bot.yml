@@ -251,7 +251,7 @@ actions:
       message_variants:
         - What is your cuisine of choice? Mexican, Italian, Chinese, and dessert restaurants are in the area.
         - What type of food would you like to eat tonight? Mexican, Chinese, dessert, and Italian are your options.
-        - dessert, Chinese, Mexican, and Italian restaurants are around; which would you prefer?
+        - Dessert, Chinese, Mexican, and Italian restaurants are around; which would you prefer?
       fallback_message_variants:
         - Sorry, that isn't a valid cuisine. 
       config_entities:

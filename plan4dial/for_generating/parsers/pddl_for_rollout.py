@@ -47,7 +47,7 @@ def rollout_config(configuration_data: Dict) -> Dict:
                 actions[act]["effect"][out["name"]] = list(
                     get_update_fluents(
                         configuration_data["context_variables"], out["updates"]
-                    )
+                    ).difference(set(actions[act]["condition"]))
                 )
     # return the actions, and initial state, and all fluents
     return {

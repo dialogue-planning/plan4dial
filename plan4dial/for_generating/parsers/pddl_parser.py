@@ -228,9 +228,10 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
     """
     act_param = f"{TAB}(:action {act}\n{TAB * 2}:parameters()"
 
+    pre_fluents = get_precond_fluents(context_variables, act_config["condition"])
     # convert the preconditions
     precond = _fluents_to_pddl(
-        fluents=get_precond_fluents(context_variables, act_config["condition"]),
+        pre_fluents,
         tabs=2,
         name_wrap=":precondition",
         and_wrap=True,
@@ -245,9 +246,12 @@ def _action_to_pddl(context_variables: Dict, act: str, act_config: Dict) -> str:
     for out_config in act_config["effect"]["outcomes"]:
         if "updates" in out_config:
             # for each outcome, get the update fluents
-            update_fluents = get_update_fluents(
-                context_variables, out_config["updates"]
+            update_fluents = set(
+                get_update_fluents(context_variables, out_config["updates"])
             )
+            # we don't want to add fluents in the effect that are already
+            # in the precondition
+            update_fluents = update_fluents.difference(pre_fluents)
             # add the outcome to the effect string
             effects += _fluents_to_pddl(
                 fluents=update_fluents,

@@ -6,7 +6,7 @@
             "0": {
                 "expected_successor": false,
                 "action": "---",
-                "state": "0xb04190",
+                "state": "0x234a190",
                 "distance": 0,
                 "is_relevant": 1,
                 "is_goal": 1,
@@ -16,7 +16,7 @@
             "10": {
                 "expected_successor": "9",
                 "action": "set-outing",
-                "state": "0xb1cb90",
+                "state": "0x2362b90",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -43,7 +43,7 @@
             "11": {
                 "expected_successor": "10",
                 "action": "slot-fill__get_outing",
-                "state": "0xb1cd50",
+                "state": "0x2362d50",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -78,7 +78,7 @@
             "8": {
                 "expected_successor": "7",
                 "action": "slot-fill__get-location",
-                "state": "0xb183d0",
+                "state": "0x235e3d0",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -101,7 +101,7 @@
             "9": {
                 "expected_successor": "8",
                 "action": "slot-fill__get-phone_number",
-                "state": "0xb23580",
+                "state": "0x2369580",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -124,7 +124,7 @@
             "6": {
                 "expected_successor": "5",
                 "action": "slot-fill__get-cuisine",
-                "state": "0xb1b430",
+                "state": "0x2361430",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -147,7 +147,7 @@
             "7": {
                 "expected_successor": "6",
                 "action": "dialogue_statement",
-                "state": "0xb23c60",
+                "state": "0x2369c60",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -162,7 +162,7 @@
             "4": {
                 "expected_successor": "3",
                 "action": "set-restaurant",
-                "state": "0xb24880",
+                "state": "0x236a880",
                 "distance": 4,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -189,7 +189,7 @@
             "5": {
                 "expected_successor": "4",
                 "action": "dialogue_statement",
-                "state": "0xb24200",
+                "state": "0x236a200",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -204,7 +204,7 @@
             "2": {
                 "expected_successor": "1",
                 "action": "dialogue_statement",
-                "state": "0xb25430",
+                "state": "0x236b430",
                 "distance": 2,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -219,7 +219,7 @@
             "3": {
                 "expected_successor": "2",
                 "action": "inform",
-                "state": "0xb24730",
+                "state": "0x236a730",
                 "distance": 3,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -234,7 +234,7 @@
             "1": {
                 "expected_successor": "0",
                 "action": "complete",
-                "state": "0xb25300",
+                "state": "0x236b300",
                 "distance": 1,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -249,7 +249,7 @@
             "27": {
                 "expected_successor": "23",
                 "action": "clarify__outing_type",
-                "state": "0xb33ef0",
+                "state": "0x2379ef0",
                 "distance": 14,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -272,7 +272,7 @@
             "25": {
                 "expected_successor": "24",
                 "action": "dialogue_statement",
-                "state": "0xb31850",
+                "state": "0x2377850",
                 "distance": 15,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -287,7 +287,7 @@
             "13": {
                 "expected_successor": "5",
                 "action": "clarify__cuisine",
-                "state": "0xb27700",
+                "state": "0x236d700",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -310,7 +310,7 @@
             "14": {
                 "expected_successor": "13",
                 "action": "dialogue_statement",
-                "state": "0xb28c40",
+                "state": "0x236ec40",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -325,7 +325,7 @@
             "15": {
                 "expected_successor": "7",
                 "action": "clarify__location",
-                "state": "0xb29560",
+                "state": "0x236f560",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -348,7 +348,7 @@
             "16": {
                 "expected_successor": "15",
                 "action": "dialogue_statement",
-                "state": "0xb29fa0",
+                "state": "0x236ffa0",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -363,7 +363,7 @@
             "17": {
                 "expected_successor": "8",
                 "action": "dialogue_statement",
-                "state": "0xb2a4c0",
+                "state": "0x23704c0",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -378,7 +378,7 @@
             "18": {
                 "expected_successor": "8",
                 "action": "clarify__phone_number",
-                "state": "0xb2a4e0",
+                "state": "0x23704e0",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -401,7 +401,7 @@
             "19": {
                 "expected_successor": "18",
                 "action": "dialogue_statement",
-                "state": "0xb2bf20",
+                "state": "0x2371f20",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -416,7 +416,7 @@
             "20": {
                 "expected_successor": "9",
                 "action": "dialogue_statement",
-                "state": "0xb2b4a0",
+                "state": "0x23714a0",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -431,7 +431,7 @@
             "21": {
                 "expected_successor": "10",
                 "action": "dialogue_statement",
-                "state": "0xb2da20",
+                "state": "0x2373a20",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -446,7 +446,7 @@
             "22": {
                 "expected_successor": "21",
                 "action": "single_slot__budget",
-                "state": "0xb2d090",
+                "state": "0x2373090",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -465,7 +465,7 @@
             "23": {
                 "expected_successor": "22",
                 "action": "dialogue_statement",
-                "state": "0xb2e400",
+                "state": "0x2374400",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -480,7 +480,7 @@
             "24": {
                 "expected_successor": "23",
                 "action": "clarify__outing_type",
-                "state": "0xb2e550",
+                "state": "0x2374550",
                 "distance": 14,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -503,7 +503,7 @@
             "26": {
                 "expected_successor": "27",
                 "action": "dialogue_statement",
-                "state": "0xb33470",
+                "state": "0x2379470",
                 "distance": 15,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -518,7 +518,7 @@
             "28": {
                 "expected_successor": "10",
                 "action": "slot-fill__get_outing",
-                "state": "0xb33fb0",
+                "state": "0x2379fb0",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -553,7 +553,7 @@
             "29": {
                 "expected_successor": "28",
                 "action": "dialogue_statement",
-                "state": "0xb34240",
+                "state": "0x237a240",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -568,7 +568,7 @@
             "30": {
                 "expected_successor": "21",
                 "action": "clarify__outing_type",
-                "state": "0xb35930",
+                "state": "0x237b930",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -591,7 +591,7 @@
             "32": {
                 "expected_successor": "21",
                 "action": "single_slot__outing_type",
-                "state": "0xb343f0",
+                "state": "0x237a3f0",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -614,7 +614,7 @@
             "33": {
                 "expected_successor": "32",
                 "action": "dialogue_statement",
-                "state": "0xb39140",
+                "state": "0x237f140",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -629,7 +629,7 @@
             "31": {
                 "expected_successor": "30",
                 "action": "dialogue_statement",
-                "state": "0xb36f60",
+                "state": "0x237cf60",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -644,7 +644,7 @@
             "62": {
                 "expected_successor": "55",
                 "action": "get-allergy",
-                "state": "0xb505a0",
+                "state": "0x23965a0",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -663,7 +663,7 @@
             "63": {
                 "expected_successor": "38",
                 "action": "clarify__location",
-                "state": "0xb231c0",
+                "state": "0x23691c0",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -686,7 +686,7 @@
             "64": {
                 "expected_successor": "63",
                 "action": "dialogue_statement",
-                "state": "0xb3d090",
+                "state": "0x2383090",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -701,7 +701,7 @@
             "65": {
                 "expected_successor": "39",
                 "action": "dialogue_statement",
-                "state": "0xb3b930",
+                "state": "0x2381930",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -716,7 +716,7 @@
             "66": {
                 "expected_successor": "39",
                 "action": "clarify__phone_number",
-                "state": "0xb3dae0",
+                "state": "0x2383ae0",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -739,7 +739,7 @@
             "67": {
                 "expected_successor": "66",
                 "action": "dialogue_statement",
-                "state": "0xb3fd40",
+                "state": "0x2385d40",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -754,7 +754,7 @@
             "68": {
                 "expected_successor": "40",
                 "action": "dialogue_statement",
-                "state": "0xb40a10",
+                "state": "0x2386a10",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -769,7 +769,7 @@
             "69": {
                 "expected_successor": "68",
                 "action": "single_slot__budget",
-                "state": "0xb57880",
+                "state": "0x239d880",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -788,7 +788,7 @@
             "42": {
                 "expected_successor": "41",
                 "action": "get-allergy",
-                "state": "0xb35020",
+                "state": "0x237b020",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -807,7 +807,7 @@
             "41": {
                 "expected_successor": "40",
                 "action": "slot-fill__get_outing",
-                "state": "0xb22c10",
+                "state": "0x2368c10",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -842,7 +842,7 @@
             "59": {
                 "expected_successor": "34",
                 "action": "check-conflicts",
-                "state": "0xb245a0",
+                "state": "0x236a5a0",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -877,7 +877,7 @@
             "43": {
                 "expected_successor": "11",
                 "action": "get-have-allergy",
-                "state": "0xb53f00",
+                "state": "0x2399f00",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -900,7 +900,7 @@
             "34": {
                 "expected_successor": "4",
                 "action": "set-outing",
-                "state": "0xb237a0",
+                "state": "0x23697a0",
                 "distance": 5,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -927,7 +927,7 @@
             "61": {
                 "expected_successor": "62",
                 "action": "dialogue_statement",
-                "state": "0xb59d50",
+                "state": "0x239fd50",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -942,7 +942,7 @@
             "44": {
                 "expected_successor": "34",
                 "action": "dialogue_statement",
-                "state": "0xb55410",
+                "state": "0x239b410",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -957,7 +957,7 @@
             "49": {
                 "expected_successor": "45",
                 "action": "dialogue_statement",
-                "state": "0xb416b0",
+                "state": "0x23876b0",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -972,7 +972,7 @@
             "36": {
                 "expected_successor": "35",
                 "action": "dialogue_statement",
-                "state": "0xb58cd0",
+                "state": "0x239ecd0",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -987,7 +987,7 @@
             "52": {
                 "expected_successor": "55",
                 "action": "get-allergy",
-                "state": "0xb56b20",
+                "state": "0x239cb20",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1006,7 +1006,7 @@
             "55": {
                 "expected_successor": "60",
                 "action": "slot-fill__get-cuisine",
-                "state": "0xb58ee0",
+                "state": "0x239eee0",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1029,7 +1029,7 @@
             "48": {
                 "expected_successor": "54",
                 "action": "reset-preferences",
-                "state": "0xb544e0",
+                "state": "0x239a4e0",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1044,7 +1044,7 @@
             "38": {
                 "expected_successor": "37",
                 "action": "dialogue_statement",
-                "state": "0xb5ada0",
+                "state": "0x23a0da0",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1059,7 +1059,7 @@
             "37": {
                 "expected_successor": "36",
                 "action": "slot-fill__get-cuisine",
-                "state": "0xb3a470",
+                "state": "0x2380470",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1082,7 +1082,7 @@
             "51": {
                 "expected_successor": "50",
                 "action": "dialogue_statement",
-                "state": "0xb48ba0",
+                "state": "0x238eba0",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1097,7 +1097,7 @@
             "57": {
                 "expected_successor": "60",
                 "action": "clarify__cuisine",
-                "state": "0xb4b8e0",
+                "state": "0x23918e0",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1120,7 +1120,7 @@
             "35": {
                 "expected_successor": "34",
                 "action": "check-conflicts",
-                "state": "0xb43c70",
+                "state": "0x2389c70",
                 "distance": 6,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1155,7 +1155,7 @@
             "50": {
                 "expected_successor": "44",
                 "action": "clarify__cuisine",
-                "state": "0xb4c290",
+                "state": "0x2392290",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1178,7 +1178,7 @@
             "40": {
                 "expected_successor": "39",
                 "action": "slot-fill__get-phone_number",
-                "state": "0xb471c0",
+                "state": "0x238d1c0",
                 "distance": 11,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1201,7 +1201,7 @@
             "45": {
                 "expected_successor": "44",
                 "action": "slot-fill__get-cuisine",
-                "state": "0xb554b0",
+                "state": "0x239b4b0",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1224,7 +1224,7 @@
             "39": {
                 "expected_successor": "38",
                 "action": "slot-fill__get-location",
-                "state": "0xb44660",
+                "state": "0x238a660",
                 "distance": 10,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1247,7 +1247,7 @@
             "60": {
                 "expected_successor": "59",
                 "action": "dialogue_statement",
-                "state": "0xb429d0",
+                "state": "0x23889d0",
                 "distance": 7,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1262,7 +1262,7 @@
             "56": {
                 "expected_successor": "55",
                 "action": "dialogue_statement",
-                "state": "0xb56b00",
+                "state": "0x239cb00",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1277,7 +1277,7 @@
             "53": {
                 "expected_successor": "45",
                 "action": "get-have-allergy",
-                "state": "0xb43710",
+                "state": "0x2389710",
                 "distance": 8,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1300,7 +1300,7 @@
             "54": {
                 "expected_successor": "53",
                 "action": "dialogue_statement",
-                "state": "0xb53a80",
+                "state": "0x2399a80",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1315,7 +1315,7 @@
             "58": {
                 "expected_successor": "57",
                 "action": "dialogue_statement",
-                "state": "0xb47cb0",
+                "state": "0x238dcb0",
                 "distance": 9,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1330,7 +1330,7 @@
             "70": {
                 "expected_successor": "69",
                 "action": "dialogue_statement",
-                "state": "0xb5b360",
+                "state": "0x23a1360",
                 "distance": 14,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1345,7 +1345,7 @@
             "71": {
                 "expected_successor": "70",
                 "action": "clarify__outing_type",
-                "state": "0xb3c3c0",
+                "state": "0x23823c0",
                 "distance": 15,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1368,7 +1368,7 @@
             "72": {
                 "expected_successor": "71",
                 "action": "dialogue_statement",
-                "state": "0xb5e190",
+                "state": "0x23a4190",
                 "distance": 16,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1383,7 +1383,7 @@
             "74": {
                 "expected_successor": "70",
                 "action": "clarify__outing_type",
-                "state": "0xb600e0",
+                "state": "0x23a60e0",
                 "distance": 15,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1406,7 +1406,7 @@
             "73": {
                 "expected_successor": "74",
                 "action": "dialogue_statement",
-                "state": "0xb5f660",
+                "state": "0x23a5660",
                 "distance": 16,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1421,7 +1421,7 @@
             "75": {
                 "expected_successor": "40",
                 "action": "slot-fill__get_outing",
-                "state": "0xb601a0",
+                "state": "0x23a61a0",
                 "distance": 12,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1456,7 +1456,7 @@
             "76": {
                 "expected_successor": "75",
                 "action": "dialogue_statement",
-                "state": "0xb60a30",
+                "state": "0x23a6a30",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1471,7 +1471,7 @@
             "78": {
                 "expected_successor": "77",
                 "action": "dialogue_statement",
-                "state": "0xb63860",
+                "state": "0x23a9860",
                 "distance": 14,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1486,7 +1486,7 @@
             "77": {
                 "expected_successor": "68",
                 "action": "clarify__outing_type",
-                "state": "0xb60a70",
+                "state": "0x23a6a70",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1509,7 +1509,7 @@
             "79": {
                 "expected_successor": "68",
                 "action": "single_slot__outing_type",
-                "state": "0xb63960",
+                "state": "0x23a9960",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1532,7 +1532,7 @@
             "80": {
                 "expected_successor": "79",
                 "action": "dialogue_statement",
-                "state": "0xb65c80",
+                "state": "0x23abc80",
                 "distance": 14,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1547,7 +1547,7 @@
             "82": {
                 "expected_successor": "43",
                 "action": "dialogue_statement",
-                "state": "0xb687f0",
+                "state": "0x23ae7f0",
                 "distance": 13,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -1562,7 +1562,7 @@
             "81": {
                 "expected_successor": "42",
                 "action": "dialogue_statement",
-                "state": "0xb674e0",
+                "state": "0x23ad4e0",
                 "distance": 14,
                 "is_relevant": 0,
                 "is_goal": 0,
@@ -2443,10 +2443,10 @@
             ]
         ],
         "states": {
-            "0xb04190": [
+            "0x234a190": [
                 "Atom goal()"
             ],
-            "0xb1cb90": [
+            "0x2362b90": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2464,7 +2464,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb1cd50": [
+            "0x2362d50": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2482,7 +2482,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb183d0": [
+            "0x235e3d0": [
                 "NegatedAtom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2497,7 +2497,7 @@
                 "NegatedAtom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb23580": [
+            "0x2369580": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2512,7 +2512,7 @@
                 "NegatedAtom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb1b430": [
+            "0x2361430": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2527,7 +2527,7 @@
                 "NegatedAtom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb23c60": [
+            "0x2369c60": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2542,7 +2542,7 @@
                 "Atom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb24880": [
+            "0x236a880": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2557,7 +2557,7 @@
                 "NegatedAtom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb24200": [
+            "0x236a200": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2572,12 +2572,12 @@
                 "Atom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb25430": [
+            "0x236b430": [
                 "Atom informed()",
                 "NegatedAtom forcing__get-allergy()",
                 "Atom force-statement()"
             ],
-            "0xb24730": [
+            "0x236a730": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2588,12 +2588,12 @@
                 "NegatedAtom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb25300": [
+            "0x236b300": [
                 "Atom informed()",
                 "NegatedAtom forcing__get-allergy()",
                 "NegatedAtom force-statement()"
             ],
-            "0xb33ef0": [
+            "0x2379ef0": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2612,7 +2612,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb31850": [
+            "0x2377850": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2631,7 +2631,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb27700": [
+            "0x236d700": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2646,7 +2646,7 @@
                 "NegatedAtom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb28c40": [
+            "0x236ec40": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2661,7 +2661,7 @@
                 "Atom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb29560": [
+            "0x236f560": [
                 "NegatedAtom know__location()",
                 "Atom know__phone_number()",
                 "Atom maybe-know__location()",
@@ -2676,7 +2676,7 @@
                 "NegatedAtom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb29fa0": [
+            "0x236ffa0": [
                 "NegatedAtom know__location()",
                 "Atom know__phone_number()",
                 "Atom maybe-know__location()",
@@ -2691,7 +2691,7 @@
                 "Atom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb2a4c0": [
+            "0x23704c0": [
                 "NegatedAtom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2706,7 +2706,7 @@
                 "Atom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb2a4e0": [
+            "0x23704e0": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2721,7 +2721,7 @@
                 "NegatedAtom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb2bf20": [
+            "0x2371f20": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2736,7 +2736,7 @@
                 "Atom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb2b4a0": [
+            "0x23714a0": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2751,7 +2751,7 @@
                 "Atom force-statement()",
                 "Atom know__outing()"
             ],
-            "0xb2da20": [
+            "0x2373a20": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2769,7 +2769,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb2d090": [
+            "0x2373090": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2788,7 +2788,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb2e400": [
+            "0x2374400": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2807,7 +2807,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb2e550": [
+            "0x2374550": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2826,7 +2826,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb33470": [
+            "0x2379470": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2845,7 +2845,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb33fb0": [
+            "0x2379fb0": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2863,7 +2863,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb34240": [
+            "0x237a240": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2881,7 +2881,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb35930": [
+            "0x237b930": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2899,7 +2899,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb343f0": [
+            "0x237a3f0": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2918,7 +2918,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb39140": [
+            "0x237f140": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2937,7 +2937,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb36f60": [
+            "0x237cf60": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -2955,7 +2955,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb505a0": [
+            "0x23965a0": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -2974,7 +2974,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb231c0": [
+            "0x23691c0": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "Atom know__phone_number()",
@@ -2994,7 +2994,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb3d090": [
+            "0x2383090": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "Atom know__phone_number()",
@@ -3014,7 +3014,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb3b930": [
+            "0x2381930": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "Atom know__phone_number()",
@@ -3034,7 +3034,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb3dae0": [
+            "0x2383ae0": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3054,7 +3054,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb3fd40": [
+            "0x2385d40": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3074,7 +3074,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb40a10": [
+            "0x2386a10": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3094,7 +3094,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb57880": [
+            "0x239d880": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3115,7 +3115,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb35020": [
+            "0x237b020": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3134,7 +3134,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb22c10": [
+            "0x2368c10": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3154,7 +3154,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb245a0": [
+            "0x236a5a0": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3174,7 +3174,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb53f00": [
+            "0x2399f00": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom know__food_restriction()",
@@ -3193,7 +3193,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb237a0": [
+            "0x23697a0": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -3211,7 +3211,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb59d50": [
+            "0x239fd50": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3230,7 +3230,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb55410": [
+            "0x239b410": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -3248,7 +3248,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb416b0": [
+            "0x23876b0": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -3266,7 +3266,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb58cd0": [
+            "0x239ecd0": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3286,7 +3286,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb56b20": [
+            "0x239cb20": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3305,7 +3305,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb58ee0": [
+            "0x239eee0": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3325,7 +3325,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb544e0": [
+            "0x239a4e0": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -3341,7 +3341,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb5ada0": [
+            "0x23a0da0": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3361,7 +3361,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb3a470": [
+            "0x2380470": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3381,7 +3381,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb48ba0": [
+            "0x238eba0": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -3399,7 +3399,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb4b8e0": [
+            "0x23918e0": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3419,7 +3419,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb43c70": [
+            "0x2389c70": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3439,7 +3439,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb4c290": [
+            "0x2392290": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -3457,7 +3457,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb471c0": [
+            "0x238d1c0": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3477,7 +3477,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb554b0": [
+            "0x239b4b0": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom maybe-know__location()",
@@ -3495,7 +3495,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb44660": [
+            "0x238a660": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "Atom know__phone_number()",
@@ -3515,7 +3515,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb429d0": [
+            "0x23889d0": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3535,7 +3535,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb56b00": [
+            "0x239cb00": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3555,7 +3555,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb43710": [
+            "0x2389710": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom know__food_restriction()",
@@ -3574,7 +3574,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb53a80": [
+            "0x2399a80": [
                 "Atom know__location()",
                 "Atom know__phone_number()",
                 "NegatedAtom know__food_restriction()",
@@ -3593,7 +3593,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb47cb0": [
+            "0x238dcb0": [
                 "Atom have_allergy()",
                 "Atom know__location()",
                 "Atom know__phone_number()",
@@ -3613,7 +3613,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb5b360": [
+            "0x23a1360": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3634,7 +3634,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb3c3c0": [
+            "0x23823c0": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3655,7 +3655,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb5e190": [
+            "0x23a4190": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3676,7 +3676,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb600e0": [
+            "0x23a60e0": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3697,7 +3697,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb5f660": [
+            "0x23a5660": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3718,7 +3718,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb601a0": [
+            "0x23a61a0": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3738,7 +3738,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb60a30": [
+            "0x23a6a30": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3758,7 +3758,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb63860": [
+            "0x23a9860": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3778,7 +3778,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb60a70": [
+            "0x23a6a70": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3798,7 +3798,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb63960": [
+            "0x23a9960": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3819,7 +3819,7 @@
                 "NegatedAtom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb65c80": [
+            "0x23abc80": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
@@ -3840,7 +3840,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb687f0": [
+            "0x23ae7f0": [
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
                 "NegatedAtom know__food_restriction()",
@@ -3859,7 +3859,7 @@
                 "Atom force-statement()",
                 "NegatedAtom know__outing()"
             ],
-            "0xb674e0": [
+            "0x23ad4e0": [
                 "Atom have_allergy()",
                 "NegatedAtom know__location()",
                 "NegatedAtom know__phone_number()",
