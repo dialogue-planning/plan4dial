@@ -55,4 +55,5 @@ def rollout_config(configuration_data: Dict) -> Dict:
         "initial_state": list(
             get_init_fluents(configuration_data["context_variables"])[1]
         ),
+        "partial": {act: [] for act in actions},
     }

@@ -101,7 +101,7 @@ if __name__ == "__main__":
     else:
         bot_name = "gold_standard_bot"
     # we can hardcode the path as it will stay the same in docker container
-    dirname = f"/root/app/plan4dial/local_data/{bot_name}"
+    dirname = f"/root/app/plan4dial/local_data/conversation_alignment_bots/{bot_name}"
     generate_files(
         f"{dirname}/{bot_name}.yml",
         f"{dirname}/output_files",
